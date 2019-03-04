@@ -1,0 +1,147 @@
+[
+  {
+    "key": "andrii.voloshchuk",
+    "name": "Andrii Voloshchuk",
+    "team": "Tech"
+  },
+  {
+    "key": "andrzej.slupek",
+    "name": "Andrzej Słupek",
+    "team": "Network"
+  },
+  {
+    "key": "charlie.edmunds",
+    "name": "Charlie Edmunds",
+    "team": "Gameplay"
+  },
+  {
+    "key": "dzmitry.ananchuk",
+    "name": "Dzmitry Ananchuk",
+    "team": "Gameplay"
+  },
+  {
+    "key": "filip.radwaniecki",
+    "name": "Filip Radwaniecki",
+    "team": "Network"
+  },
+  {
+    "key": "kacper.koscienski",
+    "name": "Kacper Kościeński",
+    "team": "Tech"
+  },
+  {
+    "key": "lukasz.krasniewski",
+    "name": "Łukasz Kraśniewski",
+    "team": "Gameplay"
+  },
+  {
+    "key": "maciej.blady",
+    "name": "Maciej Blady",
+    "team": "Tech"
+  },
+  {
+    "key": "manuel.silva",
+    "name": "Manuel Silva",
+    "team": "Gameplay"
+  },
+  {
+    "key": "marcin.kowalski",
+    "name": "Marcin Kowalski",
+    "team": "Gameplay"
+  },
+  {
+    "key": "michal.cwiek",
+    "name": "Michał Ćwiek",
+    "team": "Tech"
+  },
+  {
+    "key": "alexandr.pereverziev",
+    "name": "Oleksandr Pereverziev",
+    "team": "Network"
+  },
+  {
+    "key": "maciej.ostrowski",
+    "name": "Maciej Ostrowski",
+    "team": "Design"
+  },
+  {
+    "key": "michal.zabludowski",
+    "name": "Michał Zabłudowski",
+    "team": "Design"
+  },
+  {
+    "key": "adrian.wiacek",
+    "name": "Adrian Wiącek",
+    "team": "Design"
+  },
+  {
+    "key": "marcin.szypura",
+    "name": "Marcin Szypura",
+    "team": "Design"
+  },
+  {
+    "key": "piotr.golus",
+    "name": "Piotr Golus",
+    "team": "Design"
+  },
+  {
+    "key": "adam.pach",
+    "name": "Adam Pach",
+    "team": "UI"
+  },
+  {
+    "key": "natalia.nowacka",
+    "name": "Natalia Nowacka",
+    "team": "UI"
+  },
+  {
+    "key": "agnieszka.rogowska",
+    "name": "Agnieszka Rogowska",
+    "team": "UI"
+  },
+  {
+    "key": "asil.karatas",
+    "name": "Asil Karatas",
+    "team": "UI"
+  },
+  {
+    "key": "darya.dzemidzenka",
+    "name": "Darya Dzemidzenka",
+    "team": "UI"
+  },
+  {
+    "key": "krzysztof.sobczak",
+    "name": "Krzysztof Sobczak",
+    "team": "Backend"
+  },
+  {
+    "key": "georgii.korshunov",
+    "name": "Georgii Korshunov",
+    "team": "Backend"
+  },
+  {
+    "key": "mkuc",
+    "name": "Marlena Kuc",
+    "team": "Backend"
+  },
+  {
+    "key": "eryk.przychocki",
+    "name": "Eryk Przychocki",
+    "team": "Backend"
+  },
+  {
+    "key": "mieszko.malawski",
+    "name": "Mieszko Malawski",
+    "team": "Backend"
+  },
+  {
+    "key": "lukasz.staniec",
+    "name": "Lukasz Staniec",
+    "team": "Backend"
+  },
+  {
+    "key": "leszek.krupinski",
+    "name": "Leszek Krupiński",
+    "team": "Backend"
+  }
+]
