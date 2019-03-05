@@ -60,11 +60,11 @@ export default class StarterNavigation extends React.Component {
         onResize={this.props.onNavResize}
         containerHeaderComponent={() => (
           <AkContainerTitle
-            href="https://jira.cdprojektred.com/"
+            href={`https://${process.env.HOSTNAME}`}
             icon={
               <img alt="logo" src={Logo} />
             }
-            text="Spacer"
+            text="Gwent"
           />
         )}
         globalPrimaryIcon={globalPrimaryIcon}
