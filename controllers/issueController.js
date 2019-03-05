@@ -43,7 +43,7 @@ function httpsPostPromise(jql) {
     }`;
 
     const options = {
-      hostname: process.env.HOST,
+      hostname: process.env.HOSTNAME,
       port: 443,
       path: `${process.env.API_PATH}/search`,
       method: 'POST',
@@ -87,10 +87,10 @@ function httpsPostPromise(jql) {
   });
 }
 
-exports.getIssues = async (req, res) => res.json(await Issue.find());
+exports.getIssues = async (req, res) => {
+  const jql = 'filter=22119';
+  httpsPostPromise(jql);
+  return res.json(await Issue.find());
+};
 
-// exports.getIssues = async (req, res) => {
-//   const jql = 'filter=22119';
-//   httpsPostPromise(jql);
-//   return res.json(await Issue.find());
-// };
+// exports.getIssues = async (req, res) => res.json(await Issue.find());

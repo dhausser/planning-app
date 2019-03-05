@@ -96,7 +96,7 @@ export default class extends Component {
           caption={caption}
           head={head}
           rows={rows}
-          rowsPerPage={resources ? 10 : 10}
+          rowsPerPage={resources ? 20 : 10}
           defaultPage={1}
           loadingSpinnerSize="large"
           isLoading={false}
