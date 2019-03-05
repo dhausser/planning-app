@@ -5,7 +5,7 @@ import App from './App';
 import HomePage from '../pages/HomePage';
 import RoadmapPage from '../pages/RoadmapPage';
 import ResourcesPage from '../pages/ResourcesPage';
-import ResourcePage from '../pages/ResourcePage';
+import ProfilePage from '../pages/ProfilePage';
 import IssuesPage from '../pages/IssuesPage';
 import HolidaysPage from '../pages/HolidaysPage';
 import SettingsPage from '../pages/SettingsPage';
@@ -47,7 +47,7 @@ export default class BrowserRouter extends Component {
           <IndexRoute component={HomePage} />
           <Route path="/roadmap" component={RoadmapPage} />
           <Route path="/resources" component={ResourcesPage} />
-          <Route path="/view/:resourceId" component={ResourcePage} />`
+          <Route path="/view/:resourceId" component={ProfilePage} />`
           <Route path="/issues" component={IssuesPage} />
           <Route path="/holidays" component={HolidaysPage} />
           <Route path="/settings" component={SettingsPage} />
