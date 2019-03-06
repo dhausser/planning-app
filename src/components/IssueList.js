@@ -54,7 +54,6 @@ const createRows = (issues, resources) => issues.map((issue, index) => {
     key: `row-${index}-${issue.key}`,
     cells: [
       {
-        key: createKey(issue.key),
         content: issue.key
       },
       {

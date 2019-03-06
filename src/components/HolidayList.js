@@ -8,16 +8,6 @@ function createKey(input) {
   return input ? input.replace(/^(the|a|an)/, '').replace(/\s/g, '') : input;
 }
 
-const findName = (resources, key) => {
-  const resource = resources.find(resource => resource.key === key);
-  return resource.name;
-}
-
-const findTeam = (resources, key) => {
-  const resource = resources.find(resource => resource.key === key);
-  return resource.team;
-}
-
 const dateString = (string) => new Date(string).toDateString();
 
 const Wrapper = styled.div`
@@ -34,6 +24,11 @@ const createHead = (withWidth, resources) => {
         isSortable: true,
         width: withWidth ? 10 : undefined,
       },
+    ],
+  };
+
+  if (resources != null) {
+    head.cells.push(
       {
         key: 'team',
         content: 'Team',
@@ -47,42 +42,39 @@ const createHead = (withWidth, resources) => {
         isSortable: true,
         width: withWidth ? 10 : undefined,
       },
-    ],
-  };
-  if (resources == null) {
-    head.cells.splice(-1, 2);
+    );
   }
+
   return head;
 };
 
-const createRows = (holidays, resources) => {
-  const rows = holidays.map((holiday, index) => ({
+const createRows = (holidays, resources) => holidays.map((holiday, index) => {
+  const row = {
     key: `row-${index}-${holiday.key}`,
     cells: [
       {
-        key: createKey(holiday.date),
-        content: dateString(holiday.date),
-      },
-      {
-        key: createKey(holiday.team),
-        content: resources ? findTeam(resources, holiday.key) : '',
-      },
-      {
-        content: (
-          <Link to={`/view/${holiday.key}`}>
-            {resources ? findName(resources, holiday.key) : ''}
-          </Link>
-        ),
+        content: new Date(holiday.date).toDateString(),
       },
     ],
-  }));
-  if (resources == null) {
-    rows.forEach(row => {
-      row.cells.splice(-1, 2);
-    })
   }
-  return rows;
-}
+
+  if (resources != null) {
+    const arr = [
+      {
+        content: resources.find(resource => resource.key === holiday.key).team,
+      }, {
+      content: (
+        <Link to={`/view/${holiday.key}`}>
+          {resources.find(resource => resource.key === holiday.key).name}
+        </Link>),
+      }
+    ];
+    row.cells.push(...arr);
+  }
+
+
+  return row;
+});
 
 export default class extends Component {
   render() {
