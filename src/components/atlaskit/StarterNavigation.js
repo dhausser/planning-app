@@ -40,15 +40,15 @@ export default class StarterNavigation extends React.Component {
     navOpenState: PropTypes.object,
     router: PropTypes.object,
   };
-
-  openDrawer = (openDrawer) => {
-    this.setState({ openDrawer });
-  };
-
+  
   shouldComponentUpdate(nextProps, nextContext) {
     return true;
   };
-
+  
+  openDrawer = (openDrawer) => {
+    this.setState({ openDrawer });
+  };
+  
   render() {
     const backIcon = <ArrowleftIcon label="Back icon" size="medium" />;
     const globalPrimaryIcon = <AtlassianIcon label="Atlassian icon" size="xlarge" />;

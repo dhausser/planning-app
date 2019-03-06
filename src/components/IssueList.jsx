@@ -1,16 +1,13 @@
 // @flow
 import React from 'react';
 import { Link } from 'react-router';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import DynamicTable from '@atlaskit/dynamic-table';
 
 const Wrapper = styled.div`
   min-width: 600px;
 `;
-
-function createKey(input) {
-  return input ? input.replace(/^(the|a|an)/, '').replace(/\s/g, '') : input;
-}
 
 const createHead = (withWidth, resources) => {
   const head = {
@@ -38,46 +35,53 @@ const createHead = (withWidth, resources) => {
     ],
   };
 
-  (resources != null) && head.cells.push({
-    key: 'assignee',
-    content: 'Assignee',
-    shouldTruncate: true,
-    isSortable: true,
-    width: withWidth ? 15 : undefined,
-  });
+  if (resources != null) {
+    head.cells.push({
+      key: 'assignee',
+      content: 'Assignee',
+      shouldTruncate: true,
+      isSortable: true,
+      width: withWidth ? 15 : undefined,
+    });
+  }
 
   return head;
 };
 
-const createRows = (issues, resources) => issues.map((issue, index) => {
-  const row = {
-    key: `row-${index}-${issue.key}`,
-    cells: [
-      {
-        content: issue.key
-      },
-      {
-        content: issue.summary,
-      },
-      {
-        content: issue.status,
-      },
-    ],
-  }
+const createRows = (issues, resources) =>
+  issues.map((issue, index) => {
+    const row = {
+      key: `row-${index}-${issue.key}`,
+      cells: [
+        {
+          content: issue.key,
+        },
+        {
+          content: issue.summary,
+        },
+        {
+          content: issue.status,
+        },
+      ],
+    };
 
-  if (resources != null) {
-    const name = resources.find(resource => resource.key === issue.assignee).name;
-    row.cells.push({ content: <Link to={`/view/${issue.assignee}`}>{name}</Link> });
-  }
+    if (resources != null) {
+      const { name } = resources.find(
+        resource => resource.key === issue.assignee
+      );
+      row.cells.push({
+        content: <Link to={`/view/${issue.assignee}`}>{name}</Link>,
+      });
+    }
 
-  return row;
-});
+    return row;
+  });
 
-export default ({ issues, resources }) => {
+const HolidayList = ({ issues, resources }) => {
   const caption = 'List of Gwent Issues';
   return (
     <Wrapper>
-      {issues &&
+      {issues && (
         <DynamicTable
           caption={caption}
           head={createHead(true, resources)}
@@ -92,7 +96,14 @@ export default ({ issues, resources }) => {
           onSort={() => console.log('onSort')}
           onSetPage={() => console.log('onSetPage')}
         />
-      }
+      )}
     </Wrapper>
   );
-}
+};
+
+HolidayList.propTypes = {
+  issues: PropTypes.array,
+  resources: PropTypes.array,
+};
+
+export default HolidayList;
