@@ -69,6 +69,8 @@ export default class App extends Component {
       holidaysResponse.json(), issuesResponse.json(), resourcesResponse.json()
     ]);
 
+    console.log(issues.length);
+
     this.setState({ holidays, issues, resources });
   }
 

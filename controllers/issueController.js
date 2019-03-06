@@ -1,5 +1,6 @@
 const https = require('https');
 const mongoose = require('mongoose');
+const fs = require('fs');
 
 const Issue = mongoose.model('Issue');
 
@@ -20,6 +21,12 @@ async function saveIssues(rawIssues) {
   await Issue.deleteMany();
 
   try {
+    // fs.writeFile('./data/issues.json', JSON.stringify(issues), function (err) {
+    //   if (err) {
+    //     console.log(err);
+    //   }
+    // });
+
     await Issue.insertMany(issues);
   } catch (e) {
     console.log(e);
@@ -87,10 +94,10 @@ function httpsPostPromise(jql) {
   });
 }
 
-// exports.getIssues = async (req, res) => {
-//   const jql = 'filter=22119';
-//   httpsPostPromise(jql);
-//   return res.json(await Issue.find());
-// };
+exports.getIssues = async (req, res) => {
+  const jql = 'filter=22119';
+  httpsPostPromise(jql);
+  return res.json(await Issue.find());
+};
 
-exports.getIssues = async (req, res) => res.json(await Issue.find());
+// exports.getIssues = async (req, res) => res.json(await Issue.find());
