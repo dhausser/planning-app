@@ -12,11 +12,6 @@ function createKey(input) {
   return input ? input.replace(/^(the|a|an)/, '').replace(/\s/g, '') : input;
 }
 
-const findName = (resources, key) => {
-  const resource = resources.find(resource => resource.key === key);
-  return resource.name;
-}
-
 const createHead = (withWidth, resources) => {
   const head = {
     cells: [
@@ -54,7 +49,7 @@ const createHead = (withWidth, resources) => {
   return head;
 };
 
-const createRows = (issues, resources) => issues.map((issue, index, name=findName(resources, issue.assignee)) => {
+const createRows = (issues, resources) => issues.map((issue, index) => {
   const row = {
     key: `row-${index}-${issue.key}`,
     cells: [
@@ -63,7 +58,6 @@ const createRows = (issues, resources) => issues.map((issue, index, name=findNam
         content: issue.key
       },
       {
-        key: createKey(issue.summary),
         content: issue.summary,
       },
       {
@@ -71,7 +65,13 @@ const createRows = (issues, resources) => issues.map((issue, index, name=findNam
       },
     ],
   }
-  name && row.cells.push({ content: <Link to={`/view/${issue.assignee}`}>{name}</Link> });
+
+  if (resources != null) {
+    const name = resources.find(resource => resource.key === issue.assignee).name;
+    row.cells.push({ content: <Link to={`/view/${issue.assignee}`}>{name}</Link> });
+  }
+
+  return row;
 });
 
 export default ({ issues, resources }) => {
