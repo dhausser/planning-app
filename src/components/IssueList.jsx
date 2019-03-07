@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import DynamicTable from '@atlaskit/dynamic-table';
+import { Status } from '@atlaskit/status';
 
 const Wrapper = styled.div`
   min-width: 600px;
@@ -48,34 +49,33 @@ const createHead = (withWidth, resources) => {
   return head;
 };
 
-const createRows = (issues, resources) =>
-  issues.map((issue, index) => {
-    const row = {
-      key: `row-${index}-${issue.key}`,
-      cells: [
-        {
-          content: issue.key,
-        },
-        {
-          content: issue.summary,
-        },
-        {
-          content: issue.status,
-        },
-      ],
-    };
+const createRows = (issues, resources) => issues.map((issue, index) => {
+  const row = {
+    key: `row-${index}-${issue.key}`,
+    cells: [
+      {
+        content: issue.key,
+      },
+      {
+        content: issue.summary,
+      },
+      {
+        content: <Status text={issue.status} color="yellow" />,
+      },
+    ],
+  };
 
-    if (resources != null) {
-      const { name } = resources.find(
-        resource => resource.key === issue.assignee
-      );
-      row.cells.push({
-        content: <Link to={`/view/${issue.assignee}`}>{name}</Link>,
-      });
-    }
+  if (resources != null) {
+    const { name } = resources.find(
+      resource => resource.key === issue.assignee,
+    );
+    row.cells.push({
+      content: <Link to={`/view/${issue.assignee}`}>{name}</Link>,
+    });
+  }
 
-    return row;
-  });
+  return row;
+});
 
 const HolidayList = ({ issues, resources }) => {
   const caption = 'List of Gwent Issues';
@@ -92,7 +92,7 @@ const HolidayList = ({ issues, resources }) => {
           isLoading={false}
           isFixedSize
           defaultSortKey="status"
-          defaultSortOrder="ASC"
+          defaultSortOrder="DESC"
           onSort={() => console.log('onSort')}
           onSetPage={() => console.log('onSetPage')}
         />
@@ -102,8 +102,8 @@ const HolidayList = ({ issues, resources }) => {
 };
 
 HolidayList.propTypes = {
-  issues: PropTypes.array,
-  resources: PropTypes.array,
+  issues: PropTypes.arrayOf([PropTypes.object]).isRequired,
+  resources: PropTypes.arrayOf([PropTypes.object]).isRequired,
 };
 
 export default HolidayList;

@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import { Link } from 'react-router';
 import PropTypes from 'prop-types';
@@ -35,43 +36,42 @@ const createHead = (withWidth, resources) => {
         content: 'Name',
         isSortable: true,
         width: withWidth ? 10 : undefined,
-      }
+      },
     );
   }
 
   return head;
 };
 
-const createRows = (holidays, resources) =>
-  holidays.map((holiday, index) => {
-    const row = {
-      key: `row-${index}-${holiday.key}`,
-      cells: [
-        {
-          content: new Date(holiday.date).toDateString(),
-        },
-      ],
-    };
+const createRows = (holidays, resources) => holidays.map((holiday, index) => {
+  const row = {
+    key: `row-${index}-${holiday.key}`,
+    cells: [
+      {
+        content: new Date(holiday.date).toDateString(),
+      },
+    ],
+  };
 
-    if (resources != null) {
-      const arr = [
-        {
-          content: resources.find(resource => resource.key === holiday.key)
-            .team,
-        },
-        {
-          content: (
-            <Link to={`/view/${holiday.key}`}>
-              {resources.find(resource => resource.key === holiday.key).name}
-            </Link>
-          ),
-        },
-      ];
-      row.cells.push(...arr);
-    }
+  if (resources != null) {
+    const arr = [
+      {
+        content: resources.find(resource => resource.key === holiday.key)
+          .team,
+      },
+      {
+        content: (
+          <Link to={`/view/${holiday.key}`}>
+            {resources.find(resource => resource.key === holiday.key).name}
+          </Link>
+        ),
+      },
+    ];
+    row.cells.push(...arr);
+  }
 
-    return row;
-  });
+  return row;
+});
 
 const HolidayList = ({ holidays, resources }) => {
   const caption = 'List of Gwent Absences';
@@ -98,8 +98,8 @@ const HolidayList = ({ holidays, resources }) => {
 };
 
 HolidayList.propTypes = {
-  holidays: PropTypes.array,
-  resources: PropTypes.array,
+  holidays: PropTypes.arrayOf([PropTypes.object]).isRequired,
+  resources: PropTypes.arrayOf([PropTypes.object]).isRequired,
 };
 
 export default HolidayList;

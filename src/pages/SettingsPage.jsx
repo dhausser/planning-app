@@ -1,11 +1,11 @@
 import React from 'react';
+import MainSection from '../components/atlaskit/MainSection';
 import ContentWrapper from '../components/atlaskit/ContentWrapper';
 import PageTitle from '../components/atlaskit/PageTitle';
-import IssueList from '../components/IssueList';
 
-export default (props) => (
+export default () => (
   <ContentWrapper>
-    <PageTitle>Roadmap</PageTitle>
-    <IssueList {...props} />
+    <PageTitle>Settings</PageTitle>
+    <MainSection />
   </ContentWrapper>
-)
+);

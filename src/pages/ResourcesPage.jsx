@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
+import DropdownMenu, { DropdownItemGroup, DropdownItem } from '@atlaskit/dropdown-menu';
 import ResourceList from '../components/ResourceList';
 import ContentWrapper from '../components/atlaskit/ContentWrapper';
 import PageTitle from '../components/atlaskit/PageTitle';
-import DropdownMenu, { DropdownItemGroup, DropdownItem } from '@atlaskit/dropdown-menu';
 
 export default class ResourcesPage extends Component {
-  state = { team: "" };
+  state = {
+    team: ''
+  };
 
   render() {
     const teams = [...new Set(this.props.resources.map(resource => resource.team))];
@@ -26,6 +28,6 @@ export default class ResourcesPage extends Component {
         </DropdownMenu>
         <ResourceList teams={teams} {...this.props} />
       </ContentWrapper>
-    )
+    );
   }
 }

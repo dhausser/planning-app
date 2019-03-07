@@ -12,10 +12,10 @@ const Holiday = require('../models/Holiday');
 // const Sprint = require('../models/Sprint');
 
 const resources = JSON.parse(
-  fs.readFileSync(`${__dirname}/resources.json`, 'utf-8')
+  fs.readFileSync(`${__dirname}/resources.json`, 'utf-8'),
 );
 const holidays = JSON.parse(
-  fs.readFileSync(`${__dirname}/holidays.json`, 'utf-8')
+  fs.readFileSync(`${__dirname}/holidays.json`, 'utf-8'),
 );
 // const sprints = JSON.parse(fs.readFileSync(`${__dirname}/sprints.json`, 'utf-8'));
 
@@ -25,7 +25,7 @@ async function deleteData() {
   await Resource.deleteMany();
   await Holiday.deleteMany();
   console.log(
-    'Data Deleted. To load sample data, run\n\n\t npm run sample\n\n'
+    'Data Deleted. To load sample data, run\n\n\t npm run sample\n\n',
   );
   process.exit();
 }
@@ -39,7 +39,7 @@ async function loadData() {
     process.exit();
   } catch (e) {
     console.log(
-      '\n👎👎👎👎👎👎👎👎 Error! The Error info is below but if you are importing sample data make sure to drop the existing database first with.\n\n\t npm run blowitallaway\n\n\n'
+      '\n👎👎👎👎👎👎👎👎 Error! The Error info is below but if you are importing sample data make sure to drop the existing database first with.\n\n\t npm run blowitallaway\n\n\n',
     );
     console.log(e);
     process.exit();

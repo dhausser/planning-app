@@ -10,7 +10,7 @@ mongoose.connect(process.env.DATABASE, {
   useNewUrlParser: true,
 });
 mongoose.Promise = global.Promise;
-mongoose.connection.on('error', err => {
+mongoose.connection.on('error', (err) => {
   console.error(`🙅 🚫 🙅 🚫 🙅 🚫 🙅 🚫 → ${err.message}`);
 });
 
@@ -22,11 +22,15 @@ const app = express();
 
 app.use('/', require('./routes/index'));
 
-app.use(express.static(path.join(__dirname, 'build')));
+if (process.env.NODE_ENV === 'production') {
+  console.log('Serving production build...');
 
-app.get('/*', function (req, res) {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
+  app.use(express.static(path.join(__dirname, 'build')));
+
+  app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  });
+}
 
 app.set('port', process.env.PORT || 7777);
 const server = app.listen(app.get('port'), () => {

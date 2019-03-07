@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+
 const Resource = mongoose.model('Resource');
 
 exports.getTeams = async (req, res) => {
@@ -12,5 +13,4 @@ exports.getTeams = async (req, res) => {
   res.json({ teams, resources });
 };
 
-exports.getResources = async (req, res) =>
-  res.json(await Resource.getResources());
+exports.getResources = async (req, res) => res.json(await Resource.getResources());

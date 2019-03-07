@@ -11,10 +11,11 @@ const resourceSchema = new mongoose.Schema(
   {
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
-  }
+  },
 );
 
-resourceSchema.statics.getResources = function() {
+// eslint-disable-next-line func-names
+resourceSchema.statics.getResources = function () {
   return this.aggregate([
     {
       $lookup: {
@@ -45,7 +46,7 @@ resourceSchema.statics.getResources = function() {
   ]);
 };
 
-resourceSchema.statics.getTeams = function() {
+resourceSchema.statics.getTeams = function () {
   return this.aggregate([
     {
       $group: {

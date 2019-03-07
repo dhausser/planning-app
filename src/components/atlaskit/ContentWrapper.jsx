@@ -14,4 +14,4 @@ export default ({ children }) => (
       <Padding>{children}</Padding>
     </GridColumn>
   </Grid>
-)
+);

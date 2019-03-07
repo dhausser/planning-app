@@ -14,7 +14,7 @@ const issueSchema = new mongoose.Schema({
   aggregateprogress: Number,
 });
 
-issueSchema.statics.getAssignees = function() {
+issueSchema.statics.getAssignees = function () {
   return this.aggregate([
     {
       $group: {

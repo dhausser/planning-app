@@ -8,4 +8,4 @@ export default props => (
     <PageTitle>Absences</PageTitle>
     <HolidayList {...props} />
   </ContentWrapper>
-)
+);

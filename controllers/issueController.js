@@ -62,14 +62,14 @@ function httpsPostPromise(jql) {
       },
     };
 
-    const req = https.request(options, res => {
+    const req = https.request(options, (res) => {
       if (process.env.NODE_ENV === 'development') {
         console.log(`STATUS: ${res.statusCode}`);
         console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
       }
       let rawData = '';
       res.setEncoding('utf8');
-      res.on('data', chunk => {
+      res.on('data', (chunk) => {
         rawData += chunk;
       });
       res.on('end', () => {
@@ -83,7 +83,7 @@ function httpsPostPromise(jql) {
       });
     });
 
-    req.on('error', e => {
+    req.on('error', (e) => {
       console.error(`problem with request: ${e.message}`);
       reject();
     });
