@@ -80,20 +80,22 @@ const ResourceList = ({ resources }) => {
   const rows = createRows(resources);
   return (
     <Wrapper>
-      <DynamicTable
-        caption={caption}
-        head={head}
-        rows={rows}
-        rowsPerPage={20}
-        defaultPage={1}
-        loadingSpinnerSize="large"
-        isLoading={false}
-        isFixedSize
-        defaultSortKey="issues"
-        defaultSortOrder="DESC"
-        onSort={() => console.log('onSort')}
-        onSetPage={() => console.log('onSetPage')}
-      />
+      {resources &&
+        <DynamicTable
+          caption={caption}
+          head={head}
+          rows={rows}
+          rowsPerPage={20}
+          defaultPage={1}
+          loadingSpinnerSize="large"
+          isLoading={false}
+          isFixedSize
+          defaultSortKey="issues"
+          defaultSortOrder="DESC"
+          onSort={() => console.log('onSort')}
+          onSetPage={() => console.log('onSetPage')}
+        />
+      }
     </Wrapper>
   );
 };

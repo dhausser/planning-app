@@ -56,6 +56,10 @@ export default class App extends Component {
     })
   }
 
+  filterTeam = () => {
+    console.log('Filtering team...')
+  }
+
   async componentDidMount() {
     const holidaysPromise = fetch('/api/holidays');
     const issuesPromise = fetch('/api/issues');
@@ -65,7 +69,7 @@ export default class App extends Component {
       holidaysPromise, issuesPromise, resourcesPromise
     ]);
 
-    const [holidays, issues, resources] = await Promise.all([
+    let [holidays, issues, resources] = await Promise.all([
       holidaysResponse.json(), issuesResponse.json(), resourcesResponse.json()
     ]);
 

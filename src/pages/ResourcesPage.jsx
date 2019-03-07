@@ -6,11 +6,13 @@ import PageTitle from '../components/atlaskit/PageTitle';
 
 export default class ResourcesPage extends Component {
   state = {
-    team: ''
+    team: null
   };
-
+  
   render() {
+    console.log(this.props);
     const teams = [...new Set(this.props.resources.map(resource => resource.team))];
+    console.log(teams);
     return (
       <ContentWrapper>
         <PageTitle>Resources</PageTitle>
@@ -21,12 +23,13 @@ export default class ResourcesPage extends Component {
           position="right top"
           onOpenChange={e => console.log('dropdown opened', e)}
           onClick={e => console.log(e)}
+          onItemActivated={e => console.log(e)}
         >
           <DropdownItemGroup>
             {teams.map(team => <DropdownItem key={team}>{team}</DropdownItem>)}
           </DropdownItemGroup>
         </DropdownMenu>
-        <ResourceList teams={teams} {...this.props} />
+        <ResourceList {...this.props} />
       </ContentWrapper>
     );
   }

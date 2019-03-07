@@ -79,20 +79,22 @@ const HolidayList = ({ holidays, resources }) => {
   const rows = createRows(holidays, resources);
   return (
     <Wrapper>
-      <DynamicTable
-        caption={caption}
-        head={head}
-        rows={rows}
-        rowsPerPage={resources ? 20 : 10}
-        defaultPage={1}
-        loadingSpinnerSize="large"
-        isLoading={false}
-        isFixedSize
-        defaultSortKey="date"
-        defaultSortOrder="DESC"
-        onSort={() => console.log('onSort')}
-        onSetPage={() => console.log('onSetPage')}
-      />
+      {holidays &&
+        <DynamicTable
+          caption={caption}
+          head={head}
+          rows={rows}
+          rowsPerPage={resources ? 20 : 10}
+          defaultPage={1}
+          loadingSpinnerSize="large"
+          isLoading={false}
+          isFixedSize
+          defaultSortKey="date"
+          defaultSortOrder="DESC"
+          onSort={() => console.log('onSort')}
+          onSetPage={() => console.log('onSetPage')}
+        />
+      }
     </Wrapper>
   );
 };
@@ -106,7 +108,7 @@ HolidayList.propTypes = {
   resources: arrayOf(shape({
     key: string,
     name: string,
-  })).isRequired,
+  })),
 };
 
 export default HolidayList;

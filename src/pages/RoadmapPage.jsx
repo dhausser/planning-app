@@ -8,4 +8,4 @@ export default props => (
     <PageTitle>Roadmap</PageTitle>
     <IssueList {...props} />
   </ContentWrapper>
-);
+)

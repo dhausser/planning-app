@@ -143,7 +143,7 @@ const createRows = (issues, resources) => {
   });
 }
 
-const HolidayList = ({ issues, resources }) => {
+const IssueList = ({ issues, resources }) => {
   const caption = 'List of Gwent Issues';
   return (
     <Wrapper>
@@ -167,7 +167,7 @@ const HolidayList = ({ issues, resources }) => {
   );
 };
 
-HolidayList.propTypes = {
+IssueList.propTypes = {
   issues: arrayOf(shape({
     key: string,
     summary: string,
@@ -177,7 +177,7 @@ HolidayList.propTypes = {
   resources: arrayOf(shape({
     key: string,
     name: string,
-  })).isRequired,
+  })),
 };
 
-export default HolidayList;
+export default IssueList;
