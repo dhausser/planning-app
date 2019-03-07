@@ -7,11 +7,11 @@ const issueSchema = new mongoose.Schema({
   key: String,
   summary: String,
   assignee: String,
-  timeestimate: Number,
-  timeoriginalestimate: Number,
   status: String,
   issuetype: String,
-  aggregateprogress: Number,
+  priority: String,
+  statusCategory: String,
+  components: Array,
 });
 
 issueSchema.statics.getAssignees = function () {
@@ -36,6 +36,19 @@ issueSchema.statics.getAssignees = function () {
         localField: '_id',
         foreignField: 'key',
         as: 'holidays',
+      },
+    },
+    {
+      $project: {
+        _id: false,
+        id: false,
+        key: true,
+        summary: true,
+        issuetype: true,
+        status: true,
+        priority: true,
+        statusCategory: true,
+        components: true,
       },
     },
   ]);

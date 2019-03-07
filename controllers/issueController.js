@@ -11,11 +11,11 @@ async function saveIssues({ issues }) {
     assignee: (issue.fields.assignee && issue.fields.assignee.key) || '',
     avatarUrls: (issue.fields.assignee && issue.fields.assignee.avatarUrls) || '',
     summary: issue.fields.summary || '',
+    issuetype: issue.fields.issuetype.name || '',
     status: issue.fields.status.name || '',
     statusCategory: issue.fields.status.statusCategory.key || '',
     priority: issue.fields.priority.name || '',
-    component: issue.fields.components || '',
-    issuetype: issue.fields.issuetype.name || '',
+    components: issue.fields.components || '',
   }));
 
   await Issue.deleteMany();

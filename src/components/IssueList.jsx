@@ -31,7 +31,7 @@ const createHead = (withWidth, resources) => {
         content: 'Status',
         shouldTruncate: true,
         isSortable: true,
-        width: withWidth ? 10 : undefined,
+        width: withWidth ? 15 : undefined,
       },
     ],
   };
@@ -50,17 +50,43 @@ const createHead = (withWidth, resources) => {
 };
 
 const createRows = (issues, resources) => issues.map((issue, index) => {
+  const colors = [
+    "neutral",
+    "purple",
+    "blue",
+    "red",
+    "yellow",
+    "green"
+  ];
+  let color = '';
+
+  switch (issue.statusCategory) {
+    case 'new':
+      color = colors[2];
+      break;
+    case 'indeterminate':
+      color = colors[4];
+      break;
+    case 'done':
+      color = colors[5];
+      break;
+    default:
+      color = colors[0];
+  }
+
   const row = {
     key: `row-${index}-${issue.key}`,
     cells: [
       {
-        content: issue.key,
+        content: (
+          <a href={`https://jira.cdprojektred.com/browse/${issue.key}`} target="_blank" rel="noopener noreferrer">{issue.key}</a>
+        ),
       },
       {
         content: issue.summary,
       },
       {
-        content: <Status text={issue.status} color="yellow" />,
+        content: <Status text={issue.status} color={color} />,
       },
     ],
   };
