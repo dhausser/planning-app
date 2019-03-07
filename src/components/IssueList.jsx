@@ -5,6 +5,15 @@ import { arrayOf, shape, string } from 'prop-types';
 import styled from 'styled-components';
 import DynamicTable from '@atlaskit/dynamic-table';
 import { Status } from '@atlaskit/status';
+import PriorityBlockerIcon from '@atlaskit/icon-priority/glyph/priority-blocker';
+import PriorityHighestIcon from '@atlaskit/icon-priority/glyph/priority-highest';
+import PriorityMajorIcon from '@atlaskit/icon-priority/glyph/priority-major';
+import PriorityHighIcon from '@atlaskit/icon-priority/glyph/priority-high';
+import PriorityMediumIcon from '@atlaskit/icon-priority/glyph/priority-medium';
+import PriorityLowIcon from '@atlaskit/icon-priority/glyph/priority-low';
+import PriorityLowestIcon from '@atlaskit/icon-priority/glyph/priority-lowest';
+import PriorityMinorIcon from '@atlaskit/icon-priority/glyph/priority-minor';
+import PriorityTrivialIcon from '@atlaskit/icon-priority/glyph/priority-trivial';
 
 const Wrapper = styled.div`
   min-width: 600px;
@@ -17,21 +26,21 @@ const createHead = (withWidth, resources) => {
         key: 'key',
         content: 'Key',
         isSortable: true,
-        width: withWidth ? 10 : undefined,
+        width: withWidth ? 15 : undefined,
       },
       {
         key: 'summary',
         content: 'Summary',
         shouldTruncate: true,
         isSortable: true,
-        width: withWidth ? 30 : undefined,
+        width: withWidth ? 20 : undefined,
       },
       {
-        key: 'priority',
-        content: 'Priority',
+        key: 'value',
+        content: 'Value',
         shouldTruncate: true,
         isSortable: true,
-        width: withWidth ? 10 : undefined,
+        width: withWidth ? 5 : undefined,
       },
       {
         key: 'status',
@@ -56,64 +65,83 @@ const createHead = (withWidth, resources) => {
   return head;
 };
 
-const createRows = (issues, resources) => issues.map((issue, index) => {
-  const colors = [
-    "neutral",
-    "purple",
-    "blue",
-    "red",
-    "yellow",
-    "green"
-  ];
-  let color = '';
+const createRows = (issues, resources) => {
+  const statusColor = ({ statusCategory }) => {
+    const colors = [
+      "neutral",
+      "purple",
+      "blue",
+      "red",
+      "yellow",
+      "green"
+    ];
 
-  switch (issue.statusCategory) {
-    case 'new':
-      color = colors[2];
-      break;
-    case 'indeterminate':
-      color = colors[4];
-      break;
-    case 'done':
-      color = colors[5];
-      break;
-    default:
-      color = colors[0];
+    switch (statusCategory) {
+      case 'new':
+        return colors[2];
+      case 'indeterminate':
+        return colors[4];
+      case 'done':
+        return colors[5];
+      default:
+        return colors[0];
+    }
   }
 
-  const row = {
-    key: `row-${index}-${issue.key}`,
-    cells: [
-      {
-        content: (
-          <a href={`https://jira.cdprojektred.com/browse/${issue.key}`} target="_blank" rel="noopener noreferrer">{issue.key}</a>
-        ),
-      },
-      {
-        content: issue.summary,
-      },
-      {
-        key: issue.priority,
-        content: issue.priority,
-      },
-      {
-        key: issue.statusCategory,
-        content: <Status text={issue.status} color={color} />,
-      },
-    ],
-  };
-
-  if (resources != null) {
-    const { name } = resources.find(
-      resource => resource.key === issue.assignee,
-    );
-    row.cells.push({
-      content: <Link to={`/view/${issue.assignee}`}>{name}</Link>,
-    });
+  const priorityIcon = ({ priority }) => {
+    switch (priority) {
+      case 'PO':
+        return <PriorityBlockerIcon size="small" />
+      case 'P1':
+        return <PriorityHighestIcon size="small" />
+      case 'P2':
+        return <PriorityMediumIcon size="small" />
+      case 'P3':
+        return <PriorityLowestIcon size="small" />
+      case 'P4':
+        return <PriorityMinorIcon size="small" />
+      case 'P5':
+        return <PriorityTrivialIcon size="small" />
+      default:
+        return <PriorityBlockerIcon size="small" />
+    }
   }
 
-  return row;
-});
+  return issues.map((issue, index) => {
+    const row = {
+      key: `row-${index}-${issue.key}`,
+      cells: [
+        {
+          content: (
+            <a href={`https://jira.cdprojektred.com/browse/${issue.key}`} target="_blank" rel="noopener noreferrer">{issue.key}</a>
+          ),
+        },
+        {
+          content: issue.summary,
+        },
+        {
+          key: issue.priority,
+          content: priorityIcon(issue),
+        },
+        {
+          key: issue.statusCategory,
+          content: <Status text={issue.status} color={statusColor(issue)} />,
+        },
+      ],
+    };
+
+    if (resources != null) {
+      const { name } = resources.find(
+        resource => resource.key === issue.assignee,
+      );
+      row.cells.push({
+        content: <Link to={`/view/${issue.assignee}`}>{name}</Link>,
+      });
+    }
+
+    return row;
+  });
+}
 
 const HolidayList = ({ issues, resources }) => {
   const caption = 'List of Gwent Issues';

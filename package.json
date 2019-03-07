@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "concurrently \"npm run watch\" \"npm run dev\"",
+    "start": "concurrently \"npm run dev\" \"npm run watch\"",
     "dev": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
@@ -26,6 +26,7 @@
     "@atlaskit/dynamic-table": "^10.0.23",
     "@atlaskit/flag": "^9.0.7",
     "@atlaskit/icon": "^13.4.0",
+    "@atlaskit/icon-priority": "^3.0.0",
     "@atlaskit/inline-edit": "^7.0.7",
     "@atlaskit/modal-dialog": "^6.0.10",
     "@atlaskit/navigation": "^33.1.7",

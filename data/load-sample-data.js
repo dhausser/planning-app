@@ -9,7 +9,7 @@ mongoose.Promise = global.Promise; // Tell Mongoose to use ES6 promises
 // import all of our models - they need to be imported only once
 const Resource = require('../models/Resource');
 const Holiday = require('../models/Holiday');
-// const Sprint = require('../models/Sprint');
+const Issue = require('../models/Issue');
 
 const resources = JSON.parse(
   fs.readFileSync(`${__dirname}/resources.json`, 'utf-8'),
@@ -17,24 +17,26 @@ const resources = JSON.parse(
 const holidays = JSON.parse(
   fs.readFileSync(`${__dirname}/holidays.json`, 'utf-8'),
 );
-// const sprints = JSON.parse(fs.readFileSync(`${__dirname}/sprints.json`, 'utf-8'));
+const issues = JSON.parse(
+  fs.readFileSync(`${__dirname}/issues.json`, 'utf-8'),
+);
 
 async function deleteData() {
   console.log('😢😢 Goodbye Data...');
-  // await Sprint.deleteMany();
   await Resource.deleteMany();
   await Holiday.deleteMany();
+  await Issue.deleteMany();
   console.log(
     'Data Deleted. To load sample data, run\n\n\t npm run sample\n\n',
   );
   process.exit();
 }
 
-async function loadData() {
+async function loadData() { 
   try {
     await Resource.insertMany(resources);
     await Holiday.insertMany(holidays);
-    // await Sprint.insertMany(sprints);
+    await Issue.insertMany(issues);
     console.log('👍👍👍👍👍👍👍👍 Done!');
     process.exit();
   } catch (e) {

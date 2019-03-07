@@ -96,9 +96,7 @@ function httpsPostPromise(jql) {
 }
 
 exports.getIssues = async (req, res) => {
-  const jql = 'filter=22119';
-  httpsPostPromise(jql);
+  // const jql = 'filter=22119';
+  // httpsPostPromise(jql);
   return res.json(await Issue.find());
 };
-
-// exports.getIssues = async (req, res) => res.json(await Issue.find());
