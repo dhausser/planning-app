@@ -27,6 +27,13 @@ const createHead = (withWidth, resources) => {
         width: withWidth ? 30 : undefined,
       },
       {
+        key: 'priority',
+        content: 'Priority',
+        shouldTruncate: true,
+        isSortable: true,
+        width: withWidth ? 10 : undefined,
+      },
+      {
         key: 'status',
         content: 'Status',
         shouldTruncate: true,
@@ -86,6 +93,11 @@ const createRows = (issues, resources) => issues.map((issue, index) => {
         content: issue.summary,
       },
       {
+        key: issue.priority,
+        content: issue.priority,
+      },
+      {
+        key: issue.statusCategory,
         content: <Status text={issue.status} color={color} />,
       },
     ],
@@ -118,7 +130,7 @@ const HolidayList = ({ issues, resources }) => {
           isLoading={false}
           isFixedSize
           defaultSortKey="status"
-          defaultSortOrder="DESC"
+          defaultSortOrder="ASC"
           onSort={() => console.log('onSort')}
           onSetPage={() => console.log('onSetPage')}
         />

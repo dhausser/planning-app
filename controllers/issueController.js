@@ -21,11 +21,11 @@ async function saveIssues({ issues }) {
   await Issue.deleteMany();
 
   try {
-    fs.writeFile('./data/issues.json', JSON.stringify(shallowIssues), function (err) {
-      if (err) {
-        console.log(err);
-      }
-    });
+    // fs.writeFile('./data/issues.json', JSON.stringify(shallowIssues), function (err) {
+    //   if (err) {
+    //     console.log(err);
+    //   }
+    // });
 
     await Issue.insertMany(shallowIssues);
   } catch (e) {
