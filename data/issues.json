@@ -1,1546 +1,3387 @@
 [
   {
+    "id": "402923",
+    "key": "GWENT-62804",
+    "assignee": "andrzej.slupek",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=andrzej.slupek&avatarId=16302",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=andrzej.slupek&avatarId=16302",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=andrzej.slupek&avatarId=16302",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=andrzej.slupek&avatarId=16302"
+    },
+    "summary": "Error while purchasing a Bloodmoon pack",
+    "status": "Open",
+    "statusCategory": "new",
+    "priority": "P0",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11306",
+        "id": "11306",
+        "name": "Network"
+      }
+    ],
+    "issuetype": "Bug"
+  },
+  {
+    "id": "402870",
+    "key": "GWENT-62796",
+    "assignee": "lukasz.krasniewski",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=lukasz.krasniewski&avatarId=12712",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=lukasz.krasniewski&avatarId=12712",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=lukasz.krasniewski&avatarId=12712",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=lukasz.krasniewski&avatarId=12712"
+    },
+    "summary": "Tournament build issues",
+    "status": "Open",
+    "statusCategory": "new",
+    "priority": "P1",
+    "component": [],
+    "issuetype": "Bug"
+  },
+  {
+    "id": "402852",
+    "key": "GWENT-62792",
+    "assignee": "lukasz.krasniewski",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=lukasz.krasniewski&avatarId=12712",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=lukasz.krasniewski&avatarId=12712",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=lukasz.krasniewski&avatarId=12712",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=lukasz.krasniewski&avatarId=12712"
+    },
+    "summary": "Tournament Build Preparation: Make sure the spectator mode is fully functionnal and all bugs fixed",
+    "status": "Open",
+    "statusCategory": "new",
+    "priority": "P1",
+    "component": [],
+    "issuetype": "Sub-task"
+  },
+  {
+    "id": "402850",
+    "key": "GWENT-62790",
+    "assignee": "andrii.voloshchuk",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=andrii.voloshchuk&avatarId=13306",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=andrii.voloshchuk&avatarId=13306",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=andrii.voloshchuk&avatarId=13306",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=andrii.voloshchuk&avatarId=13306"
+    },
+    "summary": "Tournament Build Preparation: Strip the build for tournament according requirements",
+    "status": "Open",
+    "statusCategory": "new",
+    "priority": "P1",
+    "component": [],
+    "issuetype": "Sub-task"
+  },
+  {
+    "id": "402778",
+    "key": "GWENT-62782",
+    "assignee": "asil.karatas",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=asil.karatas&avatarId=16014",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=asil.karatas&avatarId=16014",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=asil.karatas&avatarId=16014",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=asil.karatas&avatarId=16014"
+    },
+    "summary": "Cards are removed from deck after opening and closing the same deck in Deckbuilder",
+    "status": "Work In Progress",
+    "statusCategory": "indeterminate",
+    "priority": "P2",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11303",
+        "id": "11303",
+        "name": "Deckbuilder"
+      },
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11410",
+        "id": "11410",
+        "name": "UI/UX"
+      }
+    ],
+    "issuetype": "Bug"
+  },
+  {
+    "id": "402713",
+    "key": "GWENT-62777",
+    "assignee": "georgii.korshunov",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=georgii.korshunov&avatarId=18506",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=georgii.korshunov&avatarId=18506",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=georgii.korshunov&avatarId=18506",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=georgii.korshunov&avatarId=18506"
+    },
+    "summary": "Seasonal quest 4000107 may not progress correctly if two daily quests are completed at the same time.",
+    "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [],
+    "issuetype": "Bug"
+  },
+  {
+    "id": "402711",
+    "key": "GWENT-62776",
+    "assignee": "filip.radwaniecki",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=filip.radwaniecki&avatarId=16306",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=filip.radwaniecki&avatarId=16306",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=filip.radwaniecki&avatarId=16306",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=filip.radwaniecki&avatarId=16306"
+    },
+    "summary": "Automate LiveUpdate",
+    "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [],
+    "issuetype": "Task"
+  },
+  {
     "id": "402290",
     "key": "GWENT-62770",
     "assignee": "lukasz.krasniewski",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=lukasz.krasniewski&avatarId=12712",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=lukasz.krasniewski&avatarId=12712",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=lukasz.krasniewski&avatarId=12712",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=lukasz.krasniewski&avatarId=12712"
+    },
     "summary": "[152209] Morkvarg shows on board after dying with Doomed status.",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P4",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11408",
+        "id": "11408",
+        "name": "Ability"
+      }
+    ],
     "issuetype": "Bug"
+  },
+  {
+    "id": "402154",
+    "key": "GWENT-62753",
+    "assignee": "andrzej.slupek",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=andrzej.slupek&avatarId=16302",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=andrzej.slupek&avatarId=16302",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=andrzej.slupek&avatarId=16302",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=andrzej.slupek&avatarId=16302"
+    },
+    "summary": "Network Support for discounts in arena tickets's price.",
+    "status": "Work In Progress",
+    "statusCategory": "indeterminate",
+    "priority": "P1",
+    "component": [],
+    "issuetype": "Sub-task"
   },
   {
     "id": "402083",
     "key": "GWENT-62746",
     "assignee": "marcin.kowalski",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=marcin.kowalski&avatarId=16917",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=marcin.kowalski&avatarId=16917",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=marcin.kowalski&avatarId=16917",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=marcin.kowalski&avatarId=16917"
+    },
     "summary": "Cannot copy different ability types between each other",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [],
     "issuetype": "Bug"
   },
   {
-    "id": "402069",
-    "key": "GWENT-62744",
-    "assignee": "marcin.kowalski",
-    "summary": "Reward book - please add code for an audio state in reward book",
-    "status": "Open",
-    "issuetype": "Task"
+    "id": "402019",
+    "key": "GWENT-62736",
+    "assignee": "piotr.golus",
+    "avatarUrls": {
+      "48x48": "https://secure.gravatar.com/avatar/3bf5142a80bc2e3d15d768136aec307d?d=mm&s=48",
+      "24x24": "https://secure.gravatar.com/avatar/3bf5142a80bc2e3d15d768136aec307d?d=mm&s=24",
+      "16x16": "https://secure.gravatar.com/avatar/3bf5142a80bc2e3d15d768136aec307d?d=mm&s=16",
+      "32x32": "https://secure.gravatar.com/avatar/3bf5142a80bc2e3d15d768136aec307d?d=mm&s=32"
+    },
+    "summary": "Seasonal Gameplay - Doubling deck animation improvement",
+    "status": "Ready for Review",
+    "statusCategory": "indeterminate",
+    "priority": "P1",
+    "component": [],
+    "issuetype": "Sub-task"
   },
   {
     "id": "401709",
     "key": "GWENT-62721",
     "assignee": "andrzej.slupek",
-    "summary": "Seasonal quest 4000114 does not always progress or stops progressing at some point.",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=andrzej.slupek&avatarId=16302",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=andrzej.slupek&avatarId=16302",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=andrzej.slupek&avatarId=16302",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=andrzej.slupek&avatarId=16302"
+    },
+    "summary": "Seasonal quests do not always progress or stop progressing at some point.",
     "status": "Work In Progress",
+    "statusCategory": "indeterminate",
+    "priority": "P1",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "401693",
     "key": "GWENT-62720",
     "assignee": "krzysztof.sobczak",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=krzysztof.sobczak&avatarId=18503",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=krzysztof.sobczak&avatarId=18503",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=krzysztof.sobczak&avatarId=18503",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=krzysztof.sobczak&avatarId=18503"
+    },
     "summary": "Matches in Seasonal Mode don't progress towards daily crown tires",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P1",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "401467",
     "key": "GWENT-62714",
     "assignee": "lukasz.staniec",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=lukasz.staniec&avatarId=16103",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=lukasz.staniec&avatarId=16103",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=lukasz.staniec&avatarId=16103",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=lukasz.staniec&avatarId=16103"
+    },
     "summary": "Crimson Curse - Premium CC Kegs - Product setup",
     "status": "Blocked",
+    "statusCategory": "indeterminate",
+    "priority": "P2",
+    "component": [],
     "issuetype": "Task"
   },
   {
     "id": "401365",
     "key": "GWENT-62704",
     "assignee": "piotr.golus",
+    "avatarUrls": {
+      "48x48": "https://secure.gravatar.com/avatar/3bf5142a80bc2e3d15d768136aec307d?d=mm&s=48",
+      "24x24": "https://secure.gravatar.com/avatar/3bf5142a80bc2e3d15d768136aec307d?d=mm&s=24",
+      "16x16": "https://secure.gravatar.com/avatar/3bf5142a80bc2e3d15d768136aec307d?d=mm&s=16",
+      "32x32": "https://secure.gravatar.com/avatar/3bf5142a80bc2e3d15d768136aec307d?d=mm&s=32"
+    },
     "summary": "PTR: Get Default Availability node doesn't include CC",
     "status": "QA Verification",
+    "statusCategory": "indeterminate",
+    "priority": "P1",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "401334",
     "key": "GWENT-62702",
     "assignee": "michal.cwiek",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=michal.cwiek&avatarId=11500",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=michal.cwiek&avatarId=11500",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=michal.cwiek&avatarId=11500",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=michal.cwiek&avatarId=11500"
+    },
     "summary": "Confluence page with list of known validator errors that where flagged as acceptable by 3rd parties",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [],
     "issuetype": "Task"
   },
   {
-    "id": "401127",
-    "key": "GWENT-62690",
-    "assignee": "krzysztof.sobczak",
-    "summary": "Can't start transaction from Poland in GAEA builds",
+    "id": "401131",
+    "key": "GWENT-62691",
+    "assignee": "maciej.blady",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=maciej.blady&avatarId=17004",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=maciej.blady&avatarId=17004",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=maciej.blady&avatarId=17004",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=maciej.blady&avatarId=17004"
+    },
+    "summary": "Critical errors spammed in log files/mem logger",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "401044",
     "key": "GWENT-62679",
     "assignee": "krzysztof.sobczak",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=krzysztof.sobczak&avatarId=18503",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=krzysztof.sobczak&avatarId=18503",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=krzysztof.sobczak&avatarId=18503",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=krzysztof.sobczak&avatarId=18503"
+    },
     "summary": "User transferred from UWP to GOG has boards displayed as not yet purchased in the store despite already having them.",
     "status": "Open",
-    "issuetype": "Bug"
-  },
-  {
-    "id": "401021",
-    "key": "GWENT-62675",
-    "assignee": "krzysztof.sobczak",
-    "summary": "Some users have Season Tree locked despite having lvl 10 or above.",
-    "status": "Work In Progress",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "400983",
     "key": "GWENT-62673",
     "assignee": "mieszko.malawski",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=mieszko.malawski&avatarId=16922",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=mieszko.malawski&avatarId=16922",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=mieszko.malawski&avatarId=16922",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=mieszko.malawski&avatarId=16922"
+    },
     "summary": "[PTR] Matchmaking does not connect users.",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P1",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11306",
+        "id": "11306",
+        "name": "Network"
+      }
+    ],
+    "issuetype": "Bug"
+  },
+  {
+    "id": "400387",
+    "key": "GWENT-62662",
+    "assignee": "piotr.golus",
+    "avatarUrls": {
+      "48x48": "https://secure.gravatar.com/avatar/3bf5142a80bc2e3d15d768136aec307d?d=mm&s=48",
+      "24x24": "https://secure.gravatar.com/avatar/3bf5142a80bc2e3d15d768136aec307d?d=mm&s=24",
+      "16x16": "https://secure.gravatar.com/avatar/3bf5142a80bc2e3d15d768136aec307d?d=mm&s=16",
+      "32x32": "https://secure.gravatar.com/avatar/3bf5142a80bc2e3d15d768136aec307d?d=mm&s=32"
+    },
+    "summary": "Vran Warrior's ability triggers if opponent's artifact get destroyed",
+    "status": "Open",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "400369",
     "key": "GWENT-62657",
     "assignee": "marcin.kowalski",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=marcin.kowalski&avatarId=16917",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=marcin.kowalski&avatarId=16917",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=marcin.kowalski&avatarId=16917",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=marcin.kowalski&avatarId=16917"
+    },
     "summary": "Create a tool for checking battlecries readiness in raw files",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [],
     "issuetype": "Task"
   },
   {
     "id": "400343",
     "key": "GWENT-62653",
     "assignee": "darya.dzemidzenka",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=darya.dzemidzenka&avatarId=17707",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=darya.dzemidzenka&avatarId=17707",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=darya.dzemidzenka&avatarId=17707",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=darya.dzemidzenka&avatarId=17707"
+    },
     "summary": "Reward book unlock button should not be available outside of corresponding season",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P1",
+    "component": [],
     "issuetype": "Sub-task"
   },
   {
     "id": "400222",
     "key": "GWENT-62651",
     "assignee": "piotr.golus",
+    "avatarUrls": {
+      "48x48": "https://secure.gravatar.com/avatar/3bf5142a80bc2e3d15d768136aec307d?d=mm&s=48",
+      "24x24": "https://secure.gravatar.com/avatar/3bf5142a80bc2e3d15d768136aec307d?d=mm&s=24",
+      "16x16": "https://secure.gravatar.com/avatar/3bf5142a80bc2e3d15d768136aec307d?d=mm&s=16",
+      "32x32": "https://secure.gravatar.com/avatar/3bf5142a80bc2e3d15d768136aec307d?d=mm&s=32"
+    },
     "summary": "Cards in hands should lose all buffs at round end",
     "status": "Ready for Review",
+    "statusCategory": "indeterminate",
+    "priority": "P1",
+    "component": [],
     "issuetype": "Task"
   },
   {
     "id": "400212",
     "key": "GWENT-62648",
     "assignee": "piotr.golus",
+    "avatarUrls": {
+      "48x48": "https://secure.gravatar.com/avatar/3bf5142a80bc2e3d15d768136aec307d?d=mm&s=48",
+      "24x24": "https://secure.gravatar.com/avatar/3bf5142a80bc2e3d15d768136aec307d?d=mm&s=24",
+      "16x16": "https://secure.gravatar.com/avatar/3bf5142a80bc2e3d15d768136aec307d?d=mm&s=16",
+      "32x32": "https://secure.gravatar.com/avatar/3bf5142a80bc2e3d15d768136aec307d?d=mm&s=32"
+    },
     "summary": "Order abilities with multiple charges are forgetting their target after 1st use",
     "status": "QA Verification",
+    "statusCategory": "indeterminate",
+    "priority": "P2",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "400165",
     "key": "GWENT-62646",
     "assignee": "maciej.ostrowski",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=maciej.ostrowski&avatarId=12907",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=maciej.ostrowski&avatarId=12907",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=maciej.ostrowski&avatarId=12907",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=maciej.ostrowski&avatarId=12907"
+    },
     "summary": "Tactical Advantage does not banish self when it's changed from Artifact to Stratagem card type",
     "status": "QA Verification",
+    "statusCategory": "indeterminate",
+    "priority": "P2",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "400149",
     "key": "GWENT-62645",
     "assignee": "marcin.szypura",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=marcin.szypura&avatarId=15104",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=marcin.szypura&avatarId=15104",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=marcin.szypura&avatarId=15104",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=marcin.szypura&avatarId=15104"
+    },
     "summary": "Previewing currently running ability is not longer possible",
     "status": "QA Verification",
+    "statusCategory": "indeterminate",
+    "priority": "P2",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "400040",
     "key": "GWENT-62634",
     "assignee": "georgii.korshunov",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=georgii.korshunov&avatarId=18506",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=georgii.korshunov&avatarId=18506",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=georgii.korshunov&avatarId=18506",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=georgii.korshunov&avatarId=18506"
+    },
     "summary": "[AdminPanel] extend info about user quests",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [],
     "issuetype": "Backend"
   },
   {
     "id": "399928",
     "key": "GWENT-62626",
     "assignee": "krzysztof.sobczak",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=krzysztof.sobczak&avatarId=18503",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=krzysztof.sobczak&avatarId=18503",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=krzysztof.sobczak&avatarId=18503",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=krzysztof.sobczak&avatarId=18503"
+    },
     "summary": "New day timer counts to 01:00 CET while the quest is correctly granted at 00:00 CET.",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "399612",
     "key": "GWENT-62610",
-    "assignee": "charlie.edmunds",
+    "assignee": "manuel.silva",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=manuel.silva&avatarId=17330",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=manuel.silva&avatarId=17330",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=manuel.silva&avatarId=17330",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=manuel.silva&avatarId=17330"
+    },
     "summary": "Support display of multiples statuses on card",
     "status": "In Progress",
+    "statusCategory": "indeterminate",
+    "priority": "P1",
+    "component": [],
     "issuetype": "Story"
-  },
-  {
-    "id": "399554",
-    "key": "GWENT-62606",
-    "assignee": "andrzej.slupek",
-    "summary": "Game cannot progress past splash screen if rewardbook is not available.",
-    "status": "Work In Progress",
-    "issuetype": "Bug"
   },
   {
     "id": "399517",
     "key": "GWENT-62604",
     "assignee": "natalia.nowacka",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=natalia.nowacka&avatarId=18705",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=natalia.nowacka&avatarId=18705",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=natalia.nowacka&avatarId=18705",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=natalia.nowacka&avatarId=18705"
+    },
     "summary": "Sequential animation of progression and rewards",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [],
     "issuetype": "Sub-task"
   },
   {
     "id": "399063",
     "key": "GWENT-62588",
     "assignee": "natalia.nowacka",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=natalia.nowacka&avatarId=18705",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=natalia.nowacka&avatarId=18705",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=natalia.nowacka&avatarId=18705",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=natalia.nowacka&avatarId=18705"
+    },
     "summary": "Asset change for defeat / torn on card",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [],
     "issuetype": "Sub-task"
   },
   {
     "id": "399026",
     "key": "GWENT-62584",
     "assignee": "mkuc",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=mkuc&avatarId=18100",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=mkuc&avatarId=18100",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=mkuc&avatarId=18100",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=mkuc&avatarId=18100"
+    },
     "summary": "Netdecking: GAEA authorization",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P1",
+    "component": [],
     "issuetype": "Backend"
   },
   {
     "id": "399009",
     "key": "GWENT-62582",
     "assignee": "lukasz.staniec",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=lukasz.staniec&avatarId=16103",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=lukasz.staniec&avatarId=16103",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=lukasz.staniec&avatarId=16103",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=lukasz.staniec&avatarId=16103"
+    },
     "summary": "Fix the reason for \"EntityManager closed\" exception in Gamification",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P1",
+    "component": [],
     "issuetype": "Backend"
   },
   {
     "id": "399007",
     "key": "GWENT-62581",
     "assignee": "georgii.korshunov",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=georgii.korshunov&avatarId=18506",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=georgii.korshunov&avatarId=18506",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=georgii.korshunov&avatarId=18506",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=georgii.korshunov&avatarId=18506"
+    },
     "summary": "Plan merging Gamification into Achievements",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P1",
+    "component": [],
     "issuetype": "Backend"
   },
   {
     "id": "398993",
     "key": "GWENT-62579",
     "assignee": "georgii.korshunov",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=georgii.korshunov&avatarId=18506",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=georgii.korshunov&avatarId=18506",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=georgii.korshunov&avatarId=18506",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=georgii.korshunov&avatarId=18506"
+    },
     "summary": "Achievements/Quests unification",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [],
     "issuetype": "Epic"
   },
   {
     "id": "398976",
     "key": "GWENT-62578",
     "assignee": "mkuc",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=mkuc&avatarId=18100",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=mkuc&avatarId=18100",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=mkuc&avatarId=18100",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=mkuc&avatarId=18100"
+    },
     "summary": "Live: End Premium Kegs in Shop",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P1",
+    "component": [],
     "issuetype": "Backend"
   },
   {
     "id": "398901",
     "key": "GWENT-62576",
     "assignee": "mkuc",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=mkuc&avatarId=18100",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=mkuc&avatarId=18100",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=mkuc&avatarId=18100",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=mkuc&avatarId=18100"
+    },
     "summary": "Netdecking: \"craft a deck\" endpoint",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P1",
+    "component": [],
     "issuetype": "Backend"
   },
   {
     "id": "398893",
     "key": "GWENT-62575",
     "assignee": "mkuc",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=mkuc&avatarId=18100",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=mkuc&avatarId=18100",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=mkuc&avatarId=18100",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=mkuc&avatarId=18100"
+    },
     "summary": "Netdecking: provide provisions cap for a deck in the API",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P1",
+    "component": [],
     "issuetype": "Backend"
   },
   {
     "id": "398878",
     "key": "GWENT-62573",
     "assignee": "mkuc",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=mkuc&avatarId=18100",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=mkuc&avatarId=18100",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=mkuc&avatarId=18100",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=mkuc&avatarId=18100"
+    },
     "summary": "Netdecking: provide card categories in the API (Human/Soldier/Elf/etc)",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P1",
+    "component": [],
     "issuetype": "Backend"
   },
   {
     "id": "398813",
     "key": "GWENT-62572",
     "assignee": "andrzej.slupek",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=andrzej.slupek&avatarId=16302",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=andrzej.slupek&avatarId=16302",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=andrzej.slupek&avatarId=16302",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=andrzej.slupek&avatarId=16302"
+    },
     "summary": "We need support for checking if seasonal art tree is avatar or border etc.",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P1",
+    "component": [],
     "issuetype": "Task"
   },
   {
     "id": "398806",
     "key": "GWENT-62571",
     "assignee": "maciej.ostrowski",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=maciej.ostrowski&avatarId=12907",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=maciej.ostrowski&avatarId=12907",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=maciej.ostrowski&avatarId=12907",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=maciej.ostrowski&avatarId=12907"
+    },
     "summary": "Add vfx support for \"Balance card status timer\"",
     "status": "Ready for Review",
+    "statusCategory": "indeterminate",
+    "priority": "P1",
+    "component": [],
     "issuetype": "Task"
   },
   {
     "id": "398004",
     "key": "GWENT-62543",
     "assignee": "maciej.ostrowski",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=maciej.ostrowski&avatarId=12907",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=maciej.ostrowski&avatarId=12907",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=maciej.ostrowski&avatarId=12907",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=maciej.ostrowski&avatarId=12907"
+    },
     "summary": "Rain, Frost, Skellige Storm are missing VFX direct responses ",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/12318",
+        "id": "12318",
+        "name": "VFX",
+        "description": "14"
+      }
+    ],
     "issuetype": "Bug"
   },
   {
     "id": "397670",
     "key": "GWENT-62501",
     "assignee": "andrzej.slupek",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=andrzej.slupek&avatarId=16302",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=andrzej.slupek&avatarId=16302",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=andrzej.slupek&avatarId=16302",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=andrzej.slupek&avatarId=16302"
+    },
     "summary": "[GAEA] [PC] Client doesn't handle disconnection on Main Menu",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11306",
+        "id": "11306",
+        "name": "Network"
+      }
+    ],
     "issuetype": "Bug"
   },
   {
     "id": "397630",
     "key": "GWENT-62500",
     "assignee": "mkuc",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=mkuc&avatarId=18100",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=mkuc&avatarId=18100",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=mkuc&avatarId=18100",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=mkuc&avatarId=18100"
+    },
     "summary": "Netdecking: provide card type (artifact/special/regular) in the API",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P1",
+    "component": [],
     "issuetype": "Backend"
   },
   {
     "id": "397514",
     "key": "GWENT-62493",
     "assignee": "piotr.golus",
+    "avatarUrls": {
+      "48x48": "https://secure.gravatar.com/avatar/3bf5142a80bc2e3d15d768136aec307d?d=mm&s=48",
+      "24x24": "https://secure.gravatar.com/avatar/3bf5142a80bc2e3d15d768136aec307d?d=mm&s=24",
+      "16x16": "https://secure.gravatar.com/avatar/3bf5142a80bc2e3d15d768136aec307d?d=mm&s=16",
+      "32x32": "https://secure.gravatar.com/avatar/3bf5142a80bc2e3d15d768136aec307d?d=mm&s=32"
+    },
     "summary": "Pressing up and down in template's debug tooltip will move both cursor and templates in template list",
     "status": "QA Verification",
-    "issuetype": "Bug"
-  },
-  {
-    "id": "397403",
-    "key": "GWENT-62489",
-    "assignee": "asil.karatas",
-    "summary": "Thronebreaker cards overlap each other when claiming multiple rewards in Gwent",
-    "status": "Open",
+    "statusCategory": "indeterminate",
+    "priority": "P3",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "397300",
     "key": "GWENT-62484",
     "assignee": "piotr.golus",
+    "avatarUrls": {
+      "48x48": "https://secure.gravatar.com/avatar/3bf5142a80bc2e3d15d768136aec307d?d=mm&s=48",
+      "24x24": "https://secure.gravatar.com/avatar/3bf5142a80bc2e3d15d768136aec307d?d=mm&s=24",
+      "16x16": "https://secure.gravatar.com/avatar/3bf5142a80bc2e3d15d768136aec307d?d=mm&s=16",
+      "32x32": "https://secure.gravatar.com/avatar/3bf5142a80bc2e3d15d768136aec307d?d=mm&s=32"
+    },
     "summary": "Purifying a card then applying a status will result in nothing happening",
     "status": "QA Verification",
+    "statusCategory": "indeterminate",
+    "priority": "P1",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "397260",
     "key": "GWENT-62482",
     "assignee": "andrzej.slupek",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=andrzej.slupek&avatarId=16302",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=andrzej.slupek&avatarId=16302",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=andrzej.slupek&avatarId=16302",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=andrzej.slupek&avatarId=16302"
+    },
     "summary": "GameValidFlag should be triggered by server",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11306",
+        "id": "11306",
+        "name": "Network"
+      }
+    ],
     "issuetype": "Task"
   },
   {
     "id": "397218",
     "key": "GWENT-62481",
     "assignee": "andrzej.slupek",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=andrzej.slupek&avatarId=16302",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=andrzej.slupek&avatarId=16302",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=andrzej.slupek&avatarId=16302",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=andrzej.slupek&avatarId=16302"
+    },
     "summary": "1738 quest from avatar march season tree can be completed without winning in a row",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P1",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "397213",
     "key": "GWENT-62480",
     "assignee": "andrii.voloshchuk",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=andrii.voloshchuk&avatarId=13306",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=andrii.voloshchuk&avatarId=13306",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=andrii.voloshchuk&avatarId=13306",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=andrii.voloshchuk&avatarId=13306"
+    },
     "summary": "One time infinite loading after disconnecting console during singing in",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11306",
+        "id": "11306",
+        "name": "Network"
+      }
+    ],
     "issuetype": "Bug"
   },
   {
     "id": "397124",
     "key": "GWENT-62476",
     "assignee": "darya.dzemidzenka",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=darya.dzemidzenka&avatarId=17707",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=darya.dzemidzenka&avatarId=17707",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=darya.dzemidzenka&avatarId=17707",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=darya.dzemidzenka&avatarId=17707"
+    },
     "summary": "[X1][PS4] \"Unlock in the reward book\" button is not disabled if corresponding reward book tree is not available",
     "status": "Work In Progress",
+    "statusCategory": "indeterminate",
+    "priority": "P1",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11410",
+        "id": "11410",
+        "name": "UI/UX"
+      }
+    ],
     "issuetype": "Bug"
   },
   {
     "id": "397037",
     "key": "GWENT-62471",
     "assignee": "kacper.koscienski",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=kacper.koscienski&avatarId=14941",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=kacper.koscienski&avatarId=14941",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=kacper.koscienski&avatarId=14941",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=kacper.koscienski&avatarId=14941"
+    },
     "summary": "[PS4] FPS drop on victory/defeat/draw screen",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11301",
+        "id": "11301",
+        "name": "Multiplayer"
+      }
+    ],
     "issuetype": "Bug"
   },
   {
     "id": "396871",
     "key": "GWENT-62467",
     "assignee": "andrii.voloshchuk",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=andrii.voloshchuk&avatarId=13306",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=andrii.voloshchuk&avatarId=13306",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=andrii.voloshchuk&avatarId=13306",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=andrii.voloshchuk&avatarId=13306"
+    },
     "summary": "[One time] Power of unit cards on loading screen is displayed incorrectly",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "396614",
     "key": "GWENT-62459",
     "assignee": "natalia.nowacka",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=natalia.nowacka&avatarId=18705",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=natalia.nowacka&avatarId=18705",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=natalia.nowacka&avatarId=18705",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=natalia.nowacka&avatarId=18705"
+    },
     "summary": "UI implementation of Outcome Screen",
     "status": "To Do",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [],
     "issuetype": "Story"
   },
   {
     "id": "396252",
     "key": "GWENT-62449",
     "assignee": "krzysztof.sobczak",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=krzysztof.sobczak&avatarId=18503",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=krzysztof.sobczak&avatarId=18503",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=krzysztof.sobczak&avatarId=18503",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=krzysztof.sobczak&avatarId=18503"
+    },
     "summary": "Allow Gameplay to properly initialize next DV via API",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [],
     "issuetype": "Backend"
   },
   {
     "id": "396198",
     "key": "GWENT-62446",
     "assignee": "maciej.ostrowski",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=maciej.ostrowski&avatarId=12907",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=maciej.ostrowski&avatarId=12907",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=maciej.ostrowski&avatarId=12907",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=maciej.ostrowski&avatarId=12907"
+    },
     "summary": "Purify node",
     "status": "Ready for Review",
+    "statusCategory": "indeterminate",
+    "priority": "P1",
+    "component": [],
     "issuetype": "Task"
   },
   {
     "id": "396083",
     "key": "GWENT-62437",
     "assignee": "andrzej.slupek",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=andrzej.slupek&avatarId=16302",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=andrzej.slupek&avatarId=16302",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=andrzej.slupek&avatarId=16302",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=andrzej.slupek&avatarId=16302"
+    },
     "summary": "Create RewardPopQueue for better rewards.",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11306",
+        "id": "11306",
+        "name": "Network"
+      },
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11410",
+        "id": "11410",
+        "name": "UI/UX"
+      }
+    ],
     "issuetype": "Task"
   },
   {
     "id": "395797",
     "key": "GWENT-62406",
     "assignee": "andrii.voloshchuk",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=andrii.voloshchuk&avatarId=13306",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=andrii.voloshchuk&avatarId=13306",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=andrii.voloshchuk&avatarId=13306",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=andrii.voloshchuk&avatarId=13306"
+    },
     "summary": "After resuming from Rest Mode, pop-up for disconnected controller cannot be dismissed",
     "status": "Open",
-    "issuetype": "Bug"
-  },
-  {
-    "id": "395696",
-    "key": "GWENT-62397",
-    "assignee": "adam.pach",
-    "summary": "Keg Opening - Strength and Provision numbers do not fade with card when selecting 5th card",
-    "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "395593",
     "key": "GWENT-62393",
     "assignee": "natalia.nowacka",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=natalia.nowacka&avatarId=18705",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=natalia.nowacka&avatarId=18705",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=natalia.nowacka&avatarId=18705",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=natalia.nowacka&avatarId=18705"
+    },
     "summary": "Seasonal Tree - Quest Reward presentation does not match design in documentation, causes unaesthetic overlapping of quest progress bar",
     "status": "Ready for Review",
+    "statusCategory": "indeterminate",
+    "priority": "P1",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11410",
+        "id": "11410",
+        "name": "UI/UX"
+      }
+    ],
     "issuetype": "Sub-task"
   },
   {
-    "id": "395550",
-    "key": "GWENT-62388",
-    "assignee": "andrzej.slupek",
-    "summary": "Seasonal Trees - If the quest is fulfilled, the result is inaccurate until the build is restarted",
+    "id": "395565",
+    "key": "GWENT-62392",
+    "assignee": "piotr.golus",
+    "avatarUrls": {
+      "48x48": "https://secure.gravatar.com/avatar/3bf5142a80bc2e3d15d768136aec307d?d=mm&s=48",
+      "24x24": "https://secure.gravatar.com/avatar/3bf5142a80bc2e3d15d768136aec307d?d=mm&s=24",
+      "16x16": "https://secure.gravatar.com/avatar/3bf5142a80bc2e3d15d768136aec307d?d=mm&s=16",
+      "32x32": "https://secure.gravatar.com/avatar/3bf5142a80bc2e3d15d768136aec307d?d=mm&s=32"
+    },
+    "summary": "With no Elf allies, when Yaevinn gets played he needlessly forces the player to target an enemy",
     "status": "Open",
-    "issuetype": "Sub-task"
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [],
+    "issuetype": "Bug"
+  },
+  {
+    "id": "395560",
+    "key": "GWENT-62390",
+    "assignee": "piotr.golus",
+    "avatarUrls": {
+      "48x48": "https://secure.gravatar.com/avatar/3bf5142a80bc2e3d15d768136aec307d?d=mm&s=48",
+      "24x24": "https://secure.gravatar.com/avatar/3bf5142a80bc2e3d15d768136aec307d?d=mm&s=24",
+      "16x16": "https://secure.gravatar.com/avatar/3bf5142a80bc2e3d15d768136aec307d?d=mm&s=16",
+      "32x32": "https://secure.gravatar.com/avatar/3bf5142a80bc2e3d15d768136aec307d?d=mm&s=32"
+    },
+    "summary": "Frightener's ability counter decreases if player's artifact gets destroyed",
+    "status": "Open",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [],
+    "issuetype": "Bug"
   },
   {
     "id": "395460",
     "key": "GWENT-62365",
     "assignee": "lukasz.staniec",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=lukasz.staniec&avatarId=16103",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=lukasz.staniec&avatarId=16103",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=lukasz.staniec&avatarId=16103",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=lukasz.staniec&avatarId=16103"
+    },
     "summary": "Crimson Curse - Blood Moon Pack (Implementation)",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P1",
+    "component": [],
     "issuetype": "Task"
-  },
-  {
-    "id": "395285",
-    "key": "GWENT-62352",
-    "assignee": "adam.pach",
-    "summary": "Enter button sprite is misaligned on Deckpicker",
-    "status": "Open",
-    "issuetype": "Bug"
   },
   {
     "id": "395252",
     "key": "GWENT-62349",
     "assignee": "filip.radwaniecki",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=filip.radwaniecki&avatarId=16306",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=filip.radwaniecki&avatarId=16306",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=filip.radwaniecki&avatarId=16306",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=filip.radwaniecki&avatarId=16306"
+    },
     "summary": "Card Prices should be only backend driven",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11306",
+        "id": "11306",
+        "name": "Network"
+      }
+    ],
     "issuetype": "Task"
   },
   {
     "id": "395014",
     "key": "GWENT-62322",
     "assignee": "manuel.silva",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=manuel.silva&avatarId=17330",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=manuel.silva&avatarId=17330",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=manuel.silva&avatarId=17330",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=manuel.silva&avatarId=17330"
+    },
     "summary": "Please make it so it will be possible to preview abilities from older DV",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [],
     "issuetype": "Task"
   },
   {
     "id": "394934",
     "key": "GWENT-62313",
     "assignee": "mkuc",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=mkuc&avatarId=18100",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=mkuc&avatarId=18100",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=mkuc&avatarId=18100",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=mkuc&avatarId=18100"
+    },
     "summary": "Extend items definitions DTO with custom data",
     "status": "Work In Progress",
+    "statusCategory": "indeterminate",
+    "priority": "P2",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11410",
+        "id": "11410",
+        "name": "UI/UX"
+      }
+    ],
     "issuetype": "Task"
   },
   {
     "id": "394923",
     "key": "GWENT-62311",
     "assignee": "asil.karatas",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=asil.karatas&avatarId=16014",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=asil.karatas&avatarId=16014",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=asil.karatas&avatarId=16014",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=asil.karatas&avatarId=16014"
+    },
     "summary": "[XB1] Leader Challenge - Entering challenge screen can show  Your Rewards screen",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11410",
+        "id": "11410",
+        "name": "UI/UX"
+      }
+    ],
     "issuetype": "Bug"
   },
   {
     "id": "394919",
     "key": "GWENT-62310",
     "assignee": "lukasz.krasniewski",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=lukasz.krasniewski&avatarId=12712",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=lukasz.krasniewski&avatarId=12712",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=lukasz.krasniewski&avatarId=12712",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=lukasz.krasniewski&avatarId=12712"
+    },
     "summary": "[Crimson Curse] - Queen of the Night 202221 support",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P1",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "394789",
     "key": "GWENT-62297",
     "assignee": "andrzej.slupek",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=andrzej.slupek&avatarId=16302",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=andrzej.slupek&avatarId=16302",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=andrzej.slupek&avatarId=16302",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=andrzej.slupek&avatarId=16302"
+    },
     "summary": "[GAEA] User is forced to disconnect once he has been online for 1 hour",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P1",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "394590",
     "key": "GWENT-62295",
     "assignee": "maciej.ostrowski",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=maciej.ostrowski&avatarId=12907",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=maciej.ostrowski&avatarId=12907",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=maciej.ostrowski&avatarId=12907",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=maciej.ostrowski&avatarId=12907"
+    },
     "summary": "Incinerating and Pitfall Traps do not trigger for unit played via Cantarella",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "394549",
     "key": "GWENT-62288",
     "assignee": "natalia.nowacka",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=natalia.nowacka&avatarId=18705",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=natalia.nowacka&avatarId=18705",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=natalia.nowacka&avatarId=18705",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=natalia.nowacka&avatarId=18705"
+    },
     "summary": "Animations/VFXes for win counter and stamps in Arena's Menu are not working after leaving match",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11410",
+        "id": "11410",
+        "name": "UI/UX"
+      }
+    ],
+    "issuetype": "Bug"
+  },
+  {
+    "id": "394195",
+    "key": "GWENT-62263",
+    "assignee": "krzysztof.sobczak",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=krzysztof.sobczak&avatarId=18503",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=krzysztof.sobczak&avatarId=18503",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=krzysztof.sobczak&avatarId=18503",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=krzysztof.sobczak&avatarId=18503"
+    },
+    "summary": "QA platform doesn't work as intended in Casual mode",
+    "status": "Open",
+    "statusCategory": "new",
+    "priority": "P1",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11301",
+        "id": "11301",
+        "name": "Multiplayer"
+      }
+    ],
     "issuetype": "Bug"
   },
   {
     "id": "394080",
     "key": "GWENT-62255",
     "assignee": "eryk.przychocki",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=eryk.przychocki&avatarId=17722",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=eryk.przychocki&avatarId=17722",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=eryk.przychocki&avatarId=17722",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=eryk.przychocki&avatarId=17722"
+    },
     "summary": "Refer a Friend, relations not created",
-    "status": "Work In Progress",
+    "status": "Blocked",
+    "statusCategory": "indeterminate",
+    "priority": "P3",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "394064",
     "key": "GWENT-62253",
     "assignee": "marcin.kowalski",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=marcin.kowalski&avatarId=16917",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=marcin.kowalski&avatarId=16917",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=marcin.kowalski&avatarId=16917",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=marcin.kowalski&avatarId=16917"
+    },
     "summary": "No ui_global_validate event is played when opening Keg in Shop",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P4",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/12319",
+        "id": "12319",
+        "name": "SFX",
+        "description": "8"
+      },
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11410",
+        "id": "11410",
+        "name": "UI/UX"
+      }
+    ],
     "issuetype": "Bug"
   },
   {
     "id": "394027",
     "key": "GWENT-62250",
     "assignee": "charlie.edmunds",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=charlie.edmunds&avatarId=13311",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=charlie.edmunds&avatarId=13311",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=charlie.edmunds&avatarId=13311",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=charlie.edmunds&avatarId=13311"
+    },
     "summary": "Adjust name of AI opponent",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [],
     "issuetype": "Task"
   },
   {
     "id": "393950",
     "key": "GWENT-62242",
     "assignee": "lukasz.krasniewski",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=lukasz.krasniewski&avatarId=12712",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=lukasz.krasniewski&avatarId=12712",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=lukasz.krasniewski&avatarId=12712",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=lukasz.krasniewski&avatarId=12712"
+    },
     "summary": "Seasonal Bear icon on Play sub-menu is low resolution",
     "status": "Work In Progress",
+    "statusCategory": "indeterminate",
+    "priority": "P2",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11304",
+        "id": "11304",
+        "name": "Cards"
+      },
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11410",
+        "id": "11410",
+        "name": "UI/UX"
+      }
+    ],
     "issuetype": "Sub-task"
   },
   {
     "id": "393946",
     "key": "GWENT-62241",
     "assignee": "natalia.nowacka",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=natalia.nowacka&avatarId=18705",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=natalia.nowacka&avatarId=18705",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=natalia.nowacka&avatarId=18705",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=natalia.nowacka&avatarId=18705"
+    },
     "summary": "Hide MMR indicator when player is below Rank 25",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [],
     "issuetype": "Sub-task"
   },
   {
     "id": "393735",
     "key": "GWENT-62230",
     "assignee": "charlie.edmunds",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=charlie.edmunds&avatarId=13311",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=charlie.edmunds&avatarId=13311",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=charlie.edmunds&avatarId=13311",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=charlie.edmunds&avatarId=13311"
+    },
     "summary": "Bot made with server authority (reusing game client AI) research and estimation",
-    "status": "To Do",
+    "status": "In Progress",
+    "statusCategory": "indeterminate",
+    "priority": "P2",
+    "component": [],
     "issuetype": "Story"
   },
   {
     "id": "393733",
     "key": "GWENT-62229",
     "assignee": "krzysztof.sobczak",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=krzysztof.sobczak&avatarId=18503",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=krzysztof.sobczak&avatarId=18503",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=krzysztof.sobczak&avatarId=18503",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=krzysztof.sobczak&avatarId=18503"
+    },
     "summary": "Merge of casual and ranked pools only on low levels research and estimation",
     "status": "To Do",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [],
     "issuetype": "Story"
   },
   {
     "id": "393724",
     "key": "GWENT-62227",
     "assignee": "natalia.nowacka",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=natalia.nowacka&avatarId=18705",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=natalia.nowacka&avatarId=18705",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=natalia.nowacka&avatarId=18705",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=natalia.nowacka&avatarId=18705"
+    },
     "summary": "Implement new state for closed shelf",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [],
     "issuetype": "Sub-task"
   },
   {
     "id": "393632",
     "key": "GWENT-62225",
     "assignee": "natalia.nowacka",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=natalia.nowacka&avatarId=18705",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=natalia.nowacka&avatarId=18705",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=natalia.nowacka&avatarId=18705",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=natalia.nowacka&avatarId=18705"
+    },
     "summary": "Display bigger cards in slots",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [],
     "issuetype": "Sub-task"
   },
   {
     "id": "393629",
     "key": "GWENT-62224",
     "assignee": "natalia.nowacka",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=natalia.nowacka&avatarId=18705",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=natalia.nowacka&avatarId=18705",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=natalia.nowacka&avatarId=18705",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=natalia.nowacka&avatarId=18705"
+    },
     "summary": "Adjust reward positioning on outcome screen shelves",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [],
     "issuetype": "Sub-task"
   },
   {
     "id": "393584",
     "key": "GWENT-62216",
     "assignee": "natalia.nowacka",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=natalia.nowacka&avatarId=18705",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=natalia.nowacka&avatarId=18705",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=natalia.nowacka&avatarId=18705",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=natalia.nowacka&avatarId=18705"
+    },
     "summary": "Unify players information",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [],
     "issuetype": "Sub-task"
-  },
-  {
-    "id": "393364",
-    "key": "GWENT-62204",
-    "assignee": "agnieszka.rogowska",
-    "summary": "Card backs load textureless sprite for a second on first loading ",
-    "status": "Open",
-    "issuetype": "Bug"
   },
   {
     "id": "393004",
     "key": "GWENT-62192",
     "assignee": "natalia.nowacka",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=natalia.nowacka&avatarId=18705",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=natalia.nowacka&avatarId=18705",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=natalia.nowacka&avatarId=18705",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=natalia.nowacka&avatarId=18705"
+    },
     "summary": "Remove crown with red gem left of the outcome screen",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11410",
+        "id": "11410",
+        "name": "UI/UX"
+      }
+    ],
     "issuetype": "Sub-task"
   },
   {
     "id": "392854",
     "key": "GWENT-62178",
     "assignee": "darya.dzemidzenka",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=darya.dzemidzenka&avatarId=17707",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=darya.dzemidzenka&avatarId=17707",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=darya.dzemidzenka&avatarId=17707",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=darya.dzemidzenka&avatarId=17707"
+    },
     "summary": "Pressing Back on Play sub-menu with Social Panel open closes Play menu first",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11410",
+        "id": "11410",
+        "name": "UI/UX"
+      }
+    ],
     "issuetype": "Bug"
   },
   {
     "id": "391947",
     "key": "GWENT-62117",
     "assignee": "marcin.kowalski",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=marcin.kowalski&avatarId=16917",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=marcin.kowalski&avatarId=16917",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=marcin.kowalski&avatarId=16917",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=marcin.kowalski&avatarId=16917"
+    },
     "summary": "Adjust Save+Export button so it will include Export Data Package functionality",
     "status": "Work In Progress",
+    "statusCategory": "indeterminate",
+    "priority": "P2",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "391846",
     "key": "GWENT-62111",
     "assignee": "maciej.ostrowski",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=maciej.ostrowski&avatarId=12907",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=maciej.ostrowski&avatarId=12907",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=maciej.ostrowski&avatarId=12907",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=maciej.ostrowski&avatarId=12907"
+    },
     "summary": "If played by Emhyr, Venendal Elite ability doesn't trigger",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "391482",
     "key": "GWENT-62082",
     "assignee": "natalia.nowacka",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=natalia.nowacka&avatarId=18705",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=natalia.nowacka&avatarId=18705",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=natalia.nowacka&avatarId=18705",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=natalia.nowacka&avatarId=18705"
+    },
     "summary": "Disable/Grey out Resolution Scale setting when game is windowed",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11410",
+        "id": "11410",
+        "name": "UI/UX"
+      }
+    ],
     "issuetype": "Bug"
   },
   {
     "id": "390520",
     "key": "GWENT-62015",
     "assignee": "manuel.silva",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=manuel.silva&avatarId=17330",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=manuel.silva&avatarId=17330",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=manuel.silva&avatarId=17330",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=manuel.silva&avatarId=17330"
+    },
     "summary": "VFX type request - \"Reversed Projectile\"",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [],
     "issuetype": "Task"
   },
   {
     "id": "390517",
     "key": "GWENT-62014",
     "assignee": "lukasz.krasniewski",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=lukasz.krasniewski&avatarId=12712",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=lukasz.krasniewski&avatarId=12712",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=lukasz.krasniewski&avatarId=12712",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=lukasz.krasniewski&avatarId=12712"
+    },
     "summary": " Add option \"all\" in \"Change Tokens\" node",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [],
     "issuetype": "Task"
   },
   {
     "id": "389960",
     "key": "GWENT-61972",
     "assignee": "michal.cwiek",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=michal.cwiek&avatarId=11500",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=michal.cwiek&avatarId=11500",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=michal.cwiek&avatarId=11500",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=michal.cwiek&avatarId=11500"
+    },
     "summary": "[PS4] Infinite loading after resuming from suspension",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11308",
+        "id": "11308",
+        "name": "Misc"
+      },
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11301",
+        "id": "11301",
+        "name": "Multiplayer"
+      }
+    ],
     "issuetype": "Bug"
   },
   {
     "id": "389941",
     "key": "GWENT-61970",
     "assignee": "leszek.krupinski",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=leszek.krupinski&avatarId=18811",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=leszek.krupinski&avatarId=18811",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=leszek.krupinski&avatarId=18811",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=leszek.krupinski&avatarId=18811"
+    },
     "summary": "Create an object wrapper for Flow configuration",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [],
     "issuetype": "Backend"
   },
   {
     "id": "389857",
     "key": "GWENT-61964",
     "assignee": "charlie.edmunds",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=charlie.edmunds&avatarId=13311",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=charlie.edmunds&avatarId=13311",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=charlie.edmunds&avatarId=13311",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=charlie.edmunds&avatarId=13311"
+    },
     "summary": "Season Trees - Card Backs are not equippable and missing from the Player Profile",
     "status": "Blocked",
+    "statusCategory": "indeterminate",
+    "priority": "P1",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11410",
+        "id": "11410",
+        "name": "UI/UX"
+      }
+    ],
     "issuetype": "Sub-task"
   },
   {
     "id": "389408",
     "key": "GWENT-61912",
     "assignee": "krzysztof.sobczak",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=krzysztof.sobczak&avatarId=18503",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=krzysztof.sobczak&avatarId=18503",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=krzysztof.sobczak&avatarId=18503",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=krzysztof.sobczak&avatarId=18503"
+    },
     "summary": "[GAEA]Unable to add friends",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P1",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "389016",
     "key": "GWENT-61909",
     "assignee": "andrii.voloshchuk",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=andrii.voloshchuk&avatarId=13306",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=andrii.voloshchuk&avatarId=13306",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=andrii.voloshchuk&avatarId=13306",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=andrii.voloshchuk&avatarId=13306"
+    },
     "summary": "Chinese characters are displayed incorrectly in the username",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/22700",
+        "id": "22700",
+        "name": "Localization"
+      }
+    ],
     "issuetype": "Bug"
   },
   {
     "id": "388774",
     "key": "GWENT-61890",
     "assignee": "manuel.silva",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=manuel.silva&avatarId=17330",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=manuel.silva&avatarId=17330",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=manuel.silva&avatarId=17330",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=manuel.silva&avatarId=17330"
+    },
     "summary": "Deckbuilder - Leader Selection Screen - Card preview is rendered in lowres",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P4",
+    "component": [],
     "issuetype": "Task"
   },
   {
     "id": "386551",
     "key": "GWENT-61848",
     "assignee": "maciej.ostrowski",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=maciej.ostrowski&avatarId=12907",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=maciej.ostrowski&avatarId=12907",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=maciej.ostrowski&avatarId=12907",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=maciej.ostrowski&avatarId=12907"
+    },
     "summary": "Thrive does not trigger if a spy with Higher power gets played on that side",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "386514",
     "key": "GWENT-61846",
     "assignee": "maciej.ostrowski",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=maciej.ostrowski&avatarId=12907",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=maciej.ostrowski&avatarId=12907",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=maciej.ostrowski&avatarId=12907",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=maciej.ostrowski&avatarId=12907"
+    },
     "summary": "Locking an already locked unit does not remove its other statuses",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "385963",
     "key": "GWENT-61781",
     "assignee": "filip.radwaniecki",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=filip.radwaniecki&avatarId=16306",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=filip.radwaniecki&avatarId=16306",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=filip.radwaniecki&avatarId=16306",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=filip.radwaniecki&avatarId=16306"
+    },
     "summary": "Refactor ChallengesModel",
     "status": "Work In Progress",
+    "statusCategory": "indeterminate",
+    "priority": "P2",
+    "component": [],
     "issuetype": "Task"
-  },
-  {
-    "id": "385386",
-    "key": "GWENT-61774",
-    "assignee": "agnieszka.rogowska",
-    "summary": "Players below rank 25 confused they are not listed in the Leaderboards",
-    "status": "Work In Progress",
-    "issuetype": "Bug"
   },
   {
     "id": "385295",
     "key": "GWENT-61766",
     "assignee": "georgii.korshunov",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=georgii.korshunov&avatarId=18506",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=georgii.korshunov&avatarId=18506",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=georgii.korshunov&avatarId=18506",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=georgii.korshunov&avatarId=18506"
+    },
     "summary": "Transaction error upon trying to open a Pack",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "385227",
     "key": "GWENT-61720",
     "assignee": "asil.karatas",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=asil.karatas&avatarId=16014",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=asil.karatas&avatarId=16014",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=asil.karatas&avatarId=16014",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=asil.karatas&avatarId=16014"
+    },
     "summary": "[GAEA] Message is not fully expanded on GAEA upon getting reward through GG button",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11410",
+        "id": "11410",
+        "name": "UI/UX"
+      }
+    ],
     "issuetype": "Bug"
   },
   {
     "id": "384916",
     "key": "GWENT-61690",
     "assignee": "maciej.ostrowski",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=maciej.ostrowski&avatarId=12907",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=maciej.ostrowski&avatarId=12907",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=maciej.ostrowski&avatarId=12907",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=maciej.ostrowski&avatarId=12907"
+    },
     "summary": "Damage from Geralt: Aard does not contribute to boosting An Craite Greatswords if the units damaged move",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "383738",
     "key": "GWENT-61634",
     "assignee": "michal.cwiek",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=michal.cwiek&avatarId=11500",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=michal.cwiek&avatarId=11500",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=michal.cwiek&avatarId=11500",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=michal.cwiek&avatarId=11500"
+    },
     "summary": "After loading screen finishes, the whole screen is black",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P1",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "383466",
     "key": "GWENT-61620",
     "assignee": "michal.cwiek",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=michal.cwiek&avatarId=11500",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=michal.cwiek&avatarId=11500",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=michal.cwiek&avatarId=11500",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=michal.cwiek&avatarId=11500"
+    },
     "summary": "Game crashes when opening a keg.",
     "status": "Work In Progress",
+    "statusCategory": "indeterminate",
+    "priority": "P2",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "383366",
     "key": "GWENT-61608",
     "assignee": "natalia.nowacka",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=natalia.nowacka&avatarId=18705",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=natalia.nowacka&avatarId=18705",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=natalia.nowacka&avatarId=18705",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=natalia.nowacka&avatarId=18705"
+    },
     "summary": "When trying to purchase goods with real currency without GOG overlay enabled, the notification displays info that Galaxy must be running in the background, no indication about the overlay",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "383083",
     "key": "GWENT-61586",
     "assignee": "charlie.edmunds",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=charlie.edmunds&avatarId=13311",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=charlie.edmunds&avatarId=13311",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=charlie.edmunds&avatarId=13311",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=charlie.edmunds&avatarId=13311"
+    },
     "summary": "Backend accepting data_definitions only if it is correct",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [],
     "issuetype": "Task"
   },
   {
     "id": "383063",
     "key": "GWENT-61584",
     "assignee": "adam.pach",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=adam.pach&avatarId=16924",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=adam.pach&avatarId=16924",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=adam.pach&avatarId=16924",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=adam.pach&avatarId=16924"
+    },
     "summary": "Decouple vanity assets",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [],
     "issuetype": "Task"
   },
   {
     "id": "382880",
     "key": "GWENT-61574",
     "assignee": "maciej.ostrowski",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=maciej.ostrowski&avatarId=12907",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=maciej.ostrowski&avatarId=12907",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=maciej.ostrowski&avatarId=12907",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=maciej.ostrowski&avatarId=12907"
+    },
     "summary": "Please update all card templates for Crimson Curse and add illustration artists credits",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11304",
+        "id": "11304",
+        "name": "Cards"
+      }
+    ],
     "issuetype": "Task"
   },
   {
     "id": "382664",
     "key": "GWENT-61530",
     "assignee": "maciej.ostrowski",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=maciej.ostrowski&avatarId=12907",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=maciej.ostrowski&avatarId=12907",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=maciej.ostrowski&avatarId=12907",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=maciej.ostrowski&avatarId=12907"
+    },
     "summary": "Rewrite the status tokens as abilities using new system",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [],
     "issuetype": "Task"
   },
   {
     "id": "382649",
     "key": "GWENT-61527",
     "assignee": "krzysztof.sobczak",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=krzysztof.sobczak&avatarId=18503",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=krzysztof.sobczak&avatarId=18503",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=krzysztof.sobczak&avatarId=18503",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=krzysztof.sobczak&avatarId=18503"
+    },
     "summary": "Congratulation screen with random rewards appears in Main Menu if any pack has been purchased",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P1",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11306",
+        "id": "11306",
+        "name": "Network"
+      },
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11410",
+        "id": "11410",
+        "name": "UI/UX"
+      }
+    ],
     "issuetype": "Bug"
   },
   {
     "id": "382132",
     "key": "GWENT-61505",
     "assignee": "asil.karatas",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=asil.karatas&avatarId=16014",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=asil.karatas&avatarId=16014",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=asil.karatas&avatarId=16014",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=asil.karatas&avatarId=16014"
+    },
     "summary": "[Challenge] Picking side in Quest Tab",
     "status": "Open",
-    "issuetype": "Task"
-  },
-  {
-    "id": "381556",
-    "key": "GWENT-61483",
-    "assignee": "agnieszka.rogowska",
-    "summary": "Change UI behavior to spawn specific button prefab instead of the global generic one",
-    "status": "Open",
+    "statusCategory": "new",
+    "priority": "P4",
+    "component": [],
     "issuetype": "Task"
   },
   {
     "id": "381450",
     "key": "GWENT-61476",
     "assignee": "asil.karatas",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=asil.karatas&avatarId=16014",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=asil.karatas&avatarId=16014",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=asil.karatas&avatarId=16014",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=asil.karatas&avatarId=16014"
+    },
     "summary": "When using gamepad the focus is resetting when replacing daily quest on welcome screen.",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "381140",
     "key": "GWENT-61468",
     "assignee": "marcin.kowalski",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=marcin.kowalski&avatarId=16917",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=marcin.kowalski&avatarId=16917",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=marcin.kowalski&avatarId=16917",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=marcin.kowalski&avatarId=16917"
+    },
     "summary": "Add ability to click, drag and drop cards onto row/board to play them",
     "status": "In Progress",
+    "statusCategory": "indeterminate",
+    "priority": "P2",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11410",
+        "id": "11410",
+        "name": "UI/UX"
+      }
+    ],
     "issuetype": "Story"
   },
   {
     "id": "380908",
     "key": "GWENT-61333",
     "assignee": "manuel.silva",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=manuel.silva&avatarId=17330",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=manuel.silva&avatarId=17330",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=manuel.silva&avatarId=17330",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=manuel.silva&avatarId=17330"
+    },
     "summary": "Leader Setup panel improvement",
     "status": "Work In Progress",
+    "statusCategory": "indeterminate",
+    "priority": "P2",
+    "component": [],
     "issuetype": "Task"
   },
   {
     "id": "380900",
     "key": "GWENT-61332",
     "assignee": "eryk.przychocki",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=eryk.przychocki&avatarId=17722",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=eryk.przychocki&avatarId=17722",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=eryk.przychocki&avatarId=17722",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=eryk.przychocki&avatarId=17722"
+    },
     "summary": "Reward book - game froze during leader unlock (TB Meve)",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "380698",
     "key": "GWENT-61321",
     "assignee": "asil.karatas",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=asil.karatas&avatarId=16014",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=asil.karatas&avatarId=16014",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=asil.karatas&avatarId=16014",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=asil.karatas&avatarId=16014"
+    },
     "summary": "Tooltip remains on screen during Season Transition, Faction Challenge screen",
     "status": "Open",
-    "issuetype": "Bug"
-  },
-  {
-    "id": "380695",
-    "key": "GWENT-61319",
-    "assignee": "agnieszka.rogowska",
-    "summary": "Selection on bottom row changes to different icon after opening Reward Book, Leaderboard",
-    "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11410",
+        "id": "11410",
+        "name": "UI/UX"
+      }
+    ],
     "issuetype": "Bug"
   },
   {
     "id": "380631",
     "key": "GWENT-61314",
     "assignee": "agnieszka.rogowska",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=agnieszka.rogowska&avatarId=12704",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=agnieszka.rogowska&avatarId=12704",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=agnieszka.rogowska&avatarId=12704",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=agnieszka.rogowska&avatarId=12704"
+    },
     "summary": "The versus screen loses its black background after 20 seconds",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11301",
+        "id": "11301",
+        "name": "Multiplayer"
+      },
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11410",
+        "id": "11410",
+        "name": "UI/UX"
+      }
+    ],
     "issuetype": "Bug"
   },
   {
     "id": "379471",
     "key": "GWENT-61010",
     "assignee": "maciej.ostrowski",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=maciej.ostrowski&avatarId=12907",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=maciej.ostrowski&avatarId=12907",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=maciej.ostrowski&avatarId=12907",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=maciej.ostrowski&avatarId=12907"
+    },
     "summary": "Cards with Order to heal the allies should target the allies first, not the enemies",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "379010",
     "key": "GWENT-60676",
     "assignee": "maciej.ostrowski",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=maciej.ostrowski&avatarId=12907",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=maciej.ostrowski&avatarId=12907",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=maciej.ostrowski&avatarId=12907",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=maciej.ostrowski&avatarId=12907"
+    },
     "summary": "Blue Mountain Elite cannot damage the only unit on the row if it's Immune",
     "status": "Open",
-    "issuetype": "Bug"
-  },
-  {
-    "id": "377919",
-    "key": "GWENT-60608",
-    "assignee": "agnieszka.rogowska",
-    "summary": "Contract rewards fade out too slow after claiming them",
-    "status": "Open",
-    "issuetype": "Bug"
-  },
-  {
-    "id": "377908",
-    "key": "GWENT-60607",
-    "assignee": "adam.pach",
-    "summary": "Inconsistency in base kegs and premium kegs titles ",
-    "status": "Open",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "376934",
     "key": "GWENT-60557",
     "assignee": "georgii.korshunov",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=georgii.korshunov&avatarId=18506",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=georgii.korshunov&avatarId=18506",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=georgii.korshunov&avatarId=18506",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=georgii.korshunov&avatarId=18506"
+    },
     "summary": "Netdecking [v.1] - Exporting Decks",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P1",
+    "component": [],
     "issuetype": "Epic"
   },
   {
     "id": "376933",
     "key": "GWENT-60556",
     "assignee": "maciej.blady",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=maciej.blady&avatarId=17004",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=maciej.blady&avatarId=17004",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=maciej.blady&avatarId=17004",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=maciej.blady&avatarId=17004"
+    },
     "summary": "Fulfilling the criteria of contracts in Gwent unlocks trophies for TW3, doesn't for matching trophy for Gwent",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11308",
+        "id": "11308",
+        "name": "Misc"
+      },
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11301",
+        "id": "11301",
+        "name": "Multiplayer"
+      }
+    ],
     "issuetype": "Bug"
   },
   {
     "id": "376090",
     "key": "GWENT-60476",
     "assignee": "lukasz.krasniewski",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=lukasz.krasniewski&avatarId=12712",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=lukasz.krasniewski&avatarId=12712",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=lukasz.krasniewski&avatarId=12712",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=lukasz.krasniewski&avatarId=12712"
+    },
     "summary": "Power changes for cards in player's deck are not visible when previewing deck",
     "status": "Work In Progress",
-    "issuetype": "Bug"
-  },
-  {
-    "id": "375925",
-    "key": "GWENT-60448",
-    "assignee": "kacper.koscienski",
-    "summary": "[for tracking purposes] Bruxa [1410] - meshes are separated in very first frame of the animation",
-    "status": "Open",
+    "statusCategory": "indeterminate",
+    "priority": "P2",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11303",
+        "id": "11303",
+        "name": "Deckbuilder"
+      }
+    ],
     "issuetype": "Bug"
   },
   {
     "id": "375859",
     "key": "GWENT-60430",
     "assignee": "andrzej.slupek",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=andrzej.slupek&avatarId=16302",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=andrzej.slupek&avatarId=16302",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=andrzej.slupek&avatarId=16302",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=andrzej.slupek&avatarId=16302"
+    },
     "summary": "User is not kicked back to Splash Screen when accessing services without internet connenction.",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11306",
+        "id": "11306",
+        "name": "Network"
+      }
+    ],
     "issuetype": "Bug"
   },
   {
     "id": "374796",
     "key": "GWENT-60285",
     "assignee": "charlie.edmunds",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=charlie.edmunds&avatarId=13311",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=charlie.edmunds&avatarId=13311",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=charlie.edmunds&avatarId=13311",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=charlie.edmunds&avatarId=13311"
+    },
     "summary": "Row Effects Feedback ",
     "status": "To Do",
+    "statusCategory": "new",
+    "priority": "P1",
+    "component": [],
     "issuetype": "Story"
   },
   {
     "id": "374277",
     "key": "GWENT-60242",
     "assignee": "maciej.ostrowski",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=maciej.ostrowski&avatarId=12907",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=maciej.ostrowski&avatarId=12907",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=maciej.ostrowski&avatarId=12907",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=maciej.ostrowski&avatarId=12907"
+    },
     "summary": "Pitfall and Incinerating Traps do not trigger for units played by the opponent via Blue Dream",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "373970",
     "key": "GWENT-60234",
     "assignee": "krzysztof.sobczak",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=krzysztof.sobczak&avatarId=18503",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=krzysztof.sobczak&avatarId=18503",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=krzysztof.sobczak&avatarId=18503",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=krzysztof.sobczak&avatarId=18503"
+    },
     "summary": "[Reward Book][Admin Panel] - Create support for unlocking all starting nodes ",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [],
     "issuetype": "Task"
-  },
-  {
-    "id": "373405",
-    "key": "GWENT-60202",
-    "assignee": "agnieszka.rogowska",
-    "summary": "Shop - Incorrectly placed product titles, spacing between description and titles is gone for longer titles",
-    "status": "Open",
-    "issuetype": "Bug"
-  },
-  {
-    "id": "373403",
-    "key": "GWENT-60200",
-    "assignee": "agnieszka.rogowska",
-    "summary": "Shop - Missing \"Ś\" character in product description",
-    "status": "Open",
-    "issuetype": "Bug"
   },
   {
     "id": "373194",
     "key": "GWENT-60179",
     "assignee": "andrzej.slupek",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=andrzej.slupek&avatarId=16302",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=andrzej.slupek&avatarId=16302",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=andrzej.slupek&avatarId=16302",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=andrzej.slupek&avatarId=16302"
+    },
     "summary": "Changes to decks are not saved after reloading the game after certain steps",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11303",
+        "id": "11303",
+        "name": "Deckbuilder"
+      }
+    ],
     "issuetype": "Bug"
   },
   {
     "id": "373140",
     "key": "GWENT-60170",
     "assignee": "natalia.nowacka",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=natalia.nowacka&avatarId=18705",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=natalia.nowacka&avatarId=18705",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=natalia.nowacka&avatarId=18705",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=natalia.nowacka&avatarId=18705"
+    },
     "summary": "Buttons on last tab of social panel in battle are not centered",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P4",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11410",
+        "id": "11410",
+        "name": "UI/UX"
+      }
+    ],
     "issuetype": "Bug"
   },
   {
     "id": "372987",
     "key": "GWENT-60146",
     "assignee": "natalia.nowacka",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=natalia.nowacka&avatarId=18705",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=natalia.nowacka&avatarId=18705",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=natalia.nowacka&avatarId=18705",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=natalia.nowacka&avatarId=18705"
+    },
     "summary": "Transition after clicking on seal is not smooth in Arena",
     "status": "Open",
-    "issuetype": "Bug"
-  },
-  {
-    "id": "372925",
-    "key": "GWENT-60134",
-    "assignee": "agnieszka.rogowska",
-    "summary": "It is possible to access player profile and social panel shortly after starting looking for opponent",
-    "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/20800",
+        "id": "20800",
+        "name": "ANIMATION",
+        "description": "5"
+      },
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11410",
+        "id": "11410",
+        "name": "UI/UX"
+      }
+    ],
     "issuetype": "Bug"
   },
   {
     "id": "372846",
     "key": "GWENT-60117",
     "assignee": "adam.pach",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=adam.pach&avatarId=16924",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=adam.pach&avatarId=16924",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=adam.pach&avatarId=16924",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=adam.pach&avatarId=16924"
+    },
     "summary": "Homecoming Meve leader is not positioned as the last on the list of NR leaders",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11410",
+        "id": "11410",
+        "name": "UI/UX"
+      }
+    ],
     "issuetype": "Bug"
   },
   {
     "id": "372775",
     "key": "GWENT-60103",
     "assignee": "adam.pach",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=adam.pach&avatarId=16924",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=adam.pach&avatarId=16924",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=adam.pach&avatarId=16924",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=adam.pach&avatarId=16924"
+    },
     "summary": "PS4 - news assets are not loaded properly after language change (random occurrence)",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "372475",
     "key": "GWENT-60052",
     "assignee": "natalia.nowacka",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=natalia.nowacka&avatarId=18705",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=natalia.nowacka&avatarId=18705",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=natalia.nowacka&avatarId=18705",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=natalia.nowacka&avatarId=18705"
+    },
     "summary": "GG button's SFX is not triggered if controller is used",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/12319",
+        "id": "12319",
+        "name": "SFX",
+        "description": "8"
+      },
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11410",
+        "id": "11410",
+        "name": "UI/UX"
+      }
+    ],
     "issuetype": "Bug"
   },
   {
     "id": "371901",
     "key": "GWENT-59976",
     "assignee": "georgii.korshunov",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=georgii.korshunov&avatarId=18506",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=georgii.korshunov&avatarId=18506",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=georgii.korshunov&avatarId=18506",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=georgii.korshunov&avatarId=18506"
+    },
     "summary": "Admin: Rewards management",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [],
     "issuetype": "Backend"
   },
   {
     "id": "371831",
     "key": "GWENT-59948",
     "assignee": "maciej.ostrowski",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=maciej.ostrowski&avatarId=12907",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=maciej.ostrowski&avatarId=12907",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=maciej.ostrowski&avatarId=12907",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=maciej.ostrowski&avatarId=12907"
+    },
     "summary": "Pitfall and Incinerating Traps do not trigger for spies played by the opponent",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "371758",
     "key": "GWENT-59941",
     "assignee": "maciej.ostrowski",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=maciej.ostrowski&avatarId=12907",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=maciej.ostrowski&avatarId=12907",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=maciej.ostrowski&avatarId=12907",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=maciej.ostrowski&avatarId=12907"
+    },
     "summary": "When playing Birna Bran [152105] with empty deck player is forced to discard cards even tho the first condition of the trigger was not met.",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "369730",
     "key": "GWENT-59803",
     "assignee": "asil.karatas",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=asil.karatas&avatarId=16014",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=asil.karatas&avatarId=16014",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=asil.karatas&avatarId=16014",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=asil.karatas&avatarId=16014"
+    },
     "summary": "Upon selecting Leader in Leader Challenge, selection focus in social panel is lost and has to be reopened",
     "status": "Work In Progress",
-    "issuetype": "Bug"
-  },
-  {
-    "id": "369703",
-    "key": "GWENT-59790",
-    "assignee": "agnieszka.rogowska",
-    "summary": "[JP] [ZH] Sign in screen text positioned too low, goes off edge",
-    "status": "Open",
+    "statusCategory": "indeterminate",
+    "priority": "P2",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11301",
+        "id": "11301",
+        "name": "Multiplayer"
+      },
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11410",
+        "id": "11410",
+        "name": "UI/UX"
+      }
+    ],
     "issuetype": "Bug"
   },
   {
     "id": "368088",
     "key": "GWENT-59711",
     "assignee": "piotr.golus",
+    "avatarUrls": {
+      "48x48": "https://secure.gravatar.com/avatar/3bf5142a80bc2e3d15d768136aec307d?d=mm&s=48",
+      "24x24": "https://secure.gravatar.com/avatar/3bf5142a80bc2e3d15d768136aec307d?d=mm&s=24",
+      "16x16": "https://secure.gravatar.com/avatar/3bf5142a80bc2e3d15d768136aec307d?d=mm&s=16",
+      "32x32": "https://secure.gravatar.com/avatar/3bf5142a80bc2e3d15d768136aec307d?d=mm&s=32"
+    },
     "summary": "Giving doomed token to cards that leave graveyard due to their abilities results in weird behavior",
     "status": "QA Verification",
+    "statusCategory": "indeterminate",
+    "priority": "P2",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "367245",
     "key": "GWENT-59669",
     "assignee": "maciej.ostrowski",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=maciej.ostrowski&avatarId=12907",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=maciej.ostrowski&avatarId=12907",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=maciej.ostrowski&avatarId=12907",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=maciej.ostrowski&avatarId=12907"
+    },
     "summary": "When Light Longship gets destroyed via its damage inflicted adjacent Heymaey Protector and enemy Greatsword do not get boosted",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "365939",
     "key": "GWENT-59544",
     "assignee": "maciej.ostrowski",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=maciej.ostrowski&avatarId=12907",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=maciej.ostrowski&avatarId=12907",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=maciej.ostrowski&avatarId=12907",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=maciej.ostrowski&avatarId=12907"
+    },
     "summary": "Artist name is missing for Elven Roughneck [202166] card",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P5",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "365904",
     "key": "GWENT-59538",
     "assignee": "maciej.ostrowski",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=maciej.ostrowski&avatarId=12907",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=maciej.ostrowski&avatarId=12907",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=maciej.ostrowski&avatarId=12907",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=maciej.ostrowski&avatarId=12907"
+    },
     "summary": "It's not possible to opt out of Margarita's Order ability. Player is forced to lock a unit",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "365651",
     "key": "GWENT-59508",
     "assignee": "natalia.nowacka",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=natalia.nowacka&avatarId=18705",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=natalia.nowacka&avatarId=18705",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=natalia.nowacka&avatarId=18705",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=natalia.nowacka&avatarId=18705"
+    },
     "summary": "Arena - Special Arena modes - Please add timer to the selection screen based on VD",
     "status": "Work In Progress",
+    "statusCategory": "indeterminate",
+    "priority": "P1",
+    "component": [],
     "issuetype": "Sub-task"
   },
   {
     "id": "364272",
     "key": "GWENT-59442",
     "assignee": "georgii.korshunov",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=georgii.korshunov&avatarId=18506",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=georgii.korshunov&avatarId=18506",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=georgii.korshunov&avatarId=18506",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=georgii.korshunov&avatarId=18506"
+    },
     "summary": "After purchasing Northern Realms Bundle user still sees it as unowned in the Shop.",
     "status": "Blocked",
+    "statusCategory": "indeterminate",
+    "priority": "P3",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "362523",
     "key": "GWENT-59343",
     "assignee": "alexandr.pereverziev",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=alexandr.pereverziev&avatarId=17336",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=alexandr.pereverziev&avatarId=17336",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=alexandr.pereverziev&avatarId=17336",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=alexandr.pereverziev&avatarId=17336"
+    },
     "summary": "Investigate alternatives to swarm for docker container deployment",
     "status": "Work In Progress",
+    "statusCategory": "indeterminate",
+    "priority": "P2",
+    "component": [],
     "issuetype": "Task"
   },
   {
     "id": "362514",
     "key": "GWENT-59342",
     "assignee": "maciej.ostrowski",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=maciej.ostrowski&avatarId=12907",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=maciej.ostrowski&avatarId=12907",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=maciej.ostrowski&avatarId=12907",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=maciej.ostrowski&avatarId=12907"
+    },
     "summary": "Players are confused why abilities which require you to control OR reveal the highest unit trigger if there is a tie",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "362443",
     "key": "GWENT-59332",
     "assignee": "natalia.nowacka",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=natalia.nowacka&avatarId=18705",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=natalia.nowacka&avatarId=18705",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=natalia.nowacka&avatarId=18705",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=natalia.nowacka&avatarId=18705"
+    },
     "summary": "Arena - If the ticket's price is discounted, two purchase options for hard currency appear",
     "status": "Work In Progress",
+    "statusCategory": "indeterminate",
+    "priority": "P1",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11308",
+        "id": "11308",
+        "name": "Misc"
+      },
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11305",
+        "id": "11305",
+        "name": "Shop"
+      }
+    ],
     "issuetype": "Task"
   },
   {
     "id": "362182",
     "key": "GWENT-59317",
     "assignee": "krzysztof.sobczak",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=krzysztof.sobczak&avatarId=18503",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=krzysztof.sobczak&avatarId=18503",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=krzysztof.sobczak&avatarId=18503",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=krzysztof.sobczak&avatarId=18503"
+    },
     "summary": "Fast Create/Delete/Create ticket generates NotConnected gameLog status.",
     "status": "Open",
-    "issuetype": "Bug"
-  },
-  {
-    "id": "359361",
-    "key": "GWENT-59186",
-    "assignee": "agnieszka.rogowska",
-    "summary": "[Homecoming] [PC] After social panel is opened with controller and mouse hovers over any other UI, selection cannot return to panel",
-    "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "356903",
     "key": "GWENT-59046",
     "assignee": "adam.pach",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=adam.pach&avatarId=16924",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=adam.pach&avatarId=16924",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=adam.pach&avatarId=16924",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=adam.pach&avatarId=16924"
+    },
     "summary": "While waiting for opponent to finish mulligan button hints are not displayed on the game board",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11410",
+        "id": "11410",
+        "name": "UI/UX"
+      }
+    ],
     "issuetype": "Bug"
   },
   {
     "id": "356631",
     "key": "GWENT-59037",
     "assignee": "andrzej.slupek",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=andrzej.slupek&avatarId=16302",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=andrzej.slupek&avatarId=16302",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=andrzej.slupek&avatarId=16302",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=andrzej.slupek&avatarId=16302"
+    },
     "summary": "Prepare test server environment",
     "status": "Blocked",
+    "statusCategory": "indeterminate",
+    "priority": "P1",
+    "component": [],
     "issuetype": "Task"
   },
   {
     "id": "356177",
     "key": "GWENT-59005",
     "assignee": "asil.karatas",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=asil.karatas&avatarId=16014",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=asil.karatas&avatarId=16014",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=asil.karatas&avatarId=16014",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=asil.karatas&avatarId=16014"
+    },
     "summary": "Deckbuilder - Inconsistent navigation in the deckbuilder (selector/highlight jumps between new deck panel, cards panel and filter in inconsistent way)",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11410",
+        "id": "11410",
+        "name": "UI/UX"
+      }
+    ],
     "issuetype": "Bug"
   },
   {
     "id": "355336",
     "key": "GWENT-58906",
     "assignee": "alexandr.pereverziev",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=alexandr.pereverziev&avatarId=17336",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=alexandr.pereverziev&avatarId=17336",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=alexandr.pereverziev&avatarId=17336",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=alexandr.pereverziev&avatarId=17336"
+    },
     "summary": "Identify large HTTP requests than do not use 304",
     "status": "Blocked",
+    "statusCategory": "indeterminate",
+    "priority": "P1",
+    "component": [],
     "issuetype": "Task"
   },
   {
     "id": "354538",
     "key": "GWENT-58884",
     "assignee": "agnieszka.rogowska",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=agnieszka.rogowska&avatarId=12704",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=agnieszka.rogowska&avatarId=12704",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=agnieszka.rogowska&avatarId=12704",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=agnieszka.rogowska&avatarId=12704"
+    },
     "summary": "Button hint and friend match title do not appear on the card in lobby after re-accepting match invite",
     "status": "Open",
-    "issuetype": "Bug"
-  },
-  {
-    "id": "353492",
-    "key": "GWENT-58802",
-    "assignee": "agnieszka.rogowska",
-    "summary": "Social - Contact not found banner has missing frame-border ",
-    "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11410",
+        "id": "11410",
+        "name": "UI/UX"
+      }
+    ],
     "issuetype": "Bug"
   },
   {
     "id": "352544",
     "key": "GWENT-58736",
     "assignee": "michal.cwiek",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=michal.cwiek&avatarId=11500",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=michal.cwiek&avatarId=11500",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=michal.cwiek&avatarId=11500",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=michal.cwiek&avatarId=11500"
+    },
     "summary": "Need to have option to disable depth buffer for Render texture",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [],
     "issuetype": "Task"
-  },
-  {
-    "id": "351205",
-    "key": "GWENT-58646",
-    "assignee": "agnieszka.rogowska",
-    "summary": "Shop - Shupe is in idle pose for a few frames before proper animation starts",
-    "status": "Open",
-    "issuetype": "Bug"
   },
   {
     "id": "351132",
     "key": "GWENT-58630",
     "assignee": "agnieszka.rogowska",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=agnieszka.rogowska&avatarId=12704",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=agnieszka.rogowska&avatarId=12704",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=agnieszka.rogowska&avatarId=12704",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=agnieszka.rogowska&avatarId=12704"
+    },
     "summary": "Social Panel - Invite Friends icon is different on Xbox then on other platforms",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "349582",
     "key": "GWENT-58495",
     "assignee": "marcin.kowalski",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=marcin.kowalski&avatarId=16917",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=marcin.kowalski&avatarId=16917",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=marcin.kowalski&avatarId=16917",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=marcin.kowalski&avatarId=16917"
+    },
     "summary": "Trigger specific audio states in shop",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/12319",
+        "id": "12319",
+        "name": "SFX",
+        "description": "8"
+      }
+    ],
     "issuetype": "Task"
   },
   {
     "id": "349563",
     "key": "GWENT-58494",
     "assignee": "adam.pach",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=adam.pach&avatarId=16924",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=adam.pach&avatarId=16924",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=adam.pach&avatarId=16924",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=adam.pach&avatarId=16924"
+    },
     "summary": "Having full standard card collection, progression in player profile shows that some cards are missing.",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [],
     "issuetype": "Bug"
-  },
-  {
-    "id": "349285",
-    "key": "GWENT-58439",
-    "assignee": "agnieszka.rogowska",
-    "summary": "Main Menu - When you press back with social menu open, it closes the social menu and shows QUIT popup",
-    "status": "Open",
-    "issuetype": "Task"
   },
   {
     "id": "348347",
     "key": "GWENT-58331",
     "assignee": "natalia.nowacka",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=natalia.nowacka&avatarId=18705",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=natalia.nowacka&avatarId=18705",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=natalia.nowacka&avatarId=18705",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=natalia.nowacka&avatarId=18705"
+    },
     "summary": "[Arena] VFX of burning paper is displaying behind the scrolls not above them upon entering arena",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/12318",
+        "id": "12318",
+        "name": "VFX",
+        "description": "14"
+      }
+    ],
     "issuetype": "Bug"
   },
   {
     "id": "347590",
     "key": "GWENT-58232",
-    "assignee": "adam.pach",
+    "assignee": "asil.karatas",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=asil.karatas&avatarId=16014",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=asil.karatas&avatarId=16014",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=asil.karatas&avatarId=16014",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=asil.karatas&avatarId=16014"
+    },
     "summary": "[Homecoming] - Matchmaking gets cancelled suddenly - in case of request fail during Rank 2.0 initialisation entering Ranking Match UI remaining enabled but did nothing only plays animation of button",
     "status": "Work In Progress",
+    "statusCategory": "indeterminate",
+    "priority": "P3",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "326614",
     "key": "GWENT-57928",
     "assignee": "krzysztof.sobczak",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=krzysztof.sobczak&avatarId=18503",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=krzysztof.sobczak&avatarId=18503",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=krzysztof.sobczak&avatarId=18503",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=krzysztof.sobczak&avatarId=18503"
+    },
     "summary": "Please add the option to add/remove items from player's inventory in bulk to admin panel",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [],
     "issuetype": "Task"
   },
   {
     "id": "326292",
     "key": "GWENT-57879",
     "assignee": "maciej.ostrowski",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=maciej.ostrowski&avatarId=12907",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=maciej.ostrowski&avatarId=12907",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=maciej.ostrowski&avatarId=12907",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=maciej.ostrowski&avatarId=12907"
+    },
     "summary": "Checkbox for persistent variables that reset it on movment active -> inactive",
     "status": "Ready for Review",
+    "statusCategory": "indeterminate",
+    "priority": "P2",
+    "component": [],
     "issuetype": "Task"
-  },
-  {
-    "id": "325719",
-    "key": "GWENT-57704",
-    "assignee": "agnieszka.rogowska",
-    "summary": "TB - Card slot + Shadows",
-    "status": "Open",
-    "issuetype": "Bug"
   },
   {
     "id": "325114",
     "key": "GWENT-57567",
     "assignee": "andrzej.slupek",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=andrzej.slupek&avatarId=16302",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=andrzej.slupek&avatarId=16302",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=andrzej.slupek&avatarId=16302",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=andrzej.slupek&avatarId=16302"
+    },
     "summary": "[Homecoming] - Matchmaking gets cancelled suddenly",
     "status": "Blocked",
+    "statusCategory": "indeterminate",
+    "priority": "P1",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "324612",
     "key": "GWENT-57473",
     "assignee": "maciej.ostrowski",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=maciej.ostrowski&avatarId=12907",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=maciej.ostrowski&avatarId=12907",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=maciej.ostrowski&avatarId=12907",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=maciej.ostrowski&avatarId=12907"
+    },
     "summary": "[TSR] Users unaware that it is possible to put a card directly into the graveyard.",
     "status": "Open",
-    "issuetype": "Bug"
-  },
-  {
-    "id": "324565",
-    "key": "GWENT-57463",
-    "assignee": "agnieszka.rogowska",
-    "summary": "[TSR] Pressing 'H' or 'G' while writing a message in a social panel's chat closes the panel",
-    "status": "Open",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "324416",
     "key": "GWENT-57425",
     "assignee": "alexandr.pereverziev",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=alexandr.pereverziev&avatarId=17336",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=alexandr.pereverziev&avatarId=17336",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=alexandr.pereverziev&avatarId=17336",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=alexandr.pereverziev&avatarId=17336"
+    },
     "summary": "Unify way of parsing program args ",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [],
     "issuetype": "Task"
-  },
-  {
-    "id": "324396",
-    "key": "GWENT-57416",
-    "assignee": "agnieszka.rogowska",
-    "summary": "Burning cards VFX upon opening keg is improperly displaying shader",
-    "status": "Open",
-    "issuetype": "Bug"
   },
   {
     "id": "324382",
     "key": "GWENT-57414",
     "assignee": "andrzej.slupek",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=andrzej.slupek&avatarId=16302",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=andrzej.slupek&avatarId=16302",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=andrzej.slupek&avatarId=16302",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=andrzej.slupek&avatarId=16302"
+    },
     "summary": "Improve average latency and further minimize number of disconnects and not connected players",
     "status": "Blocked",
+    "statusCategory": "indeterminate",
+    "priority": "P2",
+    "component": [],
     "issuetype": "Task"
   },
   {
     "id": "323995",
     "key": "GWENT-57300",
     "assignee": "michal.cwiek",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=michal.cwiek&avatarId=11500",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=michal.cwiek&avatarId=11500",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=michal.cwiek&avatarId=11500",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=michal.cwiek&avatarId=11500"
+    },
     "summary": "[TSR][Low specs] Game crashes frequently on exiting the Shop or End-game screen",
     "status": "Open",
-    "issuetype": "Bug"
-  },
-  {
-    "id": "323072",
-    "key": "GWENT-57210",
-    "assignee": "agnieszka.rogowska",
-    "summary": "Shop 2.0 - Player can open a full preview of face down card on Keg opening screen.",
-    "status": "Open",
-    "issuetype": "Bug"
-  },
-  {
-    "id": "322149",
-    "key": "GWENT-57188",
-    "assignee": "adam.pach",
-    "summary": "[TSR] Deck builder - Some players are confused that they can't craft Thronebreaker Premium cards",
-    "status": "Open",
-    "issuetype": "Bug"
-  },
-  {
-    "id": "320316",
-    "key": "GWENT-56734",
-    "assignee": "agnieszka.rogowska",
-    "summary": "Pick 5th card and Choose one card - tooltips ",
-    "status": "Work In Progress",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "319437",
     "key": "GWENT-56633",
     "assignee": "krzysztof.sobczak",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=krzysztof.sobczak&avatarId=18503",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=krzysztof.sobczak&avatarId=18503",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=krzysztof.sobczak&avatarId=18503",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=krzysztof.sobczak&avatarId=18503"
+    },
     "summary": "Deck vanities filter is unreliable",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "318741",
     "key": "GWENT-56437",
     "assignee": "maciej.ostrowski",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=maciej.ostrowski&avatarId=12907",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=maciej.ostrowski&avatarId=12907",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=maciej.ostrowski&avatarId=12907",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=maciej.ostrowski&avatarId=12907"
+    },
     "summary": "Skellige Storm row VFX doesnt have damaging after effect",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/12318",
+        "id": "12318",
+        "name": "VFX",
+        "description": "14"
+      }
+    ],
     "issuetype": "Bug"
   },
   {
     "id": "318735",
     "key": "GWENT-56433",
     "assignee": "maciej.ostrowski",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=maciej.ostrowski&avatarId=12907",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=maciej.ostrowski&avatarId=12907",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=maciej.ostrowski&avatarId=12907",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=maciej.ostrowski&avatarId=12907"
+    },
     "summary": "Rain row VFX doesnt have damaging after effect ",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/12318",
+        "id": "12318",
+        "name": "VFX",
+        "description": "14"
+      }
+    ],
     "issuetype": "Bug"
   },
   {
     "id": "317409",
     "key": "GWENT-56155",
     "assignee": "lukasz.staniec",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=lukasz.staniec&avatarId=16103",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=lukasz.staniec&avatarId=16103",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=lukasz.staniec&avatarId=16103",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=lukasz.staniec&avatarId=16103"
+    },
     "summary": "Profile 2.0 - Strange bars in collection progress",
     "status": "Info Request",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11410",
+        "id": "11410",
+        "name": "UI/UX"
+      }
+    ],
     "issuetype": "Bug"
   },
   {
     "id": "317144",
     "key": "GWENT-56032",
     "assignee": "andrzej.slupek",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=andrzej.slupek&avatarId=16302",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=andrzej.slupek&avatarId=16302",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=andrzej.slupek&avatarId=16302",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=andrzej.slupek&avatarId=16302"
+    },
     "summary": "Further improvements to RedLogger",
     "status": "Ready for Review",
+    "statusCategory": "indeterminate",
+    "priority": "P2",
+    "component": [],
     "issuetype": "Task"
   },
   {
     "id": "314863",
     "key": "GWENT-55455",
     "assignee": "mieszko.malawski",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=mieszko.malawski&avatarId=16922",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=mieszko.malawski&avatarId=16922",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=mieszko.malawski&avatarId=16922",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=mieszko.malawski&avatarId=16922"
+    },
     "summary": "Popup about version mismatch works nondeterministically for the inviter",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P2",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11410",
+        "id": "11410",
+        "name": "UI/UX"
+      }
+    ],
     "issuetype": "Bug"
   },
   {
     "id": "313595",
     "key": "GWENT-54805",
     "assignee": "kacper.koscienski",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=kacper.koscienski&avatarId=14941",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=kacper.koscienski&avatarId=14941",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=kacper.koscienski&avatarId=14941",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=kacper.koscienski&avatarId=14941"
+    },
     "summary": "Loss of internet connection after launching Gwent MP",
     "status": "Work In Progress",
+    "statusCategory": "indeterminate",
+    "priority": "P2",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11301",
+        "id": "11301",
+        "name": "Multiplayer"
+      }
+    ],
     "issuetype": "Bug"
   },
   {
     "id": "310892",
     "key": "GWENT-53801",
     "assignee": "marcin.kowalski",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=marcin.kowalski&avatarId=16917",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=marcin.kowalski&avatarId=16917",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=marcin.kowalski&avatarId=16917",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=marcin.kowalski&avatarId=16917"
+    },
     "summary": "UI SFX - Season transition SFX code support",
     "status": "Work In Progress",
+    "statusCategory": "indeterminate",
+    "priority": "P2",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/12319",
+        "id": "12319",
+        "name": "SFX",
+        "description": "8"
+      }
+    ],
     "issuetype": "Task"
-  },
-  {
-    "id": "304979",
-    "key": "GWENT-50659",
-    "assignee": "agnieszka.rogowska",
-    "summary": "Shop - Base power digits are not grayed out during keg opening",
-    "status": "Open",
-    "issuetype": "Bug"
   },
   {
     "id": "294494",
     "key": "GWENT-46787",
     "assignee": "andrzej.slupek",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=andrzej.slupek&avatarId=16302",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=andrzej.slupek&avatarId=16302",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=andrzej.slupek&avatarId=16302",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=andrzej.slupek&avatarId=16302"
+    },
     "summary": "Admin: option to clean persistent notifications related to ArtTrees",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [],
     "issuetype": "Backend"
   },
   {
     "id": "282266",
     "key": "GWENT-44397",
     "assignee": "adam.pach",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=adam.pach&avatarId=16924",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=adam.pach&avatarId=16924",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=adam.pach&avatarId=16924",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=adam.pach&avatarId=16924"
+    },
     "summary": "PRO RANK - always visible highlighted part on progression bar",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P4",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11410",
+        "id": "11410",
+        "name": "UI/UX"
+      }
+    ],
     "issuetype": "Bug"
   },
   {
     "id": "234454",
     "key": "GWENT-39510",
-    "assignee": "andrzej.slupek",
+    "assignee": "asil.karatas",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=asil.karatas&avatarId=16014",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=asil.karatas&avatarId=16014",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=asil.karatas&avatarId=16014",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=asil.karatas&avatarId=16014"
+    },
     "summary": "[TSR] Inability to play a Friend Match when chat messages are restricted in GOG Privacy settings",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "227742",
     "key": "GWENT-38325",
     "assignee": "charlie.edmunds",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=charlie.edmunds&avatarId=13311",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=charlie.edmunds&avatarId=13311",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=charlie.edmunds&avatarId=13311",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=charlie.edmunds&avatarId=13311"
+    },
     "summary": "Error when changing focus of the main unity window during export process.",
     "status": "Info Request",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [],
     "issuetype": "Bug"
   },
   {
     "id": "209061",
     "key": "GWENT-36910",
-    "assignee": "natalia.nowacka",
+    "assignee": "asil.karatas",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=asil.karatas&avatarId=16014",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=asil.karatas&avatarId=16014",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=asil.karatas&avatarId=16014",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=asil.karatas&avatarId=16014"
+    },
     "summary": "[TSR] No info that Leaders used in Deck can't be milled",
     "status": "Work In Progress",
+    "statusCategory": "indeterminate",
+    "priority": "P1",
+    "component": [
+      {
+        "self": "https://jira.cdprojektred.com/rest/api/2/component/11304",
+        "id": "11304",
+        "name": "Cards"
+      }
+    ],
     "issuetype": "Bug"
   },
   {
     "id": "160049",
     "key": "GWENT-27668",
     "assignee": "krzysztof.sobczak",
+    "avatarUrls": {
+      "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=krzysztof.sobczak&avatarId=18503",
+      "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=krzysztof.sobczak&avatarId=18503",
+      "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=krzysztof.sobczak&avatarId=18503",
+      "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=krzysztof.sobczak&avatarId=18503"
+    },
     "summary": "GET on friend match invitation before it is accepted",
     "status": "Open",
+    "statusCategory": "new",
+    "priority": "P3",
+    "component": [],
     "issuetype": "Task"
-  },
-  {
-    "id": "156274",
-    "key": "GWENT-26354",
-    "assignee": "agnieszka.rogowska",
-    "summary": "Missing Scripts in UIPrefabHolder Loaded prefabs",
-    "status": "Open",
-    "issuetype": "Bug"
   }
 ]

@@ -4,30 +4,30 @@ const fs = require('fs');
 
 const Issue = mongoose.model('Issue');
 
-async function saveIssues(rawIssues) {
-  function parseIssue(issue) {
-    return {
-      id: issue.id || 0,
-      key: issue.key || '',
-      assignee: (issue.fields.assignee && issue.fields.assignee.key) || '',
-      summary: issue.fields.summary || '',
-      status: issue.fields.status.name || '',
-      issuetype: issue.fields.issuetype.name || '',
-    };
-  }
-
-  const issues = rawIssues.map(issue => parseIssue(issue));
+async function saveIssues({ issues }) {
+  const shallowIssues = issues.map(issue => ({
+    id: issue.id || 0,
+    key: issue.key || '',
+    assignee: (issue.fields.assignee && issue.fields.assignee.key) || '',
+    avatarUrls: (issue.fields.assignee && issue.fields.assignee.avatarUrls) || '',
+    summary: issue.fields.summary || '',
+    status: issue.fields.status.name || '',
+    statusCategory: issue.fields.status.statusCategory.key || '',
+    priority: issue.fields.priority.name || '',
+    component: issue.fields.components || '',
+    issuetype: issue.fields.issuetype.name || '',
+  }));
 
   await Issue.deleteMany();
 
   try {
-    // fs.writeFile('./data/issues.json', JSON.stringify(issues), function (err) {
-    //   if (err) {
-    //     console.log(err);
-    //   }
-    // });
+    fs.writeFile('./data/issues.json', JSON.stringify(shallowIssues), function (err) {
+      if (err) {
+        console.log(err);
+      }
+    });
 
-    await Issue.insertMany(issues);
+    await Issue.insertMany(shallowIssues);
   } catch (e) {
     console.log(e);
   }
@@ -45,7 +45,9 @@ function httpsPostPromise(jql) {
         "summary",
         "status",
         "assignee",
-        "issuetype"
+        "issuetype",
+        "priority",
+        "components"
       ]
     }`;
 
@@ -75,8 +77,7 @@ function httpsPostPromise(jql) {
       res.on('end', () => {
         try {
           const response = JSON.parse(rawData);
-          const { issues } = response;
-          resolve(saveIssues(issues));
+          resolve(saveIssues(response));
         } catch (err) {
           console.error(err.message);
         }
