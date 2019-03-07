@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { Link } from 'react-router';
-import PropTypes from 'prop-types';
+import { arrayOf, shape, string, number } from 'prop-types';
 import styled from 'styled-components';
 import DynamicTable from '@atlaskit/dynamic-table';
 
@@ -98,8 +98,15 @@ const HolidayList = ({ holidays, resources }) => {
 };
 
 HolidayList.propTypes = {
-  holidays: PropTypes.arrayOf([PropTypes.object]).isRequired,
-  resources: PropTypes.arrayOf([PropTypes.object]).isRequired,
+  holidays: arrayOf(shape({
+    key: string,
+    date: string,
+    count: number,
+  })).isRequired,
+  resources: arrayOf(shape({
+    key: string,
+    name: string,
+  })).isRequired,
 };
 
 export default HolidayList;

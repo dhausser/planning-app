@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { Link } from 'react-router';
-import PropTypes from 'prop-types';
+import { arrayOf, shape, string } from 'prop-types';
 import styled from 'styled-components';
 import DynamicTable from '@atlaskit/dynamic-table';
 
@@ -99,7 +99,10 @@ const ResourceList = ({ resources }) => {
 };
 
 ResourceList.propTypes = {
-  resources: PropTypes.arrayOf([PropTypes.object]).isRequired,
+  resources: arrayOf(shape({
+    key: string,
+    name: string,
+  })).isRequired,
 };
 
 export default ResourceList;

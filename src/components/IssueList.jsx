@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { Link } from 'react-router';
-import PropTypes from 'prop-types';
+import { arrayOf, shape, string } from 'prop-types';
 import styled from 'styled-components';
 import DynamicTable from '@atlaskit/dynamic-table';
 import { Status } from '@atlaskit/status';
@@ -102,8 +102,16 @@ const HolidayList = ({ issues, resources }) => {
 };
 
 HolidayList.propTypes = {
-  issues: PropTypes.arrayOf([PropTypes.object]).isRequired,
-  resources: PropTypes.arrayOf([PropTypes.object]).isRequired,
+  issues: arrayOf(shape({
+    key: string,
+    summary: string,
+    status: string,
+    assignee: string,
+  })).isRequired,
+  resources: arrayOf(shape({
+    key: string,
+    name: string,
+  })).isRequired,
 };
 
 export default HolidayList;
