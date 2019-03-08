@@ -66,9 +66,11 @@ const createRows = resources => resources.map((resource, index) => ({
       content: resource.team,
     },
     {
+      key: resource.issues.length + 1,
       content: resource.issues.length,
     },
     {
+      key: resource.holidays.length + 1,
       content: resource.holidays.length,
     },
   ],
