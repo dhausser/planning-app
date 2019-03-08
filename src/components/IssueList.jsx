@@ -7,10 +7,10 @@ import DynamicTable from '@atlaskit/dynamic-table';
 import { Status } from '@atlaskit/status';
 import PriorityBlockerIcon from '@atlaskit/icon-priority/glyph/priority-blocker';
 import PriorityHighestIcon from '@atlaskit/icon-priority/glyph/priority-highest';
-import PriorityMajorIcon from '@atlaskit/icon-priority/glyph/priority-major';
-import PriorityHighIcon from '@atlaskit/icon-priority/glyph/priority-high';
+// import PriorityMajorIcon from '@atlaskit/icon-priority/glyph/priority-major';
+// import PriorityHighIcon from '@atlaskit/icon-priority/glyph/priority-high';
 import PriorityMediumIcon from '@atlaskit/icon-priority/glyph/priority-medium';
-import PriorityLowIcon from '@atlaskit/icon-priority/glyph/priority-low';
+// import PriorityLowIcon from '@atlaskit/icon-priority/glyph/priority-low';
 import PriorityLowestIcon from '@atlaskit/icon-priority/glyph/priority-lowest';
 import PriorityMinorIcon from '@atlaskit/icon-priority/glyph/priority-minor';
 import PriorityTrivialIcon from '@atlaskit/icon-priority/glyph/priority-trivial';
@@ -120,7 +120,7 @@ const createRows = (issues, resources) => {
           content: issue.summary,
         },
         {
-          key: issue.priority,
+          key: parseInt(issue.priority.charAt(1)) + 1,
           content: priorityIcon(issue),
         },
         {
@@ -157,7 +157,7 @@ const IssueList = ({ issues, resources }) => {
           loadingSpinnerSize="large"
           isLoading={false}
           isFixedSize
-          defaultSortKey="status"
+          defaultSortKey="value"
           defaultSortOrder="ASC"
           onSort={() => console.log('onSort')}
           onSetPage={() => console.log('onSetPage')}
