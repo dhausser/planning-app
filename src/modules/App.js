@@ -1,7 +1,5 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import Flag, { FlagGroup } from '@atlaskit/flag';
-import Modal from '@atlaskit/modal-dialog';
 import Page from '@atlaskit/page';
 import '@atlaskit/css-reset';
 
@@ -9,8 +7,6 @@ import StarterNavigation from '../components/atlaskit/StarterNavigation';
 
 export default class App extends Component {
   state = {
-    flags: [],
-    isModalOpen: false,
     holidays: [],
     issues: [],
     resources: [],
@@ -61,16 +57,16 @@ export default class App extends Component {
   }
 
   async componentDidMount() {
+    const response = await fetch('/api/issues');
+    const issues = await response.json();
+
     const holidaysPromise = fetch('/api/holidays');
-    const issuesPromise = fetch('/api/issues');
     const resourcesPromise = fetch('/api/resources');
-
-    const [holidaysResponse, issuesResponse, resourcesResponse] = await Promise.all([
-      holidaysPromise, issuesPromise, resourcesPromise
+    const [holidaysResponse, resourcesResponse] = await Promise.all([
+      holidaysPromise, resourcesPromise
     ]);
-
-    let [holidays, issues, resources] = await Promise.all([
-      holidaysResponse.json(), issuesResponse.json(), resourcesResponse.json()
+    const [holidays, resources] = await Promise.all([
+      holidaysResponse.json(), resourcesResponse.json()
     ]);
 
     this.setState({ holidays, issues, resources });
@@ -78,41 +74,12 @@ export default class App extends Component {
 
   render() {
     return (
-      <div>
-        <Page
-          navigationWidth={this.context.navOpenState.width}
-          navigation={<StarterNavigation />}
-        >
-          {React.cloneElement(this.props.children, this.state)}
-        </Page>
-        <div>
-          <FlagGroup onDismissed={this.onFlagDismissed}>
-            {
-              this.state.flags.map(flag => (
-                <Flag
-                  id={flag.id}
-                  key={flag.id}
-                  title="Flag Title"
-                  description="Flag description"
-                />
-              ))
-            }
-          </FlagGroup>
-          {
-            this.state.isModalOpen && (
-              <Modal
-                heading="Candy bar"
-                actions={[{ text: 'Exit candy bar', onClick: this.hideModal }]}
-                onClose={this.hideModal}
-              >
-                <p style={{ textAlign: 'center' }}>
-                  <img src="http://i.giphy.com/yidUztgRB2w2gtDwL6.gif" alt="Moar cupcakes" />
-                </p>
-              </Modal>
-            )
-          }
-        </div>
-      </div>
+      <Page
+        navigationWidth={this.context.navOpenState.width}
+        navigation={<StarterNavigation />}
+      >
+        {React.cloneElement(this.props.children, this.state)}
+      </Page>
     );
   }
 }

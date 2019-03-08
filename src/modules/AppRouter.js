@@ -10,7 +10,7 @@ import IssuesPage from '../pages/IssuesPage';
 import HolidaysPage from '../pages/HolidaysPage';
 import SettingsPage from '../pages/SettingsPage';
 
-export default class BrowserRouter extends Component {
+export default class AppRouter extends Component {
   constructor() {
     super();
     this.state = {
@@ -20,8 +20,8 @@ export default class BrowserRouter extends Component {
       }
     }
   }
-  
-  getChildContext () {
+
+  getChildContext() {
     return {
       navOpenState: this.state.navOpenState,
     };
@@ -43,7 +43,7 @@ export default class BrowserRouter extends Component {
   render() {
     return (
       <Router history={browserHistory}>
-        <Route path ="/" component={this.appWithPersistentNav()}>
+        <Route path="/" component={this.appWithPersistentNav()}>
           <IndexRoute component={HomePage} />
           <Route path="/roadmap" component={RoadmapPage} />
           <Route path="/resources" component={ResourcesPage} />
@@ -57,6 +57,6 @@ export default class BrowserRouter extends Component {
   }
 }
 
-BrowserRouter.childContextTypes = {
+AppRouter.childContextTypes = {
   navOpenState: PropTypes.object,
 }

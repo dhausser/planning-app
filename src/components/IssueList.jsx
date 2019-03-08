@@ -90,20 +90,13 @@ const createRows = (issues, resources) => {
 
   const priorityIcon = ({ priority }) => {
     switch (priority) {
-      case 'PO':
-        return <PriorityBlockerIcon size="small" />
-      case 'P1':
-        return <PriorityHighestIcon size="small" />
-      case 'P2':
-        return <PriorityMediumIcon size="small" />
-      case 'P3':
-        return <PriorityLowestIcon size="small" />
-      case 'P4':
-        return <PriorityMinorIcon size="small" />
-      case 'P5':
-        return <PriorityTrivialIcon size="small" />
-      default:
-        return <PriorityBlockerIcon size="small" />
+      case 'PO': return <PriorityBlockerIcon size="small" />
+      case 'P1': return <PriorityHighestIcon size="small" />
+      case 'P2': return <PriorityMediumIcon size="small" />
+      case 'P3': return <PriorityLowestIcon size="small" />
+      case 'P4': return <PriorityMinorIcon size="small" />
+      case 'P5': return <PriorityTrivialIcon size="small" />
+      default: return <PriorityBlockerIcon size="small" />
     }
   }
 
