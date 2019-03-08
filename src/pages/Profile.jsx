@@ -10,10 +10,10 @@ const ProfilePage = props => {
   const resource = resources.find(resource => resource.key === resourceId);
 
   return (
-    <div>
+    <ContentWrapper>
       {resource
         && (
-          <ContentWrapper>
+          <div>
             <PageTitle>
               {resource.name}
               {' '}
@@ -24,10 +24,10 @@ const ProfilePage = props => {
             <a href={`https://jira.cdprojektred.com/issues/?jql=assignee%20%3D%20${resource.key}%20AND%20statusCategory%20in%20(new%2C%20indeterminate)%20and%20fixVersion%20in%20earliestUnreleasedVersionByReleaseDate(GWENT)`} target="_blank" rel="noopener noreferrer">View in Issue Navigator</a>
             <IssueList issues={resource.issues} />
             <HolidayList holidays={resource.holidays} />
-          </ContentWrapper>
+          </div>
         )
       }
-    </div>
+    </ContentWrapper>
   );
 };
 

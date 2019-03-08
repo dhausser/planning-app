@@ -17,12 +17,12 @@ export default class HomePage extends Component {
   render() {
     return (
       <ContentWrapper>
-        <PageTitle>Home</PageTitle>
+        <PageTitle>Dashboard</PageTitle>
         <MainSection resources={this.props.resources}/>
         <ButtonGroup>
           <Button
             appearance="primary"
-            onClick={this.context.showModal}
+            onClick={this.context.showModal}s
             onClose={() => { }}
           >Click to view Atlaskit modal</Button>
           <Button onClick={this.context.addFlag}>click to view Atlaskit flag</Button>

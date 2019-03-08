@@ -7,10 +7,7 @@ import DynamicTable from '@atlaskit/dynamic-table';
 import { Status } from '@atlaskit/status';
 import PriorityBlockerIcon from '@atlaskit/icon-priority/glyph/priority-blocker';
 import PriorityHighestIcon from '@atlaskit/icon-priority/glyph/priority-highest';
-// import PriorityMajorIcon from '@atlaskit/icon-priority/glyph/priority-major';
-// import PriorityHighIcon from '@atlaskit/icon-priority/glyph/priority-high';
 import PriorityMediumIcon from '@atlaskit/icon-priority/glyph/priority-medium';
-// import PriorityLowIcon from '@atlaskit/icon-priority/glyph/priority-low';
 import PriorityLowestIcon from '@atlaskit/icon-priority/glyph/priority-lowest';
 import PriorityMinorIcon from '@atlaskit/icon-priority/glyph/priority-minor';
 import PriorityTrivialIcon from '@atlaskit/icon-priority/glyph/priority-trivial';
@@ -18,6 +15,41 @@ import PriorityTrivialIcon from '@atlaskit/icon-priority/glyph/priority-trivial'
 const Wrapper = styled.div`
   min-width: 600px;
 `;
+
+const NameWrapper = styled.span`
+  display: flex;
+  align-items: center;
+`;
+
+export const statusColor = ({ statusCategory }) => {
+  const colors = [
+    "neutral",
+    "purple",
+    "blue",
+    "red",
+    "yellow",
+    "green"
+  ];
+
+  switch (statusCategory) {
+    case 'new': return colors[2];
+    case 'indeterminate': return colors[4];
+    case 'done': return colors[5];
+    default: return colors[0];
+  }
+}
+
+export const priorityIcon = ({ priority }) => {
+  switch (priority) {
+    case 'PO': return <PriorityBlockerIcon size="small" />
+    case 'P1': return <PriorityHighestIcon size="small" />
+    case 'P2': return <PriorityMediumIcon size="small" />
+    case 'P3': return <PriorityLowestIcon size="small" />
+    case 'P4': return <PriorityMinorIcon size="small" />
+    case 'P5': return <PriorityTrivialIcon size="small" />
+    default: return <PriorityBlockerIcon size="small" />
+  }
+}
 
 const createHead = (withWidth, resources) => {
   const head = {
@@ -65,76 +97,42 @@ const createHead = (withWidth, resources) => {
   return head;
 };
 
-const createRows = (issues, resources) => {
-  const statusColor = ({ statusCategory }) => {
-    const colors = [
-      "neutral",
-      "purple",
-      "blue",
-      "red",
-      "yellow",
-      "green"
-    ];
+const createRows = (issues, resources) => issues.map((issue, index) => {
+  const row = {
+    key: `row-${index}-${issue.key}`,
+    cells: [
+      {
+        content: (
+          <NameWrapper>
+            <Link to={`/issues/${issue.key}`}>{issue.key}</Link>
+          </NameWrapper>
+        ),
+      },
+      {
+        content: issue.summary,
+      },
+      {
+        key: parseInt(issue.priority.charAt(1)) + 1,
+        content: priorityIcon(issue),
+      },
+      {
+        key: issue.statusCategory,
+        content: <Status text={issue.status} color={statusColor(issue)} />,
+      },
+    ],
+  };
 
-    switch (statusCategory) {
-      case 'new':
-        return colors[2];
-      case 'indeterminate':
-        return colors[4];
-      case 'done':
-        return colors[5];
-      default:
-        return colors[0];
-    }
+  if (resources != null) {
+    const { name } = resources.find(
+      resource => resource.key === issue.assignee,
+    );
+    row.cells.push({
+      content: <Link to={`/resources/${issue.assignee}`}>{name}</Link>,
+    });
   }
 
-  const priorityIcon = ({ priority }) => {
-    switch (priority) {
-      case 'PO': return <PriorityBlockerIcon size="small" />
-      case 'P1': return <PriorityHighestIcon size="small" />
-      case 'P2': return <PriorityMediumIcon size="small" />
-      case 'P3': return <PriorityLowestIcon size="small" />
-      case 'P4': return <PriorityMinorIcon size="small" />
-      case 'P5': return <PriorityTrivialIcon size="small" />
-      default: return <PriorityBlockerIcon size="small" />
-    }
-  }
-
-  return issues.map((issue, index) => {
-    const row = {
-      key: `row-${index}-${issue.key}`,
-      cells: [
-        {
-          content: (
-            <a href={`https://jira.cdprojektred.com/browse/${issue.key}`} target="_blank" rel="noopener noreferrer">{issue.key}</a>
-          ),
-        },
-        {
-          content: issue.summary,
-        },
-        {
-          key: parseInt(issue.priority.charAt(1)) + 1,
-          content: priorityIcon(issue),
-        },
-        {
-          key: issue.statusCategory,
-          content: <Status text={issue.status} color={statusColor(issue)} />,
-        },
-      ],
-    };
-
-    if (resources != null) {
-      const { name } = resources.find(
-        resource => resource.key === issue.assignee,
-      );
-      row.cells.push({
-        content: <Link to={`/view/${issue.assignee}`}>{name}</Link>,
-      });
-    }
-
-    return row;
-  });
-}
+  return row;
+});
 
 const IssueList = ({ issues, resources }) => {
   const caption = 'List of Gwent Issues';

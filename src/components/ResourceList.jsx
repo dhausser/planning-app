@@ -13,7 +13,7 @@ const Wrapper = styled.div`
   min-width: 600px;
 `;
 
-const NameWrapper = styled.span`
+export const NameWrapper = styled.span`
   display: flex;
   align-items: center;
 `;
@@ -57,7 +57,7 @@ const createRows = resources => resources.map((resource, index) => ({
       key: createKey(resource.name),
       content: (
         <NameWrapper>
-          <Link to={`/view/${resource.key}`}>{resource.name}</Link>
+          <Link to={`/resources/${resource.key}`}>{resource.name}</Link>
         </NameWrapper>
       ),
     },

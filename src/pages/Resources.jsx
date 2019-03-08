@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import DropdownMenu, { DropdownItemGroup, DropdownItem } from '@atlaskit/dropdown-menu';
+// import DropdownMenu, { DropdownItemGroup, DropdownItem } from '@atlaskit/dropdown-menu';
 import ResourceList from '../components/ResourceList';
 import ContentWrapper from '../components/atlaskit/ContentWrapper';
 import PageTitle from '../components/atlaskit/PageTitle';
@@ -16,15 +16,7 @@ const appearances = [
   'help',
 ];
 
-const Table = (props) => (
-  <div style={{ display: 'table' }} {...props} />
-);
-const Row = (props) => (
-  <div style={{ display: 'table-row' }} {...props} />
-);
-const Cell = (props) => (
-  <div style={{ display: 'table-cell', padding: 4 }} {...props} />
-);
+const teams = (resources) => [...new Set(resources.map(resource => resource.team))];
 
 export default class ResourcesPage extends Component {
   state = {
@@ -32,32 +24,36 @@ export default class ResourcesPage extends Component {
     team: null,
   };
 
-  handleClick(team) {
-    this.setState({ team });
+  handleClick(team, e) {
+    console.log(e);
+    if (this.state.team === team) {
+      this.setState({ team: null })
+    } else {
+      this.setState({ team });
+    }
   };
 
   render() {
     const { showLoadingState, team } = this.state;
-    const teams = [...new Set(this.props.resources.map(resource => resource.team))];
-    const resources = this.props.resources.filter(resource => resource.team === team);
+    const { resources } = this.props;
 
     return (
       <ContentWrapper>
         <PageTitle>Resources</PageTitle>
-        {/* <ButtonGroup>
-          {teams.map(team => (
+        <ButtonGroup>
+          {teams(resources).map(team => (
             <Button
-              ref={team}
+              key={team}
               isLoading={showLoadingState}
-              appearance={appearances[1]}
+              appearance={appearances[0]}
               isSelected={false}
               onClick={(e) => this.handleClick(team, e)}
             >
               {team}
             </Button>
           ))}
-        </ButtonGroup> */}
-        <DropdownMenu
+        </ButtonGroup>
+        {/* <DropdownMenu
           trigger="Team"
           triggerType="button"
           shouldFlip={false}
@@ -76,9 +72,13 @@ export default class ResourcesPage extends Component {
               </DropdownItem>
             ))}
           </DropdownItemGroup>
-        </DropdownMenu>
-        <ResourceList resources={resources} />
+        </DropdownMenu> */}
         {/* <ResourceList {...this.props} /> */}
+        {team ? (
+          <ResourceList resources={resources.filter(resource => resource.team === team)} />
+        ) : (
+          <ResourceList resources={resources} />
+        )}
       </ContentWrapper>
     );
   }
