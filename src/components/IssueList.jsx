@@ -58,14 +58,14 @@ const createHead = (withWidth, resources) => {
         key: 'key',
         content: 'Key',
         isSortable: true,
-        width: withWidth ? 15 : undefined,
+        width: withWidth ? 10 : undefined,
       },
       {
         key: 'summary',
         content: 'Summary',
         shouldTruncate: true,
         isSortable: true,
-        width: withWidth ? 20 : undefined,
+        width: withWidth ? 30 : undefined,
       },
       {
         key: 'value',

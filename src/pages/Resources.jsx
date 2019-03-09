@@ -4,6 +4,7 @@ import ResourceList from '../components/ResourceList';
 import ContentWrapper from '../components/atlaskit/ContentWrapper';
 import PageTitle from '../components/atlaskit/PageTitle';
 import Button, { ButtonGroup } from '@atlaskit/button';
+import { throws } from 'assert';
 
 const appearances = [
   'default',
@@ -20,39 +21,53 @@ const teams = (resources) => [...new Set(resources.map(resource => resource.team
 
 export default class ResourcesPage extends Component {
   state = {
-    showLoadingState: false,
+    isSelected: false,
     team: null,
-    teams: teams(this.props.resources),
   };
 
+  componentDidMount() {
+    this.setState({ resources: this.props.resources })
+  }
+
   handleClick(team, e) {
-    console.log(e);
     if (this.state.team === team) {
-      this.setState({ team: null })
+      this.setState({ team: null, isSelected: !this.state.isSelected })
     } else {
-      this.setState({ team });
+      this.setState({ team, isSelected: !this.state.isSelected });
     }
   };
 
   render() {
-    const { showLoadingState, team } = this.state;
     const { resources, isLoading } = this.props;
+    const { team } = this.state;
 
     return (
       <ContentWrapper>
         <PageTitle>Resources</PageTitle>
         <ButtonGroup>
-          {teams(resources).map(team => (
+          {isLoading ? (
             <Button
-              key={team}
-              isLoading={showLoadingState}
+              key={'team'}
+              isLoading={isLoading}
               appearance={appearances[0]}
-              isSelected={false}
+              isSelected={this.state.isSelected}
               onClick={(e) => this.handleClick(team, e)}
             >
-              {team}
-            </Button>
-          ))}
+              Team
+        </Button>
+          ) : (
+              teams(resources).map(team => (
+                <Button
+                  key={team}
+                  isLoading={isLoading}
+                  appearance={appearances[0]}
+                  isSelected={this.state.team === team}
+                  onClick={(e) => this.handleClick(team, e)}
+                >
+                  {team}
+                </Button>
+              ))
+            )}
         </ButtonGroup>
         {/* <DropdownMenu
           trigger="Team"
@@ -78,8 +93,8 @@ export default class ResourcesPage extends Component {
         {team ? (
           <ResourceList resources={resources.filter(resource => resource.team === this.state.team)} isLoading={isLoading} />
         ) : (
-          <ResourceList resources={resources} isLoading={isLoading} />
-        )}
+            <ResourceList resources={resources} isLoading={isLoading} />
+          )}
       </ContentWrapper>
     );
   }
