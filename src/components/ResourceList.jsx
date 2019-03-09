@@ -57,7 +57,7 @@ const createRows = resources => resources.map((resource, index) => ({
       key: createKey(resource.name),
       content: (
         <NameWrapper>
-          <Link to={`/resources/${resource.key}`}>{resource.name}</Link>
+          <Link to={`/profile/${resource.key}`}>{resource.name}</Link>
         </NameWrapper>
       ),
     },
@@ -76,7 +76,8 @@ const createRows = resources => resources.map((resource, index) => ({
   ],
 }));
 
-const ResourceList = ({ resources }) => {
+
+export default function ResourceList({ resources, isLoading }) {
   const caption = 'List of Gwent Developers';
   const head = createHead('false');
   const rows = createRows(resources);
@@ -90,7 +91,7 @@ const ResourceList = ({ resources }) => {
           rowsPerPage={20}
           defaultPage={1}
           loadingSpinnerSize="large"
-          isLoading={false}
+          isLoading={isLoading}
           isFixedSize
           defaultSortKey="issues"
           defaultSortOrder="DESC"
@@ -108,5 +109,3 @@ ResourceList.propTypes = {
     name: string,
   })).isRequired,
 };
-
-export default ResourceList;

@@ -22,6 +22,7 @@ export default class ResourcesPage extends Component {
   state = {
     showLoadingState: false,
     team: null,
+    teams: teams(this.props.resources),
   };
 
   handleClick(team, e) {
@@ -35,7 +36,7 @@ export default class ResourcesPage extends Component {
 
   render() {
     const { showLoadingState, team } = this.state;
-    const { resources } = this.props;
+    const { resources, isLoading } = this.props;
 
     return (
       <ContentWrapper>
@@ -75,9 +76,9 @@ export default class ResourcesPage extends Component {
         </DropdownMenu> */}
         {/* <ResourceList {...this.props} /> */}
         {team ? (
-          <ResourceList resources={resources.filter(resource => resource.team === team)} />
+          <ResourceList resources={resources.filter(resource => resource.team === this.state.team)} isLoading={isLoading} />
         ) : (
-          <ResourceList resources={resources} />
+          <ResourceList resources={resources} isLoading={isLoading} />
         )}
       </ContentWrapper>
     );

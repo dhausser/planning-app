@@ -6,7 +6,7 @@ import { Status } from '@atlaskit/status';
 import { priorityIcon, statusColor } from '../components/IssueList';
 import { NameWrapper } from '../components/ResourceList';
 
-const Single = props => {
+export default function Single(props) {
   const { issueId } = props.params;
   const { issues, resources } = props;
   const issue = issues.find(issue => issue.key === issueId);
@@ -21,11 +21,11 @@ const Single = props => {
             <PageTitle>{issue.summary}</PageTitle>
             <a href={`https://jira.cdprojektred.com/browse/${issue.key}`} target="_blank" rel="noopener noreferrer">View in Issue Navigator</a>
             <p><Status text={issue.status} color={statusColor(issue)} /></p>
-            <p>{priorityIcon(issue)} {issue.priority}</p>
+            <p>{priorityIcon(issue)} {issue.priority} {issue.issuetype}</p>
             <p>{issue.summary}</p>
             <p>
             <NameWrapper>
-              <Link to={`/resources/${resource.key}`}>{resource.name}</Link>
+              <Link to={`/profile/${resource.key}`}>{resource.name}</Link>
             </NameWrapper>
             </p>
           </div>
@@ -33,6 +33,3 @@ const Single = props => {
     </ContentWrapper>
   )
 }
-
-export default Single;
-

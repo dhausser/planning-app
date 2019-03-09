@@ -104,7 +104,7 @@ const createRows = (issues, resources) => issues.map((issue, index) => {
       {
         content: (
           <NameWrapper>
-            <Link to={`/issues/${issue.key}`}>{issue.key}</Link>
+            <Link to={`/single/${issue.key}`}>{issue.key}</Link>
           </NameWrapper>
         ),
       },
@@ -127,14 +127,14 @@ const createRows = (issues, resources) => issues.map((issue, index) => {
       resource => resource.key === issue.assignee,
     );
     row.cells.push({
-      content: <Link to={`/resources/${issue.assignee}`}>{name}</Link>,
+      content: <Link to={`/profile/${issue.assignee}`}>{name}</Link>,
     });
   }
 
   return row;
 });
 
-const IssueList = ({ issues, resources }) => {
+export default function IssueList({ resources, issues, isLoading}) {
   const caption = 'List of Gwent Issues';
   return (
     <Wrapper>
@@ -146,7 +146,7 @@ const IssueList = ({ issues, resources }) => {
           rowsPerPage={resources ? 20 : 10}
           defaultPage={1}
           loadingSpinnerSize="large"
-          isLoading={false}
+          isLoading={isLoading}
           isFixedSize
           defaultSortKey="value"
           defaultSortOrder="ASC"
@@ -170,5 +170,3 @@ IssueList.propTypes = {
     name: string,
   })),
 };
-
-export default IssueList;

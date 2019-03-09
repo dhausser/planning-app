@@ -4,7 +4,7 @@ import PageTitle from '../components/atlaskit/PageTitle';
 import IssueList from '../components/IssueList';
 import HolidayList from '../components/HolidayList';
 
-const ProfilePage = props => {
+export default function Profile (props) {
   const { resourceId } = props.params;
   const { resources } = props;
   const resource = resources.find(resource => resource.key === resourceId);
@@ -30,5 +30,3 @@ const ProfilePage = props => {
     </ContentWrapper>
   );
 };
-
-export default ProfilePage;

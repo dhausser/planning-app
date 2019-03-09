@@ -61,7 +61,7 @@ const createRows = (holidays, resources) => holidays.map((holiday, index) => {
       },
       {
         content: (
-          <Link to={`/view/${holiday.key}`}>
+          <Link to={`/profile/${holiday.key}`}>
             {resources.find(resource => resource.key === holiday.key).name}
           </Link>
         ),
@@ -73,7 +73,7 @@ const createRows = (holidays, resources) => holidays.map((holiday, index) => {
   return row;
 });
 
-const HolidayList = ({ holidays, resources }) => {
+export default function HolidayList({ holidays, resources, isLoading }) {
   const caption = 'List of Gwent Absences';
   const head = createHead(false, resources);
   const rows = createRows(holidays, resources);
@@ -87,7 +87,7 @@ const HolidayList = ({ holidays, resources }) => {
           rowsPerPage={resources ? 20 : 10}
           defaultPage={1}
           loadingSpinnerSize="large"
-          isLoading={false}
+          isLoading={isLoading}
           isFixedSize
           defaultSortKey="date"
           defaultSortOrder="DESC"
@@ -110,5 +110,3 @@ HolidayList.propTypes = {
     name: string,
   })),
 };
-
-export default HolidayList;

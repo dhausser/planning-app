@@ -48,9 +48,9 @@ export default class AppRouter extends Component {
           <IndexRoute component={Dashboard} />
           <Route path="/roadmap" component={Roadmap} />
           <Route path="/resources" component={Resources} />
-          <Route path="/resources/:resourceId" component={Profile} />`
+          <Route path="/profile/:resourceId" component={Profile} />`
           <Route path="/issues" component={Issues} />
-          <Route path="/issues/:issueId" component={Single} />`
+          <Route path="/single/:issueId" component={Single} />`
           <Route path="/holidays" component={Holidays} />
           <Route path="/settings" component={Settings} />
         </Route>

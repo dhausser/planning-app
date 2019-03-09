@@ -7,6 +7,7 @@ import StarterNavigation from '../components/atlaskit/StarterNavigation';
 
 export default class App extends Component {
   state = {
+    isLoading: true,
     holidays: [],
     issues: [],
     resources: [],
@@ -69,10 +70,11 @@ export default class App extends Component {
       holidaysResponse.json(), resourcesResponse.json()
     ]);
 
-    this.setState({ holidays, issues, resources });
+    this.setState({ holidays, issues, resources, isLoading: false });
   }
 
   render() {
+    console.log(this.props.children);
     return (
       <Page
         navigationWidth={this.context.navOpenState.width}
