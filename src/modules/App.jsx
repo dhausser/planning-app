@@ -11,6 +11,7 @@ export default class App extends Component {
     holidays: [],
     issues: [],
     resources: [],
+    teams: [],
   };
 
   static contextTypes = {
@@ -53,24 +54,24 @@ export default class App extends Component {
     })
   }
 
-  filterTeam = () => {
-    console.log('Filtering team...')
-  }
-
   async componentDidMount() {
     const response = await fetch('/api/issues');
     const issues = await response.json();
 
     const holidaysPromise = fetch('/api/holidays');
     const resourcesPromise = fetch('/api/resources');
+    
     const [holidaysResponse, resourcesResponse] = await Promise.all([
       holidaysPromise, resourcesPromise
     ]);
+
     const [holidays, resources] = await Promise.all([
       holidaysResponse.json(), resourcesResponse.json()
     ]);
 
-    this.setState({ holidays, issues, resources, isLoading: false });
+    const teams = [...new Set(resources.map(resource => resource.team))];
+
+    this.setState({ holidays, issues, resources, teams, isLoading: false });
   }
 
   render() {
