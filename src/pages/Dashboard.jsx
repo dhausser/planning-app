@@ -14,9 +14,35 @@ export default class Dashboard extends Component {
     this.setState({ filter: ((filter === selected) ? null : selected) })
   };
 
-  render() {
-    const { isLoading, teams } = this.props;
+  aggregateIssues = ({teams, resources}) => {
     const { filter } = this.state;
+    let dataset = null;
+
+    if (filter == null) {
+      dataset = teams.reduce((accumulator, currentValue) => {
+        accumulator[currentValue] = 0;
+        return accumulator;
+      }, {});
+  
+      resources.forEach(resource => {
+        dataset[resource.team] += resource.issues.length;
+      });
+    } else {
+      dataset = resources
+        .filter(resource => resource.team === filter)
+        .reduce((accumulator, currentValue) => {
+          accumulator[currentValue.name.split(" ").shift()] = currentValue.issues.length;
+          return accumulator;
+        }, {})
+    };
+
+    return dataset;
+  }
+
+  render() {
+    const { isLoading } = this.props;
+    const { filter } = this.state;
+
     return (
       <ContentWrapper>
         <PageTitle>Dashboard</PageTitle>
@@ -25,7 +51,7 @@ export default class Dashboard extends Component {
           filter={filter}
           updateFilter={this.updateFilter} />
         {!isLoading && 
-          <BarChart teams={teams} />
+          <BarChart dataset={this.aggregateIssues({...this.props})} />
         }
       </ContentWrapper>
     );

@@ -1,30 +1,26 @@
 import React, { Component } from 'react';
 import Chart from 'chart.js';
 
-const config = (labels) => ({
+const transparency = '0.2';
+const colors = [
+  { key: 'R200 - Salmon sashimi', value: `rgba(255, 116, 82, ${transparency})` }, 
+  { key: 'Y200 - Pub mix', value: `rgba(255, 196, 0, ${transparency})` }, 
+  { key: 'G200 - Green tea', value: `rgba(87, 217, 163, ${transparency})` }, 
+  { key: 'T200 - Mermaid net', value: `rgba(0, 199, 229, ${transparency})` }, 
+  { key: 'B200 - Coogee', value: `rgba(38, 132, 255, ${transparency})` }, 
+  { key: 'P200 - Pastelli', value: `rgba(135, 119, 217, ${transparency})` }, 
+];
+
+const config = (dataset) => ({
   type: 'bar',
   data: {
-    labels,
+    labels: Object.keys(dataset),
     datasets: [{
-      label: '# of Votes',
-      data: [12, 19, 3, 5, 2, 3],
-      backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(255, 159, 64, 0.2)'
-      ],
-      borderColor: [
-        'rgba(255,99,132,1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-        'rgba(255, 159, 64, 1)'
-      ],
-      borderWidth: 1
+      label: '# of Issues',
+      data: Object.values(dataset),
+      backgroundColor: 
+        Object.entries(dataset).map((entry, index) =>
+          colors[index % colors.length].value),
     }]
   },
   options: {
@@ -38,16 +34,30 @@ const config = (labels) => ({
   }
 });
 
-export default class myChart extends Component {
+export default class BarChart extends Component {
+  state = {
+    chart: null,
+  }
+
   componentDidMount() {
-    const { teams } = this.props;
-    new Chart("myChart", config(teams));
+    this.setState({ chart: new Chart("BarChart", config(this.props.dataset)) });
+  }
+
+  componentDidUpdate() {
+    const { chart } = this.state;
+    const { dataset } = this.props;
+    chart.data.labels = Object.keys(dataset);
+    chart.data.datasets[0].data = Object.values(dataset)
+    chart.data.datasets[0].backgroundColor = 
+      Object.entries(dataset).map((entry, index) =>
+        colors[index % colors.length].value)
+    chart.update();
   }
 
   render() {
     return (
       <div>
-        <canvas id="myChart" width="400" height="250"></canvas>
+        <canvas id="BarChart" width="400" height="250"></canvas>
       </div>
     );
   }
