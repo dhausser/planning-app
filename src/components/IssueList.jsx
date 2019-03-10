@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import { Link } from 'react-router';
 import { arrayOf, shape, string } from 'prop-types';
@@ -32,22 +31,22 @@ export const statusColor = ({ statusCategory }) => {
   ];
 
   switch (statusCategory) {
-    case 'new': return colors[2];
-    case 'indeterminate': return colors[4];
-    case 'done': return colors[5];
-    default: return colors[0];
+  case 'new': return colors[2];
+  case 'indeterminate': return colors[4];
+  case 'done': return colors[5];
+  default: return colors[0];
   }
 }
 
 export const priorityIcon = ({ priority }) => {
   switch (priority) {
-    case 'PO': return <PriorityBlockerIcon size="small" />
-    case 'P1': return <PriorityHighestIcon size="small" />
-    case 'P2': return <PriorityMediumIcon size="small" />
-    case 'P3': return <PriorityLowestIcon size="small" />
-    case 'P4': return <PriorityMinorIcon size="small" />
-    case 'P5': return <PriorityTrivialIcon size="small" />
-    default: return <PriorityBlockerIcon size="small" />
+  case 'PO': return <PriorityBlockerIcon size="small" />
+  case 'P1': return <PriorityHighestIcon size="small" />
+  case 'P2': return <PriorityMediumIcon size="small" />
+  case 'P3': return <PriorityLowestIcon size="small" />
+  case 'P4': return <PriorityMinorIcon size="small" />
+  case 'P5': return <PriorityTrivialIcon size="small" />
+  default: return <PriorityBlockerIcon size="small" />
   }
 }
 
@@ -134,7 +133,7 @@ const createRows = (issues, resources) => issues.map((issue, index) => {
   return row;
 });
 
-export default function IssueList({ resources, issues, isLoading}) {
+export default function IssueList({ issues, resources, isLoading }) {
   const caption = 'List of Gwent Issues';
   return (
     <Wrapper>

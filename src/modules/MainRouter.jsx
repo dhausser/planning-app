@@ -11,7 +11,7 @@ import Single from '../pages/Single';
 import Holidays from '../pages/Holidays';
 import Settings from '../pages/Settings';
 
-export default class AppRouter extends Component {
+export default class MainRouter extends Component {
   constructor() {
     super();
     this.state = {
@@ -52,13 +52,13 @@ export default class AppRouter extends Component {
           <Route path="/issues" component={Issues} />
           <Route path="/single/:issueId" component={Single} />`
           <Route path="/holidays" component={Holidays} />
-          <Route path="/settings" component={Settings} />
+          <Route path="/settings" component={Settings} hello={'Hello!'} />
         </Route>
       </Router>
     );
   }
 }
 
-AppRouter.childContextTypes = {
+MainRouter.childContextTypes = {
   navOpenState: PropTypes.object,
 }

@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import { Link } from 'react-router';
 import { arrayOf, shape, string } from 'prop-types';

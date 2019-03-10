@@ -7,6 +7,7 @@ import StarterNavigation from '../components/atlaskit/StarterNavigation';
 
 export default class App extends Component {
   state = {
+    themeMode: 'light',
     isLoading: true,
     holidays: [],
     issues: [],
@@ -25,14 +26,24 @@ export default class App extends Component {
   };
 
   static childContextTypes = {
-    showModal: PropTypes.func,
-    addFlag: PropTypes.func,
+    isLoading: PropTypes.bool,
+    holidays: PropTypes.array,
+    issues: PropTypes.array,
+    resources: PropTypes.array,
+    teams: PropTypes.array,
+    themeMode: PropTypes.string,
+    switchTheme: PropTypes.func,
   };
 
   getChildContext() {
     return {
-      showModal: this.showModal,
-      addFlag: this.addFlag,
+      isLoading: this.state.isLoading,
+      holidays: this.state.holidays,
+      issues: this.state.issues,
+      resources: this.state.resources,
+      teams: this.state.teams,
+      themeMode: this.state.themeMode,
+      switchTheme: this.switchTheme,
     };
   }
 
@@ -53,6 +64,12 @@ export default class App extends Component {
       flags: this.state.flags.filter(flag => flag.id !== dismissedFlagId),
     })
   }
+
+  switchTheme = () => {
+    this.setState({
+      themeMode: this.state.themeMode === 'light' ? 'dark' : 'light',
+    });
+  };
 
   async componentDidMount() {
     const response = await fetch('/api/issues');
@@ -80,7 +97,7 @@ export default class App extends Component {
         navigationWidth={this.context.navOpenState.width}
         navigation={<StarterNavigation />}
       >
-        {React.cloneElement(this.props.children, this.state)}
+        { this.props.children }
       </Page>
     );
   }

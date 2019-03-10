@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import ContentWrapper from '../components/atlaskit/ContentWrapper';
 import PageTitle from '../components/atlaskit/PageTitle';
@@ -7,6 +8,14 @@ import BarChart from '../components/BarChart';
 export default class Dashboard extends Component {
   state = {
     filter: null,
+  };
+
+  static contextTypes = {
+    isLoading: PropTypes.bool,
+    holidays: PropTypes.array,
+    issues: PropTypes.array,
+    resources: PropTypes.array,
+    teams: PropTypes.array,
   };
 
   updateFilter = (selected) => {
@@ -47,11 +56,11 @@ export default class Dashboard extends Component {
       <ContentWrapper>
         <PageTitle>Dashboard</PageTitle>
         <TeamFilter
-          {...this.props}
+          {...this.context}
           filter={filter}
           updateFilter={this.updateFilter} />
         {!isLoading && 
-          <BarChart dataset={this.aggregateIssues({...this.props})} />
+          <BarChart dataset={this.aggregateIssues({...this.context})} />
         }
       </ContentWrapper>
     );

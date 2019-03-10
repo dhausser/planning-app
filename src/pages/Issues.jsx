@@ -1,13 +1,23 @@
-import React from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import ContentWrapper from '../components/atlaskit/ContentWrapper';
 import PageTitle from '../components/atlaskit/PageTitle';
 import IssueList from '../components/IssueList';
 
-export default function Issues(props) {
-  return (
-    <ContentWrapper>
-      <PageTitle>Issues</PageTitle>
-      <IssueList {...props} />
-    </ContentWrapper>
-  )
+export default class Issues extends Component {
+  static contextTypes = {
+    isLoading: PropTypes.bool,
+    issues: PropTypes.array,
+    resources: PropTypes.array,
+  };
+
+  render() {
+    const { issues, resources, isLoading  } = this.context;
+    return (
+      <ContentWrapper>
+        <PageTitle>Issues</PageTitle>
+        <IssueList issues={issues} resources={resources} isLoading={isLoading} />
+      </ContentWrapper>
+    )
+  }
 };

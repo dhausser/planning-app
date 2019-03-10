@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/dhausser/planning-app"
+  },  
   "scripts": {
     "start": "concurrently \"npm run dev\" \"npm run watch\"",
     "dev": "react-scripts start",
@@ -16,23 +20,21 @@
     "blowitallaway": "node ./data/load-sample-data.js --delete"
   },
   "keywords": [],
-  "author": "",
+  "author": "Davy Hausser",
   "license": "ISC",
   "dependencies": {
-    "@atlaskit/avatar": "^14.0.9",
     "@atlaskit/button": "^9.0.7",
-    "@atlaskit/css-reset": "^3.0.5",
+    "@atlaskit/css-reset": "^3.0.1",
     "@atlaskit/dropdown-menu": "^6.1.10",
-    "@atlaskit/dynamic-table": "^10.0.23",
-    "@atlaskit/flag": "^9.0.7",
     "@atlaskit/icon": "^13.4.0",
-    "@atlaskit/icon-priority": "^3.0.0",
     "@atlaskit/inline-edit": "^7.0.7",
-    "@atlaskit/modal-dialog": "^6.0.10",
     "@atlaskit/navigation": "^33.1.7",
     "@atlaskit/page": "^8.0.4",
-    "@atlaskit/status": "^0.5.0",
     "@atlaskit/theme": "^6.0.1",
+    "@atlaskit/dynamic-table": "^10.0.23",
+    "@atlaskit/icon-priority": "^3.0.0",
+    "@atlaskit/table-tree": "^6.0.0",
+    "@atlaskit/status": "^0.5.0",
     "chart.js": "^2.7.3",
     "dotenv": "^6.2.0",
     "express": "^4.16.3",
@@ -59,6 +61,16 @@
     "not op_mini all"
   ],
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "rules": {
+      "indent": [
+        "warn",
+        2
+      ],
+      "react/jsx-indent": [
+        "warn",
+        2
+      ]
+    }
   }
 }
