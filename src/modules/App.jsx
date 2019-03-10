@@ -7,11 +7,13 @@ import StarterNavigation from '../components/atlaskit/StarterNavigation';
 
 export default class App extends Component {
   state = {
-    themeMode: 'light',
     isLoading: true,
+    isFiltering: false,
+    themeMode: 'light',
+    filter: null,
+    resources: [],
     holidays: [],
     issues: [],
-    resources: [],
     teams: [],
   };
 
@@ -33,6 +35,8 @@ export default class App extends Component {
     teams: PropTypes.array,
     themeMode: PropTypes.string,
     switchTheme: PropTypes.func,
+    filter: PropTypes.string,
+    updateFilter: PropTypes.func,
   };
 
   getChildContext() {
@@ -44,6 +48,8 @@ export default class App extends Component {
       teams: this.state.teams,
       themeMode: this.state.themeMode,
       switchTheme: this.switchTheme,
+      filter: this.state.filter,
+      updateFilter: this.updateFilter,
     };
   }
 
@@ -69,6 +75,14 @@ export default class App extends Component {
     this.setState({
       themeMode: this.state.themeMode === 'light' ? 'dark' : 'light',
     });
+  };
+
+  updateFilter = (selection) => {
+    const { filter, isFiltering } = this.state;
+    this.setState({
+      filter: ((filter === selection) ? null : selection),
+      isFiltering: !isFiltering,
+    })
   };
 
   async componentDidMount() {

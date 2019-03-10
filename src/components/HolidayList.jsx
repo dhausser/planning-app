@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import { Link } from 'react-router';
 import { arrayOf, shape, string, number } from 'prop-types';
@@ -74,27 +73,25 @@ const createRows = (holidays, resources) => holidays.map((holiday, index) => {
 });
 
 export default function HolidayList({ holidays, resources, isLoading }) {
-  const caption = 'List of Gwent Absences';
+  const caption = 'List of Absences';
   const head = createHead(false, resources);
   const rows = createRows(holidays, resources);
   return (
     <Wrapper>
-      {holidays &&
-        <DynamicTable
-          caption={caption}
-          head={head}
-          rows={rows}
-          rowsPerPage={resources ? 20 : 10}
-          defaultPage={1}
-          loadingSpinnerSize="large"
-          isLoading={isLoading}
-          isFixedSize
-          defaultSortKey="date"
-          defaultSortOrder="DESC"
-          onSort={() => console.log('onSort')}
-          onSetPage={() => console.log('onSetPage')}
-        />
-      }
+      <DynamicTable
+        caption={caption}
+        head={head}
+        rows={rows}
+        rowsPerPage={resources ? 20 : 10}
+        defaultPage={1}
+        loadingSpinnerSize="large"
+        isLoading={isLoading}
+        isFixedSize
+        defaultSortKey="date"
+        defaultSortOrder="DESC"
+        onSort={() => console.log('onSort')}
+        onSetPage={() => console.log('onSetPage')}
+      />
     </Wrapper>
   );
 };

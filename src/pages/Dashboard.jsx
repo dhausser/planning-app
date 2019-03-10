@@ -6,61 +6,44 @@ import TeamFilter from '../components/TeamFilter';
 import BarChart from '../components/BarChart';
 
 export default class Dashboard extends Component {
-  state = {
-    filter: null,
-  };
-
   static contextTypes = {
     isLoading: PropTypes.bool,
-    holidays: PropTypes.array,
-    issues: PropTypes.array,
-    resources: PropTypes.array,
+    filter: PropTypes.string,
     teams: PropTypes.array,
+    resources: PropTypes.array,
   };
 
-  updateFilter = (selected) => {
-    const { filter } = this.state;
-    this.setState({ filter: ((filter === selected) ? null : selected) })
-  };
-
-  aggregateIssues = ({teams, resources}) => {
-    const { filter } = this.state;
-    let dataset = null;
+  aggregateIssues = () => {
+    const { filter, teams, resources } = this.context;
 
     if (filter == null) {
-      dataset = teams.reduce((accumulator, currentValue) => {
+      const dataset = teams.reduce((accumulator, currentValue) => {
         accumulator[currentValue] = 0;
         return accumulator;
       }, {});
-  
       resources.forEach(resource => {
         dataset[resource.team] += resource.issues.length;
       });
+      return dataset;
     } else {
-      dataset = resources
+      return resources
         .filter(resource => resource.team === filter)
         .reduce((accumulator, currentValue) => {
           accumulator[currentValue.name.split(" ").shift()] = currentValue.issues.length;
           return accumulator;
         }, {})
     };
-
-    return dataset;
   }
 
   render() {
-    const { isLoading } = this.props;
-    const { filter } = this.state;
+    const { isLoading } = this.context;
 
     return (
       <ContentWrapper>
         <PageTitle>Dashboard</PageTitle>
-        <TeamFilter
-          {...this.context}
-          filter={filter}
-          updateFilter={this.updateFilter} />
+        <TeamFilter />
         {!isLoading && 
-          <BarChart dataset={this.aggregateIssues({...this.context})} />
+          <BarChart dataset={this.aggregateIssues()} />
         }
       </ContentWrapper>
     );

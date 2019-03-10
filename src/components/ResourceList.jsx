@@ -75,29 +75,24 @@ const createRows = resources => resources.map((resource, index) => ({
   ],
 }));
 
-
 export default function ResourceList({ resources, isLoading }) {
-  const caption = 'List of Gwent Developers';
+  const caption = 'List of Developers';
   const head = createHead('false');
   const rows = createRows(resources);
   return (
     <Wrapper>
-      {resources &&
-        <DynamicTable
-          caption={caption}
-          head={head}
-          rows={rows}
-          rowsPerPage={20}
-          defaultPage={1}
-          loadingSpinnerSize="large"
-          isLoading={isLoading}
-          isFixedSize
-          defaultSortKey="issues"
-          defaultSortOrder="DESC"
-          onSort={() => console.log('onSort')}
-          onSetPage={() => console.log('onSetPage')}
-        />
-      }
+      <DynamicTable
+        caption={caption}
+        head={head}
+        rows={rows}
+        rowsPerPage={20}
+        defaultPage={1}
+        loadingSpinnerSize="large"
+        isLoading={isLoading}
+        isFixedSize
+        defaultSortKey="issues"
+        defaultSortOrder="DESC"
+      />
     </Wrapper>
   );
 };

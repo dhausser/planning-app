@@ -6,38 +6,25 @@ import TeamFilter from '../components/TeamFilter';
 import ResourceList from '../components/ResourceList';
 
 export default class ResourcesPage extends Component {
-  state = {
-    filter: null,
-  };
-
   static contextTypes = {
     isLoading: PropTypes.bool,
     resources: PropTypes.array,
-    teams: PropTypes.array,
-  };
-
-  updateFilter = (selected) => {
-    const { filter } = this.state;
-    this.setState({ filter: ((filter === selected) ? null : selected) })
+    filter: PropTypes.string,
   };
 
   render() {
-    const { resources, teams, isLoading } = this.context;
-    const { filter } = this.state;
+    const { isLoading, filter } = this.context;
+    const resources = filter ? (
+      this.context.resources.filter(({ team }) => team === filter)
+    ) : (
+      this.context.resources
+    );
 
     return (
       <ContentWrapper>
         <PageTitle>Resources</PageTitle>
-        <TeamFilter
-          resources={resources}
-          teams={teams}
-          filter={filter}
-          updateFilter={this.updateFilter} />
-        {filter ? (
-          <ResourceList resources={resources.filter(resource => resource.team === filter)} isLoading={isLoading} />
-        ) : (
-          <ResourceList resources={resources} isLoading={isLoading} />
-        )}
+        <TeamFilter />
+        <ResourceList resources={resources} isLoading={isLoading} />
       </ContentWrapper>
     );
   }
