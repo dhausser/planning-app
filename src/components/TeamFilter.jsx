@@ -23,7 +23,6 @@ export default class TeamFilter extends Component {
 
   render() {
     const { teams, isLoading, filter, updateFilter  } = this.context;
-
     return (
       <ButtonGroup>
         {isLoading ? (
