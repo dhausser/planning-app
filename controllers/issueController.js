@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 const Issue = mongoose.model('Issue');
 
-async function shallowCopy({ issues }) {
+async function shallowCopy(issues) {
   const shallowIssues = issues.map(issue => ({
     id: issue.id || 0,
     key: issue.key || '',
