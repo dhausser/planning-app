@@ -4,9 +4,9 @@
   "description": "",
   "main": "app.js",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/dhausser/planning-app"
-  },  
+    "type": "git",
+    "url": "https://github.com/dhausser/planning-app"
+  },
   "scripts": {
     "start": "concurrently \"npm run dev\" \"npm run watch\"",
     "dev": "react-scripts start",
