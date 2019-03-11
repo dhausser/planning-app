@@ -1,10 +1,9 @@
 const https = require('https');
 const mongoose = require('mongoose');
-const fs = require('fs');
 
 const Issue = mongoose.model('Issue');
 
-async function saveIssues({ issues }) {
+async function shallowCopy({ issues }) {
   const shallowIssues = issues.map(issue => ({
     id: issue.id || 0,
     key: issue.key || '',
@@ -21,12 +20,6 @@ async function saveIssues({ issues }) {
   await Issue.deleteMany();
 
   try {
-    // fs.writeFile('./data/issues.json', JSON.stringify(shallowIssues), function (err) {
-    //   if (err) {
-    //     console.log(err);
-    //   }
-    // });
-
     await Issue.insertMany(shallowIssues);
   } catch (e) {
     console.log(e);
@@ -35,22 +28,8 @@ async function saveIssues({ issues }) {
   return issues;
 }
 
-function httpsPostPromise(jql) {
+function httpsPostPromise(bodyData) {
   return new Promise((resolve, reject) => {
-    const bodyData = `{
-      "jql": "${jql}",
-      "startAt": 0,
-      "maxResults": 500,
-      "fields": [
-        "summary",
-        "status",
-        "assignee",
-        "issuetype",
-        "priority",
-        "components"
-      ]
-    }`;
-
     const options = {
       hostname: process.env.HOSTNAME,
       port: 443,
@@ -77,7 +56,7 @@ function httpsPostPromise(jql) {
       res.on('end', () => {
         try {
           const response = JSON.parse(rawData);
-          resolve(saveIssues(response));
+          resolve(response);
         } catch (err) {
           console.error(err.message);
         }
@@ -87,16 +66,37 @@ function httpsPostPromise(jql) {
     req.on('error', (e) => {
       console.error(`problem with request: ${e.message}`);
       reject();
-    });
+    })
 
-    // write data to request body
-    req.write(bodyData);
+    req.write(bodyData)
     req.end();
   });
 }
 
 exports.getIssues = async (req, res) => {
-  const jql = 'filter=22119';
-  httpsPostPromise(jql);
+  // TO DO
+  // Handle query parameters
+  // console.log(req.param);
+  // console.log(req.query);
+
+  if (process.env.NODE_ENV === 'production') {
+    const query = 'filter=22119';
+    const bodyData = `{
+      "jql": "${query}",
+      "startAt": 0,
+      "maxResults": 500,
+      "fields": [
+        "summary",
+        "status",
+        "assignee",
+        "issuetype",
+        "priority",
+        "components"
+      ]
+    }`;
+    const response = await httpsPostPromise(bodyData);
+    shallowCopy(response.issues);
+  }
+
   return res.json(await Issue.find());
 };
