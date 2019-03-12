@@ -22,12 +22,18 @@ export default class Single extends Component {
   };
 
   componentDidUpdate = () => {
-    if (this.state.readValue === '') {
-      const { issueId } = this.props.params;
-      const { issues } = this.context;
-      const issue = issues.find(issue => issue.key === issueId);
-      this.setState({ readValue: issue.summary, editValue: issue.summary })
-    }
+    (this.state.readValue === '') && this.setInitialState();
+  }
+
+  componentDidMount = () => {
+    !this.context.isLoading && this.setInitialState();
+  }
+
+  setInitialState = () => {
+    const { issueId } = this.props.params;
+    const { issues } = this.context;
+    const issue = issues.find(issue => issue.key === issueId);
+    this.setState({ readValue: issue.summary, editValue: issue.summary });
   }
 
   onConfirm = () => {
