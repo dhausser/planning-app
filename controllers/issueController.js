@@ -76,10 +76,12 @@ function httpsPostPromise(bodyData) {
 exports.getIssues = async (req, res) => {
   // TO DO
   // Handle query parameters
-  // console.log(req.param);
-  // console.log(req.query);
 
-  if (process.env.NODE_ENV !== 'production') {
+  // if(req.query !== {}) {
+  //   return res.json(req.query);
+  // }
+
+  if (process.env.NODE_ENV === 'production') {
     const query = 'filter=22119';
     const bodyData = {
       jql: query,
@@ -100,3 +102,19 @@ exports.getIssues = async (req, res) => {
 
   return res.json(await Issue.find());
 };
+
+exports.getQuery =  async (req, res) => {
+  console.log(req.query);
+  const items = [
+    {
+      key: 'GS-1',
+      summary: req.query.jql,
+    },
+    {
+      key: 'GS-2',
+      summary: 'Build a pipeline',
+    }
+  ]
+  console.log(items[0].summary);
+  return res.json(items[0].summary);
+}

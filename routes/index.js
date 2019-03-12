@@ -12,6 +12,7 @@ const catchErrors = fn => function (req, res, next) {
 
 router.get('/api/holidays', catchErrors(holidayController.getHolidays));
 router.get('/api/issues', catchErrors(issueController.getIssues));
+router.get('/api/search', catchErrors(issueController.getQuery));
 router.get('/api/resources', catchErrors(resourceController.getResources));
 router.get('/api/teams', catchErrors(resourceController.getTeams));
 

@@ -33,8 +33,6 @@ export default class Roadmap extends Component {
       }
     ))
   
-    console.log(items);
-  
     return (
       <ContentWrapper>
         <PageTitle>Roadmap</PageTitle>

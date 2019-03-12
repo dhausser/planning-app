@@ -10,6 +10,9 @@ import InlineEdit, { SingleLineTextInput } from '@atlaskit/inline-edit';
 
 export default class Single extends Component {
   state = {
+    error: null,
+    isLoaded: false,
+    items: [],
     editValue: '',
     readValue: '',
     onEventResult: 'Click on a field above to show edit view',
@@ -37,7 +40,23 @@ export default class Single extends Component {
   }
 
   onConfirm = () => {
-    this.setState(state => ({ readValue: state.editValue }));
+    fetch(`/api/search?jql=${this.state.editValue}`)
+      .then(res => res.json())
+      .then(
+        (result) => {
+          console.log(result);
+          this.setState({
+            isLoaded: true,
+            readValue: result,
+          });
+        },
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error
+          });
+        }
+      )
   };
 
   onCancel = () => {
