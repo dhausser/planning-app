@@ -3,118 +3,117 @@ const mongoose = require('mongoose');
 
 const Issue = mongoose.model('Issue');
 
-async function shallowCopy(issues) {
-  const shallowIssues = issues.map(issue => ({
-    id: issue.id || 0,
-    key: issue.key || '',
-    assignee: (issue.fields.assignee && issue.fields.assignee.key) || '',
-    avatarUrls: (issue.fields.assignee && issue.fields.assignee.avatarUrls) || '',
-    summary: issue.fields.summary || '',
-    issuetype: issue.fields.issuetype.name || '',
-    status: issue.fields.status.name || '',
-    statusCategory: issue.fields.status.statusCategory.key || '',
-    priority: issue.fields.priority.name || '',
-    components: issue.fields.components || '',
-  }));
+exports.httpsRequest = (req, res, next) => {
+  const jql = (req.query.jql !== {}) ? req.query.jql : 'filter=22119';
+  const bodyData = JSON.stringify({
+    jql,
+    startAt: 0,
+    maxResults: 500,
+    fields: [
+      "summary",
+      "status",
+      "assignee",
+      "issuetype",
+      "priority",
+      "components"
+    ]
+  });
+  const options = {
+    hostname: process.env.HOSTNAME,
+    port: 443,
+    path: `${process.env.API_PATH}/search`,
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Content-Length': Buffer.byteLength(bodyData),
+      Accept: 'application/json',
+      Authorization: process.env.AUTHORIZATION,
+    },
+  };
+
+  const request = https.request(options, (res) => {
+    console.log(`STATUS: ${res.statusCode}`);
+    console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
+    let rawData = '';
+    res.setEncoding('utf8');
+    res.on('data', (chunk) => {
+      rawData += chunk;
+    });
+    res.on('end', () => {
+      try {
+        const response = JSON.parse(rawData);
+        req.issues = response.issues;
+        next();
+      } catch (err) {
+        console.error(err.message);
+      }
+    });
+  });
+  request.on('error', (e) => {
+    console.error(`problem with request: ${e.message}`);
+  });
+  request.write(bodyData)
+  request.end();
+}
+
+exports.shallowCopy= async (req, res, next) => {
+  const shallowIssues = req.issues.map(({ id, key, fields }) => 
+    ({
+      id,
+      key,
+      assignee: fields.assignee && fields.assignee.key,
+      avatarUrls: fields.assignee && fields.assignee.avatarUrls,
+      summary: fields.summary,
+      issuetype: fields.issuetype.name,
+      status: fields.status.name,
+      statusCategory: fields.status.statusCategory.key,
+      priority: fields.priority.name,
+      components: fields.components,
+    })
+  );
 
   await Issue.deleteMany();
-
+  
   try {
     await Issue.insertMany(shallowIssues);
+    next();
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
-
-  return issues;
 }
 
-function httpsPostPromise(bodyData) {
-  return new Promise((resolve, reject) => {
-    const options = {
-      hostname: process.env.HOSTNAME,
-      port: 443,
-      path: `${process.env.API_PATH}/search`,
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Content-Length': Buffer.byteLength(bodyData),
-        Accept: 'application/json',
-        Authorization: process.env.AUTHORIZATION,
-      },
-    };
+exports.getIssues = async (req, res) => res.json(await Issue.find());
 
-    const req = https.request(options, (res) => {
-      if (process.env.NODE_ENV === 'development') {
-        console.log(`STATUS: ${res.statusCode}`);
-        console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
-      }
-      let rawData = '';
-      res.setEncoding('utf8');
-      res.on('data', (chunk) => {
-        rawData += chunk;
-      });
-      res.on('end', () => {
-        try {
-          const response = JSON.parse(rawData);
-          resolve(response);
-        } catch (err) {
-          console.error(err.message);
-        }
-      });
-    });
+exports.getQuery =  async (req, res) => res.json(req.query.jql);
 
-    req.on('error', (e) => {
-      console.error(`problem with request: ${e.message}`);
-      reject();
-    })
 
-    req.write(bodyData)
-    req.end();
-  });
-}
 
-exports.getIssues = async (req, res) => {
-  // TO DO
-  // Handle query parameters
+// HTTPS POST PROMISE
+//
+// return new Promise((resolve, reject) => {
+//   const req = https.request(options, (res) => {
+//     console.log(`STATUS: ${res.statusCode}`);
+//     console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
+//     let rawData = '';
+//     res.setEncoding('utf8');
+//     res.on('data', (chunk) => {
+//       rawData += chunk;
+//     });
+//     res.on('end', () => {
+//       try {
+//         const response = JSON.parse(rawData);
+//         resolve(response);
+//       } catch (err) {
+//         console.error(err.message);
+//       }
+//     });
+//   });
 
-  // if(req.query !== {}) {
-  //   return res.json(req.query);
-  // }
+//   req.on('error', (e) => {
+//     console.error(`problem with request: ${e.message}`);
+//     reject();
+//   })
 
-  if (process.env.NODE_ENV === 'production') {
-    const query = 'filter=22119';
-    const bodyData = {
-      jql: query,
-      startAt: 0,
-      maxResults: 500,
-      fields: [
-        "summary",
-        "status",
-        "assignee",
-        "issuetype",
-        "priority",
-        "components"
-      ]
-    };
-    const response = await httpsPostPromise(JSON.stringify(bodyData));
-    shallowCopy(response.issues);
-  }
-
-  return res.json(await Issue.find());
-};
-
-exports.getQuery =  async (req, res) => {
-  console.log(req.query);
-  const items = [
-    {
-      key: 'GS-1',
-      summary: req.query.jql,
-    },
-    {
-      key: 'GS-2',
-      summary: 'Build a pipeline',
-    }
-  ]
-  console.log(items[0].summary);
-  return res.json(items[0].summary);
-}
+//   req.write(bodyData)
+//   req.end();
+// });

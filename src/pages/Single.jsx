@@ -40,7 +40,7 @@ export default class Single extends Component {
   }
 
   onConfirm = () => {
-    fetch(`/api/search?jql=${this.state.editValue}`)
+    fetch(`/api/test?jql=${this.state.editValue}`)
       .then(res => res.json())
       .then(
         (result) => {

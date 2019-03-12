@@ -86,7 +86,7 @@ export default class App extends Component {
   };
 
   async componentDidMount() {
-    const response = await fetch('/api/issues');
+    const response = await fetch('/api/search');
     const issues = await response.json();
 
     const holidaysPromise = fetch('/api/holidays');
