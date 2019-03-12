@@ -79,13 +79,13 @@ exports.getIssues = async (req, res) => {
   // console.log(req.param);
   // console.log(req.query);
 
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV !== 'production') {
     const query = 'filter=22119';
-    const bodyData = `{
-      "jql": "${query}",
-      "startAt": 0,
-      "maxResults": 500,
-      "fields": [
+    const bodyData = {
+      jql: query,
+      startAt: 0,
+      maxResults: 500,
+      fields: [
         "summary",
         "status",
         "assignee",
@@ -93,8 +93,8 @@ exports.getIssues = async (req, res) => {
         "priority",
         "components"
       ]
-    }`;
-    const response = await httpsPostPromise(bodyData);
+    };
+    const response = await httpsPostPromise(JSON.stringify(bodyData));
     shallowCopy(response.issues);
   }
 
