@@ -130,7 +130,7 @@ const createRows = (issues, pathname) =>
     return row;
   });
 
-export default function IssueList({ issues, pathname, isLoading }) {
+export default function IssueList({ issues, isLoading, pathname }) {
   const caption = 'List of Issues';
   return (
     <Wrapper>
@@ -159,8 +159,4 @@ IssueList.propTypes = {
     status: string,
     assignee: string,
   })).isRequired,
-  resources: arrayOf(shape({
-    key: string,
-    name: string,
-  })),
 };

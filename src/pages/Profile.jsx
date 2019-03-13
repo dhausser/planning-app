@@ -14,23 +14,29 @@ export default class Profile extends Component {
   render() {
     const { resourceId } = this.props.params;
     const { resources, isLoading } = this.context;
-    const resource = resources.find(resource => resource.key === resourceId);
-  
+    let link = null;
+    let resource = null;
+
+    if (!isLoading) {
+      resource = resources.find(({ key }) => key === resourceId);
+      link = `https://${process.env.HOSTNAME}/issues/?jql=assignee%20%3D%20${resource.key}%20AND%20statusCategory%20in%20(new%2C%20indeterminate)%20and%20fixVersion%20in%20earliestUnreleasedVersionByReleaseDate(GWENT)`;
+    }
+
     return (
       <ContentWrapper>
-        {!isLoading && resource
+        {!isLoading
           && (
             <div>
               <PageTitle>
-                {resource.name}
+                {resource && resource.name}
                 {' '}
                 -
                 {' '}
-                {resource.team}
+                {resource && resource.team}
               </PageTitle>
-              <a href={`https://jira.cdprojektred.com/issues/?jql=assignee%20%3D%20${resource.key}%20AND%20statusCategory%20in%20(new%2C%20indeterminate)%20and%20fixVersion%20in%20earliestUnreleasedVersionByReleaseDate(GWENT)`} target="_blank" rel="noopener noreferrer">View in Issue Navigator</a>
-              <IssueList issues={resource.issues} />
-              <HolidayList holidays={resource.holidays} />
+              <a href={link} target="_blank" rel="noopener noreferrer">View in Issue Navigator</a>
+              <IssueList issues={resource && resource.issues} isLoading={isLoading} />
+              <HolidayList holidays={resource && resource.holidays} isLoading={isLoading} />
             </div>
           )
         }

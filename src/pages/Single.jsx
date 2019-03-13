@@ -40,7 +40,8 @@ export default class Single extends Component {
   }
 
   onConfirm = () => {
-    fetch(`/api/test?jql=${this.state.editValue}`)
+    console.log(`Sending value: ${this.state.editValue}`)
+    fetch(`/api/search?jql=${this.state.editValue}`)
       .then(res => res.json())
       .then(
         (result) => {
@@ -84,7 +85,6 @@ export default class Single extends Component {
     const { issues, resources, isLoading } = this.context;
     const issue = issues.find(issue => issue.key === issueId);
     const resource = resources.find(resource => resource.key === issue.assignee);
-
     const id = 'inline-edit-single';
 
     return (
