@@ -90,6 +90,7 @@ export default class App extends Component {
     const issues = await response.json();
 
     console.log(issues.length);
+    console.log(issues[0]);
 
     const holidaysPromise = fetch('/api/holidays');
     const resourcesPromise = fetch('/api/resources');

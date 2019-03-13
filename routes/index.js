@@ -14,11 +14,10 @@ router.get('/api/resources', catchErrors(resourceController.getResources));
 router.get('/api/holidays', catchErrors(holidayController.getHolidays));
 router.get('/api/teams', catchErrors(resourceController.getTeams));
 router.get('/api/issues', catchErrors(issueController.getIssues));
-router.get('/api/test', catchErrors(issueController.getQuery));
+router.get('/api/edit', catchErrors(issueController.getQuery));
 router.get('/api/search',
   issueController.httpsRequest,
-  issueController.shallowCopy,
-  issueController.getIssues
+  issueController.getFields,
 );
 
 module.exports = router;

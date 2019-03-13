@@ -41,15 +41,18 @@ export default class Single extends Component {
 
   onConfirm = () => {
     console.log(`Sending value: ${this.state.editValue}`)
-    fetch(`/api/search?jql=${this.state.editValue}`)
+
+    this.setState({
+      isLoaded: true,
+      readValue: this.state.editValue,
+    });
+
+    fetch(`/api/edit?param=${this.state.editValue}`)
       .then(res => res.json())
       .then(
         (result) => {
           console.log(result);
-          this.setState({
-            isLoaded: true,
-            readValue: result,
-          });
+
         },
         (error) => {
           this.setState({

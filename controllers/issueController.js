@@ -32,15 +32,15 @@ exports.httpsRequest = (req, res, next) => {
     },
   };
 
-  const request = https.request(options, (res) => {
-    console.log(`STATUS: ${res.statusCode}`);
-    console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
+  const postRequest = https.request(options, (request) => {
+    console.log(`STATUS: ${request.statusCode}`);
+    console.log(`HEADERS: ${JSON.stringify(request.headers)}`);
     let rawData = '';
-    res.setEncoding('utf8');
-    res.on('data', (chunk) => {
+    request.setEncoding('utf8');
+    request.on('data', (chunk) => {
       rawData += chunk;
     });
-    res.on('end', () => {
+    request.on('end', () => {
       try {
         const response = JSON.parse(rawData);
         req.issues = response.issues;
@@ -50,48 +50,47 @@ exports.httpsRequest = (req, res, next) => {
       }
     });
   });
-  request.on('error', (e) => {
+  postRequest.on('error', (e) => {
     console.error(`problem with request: ${e.message}`);
   });
-  request.write(bodyData)
-  request.end();
+  postRequest.write(bodyData)
+  postRequest.end();
 }
 
-exports.shallowCopy = async (req, res, next) => {
-  if (req.issues) {
-    console.log(`Saving ${req.issues.length} to MongoDB...`);
-    const shallowIssues = req.issues.map(({ id, key, fields }) =>
-      ({
-        id,
-        key,
-        assignee: fields.assignee.key,
-        summary: fields.summary,
-        issuetype: fields.issuetype.name,
-        status: fields.status.name,
-        statusCategory: fields.status.statusCategory.key,
-        priority: fields.priority.name,
-        components: fields.components,
-      })
-    );
+exports.getFields = async (req, res) =>
+  res.json(req.issues.map(({ key, fields }) =>
+    ({
+      key,
+      summary: fields.summary,
+      priority: fields.priority.name,
+      status: fields.status.name,
+      statusCategory: fields.status.statusCategory.key,
+      issuetype: fields.issuetype.name,
+      assignee: fields.assignee.key,
+      displayName: fields.assignee.displayName,
+    })
+  ));
 
-    await Issue.deleteMany();
+exports.getIssues = async (res) => res.json(await Issue.find());
 
-    try {
-      await Issue.insertMany(shallowIssues);
-      console.log(`Successfully saved ${req.issues.length} to MongoDB!`);
-      next();
-    } catch (e) {
-      console.error(e);
-    }
-  } else {
-    console.log(`Skip saving to MongoDB`);
-    next();
-  }
-}
+exports.getQuery = async (req, res) => res.json(req.query.param);
 
-exports.getIssues = async (req, res, next) => {
-  console.log('Returning issues from MongoDB collection')
-  return res.json(await Issue.find());
-}
 
-exports.getQuery = async (req, res) => res.json(req.query.jql);
+
+// SAVING SHALLOW COPY TO MONGODB FOR AGGREGATION PIPELINE
+//
+// {
+// if (req.issues) {
+// await Issue.deleteMany();
+// try {
+// await Issue.insertMany(shallows);
+// console.log(`Successfully saved ${req.issues.length} to MongoDB!`);
+// next()
+// } catch (e) {
+// console.error(e);
+// }
+// } else {
+// console.log(`Skip saving to MongoDB`);
+// next();
+// }
+// }
