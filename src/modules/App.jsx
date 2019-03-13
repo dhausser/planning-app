@@ -86,12 +86,12 @@ export default class App extends Component {
   };
 
   async componentDidMount() {
-    const response = await fetch('/api/search');
+    const response = await fetch('/api/issues');
     const issues = await response.json();
 
     const holidaysPromise = fetch('/api/holidays');
     const resourcesPromise = fetch('/api/resources');
-    
+
     const [holidaysResponse, resourcesResponse] = await Promise.all([
       holidaysPromise, resourcesPromise
     ]);
@@ -111,7 +111,7 @@ export default class App extends Component {
         navigationWidth={this.context.navOpenState.width}
         navigation={<StarterNavigation />}
       >
-        { this.props.children }
+        {this.props.children}
       </Page>
     );
   }

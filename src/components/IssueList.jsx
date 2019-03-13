@@ -50,7 +50,7 @@ export const priorityIcon = ({ priority }) => {
   }
 }
 
-const createHead = (withWidth, resources) => {
+const createHead = (withWidth, pathname) => {
   const head = {
     cells: [
       {
@@ -83,7 +83,7 @@ const createHead = (withWidth, resources) => {
     ],
   };
 
-  if (resources != null) {
+  (pathname === '/issues') &&
     head.cells.push({
       key: 'assignee',
       content: 'Assignee',
@@ -91,57 +91,54 @@ const createHead = (withWidth, resources) => {
       isSortable: true,
       width: withWidth ? 15 : undefined,
     });
-  }
+
 
   return head;
 };
 
-const createRows = (issues, resources) => issues.map((issue, index) => {
-  const row = {
-    key: `row-${index}-${issue.key}`,
-    cells: [
-      {
-        content: (
-          <NameWrapper>
-            <Link to={`/single/${issue.key}`}>{issue.key}</Link>
-          </NameWrapper>
-        ),
-      },
-      {
-        content: issue.summary,
-      },
-      {
-        key: parseInt(issue.priority.charAt(1)) + 1,
-        content: priorityIcon(issue),
-      },
-      {
-        key: issue.statusCategory,
-        content: <Status text={issue.status} color={statusColor(issue)} />,
-      },
-    ],
-  };
+const createRows = (issues, pathname) =>
+  issues.map((issue, index) => {
+    const row = {
+      key: `row-${index}-${issue.key}`,
+      cells: [
+        {
+          content: (
+            <NameWrapper>
+              <Link to={`/single/${issue.key}`}>{issue.key}</Link>
+            </NameWrapper>
+          ),
+        },
+        {
+          content: issue.summary,
+        },
+        {
+          key: parseInt(issue.priority.charAt(1)) + 1,
+          content: priorityIcon(issue),
+        },
+        {
+          key: issue.statusCategory,
+          content: <Status text={issue.status} color={statusColor(issue)} />,
+        },
+      ],
+    };
 
-  if (resources != null) {
-    const { name } = resources.find(
-      resource => resource.key === issue.assignee,
-    );
-    row.cells.push({
-      content: <Link to={`/profile/${issue.assignee}`}>{name}</Link>,
-    });
-  }
+    (pathname === '/issues') &&
+      row.cells.push({
+        content: <Link to={`/profile/${issue.assignee}`}>{issue.assignee}</Link>,
+      });
 
-  return row;
-});
+    return row;
+  });
 
-export default function IssueList({ issues, resources, isLoading }) {
+export default function IssueList({ issues, pathname, isLoading }) {
   const caption = 'List of Issues';
   return (
     <Wrapper>
       <DynamicTable
         caption={caption}
-        head={createHead(true, resources)}
-        rows={createRows(issues, resources)}
-        rowsPerPage={resources ? 20 : 10}
+        head={createHead(true, pathname)}
+        rows={createRows(issues, pathname)}
+        rowsPerPage={(pathname === "/issues") ? 20 : 10}
         defaultPage={1}
         loadingSpinnerSize="large"
         isLoading={isLoading}

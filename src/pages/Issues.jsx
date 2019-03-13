@@ -13,13 +13,19 @@ export default class Issues extends Component {
   };
 
   render() {
-    const { issues, resources, isLoading  } = this.context;
+    const { issues, resources, isLoading } = this.context;
+    const { pathname } = this.props.location;
 
     return (
       <ContentWrapper>
         <PageTitle>Issues</PageTitle>
         <TeamFilter />
-        <IssueList issues={issues} resources={resources} isLoading={isLoading} />
+        <IssueList
+          issues={issues}
+          resources={resources}
+          isLoading={isLoading}
+          pathname={pathname}
+        />
       </ContentWrapper>
     )
   }
