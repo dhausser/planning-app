@@ -43,7 +43,6 @@ export default class App extends Component {
     return {
       isLoading: this.state.isLoading,
       holidays: this.state.holidays,
-      issues: this.state.issues,
       resources: this.state.resources,
       teams: this.state.teams,
       themeMode: this.state.themeMode,
@@ -86,26 +85,14 @@ export default class App extends Component {
   };
 
   async componentDidMount() {
-    const response = await fetch('/api/search');
-    const issues = await response.json();
-
-    console.log(issues.length);
-    console.log(issues[0]);
-
-    const holidaysPromise = fetch('/api/holidays');
-    const resourcesPromise = fetch('/api/resources');
-
-    const [holidaysResponse, resourcesResponse] = await Promise.all([
-      holidaysPromise, resourcesPromise
+    const [resourcesResponse, holidaysResponse] = await Promise.all([
+      fetch('/api/resources'), fetch('/api/holidays')
     ]);
-
-    const [holidays, resources] = await Promise.all([
-      holidaysResponse.json(), resourcesResponse.json()
+    const [resources, holidays] = await Promise.all([
+      resourcesResponse.json(), holidaysResponse.json()
     ]);
-
     const teams = [...new Set(resources.map(resource => resource.team))];
-
-    this.setState({ holidays, issues, resources, teams, isLoading: false });
+    this.setState({ resources, teams, holidays, isLoading: false });
   }
 
   render() {

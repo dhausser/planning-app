@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import ContentWrapper from '../components/atlaskit/ContentWrapper';
@@ -12,30 +11,27 @@ export default class Single extends Component {
   state = {
     error: null,
     isLoaded: false,
-    items: [],
+    issue: {},
     editValue: '',
     readValue: '',
     onEventResult: 'Click on a field above to show edit view',
   }
 
-  static contextTypes = {
-    isLoading: PropTypes.bool,
-    issues: PropTypes.array,
-    resources: PropTypes.array,
-  };
-
   componentDidUpdate = () => {
     (this.state.readValue === '') && this.setInitialState();
   }
 
-  componentDidMount = () => {
-    !this.context.isLoading && this.setInitialState();
+  componentDidMount = async () => {
+    const jql = `key=${this.props.params.issueId}`;
+    const response = await fetch(`/api/search?jql=${jql}`);
+    const issues = await response.json();
+    this.setState({ issue: issues.shift(), isLoading: false });
+    console.log(this.state.issue);
+    this.setInitialState();
   }
 
   setInitialState = () => {
-    const { issueId } = this.props.params;
-    const { issues } = this.context;
-    const issue = issues.find(issue => issue.key === issueId);
+    const { issue } = this.state;
     this.setState({ readValue: issue.summary, editValue: issue.summary });
   }
 
@@ -84,21 +80,18 @@ export default class Single extends Component {
   );
 
   render() {
-    const { issueId } = this.props.params;
-    const { issues, resources, isLoading } = this.context;
-    const issue = issues.find(issue => issue.key === issueId);
-    const resource = resources.find(resource => resource.key === issue.assignee);
     const id = 'inline-edit-single';
-
+    const { issue, isLoading } = this.state;
+    console.log(issue.status);
     return (
       <ContentWrapper>
-        {!isLoading && issue
+        {!isLoading
           && (
             <div style={{ padding: '0 16px' }}>
               <PageTitle>{this.state.readValue}</PageTitle>
               <a href={`https://jira.cdprojektred.com/browse/${issue.key}`} target="_blank" rel="noopener noreferrer">View in Issue Navigator</a>
-              <p><Status text={issue.status} color={statusColor(issue)} /></p>
-              <p>{priorityIcon(issue)} {issue.priority} {issue.issuetype}</p>
+              <p><Status text={issue.status || ''} color={statusColor(issue.statusCategory)} /></p>
+              <p>{priorityIcon(issue.priority)} {issue.priority} {issue.issuetype}</p>
               <InlineEdit
                 isFitContainerWidthReadView
                 label="Summary"
@@ -111,7 +104,7 @@ export default class Single extends Component {
               />
               <p>
                 <NameWrapper>
-                  <Link to={`/profile/${resource.key}`}>{resource.name}</Link>
+                  <Link to={`/profile/${issue.assignee}`}>{issue.displayName}</Link>
                 </NameWrapper>
               </p>
             </div>

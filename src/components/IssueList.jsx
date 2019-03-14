@@ -20,7 +20,7 @@ const NameWrapper = styled.span`
   align-items: center;
 `;
 
-export const statusColor = ({ statusCategory }) => {
+export const statusColor = (category) => {
   const colors = [
     "neutral",
     "purple",
@@ -30,7 +30,7 @@ export const statusColor = ({ statusCategory }) => {
     "green"
   ];
 
-  switch (statusCategory) {
+  switch (category) {
   case 'new': return colors[2];
   case 'indeterminate': return colors[4];
   case 'done': return colors[5];
@@ -38,7 +38,7 @@ export const statusColor = ({ statusCategory }) => {
   }
 }
 
-export const priorityIcon = ({ priority }) => {
+export const priorityIcon = (priority) => {
   switch (priority) {
   case 'PO': return <PriorityBlockerIcon size="small" />
   case 'P1': return <PriorityHighestIcon size="small" />
@@ -113,11 +113,11 @@ const createRows = (issues, pathname) =>
         },
         {
           key: parseInt(issue.priority.charAt(1)) + 1,
-          content: priorityIcon(issue),
+          content: priorityIcon(issue.priority),
         },
         {
           key: issue.statusCategory,
-          content: <Status text={issue.status} color={statusColor(issue)} />,
+          content: <Status text={issue.status} color={statusColor(issue.statusCategory)} />,
         },
       ],
     };

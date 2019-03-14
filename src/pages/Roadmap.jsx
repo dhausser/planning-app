@@ -7,32 +7,45 @@ import { Status } from '@atlaskit/status';
 import { statusColor } from '../components/IssueList';
 
 export default class Roadmap extends Component {
+  state = {
+    issues: [],
+  }
+
   static contextTypes = {
     isLoading: PropTypes.bool,
-    issues: PropTypes.array,
   };
 
-  render() {
-    const { isLoading } = this.context;
-    const issues = this.context.issues.filter(({ issuetype }) => issuetype === 'Story');
-    const items = issues.map(issue => (
+  componentDidMount = async () => {
+    const jql = 'project=GWENT AND issuetype=Story AND fixVersion=2.0';
+    const response = await fetch(`api/search?jql=${jql}`);
+    const issues = await response.json();
+    this.setState({ issues });
+  }
+
+  // TODO assign maps subtasks as children
+  convertIssues = () => {
+    return this.state.issues.map(issue => (
       {
         key: issue.key,
         summary: issue.summary,
         value: issue.priority,
-        status: <Status text={issue.status} color={statusColor(issue)} />,
+        status: <Status text={issue.status} color={statusColor(issue.statusCategory)} />,
         children: [
           {
-            key: `${issue.key}-subtask`,
-            summary: `${issue.key} Sample subtask`,
-            value: issue.priority,
-            status: <Status text={issue.status} color={statusColor(issue)} />,
+            key: 'subtask',
+            summary: 'Sample subtask',
+            value: 'P4',
+            status: 'to do',
             children: []
           }
         ]
       }
     ))
-  
+  }
+
+  render() {
+    const { isLoading } = this.context;
+
     return (
       <ContentWrapper>
         <PageTitle>Roadmap</PageTitle>
@@ -44,7 +57,7 @@ export default class Roadmap extends Component {
               <Header width={100}>Status</Header>
             </Headers>
             <Rows
-              items={items}
+              items={this.convertIssues()}
               render={({ key, summary, value, status, children }) => (
                 <Row
                   expandLabel={'Expand'}

@@ -4,10 +4,10 @@ const mongoose = require('mongoose');
 const Issue = mongoose.model('Issue');
 
 exports.httpsRequest = (req, res, next) => {
-  // const jql = (req.query.jql !== {}) ? req.query.jql : 'filter=22119';
-  const jql = 'filter=22119';
+  console.log(req.query.jql);
+
   const bodyData = JSON.stringify({
-    jql,
+    jql: req.query.jql,
     startAt: 0,
     maxResults: 200,
     fields: [
@@ -33,8 +33,8 @@ exports.httpsRequest = (req, res, next) => {
   };
 
   const postRequest = https.request(options, (request) => {
-    console.log(`STATUS: ${request.statusCode}`);
-    console.log(`HEADERS: ${JSON.stringify(request.headers)}`);
+    // console.log(`STATUS: ${request.statusCode}`);
+    // console.log(`HEADERS: ${JSON.stringify(request.headers)}`);
     let rawData = '';
     request.setEncoding('utf8');
     request.on('data', (chunk) => {
@@ -44,6 +44,8 @@ exports.httpsRequest = (req, res, next) => {
       try {
         const response = JSON.parse(rawData);
         req.issues = response.issues;
+        console.log(req.issues.length);
+
         next();
       } catch (err) {
         console.error(err.message);
