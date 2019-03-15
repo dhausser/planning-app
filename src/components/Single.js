@@ -7,10 +7,26 @@ import PageTitle from './PageTitle';
 import { priorityIcon, statusColor } from './IssueList';
 import { NameWrapper } from './ResourceList';
 
+function postData(url = ``, data = {}) {
+  return fetch(url, {
+    method: "POST",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    redirect: "follow",
+    referrer: "no-referrer",
+    body: JSON.stringify(data),
+  })
+    .then(response => response.json());
+}
+
 export default class Single extends Component {
   state = {
     error: null,
-    isLoaded: false,
+    isLoading: false,
     issue: {},
     editValue: '',
     readValue: '',
@@ -22,11 +38,9 @@ export default class Single extends Component {
   }
 
   componentDidMount = async () => {
-    const jql = `key=${this.props.params.issueId}`;
-    const response = await fetch(`/api/search?jql=${jql}`);
-    const issues = await response.json();
-    this.setState({ issue: issues.shift(), isLoading: false });
-    console.log(this.state.issue);
+    const response = await fetch(`/api/issue?jql=key=${this.props.params.issueId}`);
+    const issue = (await response.json()).shift();
+    this.setState({ issue, isLoading: false });
     this.setInitialState();
   }
 
@@ -36,27 +50,28 @@ export default class Single extends Component {
   }
 
   onConfirm = () => {
-    console.log(`Sending value: ${this.state.editValue}`)
+    const { readValue } = this.state;
+    this.setState({ readValue: this.state.editValue });
+    postData('/api/issue', { key: this.state.issue.key, summary: this.state.editValue })
+      .then(data => {
+        switch (data) {
+        case 400:
+          console.log('STATUS 400: Returned if the requested issue update failed.');
+          this.setState({ readValue });
+          break;
+        case 204:
+          console.log('STATUS 204: Returned if it updated the issue successfully.');
+          break;
+        case 403:
+          console.log('STATUS 403: Returned if the user doesnt have permissions to disable users notification.');
+          this.setState({ readValue });
+          break;
 
-    this.setState({
-      isLoaded: true,
-      readValue: this.state.editValue,
-    });
-
-    fetch(`/api/edit?param=${this.state.editValue}`)
-      .then(res => res.json())
-      .then(
-        (result) => {
-          console.log(result);
-
-        },
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error
-          });
+        default:
+          break;
         }
-      )
+      })
+      .catch(error => console.error(error));
   };
 
   onCancel = () => {
@@ -82,7 +97,6 @@ export default class Single extends Component {
   render() {
     const id = 'inline-edit-single';
     const { issue, isLoading } = this.state;
-    console.log(issue.status);
     return (
       <ContentWrapper>
         {!isLoading

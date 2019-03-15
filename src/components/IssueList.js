@@ -124,6 +124,7 @@ const createRows = (issues, pathname) =>
 
     (pathname === '/issues') &&
       row.cells.push({
+        key: issue.assignee,
         content: <Link to={`/profile/${issue.assignee}`}>{issue.displayName}</Link>,
       });
 

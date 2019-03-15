@@ -10,14 +10,15 @@ const catchErrors = fn => function (req, res, next) {
   return fn(req, res, next).catch(next);
 };
 
+// Routes to MongoDB
 router.get('/api/resources', catchErrors(resourceController.getResources));
 router.get('/api/holidays', catchErrors(holidayController.getHolidays));
 router.get('/api/teams', catchErrors(resourceController.getTeams));
-router.get('/api/edit', catchErrors(issueController.getQuery));
 router.get('/api/issues', catchErrors(issueController.getIssues));
-router.get('/api/search',
-  issueController.httpsRequest,
-  issueController.getFields,
-);
+
+// Routes to Jira Server API
+router.get('/api/search', issueController.httpsRequest, issueController.getFields);
+router.get('/api/issue', issueController.httpsRequest, issueController.getFields);
+router.post('/api/issue', issueController.editIssue);
 
 module.exports = router;

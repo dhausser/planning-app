@@ -4,12 +4,10 @@ const mongoose = require('mongoose');
 const Issue = mongoose.model('Issue');
 
 exports.httpsRequest = (req, res, next) => {
-  console.log(req.query.jql);
-
   const bodyData = JSON.stringify({
     jql: req.query.jql,
     startAt: 0,
-    maxResults: 200,
+    maxResults: 500,
     fields: [
       "summary",
       "status",
@@ -19,6 +17,7 @@ exports.httpsRequest = (req, res, next) => {
       "components"
     ]
   });
+
   const options = {
     hostname: process.env.HOSTNAME,
     port: 443,
@@ -33,8 +32,8 @@ exports.httpsRequest = (req, res, next) => {
   };
 
   const postRequest = https.request(options, (request) => {
-    // console.log(`STATUS: ${request.statusCode}`);
-    // console.log(`HEADERS: ${JSON.stringify(request.headers)}`);
+    console.log(`STATUS: ${request.statusCode}`);
+    console.log(`HEADERS: ${JSON.stringify(request.headers)}`);
     let rawData = '';
     request.setEncoding('utf8');
     request.on('data', (chunk) => {
@@ -43,9 +42,7 @@ exports.httpsRequest = (req, res, next) => {
     request.on('end', () => {
       try {
         const response = JSON.parse(rawData);
-        req.issues = response.issues;
-        console.log(req.issues.length);
-
+        req.response = response;
         next();
       } catch (err) {
         console.error(err.message);
@@ -59,40 +56,53 @@ exports.httpsRequest = (req, res, next) => {
   postRequest.end();
 }
 
-exports.getFields = async (req, res) =>
-  res.json(req.issues.map(({ key, fields }) =>
-    ({
-      key,
-      summary: fields.summary,
-      priority: fields.priority.name,
-      status: fields.status.name,
-      statusCategory: fields.status.statusCategory.key,
-      issuetype: fields.issuetype.name,
-      assignee: fields.assignee.key,
-      displayName: fields.assignee.displayName,
+exports.getFields = async (req, res) => {
+  function fields(issue) {
+    return ({
+      key: issue.key,
+      summary: issue.fields.summary,
+      priority: issue.fields.priority.name,
+      status: issue.fields.status.name,
+      statusCategory: issue.fields.status.statusCategory.key,
+      issuetype: issue.fields.issuetype.name,
+      assignee: issue.fields.assignee.key,
+      displayName: issue.fields.assignee.displayName,
     })
-  ));
+  }
 
-exports.getIssues = async (res) => res.json(await Issue.find());
+  return (req.response.issues) ?
+    res.json(req.response.issues.map(issue => fields(issue))) :
+    fields(req.response);
+}
 
-exports.getQuery = async (req, res) => res.json(req.query.param);
+exports.getIssues = async (req, res) => res.json(await Issue.find());
 
+exports.getIssue = async (req, res) => {
+  console.log(req.query.key);
+  return res.json({ key: 'GS-11', summary: 'Sample issue', assignee: 'joe.cool', displayName: 'Joe Cool' });
+};
 
+exports.editIssue = async (req, res) => {
+  const bodyData = JSON.stringify({ "update": { "summary": [{ "set": `${req.body.summary}` }] } });
+  // const bodyData = JSON.stringify({ "fields": { "summary": `${req.body.summary}` } });
 
-// SAVING SHALLOW COPY TO MONGODB FOR AGGREGATION PIPELINE
-//
-// {
-// if (req.issues) {
-// await Issue.deleteMany();
-// try {
-// await Issue.insertMany(shallows);
-// console.log(`Successfully saved ${req.issues.length} to MongoDB!`);
-// next()
-// } catch (e) {
-// console.error(e);
-// }
-// } else {
-// console.log(`Skip saving to MongoDB`);
-// next();
-// }
-// }
+  const options = {
+    hostname: process.env.HOSTNAME,
+    port: 443,
+    path: `${process.env.API_PATH}/issue/${req.body.key}`,
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Content-Length': Buffer.byteLength(bodyData),
+      Accept: 'application/json',
+      Authorization: process.env.AUTHORIZATION,
+    },
+  };
+
+  const postRequest = https.request(options, (request) => res.json(request.statusCode));
+  postRequest.on('error', (e) => {
+    console.error(`problem with request: ${e.message}`);
+  });
+  postRequest.write(bodyData)
+  postRequest.end();
+}
