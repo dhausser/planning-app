@@ -1,0 +1,13 @@
+{
+  "extends": "react-app",
+  "rules": {
+    "indent": [
+      "warn",
+      2
+    ],
+    "react/jsx-indent": [
+      "warn",
+      2
+    ]
+  }
+}
