@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import ContentWrapper from '../components/atlaskit/ContentWrapper';
-import PageTitle from '../components/atlaskit/PageTitle';
-import TeamFilter from '../components/TeamFilter';
-import HolidayList from '../components/HolidayList';
+import ContentWrapper from './ContentWrapper';
+import PageTitle from './PageTitle';
+import TeamFilter from './TeamFilter';
+import HolidayList from './HolidayList';
 
 export default class Holidays extends Component {
   static contextTypes = {
@@ -13,7 +13,7 @@ export default class Holidays extends Component {
   };
 
   render() {
-    const { holidays, resources, isLoading  } = this.context;
+    const { holidays, resources, isLoading } = this.context;
 
     return (
       <ContentWrapper>

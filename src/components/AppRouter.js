@@ -2,16 +2,16 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import App from './App';
-import Dashboard from '../pages/Dashboard';
-import Roadmap from '../pages/Roadmap';
-import Resources from '../pages/Resources';
-import Profile from '../pages/Profile';
-import Issues from '../pages/Issues';
-import Single from '../pages/Single';
-import Holidays from '../pages/Holidays';
-import Settings from '../pages/Settings';
+import Dashboard from './Dashboard';
+import Roadmap from './Roadmap';
+import Resources from './Resources';
+import Profile from './Profile';
+import Issues from './Issues';
+import Single from './Single';
+import Holidays from './Holidays';
+import Settings from './Settings';
 
-export default class MainRouter extends Component {
+export default class AppRouter extends Component {
   constructor() {
     super();
     this.state = {
@@ -59,6 +59,6 @@ export default class MainRouter extends Component {
   }
 }
 
-MainRouter.childContextTypes = {
+AppRouter.childContextTypes = {
   navOpenState: PropTypes.object,
 }

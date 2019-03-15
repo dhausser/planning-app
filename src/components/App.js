@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Page from '@atlaskit/page';
 import '@atlaskit/css-reset';
 
-import StarterNavigation from '../components/atlaskit/StarterNavigation';
+import StarterNavigation from './StarterNavigation';
 
 export default class App extends Component {
   state = {

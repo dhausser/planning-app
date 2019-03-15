@@ -2,15 +2,15 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import Button from '@atlaskit/button';
 import { AtlaskitThemeProvider } from '@atlaskit/theme';
-import ContentWrapper from '../components/atlaskit/ContentWrapper';
-import PageTitle from '../components/atlaskit/PageTitle';
+import ContentWrapper from './ContentWrapper';
+import PageTitle from './PageTitle';
 
 export default class Settings extends Component {
   static contextTypes = {
     themeMode: PropTypes.string,
     switchTheme: PropTypes.func,
   };
-  
+
   render() {
     return (
       <ContentWrapper>

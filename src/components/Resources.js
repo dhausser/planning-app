@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import ContentWrapper from '../components/atlaskit/ContentWrapper';
-import PageTitle from '../components/atlaskit/PageTitle';
-import TeamFilter from '../components/TeamFilter';
-import ResourceList from '../components/ResourceList';
+import ContentWrapper from './ContentWrapper';
+import PageTitle from './PageTitle';
+import TeamFilter from './TeamFilter';
+import ResourceList from './ResourceList';
 
 export default class ResourcesPage extends Component {
   static contextTypes = {

@@ -22,7 +22,7 @@ import CreateDrawer from './CreateDrawer';
 import SearchDrawer from './SearchDrawer';
 import HelpDropdownMenu from './HelpDropdownMenu';
 import AccountDropdownMenu from './AccountDropdownMenu';
-import Logo from '../../images/jira.png';
+import Logo from '../images/jira.png';
 
 export default class StarterNavigation extends React.Component {
   state = {
@@ -40,15 +40,15 @@ export default class StarterNavigation extends React.Component {
     navOpenState: PropTypes.object,
     router: PropTypes.object,
   };
-  
+
   shouldComponentUpdate(nextProps, nextContext) {
     return true;
   };
-  
+
   openDrawer = (openDrawer) => {
     this.setState({ openDrawer });
   };
-  
+
   render() {
     const backIcon = <ArrowleftIcon label="Back icon" size="medium" />;
     const globalPrimaryIcon = <AtlassianIcon label="Atlassian icon" size="xlarge" />;

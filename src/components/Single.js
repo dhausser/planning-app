@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
-import ContentWrapper from '../components/atlaskit/ContentWrapper';
-import PageTitle from '../components/atlaskit/PageTitle';
 import { Status } from '@atlaskit/status';
-import { priorityIcon, statusColor } from '../components/IssueList';
-import { NameWrapper } from '../components/ResourceList';
 import InlineEdit, { SingleLineTextInput } from '@atlaskit/inline-edit';
+import ContentWrapper from './ContentWrapper';
+import PageTitle from './PageTitle';
+import { priorityIcon, statusColor } from './IssueList';
+import { NameWrapper } from './ResourceList';
 
 export default class Single extends Component {
   state = {

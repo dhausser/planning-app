@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import ContentWrapper from '../components/atlaskit/ContentWrapper';
-import PageTitle from '../components/atlaskit/PageTitle';
+import ContentWrapper from './ContentWrapper';
+import PageTitle from './PageTitle';
 import TableTree, { Headers, Header, Rows, Row, Cell } from '@atlaskit/table-tree';
 import { Status } from '@atlaskit/status';
-import { statusColor } from '../components/IssueList';
+import { statusColor } from './IssueList';
 
 export default class Roadmap extends Component {
   state = {

@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import ContentWrapper from '../components/atlaskit/ContentWrapper';
-import PageTitle from '../components/atlaskit/PageTitle';
-import TeamFilter from '../components/TeamFilter';
-import BarChart from '../components/BarChart';
+import ContentWrapper from './ContentWrapper';
+import PageTitle from './PageTitle';
+import TeamFilter from './TeamFilter';
+import BarChart from './BarChart';
 
 export default class Dashboard extends Component {
   static contextTypes = {
@@ -42,7 +42,7 @@ export default class Dashboard extends Component {
       <ContentWrapper>
         <PageTitle>Dashboard</PageTitle>
         <TeamFilter />
-        {!isLoading && 
+        {!isLoading &&
           <BarChart dataset={this.aggregateIssues()} />
         }
       </ContentWrapper>

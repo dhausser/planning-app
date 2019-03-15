@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import ContentWrapper from '../components/atlaskit/ContentWrapper';
-import PageTitle from '../components/atlaskit/PageTitle';
-import TeamFilter from '../components/TeamFilter';
-import IssueList from '../components/IssueList';
+import ContentWrapper from './ContentWrapper';
+import PageTitle from './PageTitle';
+import TeamFilter from './TeamFilter';
+import IssueList from './IssueList';
 
 export default class Issues extends Component {
   state = {
