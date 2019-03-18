@@ -3,19 +3,32 @@ const mongoose = require('mongoose');
 
 const Issue = mongoose.model('Issue');
 
+function getFields(issue) {
+  return ({
+    key: issue.key,
+    summary: issue.fields.summary,
+    priority: issue.fields.priority.name,
+    status: issue.fields.status.name,
+    statusCategory: issue.fields.status.statusCategory.key,
+    issuetype: issue.fields.issuetype.name,
+    assignee: issue.fields.assignee.key,
+    displayName: issue.fields.assignee.displayName,
+  })
+}
+
 exports.httpsRequest = (req, res, next) => {
   const bodyData = JSON.stringify({
     jql: req.query.jql,
     startAt: 0,
     maxResults: 500,
     fields: [
-      "summary",
-      "status",
-      "assignee",
-      "issuetype",
-      "priority",
-      "components"
-    ]
+      'summary',
+      'status',
+      'assignee',
+      'issuetype',
+      'priority',
+      'components'
+    ],
   });
 
   const options = {
@@ -57,22 +70,18 @@ exports.httpsRequest = (req, res, next) => {
 }
 
 exports.getFields = async (req, res) => {
-  function fields(issue) {
-    return ({
-      key: issue.key,
-      summary: issue.fields.summary,
-      priority: issue.fields.priority.name,
-      status: issue.fields.status.name,
-      statusCategory: issue.fields.status.statusCategory.key,
-      issuetype: issue.fields.issuetype.name,
-      assignee: issue.fields.assignee.key,
-      displayName: issue.fields.assignee.displayName,
-    })
+  try {
+    if (req.response.issues) {
+      const issues = req.response.issues.map(issue => getFields(issue));
+      await Issue.deleteMany();
+      await Issue.insertMany(issues);
+      return res.json(issues);
+    } else {
+      return res.json(getFields(req.response));
+    }
+  } catch (e) {
+    console.log(e);
   }
-
-  return (req.response.issues) ?
-    res.json(req.response.issues.map(issue => fields(issue))) :
-    fields(req.response);
 }
 
 exports.getIssues = async (req, res) => res.json(await Issue.find());

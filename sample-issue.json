@@ -1,0 +1,236 @@
+{
+  "expand": "schema,names",
+  "startAt": 0,
+  "maxResults": 500,
+  "total": 6,
+  "issues": [
+    {
+      "expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
+      "id": "408467",
+      "self": "https://jira.cdprojektred.com/rest/api/latest/issue/408467",
+      "key": "GWENT-63099",
+      "fields": {
+        "summary": "CC release: infrastructure capacity planning",
+        "assignee": {
+          "self": "https://jira.cdprojektred.com/rest/api/2/user?username=krzysztof.sobczak",
+          "name": "krzysztof.sobczak",
+          "key": "krzysztof.sobczak",
+          "emailAddress": "krzysztof.sobczak@cdprojektred.com",
+          "avatarUrls": {
+            "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=krzysztof.sobczak&avatarId=18503",
+            "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=krzysztof.sobczak&avatarId=18503",
+            "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=krzysztof.sobczak&avatarId=18503",
+            "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=krzysztof.sobczak&avatarId=18503"
+          },
+          "displayName": "Krzysztof Sobczak",
+          "active": true,
+          "timeZone": "Europe/Warsaw"
+        },
+        "status": {
+          "self": "https://jira.cdprojektred.com/rest/api/2/status/3",
+          "description": "This issue is being actively worked on at the moment by the assignee.",
+          "iconUrl": "https://jira.cdprojektred.com/images/icons/statuses/inprogress.png",
+          "name": "Work In Progress",
+          "id": "3",
+          "statusCategory": {
+            "self": "https://jira.cdprojektred.com/rest/api/2/statuscategory/4",
+            "id": 4,
+            "key": "indeterminate",
+            "colorName": "yellow",
+            "name": "In Progress"
+          }
+        }
+      }
+    },
+    {
+      "expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
+      "id": "402846",
+      "self": "https://jira.cdprojektred.com/rest/api/latest/issue/402846",
+      "key": "GWENT-62787",
+      "fields": {
+        "summary": "Tournament Build Preparation",
+        "assignee": {
+          "self": "https://jira.cdprojektred.com/rest/api/2/user?username=davy.hausser",
+          "name": "davy.hausser",
+          "key": "davy.hausser",
+          "emailAddress": "davy.hausser@cdprojektred.com",
+          "avatarUrls": {
+            "48x48": "https://jira.cdprojektred.com/secure/useravatar?avatarId=12128",
+            "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&avatarId=12128",
+            "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&avatarId=12128",
+            "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&avatarId=12128"
+          },
+          "displayName": "Davy Hausser",
+          "active": true,
+          "timeZone": "Europe/Warsaw"
+        },
+        "status": {
+          "self": "https://jira.cdprojektred.com/rest/api/2/status/6",
+          "description": "The issue is considered finished, the resolution is correct. Issues which are closed can be reopened.",
+          "iconUrl": "https://jira.cdprojektred.com/images/icons/statuses/closed.png",
+          "name": "Closed",
+          "id": "6",
+          "statusCategory": {
+            "self": "https://jira.cdprojektred.com/rest/api/2/statuscategory/3",
+            "id": 3,
+            "key": "done",
+            "colorName": "green",
+            "name": "Done"
+          }
+        }
+      }
+    },
+    {
+      "expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
+      "id": "397814",
+      "self": "https://jira.cdprojektred.com/rest/api/latest/issue/397814",
+      "key": "GWENT-62510",
+      "fields": {
+        "summary": "Season of the Elf",
+        "assignee": {
+          "self": "https://jira.cdprojektred.com/rest/api/2/user?username=davy.hausser",
+          "name": "davy.hausser",
+          "key": "davy.hausser",
+          "emailAddress": "davy.hausser@cdprojektred.com",
+          "avatarUrls": {
+            "48x48": "https://jira.cdprojektred.com/secure/useravatar?avatarId=12128",
+            "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&avatarId=12128",
+            "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&avatarId=12128",
+            "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&avatarId=12128"
+          },
+          "displayName": "Davy Hausser",
+          "active": true,
+          "timeZone": "Europe/Warsaw"
+        },
+        "status": {
+          "self": "https://jira.cdprojektred.com/rest/api/2/status/3",
+          "description": "This issue is being actively worked on at the moment by the assignee.",
+          "iconUrl": "https://jira.cdprojektred.com/images/icons/statuses/inprogress.png",
+          "name": "Work In Progress",
+          "id": "3",
+          "statusCategory": {
+            "self": "https://jira.cdprojektred.com/rest/api/2/statuscategory/4",
+            "id": 4,
+            "key": "indeterminate",
+            "colorName": "yellow",
+            "name": "In Progress"
+          }
+        }
+      }
+    },
+    {
+      "expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
+      "id": "399612",
+      "self": "https://jira.cdprojektred.com/rest/api/latest/issue/399612",
+      "key": "GWENT-62610",
+      "fields": {
+        "summary": "Support display of multiples statuses on card",
+        "assignee": {
+          "self": "https://jira.cdprojektred.com/rest/api/2/user?username=manuel.silva",
+          "name": "manuel.silva",
+          "key": "manuel.silva",
+          "emailAddress": "manuel.silva@cdprojektred.com",
+          "avatarUrls": {
+            "48x48": "https://jira.cdprojektred.com/secure/useravatar?ownerId=manuel.silva&avatarId=17330",
+            "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=manuel.silva&avatarId=17330",
+            "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=manuel.silva&avatarId=17330",
+            "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=manuel.silva&avatarId=17330"
+          },
+          "displayName": "Manuel Silva",
+          "active": true,
+          "timeZone": "Europe/Warsaw"
+        },
+        "status": {
+          "self": "https://jira.cdprojektred.com/rest/api/2/status/6",
+          "description": "The issue is considered finished, the resolution is correct. Issues which are closed can be reopened.",
+          "iconUrl": "https://jira.cdprojektred.com/images/icons/statuses/closed.png",
+          "name": "Closed",
+          "id": "6",
+          "statusCategory": {
+            "self": "https://jira.cdprojektred.com/rest/api/2/statuscategory/3",
+            "id": 3,
+            "key": "done",
+            "colorName": "green",
+            "name": "Done"
+          }
+        }
+      }
+    },
+    {
+      "expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
+      "id": "408178",
+      "self": "https://jira.cdprojektred.com/rest/api/latest/issue/408178",
+      "key": "GWENT-63040",
+      "fields": {
+        "summary": "Crimson Curse Achievements",
+        "assignee": {
+          "self": "https://jira.cdprojektred.com/rest/api/2/user?username=davy.hausser",
+          "name": "davy.hausser",
+          "key": "davy.hausser",
+          "emailAddress": "davy.hausser@cdprojektred.com",
+          "avatarUrls": {
+            "48x48": "https://jira.cdprojektred.com/secure/useravatar?avatarId=12128",
+            "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&avatarId=12128",
+            "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&avatarId=12128",
+            "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&avatarId=12128"
+          },
+          "displayName": "Davy Hausser",
+          "active": true,
+          "timeZone": "Europe/Warsaw"
+        },
+        "status": {
+          "self": "https://jira.cdprojektred.com/rest/api/2/status/3",
+          "description": "This issue is being actively worked on at the moment by the assignee.",
+          "iconUrl": "https://jira.cdprojektred.com/images/icons/statuses/inprogress.png",
+          "name": "Work In Progress",
+          "id": "3",
+          "statusCategory": {
+            "self": "https://jira.cdprojektred.com/rest/api/2/statuscategory/4",
+            "id": 4,
+            "key": "indeterminate",
+            "colorName": "yellow",
+            "name": "In Progress"
+          }
+        }
+      }
+    },
+    {
+      "expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
+      "id": "396614",
+      "self": "https://jira.cdprojektred.com/rest/api/latest/issue/396614",
+      "key": "GWENT-62459",
+      "fields": {
+        "summary": "UI implementation of Outcome Screen",
+        "assignee": {
+          "self": "https://jira.cdprojektred.com/rest/api/2/user?username=davy.hausser",
+          "name": "davy.hausser",
+          "key": "davy.hausser",
+          "emailAddress": "davy.hausser@cdprojektred.com",
+          "avatarUrls": {
+            "48x48": "https://jira.cdprojektred.com/secure/useravatar?avatarId=12128",
+            "24x24": "https://jira.cdprojektred.com/secure/useravatar?size=small&avatarId=12128",
+            "16x16": "https://jira.cdprojektred.com/secure/useravatar?size=xsmall&avatarId=12128",
+            "32x32": "https://jira.cdprojektred.com/secure/useravatar?size=medium&avatarId=12128"
+          },
+          "displayName": "Davy Hausser",
+          "active": true,
+          "timeZone": "Europe/Warsaw"
+        },
+        "status": {
+          "self": "https://jira.cdprojektred.com/rest/api/2/status/3",
+          "description": "This issue is being actively worked on at the moment by the assignee.",
+          "iconUrl": "https://jira.cdprojektred.com/images/icons/statuses/inprogress.png",
+          "name": "Work In Progress",
+          "id": "3",
+          "statusCategory": {
+            "self": "https://jira.cdprojektred.com/rest/api/2/statuscategory/4",
+            "id": 4,
+            "key": "indeterminate",
+            "colorName": "yellow",
+            "name": "In Progress"
+          }
+        }
+      }
+    }
+  ]
+}
