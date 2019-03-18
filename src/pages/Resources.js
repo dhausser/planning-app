@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import ContentWrapper from './ContentWrapper';
-import PageTitle from './PageTitle';
-import TeamFilter from './TeamFilter';
-import ResourceList from './ResourceList';
+import ContentWrapper from '../components/ContentWrapper';
+import PageTitle from '../components/PageTitle';
+import TeamFilter from '../components/TeamFilter';
+import ResourceList from '../components/ResourceList';
 
 export default class ResourcesPage extends Component {
   static contextTypes = {

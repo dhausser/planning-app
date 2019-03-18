@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import ContentWrapper from './ContentWrapper';
-import PageTitle from './PageTitle';
-import IssueList from './IssueList';
-import HolidayList from './HolidayList';
+import ContentWrapper from '../components/ContentWrapper';
+import PageTitle from '../components/PageTitle';
+import IssueList from '../components/IssueList';
+import HolidayList from '../components/HolidayList';
 
 export default class Profile extends Component {
   state = {

@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { Status } from '@atlaskit/status';
 import InlineEdit, { SingleLineTextInput } from '@atlaskit/inline-edit';
-import ContentWrapper from './ContentWrapper';
-import PageTitle from './PageTitle';
-import { priorityIcon, statusColor } from './IssueList';
-import { NameWrapper } from './ResourceList';
+import ContentWrapper from '../components/ContentWrapper';
+import PageTitle from '../components/PageTitle';
+import { priorityIcon, statusColor } from '../components/IssueList';
+import { NameWrapper } from '../components/ResourceList';
 
 function postData(url = ``, data = {}) {
   return fetch(url, {

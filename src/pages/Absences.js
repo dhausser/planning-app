@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import ContentWrapper from './ContentWrapper';
-import PageTitle from './PageTitle';
-import TeamFilter from './TeamFilter';
-import HolidayList from './HolidayList';
+import ContentWrapper from '../components/ContentWrapper';
+import PageTitle from '../components/PageTitle';
+import TeamFilter from '../components/TeamFilter';
+import HolidayList from '../components/HolidayList';
 
 export default class Holidays extends Component {
   static contextTypes = {

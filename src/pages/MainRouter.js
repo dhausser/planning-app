@@ -6,12 +6,12 @@ import Dashboard from './Dashboard';
 import Roadmap from './Roadmap';
 import Resources from './Resources';
 import Profile from './Profile';
-import Issues from './Issues';
+import Backlog from './Backlog';
 import Single from './Single';
-import Holidays from './Holidays';
+import Absences from './Absences';
 import Settings from './Settings';
 
-export default class AppRouter extends Component {
+export default class MainRouter extends Component {
   constructor() {
     super();
     this.state = {
@@ -49,9 +49,9 @@ export default class AppRouter extends Component {
           <Route path="/roadmap" component={Roadmap} />
           <Route path="/resources" component={Resources} />
           <Route path="/profile/:resourceId" component={Profile} />`
-          <Route path="/issues" component={Issues} />
+          <Route path="/issues" component={Backlog} />
           <Route path="/single/:issueId" component={Single} />`
-          <Route path="/holidays" component={Holidays} />
+          <Route path="/Absences" component={Absences} />
           <Route path="/settings" component={Settings} hello={'Hello!'} />
         </Route>
       </Router>
@@ -59,6 +59,6 @@ export default class AppRouter extends Component {
   }
 }
 
-AppRouter.childContextTypes = {
+MainRouter.childContextTypes = {
   navOpenState: PropTypes.object,
 }
