@@ -30,8 +30,8 @@ export default class StarterNavigation extends React.Component {
       ['/', 'Dashboard', DashboardIcon],
       ['/roadmap', 'Roadmap', RoadmapIcon],
       ['/resources', 'Resources', PeopleGroupIcon],
-      ['/issues', 'Backlog', BacklogIcon],
-      ['/holidays', 'Absences', CameraIcon],
+      ['/backlog', 'Backlog', BacklogIcon],
+      ['/absences', 'Absences', CameraIcon],
       ['/settings', 'Settings', GearIcon],
     ]
   };

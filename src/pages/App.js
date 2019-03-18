@@ -10,9 +10,9 @@ export default class App extends Component {
     isFiltering: false,
     themeMode: 'light',
     filter: null,
+    issues: [],
     resources: [],
     holidays: [],
-    issues: [],
     teams: [],
   };
 
@@ -41,6 +41,7 @@ export default class App extends Component {
   getChildContext() {
     return {
       isLoading: this.state.isLoading,
+      issues: this.state.issues,
       holidays: this.state.holidays,
       resources: this.state.resources,
       teams: this.state.teams,
@@ -84,6 +85,10 @@ export default class App extends Component {
   };
 
   async componentDidMount() {
+    const jql = 'filter=22119';
+    const response = await fetch(`/api/search?jql=${jql}`);
+    const issues = await response.json();
+
     const [resourcesResponse, holidaysResponse] = await Promise.all([
       fetch('/api/resources'), fetch('/api/holidays')
     ]);
@@ -91,7 +96,7 @@ export default class App extends Component {
       resourcesResponse.json(), holidaysResponse.json()
     ]);
     const teams = [...new Set(resources.map(resource => resource.team))];
-    this.setState({ resources, teams, holidays, isLoading: false });
+    this.setState({ issues, resources, teams, holidays, isLoading: false });
   }
 
   render() {

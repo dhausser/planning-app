@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import { Status } from '@atlaskit/status';
 import InlineEdit, { SingleLineTextInput } from '@atlaskit/inline-edit';
@@ -25,28 +26,42 @@ function postData(url = ``, data = {}) {
 
 export default class Single extends Component {
   state = {
-    error: null,
-    isLoading: false,
     issue: {},
+    error: null,
     editValue: '',
     readValue: '',
     onEventResult: 'Click on a field above to show edit view',
   }
 
-  componentDidUpdate = () => {
-    (this.state.readValue === '') && this.setInitialState();
-  }
+  static contextTypes = {
+    isLoading: PropTypes.bool,
+    issues: PropTypes.array,
+  };
 
   componentDidMount = async () => {
-    const response = await fetch(`/api/issue?jql=key=${this.props.params.issueId}`);
-    const issue = (await response.json()).shift();
-    this.setState({ issue, isLoading: false });
-    this.setInitialState();
+    const issue = this.getIssue();
+    if (issue != null) {
+      this.setState({ issue, readValue: issue.summary, editValue: issue.summary });
+    }
   }
 
-  setInitialState = () => {
-    const { issue } = this.state;
-    this.setState({ readValue: issue.summary, editValue: issue.summary });
+  componentDidUpdate = () => {
+    if (this.state.readValue === '') {
+      const issue = this.getIssue()
+      this.setState({ issue, readValue: issue.summary, editValue: issue.summary });
+    }
+  }
+
+  getIssue() {
+    const { issueId } = this.props.params;
+    const { isLoading, issues } = this.context;
+    if (!isLoading) {
+      console.log(issueId);
+      const issue = issues.find(({ key }) => key === issueId);
+      return issue;
+    } else {
+      return null;
+    }
   }
 
   onConfirm = () => {
@@ -96,34 +111,35 @@ export default class Single extends Component {
 
   render() {
     const id = 'inline-edit-single';
-    const { issue, isLoading } = this.state;
+    const { isLoading } = this.context;
+    const { issue } = this.state;
+
     return (
+      // <div style={{ padding: '0 16px' }}>
+      //   {!isLoading &&
       <ContentWrapper>
-        {!isLoading
-          && (
-            <div style={{ padding: '0 16px' }}>
-              <PageTitle>{this.state.readValue}</PageTitle>
-              <a href={`https://jira.cdprojektred.com/browse/${issue.key}`} target="_blank" rel="noopener noreferrer">View in Issue Navigator</a>
-              <p><Status text={issue.status || ''} color={statusColor(issue.statusCategory)} /></p>
-              <p>{priorityIcon(issue.priority)} {issue.priority} {issue.issuetype}</p>
-              <InlineEdit
-                isFitContainerWidthReadView
-                label="Summary"
-                labelHtmlFor={id}
-                editView={this.renderInput({ isEditing: true, id })}
-                readView={this.renderInput({ isEditing: false, id })}
-                onConfirm={this.onConfirm}
-                onCancel={this.onCancel}
-                {...this.props}
-              />
-              <p>
-                <NameWrapper>
-                  <Link to={`/profile/${issue.assignee}`}>{issue.displayName}</Link>
-                </NameWrapper>
-              </p>
-            </div>
-          )}
+        <PageTitle>{this.state.readValue}</PageTitle>
+        <a href={`https://jira.cdprojektred.com/browse/${issue.key}`} target="_blank" rel="noopener noreferrer">View in Issue Navigator</a>
+        <p><Status text={issue.status || ''} color={statusColor(issue.statusCategory)} /></p>
+        <p>{priorityIcon(issue.priority)} {issue.priority} {issue.issuetype}</p>
+        <InlineEdit
+          isFitContainerWidthReadView
+          label="Summary"
+          labelHtmlFor={id}
+          editView={this.renderInput({ isEditing: true, id })}
+          readView={this.renderInput({ isEditing: false, id })}
+          onConfirm={this.onConfirm}
+          onCancel={this.onCancel}
+          {...this.props}
+        />
+        <p>
+          <NameWrapper>
+            <Link to={`/profile/${issue.assignee}`}>{issue.displayName}</Link>
+          </NameWrapper>
+        </p>
       </ContentWrapper>
+      //   }
+      // </div>
     )
   }
 }

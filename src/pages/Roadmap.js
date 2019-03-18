@@ -7,24 +7,14 @@ import ContentWrapper from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
 
 export default class Roadmap extends Component {
-  state = {
-    issues: [],
-  }
-
   static contextTypes = {
     isLoading: PropTypes.bool,
+    issues: PropTypes.array,
   };
 
-  componentDidMount = async () => {
-    const jql = 'project=GWENT AND issuetype=Story AND fixVersion=2.0';
-    const response = await fetch(`api/search?jql=${jql}`);
-    const issues = await response.json();
-    this.setState({ issues });
-  }
-
   // TODO assign maps subtasks as children
-  convertIssues = () => {
-    return this.state.issues.map(issue => (
+  convertIssues = (issues) => {
+    return issues.map(issue => (
       {
         key: issue.key,
         summary: issue.summary,
@@ -44,7 +34,8 @@ export default class Roadmap extends Component {
   }
 
   render() {
-    const { isLoading } = this.context;
+    const { isLoading, issues } = this.context;
+    const stories = issues.filter(({ issuetype }) => issuetype === 'Story');
 
     return (
       <ContentWrapper>
@@ -57,7 +48,7 @@ export default class Roadmap extends Component {
               <Header width={100}>Status</Header>
             </Headers>
             <Rows
-              items={this.convertIssues()}
+              items={this.convertIssues(stories)}
               render={({ key, summary, value, status, children }) => (
                 <Row
                   expandLabel={'Expand'}

@@ -6,27 +6,16 @@ import TeamFilter from '../components/TeamFilter';
 import IssueList from '../components/IssueList';
 
 export default class Issues extends Component {
-  state = {
-    isLoading: true,
-    issues: [],
-  }
-
   static contextTypes = {
     filter: PropTypes.string,
+    issues: PropTypes.array,
     resources: PropTypes.array,
   };
 
-  componentDidMount = async () => {
-    const jql = 'filter=22119';
-    const response = await fetch(`/api/search?jql=${jql}`);
-    const issues = await response.json();
-    this.setState({ issues, isLoading: false });
-  }
-
   componentDidUpdate = () => {
-    const { filter } = this.context;
+    const { filter, resources } = this.context;
     if (filter != null) {
-      const team = this.context.resources
+      const team = resources
         .filter(({ team }) => team === filter)
         .map(({ key }) => key);
       const issues = this.state.issues
@@ -39,13 +28,14 @@ export default class Issues extends Component {
   }
 
   render() {
+    const { issues, isLoading } = this.context;
     return (
       <ContentWrapper>
         <PageTitle>Issues</PageTitle>
         <TeamFilter />
         <IssueList
-          issues={this.state.issues}
-          isLoading={this.state.isLoading}
+          issues={issues}
+          isLoading={isLoading}
           pathname={this.props.location.pathname}
         />
       </ContentWrapper>

@@ -5,53 +5,45 @@ import PageTitle from '../components/PageTitle';
 import IssueList from '../components/IssueList';
 import HolidayList from '../components/HolidayList';
 
-export default class Profile extends Component {
-  state = {
-    isLoading: true,
-    link: '',
-    resource: {},
-    issues: [],
-  };
 
+export default class Profile extends Component {
   static contextTypes = {
     isLoading: PropTypes.bool,
+    issues: PropTypes.array,
     resources: PropTypes.array,
   };
 
-  componentDidMount = async () => {
+  getResource() {
     const { resourceId } = this.props.params;
-    const jql = `project=GWENT AND fixVersion=2.0 AND assignee=${resourceId}`;
-    const response = await fetch(`/api/search?jql=${jql}`);
-    const issues = await response.json();
+    const { isLoading, resources } = this.context;
+    let resource = null;
 
-    // TODO Support edge case when resourse not found
-    const { resources } = this.context;
-    const resource = resources.find(({ key }) => key === resourceId);
-    const link = `https://jira.cdprojektred.com/issues/?jql=assignee%20%3D%20${resource.key}%20AND%20statusCategory%20in%20(new%2C%20indeterminate)%20and%20fixVersion%20in%20earliestUnreleasedVersionByReleaseDate(GWENT)`;
-
-    this.setState({ issues, resource, link, isLoading: false });
+    if (!isLoading) {
+      // TODO Support edge case when resourse not found
+      resource = resources.find(({ key }) => key === resourceId);
+      resource.link = `https://jira.cdprojektred.com/issues/?jql=assignee%20%3D%20${resource && resource.key}%20AND%20statusCategory%20in%20(new%2C%20indeterminate)%20and%20fixVersion%20in%20earliestUnreleasedVersionByReleaseDate(GWENT)`;
+    }
+    return resource;
   }
 
   render() {
+    const { isLoading } = this.context;
+    const resource = this.getResource();
+    console.log(resource);
+
     return (
-      <ContentWrapper>
-        {!this.state.isLoading
-          && (
-            <div>
-              <PageTitle>
-                {this.state.resource.name}
-                {' '}
-                -
-                {' '}
-                {this.state.resource.team}
-              </PageTitle>
-              <a href={this.state.link} target="_blank" rel="noopener noreferrer">View in Issue Navigator</a>
-              <IssueList issues={this.state.issues} isLoading={this.state.isLoading} />
-              <HolidayList holidays={this.state.resource.holidays} isLoading={this.context.isLoading} />
-            </div>
-          )
+      <div>
+        {!isLoading && resource != null &&
+          <ContentWrapper>
+            <PageTitle>
+              {resource.name} {resource.team}
+            </PageTitle>
+            {/* <a href={resource.link} target="_blank" rel="noopener noreferrer">View in Issue Navigator</a> */}
+            <IssueList issues={resource.issues} isLoading={isLoading} />
+            <HolidayList holidays={resource.holidays} isLoading={isLoading} />
+          </ContentWrapper>
         }
-      </ContentWrapper>
+      </div>
     );
   }
 };
