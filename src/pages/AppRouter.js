@@ -5,9 +5,9 @@ import App from './App';
 import Dashboard from './Dashboard';
 import Roadmap from './Roadmap';
 import Resources from './Resources';
-import Profile from './Profile';
-import Backlog from './Backlog';
-import Single from './Single';
+import Resource from './Resource';
+import Issues from './Issues';
+import Issue from './Issue';
 import Absences from './Absences';
 import Settings from './Settings';
 
@@ -48,9 +48,9 @@ export default class AppRouter extends Component {
           <IndexRoute component={Dashboard} />
           <Route path="/roadmap" component={Roadmap} />
           <Route path="/resources" component={Resources} />
-          <Route path="/profile/:resourceId" component={Profile} />`
-          <Route path="/backlog" component={Backlog} />
-          <Route path="/single/:issueId" component={Single} />`
+          <Route path="/resource/:resourceId" component={Resource} />`
+          <Route path="/issues" component={Issues} />
+          <Route path="/issue/:issueId" component={Issue} />`
           <Route path="/absences" component={Absences} />
           <Route path="/settings" component={Settings} hello={'Hello!'} />
         </Route>

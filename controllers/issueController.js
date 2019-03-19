@@ -7,6 +7,7 @@ function getFields(issue) {
   return ({
     key: issue.key,
     summary: issue.fields.summary,
+    description: issue.fields.description,
     priority: issue.fields.priority.name,
     status: issue.fields.status.name,
     statusCategory: issue.fields.status.statusCategory.key,
@@ -23,11 +24,11 @@ exports.httpsRequest = (req, res, next) => {
     maxResults: 500,
     fields: [
       'summary',
+      'description',
       'status',
       'assignee',
       'issuetype',
       'priority',
-      'components'
     ],
   });
 

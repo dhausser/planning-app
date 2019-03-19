@@ -24,7 +24,7 @@ function postData(url = ``, data = {}) {
     .then(response => response.json());
 }
 
-export default class Single extends Component {
+export default class Issue extends Component {
   state = {
     issue: {},
     error: null,
@@ -111,8 +111,9 @@ export default class Single extends Component {
 
   render() {
     const id = 'inline-edit-single';
-    const { isLoading } = this.context;
+    // const { isLoading } = this.context;
     const { issue } = this.state;
+    console.log(issue);
 
     return (
       // <div style={{ padding: '0 16px' }}>
@@ -132,9 +133,11 @@ export default class Single extends Component {
           onCancel={this.onCancel}
           {...this.props}
         />
+        <p><strong>Description</strong></p>
+        <p>{issue.description}</p>
         <p>
           <NameWrapper>
-            <Link to={`/profile/${issue.assignee}`}>{issue.displayName}</Link>
+            <Link to={`/resource/${issue.assignee}`}>{issue.displayName}</Link>
           </NameWrapper>
         </p>
       </ContentWrapper>

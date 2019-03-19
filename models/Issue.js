@@ -6,6 +6,7 @@ const issueSchema = new mongoose.Schema({
   id: Number,
   key: String,
   summary: String,
+  description: String,
   assignee: String,
   displayName: String,
   status: String,

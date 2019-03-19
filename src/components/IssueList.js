@@ -104,7 +104,7 @@ const createRows = (issues, pathname) =>
         {
           content: (
             <NameWrapper>
-              <Link to={`/single/${issue.key}`}>{issue.key}</Link>
+              <Link to={`/issue/${issue.key}`}>{issue.key}</Link>
             </NameWrapper>
           ),
         },
@@ -125,14 +125,14 @@ const createRows = (issues, pathname) =>
     (pathname === '/issues') &&
       row.cells.push({
         key: issue.assignee,
-        content: <Link to={`/profile/${issue.assignee}`}>{issue.displayName}</Link>,
+        content: <Link to={`/resource/${issue.assignee}`}>{issue.displayName}</Link>,
       });
 
     return row;
   });
 
 export default function IssueList({ issues, isLoading, pathname }) {
-  const caption = 'List of Issues';
+  const caption = `List of ${issues.length} Issues`;
   return (
     <Wrapper>
       <DynamicTable

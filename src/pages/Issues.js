@@ -6,6 +6,10 @@ import TeamFilter from '../components/TeamFilter';
 import IssueList from '../components/IssueList';
 
 export default class Issues extends Component {
+  state = {
+    issues: [],
+  }
+
   static contextTypes = {
     filter: PropTypes.string,
     issues: PropTypes.array,
@@ -13,17 +17,17 @@ export default class Issues extends Component {
   };
 
   componentDidUpdate = () => {
-    const { filter, resources } = this.context;
+    const { filter, resources, issues } = this.context;
     if (filter != null) {
       const team = resources
         .filter(({ team }) => team === filter)
         .map(({ key }) => key);
-      const issues = this.state.issues
+      const teamIssues = issues
         .filter(({ assignee }) => team.includes(assignee));
-      console.log(issues.length);
+      console.log(teamIssues.length);
 
       // TODO Update the state without triggering infinite loop
-      // this.setState({ issues });
+      // this.setState({ issues: teamIssues });
     }
   }
 

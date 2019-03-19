@@ -6,9 +6,10 @@ import IssueList from '../components/IssueList';
 import HolidayList from '../components/HolidayList';
 
 
-export default class Profile extends Component {
+export default class Resource extends Component {
   static contextTypes = {
     isLoading: PropTypes.bool,
+    jql: PropTypes.string,
     issues: PropTypes.array,
     resources: PropTypes.array,
   };
@@ -21,15 +22,15 @@ export default class Profile extends Component {
     if (!isLoading) {
       // TODO Support edge case when resourse not found
       resource = resources.find(({ key }) => key === resourceId);
-      resource.link = `https://jira.cdprojektred.com/issues/?jql=assignee%20%3D%20${resource && resource.key}%20AND%20statusCategory%20in%20(new%2C%20indeterminate)%20and%20fixVersion%20in%20earliestUnreleasedVersionByReleaseDate(GWENT)`;
     }
     return resource;
   }
 
   render() {
-    const { isLoading } = this.context;
+    const { isLoading, jql } = this.context;
+    const { resourceId } = this.props.params;
+    const link = `https://jira.cdprojektred.com/issues/?jql=${jql} AND assignee=${resourceId}`;
     const resource = this.getResource();
-    console.log(resource);
 
     return (
       <div>
@@ -38,7 +39,7 @@ export default class Profile extends Component {
             <PageTitle>
               {resource.name} {resource.team}
             </PageTitle>
-            {/* <a href={resource.link} target="_blank" rel="noopener noreferrer">View in Issue Navigator</a> */}
+            <a href={link} target="_blank" rel="noopener noreferrer">View in Issue Navigator</a>
             <IssueList issues={resource.issues} isLoading={isLoading} />
             <HolidayList holidays={resource.holidays} isLoading={isLoading} />
           </ContentWrapper>

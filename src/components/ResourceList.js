@@ -56,7 +56,7 @@ const createRows = resources => resources.map((resource, index) => ({
       key: createKey(resource.name),
       content: (
         <NameWrapper>
-          <Link to={`/profile/${resource.key}`}>{resource.name}</Link>
+          <Link to={`/resource/${resource.key}`}>{resource.name}</Link>
         </NameWrapper>
       ),
     },

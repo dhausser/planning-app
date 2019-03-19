@@ -10,6 +10,7 @@ export default class App extends Component {
     isFiltering: false,
     themeMode: 'light',
     filter: null,
+    jql: '',
     issues: [],
     resources: [],
     holidays: [],
@@ -28,6 +29,7 @@ export default class App extends Component {
 
   static childContextTypes = {
     isLoading: PropTypes.bool,
+    jql: PropTypes.string,
     holidays: PropTypes.array,
     issues: PropTypes.array,
     resources: PropTypes.array,
@@ -41,6 +43,7 @@ export default class App extends Component {
   getChildContext() {
     return {
       isLoading: this.state.isLoading,
+      jql: this.state.jql,
       issues: this.state.issues,
       holidays: this.state.holidays,
       resources: this.state.resources,
@@ -96,7 +99,7 @@ export default class App extends Component {
       resourcesResponse.json(), holidaysResponse.json()
     ]);
     const teams = [...new Set(resources.map(resource => resource.team))];
-    this.setState({ issues, resources, teams, holidays, isLoading: false });
+    this.setState({ issues, resources, teams, holidays, jql, isLoading: false });
   }
 
   render() {
