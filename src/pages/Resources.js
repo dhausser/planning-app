@@ -22,7 +22,7 @@ export default class ResourcesPage extends Component {
 
     return (
       <Padding>
-        <PageTitle>Resources</PageTitle>
+        <PageTitle>People</PageTitle>
         <TeamFilter />
         <ResourceList resources={resources} isLoading={isLoading} />
       </Padding>

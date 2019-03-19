@@ -76,7 +76,7 @@ const createRows = resources => resources.map((resource, index) => ({
 }));
 
 export default function ResourceList({ resources, isLoading }) {
-  const caption = 'List of Developers';
+  const caption = `Listing ${resources.length} developers`;
   const head = createHead('false');
   const rows = createRows(resources);
   return (

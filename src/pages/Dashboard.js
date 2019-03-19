@@ -40,7 +40,7 @@ export default class Dashboard extends Component {
 
     return (
       <Padding>
-        <PageTitle>Dashboard</PageTitle>
+        <PageTitle>Reports</PageTitle>
         <TeamFilter />
         {!isLoading &&
           <ContentWrapper>

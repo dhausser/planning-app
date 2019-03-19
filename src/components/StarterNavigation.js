@@ -7,31 +7,35 @@ import Nav, {
   AkNavigationItem,
   AkSearchDrawer,
 } from '@atlaskit/navigation';
-import DashboardIcon from '@atlaskit/icon/glyph/dashboard';
 import RoadmapIcon from '@atlaskit/icon/glyph/roadmap';
-import PeopleGroupIcon from '@atlaskit/icon/glyph/people-group';
-import BacklogIcon from '@atlaskit/icon/glyph/backlog';
-import CameraIcon from '@atlaskit/icon/glyph/camera';
+import BoardIcon from '@atlaskit/icon/glyph/board';
+import PeopleIcon from '@atlaskit/icon/glyph/people';
+import GraphBarIcon from '@atlaskit/icon/glyph/graph-bar';
+import CalendarIcon from '@atlaskit/icon/glyph/calendar';
 import GearIcon from '@atlaskit/icon/glyph/settings';
 import SearchIcon from '@atlaskit/icon/glyph/search';
 import CreateIcon from '@atlaskit/icon/glyph/add';
 import AtlassianIcon from '@atlaskit/icon/glyph/atlassian';
 import ArrowleftIcon from '@atlaskit/icon/glyph/arrow-left';
+// import DashboardIcon from '@atlaskit/icon/glyph/dashboard';
+// import BacklogIcon from '@atlaskit/icon/glyph/backlog';
+// import ShipIcon from '@atlaskit/icon/glyph/ship';
+// import GraphLineIcon from '@atlaskit/icon/glyph/graph-line';
 
 import CreateDrawer from './CreateDrawer';
 import SearchDrawer from './SearchDrawer';
 import HelpDropdownMenu from './HelpDropdownMenu';
 import AccountDropdownMenu from './AccountDropdownMenu';
-import Logo from '../images/jira.png';
+import Logo from '../images/viewavatar.svg';
 
 export default class StarterNavigation extends React.Component {
   state = {
     navLinks: [
-      ['/', 'Dashboard', DashboardIcon],
       ['/roadmap', 'Roadmap', RoadmapIcon],
-      ['/resources', 'Resources', PeopleGroupIcon],
-      ['/issues', 'Backlog', BacklogIcon],
-      ['/absences', 'Absences', CameraIcon],
+      ['/issues', 'Board', BoardIcon],
+      ['/', 'Reports', GraphBarIcon],
+      ['/resources', 'People', PeopleIcon],
+      ['/absences', 'Calendar', CalendarIcon],
       ['/settings', 'Settings', GearIcon],
     ]
   };
@@ -64,7 +68,7 @@ export default class StarterNavigation extends React.Component {
             icon={
               <img alt="logo" src={Logo} />
             }
-            text="Gwent"
+            text="Space Gwent"
           />
         )}
         globalPrimaryIcon={globalPrimaryIcon}
