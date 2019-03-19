@@ -64,7 +64,7 @@ export default class StarterNavigation extends React.Component {
         onResize={this.props.onNavResize}
         containerHeaderComponent={() => (
           <AkContainerTitle
-            href={`https://${process.env.HOSTNAME}`}
+            href={'/'}
             icon={
               <img alt="logo" src={Logo} />
             }
