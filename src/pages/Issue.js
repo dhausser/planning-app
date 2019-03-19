@@ -56,7 +56,6 @@ export default class Issue extends Component {
     const { issueId } = this.props.params;
     const { isLoading, issues } = this.context;
     if (!isLoading) {
-      console.log(issueId);
       const issue = issues.find(({ key }) => key === issueId);
       return issue;
     } else {
@@ -111,13 +110,9 @@ export default class Issue extends Component {
 
   render() {
     const id = 'inline-edit-single';
-    // const { isLoading } = this.context;
     const { issue } = this.state;
-    console.log(issue);
 
     return (
-      // <div style={{ padding: '0 16px' }}>
-      //   {!isLoading &&
       <ContentWrapper>
         <PageTitle>{this.state.readValue}</PageTitle>
         <a href={`https://jira.cdprojektred.com/browse/${issue.key}`} target="_blank" rel="noopener noreferrer">View in Issue Navigator</a>
@@ -141,8 +136,6 @@ export default class Issue extends Component {
           </NameWrapper>
         </p>
       </ContentWrapper>
-      //   }
-      // </div>
     )
   }
 }

@@ -88,6 +88,12 @@ export default class App extends Component {
   };
 
   async componentDidMount() {
+    // Reinstate our localstorage
+    const localStorageRef = localStorage.getItem('team');
+    if (localStorageRef) {
+      this.setState({ filter: JSON.parse(localStorageRef) });
+    }
+
     const jql = 'filter=22119';
     const response = await fetch(`/api/search?jql=${jql}`);
     const issues = await response.json();
@@ -100,6 +106,10 @@ export default class App extends Component {
     ]);
     const teams = [...new Set(resources.map(resource => resource.team))];
     this.setState({ issues, resources, teams, holidays, jql, isLoading: false });
+  }
+
+  componentDidUpdate() {
+    localStorage.setItem('team', JSON.stringify(this.state.filter));
   }
 
   render() {
