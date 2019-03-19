@@ -1,16 +1,9 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-// import ContentWrapper from '../components/ContentWrapper';
+import { Padding } from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
 import TeamFilter from '../components/TeamFilter';
 import ResourceList from '../components/ResourceList';
-import styled from 'styled-components';
-import { gridSize } from '@atlaskit/theme';
-
-const ContentWrapper = styled.div`
-  margin: ${gridSize() * 4}px ${gridSize() * 8}px;
-  padding-bottom: ${gridSize() * 3}px;
-`;
 
 export default class ResourcesPage extends Component {
   static contextTypes = {
@@ -28,11 +21,11 @@ export default class ResourcesPage extends Component {
     );
 
     return (
-      <ContentWrapper>
+      <Padding>
         <PageTitle>Resources</PageTitle>
         <TeamFilter />
         <ResourceList resources={resources} isLoading={isLoading} />
-      </ContentWrapper>
+      </Padding>
     );
   }
 }

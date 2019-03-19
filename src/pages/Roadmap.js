@@ -3,15 +3,8 @@ import React, { Component } from 'react';
 import TableTree, { Headers, Header, Rows, Row, Cell } from '@atlaskit/table-tree';
 import { Status } from '@atlaskit/status';
 import { statusColor } from '../components/IssueList';
-// import ContentWrapper from '../components/ContentWrapper';
+import { Padding } from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
-import styled from 'styled-components';
-import { gridSize } from '@atlaskit/theme';
-
-const ContentWrapper = styled.div`
-  margin: ${gridSize() * 4}px ${gridSize() * 8}px;
-  padding-bottom: ${gridSize() * 3}px;
-`;
 
 export default class Roadmap extends Component {
   static contextTypes = {
@@ -45,7 +38,7 @@ export default class Roadmap extends Component {
     const stories = issues.filter(({ issuetype }) => issuetype === 'Story');
 
     return (
-      <ContentWrapper>
+      <Padding>
         <PageTitle>Roadmap</PageTitle>
         {!isLoading &&
           <TableTree>
@@ -72,7 +65,7 @@ export default class Roadmap extends Component {
             />
           </TableTree>
         }
-      </ContentWrapper>
+      </Padding>
     )
   }
 };

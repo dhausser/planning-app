@@ -3,17 +3,10 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import { Status } from '@atlaskit/status';
 import InlineEdit, { SingleLineTextInput } from '@atlaskit/inline-edit';
-// import ContentWrapper from '../components/ContentWrapper';
+import { Padding } from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
 import { priorityIcon, statusColor } from '../components/IssueList';
 import { NameWrapper } from '../components/ResourceList';
-import styled from 'styled-components';
-import { gridSize } from '@atlaskit/theme';
-
-const ContentWrapper = styled.div`
-  margin: ${gridSize() * 4}px ${gridSize() * 8}px;
-  padding-bottom: ${gridSize() * 3}px;
-`;
 
 function postData(url = ``, data = {}) {
   return fetch(url, {
@@ -120,7 +113,7 @@ export default class Issue extends Component {
     const { issue } = this.state;
 
     return (
-      <ContentWrapper>
+      <Padding>
         <PageTitle>{this.state.readValue}</PageTitle>
         <a href={`https://jira.cdprojektred.com/browse/${issue.key}`} target="_blank" rel="noopener noreferrer">View in Issue Navigator</a>
         <p><Status text={issue.status || ''} color={statusColor(issue.statusCategory)} /></p>
@@ -142,7 +135,7 @@ export default class Issue extends Component {
             <Link to={`/resource/${issue.assignee}`}>{issue.displayName}</Link>
           </NameWrapper>
         </p>
-      </ContentWrapper>
+      </Padding>
     )
   }
 }

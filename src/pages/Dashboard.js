@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import ContentWrapper from '../components/ContentWrapper';
+import ContentWrapper, { Padding } from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
 import TeamFilter from '../components/TeamFilter';
 import BarChart from '../components/BarChart';
@@ -39,13 +39,15 @@ export default class Dashboard extends Component {
     const { isLoading } = this.context;
 
     return (
-      <ContentWrapper>
+      <Padding>
         <PageTitle>Dashboard</PageTitle>
         <TeamFilter />
         {!isLoading &&
-          <BarChart dataset={this.aggregateIssues()} />
+          <ContentWrapper>
+            <BarChart dataset={this.aggregateIssues()} />
+          </ContentWrapper>
         }
-      </ContentWrapper>
+      </Padding>
     );
   }
 }
