@@ -132,22 +132,20 @@ const createRows = (issues, pathname) =>
   });
 
 export default function IssueList({ issues, isLoading, pathname }) {
-  const caption = `List of ${issues.length} Issues`;
+  const caption = `Listing ${issues.length} issues`;
   return (
     <Wrapper>
       <DynamicTable
         caption={caption}
         head={createHead(true, pathname)}
         rows={createRows(issues, pathname)}
-        rowsPerPage={(pathname === "/issues") ? 20 : 10}
+        rowsPerPage={(pathname === "/issues") ? 100 : 10}
         defaultPage={1}
         loadingSpinnerSize="large"
         isLoading={isLoading}
         isFixedSize
         defaultSortKey="value"
         defaultSortOrder="ASC"
-        onSort={() => console.log('onSort')}
-        onSetPage={() => console.log('onSetPage')}
       />
     </Wrapper>
   );

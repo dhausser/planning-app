@@ -3,10 +3,17 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import { Status } from '@atlaskit/status';
 import InlineEdit, { SingleLineTextInput } from '@atlaskit/inline-edit';
-import ContentWrapper from '../components/ContentWrapper';
+// import ContentWrapper from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
 import { priorityIcon, statusColor } from '../components/IssueList';
 import { NameWrapper } from '../components/ResourceList';
+import styled from 'styled-components';
+import { gridSize } from '@atlaskit/theme';
+
+const ContentWrapper = styled.div`
+  margin: ${gridSize() * 4}px ${gridSize() * 8}px;
+  padding-bottom: ${gridSize() * 3}px;
+`;
 
 function postData(url = ``, data = {}) {
   return fetch(url, {
