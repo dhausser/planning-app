@@ -8,7 +8,7 @@ import IssueList from '../components/IssueList';
 export default class Issues extends Component {
   state = {
     issues: [],
-  }
+  };
 
   static contextTypes = {
     isLoading: PropTypes.bool,
@@ -23,14 +23,15 @@ export default class Issues extends Component {
       const team = resources
         .filter(({ team }) => team === filter)
         .map(({ key }) => key);
-      const teamIssues = issues
-        .filter(({ assignee }) => team.includes(assignee));
+      const teamIssues = issues.filter(({ assignee }) =>
+        team.includes(assignee)
+      );
       console.log(teamIssues.length);
 
       // TODO Update the state without triggering infinite loop
       // this.setState({ issues: teamIssues });
     }
-  }
+  };
 
   render() {
     const { issues, isLoading } = this.context;
@@ -44,6 +45,6 @@ export default class Issues extends Component {
           pathname={this.props.location.pathname}
         />
       </Padding>
-    )
+    );
   }
-};
+}

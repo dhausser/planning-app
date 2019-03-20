@@ -17,7 +17,9 @@ export default class Settings extends Component {
         <PageTitle>Settings</PageTitle>
         <AtlaskitThemeProvider mode={this.context.themeMode}>
           <div style={{ padding: 8 }}>
-            <Button onClick={this.context.switchTheme}>Switch theme ({this.context.themeMode})</Button>
+            <Button onClick={this.context.switchTheme}>
+              Switch theme ({this.context.themeMode})
+            </Button>
           </div>
         </AtlaskitThemeProvider>
       </Padding>

@@ -29,11 +29,12 @@ export default class Dashboard extends Component {
       return resources
         .filter(resource => resource.team === filter)
         .reduce((accumulator, currentValue) => {
-          accumulator[currentValue.name.split(" ").shift()] = currentValue.issues.length;
+          accumulator[currentValue.name.split(' ').shift()] =
+            currentValue.issues.length;
           return accumulator;
-        }, {})
-    };
-  }
+        }, {});
+    }
+  };
 
   render() {
     const { isLoading } = this.context;
@@ -42,11 +43,11 @@ export default class Dashboard extends Component {
       <Padding>
         <PageTitle>Reports</PageTitle>
         <TeamFilter />
-        {!isLoading &&
+        {!isLoading && (
           <ContentWrapper>
             <BarChart dataset={this.aggregateIssues()} />
           </ContentWrapper>
-        }
+        )}
       </Padding>
     );
   }

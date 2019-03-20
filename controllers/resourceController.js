@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const Resource = mongoose.model('Resource');
 
 exports.getTeams = async (req, res) => {
@@ -10,7 +9,8 @@ exports.getTeams = async (req, res) => {
     teamsPromise,
   ]);
 
-  res.json({ teams, resources });
+  res.json({ teams: teams.map(({ _id }) => _id), resources });
 };
 
-exports.getResources = async (req, res) => res.json(await Resource.getResources());
+exports.getResources = async (req, res) =>
+  res.json(await Resource.getResources());

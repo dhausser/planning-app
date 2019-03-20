@@ -1,5 +1,9 @@
 {
-  "extends": "react-app",
+  "extends": [
+    "react-app",
+    "prettier",
+    "prettier/react"
+  ],
   "rules": {
     "indent": [
       "warn",
@@ -8,6 +12,17 @@
     "react/jsx-indent": [
       "warn",
       2
+    ],
+    "prettier/prettier": [
+      "error",
+      {
+        "trailingComma": "es5",
+        "singleQuote": true,
+        "printWidth": 80
+      }
     ]
-  }
+  },
+  "plugins": [
+    "prettier"
+  ]
 }

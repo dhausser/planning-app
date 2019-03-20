@@ -10,18 +10,17 @@ import { NameWrapper } from '../components/ResourceList';
 
 function postData(url = ``, data = {}) {
   return fetch(url, {
-    method: "POST",
-    mode: "cors",
-    cache: "no-cache",
-    credentials: "same-origin",
+    method: 'POST',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
-    redirect: "follow",
-    referrer: "no-referrer",
+    redirect: 'follow',
+    referrer: 'no-referrer',
     body: JSON.stringify(data),
-  })
-    .then(response => response.json());
+  }).then(response => response.json());
 }
 
 export default class Issue extends Component {
@@ -31,7 +30,7 @@ export default class Issue extends Component {
     editValue: '',
     readValue: '',
     onEventResult: 'Click on a field above to show edit view',
-  }
+  };
 
   static contextTypes = {
     isLoading: PropTypes.bool,
@@ -41,16 +40,24 @@ export default class Issue extends Component {
   componentDidMount = async () => {
     const issue = this.getIssue();
     if (issue != null) {
-      this.setState({ issue, readValue: issue.summary, editValue: issue.summary });
+      this.setState({
+        issue,
+        readValue: issue.summary,
+        editValue: issue.summary,
+      });
     }
-  }
+  };
 
   componentDidUpdate = () => {
     if (this.state.readValue === '') {
-      const issue = this.getIssue()
-      this.setState({ issue, readValue: issue.summary, editValue: issue.summary });
+      const issue = this.getIssue();
+      this.setState({
+        issue,
+        readValue: issue.summary,
+        editValue: issue.summary,
+      });
     }
-  }
+  };
 
   getIssue() {
     const { issueId } = this.props.params;
@@ -66,18 +73,27 @@ export default class Issue extends Component {
   onConfirm = () => {
     const { readValue } = this.state;
     this.setState({ readValue: this.state.editValue });
-    postData('/api/issue', { key: this.state.issue.key, summary: this.state.editValue })
+    postData('/api/issue', {
+      key: this.state.issue.key,
+      summary: this.state.editValue,
+    })
       .then(data => {
         switch (data) {
         case 400:
-          console.log('STATUS 400: Returned if the requested issue update failed.');
+          console.log(
+            'STATUS 400: Returned if the requested issue update failed.'
+          );
           this.setState({ readValue });
           break;
         case 204:
-          console.log('STATUS 204: Returned if it updated the issue successfully.');
+          console.log(
+            'STATUS 204: Returned if it updated the issue successfully.'
+          );
           break;
         case 403:
-          console.log('STATUS 403: Returned if the user doesnt have permissions to disable users notification.');
+          console.log(
+            'STATUS 403: Returned if the user doesnt have permissions to disable users notification.'
+          );
           this.setState({ readValue });
           break;
 
@@ -92,7 +108,7 @@ export default class Issue extends Component {
     this.setState(state => ({ editValue: state.readValue }));
   };
 
-  onChange = (event) => {
+  onChange = event => {
     this.setState({
       editValue: event.target.value,
     });
@@ -115,9 +131,22 @@ export default class Issue extends Component {
     return (
       <Padding>
         <PageTitle>{this.state.readValue}</PageTitle>
-        <a href={`https://jira.cdprojektred.com/browse/${issue.key}`} target="_blank" rel="noopener noreferrer">View in Issue Navigator</a>
-        <p><Status text={issue.status || ''} color={statusColor(issue.statusCategory)} /></p>
-        <p>{priorityIcon(issue.priority)} {issue.priority} {issue.issuetype}</p>
+        <a
+          href={`https://jira.cdprojektred.com/browse/${issue.key}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          View in Issue Navigator
+        </a>
+        <p>
+          <Status
+            text={issue.status || ''}
+            color={statusColor(issue.statusCategory)}
+          />
+        </p>
+        <p>
+          {priorityIcon(issue.priority)} {issue.priority} {issue.issuetype}
+        </p>
         <InlineEdit
           isFitContainerWidthReadView
           label="Summary"
@@ -128,7 +157,9 @@ export default class Issue extends Component {
           onCancel={this.onCancel}
           {...this.props}
         />
-        <p><strong>Description</strong></p>
+        <p>
+          <strong>Description</strong>
+        </p>
         <p>{issue.description}</p>
         <p>
           <NameWrapper>
@@ -136,6 +167,6 @@ export default class Issue extends Component {
           </NameWrapper>
         </p>
       </Padding>
-    )
+    );
   }
 }

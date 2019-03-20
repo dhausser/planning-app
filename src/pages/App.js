@@ -57,21 +57,21 @@ export default class App extends Component {
 
   showModal = () => {
     this.setState({ isModalOpen: true });
-  }
+  };
 
   hideModal = () => {
     this.setState({ isModalOpen: false });
-  }
+  };
 
   addFlag = () => {
     this.setState({ flags: [{ id: Date.now() }].concat(this.state.flags) });
-  }
+  };
 
-  onFlagDismissed = (dismissedFlagId) => {
+  onFlagDismissed = dismissedFlagId => {
     this.setState({
       flags: this.state.flags.filter(flag => flag.id !== dismissedFlagId),
-    })
-  }
+    });
+  };
 
   switchTheme = () => {
     this.setState({
@@ -79,12 +79,12 @@ export default class App extends Component {
     });
   };
 
-  updateFilter = (selection) => {
+  updateFilter = selection => {
     const { filter, isFiltering } = this.state;
     this.setState({
-      filter: ((filter === selection) ? null : selection),
+      filter: filter === selection ? null : selection,
       isFiltering: !isFiltering,
-    })
+    });
   };
 
   async componentDidMount() {
@@ -95,17 +95,20 @@ export default class App extends Component {
     }
 
     const jql = 'filter=22119';
-    const response = await fetch(`/api/search?jql=${jql}`);
+    let response = await fetch(`/api/search?jql=${jql}`);
     const issues = await response.json();
 
-    const [resourcesResponse, holidaysResponse] = await Promise.all([
-      fetch('/api/resources'), fetch('/api/holidays')
-    ]);
-    const [resources, holidays] = await Promise.all([
-      resourcesResponse.json(), holidaysResponse.json()
-    ]);
-    const teams = [...new Set(resources.map(resource => resource.team))];
-    this.setState({ issues, resources, teams, holidays, jql, isLoading: false });
+    response = await fetch('/api/teams');
+    const { resources, teams } = await response.json();
+
+    this.setState({
+      issues,
+      resources,
+      teams,
+      holidays: [],
+      jql,
+      isLoading: false,
+    });
   }
 
   componentDidUpdate() {

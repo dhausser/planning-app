@@ -33,17 +33,19 @@ export default class Resource extends Component {
 
     return (
       <div>
-        {!isLoading && resource != null &&
+        {!isLoading && resource != null && (
           <Padding>
             <PageTitle>
               {resource.name} {resource.team}
             </PageTitle>
-            <a href={link} target="_blank" rel="noopener noreferrer">View in Issue Navigator</a>
+            <a href={link} target="_blank" rel="noopener noreferrer">
+              View in Issue Navigator
+            </a>
             <IssueList issues={resource.issues} isLoading={isLoading} />
             <HolidayList holidays={resource.holidays} isLoading={isLoading} />
           </Padding>
-        }
+        )}
       </div>
     );
   }
-};
+}

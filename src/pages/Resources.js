@@ -14,11 +14,9 @@ export default class ResourcesPage extends Component {
 
   render() {
     const { isLoading, filter } = this.context;
-    const resources = filter ? (
-      this.context.resources.filter(({ team }) => team === filter)
-    ) : (
-      this.context.resources
-    );
+    const resources = filter
+      ? this.context.resources.filter(({ team }) => team === filter)
+      : this.context.resources;
 
     return (
       <Padding>

@@ -1,10 +1,9 @@
 const https = require('https');
 const mongoose = require('mongoose');
-
 const Issue = mongoose.model('Issue');
 
 function getFields(issue) {
-  return ({
+  return {
     key: issue.key,
     summary: issue.fields.summary,
     description: issue.fields.description,
@@ -14,7 +13,7 @@ function getFields(issue) {
     issuetype: issue.fields.issuetype.name,
     assignee: issue.fields.assignee.key,
     displayName: issue.fields.assignee.displayName,
-  })
+  };
 }
 
 exports.httpsRequest = (req, res, next) => {
@@ -45,12 +44,12 @@ exports.httpsRequest = (req, res, next) => {
     },
   };
 
-  const postRequest = https.request(options, (request) => {
-    console.log(`STATUS: ${request.statusCode}`);
-    console.log(`HEADERS: ${JSON.stringify(request.headers)}`);
+  const postRequest = https.request(options, request => {
+    // console.log(`STATUS: ${request.statusCode}`);
+    // console.log(`HEADERS: ${JSON.stringify(request.headers)}`);
     let rawData = '';
     request.setEncoding('utf8');
-    request.on('data', (chunk) => {
+    request.on('data', chunk => {
       rawData += chunk;
     });
     request.on('end', () => {
@@ -63,37 +62,46 @@ exports.httpsRequest = (req, res, next) => {
       }
     });
   });
-  postRequest.on('error', (e) => {
+  postRequest.on('error', e => {
     console.error(`problem with request: ${e.message}`);
   });
-  postRequest.write(bodyData)
+  postRequest.write(bodyData);
   postRequest.end();
-}
+};
 
 exports.getFields = async (req, res) => {
   try {
     if (req.response.issues) {
       const issues = req.response.issues.map(issue => getFields(issue));
+
+      // TODO: Find a better way to update and aggregate issues
       await Issue.deleteMany();
       await Issue.insertMany(issues);
+
       return res.json(issues);
-    } else {
-      return res.json(getFields(req.response));
     }
+    return res.json(getFields(req.response));
   } catch (e) {
     console.log(e);
   }
-}
+};
 
 exports.getIssues = async (req, res) => res.json(await Issue.find());
 
 exports.getIssue = async (req, res) => {
   console.log(req.query.key);
-  return res.json({ key: 'GS-11', summary: 'Sample issue', assignee: 'joe.cool', displayName: 'Joe Cool' });
+  return res.json({
+    key: 'GS-11',
+    summary: 'Sample issue',
+    assignee: 'joe.cool',
+    displayName: 'Joe Cool',
+  });
 };
 
 exports.editIssue = async (req, res) => {
-  const bodyData = JSON.stringify({ "update": { "summary": [{ "set": `${req.body.summary}` }] } });
+  const bodyData = JSON.stringify({
+    update: { summary: [{ set: `${req.body.summary}` }] },
+  });
   // const bodyData = JSON.stringify({ "fields": { "summary": `${req.body.summary}` } });
 
   const options = {
@@ -109,10 +117,12 @@ exports.editIssue = async (req, res) => {
     },
   };
 
-  const postRequest = https.request(options, (request) => res.json(request.statusCode));
-  postRequest.on('error', (e) => {
+  const postRequest = https.request(options, request =>
+    res.json(request.statusCode)
+  );
+  postRequest.on('error', e => {
     console.error(`problem with request: ${e.message}`);
   });
-  postRequest.write(bodyData)
+  postRequest.write(bodyData);
   postRequest.end();
-}
+};

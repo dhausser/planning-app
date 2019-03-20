@@ -1,6 +1,12 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import TableTree, { Headers, Header, Rows, Row, Cell } from '@atlaskit/table-tree';
+import TableTree, {
+  Headers,
+  Header,
+  Rows,
+  Row,
+  Cell,
+} from '@atlaskit/table-tree';
 import { Status } from '@atlaskit/status';
 import { statusColor } from '../components/IssueList';
 import { Padding } from '../components/ContentWrapper';
@@ -13,25 +19,25 @@ export default class Roadmap extends Component {
   };
 
   // TODO assign maps subtasks as children
-  convertIssues = (issues) => {
-    return issues.map(issue => (
-      {
-        key: issue.key,
-        summary: issue.summary,
-        value: issue.priority,
-        status: <Status text={issue.status} color={statusColor(issue.statusCategory)} />,
-        children: [
-          {
-            key: 'subtask',
-            summary: 'Sample subtask',
-            value: 'P4',
-            status: 'to do',
-            children: []
-          }
-        ]
-      }
-    ))
-  }
+  convertIssues = issues => {
+    return issues.map(issue => ({
+      key: issue.key,
+      summary: issue.summary,
+      value: issue.priority,
+      status: (
+        <Status text={issue.status} color={statusColor(issue.statusCategory)} />
+      ),
+      children: [
+        {
+          key: 'subtask',
+          summary: 'Sample subtask',
+          value: 'P4',
+          status: 'to do',
+          children: [],
+        },
+      ],
+    }));
+  };
 
   render() {
     const { isLoading, issues } = this.context;
@@ -40,7 +46,7 @@ export default class Roadmap extends Component {
     return (
       <Padding>
         <PageTitle>Roadmap</PageTitle>
-        {!isLoading &&
+        {!isLoading && (
           <TableTree>
             <Headers>
               <Header width={300}>Summary</Header>
@@ -64,8 +70,8 @@ export default class Roadmap extends Component {
               )}
             />
           </TableTree>
-        }
+        )}
       </Padding>
-    )
+    );
   }
-};
+}

@@ -19,8 +19,12 @@ export default class Holidays extends Component {
       <Padding>
         <PageTitle>Absences</PageTitle>
         <TeamFilter />
-        <HolidayList holidays={holidays} resources={resources} isLoading={isLoading} />
+        <HolidayList
+          holidays={holidays}
+          resources={resources}
+          isLoading={isLoading}
+        />
       </Padding>
-    )
+    );
   }
-};
+}

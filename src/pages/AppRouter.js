@@ -18,8 +18,8 @@ export default class AppRouter extends Component {
       navOpenState: {
         isOpen: true,
         width: 304,
-      }
-    }
+      },
+    };
   }
 
   getChildContext() {
@@ -28,18 +28,15 @@ export default class AppRouter extends Component {
     };
   }
 
-  appWithPersistentNav = () => (props) => (
-    <App
-      onNavResize={this.onNavResize}
-      {...props}
-    />
-  )
+  appWithPersistentNav = () => props => (
+    <App onNavResize={this.onNavResize} {...props} />
+  );
 
-  onNavResize = (navOpenState) => {
+  onNavResize = navOpenState => {
     this.setState({
       navOpenState,
     });
-  }
+  };
 
   render() {
     return (
@@ -61,4 +58,4 @@ export default class AppRouter extends Component {
 
 AppRouter.childContextTypes = {
   navOpenState: PropTypes.object,
-}
+};

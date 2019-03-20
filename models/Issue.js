@@ -16,7 +16,7 @@ const issueSchema = new mongoose.Schema({
   components: Array,
 });
 
-issueSchema.statics.getAssignees = function () {
+issueSchema.statics.getAssignees = function() {
   return this.aggregate([
     {
       $group: {
