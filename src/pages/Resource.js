@@ -13,8 +13,12 @@ export default class Resource extends Component {
     resources: PropTypes.array,
   };
 
-  getResource() {
-    const { resourceId } = this.props.params;
+  static propTypes = {
+    params: PropTypes.string,
+  };
+
+  getResource({ params }) {
+    const { resourceId } = params;
     const { isLoading, resources } = this.context;
     let resource = null;
 
@@ -27,7 +31,8 @@ export default class Resource extends Component {
 
   render() {
     const { isLoading, jql } = this.context;
-    const { resourceId } = this.props.params;
+    const { params } = this.props;
+    const { resourceId } = params;
     const link = `https://jira.cdprojektred.com/issues/?jql=${jql} AND assignee=${resourceId}`;
     const resource = this.getResource();
 

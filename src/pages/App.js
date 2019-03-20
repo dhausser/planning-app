@@ -23,12 +23,16 @@ export default class App extends Component {
   };
 
   static propTypes = {
-    navOpenState: PropTypes.object,
-    onNavResize: PropTypes.func,
+    children: PropTypes.node,
+
+    // TODO: change navOpenState on click or resize
+    // navOpenState: PropTypes.object,
+    // onNavResize: PropTypes.func,
   };
 
   static childContextTypes = {
     isLoading: PropTypes.bool,
+    isFiltering: PropTypes.bool,
     jql: PropTypes.string,
     holidays: PropTypes.array,
     issues: PropTypes.array,
@@ -42,58 +46,19 @@ export default class App extends Component {
 
   getChildContext() {
     return {
-      isLoading: this.state.isLoading,
-      jql: this.state.jql,
-      issues: this.state.issues,
-      holidays: this.state.holidays,
-      resources: this.state.resources,
-      teams: this.state.teams,
-      themeMode: this.state.themeMode,
-      switchTheme: this.switchTheme,
-      filter: this.state.filter,
+      ...this.state,
       updateFilter: this.updateFilter,
     };
   }
 
-  showModal = () => {
-    this.setState({ isModalOpen: true });
-  };
-
-  hideModal = () => {
-    this.setState({ isModalOpen: false });
-  };
-
-  addFlag = () => {
-    this.setState({ flags: [{ id: Date.now() }].concat(this.state.flags) });
-  };
-
-  onFlagDismissed = dismissedFlagId => {
-    this.setState({
-      flags: this.state.flags.filter(flag => flag.id !== dismissedFlagId),
-    });
-  };
-
-  switchTheme = () => {
-    this.setState({
-      themeMode: this.state.themeMode === 'light' ? 'dark' : 'light',
-    });
-  };
-
-  updateFilter = selection => {
-    const { filter, isFiltering } = this.state;
-    this.setState({
-      filter: filter === selection ? null : selection,
-      isFiltering: !isFiltering,
-    });
-  };
-
   async componentDidMount() {
     // Reinstate our localstorage
-    const localStorageRef = localStorage.getItem('team');
+    const localStorageRef = localStorage.getItem('filter');
     if (localStorageRef) {
       this.setState({ filter: JSON.parse(localStorageRef) });
     }
 
+    // TODO: Implement filter selection by dropdowns in header
     const jql = 'filter=22119';
     let response = await fetch(`/api/search?jql=${jql}`);
     const issues = await response.json();
@@ -112,16 +77,54 @@ export default class App extends Component {
   }
 
   componentDidUpdate() {
-    localStorage.setItem('team', JSON.stringify(this.state.filter));
+    const { filter } = this.state;
+    localStorage.setItem('filter', JSON.stringify(filter));
   }
 
+  showModal = () => {
+    this.setState({ isModalOpen: true });
+  };
+
+  hideModal = () => {
+    this.setState({ isModalOpen: false });
+  };
+
+  addFlag = () => {
+    const { flags } = this.state;
+    this.setState({ flags: [{ id: Date.now() }].concat(flags) });
+  };
+
+  onFlagDismissed = dismissedFlagId => {
+    const { flags } = this.state;
+    this.setState({
+      flags: flags.filter(flag => flag.id !== dismissedFlagId),
+    });
+  };
+
+  switchTheme = () => {
+    const { themeMode } = this.state;
+    this.setState({
+      themeMode: themeMode === 'light' ? 'dark' : 'light',
+    });
+  };
+
+  updateFilter = selection => {
+    const { filter, isFiltering } = this.state;
+    this.setState({
+      filter: filter === selection ? null : selection,
+      isFiltering: !isFiltering,
+    });
+  };
+
   render() {
+    const { navOpenState } = this.context;
+    const { children } = this.props;
     return (
       <Page
-        navigationWidth={this.context.navOpenState.width}
+        navigationWidth={navOpenState.width}
         navigation={<StarterNavigation />}
       >
-        {this.props.children}
+        {children}
       </Page>
     );
   }

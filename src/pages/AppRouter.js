@@ -23,8 +23,9 @@ export default class AppRouter extends Component {
   }
 
   getChildContext() {
+    const { navOpenState } = this.state;
     return {
-      navOpenState: this.state.navOpenState,
+      navOpenState,
     };
   }
 
@@ -49,7 +50,7 @@ export default class AppRouter extends Component {
           <Route path="/issues" component={Issues} />
           <Route path="/issue/:issueId" component={Issue} />`
           <Route path="/absences" component={Absences} />
-          <Route path="/settings" component={Settings} hello={'Hello!'} />
+          <Route path="/settings" component={Settings} />
         </Route>
       </Router>
     );

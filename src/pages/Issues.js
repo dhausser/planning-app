@@ -13,6 +13,10 @@ export default class Issues extends Component {
     resources: PropTypes.array,
   };
 
+  static propTypes = {
+    location: PropTypes.string,
+  };
+
   componentDidUpdate = () => {
     const { filter, resources, issues } = this.context;
     if (filter != null) {
@@ -30,7 +34,8 @@ export default class Issues extends Component {
   };
 
   render() {
-    const { pathname } = this.props.location;
+    const { location } = this.props;
+    const { pathname } = location;
     const { issues, isLoading } = this.context;
     return (
       <Padding>
