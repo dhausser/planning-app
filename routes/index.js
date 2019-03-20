@@ -23,11 +23,7 @@ router.get(
   issueController.httpsRequest,
   issueController.getFields
 );
-router.get(
-  '/api/issue',
-  issueController.httpsRequest,
-  issueController.getFields
-);
+router.get('/api/issue', issueController.getIssue);
 router.post('/api/issue', issueController.editIssue);
 
 module.exports = router;

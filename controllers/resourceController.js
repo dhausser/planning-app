@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+
 const Resource = mongoose.model('Resource');
 
 exports.getTeams = async (req, res) => {

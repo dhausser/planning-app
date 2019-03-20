@@ -13,14 +13,23 @@ import { Padding } from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
 
 export default class Roadmap extends Component {
-  static contextTypes = {
-    isLoading: PropTypes.bool,
-    issues: PropTypes.array,
+  state = {
+    isLoading: true,
+    issues: [],
+  };
+
+  componentDidMount = async () => {
+    const jql = encodeURI(
+      'project=GWENT and issuetype in (story) and fixVersion in earliestUnreleasedVersionByReleaseDate(GWENT)'
+    );
+    const response = await fetch(`/api/search?jql=${jql}`);
+    const issues = await response.json();
+    this.setState({ issues, isLoading: false });
   };
 
   // TODO assign maps subtasks as children
-  convertIssues = issues => {
-    return issues.map(issue => ({
+  convertIssues = issues =>
+    issues.map(issue => ({
       key: issue.key,
       summary: issue.summary,
       value: issue.priority,
@@ -37,11 +46,9 @@ export default class Roadmap extends Component {
         },
       ],
     }));
-  };
 
   render() {
-    const { isLoading, issues } = this.context;
-    const stories = issues.filter(({ issuetype }) => issuetype === 'Story');
+    const { isLoading, issues } = this.state;
 
     return (
       <Padding>
@@ -54,11 +61,11 @@ export default class Roadmap extends Component {
               <Header width={100}>Status</Header>
             </Headers>
             <Rows
-              items={this.convertIssues(stories)}
+              items={this.convertIssues(issues)}
               render={({ key, summary, value, status, children }) => (
                 <Row
-                  expandLabel={'Expand'}
-                  collapseLabel={'Collapse'}
+                  expandLabel="Expand"
+                  collapseLabel="Collapse"
                   itemId={key}
                   items={children}
                   hasChildren={children.length > 0}

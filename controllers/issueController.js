@@ -1,5 +1,6 @@
 const https = require('https');
 const mongoose = require('mongoose');
+
 const Issue = mongoose.model('Issue');
 
 function getFields(issue) {
@@ -88,15 +89,8 @@ exports.getFields = async (req, res) => {
 
 exports.getIssues = async (req, res) => res.json(await Issue.find());
 
-exports.getIssue = async (req, res) => {
-  console.log(req.query.key);
-  return res.json({
-    key: 'GS-11',
-    summary: 'Sample issue',
-    assignee: 'joe.cool',
-    displayName: 'Joe Cool',
-  });
-};
+exports.getIssue = async (req, res) =>
+  res.json(await Issue.findOne({ key: req.query.key }));
 
 exports.editIssue = async (req, res) => {
   const bodyData = JSON.stringify({

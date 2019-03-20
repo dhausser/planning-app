@@ -14,29 +14,18 @@ export default class Issues extends Component {
   };
 
   static propTypes = {
-    location: PropTypes.string,
-  };
-
-  componentDidUpdate = () => {
-    const { filter, resources, issues } = this.context;
-    if (filter != null) {
-      const team = resources
-        .filter(resource => resource.team === filter)
-        .map(({ key }) => key);
-      const teamIssues = issues.filter(({ assignee }) =>
-        team.includes(assignee)
-      );
-      console.log(teamIssues.length);
-
-      // TODO Update the state without triggering infinite loop
-      // this.setState({ issues: teamIssues });
-    }
+    location: PropTypes.object,
   };
 
   render() {
     const { location } = this.props;
     const { pathname } = location;
-    const { issues, isLoading } = this.context;
+    const { resources, filter, isLoading } = this.context;
+    const issues = [];
+    issues.push = resources
+      .filter(({ team }) => [null, team].includes(filter))
+      .forEach(resource => issues.push(...resource.issues));
+
     return (
       <Padding>
         <PageTitle>Issues</PageTitle>

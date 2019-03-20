@@ -17,23 +17,27 @@ export default class Resource extends Component {
     params: PropTypes.string,
   };
 
-  getResource({ params }) {
+  getResource() {
+    const { params } = this.props;
     const { resourceId } = params;
     const { isLoading, resources } = this.context;
-    let resource = null;
 
     if (!isLoading) {
       // TODO Support edge case when resourse not found
-      resource = resources.find(({ key }) => key === resourceId);
+      return resources.find(({ key }) => key === resourceId);
     }
-    return resource;
+    return null;
   }
 
   render() {
     const { isLoading, jql } = this.context;
     const { params } = this.props;
     const { resourceId } = params;
-    const link = `https://jira.cdprojektred.com/issues/?jql=${jql} AND assignee=${resourceId}`;
+    const url = new URL(
+      encodeURI(`?jql=${jql} AND assignee=${resourceId}`),
+      'https://jira.cdprojektred.com/issues/'
+    );
+    console.log(url);
     const resource = this.getResource();
 
     return (
@@ -43,7 +47,7 @@ export default class Resource extends Component {
             <PageTitle>
               {resource.name} {resource.team}
             </PageTitle>
-            <a href={link} target="_blank" rel="noopener noreferrer">
+            <a href={url.href} target="_blank" rel="noopener noreferrer">
               View in Issue Navigator
             </a>
             <IssueList issues={resource.issues} isLoading={isLoading} />

@@ -26,79 +26,66 @@ function postData(url = ``, data = {}) {
 export default class Issue extends Component {
   state = {
     issue: {},
-    error: null,
     editValue: '',
     readValue: '',
-    onEventResult: 'Click on a field above to show edit view',
   };
 
-  static contextTypes = {
-    isLoading: PropTypes.bool,
-    issues: PropTypes.array,
+  static propTypes = {
+    params: PropTypes.object,
   };
 
   componentDidMount = async () => {
-    const issue = this.getIssue();
-    if (issue != null) {
-      this.setState({
-        issue,
-        readValue: issue.summary,
-        editValue: issue.summary,
-      });
-    }
+    const { params } = this.props;
+    const { issueId } = params;
+    const response = await fetch(`/api/issue?key=${issueId}`);
+    const issue = await response.json();
+    this.setState({
+      issue,
+      readValue: issue.summary,
+      editValue: issue.summary,
+    });
   };
 
-  componentDidUpdate = () => {
-    if (this.state.readValue === '') {
-      const issue = this.getIssue();
-      this.setState({
-        issue,
-        readValue: issue.summary,
-        editValue: issue.summary,
-      });
-    }
-  };
-
-  getIssue() {
-    const { issueId } = this.props.params;
-    const { isLoading, issues } = this.context;
-    if (!isLoading) {
-      const issue = issues.find(({ key }) => key === issueId);
-      return issue;
-    } else {
-      return null;
-    }
-  }
+  // componentDidUpdate = () => {
+  //   if (this.state.readValue === '') {
+  //     const issue = this.getIssue();
+  //     this.setState({
+  //       issue,
+  //       readValue: issue.summary,
+  //       editValue: issue.summary,
+  //     });
+  //   }
+  // };
 
   onConfirm = () => {
-    const { readValue } = this.state;
-    this.setState({ readValue: this.state.editValue });
+    const { readValue, editValue } = this.state;
+    this.setState({ readValue: editValue });
     postData('/api/issue', {
       key: this.state.issue.key,
       summary: this.state.editValue,
     })
       .then(data => {
         switch (data) {
-        case 400:
-          console.log(
-            'STATUS 400: Returned if the requested issue update failed.'
-          );
-          this.setState({ readValue });
-          break;
-        case 204:
-          console.log(
-            'STATUS 204: Returned if it updated the issue successfully.'
-          );
-          break;
-        case 403:
-          console.log(
-            'STATUS 403: Returned if the user doesnt have permissions to disable users notification.'
-          );
-          this.setState({ readValue });
-          break;
+          case 400:
+            console.log(
+              'STATUS 400: Returned if the requested issue update failed.'
+            );
+            this.setState({ readValue });
+            break;
+          case 204:
+            console.log(
+              'STATUS 204: Returned if it updated the issue successfully.'
+            );
+            break;
+          case 403:
+            console.log(
+              'STATUS 403: Returned if the user doesnt have permissions to disable users notification.'
+            );
+            this.setState({ readValue });
+            break;
 
-        default:
-          break;
+          default:
+            break;
         }
       })
       .catch(error => console.error(error));

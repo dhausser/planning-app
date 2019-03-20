@@ -11,9 +11,7 @@ export default class App extends Component {
     themeMode: 'light',
     filter: null,
     jql: '',
-    issues: [],
     resources: [],
-    holidays: [],
     teams: [],
   };
 
@@ -34,14 +32,12 @@ export default class App extends Component {
     isLoading: PropTypes.bool,
     isFiltering: PropTypes.bool,
     jql: PropTypes.string,
-    holidays: PropTypes.array,
-    issues: PropTypes.array,
-    resources: PropTypes.array,
-    teams: PropTypes.array,
     themeMode: PropTypes.string,
     switchTheme: PropTypes.func,
     filter: PropTypes.string,
     updateFilter: PropTypes.func,
+    resources: PropTypes.array,
+    teams: PropTypes.array,
   };
 
   getChildContext() {
@@ -59,20 +55,17 @@ export default class App extends Component {
     }
 
     // TODO: Implement filter selection by dropdowns in header
-    const jql = 'filter=22119';
-    let response = await fetch(`/api/search?jql=${jql}`);
-    const issues = await response.json();
+    const jql = encodeURI('filter=22119');
+    await fetch(`/api/search?jql=${jql}`);
 
-    response = await fetch('/api/teams');
-    const { resources, teams } = await response.json();
+    const response = await fetch('/api/teams');
+    const { teams, resources } = await response.json();
 
     this.setState({
-      issues,
-      resources,
-      teams,
-      holidays: [],
-      jql,
       isLoading: false,
+      jql,
+      teams,
+      resources,
     });
   }
 
