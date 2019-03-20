@@ -6,10 +6,6 @@ import TeamFilter from '../components/TeamFilter';
 import IssueList from '../components/IssueList';
 
 export default class Issues extends Component {
-  state = {
-    issues: [],
-  };
-
   static contextTypes = {
     isLoading: PropTypes.bool,
     filter: PropTypes.string,
@@ -21,7 +17,7 @@ export default class Issues extends Component {
     const { filter, resources, issues } = this.context;
     if (filter != null) {
       const team = resources
-        .filter(({ team }) => team === filter)
+        .filter(resource => resource.team === filter)
         .map(({ key }) => key);
       const teamIssues = issues.filter(({ assignee }) =>
         team.includes(assignee)
@@ -34,16 +30,13 @@ export default class Issues extends Component {
   };
 
   render() {
+    const { pathname } = this.props.location;
     const { issues, isLoading } = this.context;
     return (
       <Padding>
         <PageTitle>Issues</PageTitle>
         <TeamFilter />
-        <IssueList
-          issues={issues}
-          isLoading={isLoading}
-          pathname={this.props.location.pathname}
-        />
+        <IssueList issues={issues} isLoading={isLoading} pathname={pathname} />
       </Padding>
     );
   }
