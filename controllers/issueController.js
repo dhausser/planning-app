@@ -1,4 +1,5 @@
 const https = require('https');
+const querystring = require('querystring');
 const mongoose = require('mongoose');
 
 const Issue = mongoose.model('Issue');
@@ -46,8 +47,6 @@ exports.httpsRequest = (req, res, next) => {
   };
 
   const postRequest = https.request(options, request => {
-    // console.log(`STATUS: ${request.statusCode}`);
-    // console.log(`HEADERS: ${JSON.stringify(request.headers)}`);
     let rawData = '';
     request.setEncoding('utf8');
     request.on('data', chunk => {
@@ -89,9 +88,6 @@ exports.getFields = async (req, res) => {
 
 exports.getIssues = async (req, res) => res.json(await Issue.find());
 
-exports.getIssue = async (req, res) =>
-  res.json(await Issue.findOne({ key: req.query.key }));
-
 exports.editIssue = async (req, res) => {
   const bodyData = JSON.stringify({
     update: { summary: [{ set: `${req.body.summary}` }] },
@@ -119,4 +115,44 @@ exports.editIssue = async (req, res) => {
   });
   postRequest.write(bodyData);
   postRequest.end();
+};
+
+exports.getIssue = async (request, response) => {
+  const { HOSTNAME, API_PATH } = process.env;
+
+  const options = {
+    hostname: HOSTNAME,
+    path: `${API_PATH}/issue/${request.query.key}`,
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      Authorization: process.env.AUTHORIZATION,
+    },
+  };
+
+  const req = https.request(options, res => {
+    res.setEncoding('utf8');
+    let rawData = '';
+    res.on('data', chunk => {
+      rawData += chunk;
+    });
+    res.on('end', () => {
+      const issue = JSON.parse(rawData);
+      const { summary, description, priority, status } = issue.fields;
+      response.json({
+        key: issue.key,
+        summary,
+        description,
+        priority: priority.name,
+        status: status.name,
+      });
+    });
+  });
+
+  req.on('error', e => {
+    console.error(`problem with request: ${e.message}`);
+  });
+
+  req.end();
 };

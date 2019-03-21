@@ -39,6 +39,7 @@ export default class Issue extends Component {
     const { issueId } = params;
     const response = await fetch(`/api/issue?key=${issueId}`);
     const issue = await response.json();
+    console.log(issue);
     this.setState({
       issue,
       readValue: issue.summary,
