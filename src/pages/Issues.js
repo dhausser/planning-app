@@ -18,19 +18,20 @@ export default class Issues extends Component {
   };
 
   render() {
-    const { location } = this.props;
-    const { pathname } = location;
     const { resources, filter, isLoading } = this.context;
     const issues = [];
     issues.push = resources
       .filter(({ team }) => [null, team].includes(filter))
       .forEach(resource => issues.push(...resource.issues));
-
     return (
       <Padding>
         <PageTitle>Issues</PageTitle>
         <TeamFilter />
-        <IssueList issues={issues} isLoading={isLoading} pathname={pathname} />
+        <IssueList
+          issues={issues}
+          isLoading={isLoading}
+          pathname={this.props.location.pathname}
+        />
       </Padding>
     );
   }

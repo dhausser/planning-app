@@ -57,7 +57,8 @@ exports.httpsRequest = (req, res, next) => {
 
 exports.copyToDatabase = async (req, res) => {
   try {
-    console.log(req.fields);
+    // TODO: Assign fields via variable
+    // console.log(req.fields);
     const issues = req.response.issues.map(issue => {
       const {
         summary,
