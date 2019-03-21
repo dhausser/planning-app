@@ -37,7 +37,7 @@ export default class StarterNavigation extends React.Component {
       ['/resources', 'People', PeopleIcon],
       ['/absences', 'Calendar', CalendarIcon],
       ['/settings', 'Settings', GearIcon],
-    ]
+    ],
   };
 
   static contextTypes = {
@@ -47,15 +47,17 @@ export default class StarterNavigation extends React.Component {
 
   shouldComponentUpdate(nextProps, nextContext) {
     return true;
-  };
+  }
 
-  openDrawer = (openDrawer) => {
+  openDrawer = openDrawer => {
     this.setState({ openDrawer });
   };
 
   render() {
     const backIcon = <ArrowleftIcon label="Back icon" size="medium" />;
-    const globalPrimaryIcon = <AtlassianIcon label="Atlassian icon" size="xlarge" />;
+    const globalPrimaryIcon = (
+      <AtlassianIcon label="Atlassian icon" size="xlarge" />
+    );
 
     return (
       <Nav
@@ -64,10 +66,8 @@ export default class StarterNavigation extends React.Component {
         onResize={this.props.onNavResize}
         containerHeaderComponent={() => (
           <AkContainerTitle
-            href={'/'}
-            icon={
-              <img alt="logo" src={Logo} />
-            }
+            href="/"
+            icon={<img alt="logo" src={Logo} />}
             text="Space Gwent"
           />
         )}
@@ -85,7 +85,7 @@ export default class StarterNavigation extends React.Component {
           >
             <SearchDrawer
               onResultClicked={() => this.openDrawer(null)}
-              onSearchInputRef={(ref) => {
+              onSearchInputRef={ref => {
                 this.searchInputRef = ref;
               }}
             />
@@ -97,10 +97,8 @@ export default class StarterNavigation extends React.Component {
             onBackButton={() => this.openDrawer(null)}
             primaryIcon={globalPrimaryIcon}
           >
-            <CreateDrawer
-              onItemClicked={() => this.openDrawer(null)}
-            />
-          </AkCreateDrawer>
+            <CreateDrawer onItemClicked={() => this.openDrawer(null)} />
+          </AkCreateDrawer>,
         ]}
         globalAccountItem={AccountDropdownMenu}
         globalCreateIcon={<CreateIcon label="Create icon" />}
@@ -108,20 +106,18 @@ export default class StarterNavigation extends React.Component {
         onSearchDrawerOpen={() => this.openDrawer('search')}
         onCreateDrawerOpen={() => this.openDrawer('create')}
       >
-        {
-          this.state.navLinks.map(link => {
-            const [url, title, Icon] = link;
-            return (
-              <Link key={url} to={url}>
-                <AkNavigationItem
-                  icon={<Icon label={title} size="medium" />}
-                  text={title}
-                  isSelected={this.context.router.isActive(url, true)}
-                />
-              </Link>
-            );
-          }, this)
-        }
+        {this.state.navLinks.map(link => {
+          const [url, title, Icon] = link;
+          return (
+            <Link key={url} to={url}>
+              <AkNavigationItem
+                icon={<Icon label={title} size="medium" />}
+                text={title}
+                isSelected={this.context.router.isActive(url, true)}
+              />
+            </Link>
+          );
+        }, this)}
       </Nav>
     );
   }

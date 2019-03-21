@@ -31,13 +31,13 @@ export default class App extends Component {
   static childContextTypes = {
     isLoading: PropTypes.bool,
     isFiltering: PropTypes.bool,
-    jql: PropTypes.string,
-    themeMode: PropTypes.string,
-    switchTheme: PropTypes.func,
-    filter: PropTypes.string,
     updateFilter: PropTypes.func,
+    filter: PropTypes.string,
+    jql: PropTypes.string,
     resources: PropTypes.array,
     teams: PropTypes.array,
+    themeMode: PropTypes.string,
+    switchTheme: PropTypes.func,
   };
 
   getChildContext() {
@@ -55,10 +55,9 @@ export default class App extends Component {
     }
 
     // TODO: Implement filter selection by dropdowns in header
+    // await fetch(`/api/search?jql=${jql}`);
     const jql = encodeURI('filter=22119');
-    await fetch(`/api/search?jql=${jql}`);
-
-    const response = await fetch('/api/teams');
+    const response = await fetch(`/api/teams?jql=${jql}`);
     const { teams, resources } = await response.json();
 
     this.setState({
@@ -103,6 +102,11 @@ export default class App extends Component {
 
   updateFilter = selection => {
     const { filter, isFiltering } = this.state;
+
+    // issues.push = resources
+    //   .filter(({ team }) => [null, team].includes(filter))
+    //   .forEach(resource => issues.push(...resource.issues));
+
     this.setState({
       filter: filter === selection ? null : selection,
       isFiltering: !isFiltering,

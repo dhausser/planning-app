@@ -5,6 +5,8 @@ import PageTitle from '../components/PageTitle';
 import TeamFilter from '../components/TeamFilter';
 import IssueList from '../components/IssueList';
 
+const reducer = (acc, val) => [...acc, ...val.issues];
+
 export default class Issues extends Component {
   static contextTypes = {
     isLoading: PropTypes.bool,
@@ -19,10 +21,9 @@ export default class Issues extends Component {
 
   render() {
     const { resources, filter, isLoading } = this.context;
-    const issues = [];
-    issues.push = resources
-      .filter(({ team }) => [null, team].includes(filter))
-      .forEach(resource => issues.push(...resource.issues));
+    const issues = filter
+      ? resources.filter(({ team }) => team === filter).reduce(reducer, [])
+      : resources.reduce(reducer, []);
     return (
       <Padding>
         <PageTitle>Issues</PageTitle>

@@ -10,6 +10,7 @@ exports.getTeams = async (req, res) => {
     teamsPromise,
   ]);
 
+  console.log('Hello!');
   res.json({ teams: teams.map(({ _id }) => _id), resources });
 };
 

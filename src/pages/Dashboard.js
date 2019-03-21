@@ -25,15 +25,14 @@ export default class Dashboard extends Component {
         dataset[resource.team] += resource.issues.length;
       });
       return dataset;
-    } else {
-      return resources
-        .filter(resource => resource.team === filter)
-        .reduce((accumulator, currentValue) => {
-          accumulator[currentValue.name.split(' ').shift()] =
-            currentValue.issues.length;
-          return accumulator;
-        }, {});
     }
+    return resources
+      .filter(resource => resource.team === filter)
+      .reduce((accumulator, currentValue) => {
+        accumulator[currentValue.name.split(' ').shift()] =
+          currentValue.issues.length;
+        return accumulator;
+      }, {});
   };
 
   render() {

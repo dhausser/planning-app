@@ -12,6 +12,7 @@ exports.httpsRequest = (req, res, next) => {
     'issuetype',
     'priority',
   ];
+  console.log(req.query.jql);
   const bodyData = JSON.stringify({
     jql: req.query.jql,
     startAt: 0,
@@ -55,7 +56,7 @@ exports.httpsRequest = (req, res, next) => {
   postRequest.end();
 };
 
-exports.copyToDatabase = async (req, res) => {
+exports.shallowCopyToDatabase = async (req, res, next) => {
   try {
     // TODO: Assign fields via variable
     // console.log(req.fields);
@@ -84,8 +85,8 @@ exports.copyToDatabase = async (req, res) => {
     // TODO: Find a better way to update and aggregate issues
     await Issue.deleteMany();
     await Issue.insertMany(issues);
-
-    return res.json(issues);
+    next();
+    // return res.json(issues);
   } catch (e) {
     console.log(e);
   }
