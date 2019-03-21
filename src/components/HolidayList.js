@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { arrayOf, shape, string, number } from 'prop-types';
+import { arrayOf, shape, string, number, bool } from 'prop-types';
 import styled from 'styled-components';
 import DynamicTable from '@atlaskit/dynamic-table';
 
@@ -35,42 +35,43 @@ const createHead = (withWidth, resources) => {
         content: 'Name',
         isSortable: true,
         width: withWidth ? 10 : undefined,
-      },
+      }
     );
   }
 
   return head;
 };
 
-const createRows = (holidays, resources) => holidays.map((holiday, index) => {
-  const row = {
-    key: `row-${index}-${holiday.key}`,
-    cells: [
-      {
-        content: new Date(holiday.date).toDateString(),
-      },
-    ],
-  };
+const createRows = (holidays, resources) =>
+  holidays.map((holiday, index) => {
+    const row = {
+      key: `row-${index}-${holiday.key}`,
+      cells: [
+        {
+          content: new Date(holiday.date).toDateString(),
+        },
+      ],
+    };
 
-  if (resources != null) {
-    const arr = [
-      {
-        content: resources.find(resource => resource.key === holiday.key)
-          .team,
-      },
-      {
-        content: (
-          <Link to={`/profile/${holiday.key}`}>
-            {resources.find(resource => resource.key === holiday.key).name}
-          </Link>
-        ),
-      },
-    ];
-    row.cells.push(...arr);
-  }
+    if (resources != null) {
+      const arr = [
+        {
+          content: resources.find(resource => resource.key === holiday.key)
+            .team,
+        },
+        {
+          content: (
+            <Link to={`/resource/${holiday.key}`}>
+              {resources.find(resource => resource.key === holiday.key).name}
+            </Link>
+          ),
+        },
+      ];
+      row.cells.push(...arr);
+    }
 
-  return row;
-});
+    return row;
+  });
 
 export default function HolidayList({ holidays, resources, isLoading }) {
   const caption = 'List of Absences';
@@ -94,16 +95,21 @@ export default function HolidayList({ holidays, resources, isLoading }) {
       />
     </Wrapper>
   );
-};
+}
 
 HolidayList.propTypes = {
-  holidays: arrayOf(shape({
-    key: string,
-    date: string,
-    count: number,
-  })).isRequired,
-  resources: arrayOf(shape({
-    key: string,
-    name: string,
-  })),
+  holidays: arrayOf(
+    shape({
+      key: string,
+      date: string,
+      count: number,
+    })
+  ).isRequired,
+  resources: arrayOf(
+    shape({
+      key: string,
+      name: string,
+    })
+  ),
+  isLoading: bool,
 };
