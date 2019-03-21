@@ -119,10 +119,10 @@ exports.editIssue = async (req, res) => {
 
 exports.getIssue = async (request, response) => {
   const { HOSTNAME, API_PATH } = process.env;
-
+  const fields = 'summary,description,status,priority,';
   const options = {
     hostname: HOSTNAME,
-    path: `${API_PATH}/issue/${request.query.key}`,
+    path: `${API_PATH}/issue/${request.query.key}?fields=${fields}`,
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -146,6 +146,7 @@ exports.getIssue = async (request, response) => {
         description,
         priority: priority.name,
         status: status.name,
+        statusCategory: status.statusCategory.key,
       });
     });
   });
