@@ -21,7 +21,7 @@ router.get('/api/issues', catchErrors(issueController.getIssues));
 router.get(
   '/api/search',
   issueController.httpsRequest,
-  issueController.getFields
+  issueController.copyToDatabase
 );
 router.get('/api/issue', issueController.getIssue);
 router.post('/api/issue', issueController.editIssue);

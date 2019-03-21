@@ -1,36 +1,22 @@
 const https = require('https');
-const querystring = require('querystring');
 const mongoose = require('mongoose');
 
 const Issue = mongoose.model('Issue');
 
-function getFields(issue) {
-  return {
-    key: issue.key,
-    summary: issue.fields.summary,
-    description: issue.fields.description,
-    priority: issue.fields.priority.name,
-    status: issue.fields.status.name,
-    statusCategory: issue.fields.status.statusCategory.key,
-    issuetype: issue.fields.issuetype.name,
-    assignee: issue.fields.assignee.key,
-    displayName: issue.fields.assignee.displayName,
-  };
-}
-
 exports.httpsRequest = (req, res, next) => {
+  req.fields = [
+    'summary',
+    'description',
+    'status',
+    'assignee',
+    'issuetype',
+    'priority',
+  ];
   const bodyData = JSON.stringify({
     jql: req.query.jql,
     startAt: 0,
     maxResults: 500,
-    fields: [
-      'summary',
-      'description',
-      'status',
-      'assignee',
-      'issuetype',
-      'priority',
-    ],
+    fields: req.fields,
   });
 
   const options = {
@@ -69,18 +55,36 @@ exports.httpsRequest = (req, res, next) => {
   postRequest.end();
 };
 
-exports.getFields = async (req, res) => {
+exports.copyToDatabase = async (req, res) => {
   try {
-    if (req.response.issues) {
-      const issues = req.response.issues.map(issue => getFields(issue));
+    console.log(req.fields);
+    const issues = req.response.issues.map(issue => {
+      const {
+        summary,
+        description,
+        priority,
+        status,
+        issuetype,
+        assignee,
+      } = issue.fields;
+      return {
+        key: issue.key,
+        summary,
+        description,
+        priority: priority.name,
+        status: status.name,
+        statusCategory: status.statusCategory.key,
+        issuetype: issuetype.name,
+        assignee: assignee.key,
+        displayName: assignee.displayName,
+      };
+    });
 
-      // TODO: Find a better way to update and aggregate issues
-      await Issue.deleteMany();
-      await Issue.insertMany(issues);
+    // TODO: Find a better way to update and aggregate issues
+    await Issue.deleteMany();
+    await Issue.insertMany(issues);
 
-      return res.json(issues);
-    }
-    return res.json(getFields(req.response));
+    return res.json(issues);
   } catch (e) {
     console.log(e);
   }
