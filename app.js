@@ -31,7 +31,7 @@ app.use(
   })
 );
 
-/**bodyParser.json(options)
+/** bodyParser.json(options)
  * Parses the text as JSON and exposes the resulting object on req.body.
  */
 app.use(bodyParser.json());
@@ -42,11 +42,6 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, 'build')));
   app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
-  });
-} else {
-  app.use(express.static(path.join(__dirname, 'public')));
-  app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
   });
 }
 

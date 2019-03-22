@@ -39,6 +39,7 @@
     "@atlaskit/table-tree": "^6.0.2",
     "@atlaskit/textarea": "^0.4.0",
     "@atlaskit/theme": "^6.0.1",
+    "body-parser": "^1.18.3",
     "chart.js": "^2.8.0",
     "dotenv": "^6.2.0",
     "express": "^4.16.3",
