@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { arrayOf, shape, string } from 'prop-types';
+import { arrayOf, shape, string, bool } from 'prop-types';
 import styled from 'styled-components';
 import DynamicTable from '@atlaskit/dynamic-table';
 import { Status } from '@atlaskit/status';
@@ -20,35 +20,39 @@ const NameWrapper = styled.span`
   align-items: center;
 `;
 
-export const statusColor = (category) => {
-  const colors = [
-    "neutral",
-    "purple",
-    "blue",
-    "red",
-    "yellow",
-    "green"
-  ];
+export const statusColor = category => {
+  const colors = ['neutral', 'purple', 'blue', 'red', 'yellow', 'green'];
 
   switch (category) {
-  case 'new': return colors[2];
-  case 'indeterminate': return colors[4];
-  case 'done': return colors[5];
-  default: return colors[0];
+    case 'new':
+      return colors[2];
+    case 'indeterminate':
+      return colors[4];
+    case 'done':
+      return colors[5];
+    default:
+      return colors[0];
   }
-}
+};
 
-export const priorityIcon = (priority) => {
+export const priorityIcon = priority => {
   switch (priority) {
-  case 'PO': return <PriorityBlockerIcon size="small" />
-  case 'P1': return <PriorityHighestIcon size="small" />
-  case 'P2': return <PriorityMediumIcon size="small" />
-  case 'P3': return <PriorityLowestIcon size="small" />
-  case 'P4': return <PriorityMinorIcon size="small" />
-  case 'P5': return <PriorityTrivialIcon size="small" />
-  default: return <PriorityBlockerIcon size="small" />
+    case 'PO':
+      return <PriorityBlockerIcon size="small" />;
+    case 'P1':
+      return <PriorityHighestIcon size="small" />;
+    case 'P2':
+      return <PriorityMediumIcon size="small" />;
+    case 'P3':
+      return <PriorityLowestIcon size="small" />;
+    case 'P4':
+      return <PriorityMinorIcon size="small" />;
+    case 'P5':
+      return <PriorityTrivialIcon size="small" />;
+    default:
+      return <PriorityBlockerIcon size="small" />;
   }
-}
+};
 
 const createHead = (withWidth, pathname) => {
   const head = {
@@ -83,7 +87,7 @@ const createHead = (withWidth, pathname) => {
     ],
   };
 
-  (pathname === '/issues') &&
+  if (pathname === '/issues') {
     head.cells.push({
       key: 'assignee',
       content: 'Assignee',
@@ -91,7 +95,7 @@ const createHead = (withWidth, pathname) => {
       isSortable: true,
       width: withWidth ? 15 : undefined,
     });
-
+  }
 
   return head;
 };
@@ -117,16 +121,24 @@ const createRows = (issues, pathname) =>
         },
         {
           key: issue.statusCategory,
-          content: <Status text={issue.status} color={statusColor(issue.statusCategory)} />,
+          content: (
+            <Status
+              text={issue.status}
+              color={statusColor(issue.statusCategory)}
+            />
+          ),
         },
       ],
     };
 
-    (pathname === '/issues') &&
+    if (pathname === '/issues') {
       row.cells.push({
         key: issue.assignee,
-        content: <Link to={`/resource/${issue.assignee}`}>{issue.displayName}</Link>,
+        content: (
+          <Link to={`/resource/${issue.assignee}`}>{issue.displayName}</Link>
+        ),
       });
+    }
 
     return row;
   });
@@ -139,7 +151,7 @@ export default function IssueList({ issues, isLoading, pathname }) {
         caption={caption}
         head={createHead(true, pathname)}
         rows={createRows(issues, pathname)}
-        rowsPerPage={(pathname === "/issues") ? 100 : 10}
+        rowsPerPage={pathname === '/issues' ? 100 : 10}
         defaultPage={1}
         loadingSpinnerSize="large"
         isLoading={isLoading}
@@ -149,13 +161,17 @@ export default function IssueList({ issues, isLoading, pathname }) {
       />
     </Wrapper>
   );
-};
+}
 
 IssueList.propTypes = {
-  issues: arrayOf(shape({
-    key: string,
-    summary: string,
-    status: string,
-    assignee: string,
-  })).isRequired,
+  issues: arrayOf(
+    shape({
+      key: string,
+      summary: string,
+      status: string,
+      assignee: string,
+    })
+  ).isRequired,
+  isLoading: bool,
+  pathname: string,
 };

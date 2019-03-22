@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import Avatar from '@atlaskit/avatar';
+import Calendar from '@atlaskit/calendar';
 import { Padding } from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
 import IssueList from '../components/IssueList';
-import HolidayList from '../components/HolidayList';
 import { NameWrapper, AvatarWrapper } from '../components/ResourceList';
 
 export default class Resource extends Component {
@@ -16,12 +16,11 @@ export default class Resource extends Component {
   };
 
   static propTypes = {
-    params: PropTypes.string,
+    params: PropTypes.object,
   };
 
   getResource() {
-    const { params } = this.props;
-    const { resourceId } = params;
+    const { resourceId } = this.props.params;
     const { isLoading, resources } = this.context;
 
     if (!isLoading) {
@@ -33,17 +32,20 @@ export default class Resource extends Component {
 
   render() {
     const { isLoading, jql } = this.context;
-    const { params } = this.props;
-    const { resourceId } = params;
+    const { resourceId } = this.props.params;
     const url = new URL(
       encodeURI(`?jql=${jql} AND assignee=${resourceId}`),
       'https://jira.cdprojektred.com/issues/'
     );
-    console.log(url);
     const resource = this.getResource();
 
     if (isLoading) return <p>Loading...</p>;
     if (!resource) return <p>This person doesn't exist</p>;
+    const { issues, holidays } = resource;
+    // TODO: Get Holidays date in format YYYY-MM-DD
+    const dates = holidays.map(({ date }) =>
+      date.replace('T00:00:00.000Z', '')
+    );
     return (
       <Padding>
         <PageTitle>
@@ -57,14 +59,15 @@ export default class Resource extends Component {
                 )}`}
               />
             </AvatarWrapper>
-            {resource.name} {resource.team}
+            {resource.name}
           </NameWrapper>
         </PageTitle>
         <a href={url.href} target="_blank" rel="noopener noreferrer">
           View in Issue Navigator
         </a>
-        <IssueList issues={resource.issues} isLoading={isLoading} />
-        <HolidayList holidays={resource.holidays} isLoading={isLoading} />
+        <IssueList issues={issues} isLoading={isLoading} />
+        <h3>Holiday Calendar</h3>
+        <Calendar day={0} defaultDisabled={dates} />
       </Padding>
     );
   }

@@ -144,7 +144,6 @@ exports.getIssue = async (request, response) => {
     });
     res.on('end', () => {
       const issue = JSON.parse(rawData);
-      console.log(issue);
       const { summary, description, priority, status, assignee } = issue.fields;
       response.json({
         key: issue.key,

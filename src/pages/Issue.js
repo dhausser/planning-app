@@ -4,6 +4,14 @@ import { Link } from 'react-router';
 import { Status } from '@atlaskit/status';
 import InlineEdit, { SingleLineTextInput } from '@atlaskit/inline-edit';
 import Avatar from '@atlaskit/avatar';
+import Comment, {
+  CommentAction,
+  CommentAuthor,
+  CommentEdited,
+  // CommentLayout,
+  CommentTime,
+} from '@atlaskit/comment';
+import TextArea from '@atlaskit/textarea';
 import { Padding } from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
 import { priorityIcon, statusColor } from '../components/IssueList';
@@ -47,17 +55,6 @@ export default class Issue extends Component {
       editValue: issue.summary,
     });
   };
-
-  // componentDidUpdate = () => {
-  //   if (this.state.readValue === '') {
-  //     const issue = this.getIssue();
-  //     this.setState({
-  //       issue,
-  //       readValue: issue.summary,
-  //       editValue: issue.summary,
-  //     });
-  //   }
-  // };
 
   onConfirm = () => {
     const { readValue, editValue } = this.state;
@@ -128,29 +125,7 @@ export default class Issue extends Component {
         >
           View in Issue Navigator
         </a>
-        <p>
-          <Status
-            text={issue.status || ''}
-            color={statusColor(issue.statusCategory)}
-          />
-        </p>
-        <p>
-          {priorityIcon(issue.priority)} {issue.priority} {issue.issuetype}
-        </p>
-        <InlineEdit
-          isFitContainerWidthReadView
-          label="Summary"
-          labelHtmlFor={id}
-          editView={this.renderInput({ isEditing: true, id })}
-          readView={this.renderInput({ isEditing: false, id })}
-          onConfirm={this.onConfirm}
-          onCancel={this.onCancel}
-          {...this.props}
-        />
-        <p>
-          <strong>Description</strong>
-        </p>
-        <p>{issue.description}</p>
+        <h4>Assignee</h4>
         <NameWrapper>
           <AvatarWrapper>
             <Avatar
@@ -163,6 +138,52 @@ export default class Issue extends Component {
           </AvatarWrapper>
           <Link to={`/resource/${issue.assignee}`}>{issue.displayName}</Link>
         </NameWrapper>
+        <h4>Status</h4>
+        <Status
+          text={issue.status || ''}
+          color={statusColor(issue.statusCategory)}
+        />
+        <h4>Priotity</h4>
+        {priorityIcon(issue.priority)} {issue.priority} {issue.issuetype}
+        <InlineEdit
+          isFitContainerWidthReadView
+          label="Summary"
+          labelHtmlFor={id}
+          editView={this.renderInput({ isEditing: true, id })}
+          readView={this.renderInput({ isEditing: false, id })}
+          onConfirm={this.onConfirm}
+          onCancel={this.onCancel}
+          {...this.props}
+        />
+        <h4>Description</h4>
+        <TextArea value={issue.description} resize="smart" />
+        <h4>Comments</h4>
+        <Comment
+          avatar={
+            <Avatar
+              src={`https://jira.cdprojektred.com/secure/useravatar?ownerId=${encodeURIComponent(
+                issue.assignee
+              )}`}
+              label="Atlaskit avatar"
+              size="medium"
+            />
+          }
+          author={<CommentAuthor>{issue.displayName}</CommentAuthor>}
+          type="author"
+          edited={<CommentEdited>Edited</CommentEdited>}
+          time={<CommentTime>30 August, 2016</CommentTime>}
+          content={
+            <p>
+              Content goes here. This can include <a href="/link">links</a> and
+              other content.
+            </p>
+          }
+          actions={[
+            <CommentAction>Reply</CommentAction>,
+            <CommentAction>Edit</CommentAction>,
+            <CommentAction>Like</CommentAction>,
+          ]}
+        />
       </Padding>
     );
   }
