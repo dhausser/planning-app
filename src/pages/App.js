@@ -11,6 +11,7 @@ export default class App extends Component {
     themeMode: 'light',
     filter: null,
     jql: '',
+    issues: [],
     resources: [],
     teams: [],
   };
@@ -34,6 +35,7 @@ export default class App extends Component {
     updateFilter: PropTypes.func,
     filter: PropTypes.string,
     jql: PropTypes.string,
+    issues: PropTypes.array,
     resources: PropTypes.array,
     teams: PropTypes.array,
     themeMode: PropTypes.string,
@@ -55,16 +57,30 @@ export default class App extends Component {
     }
 
     // TODO: Implement filter selection by dropdowns in header
-    // await fetch(`/api/search?jql=${jql}`);
     const jql = encodeURI('filter=22119');
-    const response = await fetch(`/api/teams?jql=${jql}`);
-    const { teams, resources } = await response.json();
+    const issuesPromise = await fetch(`/api/search?jql=${jql}`);
+    const resourcesPromise = await fetch('/api/resources');
+    const teamsPromise = await fetch('/api/teams');
+
+    const issues = await issuesPromise.json();
+    const resources = await resourcesPromise.json();
+    const teams = await teamsPromise.json();
+
+    // TODO: await and json all promises
+    // const [issues, resources, teams] = await Promise.all([
+    //   issuesPromise,
+    //   resourcesPromise,
+    //   teamsPromise,
+    // ]);
+
+    console.log({ issues, resources, teams });
 
     this.setState({
       isLoading: false,
       jql,
-      teams,
+      issues,
       resources,
+      teams,
     });
   }
 

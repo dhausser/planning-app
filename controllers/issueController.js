@@ -59,7 +59,7 @@ exports.httpsRequest = (req, res, next) => {
 exports.shallowCopyToDatabase = async (req, res, next) => {
   try {
     // TODO: Assign fields via variable
-    // console.log(req.fields);
+    // TODO: Assign team via mapping
     const issues = req.response.issues.map(issue => {
       const {
         summary,
@@ -79,14 +79,14 @@ exports.shallowCopyToDatabase = async (req, res, next) => {
         issuetype: issuetype.name,
         assignee: assignee.key,
         displayName: assignee.displayName,
+        team: 'Gameplay',
       };
     });
 
     // TODO: Find a better way to update and aggregate issues
     await Issue.deleteMany();
     await Issue.insertMany(issues);
-    next();
-    // return res.json(issues);
+    return res.json(issues);
   } catch (e) {
     console.log(e);
   }
