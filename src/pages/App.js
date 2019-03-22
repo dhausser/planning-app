@@ -73,8 +73,6 @@ export default class App extends Component {
     //   teamsPromise,
     // ]);
 
-    console.log({ issues, resources, teams });
-
     this.setState({
       isLoading: false,
       jql,
@@ -118,11 +116,6 @@ export default class App extends Component {
 
   updateFilter = selection => {
     const { filter, isFiltering } = this.state;
-
-    // issues.push = resources
-    //   .filter(({ team }) => [null, team].includes(filter))
-    //   .forEach(resource => issues.push(...resource.issues));
-
     this.setState({
       filter: filter === selection ? null : selection,
       isFiltering: !isFiltering,
@@ -130,8 +123,11 @@ export default class App extends Component {
   };
 
   render() {
+    const { isLoading } = this.state;
     const { navOpenState } = this.context;
     const { children } = this.props;
+
+    if (isLoading) return <p>Loading...</p>;
     return (
       <Page
         navigationWidth={navOpenState.width}

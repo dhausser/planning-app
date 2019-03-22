@@ -47,36 +47,35 @@ export default class Roadmap extends Component {
     }));
 
   render() {
-    const { isLoading, issues } = this.state;
+    const { issues, isLoading } = this.state;
 
+    if (isLoading) return <p>Loading...</p>;
     return (
       <Padding>
         <PageTitle>Roadmap</PageTitle>
-        {!isLoading && (
-          <TableTree>
-            <Headers>
-              <Header width={300}>Summary</Header>
-              <Header width={100}>Value</Header>
-              <Header width={100}>Status</Header>
-            </Headers>
-            <Rows
-              items={this.convertIssues(issues)}
-              render={({ key, summary, value, status, children }) => (
-                <Row
-                  expandLabel="Expand"
-                  collapseLabel="Collapse"
-                  itemId={key}
-                  items={children}
-                  hasChildren={children.length > 0}
-                >
-                  <Cell singleLine>{summary}</Cell>
-                  <Cell singleLine>{value}</Cell>
-                  <Cell singleLine>{status}</Cell>
-                </Row>
-              )}
-            />
-          </TableTree>
-        )}
+        <TableTree>
+          <Headers>
+            <Header width={300}>Summary</Header>
+            <Header width={100}>Value</Header>
+            <Header width={100}>Status</Header>
+          </Headers>
+          <Rows
+            items={this.convertIssues(issues)}
+            render={({ key, summary, value, status, children }) => (
+              <Row
+                expandLabel="Expand"
+                collapseLabel="Collapse"
+                itemId={key}
+                items={children}
+                hasChildren={children.length > 0}
+              >
+                <Cell singleLine>{summary}</Cell>
+                <Cell singleLine>{value}</Cell>
+                <Cell singleLine>{status}</Cell>
+              </Row>
+            )}
+          />
+        </TableTree>
       </Padding>
     );
   }

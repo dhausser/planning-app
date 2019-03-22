@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import Avatar from '@atlaskit/avatar';
 import { Padding } from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
 import IssueList from '../components/IssueList';
 import HolidayList from '../components/HolidayList';
+import { NameWrapper, AvatarWrapper } from '../components/ResourceList';
 
 export default class Resource extends Component {
   static contextTypes = {
@@ -40,21 +42,30 @@ export default class Resource extends Component {
     console.log(url);
     const resource = this.getResource();
 
+    if (isLoading) return <p>Loading...</p>;
+    if (!resource) return <p>This person doesn't exist</p>;
     return (
-      <div>
-        {!isLoading && resource != null && (
-          <Padding>
-            <PageTitle>
-              {resource.name} {resource.team}
-            </PageTitle>
-            <a href={url.href} target="_blank" rel="noopener noreferrer">
-              View in Issue Navigator
-            </a>
-            <IssueList issues={resource.issues} isLoading={isLoading} />
-            <HolidayList holidays={resource.holidays} isLoading={isLoading} />
-          </Padding>
-        )}
-      </div>
+      <Padding>
+        <PageTitle>
+          <NameWrapper>
+            <AvatarWrapper>
+              <Avatar
+                name={resource.name}
+                size="large"
+                src={`https://jira.cdprojektred.com/secure/useravatar?ownerId=${encodeURIComponent(
+                  resource.key
+                )}`}
+              />
+            </AvatarWrapper>
+            {resource.name} {resource.team}
+          </NameWrapper>
+        </PageTitle>
+        <a href={url.href} target="_blank" rel="noopener noreferrer">
+          View in Issue Navigator
+        </a>
+        <IssueList issues={resource.issues} isLoading={isLoading} />
+        <HolidayList holidays={resource.holidays} isLoading={isLoading} />
+      </Padding>
     );
   }
 }

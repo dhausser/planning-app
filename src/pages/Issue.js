@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import { Status } from '@atlaskit/status';
 import InlineEdit, { SingleLineTextInput } from '@atlaskit/inline-edit';
+import Avatar from '@atlaskit/avatar';
 import { Padding } from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
 import { priorityIcon, statusColor } from '../components/IssueList';
-import { NameWrapper } from '../components/ResourceList';
+import { NameWrapper, AvatarWrapper } from '../components/ResourceList';
 
 function postData(url = ``, data = {}) {
   return fetch(url, {
@@ -25,6 +26,7 @@ function postData(url = ``, data = {}) {
 
 export default class Issue extends Component {
   state = {
+    isLoading: true,
     issue: {},
     editValue: '',
     readValue: '',
@@ -35,12 +37,11 @@ export default class Issue extends Component {
   };
 
   componentDidMount = async () => {
-    const { params } = this.props;
-    const { issueId } = params;
+    const { issueId } = this.props.params;
     const response = await fetch(`/api/issue?key=${issueId}`);
     const issue = await response.json();
-    console.log(issue);
     this.setState({
+      isLoading: false,
       issue,
       readValue: issue.summary,
       editValue: issue.summary,
@@ -114,8 +115,9 @@ export default class Issue extends Component {
 
   render() {
     const id = 'inline-edit-single';
-    const { issue } = this.state;
+    const { issue, isLoading } = this.state;
 
+    if (isLoading) return <p>Loading...</p>;
     return (
       <Padding>
         <PageTitle>{this.state.readValue}</PageTitle>
@@ -149,11 +151,18 @@ export default class Issue extends Component {
           <strong>Description</strong>
         </p>
         <p>{issue.description}</p>
-        <p>
-          <NameWrapper>
-            <Link to={`/resource/${issue.assignee}`}>{issue.displayName}</Link>
-          </NameWrapper>
-        </p>
+        <NameWrapper>
+          <AvatarWrapper>
+            <Avatar
+              name={issue.displayName}
+              size="large"
+              src={`https://jira.cdprojektred.com/secure/useravatar?ownerId=${encodeURIComponent(
+                issue.assignee
+              )}`}
+            />
+          </AvatarWrapper>
+          <Link to={`/resource/${issue.assignee}`}>{issue.displayName}</Link>
+        </NameWrapper>
       </Padding>
     );
   }

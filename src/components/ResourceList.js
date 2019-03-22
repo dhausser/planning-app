@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { arrayOf, shape, string } from 'prop-types';
+import { arrayOf, shape, string, bool } from 'prop-types';
 import styled from 'styled-components';
 import DynamicTable from '@atlaskit/dynamic-table';
+import Avatar from '@atlaskit/avatar';
 
 function createKey(input) {
   return input ? input.replace(/^(the|a|an)/, '').replace(/\s/g, '') : input;
@@ -15,6 +16,10 @@ const Wrapper = styled.div`
 export const NameWrapper = styled.span`
   display: flex;
   align-items: center;
+`;
+
+export const AvatarWrapper = styled.div`
+  margin-right: 8px;
 `;
 
 const createHead = withWidth => ({
@@ -49,31 +54,41 @@ const createHead = withWidth => ({
   ],
 });
 
-const createRows = resources => resources.map((resource, index) => ({
-  key: `row-${index}-${resource.name}`,
-  cells: [
-    {
-      key: createKey(resource.name),
-      content: (
-        <NameWrapper>
-          <Link to={`/resource/${resource.key}`}>{resource.name}</Link>
-        </NameWrapper>
-      ),
-    },
-    {
-      key: createKey(resource.team),
-      content: resource.team,
-    },
-    {
-      key: resource.issues.length + 1,
-      content: resource.issues.length,
-    },
-    {
-      key: resource.holidays.length + 1,
-      content: resource.holidays.length,
-    },
-  ],
-}));
+const createRows = resources =>
+  resources.map((resource, index) => ({
+    key: `row-${index}-${resource.name}`,
+    cells: [
+      {
+        key: createKey(resource.name),
+        content: (
+          <NameWrapper>
+            <AvatarWrapper>
+              <Avatar
+                name={resource.name}
+                size="medium"
+                src={`https://jira.cdprojektred.com/secure/useravatar?ownerId=${encodeURIComponent(
+                  resource.key
+                )}`}
+              />
+            </AvatarWrapper>
+            <Link to={`/resource/${resource.key}`}>{resource.name}</Link>
+          </NameWrapper>
+        ),
+      },
+      {
+        key: createKey(resource.team),
+        content: resource.team,
+      },
+      {
+        key: resource.issues.length + 1,
+        content: resource.issues.length,
+      },
+      {
+        key: resource.holidays.length + 1,
+        content: resource.holidays.length,
+      },
+    ],
+  }));
 
 export default function ResourceList({ resources, isLoading }) {
   const caption = `Listing ${resources.length} developers`;
@@ -95,11 +110,14 @@ export default function ResourceList({ resources, isLoading }) {
       />
     </Wrapper>
   );
-};
+}
 
 ResourceList.propTypes = {
-  resources: arrayOf(shape({
-    key: string,
-    name: string,
-  })).isRequired,
+  resources: arrayOf(
+    shape({
+      key: string,
+      name: string,
+    })
+  ).isRequired,
+  isLoading: bool,
 };

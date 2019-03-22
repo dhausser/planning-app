@@ -12,7 +12,6 @@ exports.httpsRequest = (req, res, next) => {
     'issuetype',
     'priority',
   ];
-  console.log(req.query.jql);
   const bodyData = JSON.stringify({
     jql: req.query.jql,
     startAt: 0,
@@ -125,7 +124,7 @@ exports.editIssue = async (req, res) => {
 
 exports.getIssue = async (request, response) => {
   const { HOSTNAME, API_PATH } = process.env;
-  const fields = 'summary,description,status,priority,';
+  const fields = 'summary,description,status,priority,assignee';
   const options = {
     hostname: HOSTNAME,
     path: `${API_PATH}/issue/${request.query.key}?fields=${fields}`,
@@ -145,7 +144,8 @@ exports.getIssue = async (request, response) => {
     });
     res.on('end', () => {
       const issue = JSON.parse(rawData);
-      const { summary, description, priority, status } = issue.fields;
+      console.log(issue);
+      const { summary, description, priority, status, assignee } = issue.fields;
       response.json({
         key: issue.key,
         summary,
@@ -153,6 +153,9 @@ exports.getIssue = async (request, response) => {
         priority: priority.name,
         status: status.name,
         statusCategory: status.statusCategory.key,
+        assignee: assignee.key,
+        displayName: assignee.displayName,
+        avatarUrl: assignee.avatarUrls['48x48'],
       });
     });
   });
