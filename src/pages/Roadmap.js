@@ -19,7 +19,7 @@ export default class Roadmap extends Component {
 
   componentDidMount = async () => {
     const jql = encodeURI(
-      'project=GWENT and issuetype in (story) and fixVersion in earliestUnreleasedVersionByReleaseDate(GWENT)'
+      'project=GWENT and issuetype in (epic) and fixVersion=2.1'
     );
     const response = await fetch(`/api/search?jql=${jql}`);
     const issues = await response.json();

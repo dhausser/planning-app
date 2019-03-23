@@ -93,7 +93,7 @@ exports.shallowCopyToDatabase = async (req, res, next) => {
 
 exports.getIssues = async (req, res) => res.json(await Issue.find());
 
-exports.editIssue = async (req, res) => {
+exports.editIssue = (req, res) => {
   const bodyData = JSON.stringify({
     update: { summary: [{ set: `${req.body.summary}` }] },
   });
@@ -122,9 +122,9 @@ exports.editIssue = async (req, res) => {
   postRequest.end();
 };
 
-exports.getIssue = async (request, response) => {
+exports.getIssue = (request, response, next) => {
   const { HOSTNAME, API_PATH } = process.env;
-  const fields = 'summary,description,status,priority,assignee';
+  const fields = 'summary,description,status,priority,assignee,fixVersions';
   const options = {
     hostname: HOSTNAME,
     path: `${API_PATH}/issue/${request.query.key}?fields=${fields}`,
@@ -144,8 +144,15 @@ exports.getIssue = async (request, response) => {
     });
     res.on('end', () => {
       const issue = JSON.parse(rawData);
-      const { summary, description, priority, status, assignee } = issue.fields;
-      response.json({
+      const {
+        summary,
+        description,
+        priority,
+        status,
+        assignee,
+        fixVersions,
+      } = issue.fields;
+      request.issue = {
         key: issue.key,
         summary,
         description,
@@ -155,6 +162,44 @@ exports.getIssue = async (request, response) => {
         assignee: assignee.key,
         displayName: assignee.displayName,
         avatarUrl: assignee.avatarUrls['48x48'],
+        fixVersion: fixVersions[0].name,
+      };
+      next();
+    });
+  });
+
+  req.on('error', e => {
+    console.error(`problem with request: ${e.message}`);
+  });
+
+  req.end();
+};
+
+exports.getComments = (request, response) => {
+  const { HOSTNAME, API_PATH } = process.env;
+  const options = {
+    hostname: HOSTNAME,
+    path: `${API_PATH}/issue/${request.query.key}/comment`,
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      Authorization: process.env.AUTHORIZATION,
+    },
+  };
+
+  const req = https.request(options, res => {
+    res.setEncoding('utf8');
+    let rawData = '';
+    res.on('data', chunk => {
+      rawData += chunk;
+    });
+
+    res.on('end', () => {
+      const { comments } = JSON.parse(rawData);
+      response.json({
+        issue: request.issue,
+        comments,
       });
     });
   });

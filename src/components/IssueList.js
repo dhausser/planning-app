@@ -151,7 +151,7 @@ export default function IssueList({ issues, isLoading, pathname }) {
         caption={caption}
         head={createHead(true, pathname)}
         rows={createRows(issues, pathname)}
-        rowsPerPage={pathname === '/issues' ? 100 : 10}
+        rowsPerPage={pathname === '/issues' ? 20 : 10}
         defaultPage={1}
         loadingSpinnerSize="large"
         isLoading={isLoading}

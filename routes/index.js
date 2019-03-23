@@ -23,7 +23,8 @@ router.get(
   issueController.httpsRequest,
   catchErrors(issueController.shallowCopyToDatabase)
 );
-router.get('/api/issue', issueController.getIssue);
+router.get('/api/issue', issueController.getIssue, issueController.getComments);
 router.post('/api/issue', issueController.editIssue);
+// router.get('/api/comments', issueController.getComments);
 
 module.exports = router;

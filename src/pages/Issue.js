@@ -36,6 +36,7 @@ export default class Issue extends Component {
   state = {
     isLoading: true,
     issue: {},
+    comments: [],
     editValue: '',
     readValue: '',
   };
@@ -47,10 +48,12 @@ export default class Issue extends Component {
   componentDidMount = async () => {
     const { issueId } = this.props.params;
     const response = await fetch(`/api/issue?key=${issueId}`);
-    const issue = await response.json();
+    const { issue, comments } = await response.json();
+
     this.setState({
       isLoading: false,
       issue,
+      comments,
       readValue: issue.summary,
       editValue: issue.summary,
     });
@@ -112,7 +115,7 @@ export default class Issue extends Component {
 
   render() {
     const id = 'inline-edit-single';
-    const { issue, isLoading } = this.state;
+    const { issue, comments, isLoading } = this.state;
 
     if (isLoading) return <p>Loading...</p>;
     return (
@@ -125,7 +128,7 @@ export default class Issue extends Component {
         >
           View in Issue Navigator
         </a>
-        <h4>Assignee</h4>
+        <h5>Assignee</h5>
         <NameWrapper>
           <AvatarWrapper>
             <Avatar
@@ -138,12 +141,14 @@ export default class Issue extends Component {
           </AvatarWrapper>
           <Link to={`/resource/${issue.assignee}`}>{issue.displayName}</Link>
         </NameWrapper>
-        <h4>Status</h4>
+        <h5>Status</h5>
         <Status
           text={issue.status || ''}
           color={statusColor(issue.statusCategory)}
         />
-        <h4>Priotity</h4>
+        <h5>FixVersion</h5>
+        {issue.fixVersion}
+        <h5>Priotity</h5>
         {priorityIcon(issue.priority)} {issue.priority} {issue.issuetype}
         <InlineEdit
           isFitContainerWidthReadView
@@ -155,35 +160,38 @@ export default class Issue extends Component {
           onCancel={this.onCancel}
           {...this.props}
         />
-        <h4>Description</h4>
+        <h5>Description</h5>
         <TextArea value={issue.description} resize="smart" />
-        <h4>Comments</h4>
-        <Comment
-          avatar={
-            <Avatar
-              src={`https://jira.cdprojektred.com/secure/useravatar?ownerId=${encodeURIComponent(
-                issue.assignee
-              )}`}
-              label="Atlaskit avatar"
-              size="medium"
-            />
-          }
-          author={<CommentAuthor>{issue.displayName}</CommentAuthor>}
-          type="author"
-          edited={<CommentEdited>Edited</CommentEdited>}
-          time={<CommentTime>30 August, 2016</CommentTime>}
-          content={
-            <p>
-              Content goes here. This can include <a href="/link">links</a> and
-              other content.
-            </p>
-          }
-          actions={[
-            <CommentAction>Reply</CommentAction>,
-            <CommentAction>Edit</CommentAction>,
-            <CommentAction>Like</CommentAction>,
-          ]}
-        />
+        <h5>Comments</h5>
+        {comments.map(comment => (
+          <Comment
+            key={comment.id}
+            avatar={
+              <Avatar
+                src={`https://jira.cdprojektred.com/secure/useravatar?ownerId=${encodeURIComponent(
+                  comment.author.key
+                )}`}
+                label="Atlaskit avatar"
+                size="medium"
+              />
+            }
+            author={<CommentAuthor>{comment.author.displayName}</CommentAuthor>}
+            // type="author"
+            edited={comment.updated && <CommentEdited>Edited</CommentEdited>}
+            time={
+              <CommentTime>
+                {new Date(comment.created).toLocaleDateString()}
+              </CommentTime>
+            }
+            content={<p>{comment.body}</p>}
+            actions={[
+              <CommentAction>Reply</CommentAction>,
+              <CommentAction>Edit</CommentAction>,
+              <CommentAction>Like</CommentAction>,
+            ]}
+          />
+        ))}
+        <TextArea />
       </Padding>
     );
   }

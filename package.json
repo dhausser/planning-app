@@ -15,7 +15,7 @@
     "eject": "react-scripts eject",
     "surge": "bash surge_login.sh && surge --project ./build/ --domain atlaskit-starter.surge.sh",
     "prod": "node ./app.js",
-    "watch": "nodemon ./app.js -e js --ignore src",
+    "watch": "nodemon -e js -x node --inspect app.js --ignore src",
     "sample": "node ./data/load-sample-data.js",
     "blowitallaway": "node ./data/load-sample-data.js --delete"
   },
