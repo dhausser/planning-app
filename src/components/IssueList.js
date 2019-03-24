@@ -4,12 +4,21 @@ import { arrayOf, shape, string, bool } from 'prop-types';
 import styled from 'styled-components';
 import DynamicTable from '@atlaskit/dynamic-table';
 import { Status } from '@atlaskit/status';
+
+// Import Priority Icons
 import PriorityBlockerIcon from '@atlaskit/icon-priority/glyph/priority-blocker';
 import PriorityHighestIcon from '@atlaskit/icon-priority/glyph/priority-highest';
 import PriorityMediumIcon from '@atlaskit/icon-priority/glyph/priority-medium';
 import PriorityLowestIcon from '@atlaskit/icon-priority/glyph/priority-lowest';
 import PriorityMinorIcon from '@atlaskit/icon-priority/glyph/priority-minor';
 import PriorityTrivialIcon from '@atlaskit/icon-priority/glyph/priority-trivial';
+
+// Import Status Icons
+import Epic16Icon from '@atlaskit/icon-object/glyph/epic/16';
+import Story16Icon from '@atlaskit/icon-object/glyph/story/16';
+import Task16Icon from '@atlaskit/icon-object/glyph/task/16';
+import Subtask16Icon from '@atlaskit/icon-object/glyph/subtask/16';
+import Bug16Icon from '@atlaskit/icon-object/glyph/bug/16';
 
 const Wrapper = styled.div`
   min-width: 600px;
@@ -20,9 +29,8 @@ const NameWrapper = styled.span`
   align-items: center;
 `;
 
-export const statusColor = category => {
+export function statusColor(category) {
   const colors = ['neutral', 'purple', 'blue', 'red', 'yellow', 'green'];
-
   switch (category) {
     case 'new':
       return colors[2];
@@ -33,9 +41,9 @@ export const statusColor = category => {
     default:
       return colors[0];
   }
-};
+}
 
-export const priorityIcon = priority => {
+export function priorityIcon(priority) {
   switch (priority) {
     case 'PO':
       return <PriorityBlockerIcon size="small" />;
@@ -52,7 +60,24 @@ export const priorityIcon = priority => {
     default:
       return <PriorityBlockerIcon size="small" />;
   }
-};
+}
+
+export function typeIcon(type) {
+  switch (type) {
+    case 'Epic':
+      return <Epic16Icon alt={type} />;
+    case 'story':
+      return <Story16Icon alt={type} />;
+    case 'Task':
+      return <Task16Icon alt={type} />;
+    case 'Sub-task':
+      return <Subtask16Icon alt={type} />;
+    case 'Bug':
+      return <Bug16Icon alt={type} />;
+    default:
+      return <Task16Icon alt={type} />;
+  }
+}
 
 const head = {
   cells: [
@@ -60,7 +85,7 @@ const head = {
       key: 'type',
       content: 'T',
       isSortable: true,
-      width: 1,
+      width: 2,
     },
     {
       key: 'key',
@@ -93,7 +118,7 @@ const head = {
       key: 'priority',
       content: 'P',
       isSortable: true,
-      width: 3,
+      width: 4,
     },
     {
       key: 'status',
@@ -107,7 +132,7 @@ const head = {
       content: 'FixVersion',
       shouldTruncate: true,
       isSortable: true,
-      width: 5,
+      width: 4,
     },
   ],
 };
@@ -127,7 +152,7 @@ function createRows(issues) {
     cells: [
       {
         key: issue.issuetype[0],
-        content: issue.issuetype[0],
+        content: typeIcon(issue.issuetype),
       },
       {
         content: (
@@ -138,7 +163,11 @@ function createRows(issues) {
       },
       {
         key: issue.summary[0],
-        content: issue.summary,
+        content: (
+          <NameWrapper>
+            <Link to={`/issue/${issue.key}`}>{issue.summary}</Link>
+          </NameWrapper>
+        ),
       },
       {
         key: issue.assignee,

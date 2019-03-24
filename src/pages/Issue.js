@@ -14,7 +14,7 @@ import Comment, {
 import TextArea from '@atlaskit/textarea';
 import { Padding } from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
-import { priorityIcon, statusColor } from '../components/IssueList';
+import { priorityIcon, statusColor, typeIcon } from '../components/IssueList';
 import { NameWrapper, AvatarWrapper } from '../components/ResourceList';
 
 function postData(url = ``, data = {}) {
@@ -148,8 +148,10 @@ export default class Issue extends Component {
         />
         <h5>FixVersion</h5>
         {issue.fixVersion}
+        <h5>Type</h5>
+        {typeIcon(issue.issuetype)} {issue.issuetype}
         <h5>Priotity</h5>
-        {priorityIcon(issue.priority)} {issue.priority} {issue.issuetype}
+        {priorityIcon(issue.priority)} {issue.priority}
         <InlineEdit
           isFitContainerWidthReadView
           label="Summary"

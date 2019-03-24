@@ -132,7 +132,7 @@ exports.editIssue = (req, res) => {
 exports.getIssue = (request, response, next) => {
   const { HOSTNAME, API_PATH } = process.env;
   const fields =
-    'summary,description,status,priority,assignee,creator,fixVersions';
+    'summary,description,status,priority,assignee,creator,fixVersions,issuetype';
   const options = {
     hostname: HOSTNAME,
     path: `${API_PATH}/issue/${request.query.key}?fields=${fields}`,
@@ -160,6 +160,7 @@ exports.getIssue = (request, response, next) => {
         assignee,
         creator,
         fixVersions,
+        issuetype,
       } = issue.fields;
       request.issue = {
         key: issue.key,
@@ -173,6 +174,7 @@ exports.getIssue = (request, response, next) => {
         avatarUrl: assignee.avatarUrls['48x48'],
         creator: creator.displayName,
         fixVersion: fixVersions[0].name,
+        issuetype: issuetype.name,
       };
       next();
     });
