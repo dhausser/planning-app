@@ -13,7 +13,9 @@ const issueSchema = new mongoose.Schema({
   issuetype: String,
   priority: String,
   statusCategory: String,
-  components: Array,
+  creatorKey: String,
+  creatorName: String,
+  fixVersion: String,
 });
 
 issueSchema.statics.getAssignees = function() {

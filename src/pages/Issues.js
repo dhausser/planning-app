@@ -24,6 +24,7 @@ export default class Issues extends Component {
     const issues = filter
       ? resources.filter(({ team }) => team === filter).reduce(reducer, [])
       : resources.reduce(reducer, []);
+    console.log(issues[0]);
     return (
       <Padding>
         <PageTitle>Issues</PageTitle>

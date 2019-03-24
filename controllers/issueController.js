@@ -11,6 +11,8 @@ exports.httpsRequest = (req, res, next) => {
     'assignee',
     'issuetype',
     'priority',
+    'creator',
+    'fixVersions',
   ];
   const bodyData = JSON.stringify({
     jql: req.query.jql,
@@ -59,6 +61,7 @@ exports.shallowCopyToDatabase = async (req, res, next) => {
   try {
     // TODO: Assign fields via variable
     // TODO: Assign team via mapping
+
     const issues = req.response.issues.map(issue => {
       const {
         summary,
@@ -67,6 +70,8 @@ exports.shallowCopyToDatabase = async (req, res, next) => {
         status,
         issuetype,
         assignee,
+        creator,
+        fixVersions,
       } = issue.fields;
       return {
         key: issue.key,
@@ -78,7 +83,9 @@ exports.shallowCopyToDatabase = async (req, res, next) => {
         issuetype: issuetype.name,
         assignee: assignee.key,
         displayName: assignee.displayName,
-        team: 'Gameplay',
+        creatorKey: creator.key,
+        creatorName: creator.displayName,
+        fixVersion: fixVersions[0].name,
       };
     });
 
@@ -124,7 +131,8 @@ exports.editIssue = (req, res) => {
 
 exports.getIssue = (request, response, next) => {
   const { HOSTNAME, API_PATH } = process.env;
-  const fields = 'summary,description,status,priority,assignee,fixVersions';
+  const fields =
+    'summary,description,status,priority,assignee,creator,fixVersions';
   const options = {
     hostname: HOSTNAME,
     path: `${API_PATH}/issue/${request.query.key}?fields=${fields}`,
@@ -150,6 +158,7 @@ exports.getIssue = (request, response, next) => {
         priority,
         status,
         assignee,
+        creator,
         fixVersions,
       } = issue.fields;
       request.issue = {
@@ -162,6 +171,7 @@ exports.getIssue = (request, response, next) => {
         assignee: assignee.key,
         displayName: assignee.displayName,
         avatarUrl: assignee.avatarUrls['48x48'],
+        creator: creator.displayName,
         fixVersion: fixVersions[0].name,
       };
       next();

@@ -57,8 +57,8 @@ export default class App extends Component {
 
     // TODO: Implement filter selection by dropdowns in header
     const jql = encodeURI('filter=22119');
-    // const issuesPromise = await fetch(`/api/search?jql=${jql}`);
-    const issuesPromise = await fetch('/api/issues');
+    const issuesPromise = await fetch(`/api/search?jql=${jql}`);
+    // const issuesPromise = await fetch('/api/issues');
     const resourcesPromise = await fetch('/api/resources');
     const teamsPromise = await fetch('/api/teams');
 

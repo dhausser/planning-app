@@ -54,94 +54,133 @@ export const priorityIcon = priority => {
   }
 };
 
-const createHead = (withWidth, pathname) => {
-  const head = {
-    cells: [
-      {
-        key: 'key',
-        content: 'Key',
-        isSortable: true,
-        width: withWidth ? 10 : undefined,
-      },
-      {
-        key: 'summary',
-        content: 'Summary',
-        shouldTruncate: true,
-        isSortable: true,
-        width: withWidth ? 30 : undefined,
-      },
-      {
-        key: 'value',
-        content: 'Value',
-        shouldTruncate: true,
-        isSortable: true,
-        width: withWidth ? 5 : undefined,
-      },
-      {
-        key: 'status',
-        content: 'Status',
-        shouldTruncate: true,
-        isSortable: true,
-        width: withWidth ? 15 : undefined,
-      },
-    ],
-  };
-
-  if (pathname === '/issues') {
-    head.cells.push({
+const head = {
+  cells: [
+    {
+      key: 'type',
+      content: 'T',
+      isSortable: true,
+      width: 1,
+    },
+    {
+      key: 'key',
+      content: 'Key',
+      shouldTruncate: true,
+      isSortable: true,
+      width: 7,
+    },
+    {
+      key: 'summary',
+      content: 'Summary',
+      shouldTruncate: true,
+      isSortable: true,
+    },
+    {
       key: 'assignee',
       content: 'Assignee',
       shouldTruncate: true,
       isSortable: true,
-      width: withWidth ? 15 : undefined,
-    });
-  }
-
-  return head;
+      width: 10,
+    },
+    {
+      key: 'reporter',
+      content: 'Reporter',
+      shouldTruncate: true,
+      isSortable: true,
+      width: 10,
+    },
+    {
+      key: 'priority',
+      content: 'P',
+      isSortable: true,
+      width: 3,
+    },
+    {
+      key: 'status',
+      content: 'Status',
+      shouldTruncate: true,
+      isSortable: true,
+      width: 10,
+    },
+    {
+      key: 'version',
+      content: 'FixVersion',
+      shouldTruncate: true,
+      isSortable: true,
+      width: 5,
+    },
+  ],
 };
+// if (pathname === '/issues') {
+//   head.cells.push({
+//     key: 'assignee',
+//     content: 'Assignee',
+//     shouldTruncate: true,
+//     isSortable: true,
+//     width: 1d,
+//   });
+// }
 
-const createRows = (issues, pathname) =>
-  issues.map((issue, index) => {
-    const row = {
-      key: `row-${index}-${issue.key}`,
-      cells: [
-        {
-          content: (
-            <NameWrapper>
-              <Link to={`/issue/${issue.key}`}>{issue.key}</Link>
-            </NameWrapper>
-          ),
-        },
-        {
-          content: issue.summary,
-        },
-        {
-          key: parseInt(issue.priority.charAt(1)) + 1,
-          content: priorityIcon(issue.priority),
-        },
-        {
-          key: issue.statusCategory,
-          content: (
-            <Status
-              text={issue.status}
-              color={statusColor(issue.statusCategory)}
-            />
-          ),
-        },
-      ],
-    };
-
-    if (pathname === '/issues') {
-      row.cells.push({
+function createRows(issues) {
+  return issues.map((issue, index) => ({
+    key: `row-${index}-${issue.key}`,
+    cells: [
+      {
+        key: issue.issuetype[0],
+        content: issue.issuetype[0],
+      },
+      {
+        content: (
+          <NameWrapper>
+            <Link to={`/issue/${issue.key}`}>{issue.key}</Link>
+          </NameWrapper>
+        ),
+      },
+      {
+        key: issue.summary[0],
+        content: issue.summary,
+      },
+      {
         key: issue.assignee,
         content: (
           <Link to={`/resource/${issue.assignee}`}>{issue.displayName}</Link>
         ),
-      });
-    }
-
-    return row;
-  });
+      },
+      {
+        key: issue.creator,
+        content: (
+          <Link to={`/resource/${issue.creatorKey}`}>{issue.creatorName}</Link>
+        ),
+      },
+      {
+        key: parseInt(issue.priority.charAt(1)) + 1,
+        content: priorityIcon(issue.priority),
+      },
+      {
+        key: issue.statusCategory,
+        content: (
+          <Status
+            text={issue.status}
+            color={statusColor(issue.statusCategory)}
+          />
+        ),
+      },
+      {
+        key: issue.fixVersion,
+        content: issue.fixVersion,
+      },
+    ],
+  }));
+}
+// if (pathname === '/issues') {
+//   row.cells.push({
+//     key: issue.assignee,
+//     content: (
+//       <Link to={`/resource/${issue.assignee}`}>{issue.displayName}</Link>
+//     ),
+//   });
+// }
+// return row;
 
 export default function IssueList({ issues, isLoading, pathname }) {
   const caption = `Listing ${issues.length} issues`;
@@ -149,14 +188,14 @@ export default function IssueList({ issues, isLoading, pathname }) {
     <Wrapper>
       <DynamicTable
         caption={caption}
-        head={createHead(true, pathname)}
+        head={head}
         rows={createRows(issues, pathname)}
         rowsPerPage={pathname === '/issues' ? 20 : 10}
         defaultPage={1}
         loadingSpinnerSize="large"
         isLoading={isLoading}
         isFixedSize
-        defaultSortKey="value"
+        defaultSortKey="priority"
         defaultSortOrder="ASC"
       />
     </Wrapper>
