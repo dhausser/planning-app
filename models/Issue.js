@@ -16,6 +16,7 @@ const issueSchema = new mongoose.Schema({
   creatorKey: String,
   creatorName: String,
   fixVersion: String,
+  subtasks: Array,
 });
 
 issueSchema.statics.getAssignees = function() {

@@ -8,7 +8,7 @@ import Nav, {
   AkSearchDrawer,
 } from '@atlaskit/navigation';
 import RoadmapIcon from '@atlaskit/icon/glyph/roadmap';
-import BoardIcon from '@atlaskit/icon/glyph/board';
+import BacklogIcon from '@atlaskit/icon/glyph/backlog';
 import PeopleIcon from '@atlaskit/icon/glyph/people';
 import GraphBarIcon from '@atlaskit/icon/glyph/graph-bar';
 import CalendarIcon from '@atlaskit/icon/glyph/calendar';
@@ -18,7 +18,7 @@ import CreateIcon from '@atlaskit/icon/glyph/add';
 import AtlassianIcon from '@atlaskit/icon/glyph/atlassian';
 import ArrowleftIcon from '@atlaskit/icon/glyph/arrow-left';
 // import DashboardIcon from '@atlaskit/icon/glyph/dashboard';
-// import BacklogIcon from '@atlaskit/icon/glyph/backlog';
+// import BoardIcon from '@atlaskit/icon/glyph/board';
 // import ShipIcon from '@atlaskit/icon/glyph/ship';
 // import GraphLineIcon from '@atlaskit/icon/glyph/graph-line';
 
@@ -32,7 +32,7 @@ export default class StarterNavigation extends React.Component {
   state = {
     navLinks: [
       ['/roadmap', 'Roadmap', RoadmapIcon],
-      ['/issues', 'Board', BoardIcon],
+      ['/issues', 'Backlog', BacklogIcon],
       ['/', 'Reports', GraphBarIcon],
       ['/resources', 'People', PeopleIcon],
       ['/absences', 'Calendar', CalendarIcon],

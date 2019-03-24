@@ -7,61 +7,77 @@ import TableTree, {
   Cell,
 } from '@atlaskit/table-tree';
 import { Status } from '@atlaskit/status';
-import { statusColor } from '../components/IssueList';
+import { statusColor, typeIcon } from '../components/IssueList';
 import { Padding } from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
 
 export default class Roadmap extends Component {
   state = {
     isLoading: true,
-    issues: [],
+    epics: [],
   };
 
   componentDidMount = async () => {
-    const jql = encodeURI(
+    const epicQuery = encodeURI(
       'project=GWENT and issuetype in (epic) and fixVersion=2.1'
     );
-    const response = await fetch(`/api/search?jql=${jql}`);
-    const issues = await response.json();
-    this.setState({ issues, isLoading: false });
+    const response = await fetch(`/api/search?jql=${epicQuery}`);
+    const epics = await response.json();
+
+    const storyQuery = encodeURI(
+      `"Epic Link"=${epics[0].key}&fields=key,summary,subtasks`
+    );
+    const res = await fetch(`/api/search?jql=${storyQuery}`);
+
+    // TODO: Find some better way to do this that would work for an array of epics
+    const children = await res.json();
+    epics[0].children = children;
+
+    this.setState({ epics, isLoading: false });
   };
 
-  // TODO assign maps subtasks as children
   convertIssues = issues =>
     issues.map(issue => ({
+      type: typeIcon(issue.issuetype),
       key: issue.key,
       summary: issue.summary,
       value: issue.priority,
       status: (
         <Status text={issue.status} color={statusColor(issue.statusCategory)} />
       ),
-      children: [
-        {
-          key: 'subtask',
-          summary: 'Sample subtask',
-          value: 'P4',
-          status: 'to do',
+      children: issue.children.map(child => ({
+        type: typeIcon(child.issuetype),
+        key: child.key,
+        summary: child.summary,
+        value: child.priority,
+        status: child.status,
+        children: child.subtasks.map(subtask => ({
+          type: typeIcon(subtask.fields.issuetype.name),
+          key: subtask.key,
+          summary: subtask.fields.summary,
+          value: subtask.fields.priority.name,
+          status: subtask.fields.status.name,
           children: [],
-        },
-      ],
+        })),
+      })),
     }));
 
   render() {
-    const { issues, isLoading } = this.state;
-
+    const { epics, isLoading } = this.state;
     if (isLoading) return <p>Loading...</p>;
     return (
       <Padding>
         <PageTitle>Roadmap</PageTitle>
         <TableTree>
           <Headers>
-            <Header width={300}>Summary</Header>
+            <Header width={150}>Type</Header>
+            <Header width={600}>Summary</Header>
             <Header width={100}>Value</Header>
             <Header width={100}>Status</Header>
           </Headers>
           <Rows
-            items={this.convertIssues(issues)}
-            render={({ key, summary, value, status, children }) => (
+            items={this.convertIssues(epics)}
+            render={({ type, key, summary, value, status, children }) => (
               <Row
                 expandLabel="Expand"
                 collapseLabel="Collapse"
@@ -69,6 +85,7 @@ export default class Roadmap extends Component {
                 items={children}
                 hasChildren={children.length > 0}
               >
+                <Cell singleLine>{type}</Cell>
                 <Cell singleLine>{summary}</Cell>
                 <Cell singleLine>{value}</Cell>
                 <Cell singleLine>{status}</Cell>

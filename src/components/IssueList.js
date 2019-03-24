@@ -66,7 +66,7 @@ export function typeIcon(type) {
   switch (type) {
     case 'Epic':
       return <Epic16Icon alt={type} />;
-    case 'story':
+    case 'Story':
       return <Story16Icon alt={type} />;
     case 'Task':
       return <Task16Icon alt={type} />;

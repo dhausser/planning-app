@@ -13,6 +13,7 @@ exports.httpsRequest = (req, res, next) => {
     'priority',
     'creator',
     'fixVersions',
+    'subtasks',
   ];
   const bodyData = JSON.stringify({
     jql: req.query.jql,
@@ -72,6 +73,7 @@ exports.shallowCopyToDatabase = async (req, res, next) => {
         assignee,
         creator,
         fixVersions,
+        subtasks,
       } = issue.fields;
       return {
         key: issue.key,
@@ -86,6 +88,7 @@ exports.shallowCopyToDatabase = async (req, res, next) => {
         creatorKey: creator.key,
         creatorName: creator.displayName,
         fixVersion: fixVersions[0].name,
+        subtasks,
       };
     });
 
