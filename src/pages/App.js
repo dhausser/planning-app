@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import Page from '@atlaskit/page';
-import '@atlaskit/css-reset';
 import StarterNavigation from '../components/StarterNavigation';
 
 export default class App extends Component {
@@ -58,7 +57,8 @@ export default class App extends Component {
 
     // TODO: Implement filter selection by dropdowns in header
     const jql = encodeURI('filter=22119');
-    const issuesPromise = await fetch(`/api/search?jql=${jql}`);
+    // const issuesPromise = await fetch(`/api/search?jql=${jql}`);
+    const issuesPromise = await fetch('/api/issues');
     const resourcesPromise = await fetch('/api/resources');
     const teamsPromise = await fetch('/api/teams');
 
