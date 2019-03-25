@@ -24,8 +24,6 @@ export default class App extends Component {
 
   static propTypes = {
     children: PropTypes.node,
-
-    // TODO: change navOpenState on click or resize
     // navOpenState: PropTypes.object,
     // onNavResize: PropTypes.func,
   };
@@ -65,21 +63,42 @@ export default class App extends Component {
 
     const { project } = this.state;
 
-    // const assignees = resources
-    //   .filter(({ team }) => team === filter)
-    //   .map(({ key }) => key);
+    const assignees = resources
+      .filter(({ team }) => team === filter)
+      .map(({ key }) => key);
 
     const jql = encodeURI(
       [
         `project=${project}`,
-        // `assignee in (${assignees})`,
+        `assignee in (${assignees})`,
         `fixVersion=${fixVersion}`,
       ].join(' AND ')
     );
 
-    // const response = await fetch(`/api/search?jql=${jql}`);
-    const response = await fetch('/api/issues');
+    const response = await fetch('/api/search', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        jql,
+        startAt: 0,
+        maxResults: 50,
+        fields: [
+          'summary',
+          'description',
+          'status',
+          'assignee',
+          'issuetype',
+          'priority',
+          'creator',
+          'fixVersions',
+          'subtasks',
+        ],
+      }),
+    });
     const issues = await response.json();
+    console.log(issues);
 
     this.setState({
       isLoading: false,
