@@ -8,11 +8,13 @@ export default class App extends Component {
     isLoading: true,
     isFiltering: false,
     themeMode: 'light',
-    filter: null,
-    jql: '',
+    project: 'GWENT',
     issues: [],
     resources: [],
     teams: [],
+    filter: null,
+    fixVersions: ['2.0', '2.0.1', '2.1', '3.0'],
+    fixVersion: null,
   };
 
   static contextTypes = {
@@ -33,12 +35,14 @@ export default class App extends Component {
     isFiltering: PropTypes.bool,
     updateFilter: PropTypes.func,
     filter: PropTypes.string,
-    jql: PropTypes.string,
+    project: PropTypes.string,
     issues: PropTypes.array,
     resources: PropTypes.array,
     teams: PropTypes.array,
     themeMode: PropTypes.string,
     switchTheme: PropTypes.func,
+    fixVersions: PropTypes.array,
+    fixVersion: PropTypes.string,
   };
 
   getChildContext() {
@@ -49,42 +53,39 @@ export default class App extends Component {
   }
 
   async componentDidMount() {
-    // Reinstate our localstorage
-    const localStorageRef = localStorage.getItem('filter');
-    if (localStorageRef) {
-      this.setState({ filter: JSON.parse(localStorageRef) });
-    }
+    const filter = JSON.parse(localStorage.getItem('filter'));
+    const fixVersion =
+      JSON.parse(localStorage.getItem('fixVersion')) ||
+      'earliestUnreleasedVersion(GWENT)';
 
-    // TODO: Implement filter selection by dropdowns in header
-    const jql = encodeURI('filter=22119');
-    const issuesPromise = await fetch(`/api/search?jql=${jql}`);
-    // const issuesPromise = await fetch('/api/issues');
     const resourcesPromise = await fetch('/api/resources');
     const teamsPromise = await fetch('/api/teams');
-
-    const issues = await issuesPromise.json();
     const resources = await resourcesPromise.json();
     const teams = await teamsPromise.json();
+    // console.log({ filter, fixVersion, resources, teams });
 
-    // TODO: await and json all promises
-    // const [issues, resources, teams] = await Promise.all([
-    //   issuesPromise,
-    //   resourcesPromise,
-    //   teamsPromise,
-    // ]);
+    const { project } = this.state;
+    // const assignees = resources
+    //   .filter(({ team }) => team === filter)
+    //   .map(({ key }) => key);
+    const jql = encodeURI(
+      [
+        `project=${project}`,
+        // `assignee in (${assignees})`,
+        `fixVersion=${fixVersion}`,
+      ].join(' AND ')
+    );
+    const response = await fetch(`/api/search?jql=${jql}`);
+    const issues = await response.json();
 
     this.setState({
       isLoading: false,
-      jql,
       issues,
       resources,
       teams,
+      filter,
+      fixVersion,
     });
-  }
-
-  componentDidUpdate() {
-    const { filter } = this.state;
-    localStorage.setItem('filter', JSON.stringify(filter));
   }
 
   showModal = () => {
@@ -114,12 +115,17 @@ export default class App extends Component {
     });
   };
 
-  updateFilter = selection => {
+  updateFilter = ({ team, fixVersion }) => {
+    console.log({ team, fixVersion });
     const { filter, isFiltering } = this.state;
-    this.setState({
-      filter: filter === selection ? null : selection,
-      isFiltering: !isFiltering,
-    });
+
+    if (fixVersion) this.setState({ fixVersion });
+
+    if (team)
+      this.setState({
+        filter: filter === team ? null : team,
+        isFiltering: !isFiltering,
+      });
   };
 
   render() {

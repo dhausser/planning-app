@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 import TableTree, {
   Headers,
   Header,
@@ -50,13 +51,19 @@ export default class Roadmap extends Component {
         key: child.key,
         summary: child.summary,
         value: child.priority,
-        status: child.status,
+        status: (
+          <Status
+            text={child.status}
+            color={statusColor(child.statusCategory)}
+          />
+        ),
+        // TODO: Subtask current do not have the flatten formatting as other issues
         children: child.subtasks.map(subtask => ({
           type: typeIcon(subtask.fields.issuetype.name),
           key: subtask.key,
           summary: subtask.fields.summary,
           value: subtask.fields.priority.name,
-          status: subtask.fields.status.name,
+          status: <Status text={subtask.fields.status.name} color="purple" />,
           children: [],
         })),
       })),
@@ -73,7 +80,7 @@ export default class Roadmap extends Component {
             <Header width={150}>Type</Header>
             <Header width={600}>Summary</Header>
             <Header width={100}>Value</Header>
-            <Header width={100}>Status</Header>
+            <Header width={200}>Status</Header>
           </Headers>
           <Rows
             items={this.convertIssues(epics)}
@@ -86,7 +93,9 @@ export default class Roadmap extends Component {
                 hasChildren={children.length > 0}
               >
                 <Cell singleLine>{type}</Cell>
-                <Cell singleLine>{summary}</Cell>
+                <Cell singleLine>
+                  {<Link to={`/issue/${key}`}>{summary}</Link>}
+                </Cell>
                 <Cell singleLine>{value}</Cell>
                 <Cell singleLine>{status}</Cell>
               </Row>

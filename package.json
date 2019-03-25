@@ -27,7 +27,7 @@
     "@atlaskit/button": "^9.0.7",
     "@atlaskit/calendar": "^7.0.20",
     "@atlaskit/comment": "^7.0.3",
-    "@atlaskit/dropdown-menu": "^6.1.10",
+    "@atlaskit/dropdown-menu": "^6.1.26",
     "@atlaskit/dynamic-table": "^10.0.23",
     "@atlaskit/icon": "^13.4.0",
     "@atlaskit/icon-object": "^3.0.5",
