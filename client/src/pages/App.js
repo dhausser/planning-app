@@ -62,12 +62,13 @@ export default class App extends Component {
     const teamsPromise = await fetch('/api/teams');
     const resources = await resourcesPromise.json();
     const teams = await teamsPromise.json();
-    // console.log({ filter, fixVersion, resources, teams });
 
     const { project } = this.state;
+
     // const assignees = resources
     //   .filter(({ team }) => team === filter)
     //   .map(({ key }) => key);
+
     const jql = encodeURI(
       [
         `project=${project}`,
@@ -75,7 +76,9 @@ export default class App extends Component {
         `fixVersion=${fixVersion}`,
       ].join(' AND ')
     );
-    const response = await fetch(`/api/search?jql=${jql}`);
+
+    // const response = await fetch(`/api/search?jql=${jql}`);
+    const response = await fetch('/api/issues');
     const issues = await response.json();
 
     this.setState({
@@ -116,16 +119,20 @@ export default class App extends Component {
   };
 
   updateFilter = ({ team, fixVersion }) => {
-    console.log({ team, fixVersion });
     const { filter, isFiltering } = this.state;
 
-    if (fixVersion) this.setState({ fixVersion });
+    if (fixVersion) {
+      localStorage.setItem('fixVersion', JSON.stringify(fixVersion));
+      this.setState({ fixVersion });
+    }
 
-    if (team)
+    if (team) {
+      localStorage.setItem('filter', JSON.stringify(team));
       this.setState({
         filter: filter === team ? null : team,
         isFiltering: !isFiltering,
       });
+    }
   };
 
   render() {
