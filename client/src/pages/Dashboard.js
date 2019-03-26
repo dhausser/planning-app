@@ -8,15 +8,15 @@ import BarChart from '../components/BarChart';
 export default class Dashboard extends Component {
   static contextTypes = {
     isLoading: PropTypes.bool,
-    filter: PropTypes.string,
+    team: PropTypes.string,
     teams: PropTypes.array,
     resources: PropTypes.array,
   };
 
   aggregateIssues = () => {
-    const { filter, teams, resources } = this.context;
+    const { team, teams, resources } = this.context;
 
-    if (filter == null) {
+    if (team == null) {
       const dataset = teams.reduce((accumulator, currentValue) => {
         accumulator[currentValue] = 0;
         return accumulator;
@@ -27,7 +27,7 @@ export default class Dashboard extends Component {
       return dataset;
     }
     return resources
-      .filter(resource => resource.team === filter)
+      .filter(resource => resource.team === team)
       .reduce((accumulator, currentValue) => {
         accumulator[currentValue.name.split(' ').shift()] =
           currentValue.issues.length;

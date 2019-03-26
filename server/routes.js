@@ -15,7 +15,7 @@ const catchErrors = fn =>
 router.get('/api/resources', catchErrors(resourceController.getResources));
 router.get('/api/holidays', catchErrors(holidayController.getHolidays));
 router.get('/api/issues', catchErrors(issueController.getIssues));
-router.get('/api/teams', resourceController.getTeams);
+router.get('/api/teams', catchErrors(resourceController.getTeams));
 
 // Routes to Jira Server API
 router.get('/api/issue', issueController.getIssue, issueController.getComments);

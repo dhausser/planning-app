@@ -174,9 +174,9 @@ export default class Issue extends Component {
             key={comment.id}
             avatar={
               <Avatar
-                src={`https://jira.cdprojektred.com/secure/useravatar?ownerId=${encodeURIComponent(
+                src={`https://jira.cdprojektred.com/secure/useravatar?ownerId=${
                   comment.author.key
-                )}`}
+                }`}
                 label="Atlaskit avatar"
                 size="medium"
               />

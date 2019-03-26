@@ -131,9 +131,8 @@ const head = {
     {
       key: 'version',
       content: 'V',
-      // shouldTruncate: true,
       isSortable: true,
-      width: 5,
+      width: 10,
     },
   ],
 };

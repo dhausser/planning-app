@@ -11,8 +11,6 @@ export default class Issues extends Component {
   static contextTypes = {
     isLoading: PropTypes.bool,
     issues: PropTypes.array,
-    // filter: PropTypes.string,
-    // resources: PropTypes.array,
   };
 
   static propTypes = {

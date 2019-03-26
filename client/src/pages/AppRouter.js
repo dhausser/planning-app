@@ -9,7 +9,6 @@ import Resource from './Resource';
 import Issues from './Issues';
 import Issue from './Issue';
 import Absences from './Absences';
-import Settings from './Settings';
 
 export default class AppRouter extends Component {
   constructor() {
@@ -50,7 +49,6 @@ export default class AppRouter extends Component {
           <Route path="/issues" component={Issues} />
           <Route path="/issue/:issueId" component={Issue} />`
           <Route path="/absences" component={Absences} />
-          <Route path="/settings" component={Settings} />
         </Route>
       </Router>
     );

@@ -9,13 +9,13 @@ export default class ResourcesPage extends Component {
   static contextTypes = {
     isLoading: PropTypes.bool,
     resources: PropTypes.array,
-    filter: PropTypes.string,
+    team: PropTypes.string,
   };
 
   render() {
-    const { isLoading, filter } = this.context;
-    const resources = filter
-      ? this.context.resources.filter(({ team }) => team === filter)
+    const { isLoading, team } = this.context;
+    const resources = team
+      ? this.context.resources.team(resource => resource.team === team)
       : this.context.resources;
 
     return (

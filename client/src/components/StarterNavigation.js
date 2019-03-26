@@ -12,7 +12,6 @@ import BacklogIcon from '@atlaskit/icon/glyph/backlog';
 import PeopleIcon from '@atlaskit/icon/glyph/people';
 import GraphBarIcon from '@atlaskit/icon/glyph/graph-bar';
 import CalendarIcon from '@atlaskit/icon/glyph/calendar';
-import GearIcon from '@atlaskit/icon/glyph/settings';
 import SearchIcon from '@atlaskit/icon/glyph/search';
 import CreateIcon from '@atlaskit/icon/glyph/add';
 import AtlassianIcon from '@atlaskit/icon/glyph/atlassian';
@@ -21,6 +20,7 @@ import ArrowleftIcon from '@atlaskit/icon/glyph/arrow-left';
 // import BoardIcon from '@atlaskit/icon/glyph/board';
 // import ShipIcon from '@atlaskit/icon/glyph/ship';
 // import GraphLineIcon from '@atlaskit/icon/glyph/graph-line';
+// import GearIcon from '@atlaskit/icon/glyph/settings';
 
 import CreateDrawer from './CreateDrawer';
 import SearchDrawer from './SearchDrawer';
@@ -36,7 +36,6 @@ export default class StarterNavigation extends React.Component {
       ['/', 'Reports', GraphBarIcon],
       ['/resources', 'People', PeopleIcon],
       ['/absences', 'Calendar', CalendarIcon],
-      ['/settings', 'Settings', GearIcon],
     ],
   };
 

@@ -6,15 +6,12 @@ import StarterNavigation from '../components/StarterNavigation';
 export default class App extends Component {
   state = {
     isLoading: true,
-    isFiltering: false,
-    themeMode: 'light',
-    project: 'GWENT',
     issues: [],
     resources: [],
     teams: [],
-    filter: null,
+    team: null,
     fixVersions: ['2.0', '2.0.1', '2.1', '3.0'],
-    fixVersion: null,
+    fixVersion: 'unreleasedVersions()',
   };
 
   static contextTypes = {
@@ -30,17 +27,14 @@ export default class App extends Component {
 
   static childContextTypes = {
     isLoading: PropTypes.bool,
-    isFiltering: PropTypes.bool,
-    updateFilter: PropTypes.func,
-    filter: PropTypes.string,
+    team: PropTypes.string,
     project: PropTypes.string,
     issues: PropTypes.array,
     resources: PropTypes.array,
     teams: PropTypes.array,
-    themeMode: PropTypes.string,
-    switchTheme: PropTypes.func,
     fixVersions: PropTypes.array,
     fixVersion: PropTypes.string,
+    updateFilter: PropTypes.func,
   };
 
   getChildContext() {
@@ -51,27 +45,15 @@ export default class App extends Component {
   }
 
   async componentDidMount() {
-    const filter = JSON.parse(localStorage.getItem('filter'));
-    const fixVersion =
-      JSON.parse(localStorage.getItem('fixVersion')) ||
-      'earliestUnreleasedVersion(GWENT)';
+    let localStorageRef = JSON.parse(localStorage.getItem('team'));
+    if (localStorageRef) this.setState({ team: localStorageRef });
+    localStorageRef = JSON.parse(localStorage.getItem('fixVersion'));
+    if (localStorageRef) this.setState({ fixVersion: localStorageRef });
 
     const resourcesPromise = await fetch('/api/resources');
     const teamsPromise = await fetch('/api/teams');
     const resources = await resourcesPromise.json();
     const teams = await teamsPromise.json();
-
-    const { project } = this.state;
-
-    const assignees = resources
-      .filter(({ team }) => team === filter)
-      .map(({ key }) => key);
-
-    const jql = [
-      `project=${project}`,
-      `assignee in (${assignees})`,
-      `fixVersion=${fixVersion}`,
-    ].join(' AND ');
 
     const response = await fetch('/api/search', {
       method: 'POST',
@@ -79,7 +61,7 @@ export default class App extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        jql,
+        jql: `fixVersion in (${this.state.fixVersion})`,
         startAt: 0,
         maxResults: 10,
         fields: [
@@ -101,91 +83,50 @@ export default class App extends Component {
       issues,
       resources,
       teams,
-      filter,
-      fixVersion,
     });
   }
 
   updateFilter = async ({ team, fixVersion }) => {
-    this.setState({ isLoading: true });
-    const { filter, isFiltering } = this.state;
-
     if (fixVersion) {
+      this.setState({ isLoading: true });
       localStorage.setItem('fixVersion', JSON.stringify(fixVersion));
-      this.setState({ fixVersion });
+
+      const jql = `fixVersion=${fixVersion || this.state.fixVersion}`;
+      const response = await fetch('/api/search', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          jql,
+          startAt: 0,
+          maxResults: 10,
+          fields: [
+            'summary',
+            'description',
+            'status',
+            'assignee',
+            'issuetype',
+            'priority',
+            'creator',
+            'fixVersions',
+          ],
+        }),
+      });
+      const { issues } = await response.json();
+      console.log(issues.length);
+      this.setState({ issues, fixVersion, isLoading: false });
     }
 
     if (team) {
-      localStorage.setItem('filter', JSON.stringify(team));
-      this.setState({
-        filter: filter === team ? null : team,
-        isFiltering: !isFiltering,
-      });
+      if (team === this.state.team) {
+        localStorage.removeItem('team');
+        this.setState({ team: null });
+      } else {
+        localStorage.setItem('team', JSON.stringify(team));
+        this.setState({ team });
+      }
     }
-
-    // TODO: This duplicate code from componentDidMount
-    const assignees = this.state.resources
-      .filter(resource => resource.team === filter)
-      .map(({ key }) => key);
-
-    const jql = [
-      `project=${this.state.project}`,
-      `assignee in (${assignees})`,
-      `fixVersion=${fixVersion || this.state.fixVersion}`,
-    ].join(' AND ');
-
-    const response = await fetch('/api/search', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        jql,
-        startAt: 0,
-        maxResults: 10,
-        fields: [
-          'summary',
-          'description',
-          'status',
-          'assignee',
-          'issuetype',
-          'priority',
-          'creator',
-          'fixVersions',
-        ],
-      }),
-    });
-    const { issues } = await response.json();
-    console.log(issues.length);
-
-    this.setState({ issues, isLoading: false });
-  };
-
-  showModal = () => {
-    this.setState({ isModalOpen: true });
-  };
-
-  hideModal = () => {
-    this.setState({ isModalOpen: false });
-  };
-
-  addFlag = () => {
-    const { flags } = this.state;
-    this.setState({ flags: [{ id: Date.now() }].concat(flags) });
-  };
-
-  onFlagDismissed = dismissedFlagId => {
-    const { flags } = this.state;
-    this.setState({
-      flags: flags.filter(flag => flag.id !== dismissedFlagId),
-    });
-  };
-
-  switchTheme = () => {
-    const { themeMode } = this.state;
-    this.setState({
-      themeMode: themeMode === 'light' ? 'dark' : 'light',
-    });
   };
 
   render() {

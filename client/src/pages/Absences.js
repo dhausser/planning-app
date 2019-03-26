@@ -8,15 +8,15 @@ import HolidayList from '../components/HolidayList';
 export default class Holidays extends Component {
   static contextTypes = {
     isLoading: PropTypes.bool,
-    filter: PropTypes.string,
+    team: PropTypes.string,
     resources: PropTypes.array,
   };
 
   render() {
-    const { resources, filter, isLoading } = this.context;
+    const { resources, team, isLoading } = this.context;
     const holidays = [];
     holidays.push = resources
-      .filter(({ team }) => [null, team].includes(filter))
+      .filter(resource => [null, team].includes(resource.team))
       .forEach(resource => holidays.push(...resource.holidays));
 
     return (

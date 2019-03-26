@@ -21,18 +21,17 @@ export default class TeamFilter extends Component {
   static contextTypes = {
     isLoading: PropTypes.bool,
     teams: PropTypes.array,
-    filter: PropTypes.string,
-    updateFilter: PropTypes.func,
+    team: PropTypes.string,
     fixVersions: PropTypes.array,
     fixVersion: PropTypes.string,
+    updateFilter: PropTypes.func,
   };
 
   render() {
     const {
+      isLoading,
       teams,
       fixVersions,
-      isLoading,
-      filter,
       fixVersion,
       updateFilter,
     } = this.context;
@@ -73,7 +72,7 @@ export default class TeamFilter extends Component {
                 key={team}
                 isLoading={isLoading}
                 appearance={appearances[0]}
-                isSelected={filter === team}
+                isSelected={team === this.context.team}
                 onClick={() => updateFilter({ team })}
               >
                 {team}
