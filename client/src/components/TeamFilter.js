@@ -23,7 +23,7 @@ export default class TeamFilter extends Component {
     teams: PropTypes.array,
     team: PropTypes.string,
     fixVersions: PropTypes.array,
-    fixVersion: PropTypes.string,
+    fixVersion: PropTypes.object,
     updateFilter: PropTypes.func,
   };
 
@@ -40,7 +40,7 @@ export default class TeamFilter extends Component {
         <ButtonGroup>
           <DropdownMenu
             isLoading={isLoading}
-            trigger={fixVersion != null ? fixVersion : 'FixVersion'}
+            trigger={fixVersion.name}
             triggerType="button"
             shouldFlip={false}
             position="right top"
@@ -48,12 +48,12 @@ export default class TeamFilter extends Component {
             <DropdownItemGroup>
               {fixVersions.map(version => (
                 <DropdownItem
-                  key={version}
+                  key={version.id}
                   onClick={() => {
                     updateFilter({ fixVersion: version });
                   }}
                 >
-                  {version}
+                  {version.name}
                 </DropdownItem>
               ))}
             </DropdownItemGroup>

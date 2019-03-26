@@ -45,7 +45,7 @@ export default class Resource extends Component {
       return (
         <EmptyState
           header="This person doesn't exist"
-          description={`The person you are trying to lookup current isn't recorded in the database.`}
+          description={`The person you are trying to lookup isn't currently recorded in the database.`}
         />
       );
     const { issues, holidays } = resource;

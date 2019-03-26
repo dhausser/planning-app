@@ -21,5 +21,6 @@ router.get('/api/teams', catchErrors(resourceController.getTeams));
 router.get('/api/issue', issueController.getIssue, issueController.getComments);
 router.post('/api/issue', issueController.editIssue);
 router.post('/api/search', issueController.searchIssues);
+router.get('/api/fixVersions', issueController.getFixVersions);
 
 module.exports = router;

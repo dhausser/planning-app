@@ -142,3 +142,37 @@ exports.getComments = (request, response) => {
 
   req.end();
 };
+
+exports.getFixVersions = (request, response) => {
+  const options = {
+    method: 'GET',
+    hostname: process.env.HOSTNAME,
+    path: `/${
+      process.env.API_PATH
+    }/project/${10500}/version?startAt=59&maxResults=5&orderBy=+releaseDate&status=unreleased`,
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      Authorization: process.env.AUTHORIZATION,
+    },
+  };
+
+  const req = https.request(options, res => {
+    res.setEncoding('utf8');
+    let rawData = '';
+    res.on('data', chunk => {
+      rawData += chunk;
+    });
+
+    res.on('end', () => {
+      const data = JSON.parse(rawData);
+      response.json(data);
+    });
+  });
+
+  req.on('error', e => {
+    console.error(`problem with request: ${e.message}`);
+  });
+
+  req.end();
+};

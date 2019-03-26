@@ -22,10 +22,10 @@ app.use(bodyParser.json());
 app.use('/', require('./routes'));
 
 // Static Files
-app.use(express.static(path.join(__dirname, 'build')));
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
+// app.use(express.static(path.join(__dirname, 'build')));
+// app.get('/*', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'build', 'index.html'));
+// });
 
 // Server
 app.listen(PORT);

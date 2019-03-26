@@ -12,8 +12,8 @@ export default class App extends Component {
     resources: [],
     teams: [],
     team: null,
-    fixVersions: ['2.0', '2.0.1', '2.1', '3.0'],
-    fixVersion: 'unreleasedVersions()',
+    fixVersions: [],
+    fixVersion: {},
   };
 
   static contextTypes = {
@@ -36,7 +36,7 @@ export default class App extends Component {
     teams: PropTypes.array,
     team: PropTypes.string,
     fixVersions: PropTypes.array,
-    fixVersion: PropTypes.string,
+    fixVersion: PropTypes.object,
     updateFilter: PropTypes.func,
   };
 
@@ -48,48 +48,42 @@ export default class App extends Component {
   }
 
   async componentDidMount() {
-    let localStorageRef = JSON.parse(localStorage.getItem('team'));
-    if (localStorageRef) this.setState({ team: localStorageRef });
-    localStorageRef = JSON.parse(localStorage.getItem('fixVersion'));
-    if (localStorageRef) this.setState({ fixVersion: localStorageRef });
+    // Reinstate localstorage
+    let localStorageRef = localStorage.getItem('team');
+    if (localStorageRef) {
+      this.setState({ team: JSON.parse(localStorageRef) });
+    }
+    localStorageRef = localStorage.getItem('fixVersion');
+    if (localStorageRef) {
+      this.setState({
+        fixVersion: JSON.parse(localStorageRef),
+      });
+    }
 
-    const resourcesPromise = await fetch('/api/resources');
-    const teamsPromise = await fetch('/api/teams');
-    const resources = await resourcesPromise.json();
-    const teams = await teamsPromise.json();
+    const [
+      teamsPromise,
+      resourcesPromise,
+      fixVersionsPromise,
+    ] = await Promise.all([
+      fetch('/api/teams'),
+      fetch('/api/resources'),
+      fetch('/api/fixVersions'),
+    ]);
+    const [teams, resources, fixVersions] = await Promise.all([
+      teamsPromise.json(),
+      resourcesPromise.json(),
+      fixVersionsPromise.json(),
+    ]);
 
-    /**
-     * TODO: Make a function
-     */
-    const response = await fetch('/api/search', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        jql: `fixVersion in (${this.state.fixVersion}) ORDER BY priority DESC`,
-        maxResults: 20,
-        fields: [
-          'summary',
-          'description',
-          'status',
-          'assignee',
-          'issuetype',
-          'priority',
-          'creator',
-          'fixVersions',
-        ],
-      }),
-    });
-    const { issues, maxResults, total } = await response.json();
-    /**
-     * End of function block
-     */
+    const { issues, maxResults, total } = await this.getIssues(
+      this.state.fixVersion.id
+    );
 
     this.setState({
       isLoading: false,
       maxResults,
       total,
+      fixVersions: fixVersions.values,
       issues,
       resources,
       teams,
@@ -97,39 +91,10 @@ export default class App extends Component {
   }
 
   updateFilter = async ({ team, fixVersion }) => {
-    if (fixVersion) {
-      this.setState({ fixVersion, isLoading: true });
+    if (fixVersion != null) {
+      this.setState({ isLoading: true });
+      const { issues, maxResults, total } = await this.getIssues(fixVersion.id);
       localStorage.setItem('fixVersion', JSON.stringify(fixVersion));
-
-      /**
-       * TODO: Make a function
-       */
-      const response = await fetch('/api/search', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          jql: `fixVersion=${this.state.fixVersion} ORDER BY priority DESC`,
-          startAt: 0,
-          maxResults: 10,
-          fields: [
-            'summary',
-            'description',
-            'status',
-            'assignee',
-            'issuetype',
-            'priority',
-            'creator',
-            'fixVersions',
-          ],
-        }),
-      });
-      const { issues, maxResults, total } = await response.json();
-      /**
-       * End of function block
-       */
-
       this.setState({
         issues,
         fixVersion,
@@ -139,7 +104,7 @@ export default class App extends Component {
       });
     }
 
-    if (team) {
+    if (team != null) {
       if (team === this.state.team) {
         localStorage.removeItem('team');
         this.setState({ team: null });
@@ -149,6 +114,27 @@ export default class App extends Component {
       }
     }
   };
+
+  getIssues = async id =>
+    (await fetch('/api/search', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        jql: `fixVersion=${id} ORDER BY priority DESC`,
+        // maxResults: 10,
+        fields: [
+          'summary',
+          'description',
+          'status',
+          'assignee',
+          'issuetype',
+          'priority',
+          'fixVersions',
+        ],
+      }),
+    })).json();
 
   render() {
     const { navOpenState } = this.context;
