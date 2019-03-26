@@ -20,6 +20,7 @@
     "@atlaskit/comment": "^7.0.3",
     "@atlaskit/dropdown-menu": "^6.1.26",
     "@atlaskit/dynamic-table": "^10.0.23",
+    "@atlaskit/empty-state": "^4.0.2",
     "@atlaskit/icon": "^13.4.0",
     "@atlaskit/icon-object": "^3.0.5",
     "@atlaskit/icon-priority": "^3.0.2",

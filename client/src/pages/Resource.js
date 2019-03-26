@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import Avatar from '@atlaskit/avatar';
 import Calendar from '@atlaskit/calendar';
+import EmptyState from '@atlaskit/empty-state';
 import { Padding } from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
 import IssueList from '../components/IssueList';
@@ -34,13 +35,19 @@ export default class Resource extends Component {
     const { isLoading, jql } = this.context;
     const { resourceId } = this.props.params;
     const url = new URL(
-      encodeURI(`?jql=${jql} AND assignee=${resourceId}`),
+      `?jql=${jql} AND assignee=${resourceId}`,
       'https://jira.cdprojektred.com/issues/'
     );
     const resource = this.getResource();
 
     if (isLoading) return <p>Loading...</p>;
-    if (!resource) return <p>This person doesn't exist</p>;
+    if (!resource)
+      return (
+        <EmptyState
+          header="This person doesn't exist"
+          description={`The person you are trying to lookup current isn't recorded in the database.`}
+        />
+      );
     const { issues, holidays } = resource;
     // TODO: Get Holidays date in format YYYY-MM-DD
     const dates = holidays.map(({ date }) =>

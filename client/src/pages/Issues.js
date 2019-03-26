@@ -10,24 +10,40 @@ import IssueList from '../components/IssueList';
 export default class Issues extends Component {
   static contextTypes = {
     isLoading: PropTypes.bool,
+    maxResults: PropTypes.number,
+    total: PropTypes.number,
     issues: PropTypes.array,
+    resources: PropTypes.array,
+    team: PropTypes.string,
   };
 
   static propTypes = {
     location: PropTypes.object,
   };
 
+  filterIssues() {
+    const { issues, resources, team } = this.context;
+    if (team != null) {
+      const resourceFilter = resources
+        .filter(resource => resource.team === team)
+        .map(({ key }) => key);
+      return issues.filter(issue =>
+        resourceFilter.includes(issue.fields.assignee.key)
+      );
+    }
+    return issues;
+  }
+
   render() {
-    const { issues, isLoading } = this.context;
-    // const issues = filter
-    //   ? resources.filter(({ team }) => team === filter).reduce(reducer, [])
-    //   : resources.reduce(reducer, []);
+    const { maxResults, total, isLoading } = this.context;
     return (
       <Padding>
         <PageTitle>Issues</PageTitle>
         <TeamFilter />
         <IssueList
-          issues={issues}
+          issues={this.filterIssues()}
+          maxResults={maxResults}
+          total={total}
           isLoading={isLoading}
           pathname={this.props.location.pathname}
         />

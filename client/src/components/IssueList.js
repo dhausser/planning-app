@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { arrayOf, shape, string, bool } from 'prop-types';
+import { arrayOf, shape, string, bool, number } from 'prop-types';
 import styled from 'styled-components';
 import DynamicTable from '@atlaskit/dynamic-table';
 import { Status } from '@atlaskit/status';
@@ -218,8 +218,14 @@ function createRows(issues) {
 // }
 // return row;
 
-export default function IssueList({ issues, isLoading, pathname }) {
-  const caption = `Listing ${issues.length} issues`;
+export default function IssueList({
+  issues,
+  isLoading,
+  maxResults,
+  total,
+  pathname,
+}) {
+  const caption = `Listing ${maxResults} issues of ${total}`;
   return (
     <Wrapper>
       <DynamicTable
@@ -247,6 +253,8 @@ IssueList.propTypes = {
       assignee: string,
     })
   ).isRequired,
+  maxResults: number,
+  total: number,
   isLoading: bool,
   pathname: string,
 };
