@@ -85,21 +85,21 @@ const head = {
       key: 'type',
       content: 'T',
       isSortable: true,
-      width: 2,
+      width: 4,
     },
     {
       key: 'key',
       content: 'Key',
       shouldTruncate: true,
       isSortable: true,
-      width: 10,
+      width: 15,
     },
     {
       key: 'summary',
       content: 'Summary',
       shouldTruncate: true,
       isSortable: true,
-      // width: 20,
+      // width: 40,
     },
     {
       key: 'assignee',
@@ -108,29 +108,29 @@ const head = {
       isSortable: true,
       width: 10,
     },
-    {
-      key: 'reporter',
-      content: 'Reporter',
-      shouldTruncate: true,
-      isSortable: true,
-      width: 10,
-    },
+    // {
+    //   key: 'reporter',
+    //   content: 'Reporter',
+    //   shouldTruncate: true,
+    //   isSortable: true,
+    //   // width: 10,
+    // },
     {
       key: 'priority',
       content: 'P',
       isSortable: true,
-      width: 3,
+      width: 5,
     },
     {
       key: 'status',
       content: 'Status',
       // shouldTruncate: true,
       isSortable: true,
-      width: 15,
+      width: 10,
     },
     {
       key: 'version',
-      content: 'FixVersion',
+      content: 'V',
       // shouldTruncate: true,
       isSortable: true,
       width: 5,
@@ -152,10 +152,11 @@ function createRows(issues) {
     key: `row-${index}-${issue.key}`,
     cells: [
       {
-        key: issue.issuetype[0],
-        content: typeIcon(issue.issuetype),
+        key: issue.fields.issuetype.id,
+        content: typeIcon(issue.fields.issuetype.name),
       },
       {
+        key: issue.id,
         content: (
           <NameWrapper>
             <Link to={`/issue/${issue.key}`}>{issue.key}</Link>
@@ -163,45 +164,51 @@ function createRows(issues) {
         ),
       },
       {
-        key: issue.summary[0],
+        key: issue.id,
         content: (
           <NameWrapper>
-            <Link to={`/issue/${issue.key}`}>{issue.summary}</Link>
+            <Link to={`/issue/${issue.key}`}>{issue.fields.summary}</Link>
           </NameWrapper>
         ),
       },
       {
-        key: issue.assignee,
+        key: issue.fields.assignee.key,
         content: (
-          <Link to={`/resource/${issue.assignee}`}>{issue.displayName}</Link>
+          <Link to={`/resource/${issue.fields.assignee.key}`}>
+            {issue.fields.assignee.displayName}
+          </Link>
         ),
       },
+      // {
+      //   key: issue.fields.creator.key,
+      //   content: (
+      //     <Link to={`/resource/${issue.fields.creator.key}`}>
+      //       {issue.fields.creator.displayName}
+      //     </Link>
+      //   ),
+      // },
       {
-        key: issue.creator,
-        content: (
-          <Link to={`/resource/${issue.creatorKey}`}>{issue.creatorName}</Link>
-        ),
+        key: issue.fields.priority.id,
+        content: priorityIcon(issue.fields.priority.name),
       },
       {
-        key: parseInt(issue.priority.charAt(1)) + 1,
-        content: priorityIcon(issue.priority),
-      },
-      {
-        key: issue.statusCategory,
+        key: issue.fields.status.statusCategory.id,
         content: (
           <Status
-            text={issue.status}
-            color={statusColor(issue.statusCategory)}
+            text={issue.fields.status.name}
+            color={statusColor(issue.fields.status.statusCategory.key)}
           />
         ),
       },
       {
-        key: issue.fixVersion,
-        content: issue.fixVersion,
+        key: issue.fields.fixVersions[0] && issue.fields.fixVersions[0].id,
+        content:
+          issue.fields.fixVersions[0] && issue.fields.fixVersions[0].name,
       },
     ],
   }));
 }
+
 // if (pathname === '/issues') {
 //   row.cells.push({
 //     key: issue.assignee,

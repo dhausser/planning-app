@@ -5,14 +5,14 @@ import PageTitle from '../components/PageTitle';
 import TeamFilter from '../components/TeamFilter';
 import IssueList from '../components/IssueList';
 
-const reducer = (acc, val) => [...acc, ...val.issues];
+// const reducer = (acc, val) => [...acc, ...val.issues];
 
 export default class Issues extends Component {
   static contextTypes = {
     isLoading: PropTypes.bool,
-    filter: PropTypes.string,
     issues: PropTypes.array,
-    resources: PropTypes.array,
+    // filter: PropTypes.string,
+    // resources: PropTypes.array,
   };
 
   static propTypes = {
@@ -20,10 +20,10 @@ export default class Issues extends Component {
   };
 
   render() {
-    const { resources, filter, isLoading } = this.context;
-    const issues = filter
-      ? resources.filter(({ team }) => team === filter).reduce(reducer, [])
-      : resources.reduce(reducer, []);
+    const { issues, isLoading } = this.context;
+    // const issues = filter
+    //   ? resources.filter(({ team }) => team === filter).reduce(reducer, [])
+    //   : resources.reduce(reducer, []);
     return (
       <Padding>
         <PageTitle>Issues</PageTitle>

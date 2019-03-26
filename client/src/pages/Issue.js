@@ -50,12 +50,14 @@ export default class Issue extends Component {
     const response = await fetch(`/api/issue?key=${issueId}`);
     const { issue, comments } = await response.json();
 
+    console.log({ issue, comments });
+
     this.setState({
       isLoading: false,
       issue,
       comments,
-      readValue: issue.summary,
-      editValue: issue.summary,
+      readValue: issue.fields.summary,
+      editValue: issue.fields.summary,
     });
   };
 
@@ -132,26 +134,28 @@ export default class Issue extends Component {
         <NameWrapper>
           <AvatarWrapper>
             <Avatar
-              name={issue.displayName}
+              name={issue.fields.assignee.displayName}
               size="large"
-              src={`https://jira.cdprojektred.com/secure/useravatar?ownerId=${encodeURIComponent(
-                issue.assignee
-              )}`}
+              src={`https://jira.cdprojektred.com/secure/useravatar?ownerId=${
+                issue.fields.assignee.key
+              }`}
             />
           </AvatarWrapper>
-          <Link to={`/resource/${issue.assignee}`}>{issue.displayName}</Link>
+          <Link to={`/resource/${issue.fields.assignee.key}`}>
+            {issue.fields.assignee.displayName}
+          </Link>
         </NameWrapper>
         <h5>Status</h5>
         <Status
-          text={issue.status || ''}
-          color={statusColor(issue.statusCategory)}
+          text={issue.fields.status.name}
+          color={statusColor(issue.fields.status.statusCategory.key)}
         />
         <h5>FixVersion</h5>
-        {issue.fixVersion}
+        {issue.fields.fixVersions[0] && issue.fields.fixVersions[0].name}
         <h5>Type</h5>
-        {typeIcon(issue.issuetype)} {issue.issuetype}
+        {typeIcon(issue.fields.issuetype.name)} {issue.fields.issuetype.name}
         <h5>Priotity</h5>
-        {priorityIcon(issue.priority)} {issue.priority}
+        {priorityIcon(issue.fields.priority.name)} {issue.fields.priority.name}
         <InlineEdit
           isFitContainerWidthReadView
           label="Summary"
@@ -163,7 +167,7 @@ export default class Issue extends Component {
           {...this.props}
         />
         <h5>Description</h5>
-        <TextArea value={issue.description} resize="smart" />
+        <TextArea value={issue.fields.description} resize="smart" />
         <h5>Comments</h5>
         {comments.map(comment => (
           <Comment

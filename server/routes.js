@@ -20,10 +20,6 @@ router.get('/api/teams', resourceController.getTeams);
 // Routes to Jira Server API
 router.get('/api/issue', issueController.getIssue, issueController.getComments);
 router.post('/api/issue', issueController.editIssue);
-router.post(
-  '/api/search',
-  issueController.searchIssues,
-  catchErrors(issueController.shallowCopyIssues)
-);
+router.post('/api/search', issueController.searchIssues);
 
 module.exports = router;

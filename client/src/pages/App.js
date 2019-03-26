@@ -67,13 +67,11 @@ export default class App extends Component {
       .filter(({ team }) => team === filter)
       .map(({ key }) => key);
 
-    const jql = encodeURI(
-      [
-        `project=${project}`,
-        `assignee in (${assignees})`,
-        `fixVersion=${fixVersion}`,
-      ].join(' AND ')
-    );
+    const jql = [
+      `project=${project}`,
+      `assignee in (${assignees})`,
+      `fixVersion=${fixVersion}`,
+    ].join(' AND ');
 
     const response = await fetch('/api/search', {
       method: 'POST',
@@ -83,7 +81,7 @@ export default class App extends Component {
       body: JSON.stringify({
         jql,
         startAt: 0,
-        maxResults: 50,
+        maxResults: 10,
         fields: [
           'summary',
           'description',
@@ -93,12 +91,10 @@ export default class App extends Component {
           'priority',
           'creator',
           'fixVersions',
-          'subtasks',
         ],
       }),
     });
-    const issues = await response.json();
-    console.log(issues);
+    const { issues } = await response.json();
 
     this.setState({
       isLoading: false,
@@ -109,6 +105,61 @@ export default class App extends Component {
       fixVersion,
     });
   }
+
+  updateFilter = async ({ team, fixVersion }) => {
+    this.setState({ isLoading: true });
+    const { filter, isFiltering } = this.state;
+
+    if (fixVersion) {
+      localStorage.setItem('fixVersion', JSON.stringify(fixVersion));
+      this.setState({ fixVersion });
+    }
+
+    if (team) {
+      localStorage.setItem('filter', JSON.stringify(team));
+      this.setState({
+        filter: filter === team ? null : team,
+        isFiltering: !isFiltering,
+      });
+    }
+
+    // TODO: This duplicate code from componentDidMount
+    const assignees = this.state.resources
+      .filter(resource => resource.team === filter)
+      .map(({ key }) => key);
+
+    const jql = [
+      `project=${this.state.project}`,
+      `assignee in (${assignees})`,
+      `fixVersion=${fixVersion || this.state.fixVersion}`,
+    ].join(' AND ');
+
+    const response = await fetch('/api/search', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        jql,
+        startAt: 0,
+        maxResults: 10,
+        fields: [
+          'summary',
+          'description',
+          'status',
+          'assignee',
+          'issuetype',
+          'priority',
+          'creator',
+          'fixVersions',
+        ],
+      }),
+    });
+    const { issues } = await response.json();
+    console.log(issues.length);
+
+    this.setState({ issues, isLoading: false });
+  };
 
   showModal = () => {
     this.setState({ isModalOpen: true });
@@ -137,29 +188,10 @@ export default class App extends Component {
     });
   };
 
-  updateFilter = ({ team, fixVersion }) => {
-    const { filter, isFiltering } = this.state;
-
-    if (fixVersion) {
-      localStorage.setItem('fixVersion', JSON.stringify(fixVersion));
-      this.setState({ fixVersion });
-    }
-
-    if (team) {
-      localStorage.setItem('filter', JSON.stringify(team));
-      this.setState({
-        filter: filter === team ? null : team,
-        isFiltering: !isFiltering,
-      });
-    }
-  };
-
   render() {
-    const { isLoading } = this.state;
     const { navOpenState } = this.context;
     const { children } = this.props;
 
-    if (isLoading) return <p>Loading...</p>;
     return (
       <Page
         navigationWidth={navOpenState.width}
