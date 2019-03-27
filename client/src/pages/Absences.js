@@ -15,8 +15,9 @@ export default class Holidays extends Component {
   render() {
     const { resources, team, isLoading } = this.context;
     const holidays = [];
+    console.log(team);
     holidays.push = resources
-      .filter(resource => [null, team].includes(resource.team))
+      .filter(resource => (team ? resource.team === team : true))
       .forEach(resource => holidays.push(...resource.holidays));
 
     return (

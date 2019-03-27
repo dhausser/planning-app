@@ -225,7 +225,9 @@ export default function IssueList({
   total,
   pathname,
 }) {
-  const caption = `Listing ${maxResults} issues of ${total}`;
+  const caption = `Listing ${
+    maxResults <= total ? maxResults : total
+  } issues of ${total}`;
   return (
     <Wrapper>
       <DynamicTable

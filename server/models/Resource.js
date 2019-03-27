@@ -25,20 +25,11 @@ resourceSchema.statics.getResources = function() {
       },
     },
     {
-      $lookup: {
-        from: 'issues',
-        localField: 'key',
-        foreignField: 'assignee',
-        as: 'issues',
-      },
-    },
-    {
       $project: {
         _id: false,
         key: true,
         name: true,
         team: true,
-        issues: true,
         holidays: true,
       },
     },

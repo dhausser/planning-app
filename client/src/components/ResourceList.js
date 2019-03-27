@@ -37,13 +37,13 @@ const createHead = withWidth => ({
       isSortable: true,
       width: withWidth ? 15 : undefined,
     },
-    {
-      key: 'issues',
-      content: 'Issues',
-      shouldTruncate: true,
-      isSortable: true,
-      width: withWidth ? 10 : undefined,
-    },
+    // {
+    //   key: 'issues',
+    //   content: 'Issues',
+    //   shouldTruncate: true,
+    //   isSortable: true,
+    //   width: withWidth ? 10 : undefined,
+    // },
     {
       key: 'absences',
       content: 'Absences',
@@ -79,10 +79,10 @@ const createRows = resources =>
         key: createKey(resource.team),
         content: resource.team,
       },
-      {
-        key: resource.issues.length + 1,
-        content: resource.issues.length,
-      },
+      // {
+      //   key: resource.issues.length + 1,
+      //   content: resource.issues.length,
+      // },
       {
         key: resource.holidays.length + 1,
         content: resource.holidays.length,
@@ -105,7 +105,7 @@ export default function ResourceList({ resources, isLoading }) {
         loadingSpinnerSize="large"
         isLoading={isLoading}
         isFixedSize
-        defaultSortKey="issues"
+        defaultSortKey="absences"
         defaultSortOrder="DESC"
       />
     </Wrapper>

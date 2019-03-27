@@ -17,7 +17,7 @@ export default class ResourcesPage extends Component {
     const resources = team
       ? this.context.resources.team(resource => resource.team === team)
       : this.context.resources;
-
+    console.log({ resources });
     return (
       <Padding>
         <PageTitle>People</PageTitle>

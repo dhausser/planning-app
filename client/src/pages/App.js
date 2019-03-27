@@ -122,8 +122,8 @@ export default class App extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        jql: `fixVersion=${id} ORDER BY priority DESC`,
-        // maxResults: 10,
+        jql: `filter=22119 AND fixVersion=${id} ORDER BY priority DESC`,
+        maxResults: 10,
         fields: [
           'summary',
           'description',

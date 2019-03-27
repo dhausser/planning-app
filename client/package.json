@@ -43,7 +43,7 @@
   "devDependencies": {
     "react-scripts": "^2.1.3"
   },
-  "proxy": "http://localhost:8080",
+  "proxy": "http://localhost:4444",
   "browserslist": [
     ">0.2%",
     "not dead",

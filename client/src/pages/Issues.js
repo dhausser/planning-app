@@ -38,32 +38,25 @@ export default class Issues extends Component {
   render() {
     const { maxResults, total, isLoading } = this.context;
     const issues = this.filterIssues();
-
-    let content = null;
-    if (!issues) {
-      content = (
-        <EmptyState
-          header="Fail"
-          description="Something must be wrong with the request."
-        />
-      );
-    } else {
-      content = (
-        <IssueList
-          issues={issues}
-          maxResults={maxResults}
-          total={total}
-          isLoading={isLoading}
-          pathname={this.props.location.pathname}
-        />
-      );
-    }
-
+    const issueList = issues ? (
+      <IssueList
+        issues={issues}
+        maxResults={maxResults}
+        total={total}
+        isLoading={isLoading}
+        pathname={this.props.location.pathname}
+      />
+    ) : (
+      <EmptyState
+        header="Fail"
+        description="Something must be wrong with the request."
+      />
+    );
     return (
       <Padding>
         <PageTitle>Issues</PageTitle>
         <TeamFilter />
-        {content}
+        {issueList}
       </Padding>
     );
   }

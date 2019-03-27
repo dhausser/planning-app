@@ -1,14 +1,9 @@
 const https = require('https');
-const mongoose = require('mongoose');
-
-const Issue = mongoose.model('Issue');
-
-exports.getIssues = async (req, res) => res.json(await Issue.find());
 
 exports.searchIssues = (request, response, next) => {
   const bodyData = JSON.stringify(request.body);
   const options = {
-    hostname: 'jira.cdprojektred.com', // process.env.HOSTNAME,
+    hostname: process.env.HOSTNAME,
     port: 443,
     path: `/${process.env.API_PATH}/search`,
     method: 'POST',
@@ -21,6 +16,8 @@ exports.searchIssues = (request, response, next) => {
   };
 
   const req = https.request(options, res => {
+    console.log(`STATUS: ${res.statusCode}`);
+    console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
     let rawData = '';
     res.setEncoding('utf8');
     res.on('data', chunk => {

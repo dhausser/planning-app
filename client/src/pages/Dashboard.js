@@ -18,13 +18,16 @@ export default class Dashboard extends Component {
   aggregateIssues = () => {
     const { issues } = this.context;
 
+    if (!issues) return {};
+
     // By Team Aggregation
-    const perResource = issues.reduce((resources, issue) => {
+    return issues.reduce((resources, issue) => {
       const name = issue.fields.assignee.displayName.split(' ').shift();
       if (!resources[name]) {
         resources[name] = 0;
       }
       resources[name] += 1;
+
       return resources;
     }, {});
 
@@ -36,8 +39,6 @@ export default class Dashboard extends Component {
     //       currentValue.issues.length;
     //     return accumulator;
     //   }, {});
-
-    return perResource;
   };
 
   render() {
