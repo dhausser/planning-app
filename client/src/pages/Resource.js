@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Avatar from '@atlaskit/avatar';
 import Calendar from '@atlaskit/calendar';
 import EmptyState from '@atlaskit/empty-state';
+import Spinner from '@atlaskit/spinner';
 import { Padding } from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
 import IssueList from '../components/IssueList';
@@ -11,7 +12,6 @@ import { NameWrapper, AvatarWrapper } from '../components/ResourceList';
 export default class Resource extends Component {
   static contextTypes = {
     isLoading: PropTypes.bool,
-    jql: PropTypes.string,
     issues: PropTypes.array,
     resources: PropTypes.array,
   };
@@ -23,12 +23,7 @@ export default class Resource extends Component {
   getResource() {
     const { resourceId } = this.props.params;
     const { isLoading, resources } = this.context;
-
-    if (!isLoading) {
-      // TODO Support edge case when resourse not found
-      return resources.find(({ key }) => key === resourceId);
-    }
-    return null;
+    return resources.find(({ key }) => key === resourceId);
   }
 
   render() {
@@ -38,9 +33,9 @@ export default class Resource extends Component {
       `?jql=${jql} AND assignee=${resourceId}`,
       'https://jira.cdprojektred.com/issues/'
     );
-    const resource = this.getResource();
 
-    if (isLoading) return <p>Loading...</p>;
+    if (isLoading) return <Spinner size="large" />;
+    const resource = this.getResource();
     if (!resource)
       return (
         <EmptyState
@@ -48,11 +43,19 @@ export default class Resource extends Component {
           description={`The person you are trying to lookup isn't currently recorded in the database.`}
         />
       );
-    const { issues, holidays } = resource;
-    // TODO: Get Holidays date in format YYYY-MM-DD
+
+    const issues = this.context.issues.filter(
+      issue => issue.fields.assignee.key === resource.key
+    );
+
+    const { holidays } = resource;
+    /**
+     * Get Holidays date in format YYYY-MM-DD
+     */
     const dates = holidays.map(({ date }) =>
       date.replace('T00:00:00.000Z', '')
     );
+
     return (
       <Padding>
         <PageTitle>
@@ -61,15 +64,19 @@ export default class Resource extends Component {
               <Avatar
                 name={resource.name}
                 size="large"
-                src={`https://jira.cdprojektred.com/secure/useravatar?ownerId=${encodeURIComponent(
+                src={`https://jira.cdprojektred.com/secure/useravatar?ownerId=${
                   resource.key
-                )}`}
+                }`}
               />
             </AvatarWrapper>
             {resource.name}
           </NameWrapper>
         </PageTitle>
-        <a href={url.href} target="_blank" rel="noopener noreferrer">
+        <a
+          href={`https://jira.cdprojektred.com/issues/?jql=${jql} AND assignee=${resourceId}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           View in Issue Navigator
         </a>
         <IssueList issues={issues} isLoading={isLoading} />

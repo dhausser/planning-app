@@ -3,6 +3,15 @@ import React, { Component } from 'react';
 import Page from '@atlaskit/page';
 import StarterNavigation from '../components/StarterNavigation';
 
+export const getIssues = async (data = {}) =>
+  (await fetch('/api/search', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })).json();
+
 export default class App extends Component {
   state = {
     isLoading: true,
@@ -75,9 +84,23 @@ export default class App extends Component {
       fixVersionsPromise.json(),
     ]);
 
-    const { issues, maxResults, total } = await this.getIssues(
-      this.state.fixVersion.id
-    );
+    const requestData = {
+      jql: `filter=22119 AND fixVersion=${
+        this.state.fixVersion.id
+      } ORDER BY priority DESC`,
+      maxResults: 10,
+      fields: [
+        'summary',
+        'description',
+        'status',
+        'assignee',
+        'creator',
+        'issuetype',
+        'priority',
+        'fixVersions',
+      ],
+    };
+    const { issues, maxResults, total } = await getIssues(requestData);
 
     this.setState({
       isLoading: false,
@@ -93,8 +116,26 @@ export default class App extends Component {
   updateFilter = async ({ team, fixVersion }) => {
     if (fixVersion != null) {
       this.setState({ isLoading: true });
-      const { issues, maxResults, total } = await this.getIssues(fixVersion.id);
       localStorage.setItem('fixVersion', JSON.stringify(fixVersion));
+
+      const requestData = {
+        jql: `filter=22119 AND fixVersion=${
+          fixVersion.id
+        } ORDER BY priority DESC`,
+        maxResults: 10,
+        fields: [
+          'summary',
+          'description',
+          'status',
+          'assignee',
+          'creator',
+          'issuetype',
+          'priority',
+          'fixVersions',
+        ],
+      };
+      const { issues, maxResults, total } = await getIssues(requestData);
+
       this.setState({
         issues,
         fixVersion,
@@ -115,31 +156,9 @@ export default class App extends Component {
     }
   };
 
-  getIssues = async id =>
-    (await fetch('/api/search', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        jql: `filter=22119 AND fixVersion=${id} ORDER BY priority DESC`,
-        maxResults: 10,
-        fields: [
-          'summary',
-          'description',
-          'status',
-          'assignee',
-          'issuetype',
-          'priority',
-          'fixVersions',
-        ],
-      }),
-    })).json();
-
   render() {
     const { navOpenState } = this.context;
     const { children } = this.props;
-
     return (
       <Page
         navigationWidth={navOpenState.width}

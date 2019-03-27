@@ -4,6 +4,7 @@ import { arrayOf, shape, string, bool, number } from 'prop-types';
 import styled from 'styled-components';
 import DynamicTable from '@atlaskit/dynamic-table';
 import { Status } from '@atlaskit/status';
+import Tooltip from '@atlaskit/tooltip';
 
 // Import Priority Icons
 import PriorityBlockerIcon from '@atlaskit/icon-priority/glyph/priority-blocker';
@@ -44,39 +45,55 @@ export function statusColor(category) {
 }
 
 export function priorityIcon(priority) {
+  let icon = null;
   switch (priority) {
-    case 'PO':
-      return <PriorityBlockerIcon size="small" />;
+    case 'P0':
+      icon = <PriorityBlockerIcon size="small" />;
+      break;
     case 'P1':
-      return <PriorityHighestIcon size="small" />;
+      icon = <PriorityHighestIcon size="small" />;
+      break;
     case 'P2':
-      return <PriorityMediumIcon size="small" />;
+      icon = <PriorityMediumIcon size="small" />;
+      break;
     case 'P3':
-      return <PriorityLowestIcon size="small" />;
+      icon = <PriorityLowestIcon size="small" />;
+      break;
     case 'P4':
-      return <PriorityMinorIcon size="small" />;
+      icon = <PriorityMinorIcon size="small" />;
+      break;
     case 'P5':
-      return <PriorityTrivialIcon size="small" />;
+      icon = <PriorityTrivialIcon size="small" />;
+      break;
     default:
-      return <PriorityBlockerIcon size="small" />;
+      icon = <PriorityBlockerIcon size="small" />;
   }
+  return <Tooltip content={priority}>{icon}</Tooltip>;
 }
 
 export function typeIcon(type) {
+  let icon = null;
   switch (type) {
     case 'Epic':
-      return <Epic16Icon alt={type} />;
+      icon = <Epic16Icon alt={type} />;
+      break;
     case 'Story':
-      return <Story16Icon alt={type} />;
+      icon = <Story16Icon alt={type} />;
+      break;
     case 'Task':
-      return <Task16Icon alt={type} />;
+      icon = <Task16Icon alt={type} />;
+      break;
     case 'Sub-task':
-      return <Subtask16Icon alt={type} />;
+      icon = <Subtask16Icon alt={type} />;
+      break;
     case 'Bug':
-      return <Bug16Icon alt={type} />;
+      icon = <Bug16Icon alt={type} />;
+      break;
     default:
-      return <Task16Icon alt={type} />;
+      icon = <Task16Icon alt={type} />;
+      break;
   }
+  return <Tooltip content={type}>{icon}</Tooltip>;
 }
 
 const head = {
@@ -85,68 +102,54 @@ const head = {
       key: 'type',
       content: 'T',
       isSortable: true,
-      width: 4,
+      width: 2,
     },
     {
       key: 'key',
       content: 'Key',
-      shouldTruncate: true,
       isSortable: true,
-      width: 15,
+      width: 9,
     },
     {
       key: 'summary',
       content: 'Summary',
-      shouldTruncate: true,
       isSortable: true,
-      // width: 40,
     },
     {
       key: 'assignee',
       content: 'Assignee',
       shouldTruncate: true,
       isSortable: true,
-      width: 10,
+      width: 12,
     },
-    // {
-    //   key: 'reporter',
-    //   content: 'Reporter',
-    //   shouldTruncate: true,
-    //   isSortable: true,
-    //   // width: 10,
-    // },
+    {
+      key: 'reporter',
+      content: 'Reporter',
+      isSortable: true,
+      width: 12,
+    },
     {
       key: 'priority',
       content: 'P',
       isSortable: true,
-      width: 5,
+      width: 3,
     },
     {
       key: 'status',
       content: 'Status',
-      // shouldTruncate: true,
       isSortable: true,
-      width: 10,
+      width: 12,
     },
     {
       key: 'version',
       content: 'V',
       isSortable: true,
-      width: 10,
+      width: 5,
     },
   ],
 };
-// if (pathname === '/issues') {
-//   head.cells.push({
-//     key: 'assignee',
-//     content: 'Assignee',
-//     shouldTruncate: true,
-//     isSortable: true,
-//     width: 1d,
-//   });
-// }
 
-function createRows(issues) {
+function createRows(issues = []) {
   return issues.map((issue, index) => ({
     key: `row-${index}-${issue.key}`,
     cells: [
@@ -178,14 +181,14 @@ function createRows(issues) {
           </Link>
         ),
       },
-      // {
-      //   key: issue.fields.creator.key,
-      //   content: (
-      //     <Link to={`/resource/${issue.fields.creator.key}`}>
-      //       {issue.fields.creator.displayName}
-      //     </Link>
-      //   ),
-      // },
+      {
+        key: issue.fields.creator.key,
+        content: (
+          <Link to={`/resource/${issue.fields.creator.key}`}>
+            {issue.fields.creator.displayName}
+          </Link>
+        ),
+      },
       {
         key: issue.fields.priority.id,
         content: priorityIcon(issue.fields.priority.name),

@@ -8,10 +8,10 @@ import Comment, {
   CommentAction,
   CommentAuthor,
   CommentEdited,
-  // CommentLayout,
   CommentTime,
 } from '@atlaskit/comment';
 import TextArea from '@atlaskit/textarea';
+import Spinner from '@atlaskit/spinner';
 import { Padding } from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
 import { priorityIcon, statusColor, typeIcon } from '../components/IssueList';
@@ -119,7 +119,7 @@ export default class Issue extends Component {
     const id = 'inline-edit-single';
     const { issue, comments, isLoading } = this.state;
 
-    if (isLoading) return <p>Loading...</p>;
+    if (isLoading) return <Spinner size="large" />;
     return (
       <Padding>
         <PageTitle>{this.state.readValue}</PageTitle>
@@ -153,9 +153,9 @@ export default class Issue extends Component {
         <h5>FixVersion</h5>
         {issue.fields.fixVersions[0] && issue.fields.fixVersions[0].name}
         <h5>Type</h5>
-        {typeIcon(issue.fields.issuetype.name)} {issue.fields.issuetype.name}
+        {typeIcon(issue.fields.issuetype.name)}
         <h5>Priotity</h5>
-        {priorityIcon(issue.fields.priority.name)} {issue.fields.priority.name}
+        {priorityIcon(issue.fields.priority.name)}
         <InlineEdit
           isFitContainerWidthReadView
           label="Summary"

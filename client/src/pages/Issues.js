@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import EmptyState from '@atlaskit/empty-state';
-import { Padding } from '../components/ContentWrapper';
+import ContentWrapper, { Padding } from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
 import TeamFilter from '../components/TeamFilter';
 import IssueList from '../components/IssueList';
@@ -38,25 +38,24 @@ export default class Issues extends Component {
   render() {
     const { maxResults, total, isLoading } = this.context;
     const issues = this.filterIssues();
-    const issueList = issues ? (
-      <IssueList
-        issues={issues}
-        maxResults={maxResults}
-        total={total}
-        isLoading={isLoading}
-        pathname={this.props.location.pathname}
-      />
-    ) : (
-      <EmptyState
-        header="Fail"
-        description="Something must be wrong with the request."
-      />
-    );
     return (
       <Padding>
         <PageTitle>Issues</PageTitle>
         <TeamFilter />
-        {issueList}
+        {issues ? (
+          <IssueList
+            issues={issues}
+            maxResults={maxResults}
+            total={total}
+            isLoading={isLoading}
+            pathname={this.props.location.pathname}
+          />
+        ) : (
+          <EmptyState
+            header="Fail"
+            description="Something must be wrong with the request."
+          />
+        )}
       </Padding>
     );
   }

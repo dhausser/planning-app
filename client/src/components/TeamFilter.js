@@ -6,17 +6,6 @@ import DropdownMenu, {
   DropdownItem,
 } from '@atlaskit/dropdown-menu';
 
-const appearances = [
-  'default',
-  'primary',
-  'link',
-  'subtle',
-  'subtle-link',
-  'warning',
-  'danger',
-  'help',
-];
-
 export default class TeamFilter extends Component {
   static contextTypes = {
     isLoading: PropTypes.bool,
@@ -59,11 +48,7 @@ export default class TeamFilter extends Component {
             </DropdownItemGroup>
           </DropdownMenu>
           {isLoading ? (
-            <Button
-              key="team"
-              isLoading={isLoading}
-              appearance={appearances[0]}
-            >
+            <Button key="team" isLoading={isLoading} appearance="subtle">
               Teams
             </Button>
           ) : (
@@ -71,7 +56,7 @@ export default class TeamFilter extends Component {
               <Button
                 key={team}
                 isLoading={isLoading}
-                appearance={appearances[0]}
+                appearance="subtle"
                 isSelected={team === this.context.team}
                 onClick={() => updateFilter({ team })}
               >
