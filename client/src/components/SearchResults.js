@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
-import React, { Component } from "react";
-import { Link } from "react-router";
+import React, { Component } from 'react';
+import { Link } from 'react-router';
 
 export default class SearchResults extends Component {
   static propTypes = {
@@ -10,9 +10,7 @@ export default class SearchResults extends Component {
 
   render() {
     if (!this.props.matchingResults.length) {
-      return (
-        <p>Nothing found, keep on searching!</p>
-      )
+      return <p>Nothing found, keep on searching!</p>;
     }
 
     return (
@@ -23,19 +21,14 @@ export default class SearchResults extends Component {
           padding: 0,
         }}
       >
-        {
-          this.props.matchingResults.map(result => (
-            <li key={result.name} style={{padding: 8}}>
-              <Link
-                to={result.link}
-                onClick={this.props.onResultClicked}
-              >
-                {result.name}
-              </Link>
-              <span style={{display: 'block'}}>{result.description}</span>
-            </li>
-          ))
-        }
+        {this.props.matchingResults.map(result => (
+          <li key={result.name} style={{ padding: 8 }}>
+            <Link to={result.link} onClick={this.props.onResultClicked}>
+              {result.name}
+            </Link>
+            <span style={{ display: 'block' }}>{result.description}</span>
+          </li>
+        ))}
       </ul>
     );
   }

@@ -57,7 +57,7 @@ export default class Resource extends Component {
 
     const { holidays } = resource;
     /**
-     * Get Holidays date in format YYYY-MM-DD
+     * TODO: Get Holidays date in format YYYY-MM-DD
      */
     const dates = holidays.map(({ date }) =>
       date.replace('T00:00:00.000Z', '')

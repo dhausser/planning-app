@@ -22,10 +22,11 @@ export const AvatarWrapper = styled.div`
   margin-right: 8px;
 `;
 
-export default ({ children }) => (
+const ContentWrapper = ({ children }) => (
   <Grid>
     <GridColumn>
       <Padding>{children}</Padding>
     </GridColumn>
   </Grid>
 );
+export default ContentWrapper;

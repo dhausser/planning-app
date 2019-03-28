@@ -4,22 +4,7 @@ import { arrayOf, shape, string, bool, number } from 'prop-types';
 import styled from 'styled-components';
 import DynamicTable from '@atlaskit/dynamic-table';
 import { Status } from '@atlaskit/status';
-import Tooltip from '@atlaskit/tooltip';
-
-// Import Priority Icons
-import PriorityBlockerIcon from '@atlaskit/icon-priority/glyph/priority-blocker';
-import PriorityHighestIcon from '@atlaskit/icon-priority/glyph/priority-highest';
-import PriorityMediumIcon from '@atlaskit/icon-priority/glyph/priority-medium';
-import PriorityLowestIcon from '@atlaskit/icon-priority/glyph/priority-lowest';
-import PriorityMinorIcon from '@atlaskit/icon-priority/glyph/priority-minor';
-import PriorityTrivialIcon from '@atlaskit/icon-priority/glyph/priority-trivial';
-
-// Import Status Icons
-import Epic16Icon from '@atlaskit/icon-object/glyph/epic/16';
-import Story16Icon from '@atlaskit/icon-object/glyph/story/16';
-import Task16Icon from '@atlaskit/icon-object/glyph/task/16';
-import Subtask16Icon from '@atlaskit/icon-object/glyph/subtask/16';
-import Bug16Icon from '@atlaskit/icon-object/glyph/bug/16';
+import { typeIcon, priorityIcon, statusColor } from '../modules/Helpers';
 
 const Wrapper = styled.div`
   min-width: 600px;
@@ -29,72 +14,6 @@ const NameWrapper = styled.span`
   display: flex;
   align-items: center;
 `;
-
-export function statusColor(category) {
-  const colors = ['neutral', 'purple', 'blue', 'red', 'yellow', 'green'];
-  switch (category) {
-    case 'new':
-      return colors[2];
-    case 'indeterminate':
-      return colors[4];
-    case 'done':
-      return colors[5];
-    default:
-      return colors[0];
-  }
-}
-
-export function priorityIcon(priority) {
-  let icon = null;
-  switch (priority) {
-    case 'P0':
-      icon = <PriorityBlockerIcon size="small" />;
-      break;
-    case 'P1':
-      icon = <PriorityHighestIcon size="small" />;
-      break;
-    case 'P2':
-      icon = <PriorityMediumIcon size="small" />;
-      break;
-    case 'P3':
-      icon = <PriorityLowestIcon size="small" />;
-      break;
-    case 'P4':
-      icon = <PriorityMinorIcon size="small" />;
-      break;
-    case 'P5':
-      icon = <PriorityTrivialIcon size="small" />;
-      break;
-    default:
-      icon = <PriorityBlockerIcon size="small" />;
-  }
-  return <Tooltip content={priority}>{icon}</Tooltip>;
-}
-
-export function typeIcon(type) {
-  let icon = null;
-  switch (type) {
-    case 'Epic':
-      icon = <Epic16Icon alt={type} />;
-      break;
-    case 'Story':
-      icon = <Story16Icon alt={type} />;
-      break;
-    case 'Task':
-      icon = <Task16Icon alt={type} />;
-      break;
-    case 'Sub-task':
-      icon = <Subtask16Icon alt={type} />;
-      break;
-    case 'Bug':
-      icon = <Bug16Icon alt={type} />;
-      break;
-    default:
-      icon = <Task16Icon alt={type} />;
-      break;
-  }
-  return <Tooltip content={type}>{icon}</Tooltip>;
-}
 
 const head = {
   cells: [
@@ -210,16 +129,6 @@ function createRows(issues = []) {
     ],
   }));
 }
-
-// if (pathname === '/issues') {
-//   row.cells.push({
-//     key: issue.assignee,
-//     content: (
-//       <Link to={`/resource/${issue.assignee}`}>{issue.displayName}</Link>
-//     ),
-//   });
-// }
-// return row;
 
 export default function IssueList({
   issues,

@@ -4,15 +4,7 @@ import Page from '@atlaskit/page';
 import '@atlaskit/css-reset';
 
 import StarterNavigation from '../components/StarterNavigation';
-
-export const getIssues = async (data = {}) =>
-  (await fetch('/api/search', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  })).json();
+import { getIssues } from './Helpers';
 
 export default class App extends Component {
   state = {

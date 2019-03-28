@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import DynamicTable from '@atlaskit/dynamic-table';
 import Avatar from '@atlaskit/avatar';
-import { NameWrapper, AvatarWrapper } from './ContentWrapper'
+import { NameWrapper, AvatarWrapper } from './ContentWrapper';
 
 function createKey(input) {
   return input ? input.replace(/^(the|a|an)/, '').replace(/\s/g, '') : input;
@@ -30,6 +30,9 @@ const createHead = withWidth => ({
       isSortable: true,
       width: withWidth ? 15 : undefined,
     },
+    /**
+     * TODO: Get issues count by assignee
+     */
     // {
     //   key: 'issues',
     //   content: 'Issues',

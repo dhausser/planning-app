@@ -8,11 +8,9 @@ import TableTree, {
   Row,
   Cell,
 } from '@atlaskit/table-tree';
-import { Status } from '@atlaskit/status';
 import Spinner from '@atlaskit/spinner';
 
-import { getIssues } from '../modules/App';
-import { statusColor, priorityIcon, typeIcon } from '../components/IssueList';
+import { getIssues, convertIssues } from '../modules/Helpers';
 import ContentWrapper, { Center } from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
 import Filters from '../components/Filters';
@@ -35,14 +33,14 @@ export default class Roadmap extends Component {
     // const { fixVersions } = this.context;
     // console.log(fixVersions.map(({ id }) => id));
 
-    let requestData = {
+    let data = {
       jql: `project=GWENT and issuetype in (epic) and fixVersion in (${15900})`,
       maxResults: 10,
       fields: ['summary', 'status', 'issuetype', 'priority'],
     };
-    const { issues } = await getIssues(requestData);
+    const { issues } = await getIssues(data);
 
-    requestData = {
+    data = {
       jql: `"Epic Link" in (${issues[0].key})`,
       // maxResults: 10,
       fields: [
@@ -54,7 +52,8 @@ export default class Roadmap extends Component {
         'customfield_18404',
       ],
     };
-    const children = (await getIssues(requestData)).issues;
+    const response = await getIssues(data);
+    const children = response.issues;
 
     issues.forEach(issue => {
       issue.children = [];
@@ -70,46 +69,6 @@ export default class Roadmap extends Component {
 
     this.setState({ issues, isLoading: false });
   };
-
-  convertIssues = issues =>
-    issues.map(issue => ({
-      type: typeIcon(issue.fields.issuetype.name),
-      key: issue.key,
-      summary: issue.fields.summary,
-      value: priorityIcon(issue.fields.priority.name),
-      status: (
-        <Status
-          text={issue.fields.status.name}
-          color={statusColor(issue.fields.status.statusCategory.key)}
-        />
-      ),
-      children: issue.children.map(child => ({
-        type: typeIcon(child.fields.issuetype.name),
-        key: child.key,
-        summary: child.fields.summary,
-        value: priorityIcon(child.fields.priority.name),
-        status: (
-          <Status
-            text={child.fields.status.name}
-            color={statusColor(child.fields.status.statusCategory.key)}
-          />
-        ),
-        // TODO: Subtask current do not have the flatten formatting as other issues
-        children: child.fields.subtasks.map(subtask => ({
-          type: typeIcon(subtask.fields.issuetype.name),
-          key: subtask.key,
-          summary: subtask.fields.summary,
-          value: priorityIcon(subtask.fields.priority.name),
-          status: (
-            <Status
-              text={subtask.fields.status.name}
-              color={statusColor(subtask.fields.status.statusCategory.key)}
-            />
-          ),
-          children: [],
-        })),
-      })),
-    }));
 
   render() {
     const { issues, isLoading } = this.state;
@@ -130,7 +89,7 @@ export default class Roadmap extends Component {
               <Header width={200}>Status</Header>
             </Headers>
             <Rows
-              items={this.convertIssues(issues)}
+              items={convertIssues(issues)}
               render={({ type, key, summary, value, status, children }) => (
                 <Row
                   expandLabel="Expand"

@@ -1,14 +1,34 @@
 import PropTypes from 'prop-types';
-import React, { Component } from "react";
-import SearchResults from "./SearchResults";
+import React, { Component } from 'react';
+import SearchResults from './SearchResults';
 
 const items = [
   { name: 'Events', link: '/#events', description: 'List of events.' },
-  { name: 'Nature', link: '/#nature', description: 'Types of things found in nature.' },
-  { name: 'Ideas', link: '/#ideas', description: 'Page detailing specific project ideas.' },
-  { name: 'Travel Plans', link: '/#travel-plans', description: 'People\'s travel plans.' },
-  { name: 'Branches', link: '/#branches', description: 'All BitBucket branches you have access to.' },
-  { name: 'Pages', link: '/#pages', description: 'Confluence pages you have made.' },
+  {
+    name: 'Nature',
+    link: '/#nature',
+    description: 'Types of things found in nature.',
+  },
+  {
+    name: 'Ideas',
+    link: '/#ideas',
+    description: 'Page detailing specific project ideas.',
+  },
+  {
+    name: 'Travel Plans',
+    link: '/#travel-plans',
+    description: "People's travel plans.",
+  },
+  {
+    name: 'Branches',
+    link: '/#branches',
+    description: 'All BitBucket branches you have access to.',
+  },
+  {
+    name: 'Pages',
+    link: '/#pages',
+    description: 'Confluence pages you have made.',
+  },
 ];
 
 export default class SearchDrawer extends Component {
@@ -24,19 +44,22 @@ export default class SearchDrawer extends Component {
 
   filterChange = () => {
     this.setState({
-      searchString: this.searchInput.value
+      searchString: this.searchInput.value,
     });
   };
 
   searchResults = () => {
-    const {results, searchString} = this.state;
+    const { results, searchString } = this.state;
 
-    const matchingResults = results.filter(
-      c => (
-        c.name.toLowerCase().indexOf(searchString.toLowerCase()) >= 0 ||
-        (c.description && c.description.toLowerCase().indexOf(searchString.toLowerCase()) >= 0)
+    const matchingResults = results
+      .filter(
+        c =>
+          c.name.toLowerCase().indexOf(searchString.toLowerCase()) >= 0 ||
+          (c.description &&
+            c.description.toLowerCase().indexOf(searchString.toLowerCase()) >=
+              0)
       )
-    ).slice(0, 10);
+      .slice(0, 10);
 
     return (
       <SearchResults
@@ -47,7 +70,7 @@ export default class SearchDrawer extends Component {
           this.filterChange();
         }}
       />
-    )
+    );
   };
 
   render() {
@@ -72,7 +95,7 @@ export default class SearchDrawer extends Component {
             padding: '0 0 0 12px',
           }}
         />
-        { this.searchResults() }
+        {this.searchResults()}
       </div>
     );
   }
