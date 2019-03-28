@@ -87,9 +87,9 @@ export default class App extends Component {
     ]);
 
     const requestData = {
-      jql: `filter=22119 AND fixVersion=${
-        this.state.fixVersion.id
-      } ORDER BY priority DESC`,
+      jql: `filter=22119 AND fixVersion in (${
+        fixVersions.values[0].id
+      }) ORDER BY priority DESC`,
       maxResults: 10,
       fields: [
         'summary',

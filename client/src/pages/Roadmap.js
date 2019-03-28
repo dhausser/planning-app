@@ -118,10 +118,10 @@ export default class Roadmap extends Component {
         <PageTitle>Roadmap</PageTitle>
         <Filters />
         {isLoading ? (
-          // <Center>
-          <Spinner size="large" />
+          <Center>
+            <Spinner size="large" />
+          </Center>
         ) : (
-          // </Center>
           <TableTree>
             <Headers>
               <Header width={150}>Type</Header>

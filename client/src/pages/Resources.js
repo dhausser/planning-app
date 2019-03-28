@@ -15,7 +15,7 @@ export default class ResourcesPage extends Component {
   render() {
     const { isLoading, team } = this.context;
     const resources = team
-      ? this.context.resources.team(resource => resource.team === team)
+      ? this.context.resources.filter(resource => resource.team === team)
       : this.context.resources;
     return (
       <ContentWrapper>

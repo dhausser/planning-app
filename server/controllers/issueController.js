@@ -5,7 +5,7 @@ exports.searchIssues = (request, response, next) => {
   console.log(bodyData);
 
   const options = {
-    hostname: process.env.HOSTNAME,
+    hostname: process.env.HOST,
     port: 443,
     path: `/${process.env.API_PATH}/search`,
     method: 'POST',
@@ -51,7 +51,7 @@ exports.editIssue = (request, response) => {
     fields: { summary: request.body.summary },
   });
   const options = {
-    hostname: process.env.HOSTNAME,
+    hostname: process.env.HOST,
     port: 443,
     path: `/${process.env.API_PATH}/issue/${request.body.key}`,
     method: 'PUT',
@@ -77,7 +77,7 @@ exports.getIssue = (request, response, next) => {
   const fields =
     'summary,description,status,priority,assignee,creator,fixVersions,issuetype';
   const options = {
-    hostname: process.env.HOSTNAME,
+    hostname: process.env.HOST,
     path: `/${process.env.API_PATH}/issue/${
       request.query.key
     }?fields=${fields}`,
@@ -110,7 +110,7 @@ exports.getIssue = (request, response, next) => {
 
 exports.getComments = (request, response) => {
   const options = {
-    hostname: process.env.HOSTNAME,
+    hostname: process.env.HOST,
     path: `/${process.env.API_PATH}/issue/${request.query.key}/comment`,
     headers: {
       'Content-Type': 'application/json',
@@ -145,7 +145,7 @@ exports.getComments = (request, response) => {
 exports.getFixVersions = (request, response) => {
   const options = {
     method: 'GET',
-    hostname: process.env.HOSTNAME,
+    hostname: process.env.HOST,
     path: `/${
       process.env.API_PATH
     }/project/${10500}/version?startAt=59&maxResults=5&orderBy=+releaseDate&status=unreleased`,
