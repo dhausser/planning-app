@@ -2,6 +2,8 @@ const https = require('https');
 
 exports.searchIssues = (request, response, next) => {
   const bodyData = JSON.stringify(request.body);
+  console.log(bodyData);
+
   const options = {
     hostname: process.env.HOSTNAME,
     port: 443,

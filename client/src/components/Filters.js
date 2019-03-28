@@ -6,7 +6,7 @@ import DropdownMenu, {
   DropdownItem,
 } from '@atlaskit/dropdown-menu';
 
-export default class TeamFilter extends Component {
+export default class Filters extends Component {
   static contextTypes = {
     isLoading: PropTypes.bool,
     teams: PropTypes.array,

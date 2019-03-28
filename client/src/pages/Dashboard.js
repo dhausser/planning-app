@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import ContentWrapper, { Padding } from '../components/ContentWrapper';
+import ContentWrapper from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
-import TeamFilter from '../components/TeamFilter';
+import Filters from '../components/Filters';
 import BarChart from '../components/BarChart';
 // import { filterIssues } from './Issues';
 
@@ -44,13 +44,13 @@ export default class Dashboard extends Component {
   render() {
     const { isLoading } = this.context;
     return (
-      <Padding>
-        <PageTitle>Reports</PageTitle>
-        <TeamFilter />
+      <ContentWrapper>
+        <PageTitle>Dashboard</PageTitle>
+        <Filters />
         <ContentWrapper>
           {!isLoading && <BarChart dataset={this.aggregateIssues()} />}
         </ContentWrapper>
-      </Padding>
+      </ContentWrapper>
     );
   }
 }

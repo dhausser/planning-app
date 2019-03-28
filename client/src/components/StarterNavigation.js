@@ -1,22 +1,24 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router';
+
 import Nav, {
   AkContainerTitle,
   AkCreateDrawer,
   AkNavigationItem,
   AkSearchDrawer,
 } from '@atlaskit/navigation';
+import DashboardIcon from '@atlaskit/icon/glyph/dashboard';
 import RoadmapIcon from '@atlaskit/icon/glyph/roadmap';
-import BacklogIcon from '@atlaskit/icon/glyph/backlog';
+import IssuesIcon from '@atlaskit/icon/glyph/issues';
 import PeopleIcon from '@atlaskit/icon/glyph/people';
-import GraphBarIcon from '@atlaskit/icon/glyph/graph-bar';
 import CalendarIcon from '@atlaskit/icon/glyph/calendar';
 import SearchIcon from '@atlaskit/icon/glyph/search';
 import CreateIcon from '@atlaskit/icon/glyph/add';
 import AtlassianIcon from '@atlaskit/icon/glyph/atlassian';
 import ArrowleftIcon from '@atlaskit/icon/glyph/arrow-left';
-// import DashboardIcon from '@atlaskit/icon/glyph/dashboard';
+// import GraphBarIcon from '@atlaskit/icon/glyph/graph-bar';
+// import BacklogIcon from '@atlaskit/icon/glyph/backlog';
 // import BoardIcon from '@atlaskit/icon/glyph/board';
 // import ShipIcon from '@atlaskit/icon/glyph/ship';
 // import GraphLineIcon from '@atlaskit/icon/glyph/graph-line';
@@ -31,9 +33,9 @@ import Logo from '../images/viewavatar.svg';
 export default class StarterNavigation extends React.Component {
   state = {
     navLinks: [
+      ['/', 'Dashboard', DashboardIcon],
       ['/roadmap', 'Roadmap', RoadmapIcon],
-      ['/issues', 'Backlog', BacklogIcon],
-      ['/', 'Reports', GraphBarIcon],
+      ['/issues', 'Issues', IssuesIcon],
       ['/resources', 'People', PeopleIcon],
       ['/absences', 'Calendar', CalendarIcon],
     ],

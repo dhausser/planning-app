@@ -1,16 +1,17 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
-import App from './App';
-import Dashboard from './Dashboard';
-import Roadmap from './Roadmap';
-import Resources from './Resources';
-import Resource from './Resource';
-import Issues from './Issues';
-import Issue from './Issue';
-import Absences from './Absences';
 
-export default class AppRouter extends Component {
+import App from './App';
+import Dashboard from '../pages/Dashboard';
+import Roadmap from '../pages/Roadmap';
+import Resources from '../pages/Resources';
+import Resource from '../pages/Resource';
+import Issues from '../pages/Issues';
+import Issue from '../pages/Issue';
+import Absences from '../pages/Absences';
+
+export default class MainRouter extends Component {
   constructor() {
     super();
     this.state = {
@@ -55,6 +56,6 @@ export default class AppRouter extends Component {
   }
 }
 
-AppRouter.childContextTypes = {
+MainRouter.childContextTypes = {
   navOpenState: PropTypes.object,
 };

@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { Padding } from '../components/ContentWrapper';
+import ContentWrapper from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
-import TeamFilter from '../components/TeamFilter';
+import Filters from '../components/Filters';
 import ResourceList from '../components/ResourceList';
 
 export default class ResourcesPage extends Component {
@@ -17,13 +17,12 @@ export default class ResourcesPage extends Component {
     const resources = team
       ? this.context.resources.team(resource => resource.team === team)
       : this.context.resources;
-    console.log({ resources });
     return (
-      <Padding>
+      <ContentWrapper>
         <PageTitle>People</PageTitle>
-        <TeamFilter />
+        <Filters />
         <ResourceList resources={resources} isLoading={isLoading} />
-      </Padding>
+      </ContentWrapper>
     );
   }
 }

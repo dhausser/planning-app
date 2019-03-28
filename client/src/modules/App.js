@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import Page from '@atlaskit/page';
+import '@atlaskit/css-reset';
+
 import StarterNavigation from '../components/StarterNavigation';
 
 export const getIssues = async (data = {}) =>

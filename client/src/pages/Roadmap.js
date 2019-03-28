@@ -10,10 +10,12 @@ import TableTree, {
 } from '@atlaskit/table-tree';
 import { Status } from '@atlaskit/status';
 import Spinner from '@atlaskit/spinner';
+
+import { getIssues } from '../modules/App';
 import { statusColor, priorityIcon, typeIcon } from '../components/IssueList';
-import ContentWrapper, { Padding } from '../components/ContentWrapper';
+import ContentWrapper, { Center } from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
-import { getIssues } from './App';
+import Filters from '../components/Filters';
 
 export default class Roadmap extends Component {
   state = {
@@ -27,9 +29,11 @@ export default class Roadmap extends Component {
   };
 
   componentDidMount = async () => {
-    // Wait till request is fetched
-    const { fixVersions } = this.context;
-    console.log(fixVersions.map(({ id }) => id));
+    /**
+     * TODO: Wait till request is fetched
+     */
+    // const { fixVersions } = this.context;
+    // console.log(fixVersions.map(({ id }) => id));
 
     let requestData = {
       jql: `project=GWENT and issuetype in (epic) and fixVersion in (${15900})`,
@@ -56,6 +60,10 @@ export default class Roadmap extends Component {
       issue.children = [];
     });
     issues[0].children = children;
+
+    /**
+     * TODO: Attached issues in epic to epic
+     */
     // children.forEach(child => {
     //   console.log(child.fields);
     // });
@@ -106,13 +114,14 @@ export default class Roadmap extends Component {
   render() {
     const { issues, isLoading } = this.state;
     return (
-      <Padding>
+      <ContentWrapper>
         <PageTitle>Roadmap</PageTitle>
+        <Filters />
         {isLoading ? (
-          <ContentWrapper>
-            <Spinner size="large" />
-          </ContentWrapper>
+          // <Center>
+          <Spinner size="large" />
         ) : (
+          // </Center>
           <TableTree>
             <Headers>
               <Header width={150}>Type</Header>
@@ -141,7 +150,7 @@ export default class Roadmap extends Component {
             />
           </TableTree>
         )}
-      </Padding>
+      </ContentWrapper>
     );
   }
 }

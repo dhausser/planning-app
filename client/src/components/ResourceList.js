@@ -2,8 +2,10 @@ import React from 'react';
 import { Link } from 'react-router';
 import { arrayOf, shape, string, bool } from 'prop-types';
 import styled from 'styled-components';
+
 import DynamicTable from '@atlaskit/dynamic-table';
 import Avatar from '@atlaskit/avatar';
+import { NameWrapper, AvatarWrapper } from './ContentWrapper'
 
 function createKey(input) {
   return input ? input.replace(/^(the|a|an)/, '').replace(/\s/g, '') : input;
@@ -11,15 +13,6 @@ function createKey(input) {
 
 const Wrapper = styled.div`
   min-width: 600px;
-`;
-
-export const NameWrapper = styled.span`
-  display: flex;
-  align-items: center;
-`;
-
-export const AvatarWrapper = styled.div`
-  margin-right: 8px;
 `;
 
 const createHead = withWidth => ({

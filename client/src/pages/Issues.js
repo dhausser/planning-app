@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import EmptyState from '@atlaskit/empty-state';
-import ContentWrapper, { Padding } from '../components/ContentWrapper';
+import ContentWrapper from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
-import TeamFilter from '../components/TeamFilter';
+import Filters from '../components/Filters';
 import IssueList from '../components/IssueList';
 
 // const reducer = (acc, val) => [...acc, ...val.issues];
@@ -39,9 +39,9 @@ export default class Issues extends Component {
     const { maxResults, total, isLoading } = this.context;
     const issues = this.filterIssues();
     return (
-      <Padding>
+      <ContentWrapper>
         <PageTitle>Issues</PageTitle>
-        <TeamFilter />
+        <Filters />
         {issues ? (
           <IssueList
             issues={issues}
@@ -56,7 +56,7 @@ export default class Issues extends Component {
             description="Something must be wrong with the request."
           />
         )}
-      </Padding>
+      </ContentWrapper>
     );
   }
 }

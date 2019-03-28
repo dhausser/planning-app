@@ -1,13 +1,19 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+
 import Avatar from '@atlaskit/avatar';
 import Calendar from '@atlaskit/calendar';
 import EmptyState from '@atlaskit/empty-state';
 import Spinner from '@atlaskit/spinner';
-import { Padding } from '../components/ContentWrapper';
+
+import ContentWrapper, {
+  NameWrapper,
+  AvatarWrapper,
+  Center,
+} from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
 import IssueList from '../components/IssueList';
-import { NameWrapper, AvatarWrapper } from '../components/ResourceList';
+import Filters from '../components/Filters';
 
 export default class Resource extends Component {
   static contextTypes = {
@@ -22,19 +28,20 @@ export default class Resource extends Component {
 
   getResource() {
     const { resourceId } = this.props.params;
-    const { isLoading, resources } = this.context;
+    const { resources } = this.context;
     return resources.find(({ key }) => key === resourceId);
   }
 
   render() {
     const { isLoading, jql } = this.context;
     const { resourceId } = this.props.params;
-    const url = new URL(
-      `?jql=${jql} AND assignee=${resourceId}`,
-      'https://jira.cdprojektred.com/issues/'
-    );
 
-    if (isLoading) return <Spinner size="large" />;
+    if (isLoading)
+      return (
+        <Center>
+          <Spinner size="large" />;
+        </Center>
+      );
     const resource = this.getResource();
     if (!resource)
       return (
@@ -57,7 +64,7 @@ export default class Resource extends Component {
     );
 
     return (
-      <Padding>
+      <ContentWrapper>
         <PageTitle>
           <NameWrapper>
             <AvatarWrapper>
@@ -72,6 +79,7 @@ export default class Resource extends Component {
             {resource.name}
           </NameWrapper>
         </PageTitle>
+        <Filters />
         <a
           href={`https://jira.cdprojektred.com/issues/?jql=${jql} AND assignee=${resourceId}`}
           target="_blank"
@@ -82,7 +90,7 @@ export default class Resource extends Component {
         <IssueList issues={issues} isLoading={isLoading} />
         <h3>Holiday Calendar</h3>
         <Calendar day={0} defaultDisabled={dates} />
-      </Padding>
+      </ContentWrapper>
     );
   }
 }

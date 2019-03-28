@@ -8,6 +8,20 @@ export const Padding = styled.div`
   padding-bottom: ${gridSize() * 3}px;
 `;
 
+export const Center = styled.div`
+  padding: 1000px 0;
+  text-align: center;
+`;
+
+export const NameWrapper = styled.span`
+  display: flex;
+  align-items: center;
+`;
+
+export const AvatarWrapper = styled.div`
+  margin-right: 8px;
+`;
+
 export default ({ children }) => (
   <Grid>
     <GridColumn>

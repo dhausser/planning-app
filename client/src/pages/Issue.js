@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router';
+import PropTypes from 'prop-types';
+
+import Spinner from '@atlaskit/spinner';
 import { Status } from '@atlaskit/status';
 import InlineEdit, { SingleLineTextInput } from '@atlaskit/inline-edit';
 import Avatar from '@atlaskit/avatar';
@@ -10,12 +12,14 @@ import Comment, {
   CommentEdited,
   CommentTime,
 } from '@atlaskit/comment';
-import TextArea from '@atlaskit/textarea';
-import Spinner from '@atlaskit/spinner';
-import { Padding } from '../components/ContentWrapper';
+
+import ContentWrapper, {
+  NameWrapper,
+  AvatarWrapper,
+  Center,
+} from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
 import { priorityIcon, statusColor, typeIcon } from '../components/IssueList';
-import { NameWrapper, AvatarWrapper } from '../components/ResourceList';
 
 function postData(url = ``, data = {}) {
   return fetch(url, {
@@ -119,9 +123,14 @@ export default class Issue extends Component {
     const id = 'inline-edit-single';
     const { issue, comments, isLoading } = this.state;
 
-    if (isLoading) return <Spinner size="large" />;
+    if (isLoading)
+      return (
+        <Center>
+          <Spinner size="large" />
+        </Center>
+      );
     return (
-      <Padding>
+      <ContentWrapper>
         <PageTitle>{this.state.readValue}</PageTitle>
         <a
           href={`https://jira.cdprojektred.com/browse/${issue.key}`}
@@ -159,16 +168,25 @@ export default class Issue extends Component {
         <InlineEdit
           isFitContainerWidthReadView
           label="Summary"
-          labelHtmlFor={id}
+          labelHtmlFor="inline-single-edit"
           editView={this.renderInput({ isEditing: true, id })}
           readView={this.renderInput({ isEditing: false, id })}
           onConfirm={this.onConfirm}
           onCancel={this.onCancel}
           {...this.props}
         />
-        <h5>Description</h5>
-        <TextArea value={issue.fields.description} resize="smart" />
-        <h5>Comments</h5>
+        {/* <h5>Description</h5>
+          <TextArea value={issue.fields.description} resize="smart" /> */}
+        <InlineEdit
+          isFitContainerWidthReadView
+          label="Description"
+          labelHtmlFor="inline-single-edit"
+          editView={issue.fields.description}
+          readView={issue.fields.description}
+          onConfirm={this.onConfirm}
+          onCancel={this.onCancel}
+          {...this.props}
+        />
         {comments.map(comment => (
           <Comment
             key={comment.id}
@@ -197,8 +215,17 @@ export default class Issue extends Component {
             ]}
           />
         ))}
-        <TextArea />
-      </Padding>
+        <InlineEdit
+          isFitContainerWidthReadView
+          label="Comment"
+          labelHtmlFor="inline-single-edit"
+          editView="Comment here"
+          readView="Comment here"
+          onConfirm={this.onConfirm}
+          onCancel={this.onCancel}
+          {...this.props}
+        />
+      </ContentWrapper>
     );
   }
 }
