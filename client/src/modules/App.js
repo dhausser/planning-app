@@ -59,18 +59,6 @@ export default class App extends Component {
   }
 
   async componentDidMount() {
-    // Reinstate localstorage
-    let localStorageRef = localStorage.getItem('team');
-    if (localStorageRef) {
-      this.setState({ team: JSON.parse(localStorageRef) });
-    }
-    localStorageRef = localStorage.getItem('fixVersion');
-    if (localStorageRef) {
-      this.setState({
-        fixVersion: JSON.parse(localStorageRef),
-      });
-    }
-
     const [
       teamsPromise,
       resourcesPromise,
@@ -86,11 +74,18 @@ export default class App extends Component {
       fixVersionsPromise.json(),
     ]);
 
+    const team = localStorage.getItem('team')
+      ? JSON.parse(localStorage.getItem('team'))
+      : null;
+    const fixVersion = localStorage.getItem('fixVersion')
+      ? JSON.parse(localStorage.getItem('fixVersion'))
+      : fixVersions.values[0];
+
     const requestData = {
       jql: `filter=22119 AND fixVersion in (${
-        fixVersions.values[0].id
+        fixVersion.id
       }) ORDER BY priority DESC`,
-      maxResults: 10,
+      maxResults: 250,
       fields: [
         'summary',
         'description',
@@ -109,9 +104,11 @@ export default class App extends Component {
       maxResults,
       total,
       fixVersions: fixVersions.values,
+      fixVersion,
       issues,
       resources,
       teams,
+      team,
     });
   }
 
@@ -124,7 +121,7 @@ export default class App extends Component {
         jql: `filter=22119 AND fixVersion=${
           fixVersion.id
         } ORDER BY priority DESC`,
-        maxResults: 10,
+        maxResults: 250,
         fields: [
           'summary',
           'description',
