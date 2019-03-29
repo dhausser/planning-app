@@ -27,7 +27,7 @@ const head = {
       key: 'key',
       content: 'Key',
       isSortable: true,
-      width: 9,
+      width: 14,
     },
     {
       key: 'summary',
@@ -50,19 +50,19 @@ const head = {
       key: 'priority',
       content: 'P',
       isSortable: true,
-      width: 3,
+      width: 4,
     },
     {
       key: 'status',
       content: 'Status',
       isSortable: true,
-      width: 12,
+      width: 16,
     },
     {
       key: 'version',
       content: 'V',
       isSortable: true,
-      width: 5,
+      width: 6,
     },
   ],
 };
