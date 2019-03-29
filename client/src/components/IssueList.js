@@ -4,7 +4,7 @@ import { arrayOf, shape, string, bool, number } from 'prop-types';
 import styled from 'styled-components';
 import DynamicTable from '@atlaskit/dynamic-table';
 import { Status } from '@atlaskit/status';
-import { typeIcon, priorityIcon, statusColor } from '../modules/Helpers';
+import { getIcon } from '../modules/Helpers';
 
 const Wrapper = styled.div`
   min-width: 600px;
@@ -37,7 +37,6 @@ const head = {
     {
       key: 'assignee',
       content: 'Assignee',
-      shouldTruncate: true,
       isSortable: true,
       width: 12,
     },
@@ -74,7 +73,7 @@ function createRows(issues = []) {
     cells: [
       {
         key: issue.fields.issuetype.id,
-        content: typeIcon(issue.fields.issuetype.name),
+        content: getIcon[issue.fields.issuetype.name],
       },
       {
         key: issue.id,
@@ -110,14 +109,14 @@ function createRows(issues = []) {
       },
       {
         key: issue.fields.priority.id,
-        content: priorityIcon(issue.fields.priority.name),
+        content: getIcon[issue.fields.priority.name],
       },
       {
         key: issue.fields.status.statusCategory.id,
         content: (
           <Status
             text={issue.fields.status.name}
-            color={statusColor(issue.fields.status.statusCategory.key)}
+            color={getIcon[issue.fields.status.statusCategory.key]}
           />
         ),
       },

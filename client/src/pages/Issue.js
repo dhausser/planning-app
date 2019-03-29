@@ -19,11 +19,7 @@ import ContentWrapper, {
   Center,
 } from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
-import {
-  getPriorityIcon,
-  getStatusColor,
-  getTypeIcon,
-} from '../modules/Helpers';
+import { getIcon } from '../modules/Helpers';
 
 function postData(url = ``, data = {}) {
   return fetch(url, {
@@ -57,8 +53,6 @@ export default class Issue extends Component {
     const { issueId } = this.props.params;
     const response = await fetch(`/api/issue?key=${issueId}`);
     const { issue, comments } = await response.json();
-
-    console.log({ issue, comments });
 
     this.setState({
       isLoading: false,
@@ -95,7 +89,6 @@ export default class Issue extends Component {
             );
             this.setState({ readValue });
             break;
-
           default:
             break;
         }
@@ -161,14 +154,14 @@ export default class Issue extends Component {
         <h5>Status</h5>
         <Status
           text={issue.fields.status.name}
-          color={getStatusColor(issue.fields.status.statusCategory.key)}
+          color={getIcon[issue.fields.status.statusCategory.key]}
         />
         <h5>FixVersion</h5>
         {issue.fields.fixVersions[0] && issue.fields.fixVersions[0].name}
         <h5>Type</h5>
-        {getTypeIcon(issue.fields.issuetype.name)}
+        {getIcon[issue.fields.issuetype.name]}
         <h5>Priotity</h5>
-        {getPriorityIcon(issue.fields.priority.name)}
+        {getIcon[issue.fields.priority.name]}
         <InlineEdit
           isFitContainerWidthReadView
           label="Summary"
@@ -179,8 +172,6 @@ export default class Issue extends Component {
           onCancel={this.onCancel}
           {...this.props}
         />
-        {/* <h5>Description</h5>
-          <TextArea value={issue.fields.description} resize="smart" /> */}
         <InlineEdit
           isFitContainerWidthReadView
           label="Description"

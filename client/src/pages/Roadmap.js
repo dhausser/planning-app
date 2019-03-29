@@ -67,7 +67,7 @@ export default class Roadmap extends Component {
     //   console.log(child.fields);
     // });
 
-    this.setState({ issues, isLoading: false });
+    this.setState({ issues: convertIssues(issues), isLoading: false });
   };
 
   render() {
@@ -89,7 +89,7 @@ export default class Roadmap extends Component {
               <Header width={200}>Status</Header>
             </Headers>
             <Rows
-              items={convertIssues(issues)}
+              items={issues}
               render={({ type, key, summary, value, status, children }) => (
                 <Row
                   expandLabel="Expand"
