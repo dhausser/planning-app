@@ -34,8 +34,9 @@ export default class Roadmap extends Component {
     // console.log(fixVersions.map(({ id }) => id));
 
     let data = {
-      jql: `project=GWENT and issuetype in (epic) and fixVersion in (${15900})`,
-      maxResults: 10,
+      // jql: `project=GWENT and issuetype in (epic) and fixVersion in (${15900})`,
+      jql: 'issuetype=epic',
+      // maxResults: 10,
       fields: ['summary', 'status', 'issuetype', 'priority'],
     };
     const { issues } = await getIssues(data);

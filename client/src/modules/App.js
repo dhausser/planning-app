@@ -51,33 +51,31 @@ export default class App extends Component {
   }
 
   async componentDidMount() {
-    const [
-      teamsPromise,
-      resourcesPromise,
-      fixVersionsPromise,
-    ] = await Promise.all([
-      fetch('/api/teams'),
-      fetch('/api/resources'),
-      fetch('/api/fixVersions'),
-    ]);
-    const [teams, resources, fixVersions] = await Promise.all([
-      teamsPromise.json(),
-      resourcesPromise.json(),
-      fixVersionsPromise.json(),
-    ]);
+    // const [
+    //   teamsPromise,
+    //   resourcesPromise,
+    //   fixVersionsPromise,
+    // ] = await Promise.all([
+    //   fetch('/api/teams'),
+    //   fetch('/api/resources'),
+    //   fetch('/api/fixVersions'),
+    // ]);
+    // const [teams, resources, fixVersions] = await Promise.all([
+    //   teamsPromise.json(),
+    //   resourcesPromise.json(),
+    //   fixVersionsPromise.json(),
+    // ]);
 
-    const team = localStorage.getItem('team')
-      ? JSON.parse(localStorage.getItem('team'))
-      : null;
-    const fixVersion = localStorage.getItem('fixVersion')
-      ? JSON.parse(localStorage.getItem('fixVersion'))
-      : fixVersions.values[0];
+    // const team = localStorage.getItem('team')
+    //   ? JSON.parse(localStorage.getItem('team'))
+    //   : null;
+    // const fixVersion = localStorage.getItem('fixVersion')
+    //   ? JSON.parse(localStorage.getItem('fixVersion'))
+    //   : fixVersions.values[0];
 
     const requestData = {
-      jql: `filter=22119 AND fixVersion in (${
-        fixVersion.id
-      }) ORDER BY priority DESC`,
-      maxResults: 250,
+      jql: '',
+      // maxResults: 250,
       fields: [
         'summary',
         'description',
@@ -91,17 +89,22 @@ export default class App extends Component {
     };
     const { issues, maxResults, total } = await getIssues(requestData);
 
-    this.setState({
-      isLoading: false,
-      maxResults,
-      total,
-      fixVersions: fixVersions.values,
-      fixVersion,
-      issues,
-      resources,
-      teams,
-      team,
-    });
+    // const response = await fetch('/api/issues');
+    // const issues = await response.json();
+
+    this.setState({ issues, maxResults, total, isLoading: false });
+
+    // this.setState({
+    //   isLoading: false,
+    //   maxResults,
+    //   total,
+    //   fixVersions: fixVersions.values,
+    //   fixVersion,
+    //   issues,
+    //   resources,
+    //   teams,
+    //   team,
+    // });
   }
 
   updateFilter = async ({ team, fixVersion }) => {

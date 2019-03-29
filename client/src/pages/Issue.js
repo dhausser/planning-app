@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import PropTypes from 'prop-types';
 
 import Spinner from '@atlaskit/spinner';
+import EmptyState from '@atlaskit/empty-state';
 import { Status } from '@atlaskit/status';
 import InlineEdit, { SingleLineTextInput } from '@atlaskit/inline-edit';
 import Avatar from '@atlaskit/avatar';
@@ -54,12 +55,16 @@ export default class Issue extends Component {
     const response = await fetch(`/api/issue?key=${issueId}`);
     const { issue, comments } = await response.json();
 
+    let defautlValue = '';
+    if (issue.fields) defautlValue = issue.fields.summary;
+
     this.setState({
       isLoading: false,
       issue,
       comments,
-      readValue: issue.fields.summary,
-      editValue: issue.fields.summary,
+      readValue: defautlValue,
+      editValue: defautlValue,
+      host: 'jira.cdprojektred.com',
     });
   };
 
@@ -118,7 +123,7 @@ export default class Issue extends Component {
 
   render() {
     const id = 'inline-edit-single';
-    const { issue, comments, isLoading } = this.state;
+    const { issue, comments, host, isLoading } = this.state;
 
     if (isLoading)
       return (
@@ -126,31 +131,51 @@ export default class Issue extends Component {
           <Spinner size="large" />
         </Center>
       );
+
+    if (issue.errorMessages)
+      return issue.errorMessages.map(error => (
+        <EmptyState key={error} header="Error" description={error} />
+      ));
+
+    let {
+      fields: { assignee },
+    } = issue;
+    if (assignee) {
+      assignee = (
+        <NameWrapper>
+          <AvatarWrapper>
+            <Avatar
+              name={assignee.displayName}
+              size="large"
+              src={`https://${host}/secure/useravatar?ownerId=${assignee.key}`}
+            />
+          </AvatarWrapper>
+          <Link to={`/resource/${assignee.key}`}>{assignee.displayName}</Link>
+        </NameWrapper>
+      );
+    } else {
+      assignee = (
+        <NameWrapper>
+          <AvatarWrapper>
+            <Avatar name="Unassigned" size="large" />
+          </AvatarWrapper>
+          Unassigned
+        </NameWrapper>
+      );
+    }
+
     return (
       <ContentWrapper>
         <PageTitle>{this.state.readValue}</PageTitle>
         <a
-          href={`https://jira.cdprojektred.com/browse/${issue.key}`}
+          href={`https://${host}/browse/${issue.key}`}
           target="_blank"
           rel="noopener noreferrer"
         >
           View in Issue Navigator
         </a>
         <h5>Assignee</h5>
-        <NameWrapper>
-          <AvatarWrapper>
-            <Avatar
-              name={issue.fields.assignee.displayName}
-              size="large"
-              src={`https://jira.cdprojektred.com/secure/useravatar?ownerId=${
-                issue.fields.assignee.key
-              }`}
-            />
-          </AvatarWrapper>
-          <Link to={`/resource/${issue.fields.assignee.key}`}>
-            {issue.fields.assignee.displayName}
-          </Link>
-        </NameWrapper>
+        {assignee}
         <h5>Status</h5>
         <Status
           text={issue.fields.status.name}
@@ -187,7 +212,7 @@ export default class Issue extends Component {
             key={comment.id}
             avatar={
               <Avatar
-                src={`https://jira.cdprojektred.com/secure/useravatar?ownerId=${
+                src={`https://${host}/secure/useravatar?ownerId=${
                   comment.author.key
                 }`}
                 label="Atlaskit avatar"

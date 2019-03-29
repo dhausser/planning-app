@@ -21,7 +21,7 @@ const head = {
       key: 'type',
       content: 'T',
       isSortable: true,
-      width: 2,
+      width: 3,
     },
     {
       key: 'key',
@@ -38,7 +38,7 @@ const head = {
       key: 'assignee',
       content: 'Assignee',
       isSortable: true,
-      width: 12,
+      width: 16,
     },
     {
       key: 'reporter',
@@ -68,65 +68,74 @@ const head = {
 };
 
 function createRows(issues = []) {
-  return issues.map((issue, index) => ({
-    key: `row-${index}-${issue.key}`,
-    cells: [
-      {
-        key: issue.fields.issuetype.id,
-        content: getIcon[issue.fields.issuetype.name],
-      },
-      {
-        key: issue.id,
-        content: (
-          <NameWrapper>
-            <Link to={`/issue/${issue.key}`}>{issue.key}</Link>
-          </NameWrapper>
-        ),
-      },
-      {
-        key: issue.id,
-        content: (
-          <NameWrapper>
-            <Link to={`/issue/${issue.key}`}>{issue.fields.summary}</Link>
-          </NameWrapper>
-        ),
-      },
-      {
-        key: issue.fields.assignee.key,
-        content: (
-          <Link to={`/resource/${issue.fields.assignee.key}`}>
-            {issue.fields.assignee.displayName}
-          </Link>
-        ),
-      },
-      {
-        key: issue.fields.creator.key,
-        content: (
-          <Link to={`/resource/${issue.fields.creator.key}`}>
-            {issue.fields.creator.displayName}
-          </Link>
-        ),
-      },
-      {
-        key: issue.fields.priority.id,
-        content: getIcon[issue.fields.priority.name],
-      },
-      {
-        key: issue.fields.status.statusCategory.id,
-        content: (
-          <Status
-            text={issue.fields.status.name}
-            color={getIcon[issue.fields.status.statusCategory.key]}
-          />
-        ),
-      },
-      {
-        key: issue.fields.fixVersions[0] && issue.fields.fixVersions[0].id,
-        content:
-          issue.fields.fixVersions[0] && issue.fields.fixVersions[0].name,
-      },
-    ],
-  }));
+  return issues.map((issue, index) => {
+    let {
+      fields: { assignee },
+    } = issue;
+
+    if (assignee) {
+      const { key, displayName } = assignee;
+      assignee = <Link to={`/resource/${key}`}>{displayName}</Link>;
+    } else {
+      assignee = 'Unassigned';
+    }
+
+    return {
+      key: `row-${index}-${issue.key}`,
+      cells: [
+        {
+          key: issue.fields.issuetype.id,
+          content: getIcon[issue.fields.issuetype.name],
+        },
+        {
+          key: issue.id,
+          content: (
+            <NameWrapper>
+              <Link to={`/issue/${issue.key}`}>{issue.key}</Link>
+            </NameWrapper>
+          ),
+        },
+        {
+          key: issue.id,
+          content: (
+            <NameWrapper>
+              <Link to={`/issue/${issue.key}`}>{issue.fields.summary}</Link>
+            </NameWrapper>
+          ),
+        },
+        {
+          key: assignee,
+          content: assignee,
+        },
+        {
+          key: issue.fields.creator.key,
+          content: (
+            <Link to={`/resource/${issue.fields.creator.key}`}>
+              {issue.fields.creator.displayName}
+            </Link>
+          ),
+        },
+        {
+          key: issue.fields.priority.id,
+          content: getIcon[issue.fields.priority.name],
+        },
+        {
+          key: issue.fields.status.statusCategory.id,
+          content: (
+            <Status
+              text={issue.fields.status.name}
+              color={getIcon[issue.fields.status.statusCategory.key]}
+            />
+          ),
+        },
+        {
+          key: issue.fields.fixVersions[0] && issue.fields.fixVersions[0].id,
+          content:
+            issue.fields.fixVersions[0] && issue.fields.fixVersions[0].name,
+        },
+      ],
+    };
+  });
 }
 
 export default function IssueList({

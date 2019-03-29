@@ -18,8 +18,8 @@ exports.searchIssues = (request, response, next) => {
   };
 
   const req = https.request(options, res => {
-    console.log(`STATUS: ${res.statusCode}`);
-    console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
+    // console.log(`STATUS: ${res.statusCode}`);
+    // console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
     let rawData = '';
     res.setEncoding('utf8');
     res.on('data', chunk => {

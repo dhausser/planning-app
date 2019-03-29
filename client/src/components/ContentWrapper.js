@@ -9,7 +9,7 @@ export const Padding = styled.div`
 `;
 
 export const Center = styled.div`
-  padding: 1000px 0;
+  padding: 100px 0;
   text-align: center;
 `;
 
