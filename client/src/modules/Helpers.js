@@ -16,7 +16,7 @@ import Story16Icon from '@atlaskit/icon-object/glyph/story/16';
 import Task16Icon from '@atlaskit/icon-object/glyph/task/16';
 import Subtask16Icon from '@atlaskit/icon-object/glyph/subtask/16';
 import Bug16Icon from '@atlaskit/icon-object/glyph/bug/16';
-import config from './config';
+import config from './credentials.json';
 
 export const getIcon = {
   new: 'blue',

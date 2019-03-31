@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 mongoose.Promise = global.Promise;
 
@@ -8,4 +8,4 @@ const holidaySchema = new mongoose.Schema({
   date: Date,
 });
 
-module.exports = mongoose.model('Holiday', holidaySchema);
+export default mongoose.model('Holiday', holidaySchema);

@@ -1,11 +1,11 @@
-const https = require('https');
+import https from 'https';
 
-exports.searchIssues = (request, response) => {
+export function searchIssues(request, response) {
   const { options, bodyData } = request.body;
 
   const req = https.request(options, res => {
-    console.log(`STATUS: ${res.statusCode}`);
-    console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
+    // console.log(`STATUS: ${res.statusCode}`);
+    // console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
     let rawData = '';
     res.setEncoding('utf8');
     res.on('data', chunk => {
@@ -26,9 +26,9 @@ exports.searchIssues = (request, response) => {
 
   req.write(JSON.stringify(bodyData));
   req.end();
-};
+}
 
-exports.editIssue = (request, response) => {
+export function editIssue(request, response) {
   const bodyData = JSON.stringify({
     fields: { summary: request.body.summary },
   });
@@ -53,9 +53,9 @@ exports.editIssue = (request, response) => {
 
   req.write(bodyData);
   req.end();
-};
+}
 
-exports.getIssue = (request, response, next) => {
+export function getIssue(request, response, next) {
   const fields =
     'summary,description,status,priority,assignee,creator,fixVersions,issuetype';
   const options = {
@@ -88,9 +88,9 @@ exports.getIssue = (request, response, next) => {
   });
 
   req.end();
-};
+}
 
-exports.getComments = (request, response) => {
+export function getComments(request, response) {
   const options = {
     hostname: process.env.HOST,
     path: `/${process.env.API_PATH}/issue/${request.query.key}/comment`,
@@ -122,9 +122,9 @@ exports.getComments = (request, response) => {
   });
 
   req.end();
-};
+}
 
-exports.getFixVersions = (request, response) => {
+export function getFixVersions(request, response) {
   const options = {
     method: 'GET',
     hostname: process.env.HOST,
@@ -156,4 +156,4 @@ exports.getFixVersions = (request, response) => {
   });
 
   req.end();
-};
+}

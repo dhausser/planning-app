@@ -1,35 +1,66 @@
-const express = require('express');
-const path = require('path');
-const bodyParser = require('body-parser');
+// Entry point for the app
 
-require('dotenv').config({ path: '.env' });
-require('./db');
+// Express is the underlying that atlassian-connect-express uses:
+import express from 'express';
 
-// Constants
-const { NODE_ENV, PORT } = process.env;
+// https://expressjs.com/en/guide/using-middleware.html
+import bodyParser from 'body-parser';
+import compression from 'compression';
+import cookieParser from 'cookie-parser';
+import errorHandler from 'errorhandler';
+// import morgan from 'morgan';
 
-// App
+// atlassian-connect-express also provides a middleware
+// import ace from 'atlassian-connect-express';
+
+// We also need a few stock Node modules
+import http from 'http';
+import path from 'path';
+import os from 'os';
+
+// Mongoose
+import './db';
+
+// Routes live here; this is the C in MVC
+import routes from './routes';
+
+// Bootstrap Express and atlassian-connect-express
 const app = express();
+// const addon = ace(app);
 
-// Bodyparser
-app.use(
-  bodyParser.urlencoded({
-    extended: true,
-  })
-);
+// See config.json
+const port = 4444; // addon.config.port();
+app.set('port', port);
+
+// Log requests, using an appropriate formatter by env
+const devEnv = app.get('env') === 'development';
+// app.use(morgan('combined'));
+
+// Include request parsers
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
 
-// Router
-app.use('/', require('./routes'));
+// Gzip response when appropriate
+app.use(compression());
 
-// Static Files
-if (NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, 'build')));
-  app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
-  });
-}
+// Include atlassian-connect-express middleware
+// app.use(addon.middleware());
 
-// Server
-app.listen(PORT);
-console.log(`Running on http://localhost:${PORT}`);
+// Mount the static files directory
+const staticDir = path.join(__dirname, 'build');
+app.use(express.static(staticDir));
+
+// Show nicer errors in dev mode
+if (devEnv) app.use(errorHandler());
+
+// Wire up routes
+routes(app); // addon);
+
+// Boot the HTTP server
+http.createServer(app).listen(port, () => {
+  console.log(`App server running at http://${os.hostname()}:${port}`);
+
+  // Enables auto registration/de-registration of app into a host in dev mode
+  // if (devEnv) addon.register();
+});
