@@ -13,8 +13,7 @@ exports.searchIssues = (request, response) => {
     });
     res.on('end', () => {
       try {
-        const data = JSON.parse(rawData);
-        response.json(data);
+        response.json(JSON.parse(rawData));
       } catch (err) {
         console.error(err.message);
       }
@@ -25,7 +24,7 @@ exports.searchIssues = (request, response) => {
     console.error(`problem with request: ${e.message}`);
   });
 
-  req.write(bodyData);
+  req.write(JSON.stringify(bodyData));
   req.end();
 };
 

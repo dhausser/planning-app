@@ -65,33 +65,28 @@ export default class App extends Component {
     //   resourcesPromise.json(),
     //   fixVersionsPromise.json(),
     // ]);
-
     // const team = localStorage.getItem('team')
     //   ? JSON.parse(localStorage.getItem('team'))
     //   : null;
     // const fixVersion = localStorage.getItem('fixVersion')
     //   ? JSON.parse(localStorage.getItem('fixVersion'))
     //   : fixVersions.values[0];
-
-    const bodyData = {
-      jql: '',
-      // maxResults: 250,
-      fields: [
-        'summary',
-        'description',
-        'status',
-        'assignee',
-        'creator',
-        'issuetype',
-        'priority',
-        'fixVersions',
-      ],
-    };
-
-    const { issues, maxResults, total } = await fetchIssues(bodyData);
-
-    this.setState({ issues, maxResults, total, isLoading: false });
-
+    // const bodyData = {
+    //   jql: '',
+    //   // maxResults: 250,
+    //   fields: [
+    //     'summary',
+    //     'description',
+    //     'status',
+    //     'assignee',
+    //     'creator',
+    //     'issuetype',
+    //     'priority',
+    //     'fixVersions',
+    //   ],
+    // };
+    // const { issues, maxResults, total } = await fetchIssues(bodyData);
+    // this.setState({ issues, maxResults, total, isLoading: false });
     // this.setState({
     //   isLoading: false,
     //   maxResults,

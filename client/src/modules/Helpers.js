@@ -91,37 +91,42 @@ export const convertIssues = issues =>
         color={getIcon[issue.fields.status.statusCategory.key]}
       />
     ),
-    children: issue.children.map(child => ({
-      type: getIcon[child.fields.issuetype.name],
-      key: child.key,
-      summary: child.fields.summary,
-      value: getIcon[child.fields.priority.name],
-      status: (
-        <Status
-          text={child.fields.status.name}
-          color={getIcon[child.fields.status.statusCategory.key]}
-        />
-      ),
-      // TODO: Subtask current do not have the flatten formatting as other issues
-      children: child.fields.subtasks.map(subtask => ({
-        type: getIcon[subtask.fields.issuetype.name],
-        key: subtask.key,
-        summary: subtask.fields.summary,
-        value: getIcon[subtask.fields.priority.name],
+    children:
+      issue.children &&
+      issue.children.map(child => ({
+        type: getIcon[child.fields.issuetype.name],
+        key: child.key,
+        summary: child.fields.summary,
+        value: getIcon[child.fields.priority.name],
         status: (
           <Status
-            text={subtask.fields.status.name}
-            color={getIcon[subtask.fields.status.statusCategory.key]}
+            text={child.fields.status.name}
+            color={getIcon[child.fields.status.statusCategory.key]}
           />
         ),
-        children: [],
+        children: child.fields.subtasks.map(subtask => ({
+          type: getIcon[subtask.fields.issuetype.name],
+          key: subtask.key,
+          summary: subtask.fields.summary,
+          value: getIcon[subtask.fields.priority.name],
+          status: (
+            <Status
+              text={subtask.fields.status.name}
+              color={getIcon[subtask.fields.status.statusCategory.key]}
+            />
+          ),
+          children: [],
+        })),
       })),
-    })),
   }));
 
-export async function fetchIssues(data = {}, resource = 'search') {
+export async function fetchIssues(
+  bodyData = {},
+  setData,
+  ignore,
+  resource = 'search'
+) {
   const { hostname, path, Authorization } = config;
-  const bodyData = JSON.stringify(data);
 
   const options = {
     hostname,
@@ -140,5 +145,6 @@ export async function fetchIssues(data = {}, resource = 'search') {
     },
     body: JSON.stringify({ options, bodyData }),
   });
-  return response.json();
+  const result = await response.json();
+  if (!ignore) setData({ ...result, isLoading: false });
 }
