@@ -10,7 +10,7 @@ import TableTree, {
 } from '@atlaskit/table-tree';
 import Spinner from '@atlaskit/spinner';
 
-import { getIssues, convertIssues } from '../modules/Helpers';
+import { fetchIssues, convertIssues } from '../modules/Helpers';
 import ContentWrapper, { Center } from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
 import Filters from '../components/Filters';
@@ -39,7 +39,7 @@ export default class Roadmap extends Component {
       // maxResults: 10,
       fields: ['summary', 'status', 'issuetype', 'priority'],
     };
-    const { issues } = await getIssues(data);
+    const { issues } = await fetchIssues(data);
 
     data = {
       jql: `"Epic Link" in (${issues[0].key})`,
@@ -53,7 +53,7 @@ export default class Roadmap extends Component {
         'customfield_18404',
       ],
     };
-    const response = await getIssues(data);
+    const response = await fetchIssues(data);
     const children = response.issues;
 
     issues.forEach(issue => {

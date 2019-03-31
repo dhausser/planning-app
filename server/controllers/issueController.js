@@ -1,25 +1,11 @@
 const https = require('https');
 
-exports.searchIssues = (request, response, next) => {
-  const bodyData = JSON.stringify(request.body);
-  console.log(bodyData);
-
-  const options = {
-    hostname: process.env.HOST,
-    port: 443,
-    path: `/${process.env.API_PATH}/search`,
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Content-Length': Buffer.byteLength(bodyData),
-      Accept: 'application/json',
-      Authorization: process.env.AUTHORIZATION,
-    },
-  };
+exports.searchIssues = (request, response) => {
+  const { options, bodyData } = request.body;
 
   const req = https.request(options, res => {
-    // console.log(`STATUS: ${res.statusCode}`);
-    // console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
+    console.log(`STATUS: ${res.statusCode}`);
+    console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
     let rawData = '';
     res.setEncoding('utf8');
     res.on('data', chunk => {
@@ -44,9 +30,6 @@ exports.searchIssues = (request, response, next) => {
 };
 
 exports.editIssue = (request, response) => {
-  // const bodyData = JSON.stringify({
-  //   update: { summary: [{ set: request.body.summary }] },
-  // });
   const bodyData = JSON.stringify({
     fields: { summary: request.body.summary },
   });

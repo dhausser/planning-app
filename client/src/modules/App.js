@@ -4,7 +4,7 @@ import Page from '@atlaskit/page';
 import '@atlaskit/css-reset';
 
 import StarterNavigation from '../components/StarterNavigation';
-import { getIssues } from './Helpers';
+import { fetchIssues } from './Helpers';
 
 export default class App extends Component {
   state = {
@@ -73,7 +73,7 @@ export default class App extends Component {
     //   ? JSON.parse(localStorage.getItem('fixVersion'))
     //   : fixVersions.values[0];
 
-    const requestData = {
+    const bodyData = {
       jql: '',
       // maxResults: 250,
       fields: [
@@ -87,10 +87,8 @@ export default class App extends Component {
         'fixVersions',
       ],
     };
-    const { issues, maxResults, total } = await getIssues(requestData);
 
-    // const response = await fetch('/api/issues');
-    // const issues = await response.json();
+    const { issues, maxResults, total } = await fetchIssues(bodyData);
 
     this.setState({ issues, maxResults, total, isLoading: false });
 
@@ -112,7 +110,7 @@ export default class App extends Component {
       this.setState({ isLoading: true });
       localStorage.setItem('fixVersion', JSON.stringify(fixVersion));
 
-      const requestData = {
+      const bodyData = {
         jql: `filter=22119 AND fixVersion=${
           fixVersion.id
         } ORDER BY priority DESC`,
@@ -128,7 +126,7 @@ export default class App extends Component {
           'fixVersions',
         ],
       };
-      const { issues, maxResults, total } = await getIssues(requestData);
+      const { issues, maxResults, total } = await fetchIssues(bodyData);
 
       this.setState({
         issues,

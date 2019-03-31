@@ -2,9 +2,9 @@ const express = require('express');
 
 const router = express.Router();
 
-const holidayController = require('./controllers/holidayController');
-const issueController = require('./controllers/issueController');
-const resourceController = require('./controllers/resourceController');
+const holidayController = require('../controllers/holidayController');
+const issueController = require('../controllers/issueController');
+const resourceController = require('../controllers/resourceController');
 
 const catchErrors = fn =>
   function(req, res, next) {

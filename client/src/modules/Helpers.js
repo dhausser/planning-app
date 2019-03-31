@@ -16,6 +16,7 @@ import Story16Icon from '@atlaskit/icon-object/glyph/story/16';
 import Task16Icon from '@atlaskit/icon-object/glyph/task/16';
 import Subtask16Icon from '@atlaskit/icon-object/glyph/subtask/16';
 import Bug16Icon from '@atlaskit/icon-object/glyph/bug/16';
+import config from './config';
 
 export const getIcon = {
   new: 'blue',
@@ -118,13 +119,26 @@ export const convertIssues = issues =>
     })),
   }));
 
-export async function getIssues(data = {}) {
-  const response = await fetch('/api/search', {
+export async function fetchIssues(data = {}, resource = 'search') {
+  const { hostname, path, Authorization } = config;
+  const bodyData = JSON.stringify(data);
+
+  const options = {
+    hostname,
+    path: `${path}/${resource}`,
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization,
+    },
+  };
+
+  const response = await fetch(`/api/${resource}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify({ options, bodyData }),
   });
   return response.json();
 }
