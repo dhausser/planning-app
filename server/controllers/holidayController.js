@@ -1,7 +1,5 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const Holiday = mongoose.model('Holiday');
 
-export async function getHolidays(req, res) {
-  return res.json(await Holiday.find());
-}
+exports.getHolidays = async (req, res) => res.json(await Holiday.find());

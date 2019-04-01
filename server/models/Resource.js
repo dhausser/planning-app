@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
 
@@ -47,4 +47,4 @@ resourceSchema.statics.getTeams = function() {
   ]);
 };
 
-export default mongoose.model('Resource', resourceSchema);
+module.exports = mongoose.model('Resource', resourceSchema);

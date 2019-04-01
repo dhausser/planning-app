@@ -1,28 +1,28 @@
 // Entry point for the app
 
 // Express is the underlying that atlassian-connect-express uses:
-import express from 'express';
+const express = require('express');
 
 // https://expressjs.com/en/guide/using-middleware.html
-import bodyParser from 'body-parser';
-import compression from 'compression';
-import cookieParser from 'cookie-parser';
-import errorHandler from 'errorhandler';
-// import morgan from 'morgan';
+const bodyParser = require('body-parser');
+const compression = require('compression');
+const cookieParser = require('cookie-parser');
+const errorHandler = require('errorhandler');
+// const morgan = require('morgan');
 
 // atlassian-connect-express also provides a middleware
-// import ace from 'atlassian-connect-express';
+// const ace = require('atlassian-connect-express');
 
 // We also need a few stock Node modules
-import http from 'http';
-import path from 'path';
-import os from 'os';
+const http = require('http');
+const path = require('path');
+const os = require('os');
 
 // Mongoose
-import './db';
+require('./db');
 
 // Routes live here; this is the C in MVC
-import routes from './routes';
+const routes = require('./routes');
 
 // Bootstrap Express and atlassian-connect-express
 const app = express();
@@ -55,7 +55,7 @@ app.use(express.static(staticDir));
 if (devEnv) app.use(errorHandler());
 
 // Wire up routes
-routes(app); // addon);
+app.use('/', routes);
 
 // Boot the HTTP server
 http.createServer(app).listen(port, () => {

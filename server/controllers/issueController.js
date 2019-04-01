@@ -1,6 +1,6 @@
-import https from 'https';
+const https = require('https');
 
-export function searchIssues(request, response) {
+exports.searchIssues = (request, response) => {
   const { options, bodyData } = request.body;
 
   const req = https.request(options, res => {
@@ -26,9 +26,9 @@ export function searchIssues(request, response) {
 
   req.write(JSON.stringify(bodyData));
   req.end();
-}
+};
 
-export function editIssue(request, response) {
+exports.editIssue = (request, response) => {
   const bodyData = JSON.stringify({
     fields: { summary: request.body.summary },
   });
@@ -53,9 +53,9 @@ export function editIssue(request, response) {
 
   req.write(bodyData);
   req.end();
-}
+};
 
-export function getIssue(request, response, next) {
+exports.getIssue = (request, response, next) => {
   const fields =
     'summary,description,status,priority,assignee,creator,fixVersions,issuetype';
   const options = {
@@ -88,9 +88,9 @@ export function getIssue(request, response, next) {
   });
 
   req.end();
-}
+};
 
-export function getComments(request, response) {
+exports.getComments = (request, response) => {
   const options = {
     hostname: process.env.HOST,
     path: `/${process.env.API_PATH}/issue/${request.query.key}/comment`,
@@ -122,19 +122,17 @@ export function getComments(request, response) {
   });
 
   req.end();
-}
+};
 
-export function getFixVersions(request, response) {
+exports.getFixVersions = (request, response) => {
   const options = {
     method: 'GET',
     hostname: process.env.HOST,
-    path: `/${
-      process.env.API_PATH
-    }/project/${10500}/version?startAt=59&maxResults=5&orderBy=+releaseDate&status=unreleased`,
+    path: `${process.env.API_PATH}${request.body.resource}`,
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
-      Authorization: process.env.AUTHORIZATION,
+      Authorization: request.body.Authorization,
     },
   };
 
@@ -156,4 +154,4 @@ export function getFixVersions(request, response) {
   });
 
   req.end();
-}
+};

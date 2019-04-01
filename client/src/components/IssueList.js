@@ -44,7 +44,7 @@ const head = {
       key: 'reporter',
       content: 'Reporter',
       isSortable: true,
-      width: 12,
+      width: 16,
     },
     {
       key: 'priority',
@@ -56,7 +56,7 @@ const head = {
       key: 'status',
       content: 'Status',
       isSortable: true,
-      width: 16,
+      width: 18,
     },
     {
       key: 'version',
@@ -154,7 +154,7 @@ export default function IssueList({
         caption={caption}
         head={head}
         rows={createRows(issues, pathname)}
-        rowsPerPage={pathname === '/issues' ? 20 : 10}
+        rowsPerPage={pathname === '/issues' ? 10 : 5}
         defaultPage={1}
         loadingSpinnerSize="large"
         isLoading={isLoading}

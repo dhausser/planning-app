@@ -32,7 +32,8 @@ export default function Issues(props) {
 
     fetchIssues(
       {
-        jql: '',
+        jql:
+          'statusCategory in (new, indeterminate) AND project = 10500 AND fixVersion = 16414 ORDER BY priority DESC, key ASC',
         fields: [
           'summary',
           'description',

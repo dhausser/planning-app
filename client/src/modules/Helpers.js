@@ -129,9 +129,9 @@ export async function fetchIssues(
   const { hostname, path, Authorization } = config;
 
   const options = {
+    method: 'POST',
     hostname,
     path: `${path}/${resource}`,
-    method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       Authorization,
@@ -147,4 +147,22 @@ export async function fetchIssues(
   });
   const result = await response.json();
   if (!ignore) setData({ ...result, isLoading: false });
+}
+
+export async function fetchFixVersions(setData, ignore, setIsLoading) {
+  const { Authorization } = config;
+  const resource = `/project/10500/version?startAt=59&maxResults=5&orderBy=+releaseDate&status=unreleased`;
+
+  const response = await fetch('/api/fixVersions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ Authorization, resource }),
+  });
+  const data = await response.json();
+  if (!ignore) {
+    setData(data.values);
+    setIsLoading(false);
+  }
 }

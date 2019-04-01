@@ -1,12 +1,11 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const Resource = mongoose.model('Resource');
 
-export async function getTeams(req, res) {
+exports.getTeams = async (req, res) => {
   const teams = await Resource.getTeams();
   res.json(teams.map(({ _id }) => _id));
-}
+};
 
-export async function getResources(req, res) {
-  return res.json(await Resource.getResources());
-}
+exports.getResources = async (req, res) =>
+  res.json(await Resource.getResources());

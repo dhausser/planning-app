@@ -1,12 +1,9 @@
-import {
-  searchIssues,
-  getIssue,
-  getComments,
-  editIssue,
-  getFixVersions,
-} from '../controllers/issueController';
-import { getHolidays } from '../controllers/holidayController';
-import { getResources, getTeams } from '../controllers/resourceController';
+const express = require('express');
+
+const router = express.Router();
+const issueController = require('../controllers/issueController');
+const holidayController = require('../controllers/holidayController');
+const resourceController = require('../controllers/resourceController');
 
 function catchErrors(fn) {
   return function(req, res, next) {
@@ -14,19 +11,15 @@ function catchErrors(fn) {
   };
 }
 
-export default function routes(app, addon) {
-  // app.get('/', (req, res) => {
-  //   res.redirect('/atlassian-connect.json');
-  // });
+// Routes to MongoDB
+router.get('/api/resources', catchErrors(resourceController.getResources));
+router.get('/api/teams', catchErrors(resourceController.getTeams));
+router.get('/api/holidays', catchErrors(holidayController.getHolidays));
 
-  // Routes to MongoDB
-  app.get('/api/resources', catchErrors(getResources));
-  app.get('/api/holidays', catchErrors(getHolidays));
-  app.get('/api/teams', catchErrors(getTeams));
+// Routes to Jira Server API
+router.get('/api/issue', issueController.getIssue, issueController.getComments);
+router.post('/api/issue', issueController.editIssue);
+router.post('/api/search', issueController.searchIssues);
+router.post('/api/fixVersions', issueController.getFixVersions);
 
-  // Routes to Jira Server API
-  app.get('/api/issue', getIssue, getComments);
-  app.post('/api/issue', editIssue);
-  app.post('/api/search', searchIssues);
-  app.get('/api/fixVersions', getFixVersions);
-}
+module.exports = router;

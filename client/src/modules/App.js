@@ -1,10 +1,7 @@
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Page from '@atlaskit/page';
-import '@atlaskit/css-reset';
-
 import StarterNavigation from '../components/StarterNavigation';
-import { fetchIssues } from './Helpers';
 
 export default class App extends Component {
   state = {
@@ -100,48 +97,48 @@ export default class App extends Component {
     // });
   }
 
-  updateFilter = async ({ team, fixVersion }) => {
-    if (fixVersion != null) {
-      this.setState({ isLoading: true });
-      localStorage.setItem('fixVersion', JSON.stringify(fixVersion));
+  // updateFilter = async ({ team, fixVersion }) => {
+  //   if (fixVersion != null) {
+  //     this.setState({ isLoading: true });
+  //     localStorage.setItem('fixVersion', JSON.stringify(fixVersion));
 
-      const bodyData = {
-        jql: `filter=22119 AND fixVersion=${
-          fixVersion.id
-        } ORDER BY priority DESC`,
-        maxResults: 250,
-        fields: [
-          'summary',
-          'description',
-          'status',
-          'assignee',
-          'creator',
-          'issuetype',
-          'priority',
-          'fixVersions',
-        ],
-      };
-      const { issues, maxResults, total } = await fetchIssues(bodyData);
+  //     const bodyData = {
+  //       jql: `filter=22119 AND fixVersion=${
+  //         fixVersion.id
+  //       } ORDER BY priority DESC`,
+  //       maxResults: 250,
+  //       fields: [
+  //         'summary',
+  //         'description',
+  //         'status',
+  //         'assignee',
+  //         'creator',
+  //         'issuetype',
+  //         'priority',
+  //         'fixVersions',
+  //       ],
+  //     };
+  //     const { issues, maxResults, total } = await fetchIssues(bodyData);
 
-      this.setState({
-        issues,
-        fixVersion,
-        maxResults,
-        total,
-        isLoading: false,
-      });
-    }
+  //     this.setState({
+  //       issues,
+  //       fixVersion,
+  //       maxResults,
+  //       total,
+  //       isLoading: false,
+  //     });
+  //   }
 
-    if (team != null) {
-      if (team === this.state.team) {
-        localStorage.removeItem('team');
-        this.setState({ team: null });
-      } else {
-        localStorage.setItem('team', JSON.stringify(team));
-        this.setState({ team });
-      }
-    }
-  };
+  //   if (team != null) {
+  //     if (team === this.state.team) {
+  //       localStorage.removeItem('team');
+  //       this.setState({ team: null });
+  //     } else {
+  //       localStorage.setItem('team', JSON.stringify(team));
+  //       this.setState({ team });
+  //     }
+  //   }
+  // };
 
   render() {
     const { navOpenState } = this.context;

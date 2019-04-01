@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
 
@@ -59,4 +59,4 @@ issueSchema.statics.getAssignees = function() {
   ]);
 };
 
-export default mongoose.model('Issue', issueSchema);
+module.exports = mongoose.model('Issue', issueSchema);

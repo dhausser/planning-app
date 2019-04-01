@@ -39,7 +39,7 @@ export default function Roadmap() {
     );
 
     // Fetch Issues in Epic
-    // fetchIssues(
+    // fetchData(
     //   {
     //     jql: `"Epic Link" in (${epics.issues[0].key})`,
     //     fields: [
@@ -64,7 +64,7 @@ export default function Roadmap() {
     return () => {
       ignore = true;
     };
-  }, [epics]);
+  }, [epics.issues]);
 
   return (
     <ContentWrapper>
