@@ -24,8 +24,8 @@ export default function Filters() {
     let ignore = false;
 
     async function fetchTeams() {
-      const response = await fetch('/api/teams');
-      const data = await response.json();
+      const res = await fetch('/api/teams');
+      const data = await res.json();
       if (!ignore) setTeams(data);
     }
 
