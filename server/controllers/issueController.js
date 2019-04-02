@@ -2,7 +2,6 @@ const https = require('https');
 
 exports.searchIssues = (request, response) => {
   const { options, bodyData } = request.body;
-
   const req = https.request(options, res => {
     // console.log(`STATUS: ${res.statusCode}`);
     // console.log(`HEADERS: ${JSON.stringify(res.headers)}`);

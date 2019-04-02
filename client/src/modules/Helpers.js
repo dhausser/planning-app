@@ -1,5 +1,4 @@
 import React from 'react';
-import { Status } from '@atlaskit/status';
 import Tooltip from '@atlaskit/tooltip';
 
 // Import Priority Icons
@@ -16,7 +15,6 @@ import Story16Icon from '@atlaskit/icon-object/glyph/story/16';
 import Task16Icon from '@atlaskit/icon-object/glyph/task/16';
 import Subtask16Icon from '@atlaskit/icon-object/glyph/subtask/16';
 import Bug16Icon from '@atlaskit/icon-object/glyph/bug/16';
-import config from './credentials.json';
 
 export const getIcon = {
   new: 'blue',
@@ -78,91 +76,3 @@ export const getIcon = {
     </Tooltip>
   ),
 };
-
-export const convertIssues = issues =>
-  issues.map(issue => ({
-    type: getIcon[issue.fields.issuetype.name],
-    key: issue.key,
-    summary: issue.fields.summary,
-    value: getIcon[issue.fields.priority.name],
-    status: (
-      <Status
-        text={issue.fields.status.name}
-        color={getIcon[issue.fields.status.statusCategory.key]}
-      />
-    ),
-    children:
-      issue.children &&
-      issue.children.map(child => ({
-        type: getIcon[child.fields.issuetype.name],
-        key: child.key,
-        summary: child.fields.summary,
-        value: getIcon[child.fields.priority.name],
-        status: (
-          <Status
-            text={child.fields.status.name}
-            color={getIcon[child.fields.status.statusCategory.key]}
-          />
-        ),
-        children: child.fields.subtasks.map(subtask => ({
-          type: getIcon[subtask.fields.issuetype.name],
-          key: subtask.key,
-          summary: subtask.fields.summary,
-          value: getIcon[subtask.fields.priority.name],
-          status: (
-            <Status
-              text={subtask.fields.status.name}
-              color={getIcon[subtask.fields.status.statusCategory.key]}
-            />
-          ),
-          children: [],
-        })),
-      })),
-  }));
-
-export async function fetchIssues(
-  bodyData = {},
-  setData,
-  ignore,
-  resource = 'search'
-) {
-  const { hostname, path, Authorization } = config;
-
-  const options = {
-    method: 'POST',
-    hostname,
-    path: `${path}/${resource}`,
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization,
-    },
-  };
-
-  const response = await fetch(`/api/${resource}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ options, bodyData }),
-  });
-  const result = await response.json();
-  if (!ignore) setData({ ...result, isLoading: false });
-}
-
-export async function fetchFixVersions(setData, ignore, setIsLoading) {
-  const { Authorization } = config;
-  const resource = `/project/10500/version?startAt=59&maxResults=5&orderBy=+releaseDate&status=unreleased`;
-
-  const response = await fetch('/api/fixVersions', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ Authorization, resource }),
-  });
-  const data = await response.json();
-  if (!ignore) {
-    setData(data.values);
-    setIsLoading(false);
-  }
-}

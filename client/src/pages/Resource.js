@@ -5,25 +5,75 @@ import Calendar from '@atlaskit/calendar';
 import EmptyState from '@atlaskit/empty-state';
 import Spinner from '@atlaskit/spinner';
 
-import IssueList from '../components/IssueList';
-import Filters from '../components/Filters';
-import PageTitle from '../components/PageTitle';
 import ContentWrapper, {
   NameWrapper,
   AvatarWrapper,
   Center,
 } from '../components/ContentWrapper';
-import { fetchIssues } from '../modules/Helpers';
+import IssueList from '../components/IssueList';
+import Filters from '../components/Filters';
+import PageTitle from '../components/PageTitle';
 import HolidayList from '../components/HolidayList';
+import { fetchIssues } from './Issues';
 
 export default function Resource(props) {
-  const [data, setData] = useState({
-    issues: [],
-    isLoading: true,
-  });
-  const [absences, setAbsences] = useState([]);
   const { resourceId } = props.params;
+  const { issues, maxResults, total, isLoading } = useIssues(
+    `assignee=${resourceId}`
+  );
+  const absences = useAbsences(resourceId);
 
+  if (isLoading)
+    return (
+      <Center>
+        <Spinner size="large" />
+      </Center>
+    );
+
+  if (issues === [])
+    return (
+      <EmptyState
+        header="This person doesn't exist"
+        description={`The person you are trying to lookup isn't currently recorded in the database.`}
+      />
+    );
+
+  return (
+    <ContentWrapper>
+      <PageTitle>
+        <NameWrapper>
+          <AvatarWrapper>
+            <Avatar
+              name={issues[0].fields.assignee.displayName}
+              size="large"
+              src={`https://jira.cdprojektred.com/secure/useravatar?ownerId=${resourceId}`}
+            />
+          </AvatarWrapper>
+          {issues[0].fields.assignee.displayName}
+        </NameWrapper>
+      </PageTitle>
+      <Filters />
+      <a
+        href={`https://jira.cdprojektred.com/issues/?jql=assignee=${resourceId}`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        View in Issue Navigator
+      </a>
+      <IssueList
+        issues={issues}
+        maxResults={maxResults}
+        total={total}
+        isLoading={isLoading}
+      />
+      <HolidayList absences={absences} isLoading={isLoading} />
+      <Calendar day={0} defaultDisabled={absences} />
+    </ContentWrapper>
+  );
+}
+
+function useAbsences(resourceId) {
+  const [absences, setAbsences] = useState([]);
   useEffect(() => {
     let ignore = false;
 
@@ -33,9 +83,22 @@ export default function Resource(props) {
       if (!ignore) setAbsences(result);
     }
 
+    fetchAbsences();
+    return () => {
+      ignore = true;
+    };
+  }, [resourceId]);
+  return absences;
+}
+
+function useIssues(jql) {
+  const [data, setData] = useState({ issues: [], isLoading: true });
+  useEffect(() => {
+    let ignore = false;
+
     fetchIssues(
       {
-        jql: `assignee=${resourceId}`,
+        jql,
         fields: [
           'summary',
           'description',
@@ -50,57 +113,9 @@ export default function Resource(props) {
       setData,
       ignore
     );
-    fetchAbsences();
     return () => {
       ignore = true;
     };
-  }, [resourceId]);
-
-  if (data.isLoading)
-    return (
-      <Center>
-        <Spinner size="large" />
-      </Center>
-    );
-
-  if (data.issues === [])
-    return (
-      <EmptyState
-        header="This person doesn't exist"
-        description={`The person you are trying to lookup isn't currently recorded in the database.`}
-      />
-    );
-
-  return (
-    <ContentWrapper>
-      <PageTitle>
-        <NameWrapper>
-          <AvatarWrapper>
-            <Avatar
-              name={data.issues[0].fields.assignee.displayName}
-              size="large"
-              src={`https://jira.cdprojektred.com/secure/useravatar?ownerId=${resourceId}`}
-            />
-          </AvatarWrapper>
-          {data.issues[0].fields.assignee.displayName}
-        </NameWrapper>
-      </PageTitle>
-      <Filters />
-      <a
-        href={`https://jira.cdprojektred.com/issues/?jql=assignee=${resourceId}`}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        View in Issue Navigator
-      </a>
-      <IssueList
-        issues={data.issues}
-        maxResults={data.maxResults}
-        total={data.total}
-        isLoading={data.isLoading}
-      />
-      <HolidayList absences={absences} isLoading={data.isLoading} />
-      <Calendar day={0} defaultDisabled={absences} />
-    </ContentWrapper>
-  );
+  }, [jql]);
+  return data;
 }

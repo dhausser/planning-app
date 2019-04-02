@@ -4,7 +4,7 @@ import DropdownMenu, {
   DropdownItemGroup,
   DropdownItem,
 } from '@atlaskit/dropdown-menu';
-import { fetchFixVersions } from '../modules/Helpers';
+import config from '../modules/credentials.json';
 
 /**
  * TODO: Reinstate Localstorage
@@ -17,27 +17,9 @@ import { fetchFixVersions } from '../modules/Helpers';
 //   : fixVersions.values[0];
 
 export default function Filters() {
-  const [teams, setTeams] = useState([]);
-  const [fixVersions, setFixVersions] = useState([]);
   const [fixVersion, setFixVersion] = useState('');
   const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    let ignore = false;
-
-    async function fetchTeams() {
-      const res = await fetch('/api/teams');
-      const data = await res.json();
-      if (!ignore) setTeams(data);
-    }
-
-    fetchTeams();
-    fetchFixVersions(setFixVersions, ignore, setIsLoading);
-    return () => {
-      ignore = true;
-    };
-  }, []);
-
+  const { teams, fixVersions } = useData(setIsLoading);
   if (isLoading)
     return (
       <Button key="team" isLoading={isLoading} appearance="subtle">
@@ -55,14 +37,15 @@ export default function Filters() {
           position="right top"
         >
           <DropdownItemGroup>
-            {fixVersions.map(version => (
-              <DropdownItem
-                key={version.id}
-                onClick={() => setFixVersion(version)}
-              >
-                {version.name}
-              </DropdownItem>
-            ))}
+            {fixVersions &&
+              fixVersions.map(version => (
+                <DropdownItem
+                  key={version.id}
+                  onClick={() => setFixVersion(version)}
+                >
+                  {version.name}
+                </DropdownItem>
+              ))}
           </DropdownItemGroup>
         </DropdownMenu>
         {teams.map(team => (
@@ -79,4 +62,42 @@ export default function Filters() {
       </ButtonGroup>
     </div>
   );
+}
+
+function useData(setIsLoading) {
+  const [teams, setTeams] = useState([]);
+  const [fixVersions, setFixVersions] = useState([]);
+  useEffect(() => {
+    let ignore = false;
+    fetchTeams(setTeams, ignore);
+    fetchFixVersions(setFixVersions, ignore, setIsLoading);
+    return () => {
+      ignore = true;
+    };
+  }, [setIsLoading]);
+  return { teams, fixVersions };
+}
+
+async function fetchTeams(setTeams, ignore) {
+  const res = await fetch('/api/teams');
+  const data = await res.json();
+  if (!ignore) setTeams(data);
+}
+
+async function fetchFixVersions(setData, ignore, setIsLoading) {
+  const { Authorization } = config;
+  const resource = `/project/10500/version?startAt=59&maxResults=5&orderBy=+releaseDate&status=unreleased`;
+
+  const response = await fetch('/api/fixVersions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ Authorization, resource }),
+  });
+  const data = await response.json();
+  if (!ignore) {
+    setData(data.values);
+    setIsLoading(false);
+  }
 }

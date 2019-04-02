@@ -8,61 +8,23 @@ import TableTree, {
   Cell,
 } from '@atlaskit/table-tree';
 import Spinner from '@atlaskit/spinner';
-
-import { fetchIssues, convertIssues } from '../modules/Helpers';
+import { Status } from '@atlaskit/status';
 import ContentWrapper, { Center } from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
 import Filters from '../components/Filters';
-
-/**
- * TODO: Fetch Issues in Epic and attach Issues to Epic
- */
-// fetchData(
-//   {
-//     jql: `"Epic Link" in (${epics.issues[0].key})`,
-//     fields: [
-//       'summary',
-//       'status',
-//       'issuetype',
-//       'priority',
-//       'subtasks',
-//       'customfield_18404',
-//     ],
-//   },
-//   setStories,
-//   ignore
-// );
-// epics.issues.forEach(issue => {
-//   issue.children = [];
-// });
-// epics.issues[0].children = stories.issues;
+import { getIcon } from '../modules/Helpers';
+import { fetchIssues } from './Issues';
 
 export default function Roadmap() {
-  const [epics, setEpics] = useState({ issues: [], isLoading: true });
-  // const [stories, setStories] = useState({ issues: [], isLoading: true });
-
-  useEffect(() => {
-    let ignore = false;
-
-    fetchIssues(
-      {
-        jql: `project=GWENT and issuetype in (epic) and fixVersion in (${15900})`,
-        fields: ['summary', 'status', 'issuetype', 'priority'],
-      },
-      setEpics,
-      ignore
-    );
-
-    return () => {
-      ignore = true;
-    };
-  }, []);
-
+  const epics = useIssues('issuetype = epic');
+  const stories = useIssues(
+    `"Epic Link" in (${epics.issues.map(({ id }) => id)})`
+  );
   return (
     <ContentWrapper>
       <PageTitle>Roadmap</PageTitle>
       <Filters />
-      {epics.isLoading ? (
+      {stories.isLoading ? (
         <Center>
           <Spinner size="large" />
         </Center>
@@ -98,3 +60,63 @@ export default function Roadmap() {
     </ContentWrapper>
   );
 }
+
+function useIssues(jql) {
+  const [data, setData] = useState({ issues: [], isLoading: true });
+  useEffect(() => {
+    let ignore = false;
+    fetchIssues(
+      {
+        jql,
+        fields: ['summary', 'status', 'issuetype', 'priority'],
+      },
+      setData,
+      ignore
+    );
+    return () => {
+      ignore = true;
+    };
+  }, [jql]);
+  return data;
+}
+
+export const convertIssues = issues =>
+  issues.map(issue => ({
+    type: getIcon[issue.fields.issuetype.name],
+    key: issue.key,
+    summary: issue.fields.summary,
+    value: getIcon[issue.fields.priority.name],
+    status: (
+      <Status
+        text={issue.fields.status.name}
+        color={getIcon[issue.fields.status.statusCategory.key]}
+      />
+    ),
+    children:
+      issue.children &&
+      issue.children.map(child => ({
+        type: getIcon[child.fields.issuetype.name],
+        key: child.key,
+        summary: child.fields.summary,
+        value: getIcon[child.fields.priority.name],
+        status: (
+          <Status
+            text={child.fields.status.name}
+            color={getIcon[child.fields.status.statusCategory.key]}
+          />
+        ),
+        children: child.fields.subtasks.map(subtask => ({
+          type: getIcon[subtask.fields.issuetype.name],
+          key: subtask.key,
+          summary: subtask.fields.summary,
+          value: getIcon[subtask.fields.priority.name],
+          status: (
+            <Status
+              text={subtask.fields.status.name}
+              color={getIcon[subtask.fields.status.statusCategory.key]}
+            />
+          ),
+          children: [],
+        })),
+      })),
+  }));

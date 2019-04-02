@@ -2,6 +2,8 @@ import React from 'react';
 import Page from '@atlaskit/page';
 import StarterNavigation from '../components/StarterNavigation';
 
+export const FilterContext = React.createContext({ fixVersion: '', team: '' });
+
 export default function App(props) {
   return (
     <Page

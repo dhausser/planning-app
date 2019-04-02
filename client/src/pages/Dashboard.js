@@ -3,7 +3,7 @@ import ContentWrapper from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
 import Filters from '../components/Filters';
 import BarChart from '../components/BarChart';
-import { fetchIssues } from '../modules/Helpers';
+import { fetchIssues } from './Issues';
 
 function aggregateIssues(issues) {
   if (!issues) return [];
