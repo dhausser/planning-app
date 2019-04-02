@@ -6,6 +6,9 @@ import Filters from '../components/Filters';
 import IssueList from '../components/IssueList';
 import { fetchIssues } from '../modules/Helpers';
 
+/**
+ * TODO: Implement filter
+ */
 // function filterIssues() {
 //   const { issues, resources, team } = this.context;
 //   if (team != null) {
@@ -19,7 +22,7 @@ import { fetchIssues } from '../modules/Helpers';
 //   return issues;
 // }
 
-export default function Issues(props) {
+export default function Issues() {
   const [data, setData] = useState({
     issues: [],
     maxResults: 0,
@@ -65,7 +68,6 @@ export default function Issues(props) {
           maxResults={maxResults}
           total={total}
           isLoading={isLoading}
-          pathname={props.location.pathname}
         />
       ) : (
         <EmptyState

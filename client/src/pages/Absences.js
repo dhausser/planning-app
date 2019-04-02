@@ -3,14 +3,16 @@ import ContentWrapper from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
 import Filters from '../components/Filters';
 import HolidayList from '../components/HolidayList';
-// static contextTypes = {
-//   isLoading: PropTypes.bool,
-//   team: PropTypes.string,
-//   resources: PropTypes.array,
-// };
+
+/**
+ * TODO: Filter Holidays
+ */
+// holidays.push = resources
+//   .filter(resource => (team ? resource.team === team : true))
+//   .forEach(resource => holidays.push(...resource.holidays));
 
 export default function Holidays() {
-  const [data, setData] = useState({ holidays: [], isLoading: true });
+  const [data, setData] = useState({ absences: [], isLoading: true });
 
   useEffect(() => {
     let ignore = false;
@@ -18,7 +20,7 @@ export default function Holidays() {
     async function fetchData(resource) {
       const res = await fetch(`/api/${resource}`);
       const result = await res.json();
-      if (!ignore) setData({ holidays: result, isLoading: false });
+      if (!ignore) setData({ absences: result, isLoading: false });
     }
 
     fetchData('holidays');
@@ -27,18 +29,11 @@ export default function Holidays() {
     };
   }, []);
 
-  /**
-   * Filter Holidays
-   */
-  // holidays.push = resources
-  //   .filter(resource => (team ? resource.team === team : true))
-  //   .forEach(resource => holidays.push(...resource.holidays));
-
   return (
     <ContentWrapper>
       <PageTitle>Absences</PageTitle>
       <Filters />
-      <HolidayList holidays={data.holidays} isLoading={data.isLoading} />
+      <HolidayList absences={data.absences} isLoading={data.isLoading} />
     </ContentWrapper>
   );
 }

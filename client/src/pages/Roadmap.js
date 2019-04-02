@@ -14,57 +14,49 @@ import ContentWrapper, { Center } from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
 import Filters from '../components/Filters';
 
+/**
+ * TODO: Fetch Issues in Epic and attach Issues to Epic
+ */
+// fetchData(
+//   {
+//     jql: `"Epic Link" in (${epics.issues[0].key})`,
+//     fields: [
+//       'summary',
+//       'status',
+//       'issuetype',
+//       'priority',
+//       'subtasks',
+//       'customfield_18404',
+//     ],
+//   },
+//   setStories,
+//   ignore
+// );
+// epics.issues.forEach(issue => {
+//   issue.children = [];
+// });
+// epics.issues[0].children = stories.issues;
+
 export default function Roadmap() {
   const [epics, setEpics] = useState({ issues: [], isLoading: true });
   // const [stories, setStories] = useState({ issues: [], isLoading: true });
 
-  /**
-   * Warning: Can't perform a React state update on an unmounted component.
-   * This is a no-op, but it indicates a memory leak in your application.
-   * To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
-   * In Roadmap (created by RouterContext)
-   */
   useEffect(() => {
     let ignore = false;
 
-    // Fetch Epics
     fetchIssues(
       {
-        // jql: `project=GWENT and issuetype in (epic) and fixVersion in (${15900})`,
-        jql: 'issuetype=epic',
+        jql: `project=GWENT and issuetype in (epic) and fixVersion in (${15900})`,
         fields: ['summary', 'status', 'issuetype', 'priority'],
       },
       setEpics,
       ignore
     );
 
-    // Fetch Issues in Epic
-    // fetchData(
-    //   {
-    //     jql: `"Epic Link" in (${epics.issues[0].key})`,
-    //     fields: [
-    //       'summary',
-    //       'status',
-    //       'issuetype',
-    //       'priority',
-    //       'subtasks',
-    //       'customfield_18404',
-    //     ],
-    //   },
-    //   setStories,
-    //   ignore
-    // );
-
-    // Attach Issues to Epic
-    epics.issues.forEach(issue => {
-      issue.children = [];
-    });
-    // epics.issues[0].children = stories.issues;
-
     return () => {
       ignore = true;
     };
-  }, [epics.issues]);
+  }, []);
 
   return (
     <ContentWrapper>

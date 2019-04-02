@@ -1,96 +1,106 @@
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Avatar from '@atlaskit/avatar';
 import Calendar from '@atlaskit/calendar';
 import EmptyState from '@atlaskit/empty-state';
 import Spinner from '@atlaskit/spinner';
 
+import IssueList from '../components/IssueList';
+import Filters from '../components/Filters';
+import PageTitle from '../components/PageTitle';
 import ContentWrapper, {
   NameWrapper,
   AvatarWrapper,
   Center,
 } from '../components/ContentWrapper';
-import PageTitle from '../components/PageTitle';
-import IssueList from '../components/IssueList';
-import Filters from '../components/Filters';
+import { fetchIssues } from '../modules/Helpers';
+import HolidayList from '../components/HolidayList';
 
-export default class Resource extends Component {
-  static contextTypes = {
-    isLoading: PropTypes.bool,
-    issues: PropTypes.array,
-    resources: PropTypes.array,
-  };
+export default function Resource(props) {
+  const [data, setData] = useState({
+    issues: [],
+    isLoading: true,
+  });
+  const [absences, setAbsences] = useState([]);
+  const { resourceId } = props.params;
 
-  static propTypes = {
-    params: PropTypes.object,
-  };
+  useEffect(() => {
+    let ignore = false;
 
-  getResource() {
-    const { resourceId } = this.props.params;
-    const { resources } = this.context;
-    return resources.find(({ key }) => key === resourceId);
-  }
+    async function fetchAbsences() {
+      const res = await fetch(`/api/absences?user=${resourceId}`);
+      const result = await res.json();
+      if (!ignore) setAbsences(result);
+    }
 
-  render() {
-    const { isLoading, jql } = this.context;
-    const { resourceId } = this.props.params;
-
-    if (isLoading)
-      return (
-        <Center>
-          <Spinner size="large" />;
-        </Center>
-      );
-    const resource = this.getResource();
-    if (!resource)
-      return (
-        <EmptyState
-          header="This person doesn't exist"
-          description={`The person you are trying to lookup isn't currently recorded in the database.`}
-        />
-      );
-
-    const issues = this.context.issues.filter(
-      issue => issue.fields.assignee.key === resource.key
+    fetchIssues(
+      {
+        jql: `assignee=${resourceId}`,
+        fields: [
+          'summary',
+          'description',
+          'status',
+          'assignee',
+          'creator',
+          'issuetype',
+          'priority',
+          'fixVersions',
+        ],
+      },
+      setData,
+      ignore
     );
+    fetchAbsences();
+    return () => {
+      ignore = true;
+    };
+  }, [resourceId]);
 
-    const { holidays } = resource;
-    /**
-     * TODO: Get Holidays date in format YYYY-MM-DD
-     */
-    const dates = holidays.map(({ date }) =>
-      date.replace('T00:00:00.000Z', '')
-    );
-
+  if (data.isLoading)
     return (
-      <ContentWrapper>
-        <PageTitle>
-          <NameWrapper>
-            <AvatarWrapper>
-              <Avatar
-                name={resource.name}
-                size="large"
-                src={`https://jira.cdprojektred.com/secure/useravatar?ownerId=${
-                  resource.key
-                }`}
-              />
-            </AvatarWrapper>
-            {resource.name}
-          </NameWrapper>
-        </PageTitle>
-        <Filters />
-        <a
-          href={`https://jira.cdprojektred.com/issues/?jql=${jql} AND assignee=${resourceId}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          View in Issue Navigator
-        </a>
-        <IssueList issues={issues} isLoading={isLoading} />
-        <h3>Holiday Calendar</h3>
-        <Calendar day={0} defaultDisabled={dates} />
-      </ContentWrapper>
+      <Center>
+        <Spinner size="large" />
+      </Center>
     );
-  }
+
+  if (data.issues === [])
+    return (
+      <EmptyState
+        header="This person doesn't exist"
+        description={`The person you are trying to lookup isn't currently recorded in the database.`}
+      />
+    );
+
+  return (
+    <ContentWrapper>
+      <PageTitle>
+        <NameWrapper>
+          <AvatarWrapper>
+            <Avatar
+              name={data.issues[0].fields.assignee.displayName}
+              size="large"
+              src={`https://jira.cdprojektred.com/secure/useravatar?ownerId=${resourceId}`}
+            />
+          </AvatarWrapper>
+          {data.issues[0].fields.assignee.displayName}
+        </NameWrapper>
+      </PageTitle>
+      <Filters />
+      <a
+        href={`https://jira.cdprojektred.com/issues/?jql=assignee=${resourceId}`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        View in Issue Navigator
+      </a>
+      <IssueList
+        issues={data.issues}
+        maxResults={data.maxResults}
+        total={data.total}
+        isLoading={data.isLoading}
+      />
+      <HolidayList absences={absences} isLoading={data.isLoading} />
+      <Calendar day={0} defaultDisabled={absences} />
+    </ContentWrapper>
+  );
 }

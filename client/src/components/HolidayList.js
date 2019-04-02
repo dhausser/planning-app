@@ -42,8 +42,8 @@ const createHead = (withWidth, resources) => {
   return head;
 };
 
-const createRows = (holidays, resources) =>
-  holidays.map((holiday, index) => {
+const createRows = (absences, resources) =>
+  absences.map((holiday, index) => {
     const row = {
       key: `row-${index}-${holiday.key}`,
       cells: [
@@ -73,10 +73,10 @@ const createRows = (holidays, resources) =>
     return row;
   });
 
-export default function HolidayList({ holidays, resources, isLoading }) {
+export default function HolidayList({ absences, resources, isLoading }) {
   const caption = 'List of Absences';
   const head = createHead(false, resources);
-  const rows = createRows(holidays, resources);
+  const rows = createRows(absences, resources);
   return (
     <Wrapper>
       <DynamicTable
@@ -98,7 +98,7 @@ export default function HolidayList({ holidays, resources, isLoading }) {
 }
 
 HolidayList.propTypes = {
-  holidays: arrayOf(
+  absences: arrayOf(
     shape({
       key: string,
       date: string,

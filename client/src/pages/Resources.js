@@ -16,7 +16,6 @@ export default function Resources() {
     async function fetchData(resource) {
       const res = await fetch(`/api/${resource}`);
       const result = await res.json();
-      console.log(result);
       if (!ignore) setData({ resources: result, isLoading: false });
     }
 

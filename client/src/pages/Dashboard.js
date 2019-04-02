@@ -1,46 +1,54 @@
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import ContentWrapper from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
 import Filters from '../components/Filters';
 import BarChart from '../components/BarChart';
+import { fetchIssues } from '../modules/Helpers';
 
-export default class Dashboard extends Component {
-  static contextTypes = {
-    isLoading: PropTypes.bool,
-    resources: PropTypes.array,
-    issues: PropTypes.array,
-  };
-
-  aggregateIssues = () => {
-    const { issues } = this.context;
-
-    if (!issues) return {};
-
-    // By Team Aggregation
-    return issues.reduce((resources, issue) => {
-      if (issue.fields.assignee) {
-        const name = issue.fields.assignee.displayName.split(' ').shift();
-        if (!resources[name]) {
-          resources[name] = 0;
-        }
-        resources[name] += 1;
+function aggregateIssues(issues) {
+  if (!issues) return [];
+  return issues.reduce((resources, issue) => {
+    if (issue.fields.assignee) {
+      const name = issue.fields.assignee.displayName.split(' ').shift();
+      if (!resources[name]) {
+        resources[name] = 0;
       }
+      resources[name] += 1;
+    }
 
-      return resources;
-    }, {});
-  };
+    return resources;
+  }, {});
+}
 
-  render() {
-    const { isLoading } = this.context;
-    return (
-      <ContentWrapper>
-        <PageTitle>Dashboard</PageTitle>
-        <Filters />
-        <ContentWrapper>
-          {!isLoading && <BarChart dataset={this.aggregateIssues()} />}
-        </ContentWrapper>
-      </ContentWrapper>
+export default function Dashboard() {
+  const [data, setData] = useState({
+    issues: [],
+    maxResults: 0,
+    total: 0,
+    isLoading: true,
+  });
+  useEffect(() => {
+    let ignore = false;
+
+    fetchIssues(
+      {
+        jql: 'fixVersion = 15900 AND statusCategory in (new, indeterminate)',
+        fields: ['assignee'],
+      },
+      setData,
+      ignore
     );
-  }
+    return () => {
+      ignore = true;
+    };
+  }, []);
+  return (
+    <ContentWrapper>
+      <PageTitle>Dashboard</PageTitle>
+      <Filters />
+      <ContentWrapper>
+        {!data.isLoading && <BarChart dataset={aggregateIssues(data.issues)} />}
+      </ContentWrapper>
+    </ContentWrapper>
+  );
 }

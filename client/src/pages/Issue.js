@@ -37,6 +37,10 @@ function postData(url = ``, data = {}) {
   }).then(response => response.json());
 }
 
+/**
+ * TODO: Rewrite component using hooks
+ */
+
 export default class Issue extends Component {
   state = {
     isLoading: true,

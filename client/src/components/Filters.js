@@ -6,7 +6,9 @@ import DropdownMenu, {
 } from '@atlaskit/dropdown-menu';
 import { fetchFixVersions } from '../modules/Helpers';
 
-// Reinstate Localstorage
+/**
+ * TODO: Reinstate Localstorage
+ */
 // const team = localStorage.getItem('team')
 //   ? JSON.parse(localStorage.getItem('team'))
 //   : null;
@@ -17,7 +19,7 @@ import { fetchFixVersions } from '../modules/Helpers';
 export default function Filters() {
   const [teams, setTeams] = useState([]);
   const [fixVersions, setFixVersions] = useState([]);
-  const [fixVersion, setFixVersion] = useState(null);
+  const [fixVersion, setFixVersion] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
