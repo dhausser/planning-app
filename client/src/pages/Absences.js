@@ -12,28 +12,29 @@ import HolidayList from '../components/HolidayList';
 //   .forEach(resource => holidays.push(...resource.holidays));
 
 export default function Holidays() {
-  const [data, setData] = useState({ absences: [], isLoading: true });
+  const { absences, isLoading } = useAbsences();
+  return (
+    <ContentWrapper>
+      <PageTitle>Absences</PageTitle>
+      <Filters />
+      <HolidayList absences={absences} isLoading={isLoading} />
+    </ContentWrapper>
+  );
+}
 
+function useAbsences() {
+  const [data, setData] = useState({ absences: [], isLoading: true });
   useEffect(() => {
     let ignore = false;
-
     async function fetchData(resource) {
       const res = await fetch(`/api/${resource}`);
       const result = await res.json();
       if (!ignore) setData({ absences: result, isLoading: false });
     }
-
     fetchData('holidays');
     return () => {
       ignore = true;
     };
   }, []);
-
-  return (
-    <ContentWrapper>
-      <PageTitle>Absences</PageTitle>
-      <Filters />
-      <HolidayList absences={data.absences} isLoading={data.isLoading} />
-    </ContentWrapper>
-  );
+  return data;
 }

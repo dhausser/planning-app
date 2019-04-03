@@ -51,7 +51,7 @@ export default function Issues(props) {
   );
 }
 
-function useIssues(jql) {
+export function useIssues(jql) {
   const [data, setData] = useState({
     issues: [],
     maxResults: 0,

@@ -1,9 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import ContentWrapper from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
 import Filters from '../components/Filters';
 import BarChart from '../components/BarChart';
-import { fetchIssues } from './Issues';
+import { FilterContext } from '../modules/App';
+import { useIssues } from './Issues';
+
+export default function Dashboard() {
+  const filterContext = useContext(FilterContext);
+  const [fixVersion, setFixVersion] = useState(filterContext.fixVersion);
+  const { issues, isLoading } = useIssues(
+    `fixVersion = ${fixVersion.id} AND statusCategory in (new, indeterminate)`
+  );
+  return (
+    <ContentWrapper>
+      <PageTitle>Dashboard</PageTitle>
+      <Filters fixVersion={fixVersion} setFixVersion={setFixVersion} />
+      <ContentWrapper>
+        {!isLoading && <BarChart dataset={aggregateIssues(issues)} />}
+      </ContentWrapper>
+    </ContentWrapper>
+  );
+}
 
 function aggregateIssues(issues) {
   if (!issues) return [];
@@ -15,40 +33,6 @@ function aggregateIssues(issues) {
       }
       resources[name] += 1;
     }
-
     return resources;
   }, {});
-}
-
-export default function Dashboard() {
-  const [data, setData] = useState({
-    issues: [],
-    maxResults: 0,
-    total: 0,
-    isLoading: true,
-  });
-  useEffect(() => {
-    let ignore = false;
-
-    fetchIssues(
-      {
-        jql: 'fixVersion = 15900 AND statusCategory in (new, indeterminate)',
-        fields: ['assignee'],
-      },
-      setData,
-      ignore
-    );
-    return () => {
-      ignore = true;
-    };
-  }, []);
-  return (
-    <ContentWrapper>
-      <PageTitle>Dashboard</PageTitle>
-      <Filters />
-      <ContentWrapper>
-        {!data.isLoading && <BarChart dataset={aggregateIssues(data.issues)} />}
-      </ContentWrapper>
-    </ContentWrapper>
-  );
 }

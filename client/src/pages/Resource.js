@@ -1,10 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react';
-
 import Avatar from '@atlaskit/avatar';
 import Calendar from '@atlaskit/calendar';
 import EmptyState from '@atlaskit/empty-state';
 import Spinner from '@atlaskit/spinner';
-
 import ContentWrapper, {
   NameWrapper,
   AvatarWrapper,
