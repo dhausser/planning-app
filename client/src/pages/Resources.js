@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import ContentWrapper from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
 import Filters from '../components/Filters';
 import ResourceList from '../components/ResourceList';
+import { FilterContext } from '../modules/App';
 
 export default function Resources() {
+  const filterContext = useContext(FilterContext);
+  const [fixVersion, setFixVersion] = useState(filterContext.fixVersion);
   const [data, setData] = useState({
     resources: [],
     isLoading: true,
@@ -35,7 +38,7 @@ export default function Resources() {
   return (
     <ContentWrapper>
       <PageTitle>People</PageTitle>
-      <Filters />
+      <Filters fixVersion={fixVersion} setFixVersion={setFixVersion} />
       <ResourceList resources={data.resources} isLoading={data.isLoading} />
     </ContentWrapper>
   );

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 
 import Avatar from '@atlaskit/avatar';
 import Calendar from '@atlaskit/calendar';
@@ -15,9 +15,12 @@ import Filters from '../components/Filters';
 import PageTitle from '../components/PageTitle';
 import HolidayList from '../components/HolidayList';
 import { fetchIssues } from './Issues';
+import { FilterContext } from '../modules/App';
 
 export default function Resource(props) {
   const { resourceId } = props.params;
+  const filterContext = useContext(FilterContext);
+  const [fixVersion, setFixVersion] = useState(filterContext.fixVersion);
   const { issues, maxResults, total, isLoading } = useIssues(
     `assignee=${resourceId}`
   );
@@ -52,7 +55,7 @@ export default function Resource(props) {
           {issues[0].fields.assignee.displayName}
         </NameWrapper>
       </PageTitle>
-      <Filters />
+      <Filters fixVersion={fixVersion} setFixVersion={setFixVersion} />
       <a
         href={`https://jira.cdprojektred.com/issues/?jql=assignee=${resourceId}`}
         target="_blank"

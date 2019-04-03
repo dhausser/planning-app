@@ -16,10 +16,10 @@ import config from '../modules/credentials.json';
 //   ? JSON.parse(localStorage.getItem('fixVersion'))
 //   : fixVersions.values[0];
 
-export default function Filters() {
-  const [fixVersion, setFixVersion] = useState('');
+export default function Filters(props) {
   const [isLoading, setIsLoading] = useState(true);
   const { teams, fixVersions } = useData(setIsLoading);
+  const { fixVersion, setFixVersion } = props;
   if (isLoading)
     return (
       <Button key="team" isLoading={isLoading} appearance="subtle">

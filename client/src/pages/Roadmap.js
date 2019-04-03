@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router';
 import TableTree, {
   Headers,
@@ -14,16 +14,23 @@ import PageTitle from '../components/PageTitle';
 import Filters from '../components/Filters';
 import { getIcon } from '../modules/Helpers';
 import { fetchIssues } from './Issues';
+import { FilterContext } from '../modules/App';
 
 export default function Roadmap() {
-  const epics = useIssues('issuetype = epic');
+  const filterContext = useContext(FilterContext);
+  const [fixVersion, setFixVersion] = useState(filterContext.fixVersion);
+  const epics = useIssues(
+    `project = 10500 AND fixVersion = ${fixVersion.id} AND issuetype = epic`
+  );
   const stories = useIssues(
-    `"Epic Link" in (${epics.issues.map(({ id }) => id)})`
+    `project = 10500 AND fixVersion = ${
+      fixVersion.id
+    } AND "Epic Link" in (${epics.issues.map(({ id }) => id)})`
   );
   return (
     <ContentWrapper>
       <PageTitle>Roadmap</PageTitle>
-      <Filters />
+      <Filters fixVersion={fixVersion} setFixVersion={setFixVersion} />
       {stories.isLoading ? (
         <Center>
           <Spinner size="large" />
@@ -80,8 +87,8 @@ function useIssues(jql) {
   return data;
 }
 
-export const convertIssues = issues =>
-  issues.map(issue => ({
+function convertIssues(issues) {
+  return issues.map(issue => ({
     type: getIcon[issue.fields.issuetype.name],
     key: issue.key,
     summary: issue.fields.summary,
@@ -120,3 +127,4 @@ export const convertIssues = issues =>
         })),
       })),
   }));
+}

@@ -8,7 +8,7 @@ import config from '../modules/credentials.json';
 import { FilterContext } from '../modules/App';
 
 /**
- * TODO: Implement filter
+ * TODO: Implement team filter
  */
 // function filterIssues() {
 //   const { issues, resources, team } = this.context;
@@ -23,18 +23,22 @@ import { FilterContext } from '../modules/App';
 //   return issues;
 // }
 
-export default function Issues() {
-  const { fixVersion, team } = useContext(FilterContext);
-  const { issues, maxResults, total, isLoading } = useIssues();
+export default function Issues(props) {
+  const filterContext = useContext(FilterContext);
+  const [fixVersion, setFixVersion] = useState(filterContext.fixVersion);
+  const { issues, maxResults, total, isLoading } = useIssues(
+    `project = 10500 AND fixVersion = ${fixVersion.id}`
+  );
   return (
     <ContentWrapper>
       <PageTitle>Issues</PageTitle>
-      <Filters />
+      <Filters fixVersion={fixVersion} setFixVersion={setFixVersion} />
       {issues ? (
         <IssueList
           issues={issues}
           maxResults={maxResults}
           total={total}
+          pathname={props.location.pathname}
           isLoading={isLoading}
         />
       ) : (
@@ -54,10 +58,8 @@ function useIssues(jql) {
     total: 0,
     isLoading: true,
   });
-
   useEffect(() => {
     let ignore = false;
-
     fetchIssues(
       {
         jql,
@@ -89,7 +91,6 @@ export async function fetchIssues(
   resource = 'search'
 ) {
   const { hostname, path, Authorization } = config;
-
   const options = {
     method: 'POST',
     hostname,
@@ -99,7 +100,6 @@ export async function fetchIssues(
       Authorization,
     },
   };
-
   const response = await fetch(`/api/${resource}`, {
     method: 'POST',
     headers: {
