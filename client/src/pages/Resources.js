@@ -3,7 +3,7 @@ import ContentWrapper from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
 import Filters from '../components/Filters';
 import ResourceList from '../components/ResourceList';
-import { FilterContext } from '../modules/App';
+import FilterContext from '../context/FilterContext';
 
 /**
  * TODO: Filter Resources

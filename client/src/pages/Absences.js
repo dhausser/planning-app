@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import ContentWrapper from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
 import Filters from '../components/Filters';
 import HolidayList from '../components/HolidayList';
+import FilterContext from '../context/FilterContext';
 
 /**
  * TODO: Filter Holidays
@@ -12,11 +13,13 @@ import HolidayList from '../components/HolidayList';
 //   .forEach(resource => holidays.push(...resource.holidays));
 
 export default function Holidays() {
+  const filterContext = useContext(FilterContext);
+  const [fixVersion, setFixVersion] = useState(filterContext.fixVersion);
   const { absences, isLoading } = useAbsences();
   return (
     <ContentWrapper>
       <PageTitle>Absences</PageTitle>
-      <Filters />
+      <Filters fixVersion={fixVersion} setFixVersion={setFixVersion} />
       <HolidayList absences={absences} isLoading={isLoading} />
     </ContentWrapper>
   );

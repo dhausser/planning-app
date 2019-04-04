@@ -3,8 +3,8 @@ import ContentWrapper from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
 import Filters from '../components/Filters';
 import BarChart from '../components/BarChart';
-import { FilterContext } from '../modules/App';
 import { useIssues } from './Issues';
+import FilterContext from '../context/FilterContext';
 
 export default function Dashboard() {
   const filterContext = useContext(FilterContext);

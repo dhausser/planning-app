@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import Spinner from '@atlaskit/spinner';
@@ -20,7 +20,7 @@ import ContentWrapper, {
   Center,
 } from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
-import { getIcon } from '../modules/Helpers';
+import { getIcon } from '../components/Helpers';
 
 function postData(url = ``, data = {}) {
   return fetch(url, {

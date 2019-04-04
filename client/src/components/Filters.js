@@ -4,7 +4,7 @@ import DropdownMenu, {
   DropdownItemGroup,
   DropdownItem,
 } from '@atlaskit/dropdown-menu';
-import config from '../modules/credentials.json';
+import config from '../credentials.json';
 
 /**
  * TODO: Reinstate Localstorage
@@ -20,6 +20,7 @@ export default function Filters(props) {
   const [isLoading, setIsLoading] = useState(true);
   const { teams, fixVersions } = useData(setIsLoading);
   const { fixVersion, setFixVersion } = props;
+
   if (isLoading)
     return (
       <Button key="team" isLoading={isLoading} appearance="subtle">

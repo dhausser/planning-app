@@ -13,7 +13,7 @@ import Filters from '../components/Filters';
 import PageTitle from '../components/PageTitle';
 import HolidayList from '../components/HolidayList';
 import { fetchIssues } from './Issues';
-import { FilterContext } from '../modules/App';
+import FilterContext from '../context/FilterContext';
 
 export default function Resource(props) {
   const { resourceId } = props.params;
@@ -23,14 +23,12 @@ export default function Resource(props) {
     `assignee=${resourceId}`
   );
   const absences = useAbsences(resourceId);
-
   if (isLoading)
     return (
       <Center>
         <Spinner size="large" />
       </Center>
     );
-
   if (issues === [])
     return (
       <EmptyState
@@ -38,7 +36,6 @@ export default function Resource(props) {
         description={`The person you are trying to lookup isn't currently recorded in the database.`}
       />
     );
-
   return (
     <ContentWrapper>
       <PageTitle>
@@ -77,13 +74,11 @@ function useAbsences(resourceId) {
   const [absences, setAbsences] = useState([]);
   useEffect(() => {
     let ignore = false;
-
     async function fetchAbsences() {
       const res = await fetch(`/api/absences?user=${resourceId}`);
       const result = await res.json();
       if (!ignore) setAbsences(result);
     }
-
     fetchAbsences();
     return () => {
       ignore = true;
@@ -96,7 +91,6 @@ function useIssues(jql) {
   const [data, setData] = useState({ issues: [], isLoading: true });
   useEffect(() => {
     let ignore = false;
-
     fetchIssues(
       {
         jql,

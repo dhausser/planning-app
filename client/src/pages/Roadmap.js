@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import TableTree, {
   Headers,
   Header,
@@ -12,9 +12,9 @@ import { Status } from '@atlaskit/status';
 import ContentWrapper, { Center } from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
 import Filters from '../components/Filters';
-import { getIcon } from '../modules/Helpers';
+import { getIcon } from '../components/Helpers';
 import { fetchIssues } from './Issues';
-import { FilterContext } from '../modules/App';
+import FilterContext from '../context/FilterContext';
 
 export default function Roadmap() {
   const filterContext = useContext(FilterContext);

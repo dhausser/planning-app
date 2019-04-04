@@ -1,6 +1,6 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import { Link } from 'react-router';
+import React, { useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
+// import { __RouterContext } from 'react-router';
 
 import Nav, {
   AkContainerTitle,
@@ -29,97 +29,89 @@ import SearchDrawer from './SearchDrawer';
 import HelpDropdownMenu from './HelpDropdownMenu';
 import AccountDropdownMenu from './AccountDropdownMenu';
 import Logo from '../images/viewavatar.svg';
+import { NavContext } from '../context/NavContext';
 
-export default class StarterNavigation extends React.Component {
-  state = {
+export default function StarterNavigation() {
+  const { navOpenState, onNavResize } = useContext(NavContext);
+  // const router = useContext(__RouterContext);
+  const [state, setState] = useState({
     navLinks: [
-      ['/', 'Dashboard', DashboardIcon],
+      ['/dashboard', 'Dashboard', DashboardIcon],
       ['/roadmap', 'Roadmap', RoadmapIcon],
       ['/issues', 'Issues', IssuesIcon],
       ['/resources', 'People', PeopleIcon],
       ['/absences', 'Calendar', CalendarIcon],
     ],
-  };
+  });
 
-  static contextTypes = {
-    navOpenState: PropTypes.object,
-    router: PropTypes.object,
-  };
-
-  shouldComponentUpdate(nextProps, nextContext) {
-    return true;
+  function openDrawer(drawer) {
+    setState({ openDrawer: drawer });
   }
 
-  openDrawer = openDrawer => {
-    this.setState({ openDrawer });
-  };
+  const backIcon = <ArrowleftIcon label="Back icon" size="medium" />;
+  const globalPrimaryIcon = (
+    <AtlassianIcon label="Atlassian icon" size="xlarge" />
+  );
 
-  render() {
-    const backIcon = <ArrowleftIcon label="Back icon" size="medium" />;
-    const globalPrimaryIcon = (
-      <AtlassianIcon label="Atlassian icon" size="xlarge" />
-    );
-
-    return (
-      <Nav
-        isOpen={this.context.navOpenState.isOpen}
-        width={this.context.navOpenState.width}
-        onResize={this.props.onNavResize}
-        containerHeaderComponent={() => (
-          <AkContainerTitle
-            href="/"
-            icon={<img alt="logo" src={Logo} />}
-            text="Space Gwent"
+  return (
+    <Nav
+      isOpen={navOpenState.isOpen}
+      width={navOpenState.width}
+      onResize={onNavResize}
+      containerHeaderComponent={() => (
+        <AkContainerTitle
+          href="/"
+          icon={<img alt="logo" src={Logo} />}
+          text="Space Gwent"
+        />
+      )}
+      globalPrimaryIcon={globalPrimaryIcon}
+      globalPrimaryItemHref="/"
+      globalSearchIcon={<SearchIcon label="Search icon" />}
+      hasBlanket
+      drawers={[
+        <AkSearchDrawer
+          backIcon={backIcon}
+          isOpen={state.openDrawer === 'search'}
+          key="search"
+          onBackButton={() => openDrawer(null)}
+          primaryIcon={globalPrimaryIcon}
+        >
+          <SearchDrawer
+            onResultClicked={() => openDrawer(null)}
+            // onSearchInputRef={ref => {
+            //   this.searchInputRef = ref;
+            // }}
           />
-        )}
-        globalPrimaryIcon={globalPrimaryIcon}
-        globalPrimaryItemHref="/"
-        globalSearchIcon={<SearchIcon label="Search icon" />}
-        hasBlanket
-        drawers={[
-          <AkSearchDrawer
-            backIcon={backIcon}
-            isOpen={this.state.openDrawer === 'search'}
-            key="search"
-            onBackButton={() => this.openDrawer(null)}
-            primaryIcon={globalPrimaryIcon}
-          >
-            <SearchDrawer
-              onResultClicked={() => this.openDrawer(null)}
-              onSearchInputRef={ref => {
-                this.searchInputRef = ref;
-              }}
+        </AkSearchDrawer>,
+        <AkCreateDrawer
+          backIcon={backIcon}
+          isOpen={state.openDrawer === 'create'}
+          key="create"
+          onBackButton={() => openDrawer(null)}
+          primaryIcon={globalPrimaryIcon}
+        >
+          <CreateDrawer onItemClicked={() => openDrawer(null)} />
+        </AkCreateDrawer>,
+      ]}
+      globalAccountItem={AccountDropdownMenu}
+      globalCreateIcon={<CreateIcon label="Create icon" />}
+      globalHelpItem={HelpDropdownMenu}
+      onSearchDrawerOpen={() => openDrawer('search')}
+      onCreateDrawerOpen={() => openDrawer('create')}
+    >
+      {state.navLinks.map(link => {
+        const [url, title, Icon] = link;
+        return (
+          <Link key={url} to={url}>
+            <AkNavigationItem
+              icon={<Icon label={title} size="medium" />}
+              text={title}
+              // isSelected={router.isActive(url, true)}
             />
-          </AkSearchDrawer>,
-          <AkCreateDrawer
-            backIcon={backIcon}
-            isOpen={this.state.openDrawer === 'create'}
-            key="create"
-            onBackButton={() => this.openDrawer(null)}
-            primaryIcon={globalPrimaryIcon}
-          >
-            <CreateDrawer onItemClicked={() => this.openDrawer(null)} />
-          </AkCreateDrawer>,
-        ]}
-        globalAccountItem={AccountDropdownMenu}
-        globalCreateIcon={<CreateIcon label="Create icon" />}
-        globalHelpItem={HelpDropdownMenu}
-        onSearchDrawerOpen={() => this.openDrawer('search')}
-        onCreateDrawerOpen={() => this.openDrawer('create')}
-      >
-        {this.state.navLinks.map(link => {
-          const [url, title, Icon] = link;
-          return (
-            <Link key={url} to={url}>
-              <AkNavigationItem
-                icon={<Icon label={title} size="medium" />}
-                text={title}
-                isSelected={this.context.router.isActive(url, true)}
-              />
-            </Link>
-          );
-        }, this)}
-      </Nav>
-    );
-  }
+          </Link>
+        );
+      }, this)}
+    </Nav>
+  );
 }

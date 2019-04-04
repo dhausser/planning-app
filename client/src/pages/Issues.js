@@ -4,8 +4,8 @@ import ContentWrapper from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
 import Filters from '../components/Filters';
 import IssueList from '../components/IssueList';
-import config from '../modules/credentials.json';
-import { FilterContext } from '../modules/App';
+import FilterContext from '../context/FilterContext';
+import config from '../credentials.json';
 
 /**
  * TODO: Implement team filter
