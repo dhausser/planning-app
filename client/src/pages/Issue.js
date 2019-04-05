@@ -55,7 +55,7 @@ export default class Issue extends Component {
   };
 
   componentDidMount = async () => {
-    const { issueId } = this.props.params;
+    const { issueId } = this.props.match.params;
     const response = await fetch(`/api/issue?key=${issueId}`);
     const { issue, comments } = await response.json();
 

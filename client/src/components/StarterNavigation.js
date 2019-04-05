@@ -36,7 +36,7 @@ export default function StarterNavigation() {
   // const router = useContext(__RouterContext);
   const [state, setState] = useState({
     navLinks: [
-      ['/dashboard', 'Dashboard', DashboardIcon],
+      ['/', 'Dashboard', DashboardIcon],
       ['/roadmap', 'Roadmap', RoadmapIcon],
       ['/issues', 'Issues', IssuesIcon],
       ['/resources', 'People', PeopleIcon],

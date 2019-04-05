@@ -11,14 +11,13 @@ import Spinner from '@atlaskit/spinner';
 import { Status } from '@atlaskit/status';
 import ContentWrapper, { Center } from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
-import Filters from '../components/Filters';
 import { getIcon } from '../components/Helpers';
 import { fetchIssues } from './Issues';
-import FilterContext from '../context/FilterContext';
+import { FilterContext } from '../context/FilterContext';
+import Filters from '../components/Filters';
 
 export default function Roadmap() {
-  const filterContext = useContext(FilterContext);
-  const [fixVersion, setFixVersion] = useState(filterContext.fixVersion);
+  const { fixVersion } = useContext(FilterContext);
   const epics = useIssues(
     `project = 10500 AND fixVersion = ${fixVersion.id} AND issuetype = epic`
   );
@@ -30,7 +29,7 @@ export default function Roadmap() {
   return (
     <ContentWrapper>
       <PageTitle>Roadmap</PageTitle>
-      <Filters fixVersion={fixVersion} setFixVersion={setFixVersion} />
+      <Filters />
       {stories.isLoading ? (
         <Center>
           <Spinner size="large" />

@@ -13,14 +13,13 @@ import Filters from '../components/Filters';
 import PageTitle from '../components/PageTitle';
 import HolidayList from '../components/HolidayList';
 import { fetchIssues } from './Issues';
-import FilterContext from '../context/FilterContext';
+import { FilterContext } from '../context/FilterContext';
 
 export default function Resource(props) {
-  const { resourceId } = props.params;
-  const filterContext = useContext(FilterContext);
-  const [fixVersion, setFixVersion] = useState(filterContext.fixVersion);
+  const { resourceId } = props.match.params;
+  const { fixVersion } = useContext(FilterContext);
   const { issues, maxResults, total, isLoading } = useIssues(
-    `assignee=${resourceId}`
+    `assignee=${resourceId} AND fixVersion=${fixVersion.id}`
   );
   const absences = useAbsences(resourceId);
   if (isLoading)
@@ -50,7 +49,7 @@ export default function Resource(props) {
           {issues[0].fields.assignee.displayName}
         </NameWrapper>
       </PageTitle>
-      <Filters fixVersion={fixVersion} setFixVersion={setFixVersion} />
+      <Filters />
       <a
         href={`https://jira.cdprojektred.com/issues/?jql=assignee=${resourceId}`}
         target="_blank"

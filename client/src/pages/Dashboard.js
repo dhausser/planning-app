@@ -1,21 +1,20 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import ContentWrapper from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
-import Filters from '../components/Filters';
 import BarChart from '../components/BarChart';
 import { useIssues } from './Issues';
-import FilterContext from '../context/FilterContext';
+import { FilterContext } from '../context/FilterContext';
+import Filters from '../components/Filters';
 
 export default function Dashboard() {
-  const filterContext = useContext(FilterContext);
-  const [fixVersion, setFixVersion] = useState(filterContext.fixVersion);
+  const { fixVersion } = useContext(FilterContext);
   const { issues, isLoading } = useIssues(
     `fixVersion = ${fixVersion.id} AND statusCategory in (new, indeterminate)`
   );
   return (
     <ContentWrapper>
       <PageTitle>Dashboard</PageTitle>
-      <Filters fixVersion={fixVersion} setFixVersion={setFixVersion} />
+      <Filters />
       <ContentWrapper>
         {!isLoading && <BarChart dataset={aggregateIssues(issues)} />}
       </ContentWrapper>

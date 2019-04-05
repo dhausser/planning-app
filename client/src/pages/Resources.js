@@ -3,24 +3,23 @@ import ContentWrapper from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
 import Filters from '../components/Filters';
 import ResourceList from '../components/ResourceList';
-import FilterContext from '../context/FilterContext';
-
-/**
- * TODO: Filter Resources
- */
-// const resources = team
-//   ? this.context.resources.filter(resource => resource.team === team)
-//   : this.context.resources;
+import { FilterContext } from '../context/FilterContext';
 
 export default function Resources() {
-  const filterContext = useContext(FilterContext);
-  const [fixVersion, setFixVersion] = useState(filterContext.fixVersion);
+  const { team } = useContext(FilterContext);
   const { resources, isLoading } = useResources();
   return (
     <ContentWrapper>
       <PageTitle>People</PageTitle>
-      <Filters fixVersion={fixVersion} setFixVersion={setFixVersion} />
-      <ResourceList resources={resources} isLoading={isLoading} />
+      <Filters />
+      <ResourceList
+        resources={
+          team
+            ? resources.filter(resource => resource.team === team)
+            : resources
+        }
+        isLoading={isLoading}
+      />
     </ContentWrapper>
   );
 }

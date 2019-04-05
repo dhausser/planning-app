@@ -2,9 +2,9 @@ import React, { useState, useContext, useEffect } from 'react';
 import EmptyState from '@atlaskit/empty-state';
 import ContentWrapper from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
-import Filters from '../components/Filters';
 import IssueList from '../components/IssueList';
-import FilterContext from '../context/FilterContext';
+import { FilterContext } from '../context/FilterContext';
+import Filters from '../components/Filters';
 import config from '../credentials.json';
 
 /**
@@ -24,15 +24,14 @@ import config from '../credentials.json';
 // }
 
 export default function Issues(props) {
-  const filterContext = useContext(FilterContext);
-  const [fixVersion, setFixVersion] = useState(filterContext.fixVersion);
+  const { fixVersion } = useContext(FilterContext);
   const { issues, maxResults, total, isLoading } = useIssues(
     `project = 10500 AND fixVersion = ${fixVersion.id}`
   );
   return (
     <ContentWrapper>
       <PageTitle>Issues</PageTitle>
-      <Filters fixVersion={fixVersion} setFixVersion={setFixVersion} />
+      <Filters />
       {issues ? (
         <IssueList
           issues={issues}
