@@ -21,16 +21,28 @@ const typeDefs = gql`
     id: ID!
     key: String!
     summary: String!
-    assignee: String
-    reporter: String
     priority: String!
-    status: String!
+    status: Status!
+    fixVersion: FixVersion
+    assignee: Resource
+    reporter: Resource
+  }
+
+  type Status {
+    id: ID!
+    name: String!
+    category: String!
+  }
+
+  type FixVersion {
+    id: ID!
+    name: String!
   }
 
   type Resource {
     id: ID!
     name: String!
-    team: Team!
+    team: Team
   }
 
   type Team {
@@ -41,7 +53,6 @@ const typeDefs = gql`
 
   type Absence {
     id: ID!
-    resource: Resource
     date: String!
   }
 

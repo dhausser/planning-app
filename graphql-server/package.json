@@ -12,7 +12,11 @@
   "author": "Davy Hausser",
   "license": "ISC",
   "dependencies": {
+    "apollo-datasource": "^0.3.1",
+    "apollo-datasource-rest": "^0.3.2",
     "apollo-server": "^2.4.8",
-    "graphql": "^14.2.1"
+    "dotenv": "^7.0.0",
+    "graphql": "^14.2.1",
+    "mongoose": "^5.4.22"
   }
 }
