@@ -11,8 +11,7 @@ const typeDefs = gql`
     teams: [Team]!
     team(id: ID!): Team
     # Queries for Portal Absences
-    absences: [Absence]!
-    absence(id: ID!): Absence
+    absences(id: ID!): [Absence]!
     # Queries for the current user
     me: User
   }
@@ -52,7 +51,7 @@ const typeDefs = gql`
   }
 
   type Absence {
-    id: ID!
+    key: String!
     date: String!
   }
 

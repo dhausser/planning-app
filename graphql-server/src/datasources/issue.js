@@ -51,15 +51,17 @@ class IssueAPI extends RESTDataSource {
         name: issue.fields.assignee.displayName,
       },
       reporter: {
-        id: issue.fields.creator.key,
-        name: issue.fields.creator.displayName,
+        id: issue.fields.reporter.key,
+        name: issue.fields.reporter.displayName,
       },
     };
   }
 
   async getIssueById({ issueId }) {
-    const response = await this.get(`issue/${issueId}`);
-    return this.issueReducer(response[0]);
+    const response = await this.get(
+      `issue/${issueId}?fields=summary,assignee,reporter,status,issuetype,priority,description,fixVersions`
+    );
+    return this.issueReducer(response);
   }
 }
 
