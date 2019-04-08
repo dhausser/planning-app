@@ -2,15 +2,14 @@ const mongoose = require('mongoose');
 require('dotenv').config({ path: '.env' });
 
 module.exports.createStore = () => {
-  mongoose.connect(process.env.DATABASE, {
-    useCreateIndex: true,
-    useFindAndModify: false,
-    useNewUrlParser: true,
-  });
-  mongoose.Promise = global.Promise;
-  mongoose.connection.on('error', err => {
-    console.error(err.message);
-  });
+  mongoose.connect(process.env.DATABASE, { useNewUrlParser: true });
+  const db = mongoose.connection;
+  db.on('error', console.error.bind(console, 'connection error:'));
+  db.once('open', initiate);
+};
+
+function initiate() {
+  console.log('Connected to MongoDB!');
 
   const resourceSchema = new mongoose.Schema(
     {
@@ -57,5 +56,5 @@ module.exports.createStore = () => {
     ]);
   };
 
-  return { resourceSchema };
-};
+  return mongoose.model('Resource', resourceSchema);
+}

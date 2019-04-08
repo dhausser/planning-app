@@ -20,7 +20,7 @@ class IssueAPI extends RESTDataSource {
         'description',
         'status',
         'assignee',
-        'creator',
+        'reporter',
         'issuetype',
         'priority',
         'fixVersions',

@@ -11,16 +11,16 @@ class ResourceAPI extends DataSource {
     this.context = config.context;
   }
 
-  async getTeams(req, res) {
-    const Resource = this.context.resourceSchema;
+  async getTeams() {
+    const { Resource } = this.context;
     const teams = await Resource.getTeams();
-    res.json(teams.map(({ _id }) => _id));
+    return teams.map(({ _id }) => _id);
   }
 
-  async getResources(req, res) {
-    const Resource = this.context.resourceSchema;
+  async getResources() {
+    const { Resource } = this.context;
     const resources = await Resource.getResources();
-    res.json(resources);
+    return resources;
   }
 }
 

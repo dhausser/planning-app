@@ -9,8 +9,6 @@ class AbsenceAPI extends RESTDataSource {
   }
 
   willSendRequest(request) {
-    console.log(process.env.API_KEY);
-    console.log(process.env.PORTAL_URL);
     request.params.set('apiKey', process.env.API_KEY);
   }
 
@@ -20,9 +18,7 @@ class AbsenceAPI extends RESTDataSource {
   }
 
   async getAbsencesById({ userId }) {
-    console.log(userId);
     const response = await this.get(`?user[]=${userId}`);
-    console.log(response);
     return response;
   }
 }
