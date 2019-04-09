@@ -1,20 +1,22 @@
 const { DataSource } = require('apollo-datasource');
-const { Resource } = require('../models');
-const config = require('../config');
 
 class ResourceAPI extends DataSource {
-  constructor() {
+  constructor({ store }) {
     super();
-    this.context = config;
+    this.store = store;
+  }
+
+  initialize(config) {
+    this.context = config.context;
   }
 
   async getTeams() {
-    const teams = await Resource.getTeams();
+    const teams = this.store.resources.getTeams();
     return teams;
   }
 
   async getResources() {
-    const resources = await Resource.find({});
+    const resources = this.store.resources.find({});
     return resources;
   }
 }

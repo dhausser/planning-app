@@ -3,7 +3,7 @@ const { gql } = require('apollo-server');
 const typeDefs = gql`
   type Query {
     # Queries for Jira issues
-    issues: [Issue]!
+    issues(pageSize: Int, after: String): IssueConnection!
     issue(id: ID!): Issue
     # Queries for MongoDB Team Resources
     resources: [Resource]!
@@ -14,6 +14,12 @@ const typeDefs = gql`
     absences(id: ID!): [Absence]!
     # Queries for the current user
     me: User
+  }
+
+  type IssueConnection {
+    cursor: String!
+    hasMore: Boolean!
+    issues: [Issue]!
   }
 
   type Issue {
@@ -40,13 +46,15 @@ const typeDefs = gql`
 
   type Resource {
     id: ID!
+    key: String!
     name: String!
     team: String
   }
 
   type Team {
-    _id: ID
-    size: Int
+    _id: ID!
+    size: Int!
+    members: [Resource]!
   }
 
   type Absence {
