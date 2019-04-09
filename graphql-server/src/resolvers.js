@@ -2,8 +2,12 @@ const { paginateResults } = require('./utils');
 
 module.exports = {
   Query: {
-    issues: async (_, { pageSize = 20, after }, { dataSources }) => {
-      const allIssues = await dataSources.issueAPI.getAllIssues();
+    issues: async (_, { jql, pageSize = 20, after }, { dataSources }) => {
+      const allIssues = await dataSources.issueAPI.getAllIssues(
+        jql,
+        pageSize,
+        after
+      );
 
       const issues = paginateResults({
         after,
@@ -22,8 +26,6 @@ module.exports = {
           : false,
       };
     },
-    // issues: async (_, __, { dataSources }) =>
-    //   dataSources.issueAPI.getAllIssues(),
     issue: (_, { id }, { dataSources }) =>
       dataSources.issueAPI.getIssueById({ issueId: id }),
     absences: (_, { id }, { dataSources }) =>

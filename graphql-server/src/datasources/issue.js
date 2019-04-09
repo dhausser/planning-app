@@ -1,6 +1,17 @@
-/* eslint-disable class-methods-use-this */
 const { RESTDataSource } = require('apollo-datasource-rest');
 require('dotenv').config({ path: '.env' });
+
+const fields = [
+  'summary',
+  'description',
+  'status',
+  'assignee',
+  'reporter',
+  'issuetype',
+  'priority',
+  'fixVersions',
+  'comment',
+];
 
 class IssueAPI extends RESTDataSource {
   constructor() {
@@ -12,20 +23,14 @@ class IssueAPI extends RESTDataSource {
     request.headers.set('Authorization', process.env.AUTHORIZATION);
   }
 
-  async getAllIssues() {
+  async getAllIssues(jql, pageSize, after) {
+    console.log(jql);
     const response = await this.post('search', {
-      jql: 'project = 10500 AND fixVersion=15900',
-      fields: [
-        'summary',
-        'description',
-        'status',
-        'assignee',
-        'reporter',
-        'issuetype',
-        'priority',
-        'fixVersions',
-      ],
+      jql, // 'project = 10500 AND fixVersion=15900'
+      fields,
+      maxResults: pageSize,
     });
+    console.log(response);
     return Array.isArray(response.issues)
       ? response.issues.map(issue => this.issueReducer(issue))
       : [];
@@ -54,13 +59,15 @@ class IssueAPI extends RESTDataSource {
         id: issue.fields.reporter.key,
         name: issue.fields.reporter.displayName,
       },
+      comments: issue.fields.comment.comments.map(comment => ({
+        author: { id: comment.author.key, name: comment.author.displayName },
+        body: comment.body,
+      })),
     };
   }
 
   async getIssueById({ issueId }) {
-    const response = await this.get(
-      `issue/${issueId}?fields=summary,assignee,reporter,status,issuetype,priority,description,fixVersions`
-    );
+    const response = await this.get(`issue/${issueId}?fields=${fields.join()}`);
     return this.issueReducer(response);
   }
 }
