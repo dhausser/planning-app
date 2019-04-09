@@ -1,25 +1,20 @@
-/* eslint-disable class-methods-use-this */
 const { DataSource } = require('apollo-datasource');
+const { Resource } = require('../models');
+const config = require('../config');
 
 class ResourceAPI extends DataSource {
-  constructor({ store }) {
+  constructor() {
     super();
-    this.store = store;
-  }
-
-  initialize(config) {
-    this.context = config.context;
+    this.context = config;
   }
 
   async getTeams() {
-    const { Resource } = this.context;
     const teams = await Resource.getTeams();
-    return teams.map(({ _id }) => _id);
+    return teams;
   }
 
   async getResources() {
-    const { Resource } = this.context;
-    const resources = await Resource.getResources();
+    const resources = await Resource.find({});
     return resources;
   }
 }

@@ -1,13 +1,10 @@
 const { ApolloServer } = require('apollo-server');
 const typeDefs = require('./schema');
-const { createStore } = require('./utils');
 const resolvers = require('./resolvers');
 
 const IssueAPI = require('./datasources/issue');
 const AbsenceAPI = require('./datasources/absence');
 const ResourceAPI = require('./datasources/resource');
-
-const store = createStore();
 
 const server = new ApolloServer({
   typeDefs,
@@ -15,7 +12,7 @@ const server = new ApolloServer({
   dataSources: () => ({
     issueAPI: new IssueAPI(),
     absenceAPI: new AbsenceAPI(),
-    resourceAPI: new ResourceAPI({ store }),
+    resourceAPI: new ResourceAPI(),
   }),
 });
 

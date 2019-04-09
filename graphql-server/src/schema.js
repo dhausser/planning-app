@@ -41,13 +41,12 @@ const typeDefs = gql`
   type Resource {
     id: ID!
     name: String!
-    team: Team
+    team: String
   }
 
   type Team {
-    id: ID!
-    name: String!
-    resources: [Resource]!
+    _id: ID
+    size: Int
   }
 
   type Absence {
