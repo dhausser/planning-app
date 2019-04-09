@@ -30,7 +30,6 @@ class IssueAPI extends RESTDataSource {
       fields,
       maxResults: pageSize,
     });
-    console.log(response);
     return Array.isArray(response.issues)
       ? response.issues.map(issue => this.issueReducer(issue))
       : [];
