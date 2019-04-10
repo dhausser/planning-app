@@ -69,6 +69,17 @@ class IssueAPI extends RESTDataSource {
     const response = await this.get(`issue/${issueId}?fields=${fields.join()}`);
     return this.issueReducer(response);
   }
+
+  async editIssue({ issueId, summary }) {
+    // const summary = 'First Time User Experience 2.2';
+    console.log({ issueId, summary });
+    const response = await this.put(`issue/${issueId}`, {
+      fields: { summary },
+    });
+    console.log(response);
+
+    return response;
+  }
 }
 
 module.exports = IssueAPI;

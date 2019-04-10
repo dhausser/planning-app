@@ -34,4 +34,16 @@ module.exports = {
     resources: (_, __, { dataSources }) =>
       dataSources.resourceAPI.getResources(),
   },
+  Mutation: {
+    editIssue: async (_, { issueId, summary }, { dataSources }) => {
+      const result = await dataSources.issueAPI.editIssue({ issueId, summary });
+      console.log({ result });
+
+      return {
+        success: 'success status',
+        message: 'success message',
+        issue: 'returned issue',
+      };
+    },
+  },
 };

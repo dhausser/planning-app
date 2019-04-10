@@ -1,4 +1,3 @@
-/* eslint-disable class-methods-use-this */
 const { RESTDataSource } = require('apollo-datasource-rest');
 require('dotenv').config({ path: '.env' });
 

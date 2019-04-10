@@ -20,7 +20,7 @@ const server = new ApolloServer({
     // const users = await store.resources.findOne({});
     const user = users && users[0] ? users[0] : null;
 
-    console.log({ auth, userId, user, users });
+    // console.log({ auth, userId, user, users });
 
     return true; // { user: { ...user.dataValues } };
   },

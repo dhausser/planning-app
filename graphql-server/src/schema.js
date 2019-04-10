@@ -78,7 +78,7 @@ const typeDefs = gql`
 
   type Mutation {
     # if false, issue update failed -- check erros
-    editIssue(issueId: ID!): IssueUpdateResponse!
+    editIssue(issueId: ID!, summary: String): IssueUpdateResponse!
 
     login(email: String): String # login token
   }
@@ -86,7 +86,7 @@ const typeDefs = gql`
   type IssueUpdateResponse {
     success: Boolean!
     message: String
-    issues: [Issue]
+    issue: Issue
   }
 `;
 
