@@ -21,6 +21,7 @@ class IssueAPI extends RESTDataSource {
 
   willSendRequest(request) {
     request.headers.set('Authorization', process.env.AUTHORIZATION);
+    request.params.set('notifyUsers', false);
   }
 
   async getAllIssues(jql, pageSize, after) {
@@ -71,16 +72,9 @@ class IssueAPI extends RESTDataSource {
   }
 
   async editIssue({ issueId, summary }) {
-    const body = { fields: { summary } };
-
-    let response = null;
-    try {
-      response = await this.put(`issue/${issueId}`, body);
-    } catch (error) {
-      console.error(error);
-    }
-
-    return response;
+    return this.put(`issue/${issueId}`, {
+      fields: { summary },
+    });
   }
 }
 

@@ -41,12 +41,12 @@ export default function Resource(props) {
         <NameWrapper>
           <AvatarWrapper>
             <Avatar
-              name={issues[0].fields.assignee.displayName}
+              name={resourceId}
               size="large"
               src={`https://jira.cdprojektred.com/secure/useravatar?ownerId=${resourceId}`}
             />
           </AvatarWrapper>
-          {issues[0].fields.assignee.displayName}
+          {resourceId}
         </NameWrapper>
       </PageTitle>
       <Filters />

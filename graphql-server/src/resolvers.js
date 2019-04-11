@@ -35,23 +35,7 @@ module.exports = {
       dataSources.resourceAPI.getResources(),
   },
   Mutation: {
-    editIssue: async (_, { issueId, summary }, { dataSources }) => {
-      const result = await dataSources.issueAPI.editIssue({ issueId, summary });
-      console.log(result);
-
-      if (!result) {
-        return {
-          success: false,
-          message: 'Failed to update the issue',
-          issue: null,
-        };
-      }
-
-      return {
-        success: true,
-        message: 'Succesfully updated the issue',
-        issue: result,
-      };
-    },
+    editIssue: async (_, { issueId, summary }, { dataSources }) =>
+      dataSources.issueAPI.editIssue({ issueId, summary }),
   },
 };
