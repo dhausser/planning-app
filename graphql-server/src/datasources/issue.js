@@ -20,7 +20,6 @@ class IssueAPI extends RESTDataSource {
   }
 
   willSendRequest(request) {
-    console.log(process.env.AUTHORIZATION);
     request.headers.set('Authorization', process.env.AUTHORIZATION);
     request.params.set('notifyUsers', false);
   }
@@ -72,11 +71,7 @@ class IssueAPI extends RESTDataSource {
   }
 
   async editIssue({ issueId, summary }) {
-    console.log({ issueId, summary });
-    const res = await this.put(`issue/${issueId}`, {
-      fields: { summary },
-    });
-    return res;
+    this.put(`issue/${issueId}`, { fields: { summary } });
   }
 }
 

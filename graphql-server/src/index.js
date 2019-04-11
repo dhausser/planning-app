@@ -31,11 +31,11 @@ const server = new ApolloServer({
     absenceAPI: new AbsenceAPI(),
     resourceAPI: new ResourceAPI({ store }),
   }),
-  formatError: error => {
-    console.log(error);
-    return error;
-    // return new Error('Internal server error');
-  },
+  // formatError: error => {
+  //   console.log(error);
+  //   // return new Error('Internal server error');
+  //   return error;
+  // },
 });
 
 server.listen().then(({ url }) => {
