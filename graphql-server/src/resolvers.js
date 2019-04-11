@@ -37,12 +37,20 @@ module.exports = {
   Mutation: {
     editIssue: async (_, { issueId, summary }, { dataSources }) => {
       const result = await dataSources.issueAPI.editIssue({ issueId, summary });
-      console.log({ result });
+      console.log(result);
+
+      if (!result) {
+        return {
+          success: false,
+          message: 'Failed to update the issue',
+          issue: null,
+        };
+      }
 
       return {
-        success: 'success status',
-        message: 'success message',
-        issue: 'returned issue',
+        success: true,
+        message: 'Succesfully updated the issue',
+        issue: result,
       };
     },
   },

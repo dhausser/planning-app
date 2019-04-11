@@ -56,7 +56,7 @@ exports.editIssue = (request, response) => {
 
 exports.getIssue = (request, response, next) => {
   const fields =
-    'summary,description,status,priority,assignee,creator,fixVersions,issuetype';
+    'summary,description,status,priority,assignee,creator,fixVersions,issuetype,comment';
   const options = {
     hostname: process.env.HOST,
     path: `/${process.env.API_PATH}/issue/${

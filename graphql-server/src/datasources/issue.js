@@ -26,7 +26,7 @@ class IssueAPI extends RESTDataSource {
   async getAllIssues(jql, pageSize, after) {
     console.log(jql);
     const response = await this.post('search', {
-      jql, // 'project = 10500 AND fixVersion=15900'
+      jql,
       fields,
       maxResults: pageSize,
     });
@@ -71,12 +71,14 @@ class IssueAPI extends RESTDataSource {
   }
 
   async editIssue({ issueId, summary }) {
-    // const summary = 'First Time User Experience 2.2';
-    console.log({ issueId, summary });
-    const response = await this.put(`issue/${issueId}`, {
-      fields: { summary },
-    });
-    console.log(response);
+    const body = { fields: { summary } };
+
+    let response = null;
+    try {
+      response = await this.put(`issue/${issueId}`, body);
+    } catch (error) {
+      console.error(error);
+    }
 
     return response;
   }
