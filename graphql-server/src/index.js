@@ -33,7 +33,8 @@ const server = new ApolloServer({
   }),
   formatError: error => {
     console.log(error);
-    return new Error('Internal server error');
+    return error;
+    // return new Error('Internal server error');
   },
 });
 

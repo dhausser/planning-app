@@ -20,12 +20,12 @@ class IssueAPI extends RESTDataSource {
   }
 
   willSendRequest(request) {
+    console.log(process.env.AUTHORIZATION);
     request.headers.set('Authorization', process.env.AUTHORIZATION);
     request.params.set('notifyUsers', false);
   }
 
   async getAllIssues(jql, pageSize, after) {
-    console.log(jql);
     const response = await this.post('search', {
       jql,
       fields,
@@ -48,16 +48,16 @@ class IssueAPI extends RESTDataSource {
         category: issue.fields.status.statusCategory.key,
       },
       fixVersion: {
-        id: issue.fields.fixVersions[0].id,
-        name: issue.fields.fixVersions[0].name,
+        id: issue.fields.fixVersions[0] && issue.fields.fixVersions[0].id,
+        name: issue.fields.fixVersions[0] && issue.fields.fixVersions[0].name,
       },
       assignee: {
-        id: issue.fields.assignee.key,
-        name: issue.fields.assignee.displayName,
+        id: issue.fields.assignee && issue.fields.assignee.key,
+        name: issue.fields.assignee && issue.fields.assignee.displayName,
       },
       reporter: {
-        id: issue.fields.reporter.key,
-        name: issue.fields.reporter.displayName,
+        id: issue.fields.reporter && issue.fields.reporter.key,
+        name: issue.fields.reporter && issue.fields.reporter.displayName,
       },
       comments: issue.fields.comment.comments.map(comment => ({
         author: { id: comment.author.key, name: comment.author.displayName },
@@ -72,9 +72,11 @@ class IssueAPI extends RESTDataSource {
   }
 
   async editIssue({ issueId, summary }) {
-    return this.put(`issue/${issueId}`, {
+    console.log({ issueId, summary });
+    const res = await this.put(`issue/${issueId}`, {
       fields: { summary },
     });
+    return res;
   }
 }
 
