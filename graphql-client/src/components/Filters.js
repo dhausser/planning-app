@@ -1,4 +1,6 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { Fragment, useState, useEffect, useContext } from 'react';
+import { Query } from 'react-apollo';
+import gql from 'graphql-tag';
 import Button, { ButtonGroup } from '@atlaskit/button';
 import DropdownMenu, {
   DropdownItemGroup,
@@ -7,55 +9,88 @@ import DropdownMenu, {
 import config from '../credentials.json';
 import { FilterContext } from '../context/FilterContext';
 
+const GET_VERSIONS = gql`
+  query GetVersions($id: ID!, $pageSize: Int, $after: Int) {
+    versions(id: $id, pageSize: $pageSize, after: $after) {
+      id
+      name
+    }
+  }
+`;
+
+const GET_TEAMS = gql`
+  query GetTeams {
+    teams {
+      _id
+    }
+  }
+`;
+
 export default function Filters() {
   const { team, setTeam, fixVersion, setFixVersion } = useContext(
     FilterContext
   );
-  const [isLoading, setIsLoading] = useState(true);
-  const { teams, fixVersions } = useData(setIsLoading);
-  if (isLoading)
-    return (
-      <Button key="team" isLoading={isLoading} appearance="subtle">
-        Teams
-      </Button>
-    );
+
   return (
-    <div style={{ margin: '20px' }}>
+    <Fragment>
       <ButtonGroup>
-        <DropdownMenu
-          isLoading={isLoading}
-          trigger={`FixVersion: ${fixVersion && fixVersion.name}`}
-          triggerType="button"
-          shouldFlip={false}
-          position="right top"
+        <Query
+          query={GET_VERSIONS}
+          variables={{ id: 10500, pageSize: 4, after: 4 }}
         >
-          <DropdownItemGroup>
-            {fixVersions &&
-              fixVersions.map(version => (
-                <DropdownItem
-                  key={version.id}
-                  onClick={() => setFixVersion(version)}
-                >
-                  {version.name}
-                </DropdownItem>
-              ))}
-          </DropdownItemGroup>
-        </DropdownMenu>
-        {teams.map(teamName => (
-          <Button
-            key={teamName}
-            isLoading={isLoading}
-            appearance="subtle"
-            isSelected={teamName === team}
-            onClick={e =>
-              setTeam(team !== e.target.innerHTML ? e.target.innerHTML : '')
-            }
-          >
-            {teamName}
-          </Button>
-        ))}
+          {({ data, loading, error }) => {
+            if (error) return <p>ERROR</p>;
+
+            return (
+              <DropdownMenu
+                isLoading={loading}
+                trigger={`FixVersion: ${fixVersion && fixVersion.name}`}
+                triggerType="button"
+                shouldFlip={false}
+                position="right top"
+              >
+                <DropdownItemGroup>
+                  {data.versions &&
+                    data.versions.map(version => (
+                      <DropdownItem
+                        key={version.id}
+                        onClick={() => setFixVersion(version)}
+                      >
+                        {version.name}
+                      </DropdownItem>
+                    ))}
+                </DropdownItemGroup>
+              </DropdownMenu>
+            );
+          }}
+        </Query>
+        <Query query={GET_TEAMS}>
+          {({ data, loading, error }) => {
+            if (loading)
+              return (
+                <Button key="team" isLoading={loading} appearance="subtle">
+                  Teams
+                </Button>
+              );
+            if (error) return <p>ERROR</p>;
+
+            return data.teams.map(team => (
+              <Button
+                key={team._id}
+                isLoading={loading}
+                appearance="subtle"
+                isSelected={team._id === team}
+                onClick={e =>
+                  setTeam(team !== e.target.innerHTML ? e.target.innerHTML : '')
+                }
+              >
+                {team._id}
+              </Button>
+            ));
+          }}
+        </Query>
       </ButtonGroup>
-    </div>
+    </Fragment>
   );
 }
 
@@ -105,7 +140,7 @@ async function fetchData(setTeams, setFixVersions, ignore, setIsLoading) {
 //     : fixVersions.values[0];
 
 //   // Fetch Jira issues
-//   const { issues, maxResults, total } = await fetchIssues('');
+//   const {issues, maxResults, total } = await fetchIssues('');
 
 //   // Update State
 // }

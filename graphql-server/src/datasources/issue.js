@@ -24,15 +24,28 @@ class IssueAPI extends RESTDataSource {
     request.params.set('notifyUsers', false);
   }
 
+  async getAllVersions(projectId, pageSize, after) {
+    const response = await this.get(`project/${projectId}/version`, {
+      startAt: after,
+      maxResults: pageSize,
+      orderBy: 'name',
+      status: 'unreleased',
+    });
+    return Array.isArray(response.values) ? response.values : [];
+  }
+
   async getAllIssues(jql, pageSize, after) {
     const response = await this.post('search', {
       jql,
       fields,
+      startAt: after,
       maxResults: pageSize,
     });
-    return Array.isArray(response.issues)
+    const { startAt, maxResults, total } = response;
+    const issues = Array.isArray(response.issues)
       ? response.issues.map(issue => this.issueReducer(issue))
       : [];
+    return { startAt, maxResults, total, issues };
   }
 
   issueReducer(issue) {
@@ -41,6 +54,7 @@ class IssueAPI extends RESTDataSource {
       key: issue.key,
       summary: issue.fields.summary,
       priority: issue.fields.priority.name,
+      type: issue.fields.issuetype.name,
       status: {
         id: issue.fields.status.id,
         name: issue.fields.status.name,
@@ -49,6 +63,9 @@ class IssueAPI extends RESTDataSource {
       fixVersion: {
         id: issue.fields.fixVersions[0] && issue.fields.fixVersions[0].id,
         name: issue.fields.fixVersions[0] && issue.fields.fixVersions[0].name,
+        description:
+          issue.fields.fixVersions[0] &&
+          issue.fields.fixVersions[0].description,
       },
       assignee: {
         id: issue.fields.assignee && issue.fields.assignee.key,

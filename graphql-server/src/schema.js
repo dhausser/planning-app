@@ -2,23 +2,21 @@ const { gql } = require('apollo-server');
 
 const typeDefs = gql`
   type Query {
-    # Queries for Jira issues
     issues(jql: String, pageSize: Int, after: String): IssueConnection!
     issue(id: ID!): Issue
-    # Queries for MongoDB Team Resources
+    versions(id: ID!, pageSize: Int, after: Int): [FixVersion]
     resources: [Resource]!
     resource(id: ID!): Resource
     teams: [Team]!
     team(id: ID!): Team
-    # Queries for Portal Absences
     absences(id: ID!): [Absence]!
-    # Queries for the current user
     me: User
   }
 
   type IssueConnection {
-    cursor: String!
-    hasMore: Boolean!
+    startAt: Int!
+    maxResults: Int!
+    total: Int!
     issues: [Issue]!
   }
 
@@ -27,6 +25,7 @@ const typeDefs = gql`
     key: String!
     summary: String!
     priority: String!
+    type: String!
     status: Status!
     fixVersion: FixVersion
     assignee: Resource
@@ -48,6 +47,7 @@ const typeDefs = gql`
   type FixVersion {
     id: ID!
     name: String!
+    description: String
   }
 
   type Resource {

@@ -1,6 +1,6 @@
 import React from 'react';
 
-function setTeam(args) {
+function setTeamFilter(args) {
   console.log(`Setting Team...${args.name}`);
 }
 
@@ -9,7 +9,7 @@ function setFixVersion(args) {
 }
 export const FilterContext = React.createContext({
   fixVersion: { id: '15900', name: '2.1' },
-  team: '',
-  setTeam,
+  teamFilter: '',
+  setTeamFilter,
   setFixVersion,
 });

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { arrayOf, shape, string, bool, number } from 'prop-types';
 import styled from 'styled-components';
 import DynamicTable from '@atlaskit/dynamic-table';
 import { Status } from '@atlaskit/status';
@@ -72,8 +71,8 @@ const createRows = (issues = []) =>
     key: `row-${index}-${issue.key}`,
     cells: [
       {
-        key: 'T', // issue.issuetype.id,
-        content: 'T', // getIcon[issue.issuetype.name] || '',
+        key: issue.type,
+        content: getIcon[issue.type],
       },
       {
         key: issue.id,
@@ -129,7 +128,7 @@ const createRows = (issues = []) =>
 
 export default function IssueList({
   issues,
-  isLoading,
+  loading,
   maxResults,
   total,
   pathname,
@@ -146,7 +145,7 @@ export default function IssueList({
         rowsPerPage={pathname === '/issues' ? 10 : 5}
         defaultPage={1}
         loadingSpinnerSize="large"
-        isLoading={isLoading}
+        isLoading={loading}
         isFixedSize
         defaultSortKey="priority"
         defaultSortOrder="ASC"
@@ -154,18 +153,3 @@ export default function IssueList({
     </Wrapper>
   );
 }
-
-// IssueList.propTypes = {
-//   issues: arrayOf(
-//     shape({
-//       key: string,
-//       summary: string,
-//       status: string,
-//       assignee: string,
-//     })
-//   ).isRequired,
-//   maxResults: number,
-//   total: number,
-//   isLoading: bool,
-//   pathname: string,
-// };

@@ -1,8 +1,7 @@
-import React, { Fragment, useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import EmptyState from '@atlaskit/empty-state';
-import Spinner from '@atlaskit/spinner';
 import ContentWrapper from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
 import IssueList from '../components/IssueList';
@@ -13,13 +12,16 @@ import config from '../credentials.json';
 const GET_ISSUES = gql`
   query GetIssues($jql: String, $pageSize: Int!) {
     issues(jql: $jql, pageSize: $pageSize) {
+      startAt
+      maxResults
+      total
       issues {
         id
         key
         summary
+        type
         priority
         status {
-          id
           name
           category
         }
@@ -42,39 +44,33 @@ const GET_ISSUES = gql`
 export default function Issues(props) {
   const { fixVersion } = useContext(FilterContext);
   const jql = `project = 10500 AND fixVersion = ${fixVersion.id}`;
-  const pageSize = 10;
   return (
-    <Query query={GET_ISSUES} variables={{ jql, pageSize }}>
-      {({ data, loading, error }) => {
-        if (loading) return <Spinner />;
-        if (error) return <p>ERROR</p>;
-
-        console.log(data.issues.issues);
-        return (
-          <Fragment>
-            <ContentWrapper>
-              <PageTitle>Issues</PageTitle>
-              <Filters />
-              {data.issues && data.issues.issues ? (
-                <IssueList
-                  issues={data.issues.issues}
-                  maxResults={data.maxResults}
-                  total={data.total}
-                  pathname={props.location.pathname}
-                  isLoading={loading}
-                />
-              ) : (
-                <EmptyState
-                  header="Fail"
-                  description="Something must be wrong with the request."
-                />
-              )}
-            </ContentWrapper>
-            ;
-          </Fragment>
-        );
-      }}
-    </Query>
+    <ContentWrapper>
+      <PageTitle>Issues</PageTitle>
+      <Filters />
+      <Query query={GET_ISSUES} variables={{ jql, pageSize: 15 }}>
+        {({ data, loading, error }) => {
+          if (loading) return <p>Loading...</p>;
+          if (error)
+            return (
+              <EmptyState
+                header="Fail"
+                description="Something must be wrong with the request."
+              />
+            );
+          console.log(data);
+          return (
+            <IssueList
+              issues={data.issues.issues ? data.issues.issues : []}
+              maxResults={data.issues.maxResults}
+              total={data.issues.total}
+              pathname={props.location.pathname}
+              isLoading={loading}
+            />
+          );
+        }}
+      </Query>
+    </ContentWrapper>
   );
 }
 

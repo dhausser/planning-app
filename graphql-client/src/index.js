@@ -32,13 +32,13 @@ function App() {
   const { navOpenState } = useContext(NavContext);
   const filterContext = useContext(FilterContext);
   const [fixVersion, setFixVersion] = useState(filterContext.fixVersion);
-  const [team, setTeam] = useState(filterContext.team);
+  const [teamFilter, setTeamFilter] = useState(filterContext.team);
   return (
     <ApolloProvider client={client}>
       <FilterContext.Provider
         value={{
-          team,
-          setTeam,
+          teamFilter,
+          setTeamFilter,
           fixVersion,
           setFixVersion,
         }}
