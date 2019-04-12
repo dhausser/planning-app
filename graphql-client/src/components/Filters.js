@@ -27,7 +27,7 @@ const GET_TEAMS = gql`
 `;
 
 export default function Filters() {
-  const { team, setTeam, fixVersion, setFixVersion } = useContext(
+  const { teamFilter, setTeamFilter, fixVersion, setFixVersion } = useContext(
     FilterContext
   );
 
@@ -79,9 +79,9 @@ export default function Filters() {
                 key={team._id}
                 isLoading={loading}
                 appearance="subtle"
-                isSelected={team._id === team}
-                onClick={e =>
-                  setTeam(team !== e.target.innerHTML ? e.target.innerHTML : '')
+                isSelected={team._id === teamFilter}
+                onClick={() =>
+                  setTeamFilter(teamFilter !== team._id ? team._id : null)
                 }
               >
                 {team._id}

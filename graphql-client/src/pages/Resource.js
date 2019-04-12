@@ -1,4 +1,6 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { Fragment, useContext } from 'react';
+import { Query } from 'react-apollo';
+import gql from 'graphql-tag';
 import Avatar from '@atlaskit/avatar';
 import Calendar from '@atlaskit/calendar';
 import EmptyState from '@atlaskit/empty-state';
@@ -12,29 +14,55 @@ import IssueList from '../components/IssueList';
 import Filters from '../components/Filters';
 import PageTitle from '../components/PageTitle';
 import HolidayList from '../components/HolidayList';
-import { fetchIssues } from './Issues';
 import { FilterContext } from '../context/FilterContext';
 
+const GET_ISSUES = gql`
+  query issueList($jql: String, $pageSize: Int!) {
+    issues(jql: $jql, pageSize: $pageSize) {
+      startAt
+      maxResults
+      total
+      issues {
+        id
+        key
+        summary
+        type
+        priority
+        status {
+          name
+          category
+        }
+        fixVersion {
+          id
+          name
+        }
+        assignee {
+          id
+          name
+        }
+        reporter {
+          id
+          name
+        }
+      }
+    }
+  }
+`;
+
+const GET_ABSENCES = gql`
+  query absenceList($id: ID!) {
+    absences(id: $id) {
+      key
+      date
+    }
+  }
+`;
+
 export default function Resource(props) {
-  const { resourceId } = props.match.params;
   const { fixVersion } = useContext(FilterContext);
-  const { issues, maxResults, total, isLoading } = useIssues(
-    `assignee=${resourceId} AND fixVersion=${fixVersion.id}`
-  );
-  const absences = useAbsences(resourceId);
-  if (isLoading)
-    return (
-      <Center>
-        <Spinner size="large" />
-      </Center>
-    );
-  if (issues === [])
-    return (
-      <EmptyState
-        header="This person doesn't exist"
-        description={`The person you are trying to lookup isn't currently recorded in the database.`}
-      />
-    );
+  const { resourceId } = props.match.params;
+  const jql = `assignee=${resourceId} AND fixVersion=${fixVersion.id}`;
+
   return (
     <ContentWrapper>
       <PageTitle>
@@ -50,66 +78,58 @@ export default function Resource(props) {
         </NameWrapper>
       </PageTitle>
       <Filters />
-      <a
-        href={`https://jira.cdprojektred.com/issues/?jql=assignee=${resourceId}`}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        View in Issue Navigator
-      </a>
-      <IssueList
-        issues={issues}
-        maxResults={maxResults}
-        total={total}
-        isLoading={isLoading}
-      />
-      <HolidayList absences={absences} isLoading={isLoading} />
-      <Calendar day={0} defaultDisabled={absences} />
+      <p>
+        <a
+          href={`https://jira.cdprojektred.com/issues/?jql=assignee=${resourceId}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          View in Issue Navigator
+        </a>
+      </p>
+      <Query query={GET_ISSUES} variables={{ jql, pageSize: 10 }}>
+        {({ data, loading, error }) => {
+          if (loading)
+            return (
+              <Center>
+                <Spinner size="large" />
+              </Center>
+            );
+          if (error)
+            return (
+              <EmptyState
+                header="This person doesn't exist"
+                description={`The person you are trying to lookup isn't currently recorded in the database.`}
+              />
+            );
+          return (
+            <IssueList
+              issues={data.issues.issues ? data.issues.issues : []}
+              maxResults={data.issues.maxResults}
+              total={data.issues.total}
+              pathname={props.location.pathname}
+              isLoading={loading}
+            />
+          );
+        }}
+      </Query>
+      <Query query={GET_ABSENCES} variables={{ id: resourceId }}>
+        {({ data, loading, error }) => {
+          if (loading)
+            return (
+              <Center>
+                <Spinner size="large" />
+              </Center>
+            );
+          if (error) return <p>Error</p>;
+          return (
+            <Fragment>
+              <HolidayList absences={data.absences} isLoading={loading} />
+              <Calendar day={0} defaultDisabled={data.absences} />
+            </Fragment>
+          );
+        }}
+      </Query>
     </ContentWrapper>
   );
-}
-
-function useAbsences(resourceId) {
-  const [absences, setAbsences] = useState([]);
-  useEffect(() => {
-    let ignore = false;
-    async function fetchAbsences() {
-      const res = await fetch(`/api/absences?user=${resourceId}`);
-      const result = await res.json();
-      if (!ignore) setAbsences(result);
-    }
-    fetchAbsences();
-    return () => {
-      ignore = true;
-    };
-  }, [resourceId]);
-  return absences;
-}
-
-function useIssues(jql) {
-  const [data, setData] = useState({ issues: [], isLoading: true });
-  useEffect(() => {
-    let ignore = false;
-    fetchIssues(
-      {
-        jql,
-        fields: [
-          'summary',
-          'description',
-          'status',
-          'assignee',
-          'creator',
-          'issuetype',
-          'priority',
-          'fixVersions',
-        ],
-      },
-      setData,
-      ignore
-    );
-    return () => {
-      ignore = true;
-    };
-  }, [jql]);
-  return data;
 }

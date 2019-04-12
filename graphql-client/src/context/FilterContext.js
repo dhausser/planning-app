@@ -7,9 +7,11 @@ function setTeamFilter(args) {
 function setFixVersion(args) {
   console.log(`Setting FixVersion...${args}`);
 }
+
 export const FilterContext = React.createContext({
-  fixVersion: { id: '15900', name: '2.1' },
-  teamFilter: '',
+  teams: [],
+  fixVersion: { id: '15901', name: '2.2' },
+  teamFilter: null,
   setTeamFilter,
   setFixVersion,
 });

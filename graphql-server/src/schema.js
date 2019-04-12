@@ -31,6 +31,7 @@ const typeDefs = gql`
     assignee: Resource
     reporter: Resource
     comments: [Comment]
+    subtasks: [Issue]
   }
 
   type Comment {

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { arrayOf, shape, string, bool } from 'prop-types';
 import styled from 'styled-components';
 import DynamicTable from '@atlaskit/dynamic-table';
 import Avatar from '@atlaskit/avatar';
@@ -29,29 +28,12 @@ const createHead = withWidth => ({
       isSortable: true,
       width: withWidth ? 15 : undefined,
     },
-    /**
-     * TODO: Get issues count by assignee
-     */
-    // {
-    //   key: 'issues',
-    //   content: 'Issues',
-    //   shouldTruncate: true,
-    //   isSortable: true,
-    //   width: withWidth ? 10 : undefined,
-    // },
-    {
-      key: 'absences',
-      content: 'Absences',
-      shouldTruncate: true,
-      isSortable: true,
-      width: withWidth ? 10 : undefined,
-    },
   ],
 });
 
 const createRows = resources =>
-  resources.map((resource, index) => ({
-    key: `row-${index}-${resource.name}`,
+  resources.map(resource => ({
+    key: resource.key,
     cells: [
       {
         key: createKey(resource.name),
@@ -61,9 +43,9 @@ const createRows = resources =>
               <Avatar
                 name={resource.name}
                 size="medium"
-                src={`https://jira.cdprojektred.com/secure/useravatar?ownerId=${encodeURIComponent(
+                src={`https://jira.cdprojektred.com/secure/useravatar?ownerId=${
                   resource.key
-                )}`}
+                }`}
               />
             </AvatarWrapper>
             <Link to={`/resource/${resource.key}`}>{resource.name}</Link>
@@ -73,14 +55,6 @@ const createRows = resources =>
       {
         key: createKey(resource.team),
         content: resource.team,
-      },
-      // {
-      //   key: resource.issues.length + 1,
-      //   content: resource.issues.length,
-      // },
-      {
-        key: resource.holidays.length + 1,
-        content: resource.holidays.length,
       },
     ],
   }));
@@ -100,19 +74,9 @@ export default function ResourceList({ resources, isLoading }) {
         loadingSpinnerSize="large"
         isLoading={isLoading}
         isFixedSize
-        defaultSortKey="absences"
-        defaultSortOrder="DESC"
+        defaultSortKey="name"
+        defaultSortOrder="ASC"
       />
     </Wrapper>
   );
 }
-
-ResourceList.propTypes = {
-  resources: arrayOf(
-    shape({
-      key: string,
-      name: string,
-    })
-  ).isRequired,
-  isLoading: bool,
-};

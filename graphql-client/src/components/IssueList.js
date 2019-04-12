@@ -107,8 +107,8 @@ const createRows = (issues = []) =>
         ),
       },
       {
-        key: issue.priority.id,
-        content: getIcon[issue.priority.name],
+        key: issue.priority,
+        content: getIcon[issue.priority],
       },
       {
         key: issue.status.category,

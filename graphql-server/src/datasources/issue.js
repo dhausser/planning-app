@@ -11,6 +11,7 @@ const fields = [
   'priority',
   'fixVersions',
   'comment',
+  'subtasks',
 ];
 
 class IssueAPI extends RESTDataSource {
@@ -61,11 +62,10 @@ class IssueAPI extends RESTDataSource {
         category: issue.fields.status.statusCategory.key,
       },
       fixVersion: {
-        id: issue.fields.fixVersions[0] && issue.fields.fixVersions[0].id,
-        name: issue.fields.fixVersions[0] && issue.fields.fixVersions[0].name,
+        id: issue.fields.fixVersions && issue.fields.fixVersions[0].id,
+        name: issue.fields.fixVersions && issue.fields.fixVersions[0].name,
         description:
-          issue.fields.fixVersions[0] &&
-          issue.fields.fixVersions[0].description,
+          issue.fields.fixVersions && issue.fields.fixVersions[0].description,
       },
       assignee: {
         id: issue.fields.assignee && issue.fields.assignee.key,
@@ -75,10 +75,15 @@ class IssueAPI extends RESTDataSource {
         id: issue.fields.reporter && issue.fields.reporter.key,
         name: issue.fields.reporter && issue.fields.reporter.displayName,
       },
-      comments: issue.fields.comment.comments.map(comment => ({
-        author: { id: comment.author.key, name: comment.author.displayName },
-        body: comment.body,
-      })),
+      comments:
+        issue.fields.comment &&
+        issue.fields.comment.comments.map(comment => ({
+          author: { id: comment.author.key, name: comment.author.displayName },
+          body: comment.body,
+        })),
+      subtasks:
+        issue.fields.subtasks &&
+        issue.fields.subtasks.map(subtask => this.issueReducer(subtask)),
     };
   }
 
