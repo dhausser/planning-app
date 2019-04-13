@@ -17,16 +17,10 @@ const NameWrapper = styled.span`
 const head = {
   cells: [
     {
-      key: 'type',
-      content: 'T',
-      isSortable: true,
-      width: 3,
-    },
-    {
       key: 'key',
       content: 'Key',
       isSortable: true,
-      width: 14,
+      width: 8,
     },
     {
       key: 'summary',
@@ -34,28 +28,34 @@ const head = {
       isSortable: true,
     },
     {
-      key: 'assignee',
-      content: 'Assignee',
+      key: 'type',
+      content: 'T',
       isSortable: true,
-      width: 16,
-    },
-    {
-      key: 'reporter',
-      content: 'Reporter',
-      isSortable: true,
-      width: 16,
-    },
-    {
-      key: 'priority',
-      content: 'P',
-      isSortable: true,
-      width: 4,
+      width: 5,
     },
     {
       key: 'status',
       content: 'Status',
       isSortable: true,
-      width: 18,
+      width: 12,
+    },
+    {
+      key: 'assignee',
+      content: 'Assignee',
+      isSortable: true,
+      width: 10,
+    },
+    // {
+    //   key: 'reporter',
+    //   content: 'Reporter',
+    //   isSortable: true,
+    //   width: 16,
+    // },
+    {
+      key: 'priority',
+      content: 'P',
+      isSortable: true,
+      width: 4,
     },
     {
       key: 'version',
@@ -71,10 +71,6 @@ const createRows = (issues = []) =>
     key: `row-${index}-${issue.key}`,
     cells: [
       {
-        key: issue.type,
-        content: getIcon[issue.type],
-      },
-      {
         key: issue.id,
         content: (
           <NameWrapper>
@@ -84,10 +80,19 @@ const createRows = (issues = []) =>
       },
       {
         key: issue.id,
+        content: issue.summary,
+      },
+      {
+        key: issue.type,
+        content: getIcon[issue.type],
+      },
+      {
+        key: issue.status.category,
         content: (
-          <NameWrapper>
-            <Link to={`/issue/${issue.key}`}>{issue.summary}</Link>
-          </NameWrapper>
+          <Status
+            text={issue.status.name}
+            color={getIcon[issue.status.category]}
+          />
         ),
       },
       {
@@ -98,26 +103,17 @@ const createRows = (issues = []) =>
           </Link>
         ),
       },
-      {
-        key: issue.reporter && issue.reporter.id,
-        content: (
-          <Link to={`/resource/${issue.reporter && issue.reporter.id}`}>
-            {issue.reporter && issue.reporter.name}
-          </Link>
-        ),
-      },
+      // {
+      //   key: issue.reporter && issue.reporter.id,
+      //   content: (
+      //     <Link to={`/resource/${issue.reporter && issue.reporter.id}`}>
+      //       {issue.reporter && issue.reporter.name}
+      //     </Link>
+      //   ),
+      // },
       {
         key: issue.priority,
         content: getIcon[issue.priority],
-      },
-      {
-        key: issue.status.category,
-        content: (
-          <Status
-            text={issue.status.name}
-            color={getIcon[issue.status.category]}
-          />
-        ),
       },
       {
         key: issue.fixVersions && issue.fixVersions[0].id,
