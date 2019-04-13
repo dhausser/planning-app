@@ -58,8 +58,6 @@ export default function Issue(props) {
         const id = 'inline-edit-single';
         const { issue } = data;
 
-        console.log(issue);
-
         if (loading)
           return (
             <Center>

@@ -17,6 +17,7 @@ import PageTitle from '../components/PageTitle';
 import { getIcon } from '../components/Icon';
 import { FilterContext } from '../context/FilterContext';
 import Filters from '../components/Filters';
+import { projectId } from '../credentials';
 
 const GET_ISSUES = gql`
   query issueList($jql: String, $pageSize: Int!) {
@@ -41,7 +42,7 @@ const GET_ISSUES = gql`
 
 export default function Roadmap() {
   const { fixVersion } = useContext(FilterContext);
-  const epicsJql = `project = 10500 AND fixVersion = ${
+  const epicsJql = `project = ${projectId} AND fixVersion = ${
     fixVersion.id
   } AND issuetype = epic`;
   return (
