@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import DynamicTable from '@atlaskit/dynamic-table';
 import { Status } from '@atlaskit/status';
-import { getIcon } from './Helpers';
+import { getIcon } from './Icon';
 
 const Wrapper = styled.div`
   min-width: 600px;
@@ -91,18 +91,18 @@ const createRows = (issues = []) =>
         ),
       },
       {
-        key: issue.assignee.id,
+        key: (issue.assignee && issue.assignee.id) || '',
         content: (
-          <Link to={`/resource/${issue.assignee.id}`}>
-            {issue.assignee.name}
+          <Link to={`/resource/${(issue.assignee && issue.assignee.id) || ''}`}>
+            {(issue.assignee && issue.assignee.name) || ''}
           </Link>
         ),
       },
       {
-        key: issue.reporter.id,
+        key: issue.reporter && issue.reporter.id,
         content: (
-          <Link to={`/resource/${issue.reporter.id}`}>
-            {issue.reporter.name}
+          <Link to={`/resource/${issue.reporter && issue.reporter.id}`}>
+            {issue.reporter && issue.reporter.name}
           </Link>
         ),
       },
@@ -120,8 +120,8 @@ const createRows = (issues = []) =>
         ),
       },
       {
-        key: issue.fixVersion && issue.fixVersion.id,
-        content: issue.fixVersion && issue.fixVersion.name,
+        key: issue.fixVersions && issue.fixVersions[0].id,
+        content: issue.fixVersions && issue.fixVersions[0].name,
       },
     ],
   }));

@@ -14,7 +14,7 @@ import EmptyState from '@atlaskit/empty-state';
 import { Status } from '@atlaskit/status';
 import ContentWrapper from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
-import { getIcon } from '../components/Helpers';
+import { getIcon } from '../components/Icon';
 import { FilterContext } from '../context/FilterContext';
 import Filters from '../components/Filters';
 

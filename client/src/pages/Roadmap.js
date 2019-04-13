@@ -11,7 +11,7 @@ import Spinner from '@atlaskit/spinner';
 import { Status } from '@atlaskit/status';
 import ContentWrapper, { Center } from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
-import { getIcon } from '../components/Helpers';
+import { getIcon } from '../components/Icon';
 import { fetchIssues } from './Issues';
 import { FilterContext } from '../context/FilterContext';
 import Filters from '../components/Filters';

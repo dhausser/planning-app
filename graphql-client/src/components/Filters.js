@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect, useContext } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import Button, { ButtonGroup } from '@atlaskit/button';
@@ -6,8 +6,8 @@ import DropdownMenu, {
   DropdownItemGroup,
   DropdownItem,
 } from '@atlaskit/dropdown-menu';
-import config from '../credentials.json';
 import { FilterContext } from '../context/FilterContext';
+import { projectId } from '../credentials';
 
 const GET_VERSIONS = gql`
   query GetVersions($id: ID!, $pageSize: Int, $after: Int) {
@@ -36,7 +36,7 @@ export default function Filters() {
       <ButtonGroup>
         <Query
           query={GET_VERSIONS}
-          variables={{ id: 10500, pageSize: 4, after: 4 }}
+          variables={{ id: projectId, pageSize: 5, after: 0 }}
         >
           {({ data, loading, error }) => {
             if (error) return <p>ERROR</p>;
@@ -94,42 +94,41 @@ export default function Filters() {
   );
 }
 
-function useData(setIsLoading) {
-  const [teams, setTeams] = useState([]);
-  const [fixVersions, setFixVersions] = useState([]);
-  useEffect(() => {
-    let ignore = false;
-    fetchData(setTeams, setFixVersions, ignore, setIsLoading);
-    return () => {
-      ignore = true;
-    };
-  }, [setIsLoading]);
-  return { teams, fixVersions };
-}
+// function useData(setIsLoading) {
+//   const [teams, setTeams] = useState([]);
+//   const [fixVersions, setFixVersions] = useState([]);
+//   useEffect(() => {
+//     let ignore = false;
+//     fetchData(setTeams, setFixVersions, ignore, setIsLoading);
+//     return () => {
+//       ignore = true;
+//     };
+//   }, [setIsLoading]);
+//   return { teams, fixVersions };
+// }
 
-async function fetchData(setTeams, setFixVersions, ignore, setIsLoading) {
-  const { Authorization } = config;
-  const resource = `/project/10500/version?startAt=59&maxResults=5&orderBy=+releaseDate&status=unreleased`;
-  const [teamPromise, fixVersionPromise] = await Promise.all([
-    fetch('/api/teams'),
-    fetch('/api/fixVersions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ Authorization, resource }),
-    }),
-  ]);
-  const [teams, fixVersions] = await Promise.all([
-    teamPromise.json(),
-    fixVersionPromise.json(),
-  ]);
-  if (!ignore) {
-    setTeams(teams);
-    setFixVersions(fixVersions.values);
-    setIsLoading(false);
-  }
-}
+// async function fetchData(setTeams, setFixVersions, ignore, setIsLoading) {
+//   const resource = `/project/10500/version?startAt=59&maxResults=5&orderBy=+releaseDate&status=unreleased`;
+//   const [teamPromise, fixVersionPromise] = await Promise.all([
+//     fetch('/api/teams'),
+//     fetch('/api/fixVersions', {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify({ Authorization, resource }),
+//     }),
+//   ]);
+//   const [teams, fixVersions] = await Promise.all([
+//     teamPromise.json(),
+//     fixVersionPromise.json(),
+//   ]);
+//   if (!ignore) {
+//     setTeams(teams);
+//     setFixVersions(fixVersions.values);
+//     setIsLoading(false);
+//   }
+// }
 
 //   // Reinstate localstorage
 //   const team = localStorage.getItem('team')

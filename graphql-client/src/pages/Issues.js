@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import EmptyState from '@atlaskit/empty-state';
@@ -8,6 +8,7 @@ import PageTitle from '../components/PageTitle';
 import IssueList from '../components/IssueList';
 import { FilterContext } from '../context/FilterContext';
 import Filters from '../components/Filters';
+import { projectId } from '../credentials';
 
 const GET_ISSUES = gql`
   query issueList($jql: String, $pageSize: Int!) {
@@ -25,7 +26,7 @@ const GET_ISSUES = gql`
           name
           category
         }
-        fixVersion {
+        fixVersions {
           id
           name
         }
@@ -44,21 +45,22 @@ const GET_ISSUES = gql`
 
 export default function Issues(props) {
   const { fixVersion } = useContext(FilterContext);
-  const jql = `project = 10500 AND fixVersion = ${fixVersion.id}`;
   return (
     <ContentWrapper>
       <PageTitle>Issues</PageTitle>
       <Filters />
-      <Query query={GET_ISSUES} variables={{ jql, pageSize: 10 }}>
+      <Query
+        query={GET_ISSUES}
+        variables={{
+          jql: `project = ${projectId} AND fixVersion = ${
+            fixVersion.id
+          } ORDER BY KEY ASC`,
+          pageSize: 10,
+        }}
+      >
         {({ data, loading, error }) => {
           if (loading) return <Spinner />;
-          if (error)
-            return (
-              <EmptyState
-                header="Fail"
-                description="Something must be wrong with the request."
-              />
-            );
+          if (error) return <EmptyState header="Fail" description="Error" />;
           return (
             <IssueList
               issues={data.issues.issues ? data.issues.issues : []}
@@ -74,39 +76,39 @@ export default function Issues(props) {
   );
 }
 
-export function useIssues(jql) {
-  const [data, setData] = useState({
-    issues: [],
-    maxResults: 0,
-    total: 0,
-    loading: false,
-    error: null,
-  });
-  useEffect(() => {
-    let ignore = false;
-    fetchIssues(jql, setData, ignore);
-    return () => {
-      ignore = true;
-    };
-  }, [jql]);
-  return data;
-}
+// export function useIssues(jql) {
+//   const [data, setData] = useState({
+//     issues: [],
+//     maxResults: 0,
+//     total: 0,
+//     loading: false,
+//     error: null,
+//   });
+//   useEffect(() => {
+//     let ignore = false;
+//     fetchIssues(jql, setData, ignore);
+//     return () => {
+//       ignore = true;
+//     };
+//   }, [jql]);
+//   return data;
+// }
 
-async function fetchIssues(jql, setData, ignore) {
-  return (
-    <Query query={GET_ISSUES} variables={{ jql, pageSize: 10 }}>
-      {({ data, loading, error }) => {
-        // if (!ignore) {
-        if (loading) return setData({ loading });
-        if (error) return setData({ error });
-        return setData({
-          issues: data.issues.issues,
-          maxResults: data.issues.maxResults,
-          total: data.issues.total,
-          loading: false,
-        });
-        // }
-      }}
-    </Query>
-  );
-}
+// async function fetchIssues(jql, setData, ignore) {
+//   return (
+//     <Query query={GET_ISSUES} variables={{ jql, pageSize: 10 }}>
+//       {({ data, loading, error }) => {
+//         // if (!ignore) {
+//         if (loading) return setData({ loading });
+//         if (error) return setData({ error });
+//         return setData({
+//           issues: data.issues.issues,
+//           maxResults: data.issues.maxResults,
+//           total: data.issues.total,
+//           loading: false,
+//         });
+//         // }
+//       }}
+//     </Query>
+//   );
+// }

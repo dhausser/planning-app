@@ -42,6 +42,7 @@ class IssueAPI extends RESTDataSource {
       startAt: after,
       maxResults: pageSize,
     });
+    console.log(response.issues[0].fields);
     const { startAt, maxResults, total } = response;
     const issues = Array.isArray(response.issues)
       ? response.issues.map(issue => this.issueReducer(issue))
@@ -61,12 +62,10 @@ class IssueAPI extends RESTDataSource {
         name: issue.fields.status.name,
         category: issue.fields.status.statusCategory.key,
       },
-      fixVersion: {
-        id: issue.fields.fixVersions && issue.fields.fixVersions[0].id,
-        name: issue.fields.fixVersions && issue.fields.fixVersions[0].name,
-        description:
-          issue.fields.fixVersions && issue.fields.fixVersions[0].description,
-      },
+      fixVersions: issue.fields.fixVersions,
+      /**
+       * TODO: Error handler for assignee == null
+       */
       assignee: {
         id: issue.fields.assignee && issue.fields.assignee.key,
         name: issue.fields.assignee && issue.fields.assignee.displayName,

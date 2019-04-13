@@ -20,7 +20,7 @@ import ContentWrapper, {
   Center,
 } from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
-import { getIcon } from '../components/Helpers';
+import { getIcon } from '../components/Icon';
 
 function postData(url = ``, data = {}) {
   return fetch(url, {

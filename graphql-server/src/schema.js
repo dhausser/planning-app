@@ -27,7 +27,7 @@ const typeDefs = gql`
     priority: String!
     type: String!
     status: Status!
-    fixVersion: FixVersion
+    fixVersions: [FixVersion]
     assignee: Resource
     reporter: Resource
     comments: [Comment]
@@ -53,8 +53,8 @@ const typeDefs = gql`
 
   type Resource {
     id: ID!
-    key: String!
-    name: String!
+    key: String
+    name: String
     team: String
   }
 
