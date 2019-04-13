@@ -34,10 +34,6 @@ const GET_ISSUES = gql`
           id
           name
         }
-        reporter {
-          id
-          name
-        }
       }
     }
   }
