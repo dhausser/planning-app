@@ -1,24 +1,24 @@
 {
-  "name": "planning-app-backend",
+  "name": "graphql-server",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
-    "start": "nodemon -e js -x node app.js",
-    "dev": "nodemon -e js -x node --inspect app.js",
-    "prod": "node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/index.js",
+    "start:ci": "node src/index.js",
+    "sample": "node ./data/load-sample-data.js",
+    "blowitallaway": "node ./data/load-sample-data.js --delete"
   },
   "keywords": [],
   "author": "Davy Hausser",
-  "license": "MIT",
+  "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.18.3",
-    "compression": "^1.7.4",
-    "cookie-parser": "^1.4.4",
-    "dotenv": "^6.2.0",
-    "errorhandler": "^1.5.0",
-    "express": "^4.16.3",
-    "mongoose": "^5.4.19"
+    "apollo-datasource": "^0.3.1",
+    "apollo-datasource-rest": "^0.3.2",
+    "apollo-server": "^2.4.8",
+    "dotenv": "^7.0.0",
+    "graphql": "^14.2.1",
+    "mongoose": "^5.4.22"
   }
 }

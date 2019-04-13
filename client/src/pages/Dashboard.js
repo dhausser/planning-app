@@ -1,23 +1,57 @@
 import React, { useContext } from 'react';
+import { Query } from 'react-apollo';
+import gql from 'graphql-tag';
+import Spinner from '@atlaskit/spinner';
+import EmptyState from '@atlaskit/empty-state';
 import ContentWrapper from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
 import BarChart from '../components/BarChart';
-import { useIssues } from './Issues';
 import { FilterContext } from '../context/FilterContext';
 import Filters from '../components/Filters';
 
+const GET_ISSUES = gql`
+  query issueList($jql: String, $pageSize: Int!) {
+    issues(jql: $jql, pageSize: $pageSize) {
+      startAt
+      maxResults
+      total
+      issues {
+        fixVersion {
+          id
+          name
+        }
+        assignee {
+          id
+          name
+        }
+      }
+    }
+  }
+`;
+
 export default function Dashboard() {
   const { fixVersion } = useContext(FilterContext);
-  const { issues, isLoading } = useIssues(
-    `fixVersion = ${fixVersion.id} AND statusCategory in (new, indeterminate)`
-  );
+  const jql = `fixVersion = ${
+    fixVersion.id
+  } AND statusCategory in (new, indeterminate)`;
   return (
     <ContentWrapper>
       <PageTitle>Dashboard</PageTitle>
       <Filters />
-      <ContentWrapper>
-        {!isLoading && <BarChart dataset={aggregateIssues(issues)} />}
-      </ContentWrapper>
+      <Query query={GET_ISSUES} variables={{ jql, pageSize: 250 }}>
+        {({ data, loading, error }) => {
+          if (loading) return <Spinner />;
+          if (error)
+            return (
+              <EmptyState
+                header="Fail"
+                description="Something must be wrong with the request."
+              />
+            );
+
+          return <BarChart dataset={aggregateIssues(data.issues.issues)} />;
+        }}
+      </Query>
     </ContentWrapper>
   );
 }
@@ -25,8 +59,8 @@ export default function Dashboard() {
 function aggregateIssues(issues) {
   if (!issues) return [];
   return issues.reduce((resources, issue) => {
-    if (issue.fields.assignee) {
-      const name = issue.fields.assignee.displayName.split(' ').shift();
+    if (issue.assignee) {
+      const name = issue.assignee.name.split(' ').shift();
       if (!resources[name]) {
         resources[name] = 0;
       }

@@ -1,45 +1,46 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
+import { Query } from 'react-apollo';
+import gql from 'graphql-tag';
 import ContentWrapper from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
 import Filters from '../components/Filters';
 import ResourceList from '../components/ResourceList';
 import { FilterContext } from '../context/FilterContext';
 
+const GET_RESOURCES = gql`
+  query resourceList {
+    resources {
+      key
+      name
+      team
+    }
+  }
+`;
+
 export default function Resources() {
-  const { team } = useContext(FilterContext);
-  const { resources, isLoading } = useResources();
+  const { teamFilter } = useContext(FilterContext);
   return (
     <ContentWrapper>
       <PageTitle>People</PageTitle>
       <Filters />
-      <ResourceList
-        resources={
-          team
-            ? resources.filter(resource => resource.team === team)
-            : resources
-        }
-        isLoading={isLoading}
-      />
+      <Query query={GET_RESOURCES}>
+        {({ data, loading, error }) => {
+          if (loading) return <p>Loading</p>;
+          if (error) return <p>Error</p>;
+          return (
+            <ResourceList
+              resources={
+                teamFilter
+                  ? data.resources.filter(
+                      resource => resource.team === teamFilter
+                    )
+                  : data.resources
+              }
+              isLoading={loading}
+            />
+          );
+        }}
+      </Query>
     </ContentWrapper>
   );
-}
-
-function useResources() {
-  const [data, setData] = useState({
-    resources: [],
-    isLoading: true,
-  });
-  useEffect(() => {
-    let ignore = false;
-    async function fetchData(resource) {
-      const res = await fetch(`/api/${resource}`);
-      const result = await res.json();
-      if (!ignore) setData({ resources: result, isLoading: false });
-    }
-    fetchData('resources');
-    return () => {
-      ignore = true;
-    };
-  }, []);
-  return data;
 }

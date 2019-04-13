@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { arrayOf, shape, string, bool, number } from 'prop-types';
 import styled from 'styled-components';
 import DynamicTable from '@atlaskit/dynamic-table';
 import { Status } from '@atlaskit/status';
@@ -67,80 +66,69 @@ const head = {
   ],
 };
 
-function createRows(issues = []) {
-  return issues.map((issue, index) => {
-    let {
-      fields: { assignee },
-    } = issue;
-
-    if (assignee) {
-      const { key, displayName } = assignee;
-      assignee = <Link to={`/resource/${key}`}>{displayName}</Link>;
-    } else {
-      assignee = 'Unassigned';
-    }
-
-    return {
-      key: `row-${index}-${issue.key}`,
-      cells: [
-        {
-          key: issue.fields.issuetype.id,
-          content: getIcon[issue.fields.issuetype.name],
-        },
-        {
-          key: issue.id,
-          content: (
-            <NameWrapper>
-              <Link to={`/issue/${issue.key}`}>{issue.key}</Link>
-            </NameWrapper>
-          ),
-        },
-        {
-          key: issue.id,
-          content: (
-            <NameWrapper>
-              <Link to={`/issue/${issue.key}`}>{issue.fields.summary}</Link>
-            </NameWrapper>
-          ),
-        },
-        {
-          key: assignee,
-          content: assignee,
-        },
-        {
-          key: issue.fields.creator.key,
-          content: (
-            <Link to={`/resource/${issue.fields.creator.key}`}>
-              {issue.fields.creator.displayName}
-            </Link>
-          ),
-        },
-        {
-          key: issue.fields.priority.id,
-          content: getIcon[issue.fields.priority.name],
-        },
-        {
-          key: issue.fields.status.statusCategory.id,
-          content: (
-            <Status
-              text={issue.fields.status.name}
-              color={getIcon[issue.fields.status.statusCategory.key]}
-            />
-          ),
-        },
-        {
-          key: issue.fields.fixVersions[0] && issue.fields.fixVersions[0].id,
-          content:
-            issue.fields.fixVersions[0] && issue.fields.fixVersions[0].name,
-        },
-      ],
-    };
-  });
-}
+const createRows = (issues = []) =>
+  issues.map((issue, index) => ({
+    key: `row-${index}-${issue.key}`,
+    cells: [
+      {
+        key: issue.type,
+        content: getIcon[issue.type],
+      },
+      {
+        key: issue.id,
+        content: (
+          <NameWrapper>
+            <Link to={`/issue/${issue.key}`}>{issue.key}</Link>
+          </NameWrapper>
+        ),
+      },
+      {
+        key: issue.id,
+        content: (
+          <NameWrapper>
+            <Link to={`/issue/${issue.key}`}>{issue.summary}</Link>
+          </NameWrapper>
+        ),
+      },
+      {
+        key: (issue.assignee && issue.assignee.id) || '',
+        content: (
+          <Link to={`/resource/${(issue.assignee && issue.assignee.id) || ''}`}>
+            {(issue.assignee && issue.assignee.name) || ''}
+          </Link>
+        ),
+      },
+      {
+        key: issue.reporter && issue.reporter.id,
+        content: (
+          <Link to={`/resource/${issue.reporter && issue.reporter.id}`}>
+            {issue.reporter && issue.reporter.name}
+          </Link>
+        ),
+      },
+      {
+        key: issue.priority,
+        content: getIcon[issue.priority],
+      },
+      {
+        key: issue.status.category,
+        content: (
+          <Status
+            text={issue.status.name}
+            color={getIcon[issue.status.category]}
+          />
+        ),
+      },
+      {
+        key: issue.fixVersions && issue.fixVersions[0].id,
+        content: issue.fixVersions && issue.fixVersions[0].name,
+      },
+    ],
+  }));
 
 export default function IssueList({
   issues,
-  isLoading,
+  loading,
   maxResults,
   total,
   pathname,
@@ -157,7 +145,7 @@ export default function IssueList({
         rowsPerPage={pathname === '/issues' ? 10 : 5}
         defaultPage={1}
         loadingSpinnerSize="large"
-        isLoading={isLoading}
+        isLoading={loading}
         isFixedSize
         defaultSortKey="priority"
         defaultSortOrder="ASC"
@@ -165,18 +153,3 @@ export default function IssueList({
     </Wrapper>
   );
 }
-
-IssueList.propTypes = {
-  issues: arrayOf(
-    shape({
-      key: string,
-      summary: string,
-      status: string,
-      assignee: string,
-    })
-  ).isRequired,
-  maxResults: number,
-  total: number,
-  isLoading: bool,
-  pathname: string,
-};
