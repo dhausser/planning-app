@@ -1,12 +1,12 @@
 {
-  "name": "graphql-server",
+  "name": "apollo-server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/index.js",
-    "start:ci": "node src/index.js",
+    "start": "nodemon index.js",
+    "start:ci": "node index.js",
     "sample": "node ./data/load-sample-data.js",
     "blowitallaway": "node ./data/load-sample-data.js --delete"
   },
@@ -19,6 +19,14 @@
     "apollo-server": "^2.4.8",
     "dotenv": "^7.0.0",
     "graphql": "^14.2.1",
-    "mongoose": "^5.4.22"
+    "mongodb": "^3.2.3"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-1": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "babel-runtime": "^6.26.0"
   }
 }

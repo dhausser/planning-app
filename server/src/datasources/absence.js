@@ -1,7 +1,6 @@
-const { RESTDataSource } = require('apollo-datasource-rest');
-require('dotenv').config({ path: '.env' });
+import { RESTDataSource } from 'apollo-datasource-rest'
 
-class AbsenceAPI extends RESTDataSource {
+export default class AbsenceAPI extends RESTDataSource {
   constructor() {
     super();
     this.baseURL = process.env.PORTAL_URL;
@@ -22,4 +21,3 @@ class AbsenceAPI extends RESTDataSource {
   }
 }
 
-module.exports = AbsenceAPI;

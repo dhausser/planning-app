@@ -1,24 +1,8 @@
-const { DataSource } = require('apollo-datasource');
+import { DataSource } from 'apollo-datasource'
+import ResourcesDAO from '../dao/resourcesDAO'
 
-class ResourceAPI extends DataSource {
-  constructor({ store }) {
-    super();
-    this.store = store;
-  }
-
-  initialize(config) {
-    this.context = config.context;
-  }
-
-  async getTeams() {
-    const teams = this.store.resources.getTeams();
-    return teams;
-  }
-
-  async getResources() {
-    const resources = this.store.resources.find({});
-    return resources;
-  }
+export default class ResourceAPI extends DataSource {
+  getResources = async () => ResourcesDAO.getResources()
+  getResourcesByTeam = async (teams) => ResourcesDAO.getResourcesByTeam(teams)
+  getTeams = async () => ResourcesDAO.getTeams()
 }
-
-module.exports = ResourceAPI;

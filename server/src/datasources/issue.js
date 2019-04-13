@@ -1,5 +1,4 @@
-const { RESTDataSource } = require('apollo-datasource-rest');
-require('dotenv').config({ path: '.env' });
+import { RESTDataSource } from 'apollo-datasource-rest'
 
 const fields = [
   'summary',
@@ -14,7 +13,7 @@ const fields = [
   'subtasks',
 ];
 
-class IssueAPI extends RESTDataSource {
+export default class IssueAPI extends RESTDataSource {
   constructor() {
     super();
     this.baseURL = process.env.JIRA_URL;
@@ -94,5 +93,3 @@ class IssueAPI extends RESTDataSource {
     this.put(`issue/${issueId}`, { fields: { summary } });
   }
 }
-
-module.exports = IssueAPI;
