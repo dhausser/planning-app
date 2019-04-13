@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   Query: {
     issues: async (_, { jql, pageSize = 20, after = 0 }, { dataSources }) =>
       dataSources.issueAPI.getAllIssues(jql, pageSize, after),
@@ -16,4 +16,4 @@ module.exports = {
     editIssue: async (_, { issueId, summary }, { dataSources }) =>
       dataSources.issueAPI.editIssue({ issueId, summary }),
   },
-};
+}

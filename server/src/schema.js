@@ -1,6 +1,6 @@
-const { gql } = require('apollo-server');
+import { gql } from 'apollo-server'
 
-const typeDefs = gql`
+export default gql`
   type Query {
     issues(jql: String, pageSize: Int, after: String): IssueConnection!
     issue(id: ID!): Issue
@@ -88,6 +88,4 @@ const typeDefs = gql`
     message: String
     issue: Issue
   }
-`;
-
-module.exports = typeDefs;
+`

@@ -11,17 +11,17 @@ const fields = [
   'fixVersions',
   'comment',
   'subtasks',
-];
+]
 
 export default class IssueAPI extends RESTDataSource {
   constructor() {
-    super();
-    this.baseURL = process.env.JIRA_URL;
+    super()
+    this.baseURL = process.env.JIRA_URL
   }
 
   willSendRequest(request) {
-    request.headers.set('Authorization', process.env.AUTHORIZATION);
-    request.params.set('notifyUsers', false);
+    request.headers.set('Authorization', process.env.AUTHORIZATION)
+    request.params.set('notifyUsers', false)
   }
 
   async getAllVersions(projectId, pageSize, after) {
@@ -30,8 +30,8 @@ export default class IssueAPI extends RESTDataSource {
       maxResults: pageSize,
       orderBy: 'name',
       status: 'unreleased',
-    });
-    return Array.isArray(response.values) ? response.values : [];
+    })
+    return Array.isArray(response.values) ? response.values : []
   }
 
   async getAllIssues(jql, pageSize, after) {
@@ -40,12 +40,12 @@ export default class IssueAPI extends RESTDataSource {
       fields,
       startAt: after,
       maxResults: pageSize,
-    });
-    const { startAt, maxResults, total } = response;
+    })
+    const { startAt, maxResults, total } = response
     const issues = Array.isArray(response.issues)
       ? response.issues.map(issue => this.issueReducer(issue))
-      : [];
-    return { startAt, maxResults, total, issues };
+      : []
+    return { startAt, maxResults, total, issues }
   }
 
   issueReducer(issue) {
@@ -81,15 +81,15 @@ export default class IssueAPI extends RESTDataSource {
       subtasks:
         issue.fields.subtasks &&
         issue.fields.subtasks.map(subtask => this.issueReducer(subtask)),
-    };
+    }
   }
 
   async getIssueById({ issueId }) {
-    const response = await this.get(`issue/${issueId}?fields=${fields.join()}`);
-    return this.issueReducer(response);
+    const response = await this.get(`issue/${issueId}?fields=${fields.join()}`)
+    return this.issueReducer(response)
   }
 
   async editIssue({ issueId, summary }) {
-    this.put(`issue/${issueId}`, { fields: { summary } });
+    this.put(`issue/${issueId}`, { fields: { summary } })
   }
 }

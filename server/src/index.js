@@ -1,4 +1,4 @@
-import { ApolloServer } from 'apollo-server';
+import { ApolloServer } from 'apollo-server'
 import { MongoClient } from 'mongodb'
 import typeDefs from './schema'
 import resolvers from './resolvers'
@@ -13,7 +13,7 @@ MongoClient.connect(process.env.DATABASE, { useNewUrlParser: true })
     process.exit(1)
   })
   .then(async client => {
-    await ResourcesDAO.injectDB(client);
+    await ResourcesDAO.injectDB(client)
   })
 
 const server = new ApolloServer({
@@ -24,8 +24,8 @@ const server = new ApolloServer({
     absenceAPI: new AbsenceAPI(),
     resourceAPI: new ResourceAPI(),
   }),
-});
+})
 
 server.listen().then(({ url }) => {
-  console.log(`🚀 Server ready at ${url}`);
+  console.log(`🚀 Server ready at ${url}`)
 })

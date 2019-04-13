@@ -1,7 +1,4 @@
-import { ObjectId } from "bson";
-
 let resources
-let planify
 
 export default class ResourcesDAO {
   static async injectDB(conn) {
@@ -9,10 +6,12 @@ export default class ResourcesDAO {
       return
     }
     try {
-      planify = await conn.db(process.env.PLANIFY_NS)
-      resources = await conn.db(process.env.PLANIFY_NS).collection("resources")
+      await conn.db(process.env.PLANIFY_NS)
+      resources = await conn.db(process.env.PLANIFY_NS).collection('resources')
     } catch (e) {
-      console.error(`Unable to establish collection handles in resourceDAO: ${e}`)
+      console.error(
+        `Unable to establish collection handles in resourceDAO: ${e}`
+      )
     }
   }
 
@@ -25,9 +24,7 @@ export default class ResourcesDAO {
   static async getResources() {
     let cursor
     try {
-      cursor = await resources
-        .find()
-        .project({ key: 1, name: 1, team: 1 })
+      cursor = await resources.find().project({ key: 1, name: 1, team: 1 })
     } catch (e) {
       console.error(`Unable to issue find command, ${e}`)
       return []
