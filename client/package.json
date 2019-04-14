@@ -46,11 +46,20 @@
   "devDependencies": {
     "react-scripts": "^2.1.3"
   },
-  "proxy": "http://localhost:4444",
+  "proxy": "http://localhost:4000",
   "browserslist": [
     ">0.2%",
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "prettier": {
+    "useTabs": false,
+    "printWidth": 80,
+    "tabWidth": 2,
+    "singleQuote": false,
+    "trailingComma": "all",
+    "parser": "babylon",
+    "semi": false
+  }
 }

@@ -1,11 +1,11 @@
-import React, { useState, useContext, useEffect } from 'react';
-import EmptyState from '@atlaskit/empty-state';
-import ContentWrapper from '../components/ContentWrapper';
-import PageTitle from '../components/PageTitle';
-import IssueList from '../components/IssueList';
-import { FilterContext } from '../context/FilterContext';
-import Filters from '../components/Filters';
-import config from '../credentials.json';
+import React, { useState, useContext, useEffect } from 'react'
+import EmptyState from '@atlaskit/empty-state'
+import ContentWrapper from '../components/ContentWrapper'
+import PageTitle from '../components/PageTitle'
+import IssueList from '../components/IssueList'
+import { FilterContext } from '../context/FilterContext'
+import Filters from '../components/Filters'
+import { projectId } from '../credentials.json'
 
 /**
  * TODO: Implement team filter
@@ -24,10 +24,10 @@ import config from '../credentials.json';
 // }
 
 export default function Issues(props) {
-  const { fixVersion } = useContext(FilterContext);
+  // const { fixVersion } = useContext(FilterContext)
   const { issues, maxResults, total, isLoading } = useIssues(
-    `project = 10500 AND fixVersion = ${fixVersion.id}`
-  );
+    `project = ${projectId}` // AND fixVersion = ${fixVersion.id}`
+  )
   return (
     <ContentWrapper>
       <PageTitle>Issues</PageTitle>
@@ -47,7 +47,7 @@ export default function Issues(props) {
         />
       )}
     </ContentWrapper>
-  );
+  )
 }
 
 export function useIssues(jql) {
@@ -56,56 +56,53 @@ export function useIssues(jql) {
     maxResults: 0,
     total: 0,
     isLoading: true,
-  });
+  })
   useEffect(() => {
-    let ignore = false;
-    fetchIssues(
-      {
-        jql,
-        fields: [
-          'summary',
-          'description',
-          'status',
-          'assignee',
-          'creator',
-          'issuetype',
-          'priority',
-          'fixVersions',
-        ],
-      },
-      setData,
-      ignore
-    );
+    let ignore = false
+    fetchIssues(jql, setData, ignore)
     return () => {
-      ignore = true;
-    };
-  }, [jql]);
-  return data;
+      ignore = true
+    }
+  }, [jql])
+  return data
 }
 
-export async function fetchIssues(
-  bodyData = {},
-  setData,
-  ignore,
-  resource = 'search'
-) {
-  const { hostname, path, Authorization } = config;
-  const options = {
+export async function fetchIssues(jql, setData, ignore) {
+  const query = `{
+    issues(jql: "${jql}", pageSize: 10, after: 0) {
+      startAt
+      maxResults
+      total
+      issues {
+        id
+        key
+        summary
+        type
+        priority
+        status {
+          name
+          category
+        }
+        fixVersions {
+          id
+          name
+        }
+        assignee {
+          id
+          name
+        }
+      }
+    }
+  }`
+  const response = await fetch('/graphql', {
     method: 'POST',
-    hostname,
-    path: `${path}/${resource}`,
     headers: {
       'Content-Type': 'application/json',
-      Authorization,
     },
-  };
-  const response = await fetch(`/api/${resource}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ options, bodyData }),
-  });
-  const result = await response.json();
-  if (!ignore) setData({ ...result, isLoading: false });
+    body: JSON.stringify({ query }),
+  })
+  const {
+    data: { issues },
+  } = await response.json()
+  if (!ignore) setData({ ...issues, isLoading: false })
 }
