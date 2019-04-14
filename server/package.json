@@ -28,5 +28,30 @@
     "babel-preset-stage-1": "^6.24.1",
     "babel-register": "^6.26.0",
     "babel-runtime": "^6.26.0"
+  },
+  "babel": {
+    "presets": [
+      [
+        "env",
+        {
+          "targets": {
+            "node": "current"
+          }
+        }
+      ],
+      "stage-1"
+    ],
+    "plugins": [
+      "transform-runtime"
+    ]
+  },
+  "prettier": {
+    "useTabs": false,
+    "printWidth": 80,
+    "tabWidth": 2,
+    "singleQuote": false,
+    "trailingComma": "all",
+    "parser": "babylon",
+    "semi": false
   }
 }
