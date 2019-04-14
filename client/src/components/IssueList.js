@@ -45,12 +45,6 @@ const head = {
       isSortable: true,
       width: 10,
     },
-    // {
-    //   key: 'reporter',
-    //   content: 'Reporter',
-    //   isSortable: true,
-    //   width: 16,
-    // },
     {
       key: 'priority',
       content: 'P',
@@ -103,14 +97,6 @@ const createRows = (issues = []) =>
           </Link>
         ),
       },
-      // {
-      //   key: issue.reporter && issue.reporter.id,
-      //   content: (
-      //     <Link to={`/resource/${issue.reporter && issue.reporter.id}`}>
-      //       {issue.reporter && issue.reporter.name}
-      //     </Link>
-      //   ),
-      // },
       {
         key: issue.priority,
         content: getIcon[issue.priority],

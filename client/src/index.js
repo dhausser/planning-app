@@ -1,29 +1,29 @@
-import React, { useState, useContext } from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import '@atlaskit/css-reset';
-import Page from '@atlaskit/page';
-import Dashboard from './pages/Dashboard';
-import Roadmap from './pages/Roadmap';
-import Resources from './pages/Resources';
-import Resource from './pages/Resource';
-import Issues from './pages/Issues';
-import Issue from './pages/Issue';
-import Absences from './pages/Absences';
-import StarterNavigation from './components/StarterNavigation';
-import { NavContext } from './context/NavContext';
-import { FilterContext } from './context/FilterContext';
+import React, { useState, useContext } from 'react'
+import ReactDOM from 'react-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+import '@atlaskit/css-reset'
+import Page from '@atlaskit/page'
+import Dashboard from './pages/Dashboard'
+import Roadmap from './pages/Roadmap'
+import Resources from './pages/Resources'
+import Resource from './pages/Resource'
+import Issues from './pages/Issues'
+import Issue from './pages/Issue'
+import Absences from './pages/Absences'
+import StarterNavigation from './components/StarterNavigation'
+import { NavContext } from './context/NavContext'
+import { FilterContext } from './context/FilterContext'
 
 function App() {
-  const { navOpenState } = useContext(NavContext);
-  const filterContext = useContext(FilterContext);
-  const [fixVersion, setFixVersion] = useState(filterContext.fixVersion);
-  const [team, setTeam] = useState(filterContext.team);
+  const { navOpenState } = useContext(NavContext)
+  const filterContext = useContext(FilterContext)
+  const [fixVersion, setFixVersion] = useState(filterContext.fixVersion)
+  const [teamFilter, setTeamFilter] = useState(filterContext.team)
   return (
     <FilterContext.Provider
       value={{
-        team,
-        setTeam,
+        teamFilter,
+        setTeamFilter,
         fixVersion,
         setFixVersion,
       }}
@@ -41,7 +41,7 @@ function App() {
         <Route path="/absences" component={Absences} />
       </Page>
     </FilterContext.Provider>
-  );
+  )
 }
 
 function AppRouter() {
@@ -49,7 +49,7 @@ function AppRouter() {
     <Router>
       <App />
     </Router>
-  );
+  )
 }
 
-ReactDOM.render(<AppRouter />, document.getElementById('root'));
+ReactDOM.render(<AppRouter />, document.getElementById('root'))

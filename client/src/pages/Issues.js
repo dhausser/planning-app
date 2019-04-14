@@ -5,7 +5,7 @@ import PageTitle from '../components/PageTitle'
 import IssueList from '../components/IssueList'
 import { FilterContext } from '../context/FilterContext'
 import Filters from '../components/Filters'
-import { projectId } from '../credentials.json'
+import { projectId, Authorization } from '../credentials.json'
 
 /**
  * TODO: Implement team filter
@@ -24,10 +24,11 @@ import { projectId } from '../credentials.json'
 // }
 
 export default function Issues(props) {
-  // const { fixVersion } = useContext(FilterContext)
-  const { issues, maxResults, total, isLoading } = useIssues(
-    `project = ${projectId}` // AND fixVersion = ${fixVersion.id}`
-  )
+  const { fixVersion } = useContext(FilterContext)
+  const jql = `project = ${projectId} AND fixVersion = ${
+    fixVersion.id
+  } ORDER BY Key ASC`
+  const { issues, maxResults, total, isLoading } = useIssues(jql)
   return (
     <ContentWrapper>
       <PageTitle>Issues</PageTitle>
@@ -98,9 +99,11 @@ export async function fetchIssues(jql, setData, ignore) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      Authorization,
     },
     body: JSON.stringify({ query }),
   })
+
   const {
     data: { issues },
   } = await response.json()

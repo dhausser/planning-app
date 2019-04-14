@@ -8,9 +8,12 @@ import config from '../credentials.json'
 import { FilterContext } from '../context/FilterContext'
 
 export default function Filters() {
-  const { team, setTeam, fixVersion, setFixVersion } = useContext(FilterContext)
   const [isLoading, setIsLoading] = useState(true)
   const { teams, fixVersions } = useData(setIsLoading)
+  const { teamFilter, setTeamFilter, fixVersion, setFixVersion } = useContext(
+    FilterContext
+  )
+
   if (isLoading)
     return (
       <Button key="team" isLoading={isLoading} appearance="subtle">
@@ -44,9 +47,9 @@ export default function Filters() {
             key={teamName}
             isLoading={isLoading}
             appearance="subtle"
-            isSelected={teamName === team}
-            onClick={e =>
-              setTeam(team !== e.target.innerHTML ? e.target.innerHTML : '')
+            isSelected={teamName === teamFilter}
+            onClick={() =>
+              setTeamFilter(teamFilter !== teamName ? teamName : '')
             }
           >
             {teamName}
@@ -72,13 +75,13 @@ function useData(setIsLoading) {
 
 async function fetchData(setTeams, setFixVersions, ignore, setIsLoading) {
   const { Authorization, projectId } = config
-  // const resource = `/project/10500/version?startAt=59&maxResults=5&orderBy=+releaseDate&status=unreleased`;
   const [teamPromise, fixVersionPromise] = await Promise.all([
     fetch('/graphql', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
+        Authorization,
       },
       body: JSON.stringify({
         query: `
@@ -98,6 +101,7 @@ async function fetchData(setTeams, setFixVersions, ignore, setIsLoading) {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
+        Authorization,
       },
       body: JSON.stringify({
         query: `

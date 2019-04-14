@@ -1,20 +1,20 @@
-import React from 'react';
-import Tooltip from '@atlaskit/tooltip';
+import React from 'react'
+import Tooltip from '@atlaskit/tooltip'
 
 // Import Priority Icons
-import PriorityBlockerIcon from '@atlaskit/icon-priority/glyph/priority-blocker';
-import PriorityHighestIcon from '@atlaskit/icon-priority/glyph/priority-highest';
-import PriorityMediumIcon from '@atlaskit/icon-priority/glyph/priority-medium';
-import PriorityLowestIcon from '@atlaskit/icon-priority/glyph/priority-lowest';
-import PriorityMinorIcon from '@atlaskit/icon-priority/glyph/priority-minor';
-import PriorityTrivialIcon from '@atlaskit/icon-priority/glyph/priority-trivial';
+import PriorityBlockerIcon from '@atlaskit/icon-priority/glyph/priority-blocker'
+import PriorityHighestIcon from '@atlaskit/icon-priority/glyph/priority-highest'
+import PriorityMediumIcon from '@atlaskit/icon-priority/glyph/priority-medium'
+import PriorityLowestIcon from '@atlaskit/icon-priority/glyph/priority-lowest'
+import PriorityMinorIcon from '@atlaskit/icon-priority/glyph/priority-minor'
+import PriorityTrivialIcon from '@atlaskit/icon-priority/glyph/priority-trivial'
 
 // Import Status Icons
-import Epic16Icon from '@atlaskit/icon-object/glyph/epic/16';
-import Story16Icon from '@atlaskit/icon-object/glyph/story/16';
-import Task16Icon from '@atlaskit/icon-object/glyph/task/16';
-import Subtask16Icon from '@atlaskit/icon-object/glyph/subtask/16';
-import Bug16Icon from '@atlaskit/icon-object/glyph/bug/16';
+import Epic16Icon from '@atlaskit/icon-object/glyph/epic/16'
+import Story16Icon from '@atlaskit/icon-object/glyph/story/16'
+import Task16Icon from '@atlaskit/icon-object/glyph/task/16'
+import Subtask16Icon from '@atlaskit/icon-object/glyph/subtask/16'
+import Bug16Icon from '@atlaskit/icon-object/glyph/bug/16'
 
 export const getIcon = {
   new: 'blue',
@@ -31,6 +31,11 @@ export const getIcon = {
     </Tooltip>
   ),
   P2: (
+    <Tooltip content="P2">
+      <PriorityMediumIcon size="small" />
+    </Tooltip>
+  ),
+  Medium: (
     <Tooltip content="P2">
       <PriorityMediumIcon size="small" />
     </Tooltip>
@@ -75,4 +80,4 @@ export const getIcon = {
       <Bug16Icon />
     </Tooltip>
   ),
-};
+}
