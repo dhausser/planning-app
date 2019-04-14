@@ -34,8 +34,6 @@ export default function Roadmap() {
     epics.issues[0].children = epicChildren.issues
   }
 
-  console.log(epics)
-
   return (
     <ContentWrapper>
       <PageTitle>Roadmap</PageTitle>
