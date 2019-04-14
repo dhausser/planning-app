@@ -8,9 +8,25 @@ import Filters from '../components/Filters'
 
 export default function Dashboard() {
   const { fixVersion } = useContext(FilterContext)
-  const { issues, isLoading } = useIssues(
-    `fixVersion = ${fixVersion.id} AND statusCategory in (new, indeterminate)`
-  )
+
+  const jql = `fixVersion = ${
+    fixVersion.id
+  } AND statusCategory in (new, indeterminate)`
+  const query = `{
+    issues(jql: "${jql}", pageSize: 250, after: 0) {
+      startAt
+      maxResults
+      total
+      issues {
+        assignee {
+          id
+          name
+        }
+      }
+    }
+  }`
+
+  const { issues, isLoading } = useIssues(query)
   return (
     <ContentWrapper>
       <PageTitle>Dashboard</PageTitle>
@@ -25,8 +41,8 @@ export default function Dashboard() {
 function aggregateIssues(issues) {
   if (!issues) return []
   return issues.reduce((resources, issue) => {
-    if (issue.fields.assignee) {
-      const name = issue.fields.assignee.displayName.split(' ').shift()
+    if (issue.assignee) {
+      const name = issue.assignee.name.split(' ').shift()
       if (!resources[name]) {
         resources[name] = 0
       }

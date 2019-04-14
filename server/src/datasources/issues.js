@@ -137,6 +137,6 @@ function issueReducer(issue) {
       })),
     subtasks:
       issue.fields.subtasks &&
-      issue.fields.subtasks.map(subtask => this.issueReducer(subtask)),
+      issue.fields.subtasks.map(subtask => issueReducer(subtask)),
   }
 }

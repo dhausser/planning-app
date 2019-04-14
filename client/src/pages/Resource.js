@@ -18,9 +18,36 @@ import { useIssues } from './Issues'
 export default function Resource(props) {
   const { resourceId } = props.match.params
   const { fixVersion } = useContext(FilterContext)
-  const { issues, maxResults, total, isLoading } = useIssues(
-    `assignee=${resourceId} AND fixVersion=${fixVersion.id}`
-  )
+
+  const jql = `assignee=${resourceId} AND fixVersion=${fixVersion.id}`
+  const query = `{
+    issues(jql: "${jql}", pageSize: 10, after: 0) {
+      startAt
+      maxResults
+      total
+      issues {
+        id
+        key
+        summary
+        type
+        priority
+        status {
+          name
+          category
+        }
+        fixVersions {
+          id
+          name
+        }
+        assignee {
+          id
+          name
+        }
+      }
+    }
+  }`
+
+  const { issues, maxResults, total, isLoading } = useIssues(query)
   const absences = useAbsences(resourceId)
   if (isLoading)
     return (
@@ -73,12 +100,19 @@ function useAbsences(resourceId) {
   const [absences, setAbsences] = useState([])
   useEffect(() => {
     let ignore = false
-    async function fetchAbsences() {
-      const res = await fetch(`/api/absences?user=${resourceId}`)
-      const result = await res.json()
-      if (!ignore) setAbsences(result)
-    }
-    fetchAbsences()
+    // async function fetchAbsences() {
+    //   const query = `{ absences(user: ${resourceId}) }`
+    //   const res = await fetch('/graphql', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({ query }),
+    //   })
+    //   const result = await res.json()
+    //   if (!ignore) setAbsences(result)
+    // }
+    // fetchAbsences()
     return () => {
       ignore = true
     }

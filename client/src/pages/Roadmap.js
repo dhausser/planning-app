@@ -19,17 +19,60 @@ import { projectId } from '../credentials'
 
 export default function Roadmap() {
   const { fixVersion } = useContext(FilterContext)
-  const epics = useIssues(
-    `project = ${projectId} AND fixVersion = ${
-      fixVersion.id
-    } AND issuetype = epic`
-  )
-  const epicChildren = useIssues(
-    `project=${projectId} AND fixVersion = ${
-      fixVersion.id
-    } AND 'Epic Link' in (10013)`
-    // ${epics.issues.map(({ id }) => id)}
-  )
+
+  let jql = `project = ${projectId} AND fixVersion = ${
+    fixVersion.id
+  } AND issuetype = epic`
+  const epicQuery = `{
+    issues(jql: "${jql}", pageSize: 10, after: 0) {
+      startAt
+      maxResults
+      total
+      issues {
+        summary
+        type
+        priority
+        status {
+          name
+          category
+        }
+      }
+    }
+  }`
+
+  // ${epics.issues.map(({ id }) => id)}
+  const epicId = 10013
+  jql = `project=${projectId} AND fixVersion = ${
+    fixVersion.id
+  } AND 'Epic Link' in (${epicId})`
+  const childrenQuery = `{
+    issues(jql: "${jql}", pageSize: 10, after: 0) {
+      startAt
+      maxResults
+      total
+      issues {
+        summary
+        type
+        priority
+        status {
+          name
+          category
+        }
+        subtasks {
+          summary
+          type
+          priority
+          status {
+            name
+            category
+          }
+        }
+      }
+    }
+  }`
+
+  const epics = useIssues(epicQuery)
+  const epicChildren = useIssues(childrenQuery)
   if (epics.issues.length) {
     epics.issues[0].children = epicChildren.issues
   }
@@ -78,7 +121,6 @@ export default function Roadmap() {
 function convertIssues(issues) {
   return issues.map(issue => ({
     type: getIcon[issue.type],
-    key: issue.key,
     summary: issue.summary,
     value: getIcon[issue.priority],
     status: (
@@ -88,7 +130,6 @@ function convertIssues(issues) {
       issue.children &&
       issue.children.map(child => ({
         type: getIcon[child.type],
-        key: child.key,
         summary: child.summary,
         value: getIcon[child.priority],
         status: (
@@ -97,20 +138,18 @@ function convertIssues(issues) {
             color={getIcon[child.status.category]}
           />
         ),
-        children: [],
-        //   child.fields.subtasks.map(subtask => ({
-        //   type: getIcon[subtask.fields.issuetype.name],
-        //   key: subtask.key,
-        //   summary: subtask.fields.summary,
-        //   value: getIcon[subtask.fields.priority.name],
-        //   status: (
-        //     <Status
-        //       text={subtask.fields.status.name}
-        //       color={getIcon[subtask.fields.status.statusCategory.key]}
-        //     />
-        //   ),
-        //   children: [],
-        // })),
+        children: child.subtasks.map(subtask => ({
+          type: getIcon[subtask.type],
+          summary: subtask.summary,
+          value: getIcon[subtask.priority],
+          status: (
+            <Status
+              text={subtask.status.name}
+              color={getIcon[subtask.status.category]}
+            />
+          ),
+          children: [],
+        })),
       })),
   }))
 }
