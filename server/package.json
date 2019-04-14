@@ -4,9 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon -e js -x node app.js",
-    "dev": "nodemon -e js -x node --inspect app.js",
-    "prod": "node app.js",
+    "start": "nodemon index.js",
+    "dev": "nodemon --inspect index.js",
+    "prod": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -16,9 +16,44 @@
     "body-parser": "^1.18.3",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.4",
-    "dotenv": "^6.2.0",
     "errorhandler": "^1.5.0",
-    "express": "^4.16.3",
-    "mongoose": "^5.4.19"
+    "express": "^4.16.4",
+    "express-graphql": "^0.7.1",
+    "dotenv": "^7.0.0",
+    "graphql": "^14.2.1",
+    "mongodb": "^3.2.3"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-1": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "babel-runtime": "^6.26.0"
+  },
+  "babel": {
+    "presets": [
+      [
+        "env",
+        {
+          "targets": {
+            "node": "current"
+          }
+        }
+      ],
+      "stage-1"
+    ],
+    "plugins": [
+      "transform-runtime"
+    ]
+  },
+  "prettier": {
+    "useTabs": false,
+    "printWidth": 80,
+    "tabWidth": 2,
+    "singleQuote": false,
+    "trailingComma": "all",
+    "parser": "babylon",
+    "semi": false
   }
 }
