@@ -1,7 +1,7 @@
-import React from 'react';
-import AkDropdownMenu from '@atlaskit/dropdown-menu';
-import { AkGlobalItem } from '@atlaskit/navigation';
-import HelpIcon from '@atlaskit/icon/glyph/question-circle';
+import React from 'react'
+import AkDropdownMenu from '@atlaskit/dropdown-menu'
+import { AkGlobalItem } from '@atlaskit/navigation'
+import HelpIcon from '@atlaskit/icon/glyph/question-circle'
 
 export default (
   <AkDropdownMenu
@@ -25,4 +25,4 @@ export default (
       <HelpIcon label="Help icon" />
     </AkGlobalItem>
   </AkDropdownMenu>
-);
+)

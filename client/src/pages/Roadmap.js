@@ -1,31 +1,31 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useContext, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import TableTree, {
   Headers,
   Header,
   Rows,
   Row,
   Cell,
-} from '@atlaskit/table-tree';
-import Spinner from '@atlaskit/spinner';
-import { Status } from '@atlaskit/status';
-import ContentWrapper, { Center } from '../components/ContentWrapper';
-import PageTitle from '../components/PageTitle';
-import { getIcon } from '../components/Icon';
-import { fetchIssues } from './Issues';
-import { FilterContext } from '../context/FilterContext';
-import Filters from '../components/Filters';
+} from '@atlaskit/table-tree'
+import Spinner from '@atlaskit/spinner'
+import { Status } from '@atlaskit/status'
+import ContentWrapper, { Center } from '../components/ContentWrapper'
+import PageTitle from '../components/PageTitle'
+import { getIcon } from '../components/Icon'
+import { fetchIssues } from './Issues'
+import { FilterContext } from '../context/FilterContext'
+import Filters from '../components/Filters'
 
 export default function Roadmap() {
-  const { fixVersion } = useContext(FilterContext);
+  const { fixVersion } = useContext(FilterContext)
   const epics = useIssues(
     `project = 10500 AND fixVersion = ${fixVersion.id} AND issuetype = epic`
-  );
+  )
   const stories = useIssues(
     `project = 10500 AND fixVersion = ${
       fixVersion.id
     } AND "Epic Link" in (${epics.issues.map(({ id }) => id)})`
-  );
+  )
   return (
     <ContentWrapper>
       <PageTitle>Roadmap</PageTitle>
@@ -64,13 +64,13 @@ export default function Roadmap() {
         </TableTree>
       )}
     </ContentWrapper>
-  );
+  )
 }
 
 function useIssues(jql) {
-  const [data, setData] = useState({ issues: [], isLoading: true });
+  const [data, setData] = useState({ issues: [], isLoading: true })
   useEffect(() => {
-    let ignore = false;
+    let ignore = false
     fetchIssues(
       {
         jql,
@@ -78,12 +78,12 @@ function useIssues(jql) {
       },
       setData,
       ignore
-    );
+    )
     return () => {
-      ignore = true;
-    };
-  }, [jql]);
-  return data;
+      ignore = true
+    }
+  }, [jql])
+  return data
 }
 
 function convertIssues(issues) {
@@ -125,5 +125,5 @@ function convertIssues(issues) {
           children: [],
         })),
       })),
-  }));
+  }))
 }

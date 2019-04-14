@@ -1,16 +1,16 @@
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 
 export default class SearchResults extends Component {
   static propTypes = {
     matchingResults: PropTypes.arrayOf(PropTypes.object),
     onResultClicked: PropTypes.func,
-  };
+  }
 
   render() {
     if (!this.props.matchingResults.length) {
-      return <p>Nothing found, keep on searching!</p>;
+      return <p>Nothing found, keep on searching!</p>
     }
 
     return (
@@ -30,6 +30,6 @@ export default class SearchResults extends Component {
           </li>
         ))}
       </ul>
-    );
+    )
   }
 }

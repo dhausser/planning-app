@@ -1,12 +1,12 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { arrayOf, shape, string, number, bool } from 'prop-types';
-import styled from 'styled-components';
-import DynamicTable from '@atlaskit/dynamic-table';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { arrayOf, shape, string, number, bool } from 'prop-types'
+import styled from 'styled-components'
+import DynamicTable from '@atlaskit/dynamic-table'
 
 const Wrapper = styled.div`
   min-width: 600px;
-`;
+`
 
 const createHead = (withWidth, resources) => {
   const head = {
@@ -19,7 +19,7 @@ const createHead = (withWidth, resources) => {
         width: withWidth ? 10 : undefined,
       },
     ],
-  };
+  }
 
   if (resources != null) {
     head.cells.push(
@@ -36,11 +36,11 @@ const createHead = (withWidth, resources) => {
         isSortable: true,
         width: withWidth ? 10 : undefined,
       }
-    );
+    )
   }
 
-  return head;
-};
+  return head
+}
 
 const createRows = (absences, resources) =>
   absences.map((holiday, index) => {
@@ -51,7 +51,7 @@ const createRows = (absences, resources) =>
           content: new Date(holiday.date).toDateString(),
         },
       ],
-    };
+    }
 
     if (resources != null) {
       const arr = [
@@ -66,17 +66,17 @@ const createRows = (absences, resources) =>
             </Link>
           ),
         },
-      ];
-      row.cells.push(...arr);
+      ]
+      row.cells.push(...arr)
     }
 
-    return row;
-  });
+    return row
+  })
 
 export default function HolidayList({ absences, resources, isLoading }) {
-  const caption = 'List of Absences';
-  const head = createHead(false, resources);
-  const rows = createRows(absences, resources);
+  const caption = 'List of Absences'
+  const head = createHead(false, resources)
+  const rows = createRows(absences, resources)
   return (
     <Wrapper>
       <DynamicTable
@@ -94,7 +94,7 @@ export default function HolidayList({ absences, resources, isLoading }) {
         onSetPage={() => console.log('onSetPage')}
       />
     </Wrapper>
-  );
+  )
 }
 
 HolidayList.propTypes = {
@@ -112,4 +112,4 @@ HolidayList.propTypes = {
     })
   ),
   isLoading: bool,
-};
+}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 function toggleNavOpenState() {
   // setState({ navOpenState }
@@ -10,4 +10,4 @@ export const NavContext = React.createContext({
     width: 304,
   },
   onNavResize: () => toggleNavOpenState(),
-});
+})

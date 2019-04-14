@@ -1,40 +1,40 @@
-import React, { useState, useContext, useEffect } from 'react';
-import Avatar from '@atlaskit/avatar';
-import Calendar from '@atlaskit/calendar';
-import EmptyState from '@atlaskit/empty-state';
-import Spinner from '@atlaskit/spinner';
+import React, { useState, useContext, useEffect } from 'react'
+import Avatar from '@atlaskit/avatar'
+import Calendar from '@atlaskit/calendar'
+import EmptyState from '@atlaskit/empty-state'
+import Spinner from '@atlaskit/spinner'
 import ContentWrapper, {
   NameWrapper,
   AvatarWrapper,
   Center,
-} from '../components/ContentWrapper';
-import IssueList from '../components/IssueList';
-import Filters from '../components/Filters';
-import PageTitle from '../components/PageTitle';
-import HolidayList from '../components/HolidayList';
-import { fetchIssues } from './Issues';
-import { FilterContext } from '../context/FilterContext';
+} from '../components/ContentWrapper'
+import IssueList from '../components/IssueList'
+import Filters from '../components/Filters'
+import PageTitle from '../components/PageTitle'
+import HolidayList from '../components/HolidayList'
+import { fetchIssues } from './Issues'
+import { FilterContext } from '../context/FilterContext'
 
 export default function Resource(props) {
-  const { resourceId } = props.match.params;
-  const { fixVersion } = useContext(FilterContext);
+  const { resourceId } = props.match.params
+  const { fixVersion } = useContext(FilterContext)
   const { issues, maxResults, total, isLoading } = useIssues(
     `assignee=${resourceId} AND fixVersion=${fixVersion.id}`
-  );
-  const absences = useAbsences(resourceId);
+  )
+  const absences = useAbsences(resourceId)
   if (isLoading)
     return (
       <Center>
         <Spinner size="large" />
       </Center>
-    );
+    )
   if (issues === [])
     return (
       <EmptyState
         header="This person doesn't exist"
         description={`The person you are trying to lookup isn't currently recorded in the database.`}
       />
-    );
+    )
   return (
     <ContentWrapper>
       <PageTitle>
@@ -66,30 +66,30 @@ export default function Resource(props) {
       <HolidayList absences={absences} isLoading={isLoading} />
       <Calendar day={0} defaultDisabled={absences} />
     </ContentWrapper>
-  );
+  )
 }
 
 function useAbsences(resourceId) {
-  const [absences, setAbsences] = useState([]);
+  const [absences, setAbsences] = useState([])
   useEffect(() => {
-    let ignore = false;
+    let ignore = false
     async function fetchAbsences() {
-      const res = await fetch(`/api/absences?user=${resourceId}`);
-      const result = await res.json();
-      if (!ignore) setAbsences(result);
+      const res = await fetch(`/api/absences?user=${resourceId}`)
+      const result = await res.json()
+      if (!ignore) setAbsences(result)
     }
-    fetchAbsences();
+    fetchAbsences()
     return () => {
-      ignore = true;
-    };
-  }, [resourceId]);
-  return absences;
+      ignore = true
+    }
+  }, [resourceId])
+  return absences
 }
 
 function useIssues(jql) {
-  const [data, setData] = useState({ issues: [], isLoading: true });
+  const [data, setData] = useState({ issues: [], isLoading: true })
   useEffect(() => {
-    let ignore = false;
+    let ignore = false
     fetchIssues(
       {
         jql,
@@ -106,10 +106,10 @@ function useIssues(jql) {
       },
       setData,
       ignore
-    );
+    )
     return () => {
-      ignore = true;
-    };
-  }, [jql]);
-  return data;
+      ignore = true
+    }
+  }, [jql])
+  return data
 }

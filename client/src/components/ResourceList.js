@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { arrayOf, shape, string, bool } from 'prop-types'
 import styled from 'styled-components'
 import DynamicTable from '@atlaskit/dynamic-table'
 import Avatar from '@atlaskit/avatar'
@@ -14,7 +13,7 @@ const Wrapper = styled.div`
   min-width: 600px;
 `
 
-const createHead = withWidth => ({
+const head = {
   cells: [
     {
       key: 'name',
@@ -28,7 +27,7 @@ const createHead = withWidth => ({
       isSortable: true,
     },
   ],
-})
+}
 
 const createRows = resources =>
   resources.map(resource => ({
@@ -59,15 +58,12 @@ const createRows = resources =>
   }))
 
 export default function ResourceList({ resources, isLoading }) {
-  const caption = `Listing ${resources.length} developers`
-  const head = createHead('false')
-  const rows = createRows(resources)
   return (
     <Wrapper>
       <DynamicTable
-        caption={caption}
+        caption={`Listing ${resources.length} developers`}
         head={head}
-        rows={rows}
+        rows={createRows(resources)}
         rowsPerPage={20}
         defaultPage={1}
         loadingSpinnerSize="large"
@@ -78,14 +74,4 @@ export default function ResourceList({ resources, isLoading }) {
       />
     </Wrapper>
   )
-}
-
-ResourceList.propTypes = {
-  resources: arrayOf(
-    shape({
-      key: string,
-      name: string,
-    })
-  ).isRequired,
-  isLoading: bool,
 }

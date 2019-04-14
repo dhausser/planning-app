@@ -1,26 +1,26 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
-import Spinner from '@atlaskit/spinner';
-import EmptyState from '@atlaskit/empty-state';
-import { Status } from '@atlaskit/status';
-import InlineEdit, { SingleLineTextInput } from '@atlaskit/inline-edit';
-import Avatar from '@atlaskit/avatar';
+import Spinner from '@atlaskit/spinner'
+import EmptyState from '@atlaskit/empty-state'
+import { Status } from '@atlaskit/status'
+import InlineEdit, { SingleLineTextInput } from '@atlaskit/inline-edit'
+import Avatar from '@atlaskit/avatar'
 import Comment, {
   CommentAction,
   CommentAuthor,
   CommentEdited,
   CommentTime,
-} from '@atlaskit/comment';
+} from '@atlaskit/comment'
 
 import ContentWrapper, {
   NameWrapper,
   AvatarWrapper,
   Center,
-} from '../components/ContentWrapper';
-import PageTitle from '../components/PageTitle';
-import { getIcon } from '../components/Icon';
+} from '../components/ContentWrapper'
+import PageTitle from '../components/PageTitle'
+import { getIcon } from '../components/Icon'
 
 function postData(url = ``, data = {}) {
   return fetch(url, {
@@ -34,7 +34,7 @@ function postData(url = ``, data = {}) {
     redirect: 'follow',
     referrer: 'no-referrer',
     body: JSON.stringify(data),
-  }).then(response => response.json());
+  }).then(response => response.json())
 }
 
 /**
@@ -48,19 +48,19 @@ export default class Issue extends Component {
     comments: [],
     editValue: '',
     readValue: '',
-  };
+  }
 
   static propTypes = {
     params: PropTypes.object,
-  };
+  }
 
   componentDidMount = async () => {
-    const { issueId } = this.props.match.params;
-    const response = await fetch(`/api/issue?key=${issueId}`);
-    const { issue, comments } = await response.json();
+    const { issueId } = this.props.match.params
+    const response = await fetch(`/api/issue?key=${issueId}`)
+    const { issue, comments } = await response.json()
 
-    let defautlValue = '';
-    if (issue.fields) defautlValue = issue.fields.summary;
+    let defautlValue = ''
+    if (issue.fields) defautlValue = issue.fields.summary
 
     this.setState({
       isLoading: false,
@@ -69,12 +69,12 @@ export default class Issue extends Component {
       readValue: defautlValue,
       editValue: defautlValue,
       host: 'jira.cdprojektred.com',
-    });
-  };
+    })
+  }
 
   onConfirm = () => {
-    const { readValue, editValue } = this.state;
-    this.setState({ readValue: editValue });
+    const { readValue, editValue } = this.state
+    this.setState({ readValue: editValue })
     postData('/api/issue', {
       key: this.state.issue.key,
       summary: this.state.editValue,
@@ -84,36 +84,36 @@ export default class Issue extends Component {
           case 400:
             console.log(
               'STATUS 400: Returned if the requested issue update failed.'
-            );
-            this.setState({ readValue });
-            break;
+            )
+            this.setState({ readValue })
+            break
           case 204:
             console.log(
               'STATUS 204: Returned if it updated the issue successfully.'
-            );
-            break;
+            )
+            break
           case 403:
             console.log(
               'STATUS 403: Returned if the user doesnt have permissions to disable users notification.'
-            );
-            this.setState({ readValue });
-            break;
+            )
+            this.setState({ readValue })
+            break
           default:
-            break;
+            break
         }
       })
-      .catch(error => console.error(error));
-  };
+      .catch(error => console.error(error))
+  }
 
   onCancel = () => {
-    this.setState(state => ({ editValue: state.readValue }));
-  };
+    this.setState(state => ({ editValue: state.readValue }))
+  }
 
   onChange = event => {
     this.setState({
       editValue: event.target.value,
-    });
-  };
+    })
+  }
 
   renderInput = ({ isEditing, id }) => (
     <SingleLineTextInput
@@ -123,27 +123,27 @@ export default class Issue extends Component {
       value={this.state.editValue}
       onChange={this.onChange}
     />
-  );
+  )
 
   render() {
-    const id = 'inline-edit-single';
-    const { issue, comments, host, isLoading } = this.state;
+    const id = 'inline-edit-single'
+    const { issue, comments, host, isLoading } = this.state
 
     if (isLoading)
       return (
         <Center>
           <Spinner size="large" />
         </Center>
-      );
+      )
 
     if (issue.errorMessages)
       return issue.errorMessages.map(error => (
         <EmptyState key={error} header="Error" description={error} />
-      ));
+      ))
 
     let {
       fields: { assignee },
-    } = issue;
+    } = issue
     if (assignee) {
       assignee = (
         <NameWrapper>
@@ -156,7 +156,7 @@ export default class Issue extends Component {
           </AvatarWrapper>
           <Link to={`/resource/${assignee.key}`}>{assignee.displayName}</Link>
         </NameWrapper>
-      );
+      )
     } else {
       assignee = (
         <NameWrapper>
@@ -165,7 +165,7 @@ export default class Issue extends Component {
           </AvatarWrapper>
           Unassigned
         </NameWrapper>
-      );
+      )
     }
 
     return (
@@ -250,6 +250,6 @@ export default class Issue extends Component {
           {...this.props}
         />
       </ContentWrapper>
-    );
+    )
   }
 }

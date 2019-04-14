@@ -1,6 +1,6 @@
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
-import SearchResults from './SearchResults';
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import SearchResults from './SearchResults'
 
 const items = [
   { name: 'Events', link: '/#events', description: 'List of events.' },
@@ -29,27 +29,27 @@ const items = [
     link: '/#pages',
     description: 'Confluence pages you have made.',
   },
-];
+]
 
 export default class SearchDrawer extends Component {
   static propTypes = {
     onResultClicked: PropTypes.func,
     onSearchInputRef: PropTypes.func,
-  };
+  }
 
   state = {
     searchString: '',
     results: items,
-  };
+  }
 
   filterChange = () => {
     this.setState({
       searchString: this.searchInput.value,
-    });
-  };
+    })
+  }
 
   searchResults = () => {
-    const { results, searchString } = this.state;
+    const { results, searchString } = this.state
 
     const matchingResults = results
       .filter(
@@ -59,19 +59,19 @@ export default class SearchDrawer extends Component {
             c.description.toLowerCase().indexOf(searchString.toLowerCase()) >=
               0)
       )
-      .slice(0, 10);
+      .slice(0, 10)
 
     return (
       <SearchResults
         matchingResults={matchingResults}
         onResultClicked={() => {
-          this.props.onResultClicked();
-          this.searchInput.value = '';
-          this.filterChange();
+          this.props.onResultClicked()
+          this.searchInput.value = ''
+          this.filterChange()
         }}
       />
-    );
-  };
+    )
+  }
 
   render() {
     return (
@@ -81,9 +81,9 @@ export default class SearchDrawer extends Component {
           placeholder="Search..."
           onKeyUp={this.filterChange}
           ref={el => {
-            this.searchInput = el;
+            this.searchInput = el
             if (this.props.onSearchInputRef) {
-              this.props.onSearchInputRef(el);
+              this.props.onSearchInputRef(el)
             }
           }}
           style={{
@@ -97,6 +97,6 @@ export default class SearchDrawer extends Component {
         />
         {this.searchResults()}
       </div>
-    );
+    )
   }
 }

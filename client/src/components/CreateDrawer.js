@@ -1,14 +1,14 @@
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 
-import { AkNavigationItemGroup, AkNavigationItem } from '@atlaskit/navigation';
+import { AkNavigationItemGroup, AkNavigationItem } from '@atlaskit/navigation'
 
-import BitbucketBranchesIcon from '@atlaskit/icon/glyph/bitbucket/branches';
-import PageIcon from '@atlaskit/icon/glyph/page';
-import CalendarIcon from '@atlaskit/icon/glyph/calendar';
-import EmojiObjectsIcon from '@atlaskit/icon/glyph/emoji/objects';
-import EmojiNatureIcon from '@atlaskit/icon/glyph/emoji/nature';
-import EmojiTravelIcon from '@atlaskit/icon/glyph/emoji/travel';
+import BitbucketBranchesIcon from '@atlaskit/icon/glyph/bitbucket/branches'
+import PageIcon from '@atlaskit/icon/glyph/page'
+import CalendarIcon from '@atlaskit/icon/glyph/calendar'
+import EmojiObjectsIcon from '@atlaskit/icon/glyph/emoji/objects'
+import EmojiNatureIcon from '@atlaskit/icon/glyph/emoji/nature'
+import EmojiTravelIcon from '@atlaskit/icon/glyph/emoji/travel'
 
 const createItems = [
   {
@@ -46,12 +46,12 @@ const createItems = [
       ],
     ],
   },
-];
+]
 
 export default class CreateDrawer extends Component {
   static propTypes = {
     onItemClicked: PropTypes.func,
-  };
+  }
 
   render() {
     return (
@@ -59,7 +59,7 @@ export default class CreateDrawer extends Component {
         {createItems.map(itemGroup => (
           <AkNavigationItemGroup key={itemGroup.title} title={itemGroup.title}>
             {itemGroup.items.map(item => {
-              const [url, text, label, Icon] = item;
+              const [url, text, label, Icon] = item
               return (
                 <AkNavigationItem
                   key={url}
@@ -68,11 +68,11 @@ export default class CreateDrawer extends Component {
                   text={text.valueOf()}
                   onClick={this.props.onItemClicked}
                 />
-              );
+              )
             })}
           </AkNavigationItemGroup>
         ))}
       </div>
-    );
+    )
   }
 }

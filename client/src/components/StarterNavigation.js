@@ -1,5 +1,5 @@
-import React, { useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useContext } from 'react'
+import { Link } from 'react-router-dom'
 // import { __RouterContext } from 'react-router';
 
 import Nav, {
@@ -7,32 +7,26 @@ import Nav, {
   AkCreateDrawer,
   AkNavigationItem,
   AkSearchDrawer,
-} from '@atlaskit/navigation';
-import DashboardIcon from '@atlaskit/icon/glyph/dashboard';
-import RoadmapIcon from '@atlaskit/icon/glyph/roadmap';
-import IssuesIcon from '@atlaskit/icon/glyph/issues';
-import PeopleIcon from '@atlaskit/icon/glyph/people';
-import CalendarIcon from '@atlaskit/icon/glyph/calendar';
-import SearchIcon from '@atlaskit/icon/glyph/search';
-import CreateIcon from '@atlaskit/icon/glyph/add';
-import AtlassianIcon from '@atlaskit/icon/glyph/atlassian';
-import ArrowleftIcon from '@atlaskit/icon/glyph/arrow-left';
-// import GraphBarIcon from '@atlaskit/icon/glyph/graph-bar';
-// import BacklogIcon from '@atlaskit/icon/glyph/backlog';
-// import BoardIcon from '@atlaskit/icon/glyph/board';
-// import ShipIcon from '@atlaskit/icon/glyph/ship';
-// import GraphLineIcon from '@atlaskit/icon/glyph/graph-line';
-// import GearIcon from '@atlaskit/icon/glyph/settings';
+} from '@atlaskit/navigation'
+import DashboardIcon from '@atlaskit/icon/glyph/dashboard'
+import RoadmapIcon from '@atlaskit/icon/glyph/roadmap'
+import IssuesIcon from '@atlaskit/icon/glyph/issues'
+import PeopleIcon from '@atlaskit/icon/glyph/people'
+import CalendarIcon from '@atlaskit/icon/glyph/calendar'
+import SearchIcon from '@atlaskit/icon/glyph/search'
+import CreateIcon from '@atlaskit/icon/glyph/add'
+import AtlassianIcon from '@atlaskit/icon/glyph/atlassian'
+import ArrowleftIcon from '@atlaskit/icon/glyph/arrow-left'
 
-import CreateDrawer from './CreateDrawer';
-import SearchDrawer from './SearchDrawer';
-import HelpDropdownMenu from './HelpDropdownMenu';
-import AccountDropdownMenu from './AccountDropdownMenu';
-import Logo from '../images/viewavatar.svg';
-import { NavContext } from '../context/NavContext';
+import CreateDrawer from './CreateDrawer'
+import SearchDrawer from './SearchDrawer'
+import HelpDropdownMenu from './HelpDropdownMenu'
+import AccountDropdownMenu from './AccountDropdownMenu'
+import Logo from '../images/viewavatar.svg'
+import { NavContext } from '../context/NavContext'
 
 export default function StarterNavigation() {
-  const { navOpenState, onNavResize } = useContext(NavContext);
+  const { navOpenState, onNavResize } = useContext(NavContext)
   // const router = useContext(__RouterContext);
   const [state, setState] = useState({
     navLinks: [
@@ -42,16 +36,16 @@ export default function StarterNavigation() {
       ['/resources', 'People', PeopleIcon],
       ['/absences', 'Calendar', CalendarIcon],
     ],
-  });
+  })
 
   function openDrawer(drawer) {
-    setState({ openDrawer: drawer });
+    setState({ openDrawer: drawer })
   }
 
-  const backIcon = <ArrowleftIcon label="Back icon" size="medium" />;
+  const backIcon = <ArrowleftIcon label="Back icon" size="medium" />
   const globalPrimaryIcon = (
     <AtlassianIcon label="Atlassian icon" size="xlarge" />
-  );
+  )
 
   return (
     <Nav
@@ -101,7 +95,7 @@ export default function StarterNavigation() {
       onCreateDrawerOpen={() => openDrawer('create')}
     >
       {state.navLinks.map(link => {
-        const [url, title, Icon] = link;
+        const [url, title, Icon] = link
         return (
           <Link key={url} to={url}>
             <AkNavigationItem
@@ -110,8 +104,8 @@ export default function StarterNavigation() {
               // isSelected={router.isActive(url, true)}
             />
           </Link>
-        );
+        )
       }, this)}
     </Nav>
-  );
+  )
 }
