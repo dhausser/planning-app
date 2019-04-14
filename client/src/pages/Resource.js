@@ -12,8 +12,8 @@ import IssueList from '../components/IssueList'
 import Filters from '../components/Filters'
 import PageTitle from '../components/PageTitle'
 import HolidayList from '../components/HolidayList'
-import { fetchIssues } from './Issues'
 import { FilterContext } from '../context/FilterContext'
+import { useIssues } from './Issues'
 
 export default function Resource(props) {
   const { resourceId } = props.match.params
@@ -84,32 +84,4 @@ function useAbsences(resourceId) {
     }
   }, [resourceId])
   return absences
-}
-
-function useIssues(jql) {
-  const [data, setData] = useState({ issues: [], isLoading: true })
-  useEffect(() => {
-    let ignore = false
-    fetchIssues(
-      {
-        jql,
-        fields: [
-          'summary',
-          'description',
-          'status',
-          'assignee',
-          'creator',
-          'issuetype',
-          'priority',
-          'fixVersions',
-        ],
-      },
-      setData,
-      ignore
-    )
-    return () => {
-      ignore = true
-    }
-  }, [jql])
-  return data
 }

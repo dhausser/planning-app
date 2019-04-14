@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import TableTree, {
   Headers,
@@ -12,25 +12,35 @@ import { Status } from '@atlaskit/status'
 import ContentWrapper, { Center } from '../components/ContentWrapper'
 import PageTitle from '../components/PageTitle'
 import { getIcon } from '../components/Icon'
-import { fetchIssues } from './Issues'
-import { FilterContext } from '../context/FilterContext'
 import Filters from '../components/Filters'
+import { FilterContext } from '../context/FilterContext'
+import { useIssues } from './Issues'
+import { projectId } from '../credentials'
 
 export default function Roadmap() {
   const { fixVersion } = useContext(FilterContext)
   const epics = useIssues(
-    `project = 10500 AND fixVersion = ${fixVersion.id} AND issuetype = epic`
-  )
-  const stories = useIssues(
-    `project = 10500 AND fixVersion = ${
+    `project = ${projectId} AND fixVersion = ${
       fixVersion.id
-    } AND "Epic Link" in (${epics.issues.map(({ id }) => id)})`
+    } AND issuetype = epic`
   )
+  const epicChildren = useIssues(
+    `project=${projectId} AND fixVersion = ${
+      fixVersion.id
+    } AND 'Epic Link' in (10013)`
+    // ${epics.issues.map(({ id }) => id)}
+  )
+  if (epics.issues.length) {
+    epics.issues[0].children = epicChildren.issues
+  }
+
+  console.log(epics)
+
   return (
     <ContentWrapper>
       <PageTitle>Roadmap</PageTitle>
       <Filters />
-      {stories.isLoading ? (
+      {epics.isLoading ? (
         <Center>
           <Spinner size="large" />
         </Center>
@@ -67,63 +77,42 @@ export default function Roadmap() {
   )
 }
 
-function useIssues(jql) {
-  const [data, setData] = useState({ issues: [], isLoading: true })
-  useEffect(() => {
-    let ignore = false
-    fetchIssues(
-      {
-        jql,
-        fields: ['summary', 'status', 'issuetype', 'priority'],
-      },
-      setData,
-      ignore
-    )
-    return () => {
-      ignore = true
-    }
-  }, [jql])
-  return data
-}
-
 function convertIssues(issues) {
   return issues.map(issue => ({
-    type: getIcon[issue.fields.issuetype.name],
+    type: getIcon[issue.type],
     key: issue.key,
-    summary: issue.fields.summary,
-    value: getIcon[issue.fields.priority.name],
+    summary: issue.summary,
+    value: getIcon[issue.priority],
     status: (
-      <Status
-        text={issue.fields.status.name}
-        color={getIcon[issue.fields.status.statusCategory.key]}
-      />
+      <Status text={issue.status.name} color={getIcon[issue.status.category]} />
     ),
     children:
       issue.children &&
       issue.children.map(child => ({
-        type: getIcon[child.fields.issuetype.name],
+        type: getIcon[child.type],
         key: child.key,
-        summary: child.fields.summary,
-        value: getIcon[child.fields.priority.name],
+        summary: child.summary,
+        value: getIcon[child.priority],
         status: (
           <Status
-            text={child.fields.status.name}
-            color={getIcon[child.fields.status.statusCategory.key]}
+            text={child.status.name}
+            color={getIcon[child.status.category]}
           />
         ),
-        children: child.fields.subtasks.map(subtask => ({
-          type: getIcon[subtask.fields.issuetype.name],
-          key: subtask.key,
-          summary: subtask.fields.summary,
-          value: getIcon[subtask.fields.priority.name],
-          status: (
-            <Status
-              text={subtask.fields.status.name}
-              color={getIcon[subtask.fields.status.statusCategory.key]}
-            />
-          ),
-          children: [],
-        })),
+        children: [],
+        //   child.fields.subtasks.map(subtask => ({
+        //   type: getIcon[subtask.fields.issuetype.name],
+        //   key: subtask.key,
+        //   summary: subtask.fields.summary,
+        //   value: getIcon[subtask.fields.priority.name],
+        //   status: (
+        //     <Status
+        //       text={subtask.fields.status.name}
+        //       color={getIcon[subtask.fields.status.statusCategory.key]}
+        //     />
+        //   ),
+        //   children: [],
+        // })),
       })),
   }))
 }
