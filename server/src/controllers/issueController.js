@@ -4,13 +4,15 @@ export default class IssueAPI {
   static searchIssues(request, response) {
     const { options, bodyData } = request.body
     const req = https.request(options, res => {
-      // console.log(`STATUS: ${res.statusCode}`);
-      // console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
+      console.log('statusCode:', res.statusCode)
+      console.log('headers:', res.headers)
+
       let rawData = ''
-      res.setEncoding('utf8')
+
       res.on('data', chunk => {
         rawData += chunk
       })
+
       res.on('end', () => {
         try {
           response.json(JSON.parse(rawData))

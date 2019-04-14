@@ -4,17 +4,6 @@ import absenceController from '../controllers/absenceController'
 
 const router = express.Router()
 
-function catchErrors(fn) {
-  return function(req, res, next) {
-    return fn(req, res, next).catch(next)
-  }
-}
-
-// Routes to MongoDB
-// router.get('/api/resources', catchErrors(resourceController.getResources))
-// router.get('/api/teams', catchErrors(resourceController.getTeams))
-// router.get('/api/holidays', catchErrors(holidayController.getHolidays))
-
 // Routes to CD Projekt RED Portal
 router.get('/api/absences', absenceController.getAbsences)
 
