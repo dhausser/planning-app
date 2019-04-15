@@ -21,7 +21,7 @@ import ContentWrapper, {
 } from '../components/ContentWrapper';
 import PageTitle from '../components/PageTitle';
 import { getIcon } from '../components/Icon';
-import { host } from '../credentials';
+import { hostname } from '../credentials';
 
 const GET_ISSUE = gql`
   query GetIssueById($id: ID!) {
@@ -78,7 +78,7 @@ export default function Issue(props) {
                 <Avatar
                   name={issue.assignee.name}
                   size="large"
-                  src={`https://${host}/secure/useravatar?ownerId=${
+                  src={`https://${hostname}/secure/useravatar?ownerId=${
                     issue.assignee.key
                   }`}
                 />
@@ -103,7 +103,7 @@ export default function Issue(props) {
           <ContentWrapper>
             <PageTitle>{issue.summary}</PageTitle>
             <a
-              href={`https://${host}/browse/${issue.key}`}
+              href={`https://${hostname}/browse/${issue.key}`}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -147,7 +147,7 @@ export default function Issue(props) {
                 key={comment.id}
                 avatar={
                   <Avatar
-                    src={`https://${host}/secure/useravatar?ownerId=${
+                    src={`https://${hostname}/secure/useravatar?ownerId=${
                       comment.author.key
                     }`}
                     label="Atlaskit avatar"
@@ -274,6 +274,6 @@ function postData(url = ``, data = {}) {
 //     comments,
 //     readValue: defautlValue,
 //     editValue: defautlValue,
-//     host: 'jira.cdprojektred.com',
+//     name: 'jira.cdprojektred.com',
 //   });
 // };

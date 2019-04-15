@@ -94,42 +94,6 @@ export default function Filters() {
   );
 }
 
-// function useData(setIsLoading) {
-//   const [teams, setTeams] = useState([]);
-//   const [fixVersions, setFixVersions] = useState([]);
-//   useEffect(() => {
-//     let ignore = false;
-//     fetchData(setTeams, setFixVersions, ignore, setIsLoading);
-//     return () => {
-//       ignore = true;
-//     };
-//   }, [setIsLoading]);
-//   return { teams, fixVersions };
-// }
-
-// async function fetchData(setTeams, setFixVersions, ignore, setIsLoading) {
-//   const resource = `/project/10500/version?startAt=59&maxResults=5&orderBy=+releaseDate&status=unreleased`;
-//   const [teamPromise, fixVersionPromise] = await Promise.all([
-//     fetch('/api/teams'),
-//     fetch('/api/fixVersions', {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//       body: JSON.stringify({ Authorization, resource }),
-//     }),
-//   ]);
-//   const [teams, fixVersions] = await Promise.all([
-//     teamPromise.json(),
-//     fixVersionPromise.json(),
-//   ]);
-//   if (!ignore) {
-//     setTeams(teams);
-//     setFixVersions(fixVersions.values);
-//     setIsLoading(false);
-//   }
-// }
-
 //   // Reinstate localstorage
 //   const team = localStorage.getItem('team')
 //     ? JSON.parse(localStorage.getItem('team'))

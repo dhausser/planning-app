@@ -11,7 +11,7 @@ export default class AbsenceAPI extends RESTDataSource {
   }
 
   async getAllAbsences() {
-    const response = await this.get('user_absences')
+    const response = await this.get()
     return Array.isArray(response) ? response : []
   }
 
