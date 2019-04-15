@@ -35,7 +35,6 @@
     "@atlaskit/theme": "^6.0.1",
     "@atlaskit/tooltip": "^13.0.2",
     "chart.js": "^2.8.0",
-    "prop-types": "^15.6.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-intl": "^2.8.0",

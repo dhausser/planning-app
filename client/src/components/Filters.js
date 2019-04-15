@@ -106,7 +106,7 @@ async function fetchData(setTeams, setFixVersions, ignore, setIsLoading) {
       body: JSON.stringify({
         query: `
       {
-        versions(id: ${projectId}, pageSize: 5, after: 0) {
+        versions(id: ${projectId}, pageSize: 5, after: 3) {
           id
           name
           description

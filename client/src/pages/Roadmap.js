@@ -15,7 +15,7 @@ import { getIcon } from '../components/Icon'
 import Filters from '../components/Filters'
 import { FilterContext } from '../context/FilterContext'
 import { useIssues } from './Issues'
-import { projectId } from '../credentials'
+import { projectId, epicIds } from '../credentials'
 
 export default function Roadmap() {
   const { fixVersion } = useContext(FilterContext)
@@ -40,11 +40,9 @@ export default function Roadmap() {
     }
   }`
 
-  // ${epics.issues.map(({ id }) => id)}
-  const epicId = 10013
   jql = `project=${projectId} AND fixVersion = ${
     fixVersion.id
-  } AND 'Epic Link' in (${epicId})`
+  } AND 'Epic Link' in (${epicIds})`
   const childrenQuery = `{
     issues(jql: "${jql}", pageSize: 10, after: 0) {
       startAt

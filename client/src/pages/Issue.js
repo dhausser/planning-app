@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import PropTypes from 'prop-types'
-
 import Spinner from '@atlaskit/spinner'
 import EmptyState from '@atlaskit/empty-state'
 import { Status } from '@atlaskit/status'
@@ -48,10 +46,6 @@ export default class Issue extends Component {
     comments: [],
     editValue: '',
     readValue: '',
-  }
-
-  static propTypes = {
-    params: PropTypes.object,
   }
 
   componentDidMount = async () => {
