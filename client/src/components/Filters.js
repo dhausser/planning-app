@@ -22,6 +22,10 @@ const GET_TEAMS = gql`
   query GetTeams {
     teams {
       _id
+      size
+      members {
+        key
+      }
     }
   }
 `;
@@ -40,6 +44,10 @@ export default function Filters() {
         >
           {({ data, loading, error }) => {
             if (error) return <p>ERROR</p>;
+
+            /**
+             * TODO: Add fixVersion to context
+             */
 
             return (
               <DropdownMenu
@@ -73,6 +81,10 @@ export default function Filters() {
                 </Button>
               );
             if (error) return <p>ERROR</p>;
+
+            /**
+             * TODO: Add teams to context
+             */
 
             return data.teams.map(team => (
               <Button
