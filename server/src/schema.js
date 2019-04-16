@@ -52,7 +52,7 @@ export default gql`
   }
 
   type Resource {
-    id: ID!
+    id: ID
     key: String
     name: String
     team: String

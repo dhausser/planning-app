@@ -36,7 +36,7 @@ export default function Filters() {
       <ButtonGroup>
         <Query
           query={GET_VERSIONS}
-          variables={{ id: projectId, pageSize: 5, after: 0 }}
+          variables={{ id: projectId, pageSize: 5, after: 5 }}
         >
           {({ data, loading, error }) => {
             if (error) return <p>ERROR</p>;

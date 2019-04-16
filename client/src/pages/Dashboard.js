@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import Spinner from '@atlaskit/spinner';
@@ -16,7 +16,7 @@ const GET_ISSUES = gql`
       maxResults
       total
       issues {
-        fixVersion {
+        fixVersions {
           id
           name
         }
@@ -38,7 +38,7 @@ export default function Dashboard() {
     <ContentWrapper>
       <PageTitle>Dashboard</PageTitle>
       <Filters />
-      <Query query={GET_ISSUES} variables={{ jql, pageSize: 250 }}>
+      <Query query={GET_ISSUES} variables={{ jql, pageSize: 1250 }}>
         {({ data, loading, error }) => {
           if (loading) return <Spinner />;
           if (error)
@@ -49,7 +49,18 @@ export default function Dashboard() {
               />
             );
 
-          return <BarChart dataset={aggregateIssues(data.issues.issues)} />;
+          return (
+            <Fragment>
+              <h5>
+                Displaying{' '}
+                {data.issues.maxResults > data.issues.total
+                  ? data.issues.total
+                  : data.issues.maxResults}{' '}
+                of {data.issues.total} issues in fixVersion
+              </h5>
+              <BarChart dataset={aggregateIssues(data.issues.issues)} />
+            </Fragment>
+          );
         }}
       </Query>
     </ContentWrapper>
@@ -59,7 +70,7 @@ export default function Dashboard() {
 function aggregateIssues(issues) {
   if (!issues) return [];
   return issues.reduce((resources, issue) => {
-    if (issue.assignee) {
+    if (issue.assignee && issue.assignee.name) {
       const name = issue.assignee.name.split(' ').shift();
       if (!resources[name]) {
         resources[name] = 0;
