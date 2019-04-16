@@ -1,53 +1,21 @@
-import React, { Fragment, useContext } from 'react';
-import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
-import Avatar from '@atlaskit/avatar';
-import Calendar from '@atlaskit/calendar';
-import EmptyState from '@atlaskit/empty-state';
-import Spinner from '@atlaskit/spinner';
+import React, { Fragment, useContext } from 'react'
+import { Query } from 'react-apollo'
+import gql from 'graphql-tag'
+import Avatar from '@atlaskit/avatar'
+import Calendar from '@atlaskit/calendar'
+import EmptyState from '@atlaskit/empty-state'
+import Spinner from '@atlaskit/spinner'
 import ContentWrapper, {
   NameWrapper,
   AvatarWrapper,
   Center,
-} from '../components/ContentWrapper';
-import IssueList from '../components/IssueList';
-import Filters from '../components/Filters';
-import PageTitle from '../components/PageTitle';
-import HolidayList from '../components/HolidayList';
-import { FilterContext } from '../context/FilterContext';
-
-const GET_ISSUES = gql`
-  query issueList($jql: String, $pageSize: Int!) {
-    issues(jql: $jql, pageSize: $pageSize) {
-      startAt
-      maxResults
-      total
-      issues {
-        id
-        key
-        summary
-        type
-        priority
-        status {
-          name
-          category
-        }
-        fixVersion {
-          id
-          name
-        }
-        assignee {
-          id
-          name
-        }
-        reporter {
-          id
-          name
-        }
-      }
-    }
-  }
-`;
+} from '../components/ContentWrapper'
+import IssueList from '../components/IssueList'
+import Filters from '../components/Filters'
+import PageTitle from '../components/PageTitle'
+import HolidayList from '../components/HolidayList'
+import { FilterContext } from '../context/FilterContext'
+import { GET_ISSUES } from './Issues'
 
 const GET_ABSENCES = gql`
   query absenceList($id: ID!) {
@@ -56,12 +24,11 @@ const GET_ABSENCES = gql`
       date
     }
   }
-`;
+`
 
 export default function Resource(props) {
-  const { fixVersion } = useContext(FilterContext);
-  const { resourceId } = props.match.params;
-  const jql = `assignee=${resourceId} AND fixVersion=${fixVersion.id}`;
+  const { fixVersion } = useContext(FilterContext)
+  const { resourceId } = props.match.params
 
   return (
     <ContentWrapper>
@@ -87,21 +54,22 @@ export default function Resource(props) {
           View in Issue Navigator
         </a>
       </p>
-      <Query query={GET_ISSUES} variables={{ jql, pageSize: 10 }}>
+      <Query
+        query={GET_ISSUES}
+        variables={{
+          jql: `assignee=${resourceId} AND fixVersion=${fixVersion.id}`,
+          pageSize: 10,
+        }}
+      >
         {({ data, loading, error }) => {
           if (loading)
             return (
               <Center>
                 <Spinner size="large" />
               </Center>
-            );
+            )
           if (error)
-            return (
-              <EmptyState
-                header="This person doesn't exist"
-                description={`The person you are trying to lookup isn't currently recorded in the database.`}
-              />
-            );
+            return <EmptyState header="Error" description={error.message} />
           return (
             <IssueList
               issues={data.issues.issues ? data.issues.issues : []}
@@ -110,7 +78,7 @@ export default function Resource(props) {
               pathname={props.location.pathname}
               isLoading={loading}
             />
-          );
+          )
         }}
       </Query>
       <Query query={GET_ABSENCES} variables={{ id: resourceId }}>
@@ -120,16 +88,16 @@ export default function Resource(props) {
               <Center>
                 <Spinner size="large" />
               </Center>
-            );
-          if (error) return <p>Error</p>;
+            )
+          if (error) return <p>Error</p>
           return (
             <Fragment>
               <HolidayList absences={data.absences} isLoading={loading} />
               <Calendar day={0} defaultDisabled={data.absences} />
             </Fragment>
-          );
+          )
         }}
       </Query>
     </ContentWrapper>
-  );
+  )
 }

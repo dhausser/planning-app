@@ -1,12 +1,12 @@
-import React from 'react';
-import { fixVersion } from '../credentials';
+import React from 'react'
+import { fixVersion } from '../credentials'
 
 function setTeamFilter(args) {
-  console.log(`Setting Team...${args.name}`);
+  console.log(`Setting Team...${args.name}`)
 }
 
 function setFixVersion(args) {
-  console.log(`Setting FixVersion...${args}`);
+  console.log(`Setting FixVersion...${args}`)
 }
 
 export const FilterContext = React.createContext({
@@ -15,4 +15,4 @@ export const FilterContext = React.createContext({
   teamFilter: null,
   setTeamFilter,
   setFixVersion,
-});
+})

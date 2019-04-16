@@ -1,13 +1,13 @@
-import React, { Fragment, useContext } from 'react';
-import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
-import Button, { ButtonGroup } from '@atlaskit/button';
+import React, { Fragment, useContext } from 'react'
+import { Query } from 'react-apollo'
+import gql from 'graphql-tag'
+import Button, { ButtonGroup } from '@atlaskit/button'
 import DropdownMenu, {
   DropdownItemGroup,
   DropdownItem,
-} from '@atlaskit/dropdown-menu';
-import { FilterContext } from '../context/FilterContext';
-import { projectId } from '../credentials';
+} from '@atlaskit/dropdown-menu'
+import { FilterContext } from '../context/FilterContext'
+import { projectId } from '../credentials'
 
 const GET_VERSIONS = gql`
   query GetVersions($id: ID!, $pageSize: Int, $after: Int) {
@@ -16,7 +16,7 @@ const GET_VERSIONS = gql`
       name
     }
   }
-`;
+`
 
 const GET_TEAMS = gql`
   query GetTeams {
@@ -28,12 +28,12 @@ const GET_TEAMS = gql`
       }
     }
   }
-`;
+`
 
 export default function Filters() {
   const { teamFilter, setTeamFilter, fixVersion, setFixVersion } = useContext(
-    FilterContext
-  );
+    FilterContext,
+  )
 
   return (
     <Fragment>
@@ -43,7 +43,7 @@ export default function Filters() {
           variables={{ id: projectId, pageSize: 5, after: 5 }}
         >
           {({ data, loading, error }) => {
-            if (error) return <p>ERROR</p>;
+            if (error) return <p>ERROR</p>
 
             /**
              * TODO: Add fixVersion to context
@@ -69,7 +69,7 @@ export default function Filters() {
                     ))}
                 </DropdownItemGroup>
               </DropdownMenu>
-            );
+            )
           }}
         </Query>
         <Query query={GET_TEAMS}>
@@ -79,8 +79,8 @@ export default function Filters() {
                 <Button key="team" isLoading={loading} appearance="subtle">
                   Teams
                 </Button>
-              );
-            if (error) return <p>ERROR</p>;
+              )
+            if (error) return <p>ERROR</p>
 
             /**
              * TODO: Add teams to context
@@ -98,12 +98,12 @@ export default function Filters() {
               >
                 {team._id}
               </Button>
-            ));
+            ))
           }}
         </Query>
       </ButtonGroup>
     </Fragment>
-  );
+  )
 }
 
 //   // Reinstate localstorage

@@ -1,27 +1,27 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
-import Spinner from '@atlaskit/spinner';
-import EmptyState from '@atlaskit/empty-state';
-import { Status } from '@atlaskit/status';
-import InlineEdit, { SingleLineTextInput } from '@atlaskit/inline-edit';
-import Avatar from '@atlaskit/avatar';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { Query } from 'react-apollo'
+import gql from 'graphql-tag'
+import Spinner from '@atlaskit/spinner'
+import EmptyState from '@atlaskit/empty-state'
+import { Status } from '@atlaskit/status'
+import InlineEdit, { SingleLineTextInput } from '@atlaskit/inline-edit'
+import Avatar from '@atlaskit/avatar'
 import Comment, {
   CommentAction,
   CommentAuthor,
   CommentEdited,
   CommentTime,
-} from '@atlaskit/comment';
+} from '@atlaskit/comment'
 
 import ContentWrapper, {
   NameWrapper,
   AvatarWrapper,
   Center,
-} from '../components/ContentWrapper';
-import PageTitle from '../components/PageTitle';
-import { getIcon } from '../components/Icon';
-import { hostname } from '../credentials';
+} from '../components/ContentWrapper'
+import PageTitle from '../components/PageTitle'
+import { getIcon } from '../components/Icon'
+import { hostname } from '../credentials'
 
 const GET_ISSUE = gql`
   query GetIssueById($id: ID!) {
@@ -49,28 +49,28 @@ const GET_ISSUE = gql`
       }
     }
   }
-`;
+`
 
 export default function Issue(props) {
   return (
     <Query query={GET_ISSUE} variables={{ id: props.match.params.issueId }}>
       {({ data, loading, error }) => {
-        const id = 'inline-edit-single';
-        const { issue } = data;
+        const id = 'inline-edit-single'
+        const { issue } = data
 
         if (loading)
           return (
             <Center>
               <Spinner size="large" />
             </Center>
-          );
+          )
 
         if (error)
           return issue.errorMessages.map(error => (
             <EmptyState key={error} header="Error" description={error} />
-          ));
+          ))
 
-        let assignee = '';
+        let assignee = ''
         if (issue.assignee) {
           assignee = (
             <NameWrapper>
@@ -79,15 +79,15 @@ export default function Issue(props) {
                   name={issue.assignee.name}
                   size="large"
                   src={`https://${hostname}/secure/useravatar?ownerId=${
-                    issue.assignee.key
+                    issue.assignee.id
                   }`}
                 />
               </AvatarWrapper>
-              <Link to={`/resource/${issue.assignee.key}`}>
+              <Link to={`/resource/${issue.assignee.id}`}>
                 {issue.assignee.name}
               </Link>
             </NameWrapper>
-          );
+          )
         } else {
           assignee = (
             <NameWrapper>
@@ -96,7 +96,7 @@ export default function Issue(props) {
               </AvatarWrapper>
               Unassigned
             </NameWrapper>
-          );
+          )
         }
 
         return (
@@ -185,15 +185,15 @@ export default function Issue(props) {
               {...props}
             />
           </ContentWrapper>
-        );
+        )
       }}
     </Query>
-  );
+  )
 }
 
 function onConfirm() {
-  const { readValue, editValue } = this.state;
-  this.setState({ readValue: editValue });
+  const { readValue, editValue } = this.state
+  this.setState({ readValue: editValue })
   postData('/api/issue', {
     key: this.state.issue.key,
     summary: this.state.editValue,
@@ -202,36 +202,36 @@ function onConfirm() {
       switch (data) {
         case 400:
           console.log(
-            'STATUS 400: Returned if the requested issue update failed.'
-          );
-          this.setState({ readValue });
-          break;
+            'STATUS 400: Returned if the requested issue update failed.',
+          )
+          this.setState({ readValue })
+          break
         case 204:
           console.log(
-            'STATUS 204: Returned if it updated the issue successfully.'
-          );
-          break;
+            'STATUS 204: Returned if it updated the issue successfully.',
+          )
+          break
         case 403:
           console.log(
-            'STATUS 403: Returned if the user doesnt have permissions to disable users notification.'
-          );
-          this.setState({ readValue });
-          break;
+            'STATUS 403: Returned if the user doesnt have permissions to disable users notification.',
+          )
+          this.setState({ readValue })
+          break
         default:
-          break;
+          break
       }
     })
-    .catch(error => console.error(error));
+    .catch(error => console.error(error))
 }
 
 function onCancel() {
-  this.setState(state => ({ editValue: state.readValue }));
+  this.setState(state => ({ editValue: state.readValue }))
 }
 
 function onChange(event) {
   this.setState({
     editValue: event.target.value,
-  });
+  })
 }
 
 function renderInput({ editValue, isEditing, id }) {
@@ -243,7 +243,7 @@ function renderInput({ editValue, isEditing, id }) {
       value={editValue}
       onChange={onChange}
     />
-  );
+  )
 }
 function postData(url = ``, data = {}) {
   return fetch(url, {
@@ -257,7 +257,7 @@ function postData(url = ``, data = {}) {
     redirect: 'follow',
     referrer: 'no-referrer',
     body: JSON.stringify(data),
-  }).then(response => response.json());
+  }).then(response => response.json())
 }
 
 // componentDidMount = async () => {

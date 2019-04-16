@@ -1,23 +1,23 @@
-import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
-import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
+import React, { useState, useContext } from 'react'
+import { Link } from 'react-router-dom'
+import { Query } from 'react-apollo'
+import gql from 'graphql-tag'
 import TableTree, {
   Headers,
   Header,
   Rows,
   Row,
   Cell,
-} from '@atlaskit/table-tree';
-import Spinner from '@atlaskit/spinner';
-import EmptyState from '@atlaskit/empty-state';
-import { Status } from '@atlaskit/status';
-import ContentWrapper from '../components/ContentWrapper';
-import PageTitle from '../components/PageTitle';
-import { getIcon } from '../components/Icon';
-import { FilterContext } from '../context/FilterContext';
-import Filters from '../components/Filters';
-import { projectId } from '../credentials';
+} from '@atlaskit/table-tree'
+import Spinner from '@atlaskit/spinner'
+import EmptyState from '@atlaskit/empty-state'
+import { Status } from '@atlaskit/status'
+import ContentWrapper from '../components/ContentWrapper'
+import PageTitle from '../components/PageTitle'
+import { getIcon } from '../components/Icon'
+import { FilterContext } from '../context/FilterContext'
+import Filters from '../components/Filters'
+import { projectId } from '../credentials'
 
 const GET_ISSUES = gql`
   query issueList($jql: String, $pageSize: Int!) {
@@ -38,27 +38,35 @@ const GET_ISSUES = gql`
       }
     }
   }
-`;
+`
 
 export default function Roadmap() {
-  const { fixVersion } = useContext(FilterContext);
+  const { fixVersion } = useContext(FilterContext)
+  const [epicChildren, setEpicChildren] = useState([])
   const epicsJql = `project = ${projectId} AND fixVersion = ${
     fixVersion.id
-  } AND issuetype = epic`;
+  } AND issuetype = epic`
   return (
     <ContentWrapper>
       <PageTitle>Roadmap</PageTitle>
       <Filters />
       <Query query={GET_ISSUES} variables={{ jql: epicsJql, pageSize: 10 }}>
         {({ data, loading, error }) => {
-          if (loading) return <Spinner />;
+          if (loading) return <Spinner />
           if (error)
-            return (
-              <EmptyState
-                header="Fail"
-                description="Something must be wrong with the request."
-              />
-            );
+            return <EmptyState header="Fail" description={error.message} />
+
+          const {
+            issues: { issues },
+          } = data
+          if (issues.length) {
+            issues.map(issue => {
+              getEpicChildren(issue.id, fixVersion, setEpicChildren)
+              // issue.children = convertIssues(children)
+              return issue
+            })
+          }
+
           return (
             <TableTree>
               <Headers>
@@ -70,14 +78,6 @@ export default function Roadmap() {
               <Rows
                 items={convertIssues(data.issues.issues)}
                 render={({ type, key, summary, value, status, children }) => (
-                  // if (type === 'Epic') {
-                  //   <Query
-                  //     query={GET_ISSUES}
-                  //     variables={{ jql: `"Epic Link"=${key}`, pageSize: 50 }}
-                  //   >
-                  //     {({ data, loading, error }) => data.issues.issues}
-                  //   </Query>;
-                  // }
                   <Row
                     expandLabel="Expand"
                     collapseLabel="Collapse"
@@ -95,11 +95,11 @@ export default function Roadmap() {
                 )}
               />
             </TableTree>
-          );
+          )
         }}
       </Query>
     </ContentWrapper>
-  );
+  )
 }
 
 function convertIssues(issues) {
@@ -138,5 +138,56 @@ function convertIssues(issues) {
           children: [],
         })),
       })),
-  }));
+  }))
+}
+
+function getEpicChildren(epicIds, fixVersion, setEpicChildren) {
+  const jql = `project=${projectId} AND fixVersion = ${
+    fixVersion.id
+  } AND 'Epic Link' in (${epicIds})`
+
+  const GET_EPIC_CHILDREN = gql`
+    query issueList($jql: String, $pageSize: Int!) {
+      issues(jql: $jql, pageSize: $pageSize) {
+        startAt
+        maxResults
+        total
+        issues {
+          summary
+          type
+          priority
+          status {
+            name
+            category
+          }
+          subtasks {
+            summary
+            type
+            priority
+            status {
+              name
+              category
+            }
+          }
+        }
+      }
+    }
+  `
+
+  return (
+    <Query query={GET_EPIC_CHILDREN} variables={{ jql, pageSize: 10 }}>
+      {({ data, loading, error }) => {
+        if (loading) return <Spinner />
+        if (error)
+          return <EmptyState header="Error" description={error.message} />
+
+        const {
+          issues: { issues },
+        } = data
+        console.log(issues)
+        setEpicChildren(issues)
+        return null
+      }}
+    </Query>
+  )
 }
