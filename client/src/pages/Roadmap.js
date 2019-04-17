@@ -113,10 +113,15 @@ export default function Roadmap() {
                 )
 
               if (epics.issues.length) {
+                // 1. Check if parent is epic
                 epics.issues.forEach(issue => {
                   issue.children = epicChildren.issues
                 })
               }
+
+              /**
+               * TODO: key for chidren links and row layout formatting
+               */
 
               return (
                 <ContentWrapper>
