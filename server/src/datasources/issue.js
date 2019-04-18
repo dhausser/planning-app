@@ -11,6 +11,8 @@ const fields = [
   'fixVersions',
   'comment',
   'subtasks',
+  'customfield_10006',
+  'customfield_20700',
 ]
 
 export default class IssueAPI extends RESTDataSource {
@@ -81,6 +83,7 @@ export default class IssueAPI extends RESTDataSource {
       subtasks:
         issue.fields.subtasks &&
         issue.fields.subtasks.map(subtask => this.issueReducer(subtask)),
+      parent: issue.fields.customfield_10006 || issue.fields.customfield_20700,
     }
   }
 

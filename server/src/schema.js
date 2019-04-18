@@ -32,6 +32,7 @@ export default gql`
     reporter: Resource
     comments: [Comment]
     subtasks: [Issue]
+    parent: String
   }
 
   type Comment {

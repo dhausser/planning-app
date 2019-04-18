@@ -65,6 +65,7 @@ const GET_CHILDREN = gql`
             category
           }
         }
+        parent
       }
     }
   }
@@ -115,7 +116,13 @@ export default function Roadmap() {
               if (epics.issues.length) {
                 // 1. Check if parent is epic
                 epics.issues.forEach(issue => {
-                  issue.children = epicChildren.issues
+                  issue.children = []
+                  epicChildren.issues.forEach(child => {
+                    if (child.parent === issue.key) {
+                      issue.children.push(child)
+                    }
+                    return null
+                  })
                 })
               }
 
