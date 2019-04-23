@@ -74,7 +74,10 @@ export default class IssueAPI extends RESTDataSource {
       comments:
         issue.fields.comment &&
         issue.fields.comment.comments.map(comment => ({
-          author: { id: comment.author.key, name: comment.author.displayName },
+          id: comment.id,
+          created: comment.created,
+          updated: comment.updated,
+          author: { key: comment.author.key, name: comment.author.displayName },
           body: comment.body,
         })),
       children:

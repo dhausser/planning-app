@@ -42,10 +42,14 @@ const GET_ISSUE = gql`
         name
       }
       comments {
+        id
         author {
           key
+          name
         }
         body
+        created
+        updated
       }
     }
   }
@@ -154,10 +158,7 @@ export default function Issue(props) {
                     size="medium"
                   />
                 }
-                author={
-                  <CommentAuthor>{comment.author.displayName}</CommentAuthor>
-                }
-                // type="author"
+                author={<CommentAuthor>{comment.author.name}</CommentAuthor>}
                 edited={
                   comment.updated && <CommentEdited>Edited</CommentEdited>
                 }

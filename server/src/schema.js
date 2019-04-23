@@ -36,8 +36,11 @@ export default gql`
   }
 
   type Comment {
+    id: ID!
     author: Resource!
     body: String!
+    created: String!
+    updated: String
   }
 
   type Status {
