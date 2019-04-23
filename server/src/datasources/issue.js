@@ -63,9 +63,6 @@ export default class IssueAPI extends RESTDataSource {
         category: issue.fields.status.statusCategory.key,
       },
       fixVersions: issue.fields.fixVersions,
-      /**
-       * TODO: Error handler for assignee == null
-       */
       assignee: {
         id: issue.fields.assignee && issue.fields.assignee.key,
         name: issue.fields.assignee && issue.fields.assignee.displayName,
@@ -80,7 +77,7 @@ export default class IssueAPI extends RESTDataSource {
           author: { id: comment.author.key, name: comment.author.displayName },
           body: comment.body,
         })),
-      subtasks:
+      children:
         issue.fields.subtasks &&
         issue.fields.subtasks.map(subtask => this.issueReducer(subtask)),
       parent: issue.fields.customfield_10006 || issue.fields.customfield_20700,

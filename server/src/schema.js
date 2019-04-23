@@ -31,7 +31,7 @@ export default gql`
     assignee: Resource
     reporter: Resource
     comments: [Comment]
-    subtasks: [Issue]
+    children: [Issue]
     parent: String
   }
 

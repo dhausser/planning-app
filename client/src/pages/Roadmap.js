@@ -56,7 +56,8 @@ const GET_CHILDREN = gql`
           name
           category
         }
-        subtasks {
+        children {
+          key
           summary
           type
           priority
@@ -70,6 +71,19 @@ const GET_CHILDREN = gql`
     }
   }
 `
+
+const issueReducer = issue => ({
+  key: issue.key,
+  type: getIcon[issue.type],
+  summary: issue.summary,
+  value: getIcon[issue.priority],
+  status: (
+    <Status text={issue.status.name} color={getIcon[issue.status.category]} />
+  ),
+  children: issue.children
+    ? issue.children.map(child => issueReducer(child))
+    : [],
+})
 
 export default function Roadmap() {
   const { fixVersion } = useContext(FilterContext)
@@ -114,7 +128,6 @@ export default function Roadmap() {
                 )
 
               if (epics.issues.length) {
-                // 1. Check if parent is epic
                 epics.issues.forEach(issue => {
                   issue.children = []
                   epicChildren.issues.forEach(child => {
@@ -126,23 +139,19 @@ export default function Roadmap() {
                 })
               }
 
-              /**
-               * TODO: key for chidren links and row layout formatting
-               */
-
               return (
                 <ContentWrapper>
                   <PageTitle>Roadmap</PageTitle>
                   <Filters />
                   <TableTree>
                     <Headers>
-                      <Header width={150}>Type</Header>
-                      <Header width={800}>Summary</Header>
-                      <Header width={100}>Value</Header>
-                      <Header width={200}>Status</Header>
+                      <Header>Type</Header>
+                      <Header>Summary</Header>
+                      <Header>Value</Header>
+                      <Header>Status</Header>
                     </Headers>
                     <Rows
-                      items={issueReducer(epics.issues)}
+                      items={epics.issues.map(issue => issueReducer(issue))}
                       render={({
                         key,
                         summary,
@@ -176,41 +185,4 @@ export default function Roadmap() {
       }}
     </Query>
   )
-}
-
-function issueReducer(issues) {
-  return issues.map(issue => ({
-    key: issue.key,
-    type: getIcon[issue.type],
-    summary: issue.summary,
-    value: getIcon[issue.priority],
-    status: (
-      <Status text={issue.status.name} color={getIcon[issue.status.category]} />
-    ),
-    children:
-      issue.children &&
-      issue.children.map(child => ({
-        type: getIcon[child.type],
-        summary: child.summary,
-        value: getIcon[child.priority],
-        status: (
-          <Status
-            text={child.status.name}
-            color={getIcon[child.status.category]}
-          />
-        ),
-        children: child.subtasks.map(subtask => ({
-          type: getIcon[subtask.type],
-          summary: subtask.summary,
-          value: getIcon[subtask.priority],
-          status: (
-            <Status
-              text={subtask.status.name}
-              color={getIcon[subtask.status.category]}
-            />
-          ),
-          children: [],
-        })),
-      })),
-  }))
 }
