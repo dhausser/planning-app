@@ -76,7 +76,7 @@ const issueReducer = issue => ({
   key: issue.key,
   type: getIcon[issue.type],
   summary: issue.summary,
-  value: getIcon[issue.priority],
+  priority: getIcon[issue.priority],
   status: (
     <Status text={issue.status.name} color={getIcon[issue.status.category]} />
   ),
@@ -145,10 +145,10 @@ export default function Roadmap() {
                   <Filters />
                   <TableTree>
                     <Headers>
-                      <Header>Type</Header>
-                      <Header>Summary</Header>
-                      <Header>Value</Header>
-                      <Header>Status</Header>
+                      <Header width={120}>Type</Header>
+                      <Header width={450}>Summary</Header>
+                      <Header width={70}>Priority</Header>
+                      <Header width={170}>Status</Header>
                     </Headers>
                     <Rows
                       items={epics.issues.map(issue => issueReducer(issue))}
@@ -156,7 +156,7 @@ export default function Roadmap() {
                         key,
                         summary,
                         type,
-                        value,
+                        priority,
                         status,
                         children,
                       }) => (
@@ -171,7 +171,7 @@ export default function Roadmap() {
                           <Cell singleLine>
                             {<Link to={`/issue/${key}`}>{summary}</Link>}
                           </Cell>
-                          <Cell singleLine>{value}</Cell>
+                          <Cell singleLine>{priority}</Cell>
                           <Cell singleLine>{status}</Cell>
                         </Row>
                       )}
