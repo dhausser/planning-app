@@ -39,6 +39,7 @@ const GET_ISSUE = gql`
       }
       assignee {
         id
+        key
         name
       }
       comments {
@@ -60,7 +61,6 @@ export default function Issue(props) {
     <Query query={GET_ISSUE} variables={{ id: props.match.params.issueId }}>
       {({ data, loading, error }) => {
         const id = 'inline-edit-single'
-        const { issue } = data
 
         if (loading)
           return (
@@ -69,11 +69,11 @@ export default function Issue(props) {
             </Center>
           )
 
-        if (error)
-          return issue.errorMessages.map(error => (
-            <EmptyState key={error} header="Error" description={error} />
-          ))
+        if (error) {
+          return <EmptyState key={error} header="Error" description={error} />
+        }
 
+        const { issue } = data
         let assignee = ''
         if (issue.assignee) {
           assignee = (

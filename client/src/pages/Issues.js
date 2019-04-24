@@ -60,6 +60,8 @@ export default function Issues(props) {
           if (error) return <EmptyState header="Error" description={error} />
 
           const issues = data.issues.issues ? data.issues.issues : []
+          console.log(issues)
+
           return (
             <IssueList
               issues={
