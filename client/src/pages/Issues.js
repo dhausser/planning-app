@@ -57,11 +57,10 @@ export default function Issues(props) {
       >
         {({ data, loading, error }) => {
           if (loading) return <Spinner />
-          if (error) return <EmptyState header="Error" description={error} />
+          if (error)
+            return <EmptyState header="Error" description={error.message} />
 
           const issues = data.issues.issues ? data.issues.issues : []
-          console.log(issues)
-
           return (
             <IssueList
               issues={

@@ -38,7 +38,6 @@ const GET_ISSUE = gql`
         name
       }
       assignee {
-        id
         key
         name
       }
@@ -60,8 +59,6 @@ export default function Issue(props) {
   return (
     <Query query={GET_ISSUE} variables={{ id: props.match.params.issueId }}>
       {({ data, loading, error }) => {
-        const id = 'inline-edit-single'
-
         if (loading)
           return (
             <Center>
@@ -70,39 +67,16 @@ export default function Issue(props) {
           )
 
         if (error) {
-          return <EmptyState key={error} header="Error" description={error} />
+          return (
+            <EmptyState
+              key={error}
+              header="Error"
+              description={error.message}
+            />
+          )
         }
 
         const { issue } = data
-        let assignee = ''
-        if (issue.assignee) {
-          assignee = (
-            <NameWrapper>
-              <AvatarWrapper>
-                <Avatar
-                  name={issue.assignee.name}
-                  size="large"
-                  src={`https://${hostname}/secure/useravatar?ownerId=${
-                    issue.assignee.id
-                  }`}
-                />
-              </AvatarWrapper>
-              <Link to={`/resource/${issue.assignee.id}`}>
-                {issue.assignee.name}
-              </Link>
-            </NameWrapper>
-          )
-        } else {
-          assignee = (
-            <NameWrapper>
-              <AvatarWrapper>
-                <Avatar name="Unassigned" size="large" />
-              </AvatarWrapper>
-              Unassigned
-            </NameWrapper>
-          )
-        }
-
         return (
           <ContentWrapper>
             <PageTitle>{issue.summary}</PageTitle>
@@ -114,7 +88,29 @@ export default function Issue(props) {
               View in Issue Navigator
             </a>
             <h5>Assignee</h5>
-            {assignee}
+            {issue.assignee ? (
+              <NameWrapper>
+                <AvatarWrapper>
+                  <Avatar
+                    name={issue.assignee.name}
+                    size="large"
+                    src={`https://${hostname}/secure/useravatar?ownerId=${
+                      issue.assignee.key
+                    }`}
+                  />
+                </AvatarWrapper>
+                <Link to={`/resource/${issue.assignee.key}`}>
+                  {issue.assignee.name}
+                </Link>
+              </NameWrapper>
+            ) : (
+              <NameWrapper>
+                <AvatarWrapper>
+                  <Avatar name="Unassigned" size="large" />
+                </AvatarWrapper>
+                Unassigned
+              </NameWrapper>
+            )}
             <h5>Status</h5>
             <Status
               text={issue.status.name}
@@ -130,8 +126,14 @@ export default function Issue(props) {
               isFitContainerWidthReadView
               label="Summary"
               labelHtmlFor="inline-single-edit"
-              editView={renderInput({ isEditing: true, id })}
-              readView={renderInput({ isEditing: false, id })}
+              editView={renderInput({
+                isEditing: true,
+                id: 'inline-edit-single',
+              })}
+              readView={renderInput({
+                isEditing: false,
+                id: 'inline-edit-single',
+              })}
               onConfirm={onConfirm}
               onCancel={onCancel}
               {...props}

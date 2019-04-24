@@ -6,6 +6,9 @@ import DropdownMenu, {
   DropdownItemGroup,
   DropdownItem,
 } from '@atlaskit/dropdown-menu'
+import EmptyState from '@atlaskit/empty-state'
+import Spinner from '@atlaskit/spinner'
+import { Center } from './ContentWrapper'
 import { FilterContext } from '../context/FilterContext'
 import { projectId } from '../credentials'
 
@@ -43,11 +46,9 @@ export default function Filters() {
           variables={{ id: projectId, pageSize: 5, after: 5 }}
         >
           {({ data, loading, error }) => {
-            if (error) return <p>ERROR</p>
-
-            /**
-             * TODO: Add fixVersion to context
-             */
+            if (loading) return <Spinner size="medium" />
+            if (error)
+              return <EmptyState header="Error" description={error.message} />
 
             return (
               <DropdownMenu
@@ -80,11 +81,8 @@ export default function Filters() {
                   Teams
                 </Button>
               )
-            if (error) return <p>ERROR</p>
-
-            /**
-             * TODO: Add teams to context
-             */
+            if (error)
+              return <EmptyState header="Error" description={error.message} />
 
             return data.teams.map(team => (
               <Button
@@ -106,23 +104,10 @@ export default function Filters() {
   )
 }
 
-//   // Reinstate localstorage
-//   const team = localStorage.getItem('team')
-//     ? JSON.parse(localStorage.getItem('team'))
-//     : null;
-//   const fixVersion = localStorage.getItem('fixVersion')
-//     ? JSON.parse(localStorage.getItem('fixVersion'))
-//     : fixVersions.values[0];
-
-//   // Fetch Jira issues
-//   const {issues, maxResults, total } = await fetchIssues('');
-
-//   // Update State
-// }
-
 /**
  * TODO: Reinstate Localstorage
  */
+
 // const team = localStorage.getItem('team')
 //   ? JSON.parse(localStorage.getItem('team'))
 //   : null;

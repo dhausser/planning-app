@@ -46,7 +46,7 @@ export default class ResourcesDAO {
     try {
       cursor = await resources
         .find({ team: { $in: teams } })
-        .project({ key: 1, name: 1, team: 1 })
+        .project({ _id: 0, key: 1, name: 1, team: 1 })
     } catch (e) {
       console.error(`Unable to issue find command, ${e}`)
       return []

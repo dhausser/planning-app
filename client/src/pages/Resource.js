@@ -32,28 +32,6 @@ export default function Resource(props) {
 
   return (
     <ContentWrapper>
-      <PageTitle>
-        <NameWrapper>
-          <AvatarWrapper>
-            <Avatar
-              name={resourceId}
-              size="large"
-              src={`https://jira.cdprojektred.com/secure/useravatar?ownerId=${resourceId}`}
-            />
-          </AvatarWrapper>
-          {resourceId}
-        </NameWrapper>
-      </PageTitle>
-      <Filters />
-      <p>
-        <a
-          href={`https://jira.cdprojektred.com/issues/?jql=assignee=${resourceId}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          View in Issue Navigator
-        </a>
-      </p>
       <Query
         query={GET_ISSUES}
         variables={{
@@ -70,14 +48,47 @@ export default function Resource(props) {
             )
           if (error)
             return <EmptyState header="Error" description={error.message} />
+
+          const {
+            issues: { issues },
+          } = data
+          const { assignee } = issues[0]
           return (
-            <IssueList
-              issues={data.issues.issues ? data.issues.issues : []}
-              maxResults={data.issues.maxResults}
-              total={data.issues.total}
-              pathname={props.location.pathname}
-              isLoading={loading}
-            />
+            <Fragment>
+              <PageTitle>
+                <NameWrapper>
+                  <AvatarWrapper>
+                    <Avatar
+                      name={assignee.name}
+                      size="large"
+                      src={`https://jira.cdprojektred.com/secure/useravatar?ownerId=${
+                        assignee.key
+                      }`}
+                    />
+                  </AvatarWrapper>
+                  {assignee.name}
+                </NameWrapper>
+              </PageTitle>
+              <Filters />
+              <p>
+                <a
+                  href={`https://jira.cdprojektred.com/issues/?jql=assignee=${
+                    assignee.key
+                  }`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  View in Issue Navigator
+                </a>
+              </p>
+              <IssueList
+                issues={issues}
+                maxResults={data.issues.maxResults}
+                total={data.issues.total}
+                pathname={props.location.pathname}
+                isLoading={loading}
+              />
+            </Fragment>
           )
         }}
       </Query>

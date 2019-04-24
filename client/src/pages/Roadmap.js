@@ -101,7 +101,7 @@ export default function Roadmap() {
       }) => {
         if (loadingEpics) return <Spinner />
         if (errorEpics)
-          return <EmptyState header="Fail" description={errorEpics.message} />
+          return <EmptyState header="Error" description={errorEpics.message} />
 
         return (
           <Query
@@ -122,7 +122,7 @@ export default function Roadmap() {
               if (errorChildren)
                 return (
                   <EmptyState
-                    header="Fail"
+                    header="Error"
                     description={errorChildren.message}
                   />
                 )

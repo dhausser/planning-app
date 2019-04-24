@@ -3,7 +3,7 @@ import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import Spinner from '@atlaskit/spinner'
 import EmptyState from '@atlaskit/empty-state'
-import ContentWrapper from '../components/ContentWrapper'
+import ContentWrapper, { Center } from '../components/ContentWrapper'
 import PageTitle from '../components/PageTitle'
 import BarChart from '../components/BarChart'
 import { FilterContext } from '../context/FilterContext'
@@ -21,7 +21,7 @@ const GET_ISSUES = gql`
           name
         }
         assignee {
-          id
+          key
           name
         }
       }
@@ -40,14 +40,14 @@ export default function Dashboard() {
       <Filters />
       <Query query={GET_ISSUES} variables={{ jql, pageSize: 1250 }}>
         {({ data, loading, error }) => {
-          if (loading) return <Spinner />
-          if (error)
+          if (loading)
             return (
-              <EmptyState
-                header="Fail"
-                description="Something must be wrong with the request."
-              />
+              <Center>
+                <Spinner size="large" />
+              </Center>
             )
+          if (error)
+            return <EmptyState header="Error" description={error.message} />
 
           return (
             <Fragment>
