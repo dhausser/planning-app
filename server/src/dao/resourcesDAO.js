@@ -10,7 +10,7 @@ export default class ResourcesDAO {
       resources = await conn.db(process.env.PLANIFY_NS).collection('resources')
     } catch (e) {
       console.error(
-        `Unable to establish collection handles in resourceDAO: ${e}`
+        `Unable to establish collection handles in resourceDAO: ${e}`,
       )
     }
   }
@@ -24,7 +24,9 @@ export default class ResourcesDAO {
   static async getResources() {
     let cursor
     try {
-      cursor = await resources.find().project({ key: 1, name: 1, team: 1 })
+      cursor = await resources
+        .find()
+        .project({ _id: 0, key: 1, name: 1, team: 1 })
     } catch (e) {
       console.error(`Unable to issue find command, ${e}`)
       return []

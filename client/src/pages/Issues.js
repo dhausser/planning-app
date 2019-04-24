@@ -31,8 +31,9 @@ export const GET_ISSUES = gql`
           name
         }
         assignee {
-          id
+          key
           name
+          team
         }
       }
     }
@@ -40,7 +41,7 @@ export const GET_ISSUES = gql`
 `
 
 export default function Issues(props) {
-  const { fixVersion } = useContext(FilterContext)
+  const { fixVersion, teamFilter } = useContext(FilterContext)
   return (
     <ContentWrapper>
       <PageTitle>Issues</PageTitle>
@@ -56,10 +57,18 @@ export default function Issues(props) {
       >
         {({ data, loading, error }) => {
           if (loading) return <Spinner />
-          if (error) return <EmptyState header="Fail" description="Error" />
+          if (error) return <EmptyState header="Error" description={error} />
+
+          const issues = data.issues.issues ? data.issues.issues : []
           return (
             <IssueList
-              issues={data.issues.issues ? data.issues.issues : []}
+              issues={
+                teamFilter
+                  ? issues.filter(
+                      ({ assignee: { team } }) => team === teamFilter,
+                    )
+                  : issues
+              }
               maxResults={data.issues.maxResults}
               total={data.issues.total}
               pathname={props.location.pathname}
@@ -71,40 +80,3 @@ export default function Issues(props) {
     </ContentWrapper>
   )
 }
-
-// export function useIssues(jql) {
-//   const [data, setData] = useState({
-//     issues: [],
-//     maxResults: 0,
-//     total: 0,
-//     loading: false,
-//     error: null,
-//   });
-//   useEffect(() => {
-//     let ignore = false;
-//     fetchIssues(jql, setData, ignore);
-//     return () => {
-//       ignore = true;
-//     };
-//   }, [jql]);
-//   return data;
-// }
-
-// async function fetchIssues(jql, setData, ignore) {
-//   return (
-//     <Query query={GET_ISSUES} variables={{ jql, pageSize: 10 }}>
-//       {({ data, loading, error }) => {
-//         // if (!ignore) {
-//         if (loading) return setData({ loading });
-//         if (error) return setData({ error });
-//         return setData({
-//           issues: data.issues.issues,
-//           maxResults: data.issues.maxResults,
-//           total: data.issues.total,
-//           loading: false,
-//         });
-//         // }
-//       }}
-//     </Query>
-//   );
-// }

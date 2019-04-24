@@ -17,12 +17,12 @@
     "apollo-datasource": "^0.3.1",
     "apollo-datasource-rest": "^0.3.2",
     "apollo-server": "^2.4.8",
+    "babel-core": "^6.26.3",
     "dotenv": "^7.0.0",
     "graphql": "^14.2.1",
     "mongodb": "^3.2.3"
   },
   "devDependencies": {
-    "babel-core": "^6.26.3",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-stage-1": "^6.24.1",

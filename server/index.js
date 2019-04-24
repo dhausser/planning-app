@@ -1,4 +1,4 @@
-require("babel-core/register")
-require("dotenv").config()
+require('babel-core/register')
+require('dotenv').config()
 
-exports = module.exports = require("./src")
+module.exports = require('./src')
