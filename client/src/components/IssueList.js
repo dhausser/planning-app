@@ -20,11 +20,12 @@ const head = {
       key: 'key',
       content: 'Key',
       isSortable: true,
-      width: 8,
+      width: 13,
     },
     {
       key: 'summary',
       content: 'Summary',
+      shouldTruncate: true,
       isSortable: true,
     },
     {
@@ -37,13 +38,13 @@ const head = {
       key: 'status',
       content: 'Status',
       isSortable: true,
-      width: 12,
+      width: 18,
     },
     {
       key: 'assignee',
       content: 'Assignee',
       isSortable: true,
-      width: 10,
+      width: 19,
     },
     {
       key: 'priority',
@@ -89,9 +90,9 @@ const issueRow = issue => ({
       ),
     },
     {
-      key: (issue.assignee && issue.assignee.id) || '',
+      key: (issue.assignee && issue.assignee.key) || '',
       content: (
-        <Link to={`/resource/${(issue.assignee && issue.assignee.id) || ''}`}>
+        <Link to={`/resource/${(issue.assignee && issue.assignee.key) || ''}`}>
           {(issue.assignee && issue.assignee.name) || ''}
         </Link>
       ),

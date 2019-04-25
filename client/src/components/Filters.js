@@ -8,7 +8,6 @@ import DropdownMenu, {
 } from '@atlaskit/dropdown-menu'
 import EmptyState from '@atlaskit/empty-state'
 import Spinner from '@atlaskit/spinner'
-import { Center } from './ContentWrapper'
 import { FilterContext } from '../context/FilterContext'
 import { projectId } from '../credentials'
 

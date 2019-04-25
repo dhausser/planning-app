@@ -21,15 +21,14 @@ import { NavContext } from './context/NavContext'
 import { FilterContext } from './context/FilterContext'
 import { basicAuth, apiKey } from './credentials'
 
-/**
- * TODO: Handle authentication
- */
-
 const httpLink = createHttpLink({
   uri: 'http://localhost:4000/graphql',
   credentials: 'same-origin',
 })
 
+/**
+ * TODO: Handle authentication
+ */
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
   // const token = localStorage.getItem('token')
@@ -54,37 +53,37 @@ function App() {
   const [fixVersion, setFixVersion] = useState(filterContext.fixVersion)
   const [teamFilter, setTeamFilter] = useState(filterContext.teamFilter)
   return (
-    <ApolloProvider client={client}>
-      <FilterContext.Provider
-        value={{
-          teamFilter,
-          setTeamFilter,
-          fixVersion,
-          setFixVersion,
-        }}
+    <FilterContext.Provider
+      value={{
+        teamFilter,
+        setTeamFilter,
+        fixVersion,
+        setFixVersion,
+      }}
+    >
+      <Page
+        navigationWidth={navOpenState.width}
+        navigation={<StarterNavigation />}
       >
-        <Page
-          navigationWidth={navOpenState.width}
-          navigation={<StarterNavigation />}
-        >
-          <Route exact path="/" component={Dashboard} />
-          <Route path="/roadmap" component={Roadmap} />
-          <Route path="/resources" component={Resources} />
-          <Route path="/resource/:resourceId" component={Resource} />
-          <Route path="/issues" component={Issues} />
-          <Route path="/issue/:issueId" component={Issue} />
-          <Route path="/absences" component={Absences} />
-        </Page>
-      </FilterContext.Provider>
-    </ApolloProvider>
+        <Route exact path="/" component={Dashboard} />
+        <Route path="/roadmap" component={Roadmap} />
+        <Route path="/resources" component={Resources} />
+        <Route path="/resource/:resourceId" component={Resource} />
+        <Route path="/issues" component={Issues} />
+        <Route path="/issue/:issueId" component={Issue} />
+        <Route path="/absences" component={Absences} />
+      </Page>
+    </FilterContext.Provider>
   )
 }
 
 function AppRouter() {
   return (
-    <Router>
-      <App />
-    </Router>
+    <ApolloProvider client={client}>
+      <Router>
+        <App />
+      </Router>
+    </ApolloProvider>
   )
 }
 

@@ -23,6 +23,7 @@ const GET_ISSUES = gql`
         assignee {
           key
           name
+          team
         }
       }
     }
@@ -30,7 +31,7 @@ const GET_ISSUES = gql`
 `
 
 export default function Dashboard() {
-  const { fixVersion } = useContext(FilterContext)
+  const { fixVersion, teamFilter } = useContext(FilterContext)
   const jql = `fixVersion = ${
     fixVersion.id
   } AND statusCategory in (new, indeterminate)`
@@ -49,6 +50,9 @@ export default function Dashboard() {
           if (error)
             return <EmptyState header="Error" description={error.message} />
 
+          const {
+            issues: { issues },
+          } = data
           return (
             <Fragment>
               <h5>
@@ -58,7 +62,15 @@ export default function Dashboard() {
                   : data.issues.maxResults}{' '}
                 of {data.issues.total} issues in fixVersion
               </h5>
-              <BarChart dataset={aggregateIssues(data.issues.issues)} />
+              <BarChart
+                dataset={aggregateIssues(
+                  teamFilter
+                    ? issues.filter(
+                        ({ assignee: { team } }) => team === teamFilter,
+                      )
+                    : issues,
+                )}
+              />
             </Fragment>
           )
         }}

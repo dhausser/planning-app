@@ -3,7 +3,7 @@ import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import EmptyState from '@atlaskit/empty-state'
 import Spinner from '@atlaskit/spinner'
-import ContentWrapper from '../components/ContentWrapper'
+import ContentWrapper, { Center } from '../components/ContentWrapper'
 import PageTitle from '../components/PageTitle'
 import IssueList from '../components/IssueList'
 import { FilterContext } from '../context/FilterContext'
@@ -56,7 +56,12 @@ export default function Issues(props) {
         }}
       >
         {({ data, loading, error }) => {
-          if (loading) return <Spinner />
+          if (loading)
+            return (
+              <Center>
+                <Spinner size="large" />
+              </Center>
+            )
           if (error)
             return <EmptyState header="Error" description={error.message} />
 

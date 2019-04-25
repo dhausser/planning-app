@@ -12,7 +12,7 @@ import TableTree, {
 import Spinner from '@atlaskit/spinner'
 import EmptyState from '@atlaskit/empty-state'
 import { Status } from '@atlaskit/status'
-import ContentWrapper from '../components/ContentWrapper'
+import ContentWrapper, { Center } from '../components/ContentWrapper'
 import PageTitle from '../components/PageTitle'
 import { getIcon } from '../components/Icon'
 import { FilterContext } from '../context/FilterContext'
@@ -99,7 +99,12 @@ export default function Roadmap() {
         error: errorEpics,
         data: { issues: epics },
       }) => {
-        if (loadingEpics) return <Spinner />
+        if (loadingEpics)
+          return (
+            <Center>
+              <Spinner size="large" />
+            </Center>
+          )
         if (errorEpics)
           return <EmptyState header="Error" description={errorEpics.message} />
 
@@ -118,7 +123,12 @@ export default function Roadmap() {
               error: errorChildren,
               data: { issues: epicChildren },
             }) => {
-              if (loadingChildren) return <Spinner />
+              if (loadingChildren)
+                return (
+                  <Center>
+                    <Spinner size="large" />
+                  </Center>
+                )
               if (errorChildren)
                 return (
                   <EmptyState
