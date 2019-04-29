@@ -15,7 +15,7 @@ import { Status } from '@atlaskit/status'
 import ContentWrapper, { Center } from '../components/ContentWrapper'
 import PageTitle from '../components/PageTitle'
 import { getIcon } from '../components/Icon'
-import { FilterContext } from '../context/FilterContext'
+import { FilterContext } from '../components/App'
 import Filters from '../components/Filters'
 import { projectId } from '../credentials'
 

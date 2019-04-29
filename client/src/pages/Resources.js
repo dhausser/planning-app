@@ -6,7 +6,7 @@ import Spinner from '@atlaskit/spinner'
 import PageTitle from '../components/PageTitle'
 import Filters from '../components/Filters'
 import ResourceList from '../components/ResourceList'
-import { FilterContext } from '../context/FilterContext'
+import { FilterContext } from '../components/App'
 import ContentWrapper, { Center } from '../components/ContentWrapper'
 
 const GET_RESOURCES = gql`

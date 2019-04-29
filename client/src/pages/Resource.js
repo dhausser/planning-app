@@ -14,7 +14,7 @@ import IssueList from '../components/IssueList'
 import Filters from '../components/Filters'
 import PageTitle from '../components/PageTitle'
 import HolidayList from '../components/HolidayList'
-import { FilterContext } from '../context/FilterContext'
+import { FilterContext } from '../components/App'
 import { GET_ISSUES } from './Issues'
 
 const GET_ABSENCES = gql`

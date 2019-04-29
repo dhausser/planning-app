@@ -6,7 +6,7 @@ import EmptyState from '@atlaskit/empty-state'
 import ContentWrapper, { Center } from '../components/ContentWrapper'
 import PageTitle from '../components/PageTitle'
 import BarChart from '../components/BarChart'
-import { FilterContext } from '../context/FilterContext'
+import { FilterContext } from '../components/App'
 import Filters from '../components/Filters'
 
 const GET_ISSUES = gql`
@@ -63,13 +63,15 @@ export default function Dashboard() {
                 of {data.issues.total} issues in fixVersion
               </h5>
               <BarChart
-                dataset={aggregateIssues(
+                dataset={
                   teamFilter
-                    ? issues.filter(
-                        ({ assignee: { team } }) => team === teamFilter,
+                    ? aggregateByAssignee(
+                        issues.filter(
+                          ({ assignee: { team } }) => team === teamFilter,
+                        ),
                       )
-                    : issues,
-                )}
+                    : aggregateByTeam(issues)
+                }
               />
             </Fragment>
           )
@@ -79,8 +81,9 @@ export default function Dashboard() {
   )
 }
 
-function aggregateIssues(issues) {
+function aggregateByAssignee(issues) {
   if (!issues) return []
+
   return issues.reduce((resources, issue) => {
     if (issue.assignee && issue.assignee.name) {
       const name = issue.assignee.name.split(' ').shift()
@@ -90,5 +93,20 @@ function aggregateIssues(issues) {
       resources[name] += 1
     }
     return resources
+  }, {})
+}
+
+function aggregateByTeam(issues) {
+  if (!issues) return []
+
+  return issues.reduce((teams, issue) => {
+    if (issue.assignee && issue.assignee.team) {
+      const { team: teamName } = issue.assignee
+      if (!teams[teamName]) {
+        teams[teamName] = 0
+      }
+      teams[teamName] += 1
+    }
+    return teams
   }, {})
 }

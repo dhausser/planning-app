@@ -8,7 +8,7 @@ import DropdownMenu, {
 } from '@atlaskit/dropdown-menu'
 import EmptyState from '@atlaskit/empty-state'
 import Spinner from '@atlaskit/spinner'
-import { FilterContext } from '../context/FilterContext'
+import { FilterContext } from './App'
 import { projectId } from '../credentials'
 
 const GET_VERSIONS = gql`

@@ -1,5 +1,4 @@
 import { RESTDataSource } from 'apollo-datasource-rest'
-import ResourceAPI from './resource'
 import ResourcesDAO from '../dao/resourcesDAO'
 
 const fields = [
@@ -24,6 +23,9 @@ export default class IssueAPI extends RESTDataSource {
   }
 
   willSendRequest(request) {
+    /**
+     * TODO: Replace with authorization token from client
+     */
     request.headers.set('Authorization', process.env.AUTHORIZATION)
     request.params.set('notifyUsers', false)
   }

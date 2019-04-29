@@ -1,17 +1,17 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-import DynamicTable from '@atlaskit/dynamic-table';
-import Avatar from '@atlaskit/avatar';
-import { NameWrapper, AvatarWrapper } from './ContentWrapper';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import styled from 'styled-components'
+import DynamicTable from '@atlaskit/dynamic-table'
+import Avatar from '@atlaskit/avatar'
+import { NameWrapper, AvatarWrapper } from './ContentWrapper'
 
 function createKey(input) {
-  return input ? input.replace(/^(the|a|an)/, '').replace(/\s/g, '') : input;
+  return input ? input.replace(/^(the|a|an)/, '').replace(/\s/g, '') : input
 }
 
 const Wrapper = styled.div`
   min-width: 600px;
-`;
+`
 
 const createHead = withWidth => ({
   cells: [
@@ -29,7 +29,7 @@ const createHead = withWidth => ({
       width: withWidth ? 15 : undefined,
     },
   ],
-});
+})
 
 const createRows = resources =>
   resources.map(resource => ({
@@ -57,12 +57,12 @@ const createRows = resources =>
         content: resource.team,
       },
     ],
-  }));
+  }))
 
 export default function ResourceList({ resources, isLoading }) {
-  const caption = `Listing ${resources.length} developers`;
-  const head = createHead('false');
-  const rows = createRows(resources);
+  const caption = `Listing ${resources.length} developers`
+  const head = createHead('false')
+  const rows = createRows(resources)
   return (
     <Wrapper>
       <DynamicTable
@@ -78,5 +78,5 @@ export default function ResourceList({ resources, isLoading }) {
         defaultSortOrder="ASC"
       />
     </Wrapper>
-  );
+  )
 }

@@ -6,7 +6,7 @@ import Spinner from '@atlaskit/spinner'
 import ContentWrapper, { Center } from '../components/ContentWrapper'
 import PageTitle from '../components/PageTitle'
 import IssueList from '../components/IssueList'
-import { FilterContext } from '../context/FilterContext'
+import { FilterContext } from '../components/App'
 import Filters from '../components/Filters'
 import { projectId } from '../credentials'
 
@@ -42,6 +42,7 @@ export const GET_ISSUES = gql`
 
 export default function Issues(props) {
   const { fixVersion, teamFilter } = useContext(FilterContext)
+  // console.log(props.location)
   return (
     <ContentWrapper>
       <PageTitle>Issues</PageTitle>
