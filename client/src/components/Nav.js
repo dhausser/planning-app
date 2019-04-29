@@ -77,6 +77,7 @@ export const productHomeView = {
         {
           type: 'Item',
           id: 'portfolio',
+          goTo: '/roadmap',
           before: PortfolioIcon,
           text: 'Portfolio',
         },
@@ -164,7 +165,7 @@ export const productIssuesView = {
               ],
             },
           ]),
-        1000,
+        500,
       ),
     ),
 }

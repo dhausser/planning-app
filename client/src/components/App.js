@@ -83,6 +83,13 @@ class App extends Component {
     return (
       <LayoutManagerWithViewController globalNavigation={MyGlobalNavigation}>
         <Switch>
+          {/* <Route exact path="/" component={Dashboard} /> */}
+          <Route path="/roadmap" component={Roadmap} />
+          <Route path="/resources" component={Resources} />
+          <Route path="/resource/:resourceId" component={Resource} />
+          <Route path="/issues" component={Issues} />
+          <Route path="/issue/:issueId" component={Issue} />
+          <Route path="/absences" component={Absences} />
           <Route path="/projects/my-project" component={ProjectBacklogRoute} />
           <Route path="/issues" component={IssuesAndFiltersRoute} />
           <Route path="/" component={DashboardsRoute} />
@@ -119,13 +126,13 @@ export default () => {
 
 // return (
 //   <Page navigation={<AppWithNav />}>
-//     <Route exact path="/" component={Dashboard} />
-//     <Route path="/roadmap" component={Roadmap} />
-//     <Route path="/resources" component={Resources} />
-//     <Route path="/resource/:resourceId" component={Resource} />
-//     <Route path="/issues" component={Issues} />
-//     <Route path="/issue/:issueId" component={Issue} />
-//     <Route path="/absences" component={Absences} />
+// <Route exact path="/" component={Dashboard} />
+// <Route path="/roadmap" component={Roadmap} />
+// <Route path="/resources" component={Resources} />
+// <Route path="/resource/:resourceId" component={Resource} />
+// <Route path="/issues" component={Issues} />
+// <Route path="/issue/:issueId" component={Issue} />
+// <Route path="/absences" component={Absences} />
 //   </Page>
 // )
 

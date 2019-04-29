@@ -40,7 +40,7 @@ export const GET_ISSUES = gql`
   }
 `
 
-export default function Issues(props) {
+export default function Issues() {
   const { fixVersion, teamFilter } = useContext(FilterContext)
   // console.log(props.location)
   return (
@@ -78,7 +78,7 @@ export default function Issues(props) {
               }
               maxResults={data.issues.maxResults}
               total={data.issues.total}
-              pathname={props.location.pathname}
+              // pathname={props.location.pathname}
               isLoading={loading}
             />
           )

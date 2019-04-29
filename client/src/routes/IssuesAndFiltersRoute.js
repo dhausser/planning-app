@@ -10,12 +10,7 @@ class IssuesAndFiltersRouteBase extends Component {
   }
 
   render() {
-    return (
-      <div css={{ padding: 30 }}>
-        <h1>Issues and filters</h1>
-        <Issues />
-      </div>
-    )
+    return <Issues />
   }
 }
 export default withNavigationViewController(IssuesAndFiltersRouteBase)

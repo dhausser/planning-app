@@ -1,9 +1,34 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import { withNavigationViewController } from '@atlaskit/navigation-next'
+import {
+  withNavigationViewController,
+  UIControllerSubscriber,
+} from '@atlaskit/navigation-next'
+import Button from '@atlaskit/button'
+import ChevronLeft from '@atlaskit/icon/glyph/chevron-left'
+import ChevronRight from '@atlaskit/icon/glyph/chevron-right'
 import { productHomeView } from '../components/Nav'
-
 import Dashboard from '../pages/Dashboard'
+
+const ExpandToggleButton = () => (
+  <UIControllerSubscriber>
+    {navigationUIController => (
+      <Button
+        iconBefore={
+          navigationUIController.state.isCollapsed ? (
+            <ChevronRight />
+          ) : (
+            <ChevronLeft />
+          )
+        }
+        onClick={navigationUIController.toggleCollapse}
+      >
+        {navigationUIController.state.isCollapsed ? 'Expand' : 'Collapse'}{' '}
+        navigation
+      </Button>
+    )}
+  </UIControllerSubscriber>
+)
 
 class DashboardsRouteBase extends Component {
   componentDidMount() {
@@ -14,6 +39,7 @@ class DashboardsRouteBase extends Component {
   render() {
     return (
       <div css={{ padding: 30 }}>
+        <ExpandToggleButton />
         <h1>Dashboards</h1>
         <h3>Projects:</h3>
         <ul>
