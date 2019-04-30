@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
@@ -15,9 +15,8 @@ import { Status } from '@atlaskit/status'
 import ContentWrapper, { Center } from '../components/ContentWrapper'
 import PageTitle from '../components/PageTitle'
 import { getIcon } from '../components/Icon'
-import { FilterContext } from '../components/App'
 import Filters from '../components/Filters'
-import { projectId } from '../credentials'
+import { projectId, defaultFixVersion } from '../credentials'
 
 const GET_EPICS = gql`
   query issueList($jql: String, $pageSize: Int!) {
@@ -86,8 +85,7 @@ const issueReducer = issue => ({
 })
 
 export default function Roadmap() {
-  const { fixVersion } = useContext(FilterContext)
-
+  const fixVersion = defaultFixVersion
   const epicsJql = `project = ${projectId} AND fixVersion = ${
     fixVersion.id
   } AND issuetype = epic`

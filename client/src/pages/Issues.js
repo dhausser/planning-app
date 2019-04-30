@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import EmptyState from '@atlaskit/empty-state'
@@ -6,9 +6,8 @@ import Spinner from '@atlaskit/spinner'
 import ContentWrapper, { Center } from '../components/ContentWrapper'
 import PageTitle from '../components/PageTitle'
 import IssueList from '../components/IssueList'
-import { FilterContext } from '../components/App'
-import Filters from '../components/Filters'
-import { projectId } from '../credentials'
+import Filters, { LOCAL_STATE_QUERY } from '../components/Filters'
+import { projectId, defaultFixVersion } from '../credentials'
 
 export const GET_ISSUES = gql`
   query issueList($jql: String, $pageSize: Int!) {
@@ -40,9 +39,7 @@ export const GET_ISSUES = gql`
   }
 `
 
-export default function Issues() {
-  const { fixVersion, teamFilter } = useContext(FilterContext)
-  // console.log(props.location)
+export default function Issues(props) {
   return (
     <ContentWrapper>
       <PageTitle>Issues</PageTitle>
@@ -51,7 +48,7 @@ export default function Issues() {
         query={GET_ISSUES}
         variables={{
           jql: `project = ${projectId} AND fixVersion = ${
-            fixVersion.id
+            defaultFixVersion.id
           } ORDER BY KEY ASC`,
           pageSize: 10,
         }}
@@ -68,19 +65,23 @@ export default function Issues() {
 
           const issues = data.issues.issues ? data.issues.issues : []
           return (
-            <IssueList
-              issues={
-                teamFilter
-                  ? issues.filter(
-                      ({ assignee: { team } }) => team === teamFilter,
-                    )
-                  : issues
-              }
-              maxResults={data.issues.maxResults}
-              total={data.issues.total}
-              // pathname={props.location.pathname}
-              isLoading={loading}
-            />
+            <Query query={LOCAL_STATE_QUERY}>
+              {({ data: { teamFilter } }) => (
+                <IssueList
+                  issues={
+                    teamFilter
+                      ? issues.filter(
+                          ({ assignee: { team } }) => team === teamFilter,
+                        )
+                      : issues
+                  }
+                  maxResults={data.issues.maxResults}
+                  total={data.issues.total}
+                  pathname={props.match.path}
+                  isLoading={loading}
+                />
+              )}
+            </Query>
           )
         }}
       </Query>

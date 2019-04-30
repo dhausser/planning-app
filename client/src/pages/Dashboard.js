@@ -1,4 +1,4 @@
-import React, { Fragment, useContext } from 'react'
+import React, { Fragment } from 'react'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import Spinner from '@atlaskit/spinner'
@@ -6,8 +6,10 @@ import EmptyState from '@atlaskit/empty-state'
 import ContentWrapper, { Center } from '../components/ContentWrapper'
 import PageTitle from '../components/PageTitle'
 import BarChart from '../components/BarChart'
-import { FilterContext } from '../components/App'
-import Filters from '../components/Filters'
+import Filters, { LOCAL_STATE_QUERY } from '../components/Filters'
+
+// TEMP
+import { defaultFixVersion } from '../credentials'
 
 const GET_ISSUES = gql`
   query issueList($jql: String, $pageSize: Int!) {
@@ -30,56 +32,59 @@ const GET_ISSUES = gql`
   }
 `
 
-export default function Dashboard() {
-  const { fixVersion, teamFilter } = useContext(FilterContext)
-  const jql = `fixVersion = ${
-    fixVersion.id
-  } AND statusCategory in (new, indeterminate)`
-  return (
-    <ContentWrapper>
-      <PageTitle>Dashboard</PageTitle>
-      <Filters />
-      <Query query={GET_ISSUES} variables={{ jql, pageSize: 1250 }}>
-        {({ data, loading, error }) => {
-          if (loading)
-            return (
-              <Center>
-                <Spinner size="large" />
-              </Center>
-            )
-          if (error)
-            return <EmptyState header="Error" description={error.message} />
+export default () => (
+  <ContentWrapper>
+    <PageTitle>Dashboard</PageTitle>
+    <Filters />
+    <Query query={LOCAL_STATE_QUERY}>
+      {({ data: { versionFilter, teamFilter } }) => (
+        <Query
+          query={GET_ISSUES}
+          variables={{
+            jql: `fixVersion = ${
+              defaultFixVersion.id
+            } AND statusCategory in (new, indeterminate)`,
+            pageSize: 1250,
+          }}
+        >
+          {({ data: { issues }, loading: loadingIssues, error }) => {
+            if (loadingIssues)
+              return (
+                <Center>
+                  <Spinner size="large" />
+                </Center>
+              )
+            if (error)
+              return <EmptyState header="Error" description={error.message} />
 
-          const {
-            issues: { issues },
-          } = data
-          return (
-            <Fragment>
-              <h5>
-                Displaying{' '}
-                {data.issues.maxResults > data.issues.total
-                  ? data.issues.total
-                  : data.issues.maxResults}{' '}
-                of {data.issues.total} issues in fixVersion
-              </h5>
-              <BarChart
-                dataset={
-                  teamFilter
-                    ? aggregateByAssignee(
-                        issues.filter(
-                          ({ assignee: { team } }) => team === teamFilter,
-                        ),
-                      )
-                    : aggregateByTeam(issues)
-                }
-              />
-            </Fragment>
-          )
-        }}
-      </Query>
-    </ContentWrapper>
-  )
-}
+            return (
+              <Fragment>
+                <h5>
+                  Displaying{' '}
+                  {issues.maxResults > issues.total
+                    ? issues.total
+                    : issues.maxResults}{' '}
+                  of {issues.total} issues in fixVersion
+                </h5>
+                <BarChart
+                  dataset={
+                    teamFilter
+                      ? aggregateByAssignee(
+                          issues.issues.filter(
+                            ({ assignee: { team } }) => team === teamFilter,
+                          ),
+                        )
+                      : aggregateByTeam(issues.issues)
+                  }
+                />
+              </Fragment>
+            )
+          }}
+        </Query>
+      )}
+    </Query>
+  </ContentWrapper>
+)
 
 function aggregateByAssignee(issues) {
   if (!issues) return []

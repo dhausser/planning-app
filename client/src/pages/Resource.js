@@ -1,4 +1,4 @@
-import React, { Fragment, useContext } from 'react'
+import React, { Fragment } from 'react'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import Avatar from '@atlaskit/avatar'
@@ -14,8 +14,8 @@ import IssueList from '../components/IssueList'
 import Filters from '../components/Filters'
 import PageTitle from '../components/PageTitle'
 import HolidayList from '../components/HolidayList'
-import { FilterContext } from '../components/App'
 import { GET_ISSUES } from './Issues'
+import { defaultFixVersion } from '../credentials'
 
 const GET_ABSENCES = gql`
   query absenceList($id: ID!) {
@@ -27,7 +27,6 @@ const GET_ABSENCES = gql`
 `
 
 export default function Resource(props) {
-  const { fixVersion } = useContext(FilterContext)
   const { resourceId } = props.match.params
 
   return (
@@ -35,7 +34,7 @@ export default function Resource(props) {
       <Query
         query={GET_ISSUES}
         variables={{
-          jql: `assignee=${resourceId} AND fixVersion=${fixVersion.id}`,
+          jql: `assignee=${resourceId} AND fixVersion=${defaultFixVersion.id}`,
           pageSize: 10,
         }}
       >

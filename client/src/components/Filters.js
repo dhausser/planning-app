@@ -1,4 +1,4 @@
-import React, { Fragment, useContext } from 'react'
+import React from 'react'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import Button, { ButtonGroup } from '@atlaskit/button'
@@ -8,8 +8,7 @@ import DropdownMenu, {
 } from '@atlaskit/dropdown-menu'
 import EmptyState from '@atlaskit/empty-state'
 import Spinner from '@atlaskit/spinner'
-import { FilterContext } from './App'
-import { projectId } from '../credentials'
+import { projectId, defaultFixVersion } from '../credentials'
 
 const GET_VERSIONS = gql`
   query GetVersions($id: ID!, $pageSize: Int, $after: Int) {
@@ -32,13 +31,16 @@ const GET_TEAMS = gql`
   }
 `
 
-export default function Filters() {
-  const { teamFilter, setTeamFilter, fixVersion, setFixVersion } = useContext(
-    FilterContext,
-  )
+export const LOCAL_STATE_QUERY = gql`
+  {
+    teamFilter @client
+    versionFilter @client
+  }
+`
 
-  return (
-    <Fragment>
+export default () => (
+  <Query query={LOCAL_STATE_QUERY}>
+    {({ data: { versionFilter, teamFilter }, client }) => (
       <ButtonGroup>
         <Query
           query={GET_VERSIONS}
@@ -49,10 +51,12 @@ export default function Filters() {
             if (error)
               return <EmptyState header="Error" description={error.message} />
 
+            console.log(versionFilter)
             return (
               <DropdownMenu
                 isLoading={loading}
-                trigger={`FixVersion: ${fixVersion && fixVersion.name}`}
+                trigger={`FixVersion: ${(versionFilter && versionFilter.name) ||
+                  defaultFixVersion.name}`}
                 triggerType="button"
                 shouldFlip={false}
                 position="right top"
@@ -62,7 +66,17 @@ export default function Filters() {
                     data.versions.map(version => (
                       <DropdownItem
                         key={version.id}
-                        onClick={() => setFixVersion(version)}
+                        onClick={() => {
+                          client.writeData({
+                            data: {
+                              versionFilter: version,
+                            },
+                          })
+                          localStorage.setItem(
+                            'version',
+                            JSON.stringify(version),
+                          )
+                        }}
                       >
                         {version.name}
                       </DropdownItem>
@@ -83,15 +97,23 @@ export default function Filters() {
             if (error)
               return <EmptyState header="Error" description={error.message} />
 
+            console.log(teamFilter)
             return data.teams.map(team => (
               <Button
                 key={team._id}
                 isLoading={loading}
                 appearance="subtle"
-                isSelected={team._id === teamFilter}
-                onClick={() =>
-                  setTeamFilter(teamFilter !== team._id ? team._id : null)
-                }
+                isSelected={teamFilter === team._id}
+                onClick={() => {
+                  const updatedFilter =
+                    teamFilter !== team._id ? team._id : null
+                  client.writeData({
+                    data: {
+                      teamFilter: updatedFilter,
+                    },
+                  })
+                  localStorage.setItem('team', updatedFilter)
+                }}
               >
                 {team._id}
               </Button>
@@ -99,17 +121,6 @@ export default function Filters() {
           }}
         </Query>
       </ButtonGroup>
-    </Fragment>
-  )
-}
-
-/**
- * TODO: Reinstate Localstorage
- */
-
-// const team = localStorage.getItem('team')
-//   ? JSON.parse(localStorage.getItem('team'))
-//   : null;
-// const fixVersion = localStorage.getItem('fixVersion')
-//   ? JSON.parse(localStorage.getItem('fixVersion'))
-//   : fixVersions.values[0];
+    )}
+  </Query>
+)
