@@ -4,7 +4,7 @@ import gql from 'graphql-tag'
 import EmptyState from '@atlaskit/empty-state'
 import Spinner from '@atlaskit/spinner'
 import PageTitle from '../components/PageTitle'
-import Filters, { LOCAL_STATE_QUERY } from '../components/Filters'
+import Filters, { TEAM_FILTER_QUERY } from '../components/Filters'
 import ResourceList from '../components/ResourceList'
 import ContentWrapper, { Center } from '../components/ContentWrapper'
 
@@ -34,7 +34,7 @@ export default () => (
           return <EmptyState header="Error" description={error.message} />
 
         return (
-          <Query query={LOCAL_STATE_QUERY}>
+          <Query query={TEAM_FILTER_QUERY}>
             {({ data: { teamFilter } }) => (
               <ResourceList
                 resources={

@@ -6,10 +6,10 @@ import EmptyState from '@atlaskit/empty-state'
 import ContentWrapper, { Center } from '../components/ContentWrapper'
 import PageTitle from '../components/PageTitle'
 import BarChart from '../components/BarChart'
-import Filters, { LOCAL_STATE_QUERY } from '../components/Filters'
-
-// TEMP
-import { defaultFixVersion } from '../credentials'
+import Filters, {
+  TEAM_FILTER_QUERY,
+  VERSION_FILTER_QUERY,
+} from '../components/Filters'
 
 const GET_ISSUES = gql`
   query issueList($jql: String, $pageSize: Int!) {
@@ -36,19 +36,17 @@ export default () => (
   <ContentWrapper>
     <PageTitle>Dashboard</PageTitle>
     <Filters />
-    <Query query={LOCAL_STATE_QUERY}>
-      {({ data: { versionFilter, teamFilter } }) => (
+    <Query query={VERSION_FILTER_QUERY}>
+      {({ data: { versionId } }) => (
         <Query
           query={GET_ISSUES}
           variables={{
-            jql: `fixVersion = ${
-              defaultFixVersion.id
-            } AND statusCategory in (new, indeterminate)`,
+            jql: `fixVersion = ${versionId} AND statusCategory in (new, indeterminate)`,
             pageSize: 1250,
           }}
         >
-          {({ data: { issues }, loading: loadingIssues, error }) => {
-            if (loadingIssues)
+          {({ data: { issues }, loading, error }) => {
+            if (loading)
               return (
                 <Center>
                   <Spinner size="large" />
@@ -58,26 +56,30 @@ export default () => (
               return <EmptyState header="Error" description={error.message} />
 
             return (
-              <Fragment>
-                <h5>
-                  Displaying{' '}
-                  {issues.maxResults > issues.total
-                    ? issues.total
-                    : issues.maxResults}{' '}
-                  of {issues.total} issues in fixVersion
-                </h5>
-                <BarChart
-                  dataset={
-                    teamFilter
-                      ? aggregateByAssignee(
-                          issues.issues.filter(
-                            ({ assignee: { team } }) => team === teamFilter,
-                          ),
-                        )
-                      : aggregateByTeam(issues.issues)
-                  }
-                />
-              </Fragment>
+              <Query query={TEAM_FILTER_QUERY}>
+                {({ data: { teamFilter } }) => (
+                  <Fragment>
+                    <h5>
+                      Displaying{' '}
+                      {issues.maxResults > issues.total
+                        ? issues.total
+                        : issues.maxResults}{' '}
+                      of {issues.total} issues in fixVersion
+                    </h5>
+                    <BarChart
+                      dataset={
+                        teamFilter
+                          ? aggregateByAssignee(
+                              issues.issues.filter(
+                                ({ assignee: { team } }) => team === teamFilter,
+                              ),
+                            )
+                          : aggregateByTeam(issues.issues)
+                      }
+                    />
+                  </Fragment>
+                )}
+              </Query>
             )
           }}
         </Query>

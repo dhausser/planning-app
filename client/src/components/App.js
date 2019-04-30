@@ -1,6 +1,12 @@
 import React, { Component } from 'react'
 import { HashRouter, Route, Switch } from 'react-router-dom'
-
+import { ApolloClient } from 'apollo-client'
+import { InMemoryCache } from 'apollo-cache-inmemory'
+import { createHttpLink } from 'apollo-link-http'
+import { setContext } from 'apollo-link-context'
+import { Query, ApolloProvider } from 'react-apollo'
+// import { useQuery } from 'react-apollo-hooks'
+import gql from 'graphql-tag'
 import {
   LayoutManagerWithViewController,
   NavigationProvider,
@@ -20,6 +26,7 @@ import ProjectBacklogRoute from '../routes/ProjectBacklogRoute'
 import IssuesAndFiltersRoute from '../routes/IssuesAndFiltersRoute'
 
 // Pages
+// import Login from '../pages/Login'
 // import Dashboard from '../pages/Dashboard'
 import Roadmap from '../pages/Roadmap'
 import Resources from '../pages/Resources'
@@ -27,6 +34,51 @@ import Resource from '../pages/Resource'
 import Issues from '../pages/Issues'
 import Issue from '../pages/Issue'
 import Absences from '../pages/Absences'
+import { resolvers, typeDefs } from '../resolvers'
+import { basicAuth, apiKey, defaultFixVersion } from '../credentials'
+
+const httpLink = createHttpLink({
+  uri: 'http://localhost:4000/graphql',
+  credentials: 'same-origin',
+})
+const authLink = setContext((_, { headers }) => {
+  // get the authentication token from local storage if it exists
+  // const token = localStorage.getItem('token')
+  const token = apiKey
+  // return the headers to the context so httpLink can read them
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : `Basic ${basicAuth}`,
+    },
+  }
+})
+
+const cache = new InMemoryCache()
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache,
+  resolvers,
+  typeDefs,
+})
+
+const team = localStorage.getItem('team') ? localStorage.getItem('team') : null
+const version = JSON.parse(localStorage.getItem('version')) || defaultFixVersion
+
+cache.writeData({
+  data: {
+    isLoggedIn: false,
+    versionId: version.id,
+    versionName: version.name,
+    teamFilter: team,
+  },
+})
+
+const IS_LOGGED_IN = gql`
+  query IsUserLoggedIn {
+    isLoggedIn @client
+  }
+`
 
 class App extends Component {
   componentDidMount() {
@@ -57,13 +109,43 @@ class App extends Component {
 }
 const AppWithNavigationViewController = withNavigationViewController(App)
 
-export default () => (
+const AppRouter = () => (
   <HashRouter>
     <NavigationProvider>
       <AppWithNavigationViewController />
     </NavigationProvider>
   </HashRouter>
 )
+
+export default () => (
+  <ApolloProvider client={client}>
+    <Query query={IS_LOGGED_IN}>
+      {({ data }) =>
+        data.isLoggedIn ? <AppRouter client={client} /> : <AppRouter />
+      }
+    </Query>
+  </ApolloProvider>
+)
+
+/**
+ * TODO: Handle authentication
+ */
+// const httpLink = createHttpLink({
+//   uri: 'http://localhost:4000/graphql',
+//   credentials: 'same-origin',
+// })
+// const authLink = setContext((_, { headers }) => {
+//   // get the authentication token from local storage if it exists
+//   // const token = localStorage.getItem('token')
+//   const token = apiKey
+//   // return the headers to the context so httpLink can read them
+//   return {
+//     headers: {
+//       ...headers,
+//       authorization: token ? `Bearer ${token}` : `Basic ${basicAuth}`,
+//     },
+//   }
+// })
 
 /**
  * Hook App

@@ -8,7 +8,7 @@ import DropdownMenu, {
 } from '@atlaskit/dropdown-menu'
 import EmptyState from '@atlaskit/empty-state'
 import Spinner from '@atlaskit/spinner'
-import { projectId, defaultFixVersion } from '../credentials'
+import { projectId } from '../credentials'
 
 const GET_VERSIONS = gql`
   query GetVersions($id: ID!, $pageSize: Int, $after: Int) {
@@ -31,32 +31,36 @@ const GET_TEAMS = gql`
   }
 `
 
-export const LOCAL_STATE_QUERY = gql`
+export const VERSION_FILTER_QUERY = gql`
+  {
+    versionId @client
+    versionName @client
+  }
+`
+
+export const TEAM_FILTER_QUERY = gql`
   {
     teamFilter @client
-    versionFilter @client
   }
 `
 
 export default () => (
-  <Query query={LOCAL_STATE_QUERY}>
-    {({ data: { versionFilter, teamFilter }, client }) => (
-      <ButtonGroup>
-        <Query
-          query={GET_VERSIONS}
-          variables={{ id: projectId, pageSize: 5, after: 5 }}
-        >
-          {({ data, loading, error }) => {
-            if (loading) return <Spinner size="medium" />
-            if (error)
-              return <EmptyState header="Error" description={error.message} />
+  <ButtonGroup>
+    <Query
+      query={GET_VERSIONS}
+      variables={{ id: projectId, pageSize: 5, after: 5 }}
+    >
+      {({ data, loading, error }) => {
+        if (loading) return <Spinner size="medium" />
+        if (error)
+          return <EmptyState header="Error" description={error.message} />
 
-            console.log(versionFilter)
-            return (
+        return (
+          <Query query={VERSION_FILTER_QUERY}>
+            {({ data: { versionName }, client }) => (
               <DropdownMenu
                 isLoading={loading}
-                trigger={`FixVersion: ${(versionFilter && versionFilter.name) ||
-                  defaultFixVersion.name}`}
+                trigger={`FixVersion: ${versionName}`}
                 triggerType="button"
                 shouldFlip={false}
                 position="right top"
@@ -69,7 +73,8 @@ export default () => (
                         onClick={() => {
                           client.writeData({
                             data: {
-                              versionFilter: version,
+                              versionId: version.id,
+                              versionName: version.name,
                             },
                           })
                           localStorage.setItem(
@@ -83,44 +88,52 @@ export default () => (
                     ))}
                 </DropdownItemGroup>
               </DropdownMenu>
-            )
-          }}
-        </Query>
-        <Query query={GET_TEAMS}>
-          {({ data, loading, error }) => {
-            if (loading)
-              return (
-                <Button key="team" isLoading={loading} appearance="subtle">
-                  Teams
-                </Button>
-              )
-            if (error)
-              return <EmptyState header="Error" description={error.message} />
+            )}
+          </Query>
+        )
+      }}
+    </Query>
+    <Query query={GET_TEAMS}>
+      {({ data, loading, error }) => {
+        if (loading)
+          return (
+            <Button key="team" isLoading={loading} appearance="subtle">
+              Teams
+            </Button>
+          )
+        if (error)
+          return <EmptyState header="Error" description={error.message} />
 
-            console.log(teamFilter)
-            return data.teams.map(team => (
+        return data.teams.map((team, index) => (
+          <Query key={index} query={TEAM_FILTER_QUERY}>
+            {({ data: { teamFilter }, client }) => (
               <Button
                 key={team._id}
                 isLoading={loading}
                 appearance="subtle"
                 isSelected={teamFilter === team._id}
                 onClick={() => {
-                  const updatedFilter =
-                    teamFilter !== team._id ? team._id : null
+                  let updatedFilter
+                  if (teamFilter !== team._id) {
+                    updatedFilter = team._id
+                    localStorage.setItem('team', updatedFilter)
+                  } else {
+                    updatedFilter = null
+                    localStorage.removeItem('team')
+                  }
                   client.writeData({
                     data: {
                       teamFilter: updatedFilter,
                     },
                   })
-                  localStorage.setItem('team', updatedFilter)
                 }}
               >
                 {team._id}
               </Button>
-            ))
-          }}
-        </Query>
-      </ButtonGroup>
-    )}
-  </Query>
+            )}
+          </Query>
+        ))
+      }}
+    </Query>
+  </ButtonGroup>
 )
