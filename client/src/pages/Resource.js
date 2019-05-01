@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react'
-import { Query } from 'react-apollo'
+import React from 'react'
+import { useQuery } from 'react-apollo-hooks'
 import gql from 'graphql-tag'
 import Avatar from '@atlaskit/avatar'
 import Calendar from '@atlaskit/calendar'
@@ -28,86 +28,77 @@ const GET_ABSENCES = gql`
 
 export default function Resource(props) {
   const { resourceId } = props.match.params
+  const {
+    data: { issues },
+    loading: loadingIssues,
+    error: errorIssues,
+  } = useQuery(GET_ISSUES, {
+    variables: {
+      jql: `assignee=${resourceId} AND fixVersion=${defaultFixVersion.id}`,
+      pageSize: 10,
+    },
+  })
+  const {
+    data: { absences },
+    loading: loadingAbsences,
+    error: errorAbsences,
+  } = useQuery(GET_ABSENCES, {
+    variables: { id: resourceId },
+  })
 
+  if (loadingIssues || loadingAbsences)
+    return (
+      <Center>
+        <Spinner size="large" />
+      </Center>
+    )
+  if (errorIssues || errorAbsences)
+    return (
+      <EmptyState
+        header="Error"
+        description={[errorIssues, errorAbsences].map(({ message }) => message)}
+      />
+    )
+
+  const { assignee } = issues[0]
   return (
     <ContentWrapper>
-      <Query
-        query={GET_ISSUES}
-        variables={{
-          jql: `assignee=${resourceId} AND fixVersion=${defaultFixVersion.id}`,
-          pageSize: 10,
-        }}
-      >
-        {({ data, loading, error }) => {
-          if (loading)
-            return (
-              <Center>
-                <Spinner size="large" />
-              </Center>
-            )
-          if (error)
-            return <EmptyState header="Error" description={error.message} />
+      <PageTitle>
+        <NameWrapper>
+          <AvatarWrapper>
+            <Avatar
+              name={assignee.name}
+              size="large"
+              src={`https://jira.cdprojektred.com/secure/useravatar?ownerId=${
+                assignee.key
+              }`}
+            />
+          </AvatarWrapper>
+          {assignee.name}
+        </NameWrapper>
+      </PageTitle>
+      <Filters />
+      <p>
+        <a
+          href={`https://jira.cdprojektred.com/issues/?jql=assignee=${
+            assignee.key
+          }`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          View in Issue Navigator
+        </a>
+      </p>
+      <IssueList
+        issues={issues.issues}
+        maxResults={issues.maxResults}
+        total={issues.total}
+        pathname={props.location.pathname}
+        isLoading={loadingIssues}
+      />
 
-          const {
-            issues: { issues },
-          } = data
-          const { assignee } = issues[0]
-          return (
-            <Fragment>
-              <PageTitle>
-                <NameWrapper>
-                  <AvatarWrapper>
-                    <Avatar
-                      name={assignee.name}
-                      size="large"
-                      src={`https://jira.cdprojektred.com/secure/useravatar?ownerId=${
-                        assignee.key
-                      }`}
-                    />
-                  </AvatarWrapper>
-                  {assignee.name}
-                </NameWrapper>
-              </PageTitle>
-              <Filters />
-              <p>
-                <a
-                  href={`https://jira.cdprojektred.com/issues/?jql=assignee=${
-                    assignee.key
-                  }`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  View in Issue Navigator
-                </a>
-              </p>
-              <IssueList
-                issues={issues}
-                maxResults={data.issues.maxResults}
-                total={data.issues.total}
-                pathname={props.location.pathname}
-                isLoading={loading}
-              />
-            </Fragment>
-          )
-        }}
-      </Query>
-      <Query query={GET_ABSENCES} variables={{ id: resourceId }}>
-        {({ data, loading, error }) => {
-          if (loading)
-            return (
-              <Center>
-                <Spinner size="large" />
-              </Center>
-            )
-          if (error) return <p>Error</p>
-          return (
-            <Fragment>
-              <HolidayList absences={data.absences} isLoading={loading} />
-              <Calendar day={0} defaultDisabled={data.absences} />
-            </Fragment>
-          )
-        }}
-      </Query>
+      <HolidayList absences={absences} isLoading={loadingAbsences} />
+      <Calendar day={0} defaultDisabled={absences} />
     </ContentWrapper>
   )
 }

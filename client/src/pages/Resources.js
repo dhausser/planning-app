@@ -1,10 +1,10 @@
 import React from 'react'
-import { Query } from 'react-apollo'
+import { useQuery } from 'react-apollo-hooks'
 import gql from 'graphql-tag'
 import EmptyState from '@atlaskit/empty-state'
 import Spinner from '@atlaskit/spinner'
 import PageTitle from '../components/PageTitle'
-import Filters, { TEAM_FILTER_QUERY } from '../components/Filters'
+import Filters, { GET_FILTERS } from '../components/Filters'
 import ResourceList from '../components/ResourceList'
 import ContentWrapper, { Center } from '../components/ContentWrapper'
 
@@ -18,38 +18,32 @@ const GET_RESOURCES = gql`
   }
 `
 
-export default () => (
-  <ContentWrapper>
-    <PageTitle>People</PageTitle>
-    <Filters />
-    <Query query={GET_RESOURCES}>
-      {({ data, loading, error }) => {
-        if (loading)
-          return (
-            <Center>
-              <Spinner size="large" />
-            </Center>
-          )
-        if (error)
-          return <EmptyState header="Error" description={error.message} />
+export default () => {
+  const { data, loading, error } = useQuery(GET_RESOURCES)
+  const {
+    data: { teamFilter },
+  } = useQuery(GET_FILTERS)
 
-        return (
-          <Query query={TEAM_FILTER_QUERY}>
-            {({ data: { teamFilter } }) => (
-              <ResourceList
-                resources={
-                  teamFilter
-                    ? data.resources.filter(
-                        resource => resource.team === teamFilter,
-                      )
-                    : data.resources
-                }
-                isLoading={loading}
-              />
-            )}
-          </Query>
-        )
-      }}
-    </Query>
-  </ContentWrapper>
-)
+  if (loading)
+    return (
+      <Center>
+        <Spinner size="large" />
+      </Center>
+    )
+  if (error) return <EmptyState header="Error" description={error.message} />
+
+  return (
+    <ContentWrapper>
+      <PageTitle>People</PageTitle>
+      <Filters />
+      <ResourceList
+        resources={
+          teamFilter
+            ? data.resources.filter(resource => resource.team === teamFilter)
+            : data.resources
+        }
+        isLoading={loading}
+      />
+    </ContentWrapper>
+  )
+}

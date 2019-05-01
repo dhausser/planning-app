@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Query } from 'react-apollo'
+import { useQuery } from 'react-apollo-hooks'
 import gql from 'graphql-tag'
 import Spinner from '@atlaskit/spinner'
 import EmptyState from '@atlaskit/empty-state'
@@ -56,141 +56,132 @@ const GET_ISSUE = gql`
 `
 
 export default function Issue(props) {
+  const {
+    data: { issue },
+    loading,
+    error,
+  } = useQuery(GET_ISSUE, {
+    variables: { id: props.match.params.issueId },
+  })
+
+  if (loading) {
+    return (
+      <Center>
+        <Spinner size="large" />
+      </Center>
+    )
+  }
+
+  if (error) {
+    return <EmptyState key={error} header="Error" description={error.message} />
+  }
+
   return (
-    <Query query={GET_ISSUE} variables={{ id: props.match.params.issueId }}>
-      {({ data, loading, error }) => {
-        if (loading)
-          return (
-            <Center>
-              <Spinner size="large" />
-            </Center>
-          )
-
-        if (error) {
-          return (
-            <EmptyState
-              key={error}
-              header="Error"
-              description={error.message}
+    <ContentWrapper>
+      <PageTitle>{issue.summary}</PageTitle>
+      <a
+        href={`https://${hostname}/browse/${issue.key}`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        View in Issue Navigator
+      </a>
+      <h5>Assignee</h5>
+      {issue.assignee ? (
+        <NameWrapper>
+          <AvatarWrapper>
+            <Avatar
+              name={issue.assignee.name}
+              size="large"
+              src={`https://${hostname}/secure/useravatar?ownerId=${
+                issue.assignee.key
+              }`}
             />
-          )
-        }
-
-        const { issue } = data
-        return (
-          <ContentWrapper>
-            <PageTitle>{issue.summary}</PageTitle>
-            <a
-              href={`https://${hostname}/browse/${issue.key}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              View in Issue Navigator
-            </a>
-            <h5>Assignee</h5>
-            {issue.assignee ? (
-              <NameWrapper>
-                <AvatarWrapper>
-                  <Avatar
-                    name={issue.assignee.name}
-                    size="large"
-                    src={`https://${hostname}/secure/useravatar?ownerId=${
-                      issue.assignee.key
-                    }`}
-                  />
-                </AvatarWrapper>
-                <Link to={`/resource/${issue.assignee.key}`}>
-                  {issue.assignee.name}
-                </Link>
-              </NameWrapper>
-            ) : (
-              <NameWrapper>
-                <AvatarWrapper>
-                  <Avatar name="Unassigned" size="large" />
-                </AvatarWrapper>
-                Unassigned
-              </NameWrapper>
-            )}
-            <h5>Status</h5>
-            <Status
-              text={issue.status.name}
-              color={getIcon[issue.status.category]}
+          </AvatarWrapper>
+          <Link to={`/resource/${issue.assignee.key}`}>
+            {issue.assignee.name}
+          </Link>
+        </NameWrapper>
+      ) : (
+        <NameWrapper>
+          <AvatarWrapper>
+            <Avatar name="Unassigned" size="large" />
+          </AvatarWrapper>
+          Unassigned
+        </NameWrapper>
+      )}
+      <h5>Status</h5>
+      <Status text={issue.status.name} color={getIcon[issue.status.category]} />
+      <h5>FixVersion</h5>
+      {issue.fixVersions[0] && issue.fixVersions[0].name}
+      <h5>Type</h5>
+      {getIcon[issue.type]}
+      <h5>Priotity</h5>
+      {getIcon[issue.priority]}
+      <InlineEdit
+        isFitContainerWidthReadView
+        label="Summary"
+        labelHtmlFor="inline-single-edit"
+        editView={renderInput({
+          isEditing: true,
+          id: 'inline-edit-single',
+        })}
+        readView={renderInput({
+          isEditing: false,
+          id: 'inline-edit-single',
+        })}
+        onConfirm={onConfirm}
+        onCancel={onCancel}
+        {...props}
+      />
+      <InlineEdit
+        isFitContainerWidthReadView
+        label="Description"
+        labelHtmlFor="inline-single-edit"
+        editView={issue.description}
+        readView={issue.description}
+        onConfirm={onConfirm}
+        onCancel={onCancel}
+        {...props}
+      />
+      {issue.comments.map(comment => (
+        <Comment
+          key={comment.id}
+          avatar={
+            <Avatar
+              src={`https://${hostname}/secure/useravatar?ownerId=${
+                comment.author.key
+              }`}
+              label="Atlaskit avatar"
+              size="medium"
             />
-            <h5>FixVersion</h5>
-            {issue.fixVersions[0] && issue.fixVersions[0].name}
-            <h5>Type</h5>
-            {getIcon[issue.type]}
-            <h5>Priotity</h5>
-            {getIcon[issue.priority]}
-            <InlineEdit
-              isFitContainerWidthReadView
-              label="Summary"
-              labelHtmlFor="inline-single-edit"
-              editView={renderInput({
-                isEditing: true,
-                id: 'inline-edit-single',
-              })}
-              readView={renderInput({
-                isEditing: false,
-                id: 'inline-edit-single',
-              })}
-              onConfirm={onConfirm}
-              onCancel={onCancel}
-              {...props}
-            />
-            <InlineEdit
-              isFitContainerWidthReadView
-              label="Description"
-              labelHtmlFor="inline-single-edit"
-              editView={issue.description}
-              readView={issue.description}
-              onConfirm={onConfirm}
-              onCancel={onCancel}
-              {...props}
-            />
-            {issue.comments.map(comment => (
-              <Comment
-                key={comment.id}
-                avatar={
-                  <Avatar
-                    src={`https://${hostname}/secure/useravatar?ownerId=${
-                      comment.author.key
-                    }`}
-                    label="Atlaskit avatar"
-                    size="medium"
-                  />
-                }
-                author={<CommentAuthor>{comment.author.name}</CommentAuthor>}
-                edited={
-                  comment.updated && <CommentEdited>Edited</CommentEdited>
-                }
-                time={
-                  <CommentTime>
-                    {new Date(comment.created).toLocaleDateString()}
-                  </CommentTime>
-                }
-                content={<p>{comment.body}</p>}
-                actions={[
-                  <CommentAction>Reply</CommentAction>,
-                  <CommentAction>Edit</CommentAction>,
-                  <CommentAction>Like</CommentAction>,
-                ]}
-              />
-            ))}
-            <InlineEdit
-              isFitContainerWidthReadView
-              label="Comment"
-              labelHtmlFor="inline-single-edit"
-              editView="Comment here"
-              readView="Comment here"
-              onConfirm={onConfirm}
-              onCancel={onCancel}
-              {...props}
-            />
-          </ContentWrapper>
-        )
-      }}
-    </Query>
+          }
+          author={<CommentAuthor>{comment.author.name}</CommentAuthor>}
+          edited={comment.updated && <CommentEdited>Edited</CommentEdited>}
+          time={
+            <CommentTime>
+              {new Date(comment.created).toLocaleDateString()}
+            </CommentTime>
+          }
+          content={<p>{comment.body}</p>}
+          actions={[
+            <CommentAction>Reply</CommentAction>,
+            <CommentAction>Edit</CommentAction>,
+            <CommentAction>Like</CommentAction>,
+          ]}
+        />
+      ))}
+      <InlineEdit
+        isFitContainerWidthReadView
+        label="Comment"
+        labelHtmlFor="inline-single-edit"
+        editView="Comment here"
+        readView="Comment here"
+        onConfirm={onConfirm}
+        onCancel={onCancel}
+        {...props}
+      />
+    </ContentWrapper>
   )
 }
 

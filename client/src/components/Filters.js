@@ -1,5 +1,6 @@
 import React from 'react'
-import { Query } from 'react-apollo'
+import { Mutation, ApolloConsumer } from 'react-apollo'
+import { useQuery } from 'react-apollo-hooks'
 import gql from 'graphql-tag'
 import Button, { ButtonGroup } from '@atlaskit/button'
 import DropdownMenu, {
@@ -31,52 +32,96 @@ const GET_TEAMS = gql`
   }
 `
 
-export const VERSION_FILTER_QUERY = gql`
+export const GET_FILTERS = gql`
   {
+    # versionFitler @client {
+    #   id
+    #   name
+    # }
     versionId @client
     versionName @client
-  }
-`
-
-export const TEAM_FILTER_QUERY = gql`
-  {
     teamFilter @client
   }
 `
 
-export default () => (
-  <ButtonGroup>
-    <Query
-      query={GET_VERSIONS}
-      variables={{ id: projectId, pageSize: 5, after: 5 }}
-    >
-      {({ data, loading, error }) => {
-        if (loading) return <Spinner size="medium" />
-        if (error)
-          return <EmptyState header="Error" description={error.message} />
+// export const VERSION_FILTER_QUERY = gql`
+//   {
+//     versionId @client
+//     versionName @client
+//   }
+// `
 
-        return (
-          <Query query={VERSION_FILTER_QUERY}>
-            {({ data: { versionName }, client }) => (
-              <DropdownMenu
-                isLoading={loading}
-                trigger={`FixVersion: ${versionName}`}
-                triggerType="button"
-                shouldFlip={false}
-                position="right top"
-              >
-                <DropdownItemGroup>
-                  {data.versions &&
-                    data.versions.map(version => (
+// export const TEAM_FILTER_QUERY = gql`
+//   {
+//     teamFilter @client
+//   }
+// `
+
+const TOGGLE_VERSION = gql`
+  mutation toggleVersion($version: FixVersion!) {
+    toggleVersion(version: $version) @client
+  }
+`
+
+export default () => {
+  const {
+    data: { versions },
+    loading: loadingVersions,
+    error: errorVersions,
+  } = useQuery(GET_VERSIONS, {
+    variables: { id: projectId, pageSize: 5, after: 5 },
+  })
+  const {
+    data: { teams },
+    loading: loadingTeams,
+    error: errorTeams,
+  } = useQuery(GET_TEAMS)
+  const {
+    data: { versionFilter, versionId, versionName, teamFilter },
+    loading: loadingFilters,
+  } = useQuery(GET_FILTERS)
+
+  if (loadingVersions || loadingTeams || loadingFilters) {
+    return (
+      <Button
+        key="team"
+        isLoading={loadingVersions || loadingTeams}
+        appearance="subtle"
+      >
+        Filters
+      </Button>
+    )
+  }
+  if (errorVersions || errorTeams)
+    return (
+      <EmptyState
+        header="Error"
+        description={[errorVersions, errorTeams].map(({ message }) => message)}
+      />
+    )
+
+  console.log({ versionFilter, versionId, versionName, teamFilter })
+
+  return (
+    <ApolloConsumer>
+      {client => (
+        <ButtonGroup>
+          <DropdownMenu
+            isLoading={loadingVersions}
+            trigger={`FixVersion: ${versionName}`}
+            triggerType="button"
+            shouldFlip={false}
+            position="right top"
+          >
+            <DropdownItemGroup>
+              {versions &&
+                versions.map(version => (
+                  <Mutation mutation={TOGGLE_VERSION} variables={{ version }}>
+                    {toggleVersion => (
                       <DropdownItem
                         key={version.id}
                         onClick={() => {
-                          client.writeData({
-                            data: {
-                              versionId: version.id,
-                              versionName: version.name,
-                            },
-                          })
+                          toggleVersion()
                           localStorage.setItem(
                             'version',
                             JSON.stringify(version),
@@ -85,55 +130,38 @@ export default () => (
                       >
                         {version.name}
                       </DropdownItem>
-                    ))}
-                </DropdownItemGroup>
-              </DropdownMenu>
-            )}
-          </Query>
-        )
-      }}
-    </Query>
-    <Query query={GET_TEAMS}>
-      {({ data, loading, error }) => {
-        if (loading)
-          return (
-            <Button key="team" isLoading={loading} appearance="subtle">
-              Teams
+                    )}
+                  </Mutation>
+                ))}
+            </DropdownItemGroup>
+          </DropdownMenu>
+          {teams.map(team => (
+            <Button
+              key={team._id}
+              isLoading={loadingTeams}
+              appearance="subtle"
+              isSelected={teamFilter === team._id}
+              onClick={() => {
+                let updatedFilter
+                if (teamFilter !== team._id) {
+                  updatedFilter = team._id
+                  localStorage.setItem('team', updatedFilter)
+                } else {
+                  updatedFilter = null
+                  localStorage.removeItem('team')
+                }
+                client.writeData({
+                  data: {
+                    teamFilter: updatedFilter,
+                  },
+                })
+              }}
+            >
+              {team._id}
             </Button>
-          )
-        if (error)
-          return <EmptyState header="Error" description={error.message} />
-
-        return data.teams.map((team, index) => (
-          <Query key={index} query={TEAM_FILTER_QUERY}>
-            {({ data: { teamFilter }, client }) => (
-              <Button
-                key={team._id}
-                isLoading={loading}
-                appearance="subtle"
-                isSelected={teamFilter === team._id}
-                onClick={() => {
-                  let updatedFilter
-                  if (teamFilter !== team._id) {
-                    updatedFilter = team._id
-                    localStorage.setItem('team', updatedFilter)
-                  } else {
-                    updatedFilter = null
-                    localStorage.removeItem('team')
-                  }
-                  client.writeData({
-                    data: {
-                      teamFilter: updatedFilter,
-                    },
-                  })
-                }}
-              >
-                {team._id}
-              </Button>
-            )}
-          </Query>
-        ))
-      }}
-    </Query>
-  </ButtonGroup>
-)
+          ))}
+        </ButtonGroup>
+      )}
+    </ApolloConsumer>
+  )
+}
