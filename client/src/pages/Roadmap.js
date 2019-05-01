@@ -84,6 +84,9 @@ const issueReducer = issue => ({
     : [],
 })
 
+/**
+ * TODO: Use async/await to await for epics Query before children query
+ */
 export default function Roadmap() {
   const {
     data: { version },

@@ -1,22 +1,19 @@
 import express from 'express'
-import { ApolloServer } from 'apollo-server-express'
-
 import compression from 'compression'
 import cookieParser from 'cookie-parser'
 import errorhandler from 'errorhandler'
 import morgan from 'morgan'
 import session from 'express-session'
-
 import path from 'path'
 
-import './db'
-
-import typeDefs from './schema'
-import resolvers from './resolvers'
+import { ApolloServer } from 'apollo-server-express'
+import { typeDefs, resolvers } from './schema'
 
 import IssueAPI from './datasources/issue'
 import AbsenceAPI from './datasources/absence'
 import ResourceAPI from './datasources/resource'
+
+import './db'
 
 const app = express()
 
@@ -58,8 +55,9 @@ if (env === 'development') {
 
 app.use(compression())
 
-const staticDir = path.join(__dirname, 'build')
+const staticDir = path.join(__dirname, '../../client/build')
 app.use(express.static(staticDir))
+console.log(staticDir)
 
 app.listen(port, () =>
   console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`),

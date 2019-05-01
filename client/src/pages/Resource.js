@@ -11,11 +11,10 @@ import ContentWrapper, {
   Center,
 } from '../components/ContentWrapper'
 import IssueList from '../components/IssueList'
-import Filters from '../components/Filters'
+import Filters, { GET_FILTERS } from '../components/Filters'
 import PageTitle from '../components/PageTitle'
 import HolidayList from '../components/HolidayList'
 import { GET_ISSUES } from './Issues'
-import { defaultFixVersion } from '../credentials'
 
 const GET_ABSENCES = gql`
   query absenceList($id: ID!) {
@@ -29,12 +28,15 @@ const GET_ABSENCES = gql`
 export default function Resource(props) {
   const { resourceId } = props.match.params
   const {
+    data: { version },
+  } = useQuery(GET_FILTERS)
+  const {
     data: { issues },
     loading: loadingIssues,
     error: errorIssues,
   } = useQuery(GET_ISSUES, {
     variables: {
-      jql: `assignee=${resourceId} AND fixVersion=${defaultFixVersion.id}`,
+      jql: `assignee=${resourceId} AND fixVersion=${version.id}`,
       pageSize: 10,
     },
   })
@@ -60,7 +62,7 @@ export default function Resource(props) {
       />
     )
 
-  const { assignee } = issues[0]
+  const { assignee } = issues.issues[0]
   return (
     <ContentWrapper>
       <PageTitle>
