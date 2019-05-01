@@ -21,7 +21,7 @@ const GET_RESOURCES = gql`
 export default () => {
   const { data, loading, error } = useQuery(GET_RESOURCES)
   const {
-    data: { teamFilter },
+    data: { team },
   } = useQuery(GET_FILTERS)
 
   if (loading)
@@ -38,8 +38,8 @@ export default () => {
       <Filters />
       <ResourceList
         resources={
-          teamFilter
-            ? data.resources.filter(resource => resource.team === teamFilter)
+          team
+            ? data.resources.filter(resource => resource.team === team)
             : data.resources
         }
         isLoading={loading}

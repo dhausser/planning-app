@@ -41,11 +41,13 @@ export const GET_ISSUES = gql`
 
 export default function Issues(props) {
   const {
-    data: { versionId, teamFilter },
+    data: { version, team },
   } = useQuery(GET_FILTERS)
   const { data, loading, error } = useQuery(GET_ISSUES, {
     variables: {
-      jql: `project = ${projectId} AND fixVersion = ${versionId} ORDER BY KEY ASC`,
+      jql: `project = ${projectId} AND fixVersion = ${
+        version.id
+      } ORDER BY KEY ASC`,
       pageSize: 10,
     },
   })
@@ -62,9 +64,9 @@ export default function Issues(props) {
       <Filters />
       <IssueList
         issues={
-          teamFilter
+          team
             ? data.issues.issues.filter(
-                ({ assignee: { team } }) => team === teamFilter,
+                ({ assignee }) => assignee.team === team,
               )
             : data.issues.issues
         }

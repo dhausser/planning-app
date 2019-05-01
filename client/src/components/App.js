@@ -2,10 +2,7 @@ import React, { Component } from 'react'
 import { HashRouter, Route, Switch } from 'react-router-dom'
 
 import { Query, ApolloProvider } from 'react-apollo'
-import {
-  ApolloProvider as ApolloHooksProvider,
-  useQuery,
-} from 'react-apollo-hooks'
+import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { createHttpLink } from 'apollo-link-http'
 import { setContext } from 'apollo-link-context'
@@ -66,19 +63,17 @@ const client = new ApolloClient({
   typeDefs,
 })
 
-const team = localStorage.getItem('team') ? localStorage.getItem('team') : null
+const team =
+  localStorage.getItem('team') === null ? localStorage.getItem('team') : null
 const version = JSON.parse(localStorage.getItem('version')) || defaultFixVersion
+
+console.log(team)
 
 cache.writeData({
   data: {
     isLoggedIn: false,
-    versionId: version.id,
-    versionName: version.name,
-    versionFilter: {
-      id: version.id,
-      name: version.name,
-    },
-    teamFilter: team,
+    version,
+    team,
   },
 })
 

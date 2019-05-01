@@ -31,7 +31,7 @@ const GET_ISSUES = gql`
 
 export default () => {
   const {
-    data: { versionId, teamFilter },
+    data: { version, team },
   } = useQuery(GET_FILTERS)
   const {
     data: { issues },
@@ -39,7 +39,9 @@ export default () => {
     error,
   } = useQuery(GET_ISSUES, {
     variables: {
-      jql: `fixVersion = ${versionId} AND statusCategory in (new, indeterminate)`,
+      jql: `fixVersion = ${
+        version.id
+      } AND statusCategory in (new, indeterminate)`,
       pageSize: 1250,
     },
   })
@@ -62,10 +64,10 @@ export default () => {
         </h5>
         <BarChart
           dataset={
-            teamFilter
+            team
               ? aggregateByAssignee(
                   issues.issues.filter(
-                    ({ assignee: { team } }) => team === teamFilter,
+                    ({ assignee }) => assignee.team === team,
                   ),
                 )
               : aggregateByTeam(issues.issues)

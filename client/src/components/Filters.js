@@ -1,5 +1,5 @@
 import React from 'react'
-import { Mutation, ApolloConsumer } from 'react-apollo'
+import { Mutation } from 'react-apollo'
 import { useQuery } from 'react-apollo-hooks'
 import gql from 'graphql-tag'
 import Button, { ButtonGroup } from '@atlaskit/button'
@@ -8,7 +8,6 @@ import DropdownMenu, {
   DropdownItem,
 } from '@atlaskit/dropdown-menu'
 import EmptyState from '@atlaskit/empty-state'
-import Spinner from '@atlaskit/spinner'
 import { projectId } from '../credentials'
 
 const GET_VERSIONS = gql`
@@ -33,33 +32,24 @@ const GET_TEAMS = gql`
 `
 
 export const GET_FILTERS = gql`
-  {
-    # versionFitler @client {
-    #   id
-    #   name
-    # }
-    versionId @client
-    versionName @client
-    teamFilter @client
+  query GetFilters {
+    version @client {
+      id
+      name
+    }
+    team @client
   }
 `
-
-// export const VERSION_FILTER_QUERY = gql`
-//   {
-//     versionId @client
-//     versionName @client
-//   }
-// `
-
-// export const TEAM_FILTER_QUERY = gql`
-//   {
-//     teamFilter @client
-//   }
-// `
 
 const TOGGLE_VERSION = gql`
   mutation toggleVersion($version: FixVersion!) {
     toggleVersion(version: $version) @client
+  }
+`
+
+const TOGGLE_TEAM = gql`
+  mutation toggleTeam($team: String!) {
+    toggleTeam(team: $team) @client
   }
 `
 
@@ -77,7 +67,7 @@ export default () => {
     error: errorTeams,
   } = useQuery(GET_TEAMS)
   const {
-    data: { versionFilter, versionId, versionName, teamFilter },
+    data: { version: versionFilter, team: teamFilter },
     loading: loadingFilters,
   } = useQuery(GET_FILTERS)
 
@@ -100,68 +90,51 @@ export default () => {
       />
     )
 
-  console.log({ versionFilter, versionId, versionName, teamFilter })
-
   return (
-    <ApolloConsumer>
-      {client => (
-        <ButtonGroup>
-          <DropdownMenu
-            isLoading={loadingVersions}
-            trigger={`FixVersion: ${versionName}`}
-            triggerType="button"
-            shouldFlip={false}
-            position="right top"
-          >
-            <DropdownItemGroup>
-              {versions &&
-                versions.map(version => (
-                  <Mutation mutation={TOGGLE_VERSION} variables={{ version }}>
-                    {toggleVersion => (
-                      <DropdownItem
-                        key={version.id}
-                        onClick={() => {
-                          toggleVersion()
-                          localStorage.setItem(
-                            'version',
-                            JSON.stringify(version),
-                          )
-                        }}
-                      >
-                        {version.name}
-                      </DropdownItem>
-                    )}
-                  </Mutation>
-                ))}
-            </DropdownItemGroup>
-          </DropdownMenu>
-          {teams.map(team => (
+    <ButtonGroup>
+      <DropdownMenu
+        isLoading={loadingVersions}
+        trigger={`FixVersion: ${versionFilter.name}`}
+        triggerType="button"
+        shouldFlip={false}
+        position="right top"
+      >
+        <DropdownItemGroup>
+          {versions &&
+            versions.map(version => (
+              <Mutation
+                key={version.id}
+                mutation={TOGGLE_VERSION}
+                variables={{ version }}
+              >
+                {toggleVersion => (
+                  <DropdownItem key={version.id} onClick={toggleVersion}>
+                    {version.name}
+                  </DropdownItem>
+                )}
+              </Mutation>
+            ))}
+        </DropdownItemGroup>
+      </DropdownMenu>
+      {teams.map(team => (
+        <Mutation
+          key={team}
+          mutation={TOGGLE_TEAM}
+          variables={{ team: { id: team._id, filter: teamFilter } }}
+        >
+          {toggleTeam => (
             <Button
               key={team._id}
               isLoading={loadingTeams}
               appearance="subtle"
               isSelected={teamFilter === team._id}
-              onClick={() => {
-                let updatedFilter
-                if (teamFilter !== team._id) {
-                  updatedFilter = team._id
-                  localStorage.setItem('team', updatedFilter)
-                } else {
-                  updatedFilter = null
-                  localStorage.removeItem('team')
-                }
-                client.writeData({
-                  data: {
-                    teamFilter: updatedFilter,
-                  },
-                })
-              }}
+              onClick={toggleTeam}
             >
               {team._id}
             </Button>
-          ))}
-        </ButtonGroup>
-      )}
-    </ApolloConsumer>
+          )}
+        </Mutation>
+      ))}
+    </ButtonGroup>
   )
 }

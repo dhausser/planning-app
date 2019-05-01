@@ -86,12 +86,14 @@ const issueReducer = issue => ({
 
 export default function Roadmap() {
   const {
-    data: { versionId },
+    data: { version },
     loading: loadingFilters,
     error: errorFilters,
   } = useQuery(GET_FILTERS)
 
-  let jql = `project = ${projectId} AND fixVersion = ${versionId} AND issuetype = epic`
+  let jql = `project = ${projectId} AND fixVersion = ${
+    version.id
+  } AND issuetype = epic`
   const {
     data: { issues: epics },
     loading: loadingEpics,
@@ -100,7 +102,7 @@ export default function Roadmap() {
     variables: { jql, pageSize: 100 },
   })
 
-  jql = `fixVersion = ${versionId} AND 'Epic Link' in (${epics.issues.map(
+  jql = `fixVersion = ${version.id} AND 'Epic Link' in (${epics.issues.map(
     ({ id }) => id,
   )})`
   const {
