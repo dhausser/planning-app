@@ -1,12 +1,15 @@
 import React from 'react'
 import { useQuery } from 'react-apollo-hooks'
 import gql from 'graphql-tag'
-import EmptyState from '@atlaskit/empty-state'
-import Spinner from '@atlaskit/spinner'
-import PageTitle from '../components/PageTitle'
-import Filters, { GET_FILTERS } from '../components/Filters'
-import ResourceList from '../components/ResourceList'
-import ContentWrapper, { Center } from '../components/ContentWrapper'
+import {
+  ResourceList,
+  Filters,
+  ContentWrapper,
+  PageTitle,
+  Loading,
+  Error,
+} from '../components'
+import { GET_FILTERS } from '../components/Filters'
 
 const GET_RESOURCES = gql`
   query resourceList {
@@ -23,27 +26,17 @@ export default () => {
   const {
     data: { team },
   } = useQuery(GET_FILTERS)
-
-  if (loading)
-    return (
-      <Center>
-        <Spinner size="large" />
-      </Center>
-    )
-  if (error) return <EmptyState header="Error" description={error.message} />
-
+  let resources = []
+  if (error) return <Error error={error} />
+  if (!loading)
+    resources = team
+      ? data.resources.filter(resource => resource.team === team)
+      : data.resources
   return (
     <ContentWrapper>
       <PageTitle>People</PageTitle>
       <Filters />
-      <ResourceList
-        resources={
-          team
-            ? data.resources.filter(resource => resource.team === team)
-            : data.resources
-        }
-        isLoading={loading}
-      />
+      <ResourceList resources={resources} isLoading={loading} />
     </ContentWrapper>
   )
 }

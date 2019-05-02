@@ -6,7 +6,6 @@ import {
   Filters,
   ContentWrapper,
   PageTitle,
-  Loading,
   Error,
 } from '../components'
 import { GET_FILTERS } from '../components/Filters'
@@ -46,6 +45,7 @@ export default function Issues(props) {
   const {
     data: { version, team },
   } = useQuery(GET_FILTERS)
+
   const { data, loading, error } = useQuery(GET_ISSUES, {
     variables: {
       jql: `project = ${projectId} AND fixVersion = ${
@@ -54,22 +54,23 @@ export default function Issues(props) {
       pageSize: 10,
     },
   })
-  if (loading) return <Loading />
-  if (error) return <Error />
+
+  if (error) return <Error error={error} />
+
+  let issues = []
+  if (!loading)
+    issues = team
+      ? data.issues.issues.filter(({ assignee }) => assignee.team === team)
+      : data.issues.issues
+
   return (
     <ContentWrapper>
       <PageTitle>Issues</PageTitle>
       <Filters />
       <IssueList
-        issues={
-          team
-            ? data.issues.issues.filter(
-                ({ assignee }) => assignee.team === team,
-              )
-            : data.issues.issues
-        }
-        maxResults={data.issues.maxResults}
-        total={data.issues.total}
+        issues={issues || []}
+        maxResults={(data.issues && data.issues.maxResults) || 0}
+        total={(data.issues && data.issues.total) || 0}
         pathname={props.match.path}
         isLoading={loading}
       />

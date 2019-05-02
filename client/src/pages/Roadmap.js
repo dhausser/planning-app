@@ -11,9 +11,6 @@ import TableTree, {
   Cell,
 } from '@atlaskit/table-tree'
 import { Status } from '@atlaskit/status'
-// import ContentWrapper from '../components/ContentWrapper'
-// import PageTitle from '../components/PageTitle'
-import { GET_FILTERS } from '../components/Filters'
 import {
   Loading,
   Error,
@@ -21,6 +18,7 @@ import {
   PageTitle,
   Filters,
 } from '../components'
+import { GET_FILTERS } from '../components/Filters'
 import { getIcon } from '../components/Icon'
 import { projectId } from '../credentials'
 
