@@ -116,13 +116,19 @@ function Roadmap({ navigationViewController }) {
       }) => {
         if (loadingEpics) return <Loading />
         if (errorEpics) return <Error error={errorEpics} />
+
+        let jql = ''
+        if (epics.issues.length) {
+          jql = `fixVersion = ${
+            version.id
+          } AND 'Epic Link' in (${epics.issues.map(({ id }) => id)})`
+        }
+
         return (
           <Query
             query={GET_STORIES}
             variables={{
-              jql: `fixVersion = ${
-                version.id
-              } AND 'Epic Link' in (${epics.issues.map(({ id }) => id)})`,
+              jql,
               pageSize: 25,
             }}
           >
@@ -137,14 +143,18 @@ function Roadmap({ navigationViewController }) {
               if (epics.issues.length) {
                 epics.issues.forEach(issue => {
                   issue.children = []
-                  stories.issues.forEach(child => {
-                    if (child.parent === issue.key) {
-                      issue.children.push(child)
-                    }
-                    return null
-                  })
+                  if (stories.issues.length) {
+                    stories.issues.forEach(child => {
+                      if (child.parent === issue.key) {
+                        issue.children.push(child)
+                      }
+                      return null
+                    })
+                  }
                 })
               }
+
+              const items = epics.issues.map(issue => issueReducer(issue)) || []
 
               return (
                 <ContentWrapper>
@@ -162,7 +172,7 @@ function Roadmap({ navigationViewController }) {
                       <Header width={170}>Status</Header>
                     </Headers>
                     <Rows
-                      items={epics.issues.map(issue => issueReducer(issue))}
+                      items={items}
                       render={({
                         key,
                         summary,

@@ -1,6 +1,9 @@
-import React from 'react'
-import { useQuery } from 'react-apollo-hooks'
+import React, { useEffect } from 'react'
 import gql from 'graphql-tag'
+import { useQuery } from 'react-apollo-hooks'
+import { withNavigationViewController } from '@atlaskit/navigation-next'
+import { productHomeView } from '../components/Nav'
+
 import {
   ResourceList,
   Filters,
@@ -20,17 +23,23 @@ const GET_RESOURCES = gql`
   }
 `
 
-export default () => {
+const Resources = ({ navigationViewController }) => {
+  useEffect(() => {
+    navigationViewController.setView(productHomeView.id)
+  }, [navigationViewController])
+
   const { data, loading, error } = useQuery(GET_RESOURCES)
   const {
     data: { team },
   } = useQuery(GET_FILTERS)
+
   let resources = []
   if (error) return <Error error={error} />
   if (!loading)
     resources = team
       ? data.resources.filter(resource => resource.team === team)
       : data.resources
+
   return (
     <ContentWrapper>
       <PageTitle>People</PageTitle>
@@ -39,3 +48,4 @@ export default () => {
     </ContentWrapper>
   )
 }
+export default withNavigationViewController(Resources)

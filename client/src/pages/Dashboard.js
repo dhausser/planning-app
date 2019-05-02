@@ -91,7 +91,6 @@ const Dashboard = ({ navigationViewController }) => {
 
   if (error) return <Error error={error} />
 
-  // return <Loading />
   let dataset = []
   if (!loading)
     dataset = team

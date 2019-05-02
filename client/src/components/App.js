@@ -14,11 +14,14 @@ import {
   productIssuesView,
   projectHomeView,
 } from './Nav'
-
-// Pages
 import {
   Dashboard,
   Roadmap,
+  Sprints,
+  Reports,
+  Releases,
+  Pages,
+  Components,
   Resource,
   Resources,
   Issue,
@@ -46,13 +49,17 @@ const App = ({ navigationViewController }) => {
   return (
     <LayoutManagerWithViewController globalNavigation={MyGlobalNavigation}>
       <Switch>
-        <Route path="/roadmap" component={Roadmap} />
+        <Route path="/sprints" component={Sprints} />
+        <Route path="/reports" component={Reports} />
+        <Route path="/releases" component={Releases} />
+        <Route path="/pages" component={Pages} />
+        <Route path="/components" component={Components} />
         <Route path="/resources" component={Resources} />
         <Route path="/resource/:resourceId" component={Resource} />
         <Route path="/issues" component={Issues} />
         <Route path="/issue/:issueId" component={Issue} />
         <Route path="/absences" component={Absences} />
-        <Route path="/projects/my-project" component={Roadmap} />
+        <Route path="/roadmap" component={Roadmap} />
         <Route path="/issues" component={Issues} />
         <Route path="/" component={Dashboard} />
       </Switch>
@@ -80,38 +87,3 @@ export default () => (
     </ApolloHooksProvider>
   </ApolloProvider>
 )
-
-/**
- * Hook App
- */
-// const App = ({ navigationViewController }) => {
-//   const filterContext = useContext(FilterContext)
-//   const [fixVersion, setFixVersion] = useState(filterContext.fixVersion)
-//   const [teamFilter, setTeamFilter] = useState(filterContext.teamFilter)
-
-//   useEffect(() => {
-//     navigationViewController.addView(productHomeView)
-//     navigationViewController.addView(productIssuesView)
-//     navigationViewController.addView(projectHomeView)
-//   })
-
-//   return (
-//     <FilterContext.Provider
-//       value={{
-//         teamFilter,
-//         setTeamFilter,
-//         fixVersion,
-//         setFixVersion,
-//       }}
-//     >
-//       <LayoutManagerWithViewController globalNavigation={MyGlobalNavigation}>
-//         <Switch>
-//           <Route path="/projects/my-project" component={ProjectBacklogRoute} />
-//           <Route path="/issues" component={IssuesAndFiltersRoute} />
-//           <Route path="/" component={DashboardsRoute} />
-//         </Switch>
-//       </LayoutManagerWithViewController>
-//     </FilterContext.Provider>
-//   )
-// }
-// const AppWithNavigationViewController = withNavigationViewController(App)
