@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { Query } from 'react-apollo'
 import { useQuery } from 'react-apollo-hooks'
 import gql from 'graphql-tag'
 import TableTree, {
@@ -9,13 +10,18 @@ import TableTree, {
   Row,
   Cell,
 } from '@atlaskit/table-tree'
-import Spinner from '@atlaskit/spinner'
-import EmptyState from '@atlaskit/empty-state'
 import { Status } from '@atlaskit/status'
-import ContentWrapper, { Center } from '../components/ContentWrapper'
-import PageTitle from '../components/PageTitle'
+// import ContentWrapper from '../components/ContentWrapper'
+// import PageTitle from '../components/PageTitle'
+import { GET_FILTERS } from '../components/Filters'
+import {
+  Loading,
+  Error,
+  ContentWrapper,
+  PageTitle,
+  Filters,
+} from '../components'
 import { getIcon } from '../components/Icon'
-import Filters, { GET_FILTERS } from '../components/Filters'
 import { projectId } from '../credentials'
 
 const GET_EPICS = gql`
@@ -39,7 +45,7 @@ const GET_EPICS = gql`
   }
 `
 
-const GET_CHILDREN = gql`
+const GET_STORIES = gql`
   query issueList($jql: String, $pageSize: Int!) {
     issues(jql: $jql, pageSize: $pageSize) {
       startAt
@@ -84,100 +90,102 @@ const issueReducer = issue => ({
     : [],
 })
 
-/**
- * TODO: Use async/await to await for epics Query before children query
- */
 export default function Roadmap() {
   const {
     data: { version },
-    loading: loadingFilters,
-    error: errorFilters,
   } = useQuery(GET_FILTERS)
 
-  let jql = `project = ${projectId} AND fixVersion = ${
-    version.id
-  } AND issuetype = epic`
-  const {
-    data: { issues: epics },
-    loading: loadingEpics,
-    error: errorEpics,
-  } = useQuery(GET_EPICS, {
-    variables: { jql, pageSize: 100 },
-  })
-
-  jql = `fixVersion = ${version.id} AND 'Epic Link' in (${epics.issues.map(
-    ({ id }) => id,
-  )})`
-  const {
-    loading: loadingChildren,
-    error: errorChildren,
-    data: { issues: epicChildren },
-  } = useQuery(GET_CHILDREN, {
-    variables: {
-      jql,
-      pageSize: 25,
-    },
-  })
-
-  if (loadingEpics || loadingChildren || loadingFilters)
-    return (
-      <Center>
-        <Spinner size="large" />
-      </Center>
-    )
-  if (errorEpics || errorChildren || errorFilters)
-    return (
-      <EmptyState
-        header="Error"
-        description={[errorEpics, errorChildren, errorFilters].map(
-          ({ message }) => message,
-        )}
-      />
-    )
-
-  if (epics.issues.length) {
-    epics.issues.forEach(issue => {
-      issue.children = []
-      epicChildren.issues.forEach(child => {
-        if (child.parent === issue.key) {
-          issue.children.push(child)
-        }
-        return null
-      })
-    })
-  }
-
   return (
-    <ContentWrapper>
-      <PageTitle>Roadmap</PageTitle>
-      <Filters />
-      <TableTree>
-        <Headers>
-          <Header width={120}>Type</Header>
-          <Header width={450}>Summary</Header>
-          <Header width={70}>Priority</Header>
-          <Header width={170}>Status</Header>
-        </Headers>
-        <Rows
-          items={epics.issues.map(issue => issueReducer(issue))}
-          render={({ key, summary, type, priority, status, children }) => (
-            <Row
-              expandLabel="Expand"
-              collapseLabel="Collapse"
-              itemId={key}
-              items={children}
-              hasChildren={children && children.length > 0}
-            >
-              <Cell singleLine>{type}</Cell>
-              <Cell singleLine>
-                {<Link to={`/issue/${key}`}>{summary}</Link>}
-              </Cell>
-              <Cell singleLine>{priority}</Cell>
-              <Cell singleLine>{status}</Cell>
-            </Row>
-          )}
-        />
-      </TableTree>
-    </ContentWrapper>
+    <Query
+      query={GET_EPICS}
+      variables={{
+        jql: `project = ${projectId} AND fixVersion = ${
+          version.id
+        } AND issuetype = epic`,
+        pageSize: 10,
+      }}
+    >
+      {({
+        data: { issues: epics },
+        loading: loadingEpics,
+        error: errorEpics,
+      }) => {
+        if (loadingEpics) return <Loading />
+        if (errorEpics) return <Error error={errorEpics} />
+        return (
+          <Query
+            query={GET_STORIES}
+            variables={{
+              jql: `fixVersion = ${
+                version.id
+              } AND 'Epic Link' in (${epics.issues.map(({ id }) => id)})`,
+              pageSize: 25,
+            }}
+          >
+            {({
+              data: { issues: stories },
+              loading: loadingStories,
+              error: errorStories,
+            }) => {
+              if (loadingStories) return <Loading />
+              if (errorStories) return <Error error={errorStories} />
+
+              if (epics.issues.length) {
+                epics.issues.forEach(issue => {
+                  issue.children = []
+                  stories.issues.forEach(child => {
+                    if (child.parent === issue.key) {
+                      issue.children.push(child)
+                    }
+                    return null
+                  })
+                })
+              }
+
+              return (
+                <ContentWrapper>
+                  <PageTitle>Roadmap</PageTitle>
+                  <Filters />
+                  <TableTree>
+                    <Headers>
+                      <Header width={120}>Type</Header>
+                      <Header width={450}>Summary</Header>
+                      <Header width={70}>Priority</Header>
+                      <Header width={170}>Status</Header>
+                    </Headers>
+                    <Rows
+                      items={epics.issues.map(issue => issueReducer(issue))}
+                      render={({
+                        key,
+                        summary,
+                        type,
+                        priority,
+                        status,
+                        children,
+                      }) => (
+                        <Row
+                          expandLabel="Expand"
+                          collapseLabel="Collapse"
+                          itemId={key}
+                          items={children}
+                          hasChildren={children && children.length > 0}
+                        >
+                          <Cell singleLine>{type}</Cell>
+                          <Cell singleLine>
+                            {<Link to={`/issue/${key}`}>{summary}</Link>}
+                          </Cell>
+                          <Cell singleLine>{priority}</Cell>
+                          <Cell singleLine>{status}</Cell>
+                        </Row>
+                      )}
+                    />
+                  </TableTree>
+                </ContentWrapper>
+              )
+            }}
+          </Query>
+        )
+      }}
+    </Query>
   )
 }

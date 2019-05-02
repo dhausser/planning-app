@@ -1,12 +1,15 @@
 import React from 'react'
 import { useQuery } from 'react-apollo-hooks'
 import gql from 'graphql-tag'
-import EmptyState from '@atlaskit/empty-state'
-import Spinner from '@atlaskit/spinner'
-import ContentWrapper, { Center } from '../components/ContentWrapper'
-import PageTitle from '../components/PageTitle'
-import IssueList from '../components/IssueList'
-import Filters, { GET_FILTERS } from '../components/Filters'
+import {
+  IssueList,
+  Filters,
+  ContentWrapper,
+  PageTitle,
+  Loading,
+  Error,
+} from '../components'
+import { GET_FILTERS } from '../components/Filters'
 import { projectId } from '../credentials'
 
 export const GET_ISSUES = gql`
@@ -51,13 +54,8 @@ export default function Issues(props) {
       pageSize: 10,
     },
   })
-  if (loading)
-    return (
-      <Center>
-        <Spinner size="large" />
-      </Center>
-    )
-  if (error) return <EmptyState header="Error" description={error.message} />
+  if (loading) return <Loading />
+  if (error) return <Error />
   return (
     <ContentWrapper>
       <PageTitle>Issues</PageTitle>

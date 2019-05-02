@@ -67,8 +67,6 @@ const team =
   localStorage.getItem('team') === null ? localStorage.getItem('team') : null
 const version = JSON.parse(localStorage.getItem('version')) || defaultFixVersion
 
-console.log(team)
-
 cache.writeData({
   data: {
     isLoggedIn: false,
