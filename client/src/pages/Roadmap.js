@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Query } from 'react-apollo'
 import { useQuery } from 'react-apollo-hooks'
+import { withNavigationViewController } from '@atlaskit/navigation-next'
 import gql from 'graphql-tag'
 import TableTree, {
   Headers,
@@ -11,6 +12,7 @@ import TableTree, {
   Cell,
 } from '@atlaskit/table-tree'
 import { Status } from '@atlaskit/status'
+import { projectHomeView } from '../components/Nav'
 import {
   Loading,
   Error,
@@ -88,7 +90,11 @@ const issueReducer = issue => ({
     : [],
 })
 
-export default function Roadmap() {
+function Roadmap({ navigationViewController }) {
+  useEffect(() => {
+    navigationViewController.setView(projectHomeView.id)
+  }, [navigationViewController])
+
   const {
     data: { version },
   } = useQuery(GET_FILTERS)
@@ -142,6 +148,10 @@ export default function Roadmap() {
 
               return (
                 <ContentWrapper>
+                  <h1>My Project</h1>
+                  <p>
+                    <Link to="/">Back to Dashboards</Link>
+                  </p>
                   <PageTitle>Roadmap</PageTitle>
                   <Filters />
                   <TableTree>
@@ -187,3 +197,4 @@ export default function Roadmap() {
     </Query>
   )
 }
+export default withNavigationViewController(Roadmap)

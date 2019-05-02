@@ -15,9 +15,6 @@ import {
   projectHomeView,
 } from './Nav'
 
-// Routes
-import ProjectBacklogRoute from '../routes/ProjectBacklogRoute'
-
 // Pages
 import {
   Dashboard,
@@ -55,7 +52,7 @@ const App = ({ navigationViewController }) => {
         <Route path="/issues" component={Issues} />
         <Route path="/issue/:issueId" component={Issue} />
         <Route path="/absences" component={Absences} />
-        <Route path="/projects/my-project" component={ProjectBacklogRoute} />
+        <Route path="/projects/my-project" component={Roadmap} />
         <Route path="/issues" component={Issues} />
         <Route path="/" component={Dashboard} />
       </Switch>
