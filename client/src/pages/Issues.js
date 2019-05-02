@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { withNavigationViewController } from '@atlaskit/navigation-next'
 import { useQuery } from 'react-apollo-hooks'
 import gql from 'graphql-tag'
+import { productIssuesView } from '../components/Nav'
 import {
   IssueList,
   Filters,
@@ -41,7 +43,11 @@ export const GET_ISSUES = gql`
   }
 `
 
-export default function Issues(props) {
+function Issues(props) {
+  useEffect(() => {
+    props.navigationViewController.setView(productIssuesView.id)
+  }, [props.navigationViewController])
+
   const {
     data: { version, team },
   } = useQuery(GET_FILTERS)
@@ -77,3 +83,4 @@ export default function Issues(props) {
     </ContentWrapper>
   )
 }
+export default withNavigationViewController(Issues)

@@ -1,0 +1,8 @@
+export { default as Absences } from './Absences'
+export { default as Dashboard } from './Dashboard'
+export { default as Issue } from './Issue'
+export { default as Issues } from './Issues'
+export { default as Login } from './Login'
+export { default as Resource } from './Resource'
+export { default as Resources } from './Resources'
+export { default as Roadmap } from './Roadmap'

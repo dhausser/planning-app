@@ -6,7 +6,6 @@ import {
   Filters,
   ContentWrapper,
   PageTitle,
-  Loading,
   Error,
 } from '../components'
 import { GET_FILTERS } from '../components/Filters'

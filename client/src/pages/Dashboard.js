@@ -1,12 +1,20 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import { useQuery } from 'react-apollo-hooks'
 import gql from 'graphql-tag'
-import Spinner from '@atlaskit/spinner'
-import EmptyState from '@atlaskit/empty-state'
-import ContentWrapper, { Center } from '../components/ContentWrapper'
-import PageTitle from '../components/PageTitle'
-import BarChart from '../components/BarChart'
-import Filters, { GET_FILTERS } from '../components/Filters'
+
+import { Link } from 'react-router-dom'
+import { withNavigationViewController } from '@atlaskit/navigation-next'
+import { productHomeView } from '../components/Nav'
+
+import {
+  BarChart,
+  ContentWrapper,
+  PageTitle,
+  Filters,
+  Loading,
+  Error,
+} from '../components'
+import { GET_FILTERS } from '../components/Filters'
 
 const GET_ISSUES = gql`
   query issueList($jql: String, $pageSize: Int!) {
@@ -28,55 +36,6 @@ const GET_ISSUES = gql`
     }
   }
 `
-
-export default () => {
-  const {
-    data: { version, team },
-  } = useQuery(GET_FILTERS)
-  const {
-    data: { issues },
-    loading,
-    error,
-  } = useQuery(GET_ISSUES, {
-    variables: {
-      jql: `fixVersion = ${
-        version.id
-      } AND statusCategory in (new, indeterminate)`,
-      pageSize: 1250,
-    },
-  })
-  if (loading)
-    return (
-      <Center>
-        <Spinner size="large" />
-      </Center>
-    )
-  if (error) return <EmptyState header="Error" description={error.message} />
-  return (
-    <ContentWrapper>
-      <PageTitle>Dashboard</PageTitle>
-      <Filters />
-      <Fragment>
-        <h5>
-          Displaying{' '}
-          {issues.maxResults > issues.total ? issues.total : issues.maxResults}{' '}
-          of {issues.total} issues in fixVersion
-        </h5>
-        <BarChart
-          dataset={
-            team
-              ? aggregateByAssignee(
-                  issues.issues.filter(
-                    ({ assignee }) => assignee.team === team,
-                  ),
-                )
-              : aggregateByTeam(issues.issues)
-          }
-        />
-      </Fragment>
-    </ContentWrapper>
-  )
-}
 
 function aggregateByAssignee(issues) {
   if (!issues) return []
@@ -107,3 +66,62 @@ function aggregateByTeam(issues) {
     return teams
   }, {})
 }
+
+const Dashboard = ({ navigationViewController }) => {
+  useEffect(() => {
+    navigationViewController.setView(productHomeView.id)
+  }, [navigationViewController])
+
+  const {
+    data: { version, team },
+  } = useQuery(GET_FILTERS)
+
+  const {
+    data: { issues },
+    loading,
+    error,
+  } = useQuery(GET_ISSUES, {
+    variables: {
+      jql: `fixVersion = ${
+        version.id
+      } AND statusCategory in (new, indeterminate)`,
+      pageSize: 1250,
+    },
+  })
+
+  if (error) return <Error error={error} />
+
+  // return <Loading />
+  let dataset = []
+  if (!loading)
+    dataset = team
+      ? aggregateByAssignee(
+          issues.issues.filter(({ assignee }) => assignee.team === team),
+        )
+      : aggregateByTeam(issues.issues)
+
+  return (
+    <ContentWrapper>
+      <h3>Projects:</h3>
+      <ul>
+        <li>
+          <Link to="/projects/my-project">My Project</Link>
+        </li>
+      </ul>
+      <PageTitle>Dashboard</PageTitle>
+      <Filters />
+      <Fragment>
+        {loading ? (
+          <Loading />
+        ) : (
+          <BarChart
+            dataset={dataset}
+            maxResult={issues.maxResult}
+            total={issues.total}
+          />
+        )}
+      </Fragment>
+    </ContentWrapper>
+  )
+}
+export default withNavigationViewController(Dashboard)
