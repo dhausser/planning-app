@@ -2,7 +2,6 @@ import React, { Fragment, useEffect } from 'react'
 import { useQuery } from 'react-apollo-hooks'
 import gql from 'graphql-tag'
 
-import { Link } from 'react-router-dom'
 import { withNavigationViewController } from '@atlaskit/navigation-next'
 import { productHomeView } from '../components/Nav'
 
@@ -101,12 +100,6 @@ const Dashboard = ({ navigationViewController }) => {
 
   return (
     <ContentWrapper>
-      <h3>Projects:</h3>
-      <ul>
-        <li>
-          <Link to="/projects/my-project">My Project</Link>
-        </li>
-      </ul>
       <PageTitle>Dashboard</PageTitle>
       <Filters />
       <Fragment>
