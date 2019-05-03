@@ -1,16 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Mutation } from 'react-apollo'
 import { useQuery } from 'react-apollo-hooks'
 import gql from 'graphql-tag'
 import Select from '@atlaskit/select'
 import Button, { ButtonGroup } from '@atlaskit/button'
 import EmptyState from '@atlaskit/empty-state'
-import { projectId } from '../credentials'
 
-// import DropdownMenu, {
-//   DropdownItemGroup,
-//   DropdownItem,
-// } from '@atlaskit/dropdown-menu'
+import DropdownMenu, {
+  DropdownItemGroup,
+  DropdownItem,
+} from '@atlaskit/dropdown-menu'
+
+import { projectId } from '../credentials'
 
 const GET_VERSIONS = gql`
   query GetVersions($id: ID!, $pageSize: Int, $after: Int) {
@@ -73,6 +74,8 @@ export default function Filters() {
     loading: loadingFilters,
   } = useQuery(GET_FILTERS)
 
+  // const [version, setVersion] = useState(versionFilter)
+
   if (loadingVersions || loadingTeams || loadingFilters) {
     return (
       <Button
@@ -92,54 +95,61 @@ export default function Filters() {
       />
     )
 
-  const versionOptions = versions.map(version => ({
-    value: version.id,
-    label: version.name,
+  const versionOptions = versions.map(versionOption => ({
+    value: versionOption.id,
+    label: versionOption.name,
   }))
 
   return (
     <>
       <div style={{ flex: '0 0 200px', marginLeft: 8 }}>
-        <Select
-          spacing="compact"
-          className="single-select"
-          classNamePrefix="react-select"
-          defaultValue={versionOptions[0]}
-          // isDisabled={false}
-          isLoading={loadingVersions}
-          // isClearable={true}
-          // isRtl={isRtl}
-          // isSearchable={true}
-          options={versionOptions}
-          placeholder="Choose a version"
-        />
+        <Mutation mutation={TOGGLE_VERSION}>
+          {toggleVersion => (
+            <Select
+              spacing="compact"
+              className="single-select"
+              classNamePrefix="react-select"
+              defaultValue={versionOptions.find(
+                ({ value }) => value === versionFilter.id,
+              )}
+              isDisabled={false}
+              isLoading={loadingVersions}
+              isClearable
+              isSearchable
+              options={versionOptions}
+              placeholder="Choose a version"
+              onChange={e => toggleVersion({ variables: { version: e } })}
+            />
+          )}
+        </Mutation>
       </div>
       <div>
+        {/* <DropdownMenu
+            isLoading={loadingVersions}
+            trigger={`FixVersion: ${versionFilter.name}`}
+            triggerType="button"
+            shouldFlip={false}
+            position="right top"
+          >
+            <DropdownItemGroup>
+              {versions &&
+                versions.map(version => (
+                  <Mutation
+                    key={version.id}
+                    mutation={TOGGLE_VERSION}
+                    variables={{ version }}
+                  >
+                    {toggleVersion => (
+                      <DropdownItem key={version.id} onClick={toggleVersion}>
+                        {version.name}
+                      </DropdownItem>
+                    )}
+                  </Mutation>
+                ))}
+            </DropdownItemGroup>
+          </DropdownMenu> */}
+
         <ButtonGroup>
-          {/* <DropdownMenu
-        isLoading={loadingVersions}
-        trigger={`FixVersion: ${versionFilter.name}`}
-        triggerType="button"
-        shouldFlip={false}
-        position="right top"
-      >
-        <DropdownItemGroup>
-          {versions &&
-            versions.map(version => (
-              <Mutation
-                key={version.id}
-                mutation={TOGGLE_VERSION}
-                variables={{ version }}
-              >
-                {toggleVersion => (
-                  <DropdownItem key={version.id} onClick={toggleVersion}>
-                    {version.name}
-                  </DropdownItem>
-                )}
-              </Mutation>
-            ))}
-        </DropdownItemGroup>
-      </DropdownMenu> */}
           {teams.map(team => (
             <Mutation
               key={team}

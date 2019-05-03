@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useQuery } from 'react-apollo-hooks'
+import { withNavigationViewController } from '@atlaskit/navigation-next'
 import gql from 'graphql-tag'
 import { Status } from '@atlaskit/status'
 import InlineEdit, { SingleLineTextInput } from '@atlaskit/inline-edit'
@@ -11,6 +12,7 @@ import Comment, {
   CommentEdited,
   CommentTime,
 } from '@atlaskit/comment'
+import { productHomeView } from '../components/Nav'
 import { Page, Loading, Error } from '../components'
 import { NameWrapper, AvatarWrapper } from '../components/Page'
 import { getIcon } from '../components/Icon'
@@ -48,13 +50,17 @@ const GET_ISSUE = gql`
   }
 `
 
-export default function Issue(props) {
+function Issue({ navigationViewController, match }) {
+  useEffect(() => {
+    navigationViewController.setView(productHomeView.id)
+  }, [navigationViewController])
+
   const {
     data: { issue },
     loading,
     error,
   } = useQuery(GET_ISSUE, {
-    variables: { id: props.match.params.issueId },
+    variables: { id: match.params.issueId },
   })
 
   if (loading) return <Loading />
@@ -114,7 +120,6 @@ export default function Issue(props) {
         })}
         onConfirm={onConfirm}
         onCancel={onCancel}
-        {...props}
       />
       <InlineEdit
         isFitContainerWidthReadView
@@ -124,7 +129,6 @@ export default function Issue(props) {
         readView={issue.description}
         onConfirm={onConfirm}
         onCancel={onCancel}
-        {...props}
       />
       {issue.comments.map(comment => (
         <Comment
@@ -161,7 +165,6 @@ export default function Issue(props) {
         readView="Comment here"
         onConfirm={onConfirm}
         onCancel={onCancel}
-        {...props}
       />
     </Page>
   )
@@ -235,6 +238,7 @@ function postData(url = ``, data = {}) {
     body: JSON.stringify(data),
   }).then(response => response.json())
 }
+export default withNavigationViewController(Issue)
 
 // componentDidMount = async () => {
 //   const { issueId } = this.props.match.params;

@@ -1,13 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useQuery } from 'react-apollo-hooks'
 import gql from 'graphql-tag'
 import Avatar from '@atlaskit/avatar'
 import Calendar from '@atlaskit/calendar'
+import { withNavigationViewController } from '@atlaskit/navigation-next'
 import { Page, Loading, Error, IssueList } from '../components'
 import { GET_FILTERS } from '../components/Filters'
 import { NameWrapper, AvatarWrapper } from '../components/Page'
 import HolidayList from '../components/HolidayList'
 import { GET_ISSUES } from './Issues'
+import { productHomeView } from '../components/Nav'
 
 const GET_RESOURCE = gql`
   query getResourceById($id: ID!) {
@@ -28,9 +30,12 @@ const GET_ABSENCES = gql`
   }
 `
 
-export default function Resource(props) {
-  const { resourceId } = props.match.params
-  console.log(resourceId)
+function Resource({ navigationViewController, match, location }) {
+  useEffect(() => {
+    navigationViewController.setView(productHomeView.id)
+  }, [navigationViewController])
+
+  const { resourceId } = match.params
   const {
     data: { version },
   } = useQuery(GET_FILTERS)
@@ -63,9 +68,7 @@ export default function Resource(props) {
   if (errorIssues) return <Error error={errorIssues} />
   if (errorAbsences) return <Error error={errorAbsences} />
 
-  console.log(resource)
-
-  let assignee = {}
+  let assignee
   if (resource) {
     assignee = { ...resource }
   } else if (issues.issues.length) {
@@ -74,6 +77,7 @@ export default function Resource(props) {
     assignee = {
       key: resourceId,
       name: resourceId,
+      team: '',
     }
   }
 
@@ -109,7 +113,7 @@ export default function Resource(props) {
         issues={issues.issues}
         maxResults={issues.maxResults}
         total={issues.total}
-        pathname={props.location.pathname}
+        pathname={location.pathname}
         isLoading={loadingIssues}
       />
       <HolidayList absences={absences} isLoading={loadingAbsences} />
@@ -117,3 +121,4 @@ export default function Resource(props) {
     </Page>
   )
 }
+export default withNavigationViewController(Resource)

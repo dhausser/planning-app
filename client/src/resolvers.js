@@ -15,7 +15,12 @@ export const typeDefs = gql`
 
 export const resolvers = {
   Mutation: {
-    toggleVersion: (_root, { version }, { cache }) => {
+    toggleVersion: (_root, { version: update }, { cache }) => {
+      const version = {
+        id: update.value,
+        name: update.label,
+        __typename: 'FixVersion',
+      }
       cache.writeData({ data: { version } })
       localStorage.setItem('version', JSON.stringify(version))
     },
