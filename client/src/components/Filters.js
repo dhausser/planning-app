@@ -2,6 +2,7 @@ import React from 'react'
 import { Mutation } from 'react-apollo'
 import { useQuery } from 'react-apollo-hooks'
 import gql from 'graphql-tag'
+import Select from '@atlaskit/select'
 import Button, { ButtonGroup } from '@atlaskit/button'
 import DropdownMenu, {
   DropdownItemGroup,
@@ -90,9 +91,25 @@ export default () => {
       />
     )
 
+  const selectOptions = versions.map(version => ({
+    value: version.id,
+    label: version.name,
+  }))
+
   return (
-    <ButtonGroup>
-      <DropdownMenu
+    <>
+      <div style={{ flex: '0 0 200px', marginLeft: 8 }}>
+        <Select
+          spacing="compact"
+          className="single-select"
+          classNamePrefix="react-select"
+          options={selectOptions}
+          placeholder="Choose a version"
+        />
+      </div>
+      <div>
+        <ButtonGroup>
+          {/* <DropdownMenu
         isLoading={loadingVersions}
         trigger={`FixVersion: ${versionFilter.name}`}
         triggerType="button"
@@ -115,26 +132,28 @@ export default () => {
               </Mutation>
             ))}
         </DropdownItemGroup>
-      </DropdownMenu>
-      {teams.map(team => (
-        <Mutation
-          key={team}
-          mutation={TOGGLE_TEAM}
-          variables={{ team: { id: team._id, filter: teamFilter } }}
-        >
-          {toggleTeam => (
-            <Button
-              key={team._id}
-              isLoading={loadingTeams}
-              appearance="subtle"
-              isSelected={teamFilter === team._id}
-              onClick={toggleTeam}
+      </DropdownMenu> */}
+          {teams.map(team => (
+            <Mutation
+              key={team}
+              mutation={TOGGLE_TEAM}
+              variables={{ team: { id: team._id, filter: teamFilter } }}
             >
-              {team._id}
-            </Button>
-          )}
-        </Mutation>
-      ))}
-    </ButtonGroup>
+              {toggleTeam => (
+                <Button
+                  key={team._id}
+                  isLoading={loadingTeams}
+                  appearance="subtle"
+                  isSelected={teamFilter === team._id}
+                  onClick={toggleTeam}
+                >
+                  {team._id}
+                </Button>
+              )}
+            </Mutation>
+          ))}
+        </ButtonGroup>
+      </div>
+    </>
   )
 }

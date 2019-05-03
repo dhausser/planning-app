@@ -3,7 +3,7 @@ import { withNavigationViewController } from '@atlaskit/navigation-next'
 import { useQuery } from 'react-apollo-hooks'
 import gql from 'graphql-tag'
 import { productIssuesView } from '../components/Nav'
-import { IssueList, Filters, Page, Error } from '../components'
+import { IssueList, Page, Error } from '../components'
 import { GET_FILTERS } from '../components/Filters'
 import { projectId } from '../credentials'
 
@@ -65,7 +65,6 @@ function Issues(props) {
 
   return (
     <Page title="Issues">
-      <Filters />
       <IssueList
         issues={issues || []}
         maxResults={(data.issues && data.issues.maxResults) || 0}

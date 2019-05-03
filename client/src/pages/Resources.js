@@ -4,7 +4,7 @@ import { useQuery } from 'react-apollo-hooks'
 import { withNavigationViewController } from '@atlaskit/navigation-next'
 import { productHomeView } from '../components/Nav'
 
-import { ResourceList, Filters, Page, Error } from '../components'
+import { ResourceList, Page, Error } from '../components'
 import { GET_FILTERS } from '../components/Filters'
 
 const GET_RESOURCES = gql`
@@ -36,7 +36,6 @@ const Resources = ({ navigationViewController }) => {
 
   return (
     <Page title="People">
-      <Filters />
       <ResourceList resources={resources} isLoading={loading} />
     </Page>
   )

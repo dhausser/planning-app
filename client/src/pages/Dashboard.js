@@ -5,7 +5,7 @@ import gql from 'graphql-tag'
 import { withNavigationViewController } from '@atlaskit/navigation-next'
 import { productHomeView } from '../components/Nav'
 
-import { BarChart, Page, Filters, Loading, Error } from '../components'
+import { BarChart, Page, Loading, Error } from '../components'
 import { GET_FILTERS } from '../components/Filters'
 
 const GET_ISSUES = gql`
@@ -91,10 +91,8 @@ const Dashboard = ({ navigationViewController }) => {
         )
       : aggregateByTeam(issues.issues)
 
-  console.log(issues)
   return (
     <Page title="Dashboard">
-      <Filters />
       <>{loading ? <Loading /> : <BarChart {...issues} dataset={dataset} />}</>
     </Page>
   )

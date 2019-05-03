@@ -1,5 +1,5 @@
 import React from 'react'
-import { Page, Filters, HolidayList } from '../components'
+import { Page, HolidayList } from '../components'
 
 export default function Holidays() {
   // const { absences, isLoading } = useAbsences()
@@ -7,7 +7,6 @@ export default function Holidays() {
   const isLoading = false
   return (
     <Page title="Absences">
-      <Filters />
       <HolidayList absences={absences} isLoading={isLoading} />
     </Page>
   )

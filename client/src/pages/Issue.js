@@ -2,8 +2,6 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { useQuery } from 'react-apollo-hooks'
 import gql from 'graphql-tag'
-import Spinner from '@atlaskit/spinner'
-import EmptyState from '@atlaskit/empty-state'
 import { Status } from '@atlaskit/status'
 import InlineEdit, { SingleLineTextInput } from '@atlaskit/inline-edit'
 import Avatar from '@atlaskit/avatar'
@@ -13,8 +11,8 @@ import Comment, {
   CommentEdited,
   CommentTime,
 } from '@atlaskit/comment'
-
-import Page, { NameWrapper, AvatarWrapper, Center } from '../components/Page'
+import { Page, Loading, Error } from '../components'
+import { NameWrapper, AvatarWrapper } from '../components/Page'
 import { getIcon } from '../components/Icon'
 import { hostname } from '../credentials'
 
@@ -59,18 +57,8 @@ export default function Issue(props) {
     variables: { id: props.match.params.issueId },
   })
 
-  if (loading) {
-    return (
-      <Center>
-        <Spinner size="large" />
-      </Center>
-    )
-  }
-
-  if (error) {
-    return <EmptyState key={error} header="Error" description={error.message} />
-  }
-
+  if (loading) return <Loading />
+  if (error) return <Error error={error} />
   return (
     <Page title={issue.summary}>
       <a

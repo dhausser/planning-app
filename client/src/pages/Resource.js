@@ -3,11 +3,9 @@ import { useQuery } from 'react-apollo-hooks'
 import gql from 'graphql-tag'
 import Avatar from '@atlaskit/avatar'
 import Calendar from '@atlaskit/calendar'
-import EmptyState from '@atlaskit/empty-state'
-import Spinner from '@atlaskit/spinner'
-import Page, { NameWrapper, AvatarWrapper, Center } from '../components/Page'
-import IssueList from '../components/IssueList'
-import Filters, { GET_FILTERS } from '../components/Filters'
+import { Page, Filters, Loading, Error, IssueList } from '../components'
+import { GET_FILTERS } from '../components/Filters'
+import { NameWrapper, AvatarWrapper } from '../components/Page'
 import HolidayList from '../components/HolidayList'
 import { GET_ISSUES } from './Issues'
 
@@ -43,19 +41,9 @@ export default function Resource(props) {
     variables: { id: resourceId },
   })
 
-  if (loadingIssues || loadingAbsences)
-    return (
-      <Center>
-        <Spinner size="large" />
-      </Center>
-    )
-  if (errorIssues || errorAbsences)
-    return (
-      <EmptyState
-        header="Error"
-        description={[errorIssues, errorAbsences].map(({ message }) => message)}
-      />
-    )
+  if (loadingIssues || loadingAbsences) return <Loading />
+  if (errorIssues) return <Error error={errorIssues} />
+  if (errorAbsences) return <Error error={errorAbsences} />
 
   const { assignee } = issues.issues[0]
   const title = (
