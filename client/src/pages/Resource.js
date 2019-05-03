@@ -3,11 +3,21 @@ import { useQuery } from 'react-apollo-hooks'
 import gql from 'graphql-tag'
 import Avatar from '@atlaskit/avatar'
 import Calendar from '@atlaskit/calendar'
-import { Page, Filters, Loading, Error, IssueList } from '../components'
+import { Page, Loading, Error, IssueList } from '../components'
 import { GET_FILTERS } from '../components/Filters'
 import { NameWrapper, AvatarWrapper } from '../components/Page'
 import HolidayList from '../components/HolidayList'
 import { GET_ISSUES } from './Issues'
+
+const GET_RESOURCE = gql`
+  query getResourceById($id: ID!) {
+    resource(id: $id) {
+      key
+      name
+      team
+    }
+  }
+`
 
 const GET_ABSENCES = gql`
   query absenceList($id: ID!) {
@@ -20,9 +30,17 @@ const GET_ABSENCES = gql`
 
 export default function Resource(props) {
   const { resourceId } = props.match.params
+  console.log(resourceId)
   const {
     data: { version },
   } = useQuery(GET_FILTERS)
+  const {
+    data: { resource },
+  } = useQuery(GET_RESOURCE, {
+    variables: {
+      id: resourceId,
+    },
+  })
   const {
     data: { issues },
     loading: loadingIssues,
@@ -45,7 +63,20 @@ export default function Resource(props) {
   if (errorIssues) return <Error error={errorIssues} />
   if (errorAbsences) return <Error error={errorAbsences} />
 
-  const { assignee } = issues.issues[0]
+  console.log(resource)
+
+  let assignee = {}
+  if (resource) {
+    assignee = { ...resource }
+  } else if (issues.issues.length) {
+    assignee = { ...issues.issues[0].assignee }
+  } else {
+    assignee = {
+      key: resourceId,
+      name: resourceId,
+    }
+  }
+
   const title = (
     <NameWrapper>
       <AvatarWrapper>
@@ -63,7 +94,6 @@ export default function Resource(props) {
 
   return (
     <Page title={title}>
-      <Filters />
       <p>
         <a
           href={`https://jira.cdprojektred.com/issues/?jql=assignee=${
@@ -82,7 +112,6 @@ export default function Resource(props) {
         pathname={props.location.pathname}
         isLoading={loadingIssues}
       />
-
       <HolidayList absences={absences} isLoading={loadingAbsences} />
       <Calendar day={0} defaultDisabled={absences} />
     </Page>

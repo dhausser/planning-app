@@ -18,7 +18,6 @@ export default class ResourcesDAO {
   /**
    * Finds and returns all resources.
    * Returns a list of objects, each object contains a key, name and a team
-   * @param {string[]} teams - The list of teams.
    * @returns {Promise<ResourcesResult>} A promise that will resolve to a list of ResourcesResult.
    */
   static async getResources() {
@@ -36,23 +35,25 @@ export default class ResourcesDAO {
   }
 
   /**
-   * Finds and returns resources originating from one or more teams.
-   * Returns a list of objects, each object contains a key, name and a team
-   * @param {string[]} teams - The list of teams.
-   * @returns {Promise<ResourcesByTeamResult>} A promise that will resolve to a list of ResourcesByTeamResult.
+   * Finds and returns resource for given id.
+   * Returns an object, each object contains a key, name and a team
+   * @param {string[]} resourceId - The list of teams.
+   * @returns {Promise<ResourcesResult>} A promise that will resolve to a list of ResourcesResult.
    */
-  static async getResourcesByTeam(teams) {
+  static async getResourceById({ resourceId }) {
     let cursor
+
     try {
-      cursor = await resources
-        .find({ team: { $in: teams } })
-        .project({ _id: 0, key: 1, name: 1, team: 1 })
+      cursor = await resources.findOne(
+        { key: resourceId },
+        { projection: { _id: 0, key: 1, name: 1, team: 1 } },
+      )
     } catch (e) {
       console.error(`Unable to issue find command, ${e}`)
       return []
     }
 
-    return cursor.toArray()
+    return cursor
   }
 
   /**
@@ -79,6 +80,30 @@ export default class ResourcesDAO {
       console.error(`Unable to issue find command, ${e}`)
       return []
     }
+
+    return cursor.toArray()
+  }
+
+  /**
+   * Finds and returns resources originating from one or more teams.
+   * Returns a list of objects, each object contains a key, name and a team
+   * @param {string[]} teams - The list of teams.
+   * @returns {Promise<ResourcesByTeamResult>} A promise that will resolve to a list of ResourcesByTeamResult.
+   */
+  static async getResourcesByTeam({ teamId }) {
+    let cursor
+
+    console.log(teamId)
+    try {
+      cursor = await resources
+        .find({ team: teamId })
+        .project({ _id: 0, key: 1, name: 1, team: 1 })
+    } catch (e) {
+      console.error(`Unable to issue find command, ${e}`)
+      return []
+    }
+
+    console.log(await cursor.toArray())
 
     return cursor.toArray()
   }

@@ -4,7 +4,9 @@ import ResourcesDAO from '../dao/resourcesDAO'
 export default class ResourceAPI extends DataSource {
   getResources = async () => ResourcesDAO.getResources()
 
-  getResourcesByTeam = async teams => ResourcesDAO.getResourcesByTeam(teams)
+  getResourceById = async resourceId => ResourcesDAO.getResourceById(resourceId)
 
   getTeams = async () => ResourcesDAO.getTeams()
+
+  getResourcesByTeam = async teamId => ResourcesDAO.getResourcesByTeam(teamId)
 }

@@ -4,12 +4,13 @@ import { useQuery } from 'react-apollo-hooks'
 import gql from 'graphql-tag'
 import Select from '@atlaskit/select'
 import Button, { ButtonGroup } from '@atlaskit/button'
-import DropdownMenu, {
-  DropdownItemGroup,
-  DropdownItem,
-} from '@atlaskit/dropdown-menu'
 import EmptyState from '@atlaskit/empty-state'
 import { projectId } from '../credentials'
+
+// import DropdownMenu, {
+//   DropdownItemGroup,
+//   DropdownItem,
+// } from '@atlaskit/dropdown-menu'
 
 const GET_VERSIONS = gql`
   query GetVersions($id: ID!, $pageSize: Int, $after: Int) {
@@ -54,7 +55,7 @@ const TOGGLE_TEAM = gql`
   }
 `
 
-export default () => {
+export default function Filters() {
   const {
     data: { versions },
     loading: loadingVersions,
@@ -91,7 +92,7 @@ export default () => {
       />
     )
 
-  const selectOptions = versions.map(version => ({
+  const versionOptions = versions.map(version => ({
     value: version.id,
     label: version.name,
   }))
@@ -103,7 +104,13 @@ export default () => {
           spacing="compact"
           className="single-select"
           classNamePrefix="react-select"
-          options={selectOptions}
+          defaultValue={versionOptions[0]}
+          // isDisabled={false}
+          isLoading={loadingVersions}
+          // isClearable={true}
+          // isRtl={isRtl}
+          // isSearchable={true}
+          options={versionOptions}
           placeholder="Choose a version"
         />
       </div>
