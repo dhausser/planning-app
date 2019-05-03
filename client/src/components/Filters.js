@@ -1,16 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Mutation } from 'react-apollo'
 import { useQuery } from 'react-apollo-hooks'
 import gql from 'graphql-tag'
 import Select from '@atlaskit/select'
 import Button, { ButtonGroup } from '@atlaskit/button'
 import EmptyState from '@atlaskit/empty-state'
-
-import DropdownMenu, {
-  DropdownItemGroup,
-  DropdownItem,
-} from '@atlaskit/dropdown-menu'
-
 import { projectId } from '../credentials'
 
 const GET_VERSIONS = gql`
@@ -74,8 +68,6 @@ export default function Filters() {
     loading: loadingFilters,
   } = useQuery(GET_FILTERS)
 
-  // const [version, setVersion] = useState(versionFilter)
-
   if (loadingVersions || loadingTeams || loadingFilters) {
     return (
       <Button
@@ -123,32 +115,7 @@ export default function Filters() {
           )}
         </Mutation>
       </div>
-      <div>
-        {/* <DropdownMenu
-            isLoading={loadingVersions}
-            trigger={`FixVersion: ${versionFilter.name}`}
-            triggerType="button"
-            shouldFlip={false}
-            position="right top"
-          >
-            <DropdownItemGroup>
-              {versions &&
-                versions.map(version => (
-                  <Mutation
-                    key={version.id}
-                    mutation={TOGGLE_VERSION}
-                    variables={{ version }}
-                  >
-                    {toggleVersion => (
-                      <DropdownItem key={version.id} onClick={toggleVersion}>
-                        {version.name}
-                      </DropdownItem>
-                    )}
-                  </Mutation>
-                ))}
-            </DropdownItemGroup>
-          </DropdownMenu> */}
-
+      <div style={{ marginLeft: 8 }}>
         <ButtonGroup>
           {teams.map(team => (
             <Mutation

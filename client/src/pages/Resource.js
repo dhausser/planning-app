@@ -72,7 +72,7 @@ function Resource({ navigationViewController, match, location }) {
   if (resource) {
     assignee = { ...resource }
   } else if (issues.issues.length) {
-    assignee = { ...issues.issues[0].assignee }
+    assignee = { ...issues.issues[0].assignee, team: '' }
   } else {
     assignee = {
       key: resourceId,
