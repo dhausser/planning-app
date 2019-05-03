@@ -14,12 +14,7 @@ import Comment, {
   CommentTime,
 } from '@atlaskit/comment'
 
-import ContentWrapper, {
-  NameWrapper,
-  AvatarWrapper,
-  Center,
-} from '../components/ContentWrapper'
-import PageTitle from '../components/PageTitle'
+import Page, { NameWrapper, AvatarWrapper, Center } from '../components/Page'
 import { getIcon } from '../components/Icon'
 import { hostname } from '../credentials'
 
@@ -77,8 +72,7 @@ export default function Issue(props) {
   }
 
   return (
-    <ContentWrapper>
-      <PageTitle>{issue.summary}</PageTitle>
+    <Page title={issue.summary}>
       <a
         href={`https://${hostname}/browse/${issue.key}`}
         target="_blank"
@@ -181,7 +175,7 @@ export default function Issue(props) {
         onCancel={onCancel}
         {...props}
       />
-    </ContentWrapper>
+    </Page>
   )
 }
 

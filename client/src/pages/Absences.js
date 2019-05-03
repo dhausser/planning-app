@@ -1,19 +1,15 @@
 import React from 'react'
-import ContentWrapper from '../components/ContentWrapper'
-import PageTitle from '../components/PageTitle'
-import HolidayList from '../components/HolidayList'
-import Filters from '../components/Filters'
+import { Page, Filters, HolidayList } from '../components'
 
 export default function Holidays() {
   // const { absences, isLoading } = useAbsences()
   const absences = []
   const isLoading = false
   return (
-    <ContentWrapper>
-      <PageTitle>Absences</PageTitle>
+    <Page title="Absences">
       <Filters />
       <HolidayList absences={absences} isLoading={isLoading} />
-    </ContentWrapper>
+    </Page>
   )
 }
 

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { withNavigationViewController } from '@atlaskit/navigation-next'
 import { projectHomeView } from '../components/Nav'
-import { ContentWrapper, PageTitle, Filters } from '../components'
+import { Page, Filters } from '../components'
 
 const Releases = ({ navigationViewController }) => {
   useEffect(() => {
@@ -9,11 +9,10 @@ const Releases = ({ navigationViewController }) => {
   }, [navigationViewController])
 
   return (
-    <ContentWrapper>
-      <PageTitle>Releases</PageTitle>
+    <Page title="Releases">
       <Filters />
       <p>This is the releases page.</p>
-    </ContentWrapper>
+    </Page>
   )
 }
 export default withNavigationViewController(Releases)

@@ -3,13 +3,7 @@ import { withNavigationViewController } from '@atlaskit/navigation-next'
 import { useQuery } from 'react-apollo-hooks'
 import gql from 'graphql-tag'
 import { productIssuesView } from '../components/Nav'
-import {
-  IssueList,
-  Filters,
-  ContentWrapper,
-  PageTitle,
-  Error,
-} from '../components'
+import { IssueList, Filters, Page, Error } from '../components'
 import { GET_FILTERS } from '../components/Filters'
 import { projectId } from '../credentials'
 
@@ -70,8 +64,7 @@ function Issues(props) {
       : data.issues.issues
 
   return (
-    <ContentWrapper>
-      <PageTitle>Issues</PageTitle>
+    <Page title="Issues">
       <Filters />
       <IssueList
         issues={issues || []}
@@ -80,7 +73,7 @@ function Issues(props) {
         pathname={props.match.path}
         isLoading={loading}
       />
-    </ContentWrapper>
+    </Page>
   )
 }
 export default withNavigationViewController(Issues)

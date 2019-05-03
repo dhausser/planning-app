@@ -1,18 +1,11 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useQuery } from 'react-apollo-hooks'
 import gql from 'graphql-tag'
 
 import { withNavigationViewController } from '@atlaskit/navigation-next'
 import { productHomeView } from '../components/Nav'
 
-import {
-  BarChart,
-  ContentWrapper,
-  PageTitle,
-  Filters,
-  Loading,
-  Error,
-} from '../components'
+import { BarChart, Page, Filters, Loading, Error } from '../components'
 import { GET_FILTERS } from '../components/Filters'
 
 const GET_ISSUES = gql`
@@ -98,22 +91,12 @@ const Dashboard = ({ navigationViewController }) => {
         )
       : aggregateByTeam(issues.issues)
 
+  console.log(issues)
   return (
-    <ContentWrapper>
-      <PageTitle>Dashboard</PageTitle>
+    <Page title="Dashboard">
       <Filters />
-      <Fragment>
-        {loading ? (
-          <Loading />
-        ) : (
-          <BarChart
-            dataset={dataset}
-            maxResult={issues.maxResult}
-            total={issues.total}
-          />
-        )}
-      </Fragment>
-    </ContentWrapper>
+      <>{loading ? <Loading /> : <BarChart {...issues} dataset={dataset} />}</>
+    </Page>
   )
 }
 export default withNavigationViewController(Dashboard)

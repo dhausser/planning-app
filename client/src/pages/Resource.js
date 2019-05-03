@@ -5,14 +5,9 @@ import Avatar from '@atlaskit/avatar'
 import Calendar from '@atlaskit/calendar'
 import EmptyState from '@atlaskit/empty-state'
 import Spinner from '@atlaskit/spinner'
-import ContentWrapper, {
-  NameWrapper,
-  AvatarWrapper,
-  Center,
-} from '../components/ContentWrapper'
+import Page, { NameWrapper, AvatarWrapper, Center } from '../components/Page'
 import IssueList from '../components/IssueList'
 import Filters, { GET_FILTERS } from '../components/Filters'
-import PageTitle from '../components/PageTitle'
 import HolidayList from '../components/HolidayList'
 import { GET_ISSUES } from './Issues'
 
@@ -63,22 +58,23 @@ export default function Resource(props) {
     )
 
   const { assignee } = issues.issues[0]
+  const title = (
+    <NameWrapper>
+      <AvatarWrapper>
+        <Avatar
+          name={assignee.name}
+          size="large"
+          src={`https://jira.cdprojektred.com/secure/useravatar?ownerId=${
+            assignee.key
+          }`}
+        />
+      </AvatarWrapper>
+      {assignee.name}
+    </NameWrapper>
+  )
+
   return (
-    <ContentWrapper>
-      <PageTitle>
-        <NameWrapper>
-          <AvatarWrapper>
-            <Avatar
-              name={assignee.name}
-              size="large"
-              src={`https://jira.cdprojektred.com/secure/useravatar?ownerId=${
-                assignee.key
-              }`}
-            />
-          </AvatarWrapper>
-          {assignee.name}
-        </NameWrapper>
-      </PageTitle>
+    <Page title={title}>
       <Filters />
       <p>
         <a
@@ -101,6 +97,6 @@ export default function Resource(props) {
 
       <HolidayList absences={absences} isLoading={loadingAbsences} />
       <Calendar day={0} defaultDisabled={absences} />
-    </ContentWrapper>
+    </Page>
   )
 }

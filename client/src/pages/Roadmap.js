@@ -13,13 +13,7 @@ import TableTree, {
 } from '@atlaskit/table-tree'
 import { Status } from '@atlaskit/status'
 import { projectHomeView } from '../components/Nav'
-import {
-  Loading,
-  Error,
-  ContentWrapper,
-  PageTitle,
-  Filters,
-} from '../components'
+import { Loading, Error, Page, Filters } from '../components'
 import { GET_FILTERS } from '../components/Filters'
 import { getIcon } from '../components/Icon'
 import { projectId } from '../credentials'
@@ -157,12 +151,10 @@ function Roadmap({ navigationViewController }) {
               const items = epics.issues.map(issue => issueReducer(issue)) || []
 
               return (
-                <ContentWrapper>
-                  <h1>My Project</h1>
+                <Page title="Roadmap">
                   <p>
                     <Link to="/">Back to Dashboards</Link>
                   </p>
-                  <PageTitle>Roadmap</PageTitle>
                   <Filters />
                   <TableTree>
                     <Headers>
@@ -198,7 +190,7 @@ function Roadmap({ navigationViewController }) {
                       )}
                     />
                   </TableTree>
-                </ContentWrapper>
+                </Page>
               )
             }}
           </Query>

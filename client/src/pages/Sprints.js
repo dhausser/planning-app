@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { withNavigationViewController } from '@atlaskit/navigation-next'
 import { projectHomeView } from '../components/Nav'
-import { ContentWrapper, PageTitle, Filters } from '../components'
+import { Page, Filters } from '../components'
 
 const Sprints = ({ navigationViewController }) => {
   useEffect(() => {
@@ -9,11 +9,10 @@ const Sprints = ({ navigationViewController }) => {
   }, [navigationViewController])
 
   return (
-    <ContentWrapper>
-      <PageTitle>Active sprints</PageTitle>
+    <Page title="Active sprints">
       <Filters />
       <p>This is the active sprints page.</p>
-    </ContentWrapper>
+    </Page>
   )
 }
 export default withNavigationViewController(Sprints)

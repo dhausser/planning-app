@@ -36,7 +36,7 @@ const config = dataset => ({
   },
 })
 
-export default ({ dataset, maxResults, total }) => {
+export default ({ dataset, maxResults = 0, total = 0 }) => {
   const [chart, setChart] = useState(null)
 
   useEffect(() => {
@@ -52,12 +52,11 @@ export default ({ dataset, maxResults, total }) => {
     }
   }, [chart, dataset])
 
+  const results = maxResults > total ? total : maxResults
   return (
     <div>
       <h5>
-        Displaying{' '}
-        {(maxResults && maxResults > total ? total : maxResults) || 0} of{' '}
-        {total || 0} issues in fixVersion
+        Displaying {results} of {total} issues in fixVersion
       </h5>
       <canvas id="BarChart" width="400" height="250" />
     </div>
