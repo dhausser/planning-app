@@ -3,11 +3,11 @@ import { withNavigationViewController } from '@atlaskit/navigation-next'
 import { productHomeView } from '../components/Nav'
 import { Resource } from '../components'
 
-function ResourcePage({ navigationViewController, match, location }) {
+function ResourcePage(props) {
   useEffect(() => {
-    navigationViewController.setView(productHomeView.id)
-  }, [navigationViewController])
+    props.navigationViewController.setView(productHomeView.id)
+  }, [props.navigationViewController])
 
-  return <Resource id={match.params.resourceId} location={location} />
+  return <Resource {...props} />
 }
 export default withNavigationViewController(ResourcePage)

@@ -1,8 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+
 import DynamicTable from '@atlaskit/dynamic-table'
 import { Status } from '@atlaskit/status'
+
 import { getIcon } from './Icon'
 
 const Wrapper = styled.div`
