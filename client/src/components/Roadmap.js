@@ -91,11 +91,6 @@ export default function Roadmap() {
     data: { version },
   } = useQuery(GET_FILTERS)
 
-  /**
-   * TODO: Fix page crash on reload, version is undefined
-   */
-  console.log(version)
-
   return (
     <Query
       query={GET_EPICS}

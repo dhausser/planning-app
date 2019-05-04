@@ -6,7 +6,7 @@ import Loading from './Loading'
 import Error from './Error'
 import IssueList from './IssueList'
 
-import { GET_FILTERS } from './Filters'
+import { GET_FILTERS, GET_TEAMS } from './Filters'
 
 import { projectId } from '../credentials'
 
@@ -42,8 +42,12 @@ const GET_ISSUES = gql`
 
 export default function Issues(props) {
   const {
-    data: { version, team, teams },
+    data: { version, team },
   } = useQuery(GET_FILTERS)
+
+  const {
+    data: { teams },
+  } = useQuery(GET_TEAMS)
 
   let jql = ''
 

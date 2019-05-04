@@ -66,11 +66,6 @@ export default function Dashboard() {
     data: { version, team },
   } = useQuery(GET_FILTERS)
 
-  /**
-   * TODO: Fix page crash on reload, version is undefined
-   */
-  console.log(version)
-
   const {
     data: { issues },
     loading,

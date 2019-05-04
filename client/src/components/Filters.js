@@ -1,5 +1,5 @@
 import React from 'react'
-import { ApolloConsumer, Mutation } from 'react-apollo'
+import { Mutation } from 'react-apollo'
 import { useQuery } from 'react-apollo-hooks'
 import gql from 'graphql-tag'
 import Select from '@atlaskit/select'
@@ -7,7 +7,7 @@ import Button, { ButtonGroup } from '@atlaskit/button'
 import EmptyState from '@atlaskit/empty-state'
 import { projectId } from '../credentials'
 
-const GET_VERSIONS = gql`
+export const GET_VERSIONS = gql`
   query GetVersions($id: ID!, $pageSize: Int, $after: Int) {
     versions(id: $id, pageSize: $pageSize, after: $after) {
       id
@@ -16,7 +16,7 @@ const GET_VERSIONS = gql`
   }
 `
 
-const GET_TEAMS = gql`
+export const GET_TEAMS = gql`
   query GetTeams {
     teams {
       _id
@@ -35,16 +35,6 @@ export const GET_FILTERS = gql`
       name
     }
     team @client
-    teams @client {
-      _id
-      members {
-        key
-      }
-    }
-    versions @client {
-      id
-      name
-    }
   }
 `
 
@@ -59,17 +49,6 @@ const TOGGLE_TEAM = gql`
     toggleTeam(team: $team) @client
   }
 `
-
-// const SET_TEAMS = gql`
-//   mutation setTeams($teams: [Team]) {
-//     setTeams(teams: $teams) @client
-//   }
-// `
-// const SET_VERSIONS = gql`
-//   mutation setVersions($versions: [FixVersion]) {
-//     setVersions(versions: $versions) @client
-//   }
-// `
 
 export default function Filters(props) {
   const {
@@ -115,20 +94,14 @@ export default function Filters(props) {
     label: versionOption.name,
   }))
 
-  console.log(props.match)
+  const renderVersionFilter = props.match.path !== '/resources'
+  const renderTeamFilter = !['/roadmap', '/resource/:resourceId'].includes(
+    props.match.path,
+  )
+
   return (
     <>
-      <ApolloConsumer>
-        {client =>
-          client.writeData({
-            data: {
-              teams,
-              versions,
-            },
-          })
-        }
-      </ApolloConsumer>
-      {props.match.path !== '/resources' && (
+      {renderVersionFilter && (
         <div style={{ flex: '0 0 200px', marginLeft: 8 }}>
           <Mutation mutation={TOGGLE_VERSION}>
             {toggleVersion => (
@@ -151,7 +124,7 @@ export default function Filters(props) {
           </Mutation>
         </div>
       )}
-      {!['/roadmap', '/resource/:resourceId'].includes(props.match.path) && (
+      {renderTeamFilter && (
         <div style={{ marginLeft: 8 }}>
           <ButtonGroup>
             {teams.map(team => (
