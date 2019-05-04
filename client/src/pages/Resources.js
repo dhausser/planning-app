@@ -4,7 +4,7 @@ import { useQuery } from 'react-apollo-hooks'
 import { withNavigationViewController } from '@atlaskit/navigation-next'
 import { productHomeView } from '../components/Nav'
 
-import { ResourceList, Page, Error } from '../components'
+import { ResourceList, Page, Header, Error } from '../components'
 import { GET_FILTERS } from '../components/Filters'
 
 const GET_RESOURCES = gql`
@@ -17,10 +17,10 @@ const GET_RESOURCES = gql`
   }
 `
 
-const Resources = ({ navigationViewController }) => {
+const ResourcesPage = props => {
   useEffect(() => {
-    navigationViewController.setView(productHomeView.id)
-  }, [navigationViewController])
+    props.navigationViewController.setView(productHomeView.id)
+  }, [props.navigationViewController])
 
   const { data, loading, error } = useQuery(GET_RESOURCES)
   const {
@@ -36,8 +36,9 @@ const Resources = ({ navigationViewController }) => {
 
   return (
     <Page title="People">
+      <Header {...props} />
       <ResourceList resources={resources} isLoading={loading} />
     </Page>
   )
 }
-export default withNavigationViewController(Resources)
+export default withNavigationViewController(ResourcesPage)

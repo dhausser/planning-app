@@ -50,7 +50,7 @@ const TOGGLE_TEAM = gql`
   }
 `
 
-export default function Filters() {
+export default function Filters(props) {
   const {
     data: { versions },
     loading: loadingVersions,
@@ -58,11 +58,13 @@ export default function Filters() {
   } = useQuery(GET_VERSIONS, {
     variables: { id: projectId, pageSize: 5, after: 5 },
   })
+
   const {
     data: { teams },
     loading: loadingTeams,
     error: errorTeams,
   } = useQuery(GET_TEAMS)
+
   const {
     data: { version: versionFilter, team: teamFilter },
     loading: loadingFilters,
@@ -94,50 +96,54 @@ export default function Filters() {
 
   return (
     <>
-      <div style={{ flex: '0 0 200px', marginLeft: 8 }}>
-        <Mutation mutation={TOGGLE_VERSION}>
-          {toggleVersion => (
-            <Select
-              spacing="compact"
-              className="single-select"
-              classNamePrefix="react-select"
-              defaultValue={versionOptions.find(
-                ({ value }) => value === versionFilter.id,
-              )}
-              isDisabled={false}
-              isLoading={loadingVersions}
-              isClearable
-              isSearchable
-              options={versionOptions}
-              placeholder="Choose a version"
-              onChange={e => toggleVersion({ variables: { version: e } })}
-            />
-          )}
-        </Mutation>
-      </div>
-      <div style={{ marginLeft: 8 }}>
-        <ButtonGroup>
-          {teams.map(team => (
-            <Mutation
-              key={team}
-              mutation={TOGGLE_TEAM}
-              variables={{ team: { id: team._id, filter: teamFilter } }}
-            >
-              {toggleTeam => (
-                <Button
-                  key={team._id}
-                  isLoading={loadingTeams}
-                  appearance="subtle"
-                  isSelected={teamFilter === team._id}
-                  onClick={toggleTeam}
-                >
-                  {team._id}
-                </Button>
-              )}
-            </Mutation>
-          ))}
-        </ButtonGroup>
-      </div>
+      {props.match.path !== '/resources' && (
+        <div style={{ flex: '0 0 200px', marginLeft: 8 }}>
+          <Mutation mutation={TOGGLE_VERSION}>
+            {toggleVersion => (
+              <Select
+                spacing="compact"
+                className="single-select"
+                classNamePrefix="react-select"
+                defaultValue={versionOptions.find(
+                  ({ value }) => value === versionFilter.id,
+                )}
+                isDisabled={false}
+                isLoading={loadingVersions}
+                isClearable
+                isSearchable
+                options={versionOptions}
+                placeholder="Choose a version"
+                onChange={e => toggleVersion({ variables: { version: e } })}
+              />
+            )}
+          </Mutation>
+        </div>
+      )}
+      {!props.match.params.resourceId && (
+        <div style={{ marginLeft: 8 }}>
+          <ButtonGroup>
+            {teams.map(team => (
+              <Mutation
+                key={team}
+                mutation={TOGGLE_TEAM}
+                variables={{ team: { id: team._id, filter: teamFilter } }}
+              >
+                {toggleTeam => (
+                  <Button
+                    key={team._id}
+                    isLoading={loadingTeams}
+                    appearance="subtle"
+                    isSelected={teamFilter === team._id}
+                    onClick={toggleTeam}
+                  >
+                    {team._id}
+                  </Button>
+                )}
+              </Mutation>
+            ))}
+          </ButtonGroup>
+        </div>
+      )}
     </>
   )
 }
