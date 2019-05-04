@@ -3,11 +3,16 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 import { createHttpLink } from 'apollo-link-http'
 import { setContext } from 'apollo-link-context'
 import { resolvers, typeDefs } from '../resolvers'
+import { endpoint, prodEndpoint } from '../config'
+
+/**
+ * TODO: Authentication
+ */
 import { basicAuth, apiKey, defaultFixVersion } from '../credentials'
 
 export default function createClient() {
   const httpLink = createHttpLink({
-    uri: 'http://localhost:4000/graphql',
+    uri: process.env.NODE_ENV === 'development' ? endpoint : prodEndpoint,
     credentials: 'same-origin',
   })
   const authLink = setContext((_, { headers }) => {
