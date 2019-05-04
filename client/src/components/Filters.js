@@ -1,5 +1,5 @@
 import React from 'react'
-import { Mutation } from 'react-apollo'
+import { ApolloConsumer, Mutation } from 'react-apollo'
 import { useQuery } from 'react-apollo-hooks'
 import gql from 'graphql-tag'
 import Select from '@atlaskit/select'
@@ -35,6 +35,16 @@ export const GET_FILTERS = gql`
       name
     }
     team @client
+    teams @client {
+      _id
+      members {
+        key
+      }
+    }
+    versions @client {
+      id
+      name
+    }
   }
 `
 
@@ -49,6 +59,17 @@ const TOGGLE_TEAM = gql`
     toggleTeam(team: $team) @client
   }
 `
+
+// const SET_TEAMS = gql`
+//   mutation setTeams($teams: [Team]) {
+//     setTeams(teams: $teams) @client
+//   }
+// `
+// const SET_VERSIONS = gql`
+//   mutation setVersions($versions: [FixVersion]) {
+//     setVersions(versions: $versions) @client
+//   }
+// `
 
 export default function Filters(props) {
   const {
@@ -94,8 +115,19 @@ export default function Filters(props) {
     label: versionOption.name,
   }))
 
+  console.log(props.match)
   return (
     <>
+      <ApolloConsumer>
+        {client =>
+          client.writeData({
+            data: {
+              teams,
+              versions,
+            },
+          })
+        }
+      </ApolloConsumer>
       {props.match.path !== '/resources' && (
         <div style={{ flex: '0 0 200px', marginLeft: 8 }}>
           <Mutation mutation={TOGGLE_VERSION}>
@@ -119,7 +151,7 @@ export default function Filters(props) {
           </Mutation>
         </div>
       )}
-      {!props.match.params.resourceId && (
+      {!['/roadmap', '/resource/:resourceId'].includes(props.match.path) && (
         <div style={{ marginLeft: 8 }}>
           <ButtonGroup>
             {teams.map(team => (

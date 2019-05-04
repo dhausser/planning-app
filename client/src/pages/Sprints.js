@@ -1,15 +1,16 @@
 import React, { useEffect } from 'react'
 import { withNavigationViewController } from '@atlaskit/navigation-next'
 import { projectHomeView } from '../components/Nav'
-import { Page } from '../components'
+import { Page, Header } from '../components'
 
-const Sprints = ({ navigationViewController }) => {
+const Sprints = props => {
   useEffect(() => {
-    navigationViewController.setView(projectHomeView.id)
-  }, [navigationViewController])
+    props.navigationViewController.setView(projectHomeView.id)
+  }, [props.navigationViewController])
 
   return (
-    <Page title="Active sprints">
+    <Page>
+      <Header title="Active sprints" {...props} />
       <p>This is the active sprints page.</p>
     </Page>
   )

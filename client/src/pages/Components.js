@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react'
 import { withNavigationViewController } from '@atlaskit/navigation-next'
 import { projectHomeView } from '../components/Nav'
-import { Page, Filters } from '../components'
+import { Page, Header } from '../components'
 
-const Components = ({ navigationViewController }) => {
+const Components = props => {
   useEffect(() => {
-    navigationViewController.setView(projectHomeView.id)
-  }, [navigationViewController])
+    props.navigationViewController.setView(projectHomeView.id)
+  }, [props.navigationViewController])
 
   return (
-    <Page title="Components">
-      <Filters />
+    <Page>
+      <Header title="Components" {...props} />
       <p>This is the active components page.</p>
     </Page>
   )

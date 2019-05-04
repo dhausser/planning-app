@@ -12,7 +12,7 @@ import Comment, {
   CommentEdited,
   CommentTime,
 } from '@atlaskit/comment'
-import { productHomeView } from '../components/Nav'
+import { productIssuesView } from '../components/Nav'
 import { Page, Loading, Error } from '../components'
 import { NameWrapper, AvatarWrapper } from '../components/Page'
 import { getIcon } from '../components/Icon'
@@ -52,7 +52,7 @@ const GET_ISSUE = gql`
 
 function Issue({ navigationViewController, match }) {
   useEffect(() => {
-    navigationViewController.setView(productHomeView.id)
+    navigationViewController.setView(productIssuesView.id)
   }, [navigationViewController])
 
   const {

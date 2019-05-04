@@ -42,7 +42,7 @@ const GET_ISSUES = gql`
 
 export default function Issues(props) {
   const {
-    data: { version, team },
+    data: { version, team, teams },
   } = useQuery(GET_FILTERS)
 
   let jql = ''
@@ -54,7 +54,8 @@ export default function Issues(props) {
   if (props.match.params.resourceId) {
     jql = `${jql} AND assignee in (${props.match.params.resourceId})`
   } else if (team) {
-    console.log({ team })
+    const { members } = teams.find(({ _id }) => _id === team)
+    jql = `${jql} AND assignee in (${members.map(({ key }) => key)})`
   }
 
   if (version && version.id) {
@@ -68,13 +69,12 @@ export default function Issues(props) {
   if (loading) return <Loading />
   if (error) return <Error error={error} />
 
-  // console.log(jql)
   return (
     <IssueList
       issues={data.issues.issues}
       maxResults={data.issues.maxResults}
       total={data.issues.total}
-      pathname={props.location.pathname}
+      pageSize={props.pageSize}
       isLoading={loading}
     />
   )

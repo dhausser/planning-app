@@ -9,9 +9,9 @@ function IssuesPage(props) {
   }, [props.navigationViewController])
 
   return (
-    <Page title="Issues">
-      <Header {...props} />
-      <Issues />
+    <Page>
+      <Header title="Issues" {...props} />
+      <Issues pageSize={20} {...props} />
     </Page>
   )
 }

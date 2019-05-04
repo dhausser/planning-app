@@ -118,7 +118,7 @@ export default function IssueList({
   loading,
   maxResults,
   total,
-  pathname,
+  pageSize,
 }) {
   const caption = `Listing ${
     maxResults <= total ? maxResults : total
@@ -129,7 +129,7 @@ export default function IssueList({
         caption={caption}
         head={head}
         rows={issues.map(issueRow)}
-        rowsPerPage={pathname === '/issues' ? 10 : 5}
+        rowsPerPage={pageSize}
         defaultPage={1}
         loadingSpinnerSize="large"
         isLoading={loading}

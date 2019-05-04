@@ -86,10 +86,15 @@ const issueReducer = issue => ({
     : [],
 })
 
-export default function Roadmap(props) {
+export default function Roadmap() {
   const {
     data: { version },
   } = useQuery(GET_FILTERS)
+
+  /**
+   * TODO: Fix page crash on reload, version is undefined
+   */
+  console.log(version)
 
   return (
     <Query

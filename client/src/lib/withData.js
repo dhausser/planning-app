@@ -45,7 +45,9 @@ export default function createClient() {
     data: {
       isLoggedIn: false,
       version,
+      versions: [],
       team,
+      // teams: [],
     },
   })
 

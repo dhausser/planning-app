@@ -4,7 +4,9 @@ export const typeDefs = gql`
   extend type Query {
     isLoggedIn: Boolean!
     version: FixVersion
+    versions: [FixVersion]
     team: Team
+    teams: [Team]
   }
 
   extend type Team {

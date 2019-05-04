@@ -7,6 +7,9 @@ import Error from './Error'
 import BarChart from './BarChart'
 import { GET_FILTERS } from './Filters'
 
+/**
+ * TODO: Use query fragments and merge with Issues component
+ */
 const GET_ISSUES = gql`
   query issueList($jql: String, $pageSize: Int!) {
     issues(jql: $jql, pageSize: $pageSize) {
@@ -58,10 +61,15 @@ function aggregateByTeam(issues) {
   }, {})
 }
 
-export default function Dashboard(props) {
+export default function Dashboard() {
   const {
     data: { version, team },
   } = useQuery(GET_FILTERS)
+
+  /**
+   * TODO: Fix page crash on reload, version is undefined
+   */
+  console.log(version)
 
   const {
     data: { issues },
@@ -77,16 +85,24 @@ export default function Dashboard(props) {
   })
 
   if (error) return <Error error={error} />
-
-  let dataset = []
-  if (!loading)
-    dataset = team
-      ? aggregateByAssignee(
-          issues.issues.filter(({ assignee }) => assignee.team === team),
-        )
-      : aggregateByTeam(issues.issues)
-
   return (
-    <>{loading ? <Loading /> : <BarChart {...issues} dataset={dataset} />}</>
+    <>
+      {loading ? (
+        <Loading />
+      ) : (
+        <BarChart
+          {...issues}
+          dataset={
+            team
+              ? aggregateByAssignee(
+                  issues.issues.filter(
+                    ({ assignee }) => assignee.team === team,
+                  ),
+                )
+              : aggregateByTeam(issues.issues)
+          }
+        />
+      )}
+    </>
   )
 }
