@@ -9,7 +9,7 @@ import Filters from './Filters'
 
 export default props => {
   const breadcrumbs = (
-    <BreadcrumbsStateless onExpand={() => {}}>
+    <BreadcrumbsStateless>
       <BreadcrumbsItem text="Some project" key="Some project" />
       <BreadcrumbsItem text="Parent page" key="Parent page" />
     </BreadcrumbsStateless>
