@@ -80,8 +80,8 @@ export const typeDefs = gql`
   }
 
   type Resource {
-    key: ID!
-    name: String!
+    key: ID
+    name: String
     team: String
   }
 

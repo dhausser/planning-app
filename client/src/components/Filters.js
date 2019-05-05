@@ -30,6 +30,7 @@ export const GET_TEAMS = gql`
 
 export const GET_FILTERS = gql`
   query GetFilters {
+    isLoggedIn @client
     version @client {
       id
       name
