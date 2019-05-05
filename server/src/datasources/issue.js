@@ -58,7 +58,6 @@ export default class IssueAPI extends RESTDataSource {
   async getIssueById({ issueId }) {
     const teamMapping = await this.teamMapping()
     const response = await this.get(`issue/${issueId}?fields=${fields.join()}`)
-    console.log(response.fields.description)
     return this.issueReducer(response, teamMapping)
   }
 
