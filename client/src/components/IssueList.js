@@ -7,10 +7,6 @@ import { Status } from '@atlaskit/status'
 
 import { getIcon } from './Icon'
 
-const Wrapper = styled.div`
-  min-width: 600px;
-`
-
 const NameWrapper = styled.span`
   display: flex;
   align-items: center;
@@ -124,19 +120,17 @@ export default function IssueList({
     maxResults <= total ? maxResults : total
   } issues of ${total}`
   return (
-    <Wrapper>
-      <DynamicTable
-        caption={caption}
-        head={head}
-        rows={issues.map(issueRow)}
-        rowsPerPage={pageSize}
-        defaultPage={1}
-        loadingSpinnerSize="large"
-        isLoading={loading}
-        isFixedSize
-        defaultSortKey="priority"
-        defaultSortOrder="ASC"
-      />
-    </Wrapper>
+    <DynamicTable
+      caption={caption}
+      head={head}
+      rows={issues.map(issueRow)}
+      rowsPerPage={pageSize}
+      defaultPage={1}
+      loadingSpinnerSize="large"
+      isLoading={loading}
+      isFixedSize
+      defaultSortKey="priority"
+      defaultSortOrder="ASC"
+    />
   )
 }

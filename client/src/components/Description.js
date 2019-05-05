@@ -1,14 +1,4 @@
 import React from 'react'
-import InlineEdit from '@atlaskit/inline-edit'
+import { Editor } from '@atlaskit/editor-core'
 
-export default ({ description }) => (
-  <InlineEdit
-    isFitContainerWidthReadView
-    label="Description"
-    labelHtmlFor="inline-single-edit"
-    editView={description}
-    readView={description}
-    onConfirm={() => {}}
-    onCancel={() => {}}
-  />
-)
+export default ({ description }) => <Editor appearance="comment" />

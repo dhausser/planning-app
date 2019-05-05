@@ -2,7 +2,6 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Query } from 'react-apollo'
 import { useQuery } from 'react-apollo-hooks'
-import gql from 'graphql-tag'
 
 import TableTree, {
   Headers,
@@ -16,62 +15,9 @@ import { Status } from '@atlaskit/status'
 import Loading from './Loading'
 import Error from './Error'
 import { getIcon } from './Icon'
-import { GET_FILTERS } from './Filters'
 
+import { GET_EPICS, GET_STORIES, GET_FILTERS } from './queries'
 import { projectId } from '../credentials'
-
-const GET_EPICS = gql`
-  query issueList($jql: String, $pageSize: Int!) {
-    issues(jql: $jql, pageSize: $pageSize) {
-      startAt
-      maxResults
-      total
-      issues {
-        id
-        key
-        summary
-        type
-        priority
-        status {
-          name
-          category
-        }
-      }
-    }
-  }
-`
-
-const GET_STORIES = gql`
-  query issueList($jql: String, $pageSize: Int!) {
-    issues(jql: $jql, pageSize: $pageSize) {
-      startAt
-      maxResults
-      total
-      issues {
-        id
-        key
-        summary
-        type
-        priority
-        status {
-          name
-          category
-        }
-        children {
-          key
-          summary
-          type
-          priority
-          status {
-            name
-            category
-          }
-        }
-        parent
-      }
-    }
-  }
-`
 
 const issueReducer = issue => ({
   key: issue.key,

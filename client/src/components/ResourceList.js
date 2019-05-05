@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import styled from 'styled-components'
 import DynamicTable from '@atlaskit/dynamic-table'
 import Avatar from '@atlaskit/avatar'
 import { NameWrapper, AvatarWrapper } from './Page'
@@ -8,10 +7,6 @@ import { NameWrapper, AvatarWrapper } from './Page'
 function createKey(input) {
   return input ? input.replace(/^(the|a|an)/, '').replace(/\s/g, '') : input
 }
-
-const Wrapper = styled.div`
-  min-width: 600px;
-`
 
 const createHead = withWidth => ({
   cells: [
@@ -64,19 +59,17 @@ export default function ResourceList({ resources, isLoading }) {
   const head = createHead('false')
   const rows = createRows(resources)
   return (
-    <Wrapper>
-      <DynamicTable
-        caption={caption}
-        head={head}
-        rows={rows}
-        rowsPerPage={20}
-        defaultPage={1}
-        loadingSpinnerSize="large"
-        isLoading={isLoading}
-        isFixedSize
-        defaultSortKey="name"
-        defaultSortOrder="ASC"
-      />
-    </Wrapper>
+    <DynamicTable
+      caption={caption}
+      head={head}
+      rows={rows}
+      rowsPerPage={20}
+      defaultPage={1}
+      loadingSpinnerSize="large"
+      isLoading={isLoading}
+      isFixedSize
+      defaultSortKey="name"
+      defaultSortOrder="ASC"
+    />
   )
 }

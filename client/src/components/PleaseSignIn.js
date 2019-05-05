@@ -1,5 +1,5 @@
 import { Query } from 'react-apollo'
-import { CURRENT_USER_QUERY } from './User'
+import { CURRENT_USER_QUERY } from './queries'
 import Signin from './Signin'
 import Loading from './Loading'
 

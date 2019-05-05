@@ -6,7 +6,6 @@ import Comment, {
   CommentEdited,
   CommentTime,
 } from '@atlaskit/comment'
-import InlineEdit from '@atlaskit/inline-edit'
 
 import { hostname } from '../credentials'
 
@@ -39,14 +38,5 @@ export default ({ comments }) => (
         ]}
       />
     ))}
-    <InlineEdit
-      isFitContainerWidthReadView
-      label="Comment"
-      labelHtmlFor="inline-single-edit"
-      editView="Comment here"
-      readView="Comment here"
-      onConfirm={() => {}}
-      onCancel={() => {}}
-    />
   </>
 )

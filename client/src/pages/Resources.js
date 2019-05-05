@@ -5,17 +5,7 @@ import { withNavigationViewController } from '@atlaskit/navigation-next'
 import { productHomeView } from '../components/Nav'
 
 import { ResourceList, Page, Header, Error } from '../components'
-import { GET_FILTERS } from '../components/Filters'
-
-const GET_RESOURCES = gql`
-  query resourceList {
-    resources {
-      key
-      name
-      team
-    }
-  }
-`
+import { GET_RESOURCES, GET_FILTERS } from '../components/queries'
 
 const ResourcesPage = props => {
   useEffect(() => {

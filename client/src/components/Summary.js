@@ -1,7 +1,10 @@
 import React from 'react'
+
 import PageHeader from '@atlaskit/page-header'
 import { BreadcrumbsStateless, BreadcrumbsItem } from '@atlaskit/breadcrumbs'
 import Button, { ButtonGroup } from '@atlaskit/button'
+import Tooltip from '@atlaskit/tooltip'
+
 import AttachmentIcon from '@atlaskit/icon/glyph/attachment'
 import LinkIcon from '@atlaskit/icon/glyph/link'
 import PageIcon from '@atlaskit/icon/glyph/page'
@@ -15,14 +18,18 @@ export default ({ summary }) => {
     </BreadcrumbsStateless>
   )
   const barContent = (
-    // <div style={{ display: 'flex' }}>
     <ButtonGroup>
-      <Button>{AttachmentIcon()}</Button>
-      <Button>{LinkIcon()}</Button>
-      <Button>{PageIcon()}</Button>
-      <Button>{MoreIcon()}</Button>
+      <Tooltip content="Add attachement">
+        <Button iconBefore={AttachmentIcon()} />
+      </Tooltip>
+      <Tooltip content="Link issue">
+        <Button iconBefore={LinkIcon()} />
+      </Tooltip>
+      <Tooltip content="Link a Confluence page">
+        <Button iconBefore={PageIcon()} />
+      </Tooltip>
+      <Button iconBefore={MoreIcon()} />
     </ButtonGroup>
-    // </div>
   )
 
   return (

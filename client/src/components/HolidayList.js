@@ -1,12 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { arrayOf, shape, string, number, bool } from 'prop-types'
-import styled from 'styled-components'
 import DynamicTable from '@atlaskit/dynamic-table'
-
-const Wrapper = styled.div`
-  min-width: 600px;
-`
 
 const createHead = (withWidth, resources) => {
   const head = {
@@ -78,22 +73,20 @@ export default function HolidayList({ absences, resources, isLoading }) {
   const head = createHead(false, resources)
   const rows = createRows(absences, resources)
   return (
-    <Wrapper>
-      <DynamicTable
-        caption={caption}
-        head={head}
-        rows={rows}
-        rowsPerPage={resources ? 20 : 10}
-        defaultPage={1}
-        loadingSpinnerSize="large"
-        isLoading={isLoading}
-        isFixedSize
-        defaultSortKey="date"
-        defaultSortOrder="DESC"
-        onSort={() => console.log('onSort')}
-        onSetPage={() => console.log('onSetPage')}
-      />
-    </Wrapper>
+    <DynamicTable
+      caption={caption}
+      head={head}
+      rows={rows}
+      rowsPerPage={resources ? 20 : 10}
+      defaultPage={1}
+      loadingSpinnerSize="large"
+      isLoading={isLoading}
+      isFixedSize
+      defaultSortKey="date"
+      defaultSortOrder="DESC"
+      onSort={() => console.log('onSort')}
+      onSetPage={() => console.log('onSetPage')}
+    />
   )
 }
 

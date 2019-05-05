@@ -23,28 +23,37 @@ export default function Issue(props) {
   if (loading) return <Loading />
   if (error) return <Error error={error} />
 
+  console.log(issue.type)
+
   return (
-    <>
-      <Summary summary={issue.summary} />
-      <a
-        href={`https://${hostname}/browse/${issue.key}`}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        View in Issue Navigator
-      </a>
-      <h5>Assignee</h5>
-      {<Assignee assignee={issue.assignee} />}
-      <h5>Status</h5>
-      <Status text={issue.status.name} color={getIcon[issue.status.category]} />
-      <h5>FixVersion</h5>
-      {issue.fixVersions[0] && issue.fixVersions[0].name}
-      <h5>Type</h5>
-      {getIcon[issue.type]}
-      <h5>Priotity</h5>
-      {getIcon[issue.priority]}
-      <Description description={issue.description} />
-      <Comments comments={issue.comments} />
-    </>
+    <Grid>
+      <GridColumn medium={8}>
+        <Summary summary={issue.summary} />
+        <a
+          href={`https://${hostname}/browse/${issue.key}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          View in Issue Navigator
+        </a>
+        <Description description={issue.description} />
+        {/* <Comments comments={issue.comments} /> */}
+      </GridColumn>
+      <GridColumn medium={4}>
+        <p>Status</p>
+        <Status
+          text={issue.status.name}
+          color={getIcon[issue.status.category]}
+        />
+        <p>Assignee</p>
+        {<Assignee assignee={issue.assignee} />}
+        <p>FixVersion</p>
+        {issue.fixVersions[0] && issue.fixVersions[0].name}
+        <p>Type</p>
+        {getIcon[issue.type]}
+        <p>Priotity</p>
+        {getIcon[issue.priority]}
+      </GridColumn>
+    </Grid>
   )
 }

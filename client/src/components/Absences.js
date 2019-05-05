@@ -4,15 +4,7 @@ import gql from 'graphql-tag'
 import Calendar from '@atlaskit/calendar'
 import HolidayList from './HolidayList'
 import Error from './Error'
-
-const GET_ABSENCES = gql`
-  query absenceList($id: ID!) {
-    absences(id: $id) {
-      key
-      date
-    }
-  }
-`
+import { GET_ABSENCES } from './queries'
 
 export default function Absences(props) {
   const id = props.match.params.resourceId

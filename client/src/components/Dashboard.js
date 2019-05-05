@@ -1,35 +1,10 @@
 import React from 'react'
 import { useQuery } from 'react-apollo-hooks'
-import gql from 'graphql-tag'
 
 import Loading from './Loading'
 import Error from './Error'
 import BarChart from './BarChart'
-import { GET_FILTERS } from './Filters'
-
-/**
- * TODO: Use query fragments and merge with Issues component
- */
-const GET_ISSUES = gql`
-  query issueList($jql: String, $pageSize: Int!) {
-    issues(jql: $jql, pageSize: $pageSize) {
-      startAt
-      maxResults
-      total
-      issues {
-        fixVersions {
-          id
-          name
-        }
-        assignee {
-          key
-          name
-          team
-        }
-      }
-    }
-  }
-`
+import { GET_DASHBOARD_ISSUES, GET_FILTERS } from './queries'
 
 export default function Dashboard() {
   const {
@@ -44,7 +19,7 @@ export default function Dashboard() {
     data: { issues },
     loading,
     error,
-  } = useQuery(GET_ISSUES, {
+  } = useQuery(GET_DASHBOARD_ISSUES, {
     variables: {
       jql,
       pageSize: 1250,

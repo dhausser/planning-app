@@ -7,37 +7,7 @@ import Button, { ButtonGroup } from '@atlaskit/button'
 import EmptyState from '@atlaskit/empty-state'
 import { projectId } from '../credentials'
 
-export const GET_VERSIONS = gql`
-  query GetVersions($id: ID!, $pageSize: Int, $after: Int) {
-    versions(id: $id, pageSize: $pageSize, after: $after) {
-      id
-      name
-    }
-  }
-`
-
-export const GET_TEAMS = gql`
-  query GetTeams {
-    teams {
-      _id
-      size
-      members {
-        key
-      }
-    }
-  }
-`
-
-export const GET_FILTERS = gql`
-  query GetFilters {
-    isLoggedIn @client
-    version @client {
-      id
-      name
-    }
-    team @client
-  }
-`
+import { GET_VERSIONS, GET_TEAMS, GET_FILTERS } from './queries'
 
 const TOGGLE_VERSION = gql`
   mutation toggleVersion($version: FixVersion!) {

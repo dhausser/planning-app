@@ -6,39 +6,9 @@ import Loading from './Loading'
 import Error from './Error'
 import IssueList from './IssueList'
 
-import { GET_FILTERS, GET_TEAMS } from './Filters'
+import { GET_ISSUES, GET_FILTERS, GET_TEAMS } from './queries'
 
 import { projectId } from '../credentials'
-
-const GET_ISSUES = gql`
-  query issueList($jql: String, $pageSize: Int!) {
-    issues(jql: $jql, pageSize: $pageSize) {
-      startAt
-      maxResults
-      total
-      issues {
-        id
-        key
-        summary
-        type
-        priority
-        status {
-          name
-          category
-        }
-        fixVersions {
-          id
-          name
-        }
-        assignee {
-          key
-          name
-          team
-        }
-      }
-    }
-  }
-`
 
 export default function Issues(props) {
   const {

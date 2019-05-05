@@ -1,6 +1,5 @@
 import React from 'react'
 import { useQuery } from 'react-apollo-hooks'
-import gql from 'graphql-tag'
 
 import Avatar from '@atlaskit/avatar'
 
@@ -9,15 +8,8 @@ import Issues from './Issues'
 import Absences from './Absences'
 import Header from './Header'
 
+import { GET_RESOURCE } from './queries'
 import { hostname } from '../credentials'
-
-const GET_RESOURCE = gql`
-  query getResourceById($id: ID!) {
-    resource(id: $id) {
-      name
-    }
-  }
-`
 
 export default function Resource(props) {
   const id = props.match.params.resourceId
