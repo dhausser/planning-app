@@ -23,12 +23,14 @@ export default function Issue(props) {
   if (loading) return <Loading />
   if (error) return <Error error={error} />
 
-  console.log(issue.type)
-
   return (
     <Grid>
       <GridColumn medium={8}>
-        <Summary summary={issue.summary} />
+        <Summary id={issue.key} summary={issue.summary} type={issue.type} />
+        <Description description={issue.description} />
+        <Comments comments={issue.comments} />
+      </GridColumn>
+      <GridColumn medium={4}>
         <a
           href={`https://${hostname}/browse/${issue.key}`}
           target="_blank"
@@ -36,10 +38,6 @@ export default function Issue(props) {
         >
           View in Issue Navigator
         </a>
-        <Description description={issue.description} />
-        {/* <Comments comments={issue.comments} /> */}
-      </GridColumn>
-      <GridColumn medium={4}>
         <p>Status</p>
         <Status
           text={issue.status.name}
@@ -49,10 +47,10 @@ export default function Issue(props) {
         {<Assignee assignee={issue.assignee} />}
         <p>FixVersion</p>
         {issue.fixVersions[0] && issue.fixVersions[0].name}
-        <p>Type</p>
-        {getIcon[issue.type]}
         <p>Priotity</p>
         {getIcon[issue.priority]}
+        <p>Reporter</p>
+        <Assignee assignee={issue.reporter} />
       </GridColumn>
     </Grid>
   )

@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo-hooks'
 import { withNavigationViewController } from '@atlaskit/navigation-next'
 import { productHomeView } from '../components/Nav'

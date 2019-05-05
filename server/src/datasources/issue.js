@@ -58,6 +58,7 @@ export default class IssueAPI extends RESTDataSource {
   async getIssueById({ issueId }) {
     const teamMapping = await this.teamMapping()
     const response = await this.get(`issue/${issueId}?fields=${fields.join()}`)
+    console.log(response.fields.description)
     return this.issueReducer(response, teamMapping)
   }
 
@@ -77,6 +78,7 @@ export default class IssueAPI extends RESTDataSource {
       category: issue.fields.status.statusCategory.key,
     },
     fixVersions: issue.fields.fixVersions,
+    description: issue.fields.description,
     assignee: {
       key: issue.fields.assignee && issue.fields.assignee.key,
       name: issue.fields.assignee && issue.fields.assignee.displayName,
@@ -85,7 +87,7 @@ export default class IssueAPI extends RESTDataSource {
         null,
     },
     reporter: {
-      id: issue.fields.reporter && issue.fields.reporter.key,
+      key: issue.fields.reporter && issue.fields.reporter.key,
       name: issue.fields.reporter && issue.fields.reporter.displayName,
     },
     comments:

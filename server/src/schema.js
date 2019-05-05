@@ -50,6 +50,7 @@ export const typeDefs = gql`
     summary: String!
     priority: String!
     type: String!
+    description: String
     status: Status!
     fixVersions: [FixVersion]
     assignee: Resource

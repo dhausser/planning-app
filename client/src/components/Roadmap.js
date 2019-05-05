@@ -16,7 +16,7 @@ import Loading from './Loading'
 import Error from './Error'
 import { getIcon } from './Icon'
 
-import { GET_EPICS, GET_STORIES, GET_FILTERS } from './queries'
+import { GET_ISSUES, GET_STORIES, GET_FILTERS } from './queries'
 import { projectId } from '../credentials'
 
 const issueReducer = issue => ({
@@ -39,7 +39,7 @@ export default function Roadmap() {
 
   return (
     <Query
-      query={GET_EPICS}
+      query={GET_ISSUES}
       variables={{
         jql: `project = ${projectId} AND fixVersion = ${
           version.id

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { HashRouter, Route, Switch } from 'react-router-dom'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { Query, ApolloProvider } from 'react-apollo'
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks'
 import gql from 'graphql-tag'
@@ -69,11 +69,11 @@ const App = ({ navigationViewController }) => {
 const AppWithNavigationViewController = withNavigationViewController(App)
 
 const AppRouter = () => (
-  <HashRouter>
+  <BrowserRouter>
     <NavigationProvider>
       <AppWithNavigationViewController />
     </NavigationProvider>
-  </HashRouter>
+  </BrowserRouter>
 )
 
 export default () => (

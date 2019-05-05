@@ -1,135 +1,42 @@
 import gql from 'graphql-tag'
 
-export const CURRENT_USER_QUERY = gql`
-  query {
-    me {
-      id
-      email
+const ISSUE_TILE_DATA = gql`
+  fragment IssueTile on Issue {
+    id
+    key
+    summary
+    type
+    priority
+    status {
       name
-      permissions
+      category
+    }
+    fixVersions {
+      id
+      name
+    }
+    assignee {
+      key
+      name
+      team
     }
   }
 `
 
-export const GET_ISSUES = gql`
-  query issueList($jql: String, $pageSize: Int!) {
-    issues(jql: $jql, pageSize: $pageSize) {
-      startAt
-      maxResults
-      total
-      issues {
-        id
-        key
-        summary
-        type
-        priority
-        status {
-          name
-          category
-        }
-        fixVersions {
-          id
-          name
-        }
-        assignee {
-          key
-          name
-          team
-        }
-      }
-    }
-  }
-`
-export const GET_DASHBOARD_ISSUES = gql`
-  query issueList($jql: String, $pageSize: Int!) {
-    issues(jql: $jql, pageSize: $pageSize) {
-      startAt
-      maxResults
-      total
-      issues {
-        fixVersions {
-          id
-          name
-        }
-        assignee {
-          key
-          name
-          team
-        }
-      }
-    }
-  }
-`
-
-export const GET_EPICS = gql`
-  query issueList($jql: String, $pageSize: Int!) {
-    issues(jql: $jql, pageSize: $pageSize) {
-      startAt
-      maxResults
-      total
-      issues {
-        id
-        key
-        summary
-        type
-        priority
-        status {
-          name
-          category
-        }
-      }
-    }
-  }
-`
-
-export const GET_STORIES = gql`
-  query issueList($jql: String, $pageSize: Int!) {
-    issues(jql: $jql, pageSize: $pageSize) {
-      startAt
-      maxResults
-      total
-      issues {
-        id
-        key
-        summary
-        type
-        priority
-        status {
-          name
-          category
-        }
-        children {
-          key
-          summary
-          type
-          priority
-          status {
-            name
-            category
-          }
-        }
-        parent
-      }
-    }
+const ISSUE_PAGINATION = gql`
+  fragment IssuePagination on IssueConnection {
+    startAt
+    maxResults
+    total
   }
 `
 
 export const GET_ISSUE = gql`
   query GetIssueById($id: ID!) {
     issue(id: $id) {
-      id
-      key
-      summary
-      priority
-      type
-      status {
-        name
-        category
-      }
-      fixVersions {
-        name
-      }
-      assignee {
+      ...IssueTile
+      description
+      reporter {
         key
         name
       }
@@ -145,6 +52,64 @@ export const GET_ISSUE = gql`
       }
     }
   }
+  ${ISSUE_TILE_DATA}
+`
+
+export const GET_ISSUES = gql`
+  query issueList($jql: String, $pageSize: Int!) {
+    issues(jql: $jql, pageSize: $pageSize) {
+      ...IssuePagination
+      issues {
+        ...IssueTile
+      }
+    }
+  }
+  ${ISSUE_PAGINATION}
+  ${ISSUE_TILE_DATA}
+`
+
+export const GET_DASHBOARD_ISSUES = gql`
+  query issueList($jql: String, $pageSize: Int!) {
+    issues(jql: $jql, pageSize: $pageSize) {
+      ...IssuePagination
+      issues {
+        fixVersions {
+          id
+          name
+        }
+        assignee {
+          key
+          name
+          team
+        }
+      }
+    }
+  }
+  ${ISSUE_PAGINATION}
+`
+
+export const GET_STORIES = gql`
+  query issueList($jql: String, $pageSize: Int!) {
+    issues(jql: $jql, pageSize: $pageSize) {
+      ...IssuePagination
+      issues {
+        ...IssueTile
+        children {
+          key
+          summary
+          type
+          priority
+          status {
+            name
+            category
+          }
+        }
+        parent
+      }
+    }
+  }
+  ${ISSUE_PAGINATION}
+  ${ISSUE_TILE_DATA}
 `
 
 export const GET_RESOURCES = gql`
@@ -202,6 +167,17 @@ export const GET_ABSENCES = gql`
     absences(id: $id) {
       key
       date
+    }
+  }
+`
+
+export const CURRENT_USER_QUERY = gql`
+  query {
+    me {
+      id
+      email
+      name
+      permissions
     }
   }
 `

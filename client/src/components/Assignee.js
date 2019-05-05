@@ -11,7 +11,7 @@ export default ({ assignee }) =>
       <AvatarWrapper>
         <Avatar
           name={assignee.name}
-          size="large"
+          size="small"
           src={`https://${hostname}/secure/useravatar?ownerId=${assignee.key}`}
         />
       </AvatarWrapper>

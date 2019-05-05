@@ -11,6 +11,7 @@ import { hostname } from '../credentials'
 
 export default ({ comments }) => (
   <>
+    <h4>Activity</h4>
     {comments.map(comment => (
       <Comment
         key={comment.id}

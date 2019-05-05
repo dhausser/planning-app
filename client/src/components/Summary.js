@@ -10,11 +10,22 @@ import LinkIcon from '@atlaskit/icon/glyph/link'
 import PageIcon from '@atlaskit/icon/glyph/page'
 import MoreIcon from '@atlaskit/icon/glyph/more'
 
-export default ({ summary }) => {
+import { getIcon } from './Icon'
+
+export default ({ id, summary, type }) => {
   const breadcrumbs = (
     <BreadcrumbsStateless>
-      <BreadcrumbsItem text="Some project" key="Some project" />
-      <BreadcrumbsItem text="Parent page" key="Parent page" />
+      <BreadcrumbsItem
+        href="/issues"
+        text="Space Project"
+        key="Space project"
+      />
+      <BreadcrumbsItem
+        href={`/issue/${id}`}
+        iconBefore={getIcon[type]}
+        text={id}
+        key={id}
+      />
     </BreadcrumbsStateless>
   )
   const barContent = (
