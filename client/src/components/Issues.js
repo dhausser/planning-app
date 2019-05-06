@@ -1,6 +1,5 @@
 import React from 'react'
 import { useQuery } from 'react-apollo-hooks'
-import gql from 'graphql-tag'
 
 import Loading from './Loading'
 import Error from './Error'

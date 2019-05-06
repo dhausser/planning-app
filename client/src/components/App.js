@@ -2,18 +2,20 @@ import React, { useEffect } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { Query, ApolloProvider } from 'react-apollo'
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks'
-import gql from 'graphql-tag'
+
 import {
   LayoutManagerWithViewController,
   NavigationProvider,
   withNavigationViewController,
 } from '@atlaskit/navigation-next'
+
 import {
   MyGlobalNavigation,
   productHomeView,
   productIssuesView,
   projectHomeView,
 } from './Nav'
+
 import {
   Dashboard,
   Roadmap,
@@ -30,14 +32,9 @@ import {
 } from '../pages'
 
 import apolloClient from '../lib/withData'
+import { IS_LOGGED_IN } from './queries'
 
 const client = apolloClient()
-
-const IS_LOGGED_IN = gql`
-  query IsUserLoggedIn {
-    isLoggedIn @client
-  }
-`
 
 const App = ({ navigationViewController }) => {
   useEffect(() => {

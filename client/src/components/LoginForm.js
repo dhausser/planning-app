@@ -1,19 +1,16 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 
-export default class LoginForm extends Component {
-  state = { email: '' }
+export default function LoginForm(props) {
+  const [email, setEmail] = useState('')
 
-  onChange = event => {
-    const email = event.target.value
-    this.setState(s => ({ email }))
+  const onChange = event => {
+    setEmail(event.target.value)
   }
 
-  onSubmit = event => {
+  const onSubmit = event => {
     event.preventDefault()
-    this.props.login({ variables: { email: this.state.email } })
+    props.login({ variables: { email } })
   }
 
-  render() {
-    return <button type="submit">Log in</button>
-  }
+  return <button type="submit">Log in</button>
 }

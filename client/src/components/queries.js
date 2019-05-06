@@ -181,3 +181,9 @@ export const CURRENT_USER_QUERY = gql`
     }
   }
 `
+
+export const IS_LOGGED_IN = gql`
+  query IsUserLoggedIn {
+    isLoggedIn @client
+  }
+`
