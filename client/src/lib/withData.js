@@ -10,9 +10,12 @@ import { endpoint, prodEndpoint } from '../config'
  */
 import { basicAuth, apiKey, defaultFixVersion } from '../credentials'
 
+/**
+ * TODO: Change production endpoint
+ */
 export default function createClient() {
   const httpLink = createHttpLink({
-    uri: process.env.NODE_ENV === 'development' ? endpoint : prodEndpoint,
+    uri: process.env.NODE_ENV === 'development' ? endpoint : endpoint,
     credentials: 'same-origin',
   })
   const authLink = setContext((_, { headers }) => {
