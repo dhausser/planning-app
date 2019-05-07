@@ -65,6 +65,11 @@ export default function Filters(props) {
     label: versionOption.name,
   }))
 
+  const teamOptions = teams.map(teamOption => ({
+    value: teamOption._id,
+    label: teamOption._id,
+  }))
+
   const renderVersionFilter = props.match.path !== '/resources'
   const renderTeamFilter = !['/roadmap', '/resource/:resourceId'].includes(
     props.match.path,
@@ -96,28 +101,28 @@ export default function Filters(props) {
         </div>
       )}
       {renderTeamFilter && (
-        <div style={{ marginLeft: 8 }}>
-          <ButtonGroup>
-            {teams.map(team => (
-              <Mutation
-                key={team}
-                mutation={TOGGLE_TEAM}
-                variables={{ team: { id: team._id, filter: teamFilter } }}
-              >
-                {toggleTeam => (
-                  <Button
-                    key={team._id}
-                    isLoading={loadingTeams}
-                    appearance="subtle"
-                    isSelected={teamFilter === team._id}
-                    onClick={toggleTeam}
-                  >
-                    {team._id}
-                  </Button>
-                )}
-              </Mutation>
-            ))}
-          </ButtonGroup>
+        <div style={{ flex: '0 0 200px', marginLeft: 8 }}>
+          <Mutation mutation={TOGGLE_TEAM}>
+            {toggleTeam => (
+              <Select
+                spacing="compact"
+                className="single-select"
+                classNamePrefix="react-select"
+                // defaultValue={teamOptions.find(
+                //   ({ value }) => value === teamFilter,
+                // )}
+                isDisabled={false}
+                isLoading={loadingTeams}
+                isClearable
+                isSearchable
+                options={teamOptions}
+                placeholder="Choose a team"
+                onChange={e =>
+                  toggleTeam({ variables: { team: e, teamFilter } })
+                }
+              />
+            )}
+          </Mutation>
         </div>
       )}
     </>

@@ -1,3 +1,5 @@
+const fs = require('fs')
+
 let resources
 
 export default class ResourcesDAO {
@@ -16,12 +18,46 @@ export default class ResourcesDAO {
   }
 
   /**
+   * Inserts and returns all resources.
+   * Returns a list of objects, each object contains a key, name and a team
+   * @returns {Promise<ResourcesResult>} A promise that will resolve to a list of ResourcesResult.
+   */
+  static async setResources() {
+    const data = JSON.parse(
+      fs.readFileSync(`${__dirname}/resources.json`, 'utf-8'),
+    )
+
+    try {
+      console.log('😢😢 Goodbye Data...')
+      await resources.deleteMany()
+      console.log(
+        'Data Deleted. To load sample data, run\n\n\t npm run sample\n\n',
+      )
+    } catch (e) {
+      console.error(e)
+    }
+
+    try {
+      resources.insertMany(data)
+      console.log('👍👍👍👍👍👍👍👍 Done!')
+    } catch (e) {
+      console.log(
+        '\n👎👎👎👎👎👎👎👎 Error! The Error info is below but if you are importing sample data make sure to drop the existing database first with.\n\n\t npm run blowitallaway\n\n\n',
+      )
+      console.log(e)
+    }
+
+    return data
+  }
+
+  /**
    * Finds and returns all resources.
    * Returns a list of objects, each object contains a key, name and a team
    * @returns {Promise<ResourcesResult>} A promise that will resolve to a list of ResourcesResult.
    */
   static async getResources() {
     let cursor
+
     try {
       cursor = await resources
         .find()

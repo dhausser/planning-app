@@ -28,8 +28,8 @@ export const resolvers = {
         localStorage.setItem('version', JSON.stringify(version))
       }
     },
-    toggleTeam: (_root, { team: { id, filter } }, { cache }) => {
-      const team = filter && filter === id ? null : id
+    toggleTeam: (_root, { team: update }, { cache }) => {
+      const team = update ? update.value : null
       cache.writeData({ data: { team } })
       localStorage.setItem('team', team)
     },
