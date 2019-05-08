@@ -3,7 +3,7 @@ import { Mutation } from 'react-apollo'
 import { useQuery } from 'react-apollo-hooks'
 import gql from 'graphql-tag'
 import Select from '@atlaskit/select'
-import Button, { ButtonGroup } from '@atlaskit/button'
+import Button from '@atlaskit/button'
 import EmptyState from '@atlaskit/empty-state'
 import { projectId } from '../credentials'
 

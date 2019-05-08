@@ -15,7 +15,7 @@ import { basicAuth, apiKey, defaultFixVersion } from '../credentials'
  */
 export default function createClient() {
   const httpLink = createHttpLink({
-    uri: process.env.NODE_ENV === 'development' ? endpoint : endpoint,
+    uri: process.env.NODE_ENV === 'development' ? endpoint : prodEndpoint,
     credentials: 'same-origin',
   })
   const authLink = setContext((_, { headers }) => {
