@@ -3,8 +3,8 @@ import errorhandler from 'errorhandler'
 import cookieParser from 'cookie-parser'
 import morgan from 'morgan'
 import session from 'express-session'
-import { OAuth } from 'oauth'
 import fs from 'fs'
+import { OAuth } from 'oauth'
 import { consumerPrivateKeyFile, consumerKey } from './config'
 
 const app = express()
