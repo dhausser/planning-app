@@ -3,5 +3,5 @@ const homedir = require('os').homedir()
 
 module.exports = {
   consumerPrivateKeyFile: path.join(homedir, 'jira_privatekey.pem'),
-  consumerKey: 'RDm',
+  consumerKey: 'RDM',
 }
