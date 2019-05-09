@@ -1,6 +1,5 @@
 import React from 'react'
 import { useQuery } from 'react-apollo-hooks'
-import Calendar from '@atlaskit/calendar'
 import HolidayList from './HolidayList'
 import Error from './Error'
 import { GET_ABSENCES } from './queries'
@@ -14,7 +13,7 @@ export default function Absences(props) {
   return (
     <>
       <HolidayList absences={absences} isLoading={loading} />
-      <Calendar day={0} defaultDisabled={absences} />
+
       {error && <Error error={error} />}
     </>
   )

@@ -1,19 +1,20 @@
 import React, { useState } from 'react'
-import { Editor, CollapsedEditor } from '@atlaskit/editor-core'
+// import { Editor, CollapsedEditor } from '@atlaskit/editor-core'
 
 export default function CollapsibleEditor({ description }) {
-  const [isExpanded, setIsExpanded] = useState(false)
+  // const [isExpanded, setIsExpanded] = useState(false)
 
-  const expandEditor = () => setIsExpanded(true)
+  // const expandEditor = () => setIsExpanded(true)
 
-  const collapseEditor = () => setIsExpanded(false)
+  // const collapseEditor = () => setIsExpanded(false)
 
-  const onSave = () => setIsExpanded(false)
+  // const onSave = () => setIsExpanded(false)
 
   return (
     <>
       <h4>Description</h4>
-      <CollapsedEditor
+      <p>{description}</p>
+      {/* <CollapsedEditor
         placeholder={description}
         isExpanded={isExpanded}
         onFocus={expandEditor}
@@ -24,7 +25,7 @@ export default function CollapsibleEditor({ description }) {
           onCancel={collapseEditor}
           contentComponents={description}
         />
-      </CollapsedEditor>
+      </CollapsedEditor> */}
     </>
   )
 }

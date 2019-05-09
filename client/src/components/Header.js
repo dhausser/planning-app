@@ -1,8 +1,6 @@
 import React from 'react'
 import { BreadcrumbsStateless, BreadcrumbsItem } from '@atlaskit/breadcrumbs'
 import Button, { ButtonGroup } from '@atlaskit/button'
-import TextField from '@atlaskit/textfield'
-
 import PageHeader from '@atlaskit/page-header'
 
 import Filters from './Filters'
@@ -23,9 +21,6 @@ export default props => {
   )
   const barContent = (
     <div style={{ display: 'flex' }}>
-      <div style={{ flex: '0 0 200px' }}>
-        <TextField isCompact placeholder="Filter" aria-label="Filter" />
-      </div>
       <Filters {...props} />
     </div>
   )
