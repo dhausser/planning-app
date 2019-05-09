@@ -1,32 +1,31 @@
 {
-  "name": "planning-app-server",
+  "name": "server",
   "version": "1.0.0",
-  "description": "Planning app to extend Jira",
-  "repository": "https://github.com/dhausser/planning-app/",
-  "homepage": "https://roadmap.cdprojektred.com",
+  "description": "",
   "main": "index.js",
-  "type": "module",
-  "scripts": {
-    "start": "node --experimental-modules app.js",
-    "sample": "node ./data/load-sample-data.js",
-    "blowitallaway": "node ./data/load-sample-data.js --delete"
-  },
-  "keywords": [],
-  "author": "Davy Hausser",
-  "license": "ISC",
+  "module": "main.js",
   "dependencies": {
-    "apollo-datasource": "^0.3.1",
-    "apollo-datasource-rest": "^0.3.2",
-    "apollo-server-express": "^2.4.8",
+    "apollo-datasource": "^0.4.0",
+    "apollo-datasource-rest": "^0.4.0",
+    "apollo-server-express": "^2.5.0",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.4",
     "dotenv": "^8.0.0",
-    "errorhandler": "^1.5.0",
+    "errorhandler": "^1.5.1",
+    "esm": "^3.2.22",
     "express": "^4.16.4",
     "express-session": "^1.16.1",
-    "graphql": "^14.2.1",
-    "mongodb": "^3.2.3",
+    "graphql": "^14.3.0",
+    "mongodb": "^3.2.4",
     "morgan": "^1.9.1",
     "oauth": "^0.9.15"
-  }
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node -r esm main.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
