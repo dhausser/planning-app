@@ -5,7 +5,7 @@ import morgan from 'morgan'
 import session from 'express-session'
 import { OAuth } from 'oauth'
 import fs from 'fs'
-import { consumerPrivateKeyFile, consumerKey } from '../config'
+import { consumerPrivateKeyFile, consumerKey } from './config'
 
 const app = express()
 
