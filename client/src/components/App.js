@@ -32,7 +32,7 @@ import {
 } from '../pages'
 
 import apolloClient from '../lib/withData'
-import { IS_LOGGED_IN } from './queries'
+import { IS_LOGGED_IN } from '../lib/queries'
 
 const client = apolloClient()
 

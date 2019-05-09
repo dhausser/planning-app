@@ -5,7 +5,7 @@ import Loading from './Loading'
 import Error from './Error'
 import IssueList from './IssueList'
 
-import { GET_ISSUES, GET_FILTERS, GET_TEAMS } from './queries'
+import { GET_ISSUES, GET_FILTERS, GET_TEAMS } from '../lib/queries'
 
 import { projectId } from '../credentials'
 

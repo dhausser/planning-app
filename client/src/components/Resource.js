@@ -8,7 +8,7 @@ import Issues from './Issues'
 import Absences from './Absences'
 import Header from './Header'
 
-import { GET_RESOURCE } from './queries'
+import { GET_RESOURCE } from '../lib/queries'
 import { hostname } from '../credentials'
 
 export default function Resource(props) {

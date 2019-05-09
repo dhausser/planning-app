@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 // import { Editor, CollapsedEditor } from '@atlaskit/editor-core'
 
 export default function CollapsibleEditor({ description }) {

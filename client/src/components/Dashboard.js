@@ -4,7 +4,7 @@ import { useQuery } from 'react-apollo-hooks'
 import Loading from './Loading'
 import Error from './Error'
 import BarChart from './BarChart'
-import { GET_DASHBOARD_ISSUES, GET_FILTERS } from './queries'
+import { GET_DASHBOARD_ISSUES, GET_FILTERS } from '../lib/queries'
 
 export default function Dashboard() {
   const {

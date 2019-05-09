@@ -2,7 +2,7 @@ import React from 'react'
 import { Mutation, ApolloConsumer } from 'react-apollo'
 import gql from 'graphql-tag'
 
-import { LoginForm, Loading, Error } from '../components'
+import { Signin, Loading, Error } from '../components'
 
 const LOGIN_USER = gql`
   mutation login($email: String!) {
@@ -24,7 +24,7 @@ export default function Login() {
           {(login, { loading, error }) => {
             if (loading) return <Loading />
             if (error) return <Error error={error} />
-            return <LoginForm login={login} />
+            return <Signin login={login} />
           }}
         </Mutation>
       )}

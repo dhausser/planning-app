@@ -7,7 +7,7 @@ import Button from '@atlaskit/button'
 import EmptyState from '@atlaskit/empty-state'
 import { projectId } from '../credentials'
 
-import { GET_VERSIONS, GET_TEAMS, GET_FILTERS } from './queries'
+import { GET_VERSIONS, GET_TEAMS, GET_FILTERS } from '../lib/queries'
 
 const TOGGLE_VERSION = gql`
   mutation toggleVersion($version: FixVersion!) {
