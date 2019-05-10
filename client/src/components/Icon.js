@@ -20,6 +20,7 @@ export const getIcon = {
   new: 'blue',
   indeterminate: 'yellow',
   done: 'green',
+
   P0: (
     <Tooltip content="P0">
       <PriorityBlockerIcon size="small" />

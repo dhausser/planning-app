@@ -1,19 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import styled from 'styled-components'
 import DynamicTable from '@atlaskit/dynamic-table'
 import Avatar from '@atlaskit/avatar'
-import { NameWrapper, AvatarWrapper } from './ContentWrapper'
+import { NameWrapper, AvatarWrapper } from './Page'
 
 function createKey(input) {
   return input ? input.replace(/^(the|a|an)/, '').replace(/\s/g, '') : input
 }
 
-const Wrapper = styled.div`
-  min-width: 600px;
-`
-
-const head = {
+const createHead = withWidth => ({
   cells: [
     {
       key: 'name',
@@ -25,9 +20,10 @@ const head = {
       content: 'Team',
       shouldTruncate: true,
       isSortable: true,
+      width: withWidth ? 15 : undefined,
     },
   ],
-}
+})
 
 const createRows = resources =>
   resources.map(resource => ({
@@ -58,20 +54,21 @@ const createRows = resources =>
   }))
 
 export default function ResourceList({ resources, isLoading }) {
+  const caption = `Listing ${resources.length} developers`
+  const head = createHead('false')
+  const rows = createRows(resources)
   return (
-    <Wrapper>
-      <DynamicTable
-        caption={`Listing ${resources.length} developers`}
-        head={head}
-        rows={createRows(resources)}
-        rowsPerPage={20}
-        defaultPage={1}
-        loadingSpinnerSize="large"
-        isLoading={isLoading}
-        isFixedSize
-        defaultSortKey="name"
-        defaultSortOrder="ASC"
-      />
-    </Wrapper>
+    <DynamicTable
+      caption={caption}
+      head={head}
+      rows={rows}
+      rowsPerPage={20}
+      defaultPage={1}
+      loadingSpinnerSize="large"
+      isLoading={isLoading}
+      isFixedSize
+      defaultSortKey="name"
+      defaultSortOrder="ASC"
+    />
   )
 }

@@ -1,152 +1,130 @@
-import React, { useState, useEffect, useContext } from 'react'
-import Button, { ButtonGroup } from '@atlaskit/button'
-import DropdownMenu, {
-  DropdownItemGroup,
-  DropdownItem,
-} from '@atlaskit/dropdown-menu'
-import config from '../credentials.json'
-import { FilterContext } from '../context/FilterContext'
+import React from 'react'
+import { Mutation } from 'react-apollo'
+import { useQuery } from 'react-apollo-hooks'
+import gql from 'graphql-tag'
+import Select from '@atlaskit/select'
+import Button from '@atlaskit/button'
+import EmptyState from '@atlaskit/empty-state'
+import { projectId } from '../credentials'
 
-export default function Filters() {
-  const [isLoading, setIsLoading] = useState(true)
-  const { teams, fixVersions } = useData(setIsLoading)
-  const { teamFilter, setTeamFilter, fixVersion, setFixVersion } = useContext(
-    FilterContext
-  )
+import { GET_VERSIONS, GET_TEAMS, GET_FILTERS } from '../lib/queries'
 
-  if (isLoading)
+const TOGGLE_VERSION = gql`
+  mutation toggleVersion($version: FixVersion!) {
+    toggleVersion(version: $version) @client
+  }
+`
+
+const TOGGLE_TEAM = gql`
+  mutation toggleTeam($team: String!) {
+    toggleTeam(team: $team) @client
+  }
+`
+
+export default function Filters(props) {
+  const {
+    data: { versions },
+    loading: loadingVersions,
+    error: errorVersions,
+  } = useQuery(GET_VERSIONS, {
+    variables: { id: projectId, pageSize: 5, after: 5 },
+  })
+
+  const {
+    data: { teams },
+    loading: loadingTeams,
+    error: errorTeams,
+  } = useQuery(GET_TEAMS)
+
+  const {
+    data: { version: versionFilter, team: teamFilter },
+    loading: loadingFilters,
+  } = useQuery(GET_FILTERS)
+
+  if (loadingVersions || loadingTeams || loadingFilters) {
     return (
-      <Button key="team" isLoading={isLoading} appearance="subtle">
-        Teams
+      <Button
+        key="team"
+        isLoading={loadingVersions || loadingTeams}
+        appearance="subtle"
+      >
+        Filters
       </Button>
     )
+  }
+  if (errorVersions || errorTeams)
+    return (
+      <EmptyState
+        header="Error"
+        description={[errorVersions, errorTeams].map(({ message }) => message)}
+      />
+    )
+
+  const versionOptions = versions.map(versionOption => ({
+    value: versionOption.id,
+    label: versionOption.name,
+  }))
+
+  const teamOptions = teams.map(teamOption => ({
+    value: teamOption._id,
+    label: teamOption._id,
+  }))
+
+  const renderVersionFilter = props.match.path !== '/resources'
+  const renderTeamFilter = !['/roadmap', '/resource/:resourceId'].includes(
+    props.match.path,
+  )
+
   return (
-    <div style={{ margin: '20px' }}>
-      <ButtonGroup>
-        <DropdownMenu
-          isLoading={isLoading}
-          trigger={`FixVersion: ${fixVersion && fixVersion.name}`}
-          triggerType="button"
-          shouldFlip={false}
-          position="right top"
-        >
-          <DropdownItemGroup>
-            {fixVersions &&
-              fixVersions.map(version => (
-                <DropdownItem
-                  key={version.id}
-                  onClick={() => setFixVersion(version)}
-                >
-                  {version.name}
-                </DropdownItem>
-              ))}
-          </DropdownItemGroup>
-        </DropdownMenu>
-        {teams.map(teamName => (
-          <Button
-            key={teamName}
-            isLoading={isLoading}
-            appearance="subtle"
-            isSelected={teamName === teamFilter}
-            onClick={() =>
-              setTeamFilter(teamFilter !== teamName ? teamName : '')
-            }
-          >
-            {teamName}
-          </Button>
-        ))}
-      </ButtonGroup>
-    </div>
+    <>
+      {renderVersionFilter && (
+        <div style={{ flex: '0 0 200px', marginLeft: 8 }}>
+          <Mutation mutation={TOGGLE_VERSION}>
+            {toggleVersion => (
+              <Select
+                spacing="compact"
+                className="single-select"
+                classNamePrefix="react-select"
+                defaultValue={versionOptions.find(
+                  ({ value }) => value === versionFilter.id,
+                )}
+                isDisabled={false}
+                isLoading={loadingVersions}
+                isClearable
+                isSearchable
+                options={versionOptions}
+                placeholder="Choose a version"
+                onChange={e => toggleVersion({ variables: { version: e } })}
+              />
+            )}
+          </Mutation>
+        </div>
+      )}
+      {renderTeamFilter && (
+        <div style={{ flex: '0 0 200px', marginLeft: 8 }}>
+          <Mutation mutation={TOGGLE_TEAM}>
+            {toggleTeam => (
+              <Select
+                spacing="compact"
+                className="single-select"
+                classNamePrefix="react-select"
+                // defaultValue={teamOptions.find(
+                //   ({ value }) => value === teamFilter,
+                // )}
+                isDisabled={false}
+                isLoading={loadingTeams}
+                isClearable
+                isSearchable
+                options={teamOptions}
+                placeholder="Choose a team"
+                onChange={e =>
+                  toggleTeam({ variables: { team: e, teamFilter } })
+                }
+              />
+            )}
+          </Mutation>
+        </div>
+      )}
+    </>
   )
 }
-
-function useData(setIsLoading) {
-  const [teams, setTeams] = useState([])
-  const [fixVersions, setFixVersions] = useState([])
-  useEffect(() => {
-    let ignore = false
-    fetchData(setTeams, setFixVersions, ignore, setIsLoading)
-    return () => {
-      ignore = true
-    }
-  }, [setIsLoading])
-  return { teams, fixVersions }
-}
-
-async function fetchData(setTeams, setFixVersions, ignore, setIsLoading) {
-  const { Authorization, projectId } = config
-  const [teamPromise, fixVersionPromise] = await Promise.all([
-    fetch('/graphql', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        Authorization,
-      },
-      body: JSON.stringify({
-        query: `
-      {
-        teams {
-          _id
-          size
-          members {
-            key
-          }
-        }
-      }`,
-      }),
-    }),
-    fetch('/graphql', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        Authorization,
-      },
-      body: JSON.stringify({
-        query: `
-      {
-        versions(id: ${projectId}, pageSize: 5, after: 3) {
-          id
-          name
-          description
-        }
-      }`,
-      }),
-    }),
-  ])
-  const [teamsResponse, versionsResponse] = await Promise.all([
-    teamPromise.json(),
-    fixVersionPromise.json(),
-  ])
-
-  if (!ignore) {
-    setTeams(teamsResponse.data.teams.map(({ _id }) => _id))
-    setFixVersions(versionsResponse.data.versions)
-    setIsLoading(false)
-  }
-}
-
-//   // Reinstate localstorage
-//   const team = localStorage.getItem('team')
-//     ? JSON.parse(localStorage.getItem('team'))
-//     : null;
-//   const fixVersion = localStorage.getItem('fixVersion')
-//     ? JSON.parse(localStorage.getItem('fixVersion'))
-//     : fixVersions.values[0];
-
-//   // Fetch Jira issues
-//   const { issues, maxResults, total } = await fetchIssues('');
-
-//   // Update State
-// }
-
-/**
- * TODO: Reinstate Localstorage
- */
-// const team = localStorage.getItem('team')
-//   ? JSON.parse(localStorage.getItem('team'))
-//   : null;
-// const fixVersion = localStorage.getItem('fixVersion')
-//   ? JSON.parse(localStorage.getItem('fixVersion'))
-//   : fixVersions.values[0];

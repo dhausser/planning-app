@@ -1,8 +1,8 @@
-import { buildSchema } from 'graphql'
+import { gql } from 'apollo-server-express'
 
-export default buildSchema(`
+const typeDefs = gql`
   type Query {
-    issues(jql: String, pageSize: Int, after: Int): IssueConnection!
+    issues(jql: String, pageSize: Int, after: String): IssueConnection!
     issue(id: ID!): Issue
     versions(id: ID!, pageSize: Int, after: Int): [FixVersion]
     resources: [Resource]!
@@ -26,17 +26,22 @@ export default buildSchema(`
     summary: String!
     priority: String!
     type: String!
+    description: String
     status: Status!
     fixVersions: [FixVersion]
     assignee: Resource
     reporter: Resource
     comments: [Comment]
-    subtasks: [Issue]
+    children: [Issue]
+    parent: String
   }
 
   type Comment {
+    id: ID!
     author: Resource!
     body: String!
+    created: String!
+    updated: String
   }
 
   type Status {
@@ -52,8 +57,7 @@ export default buildSchema(`
   }
 
   type Resource {
-    id: ID!
-    key: String
+    key: ID
     name: String
     team: String
   }
@@ -88,4 +92,5 @@ export default buildSchema(`
     message: String
     issue: Issue
   }
-`)
+`
+export default typeDefs

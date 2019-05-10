@@ -1,17 +1,18 @@
 import React, { useEffect } from 'react'
 import { withNavigationViewController } from '@atlaskit/navigation-next'
 import { projectHomeView } from '../components/Nav'
-import { Issue, Page } from '../components'
+import { Page, Header } from '../components'
 
-function IssuePage(props) {
+const Pages = props => {
   useEffect(() => {
     props.navigationViewController.setView(projectHomeView.id)
   }, [props.navigationViewController])
 
   return (
     <Page>
-      <Issue {...props} />
+      <Header title="Pages" {...props} />
+      <p>This is the pages page.</p>
     </Page>
   )
 }
-export default withNavigationViewController(IssuePage)
+export default withNavigationViewController(Pages)

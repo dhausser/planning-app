@@ -1,13 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+
 import DynamicTable from '@atlaskit/dynamic-table'
 import { Status } from '@atlaskit/status'
-import { getIcon } from './Icon'
 
-const Wrapper = styled.div`
-  min-width: 600px;
-`
+import { getIcon } from './Icon'
 
 const NameWrapper = styled.span`
   display: flex;
@@ -20,11 +18,12 @@ const head = {
       key: 'key',
       content: 'Key',
       isSortable: true,
-      width: 8,
+      width: 13,
     },
     {
       key: 'summary',
       content: 'Summary',
+      shouldTruncate: true,
       isSortable: true,
     },
     {
@@ -37,13 +36,13 @@ const head = {
       key: 'status',
       content: 'Status',
       isSortable: true,
-      width: 12,
+      width: 18,
     },
     {
       key: 'assignee',
       content: 'Assignee',
       isSortable: true,
-      width: 10,
+      width: 19,
     },
     {
       key: 'priority',
@@ -60,78 +59,78 @@ const head = {
   ],
 }
 
-const createRows = (issues = []) =>
-  issues.map((issue, index) => ({
-    key: `row-${index}-${issue.key}`,
-    cells: [
-      {
-        key: issue.id,
-        content: (
-          <NameWrapper>
-            <Link to={`/issue/${issue.key}`}>{issue.key}</Link>
-          </NameWrapper>
-        ),
-      },
-      {
-        key: issue.id,
-        content: issue.summary,
-      },
-      {
-        key: issue.type,
-        content: getIcon[issue.type],
-      },
-      {
-        key: issue.status.category,
-        content: (
-          <Status
-            text={issue.status.name}
-            color={getIcon[issue.status.category]}
-          />
-        ),
-      },
-      {
-        key: (issue.assignee && issue.assignee.id) || '',
-        content: (
-          <Link to={`/resource/${(issue.assignee && issue.assignee.id) || ''}`}>
-            {(issue.assignee && issue.assignee.name) || ''}
-          </Link>
-        ),
-      },
-      {
-        key: issue.priority,
-        content: getIcon[issue.priority],
-      },
-      {
-        key: issue.fixVersions && issue.fixVersions[0].id,
-        content: issue.fixVersions && issue.fixVersions[0].name,
-      },
-    ],
-  }))
+const issueRow = issue => ({
+  key: issue.id,
+  cells: [
+    {
+      key: issue.id,
+      content: (
+        <NameWrapper>
+          <Link to={`/issue/${issue.key}`}>{issue.key}</Link>
+        </NameWrapper>
+      ),
+    },
+    {
+      key: issue.summary,
+      content: issue.summary,
+    },
+    {
+      key: issue.type,
+      content: getIcon[issue.type],
+    },
+    {
+      key: issue.status.category,
+      content: (
+        <Status
+          text={issue.status.name}
+          color={getIcon[issue.status.category]}
+        />
+      ),
+    },
+    {
+      key: (issue.assignee && issue.assignee.key) || '',
+      content: (
+        <Link to={`/resource/${(issue.assignee && issue.assignee.key) || ''}`}>
+          {(issue.assignee && issue.assignee.name) || ''}
+        </Link>
+      ),
+    },
+    {
+      key: issue.priority,
+      content: getIcon[issue.priority],
+    },
+    {
+      key:
+        issue.fixVersions && issue.fixVersions[issue.fixVersions.length - 1].id,
+      content:
+        issue.fixVersions &&
+        issue.fixVersions[issue.fixVersions.length - 1].name,
+    },
+  ],
+})
 
 export default function IssueList({
   issues,
   loading,
   maxResults,
   total,
-  pathname,
+  pageSize,
 }) {
   const caption = `Listing ${
     maxResults <= total ? maxResults : total
   } issues of ${total}`
   return (
-    <Wrapper>
-      <DynamicTable
-        caption={caption}
-        head={head}
-        rows={createRows(issues, pathname)}
-        rowsPerPage={pathname === '/issues' ? 10 : 5}
-        defaultPage={1}
-        loadingSpinnerSize="large"
-        isLoading={loading}
-        isFixedSize
-        defaultSortKey="priority"
-        defaultSortOrder="ASC"
-      />
-    </Wrapper>
+    <DynamicTable
+      caption={caption}
+      head={head}
+      rows={issues.map(issueRow)}
+      rowsPerPage={pageSize}
+      defaultPage={1}
+      loadingSpinnerSize="large"
+      isLoading={loading}
+      isFixedSize
+      defaultSortKey="priority"
+      defaultSortOrder="ASC"
+    />
   )
 }

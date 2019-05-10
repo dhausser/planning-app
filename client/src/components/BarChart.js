@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import Chart from 'chart.js'
 
 const transparency = '0.3'
@@ -18,7 +18,7 @@ const config = dataset => ({
         label: '# of Issues',
         data: Object.values(dataset),
         backgroundColor: Object.entries(dataset).map(
-          (entry, index) => colors[index % colors.length].value
+          (entry, index) => colors[index % colors.length].value,
         ),
       },
     ],
@@ -36,31 +36,29 @@ const config = dataset => ({
   },
 })
 
-export default class BarChart extends Component {
-  state = {
-    chart: null,
-  }
+export default ({ dataset, maxResults = 0, total = 0 }) => {
+  const [chart, setChart] = useState(null)
 
-  componentDidMount() {
-    this.setState({ chart: new Chart('BarChart', config(this.props.dataset)) })
-  }
+  useEffect(() => {
+    if (chart === null) {
+      setChart(new Chart('BarChart', config(dataset)))
+    } else {
+      chart.data.labels = Object.keys(dataset)
+      chart.data.datasets[0].data = Object.values(dataset)
+      chart.data.datasets[0].backgroundColor = Object.entries(dataset).map(
+        (entry, index) => colors[index % colors.length].value,
+      )
+      chart.update()
+    }
+  }, [chart, dataset])
 
-  componentDidUpdate() {
-    const { chart } = this.state
-    const { dataset } = this.props
-    chart.data.labels = Object.keys(dataset)
-    chart.data.datasets[0].data = Object.values(dataset)
-    chart.data.datasets[0].backgroundColor = Object.entries(dataset).map(
-      (entry, index) => colors[index % colors.length].value
-    )
-    chart.update()
-  }
-
-  render() {
-    return (
-      <div>
-        <canvas id="BarChart" width="400" height="250" />
-      </div>
-    )
-  }
+  const results = maxResults > total ? total : maxResults
+  return (
+    <div>
+      <h5>
+        Displaying {results} of {total} issues in fixVersion
+      </h5>
+      <canvas id="BarChart" width="400" height="250" />
+    </div>
+  )
 }
