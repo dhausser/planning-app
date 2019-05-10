@@ -1,536 +1,554 @@
 [
   {
     "key": "juliusz.bienkowski",
-    "name": "Bieńkowski Juliusz",
+    "name": "Juliusz Bieńkowski",
     "team": "VFX",
     "position": "Junior VFX Artist"
   },
   {
     "key": "dmitry.nikiforov",
-    "name": "Nikiforov Dmitry",
+    "name": "Dmitry Nikiforov",
     "team": "VFX",
     "position": "VFX Acting Lead"
   },
   {
     "key": "marcin.rudnicki",
-    "name": "Rudnicki Marcin",
+    "name": "Marcin Rudnicki",
     "team": "VFX",
     "position": "VFX Artist"
   },
   {
     "key": "angelina.lisovskaya",
-    "name": "Lisouskaya Anhelina",
+    "name": "Anhelina Lisouskaya",
     "team": "UX/UI",
     "position": "UI Artist"
   },
   {
     "key": "renata.mrowinska",
-    "name": "Mrowińska Renata",
+    "name": "Renata Mrowińska",
     "team": "UX/UI",
     "position": "2D Artist"
   },
   {
     "key": "aleksandra.rutkowska",
-    "name": "Rutkowska Aleksandra",
+    "name": "Aleksandra Rutkowska",
     "team": "UX/UI",
     "position": "UX/UI Artist"
   },
   {
     "key": "horatiu.sasu",
-    "name": "Sasu Horatiu",
+    "name": "Horatiu Sasu",
     "team": "UX/UI",
     "position": "UI Artist Lead"
   },
   {
     "key": "joanna.szafran",
-    "name": "Joanna Szafran",
+    "name": "Szafran Joanna",
     "team": "UX/UI",
     "position": "Junior UI Artist"
   },
   {
     "key": "vladimir.petrov",
-    "name": "Petrov Vladimir",
+    "name": "Vladimir Petrov",
     "team": "Tech Art",
     "position": "Technical Artist"
   },
   {
     "key": "vlad.karchenko",
-    "name": "Kharchenko Vladyslav",
+    "name": "Vladyslav Kharchenko",
     "team": "QA",
     "position": "Junior QA Analyst"
   },
   {
     "key": "rajmund.krakowski",
-    "name": "Krakowski Rajmund",
+    "name": "Rajmund Krakowski",
     "team": "QA",
     "position": "QA Analyst"
   },
   {
     "key": "aneta.laudova",
-    "name": "Laudová Aneta",
+    "name": "Aneta Laudová",
     "team": "Tech Art",
     "position": "Junior Technical Artist"
   },
   {
     "key": "rafal.lewicki",
-    "name": "Lewicki Rafał",
+    "name": "Rafał Lewicki",
     "team": "QA",
     "position": "Junior QA Analyst"
   },
   {
     "key": "paula.mackiewicz",
-    "name": "Mackiewicz-Armstrong Paula",
+    "name": "Paula Mackiewicz-Armstrong",
     "team": "QA",
     "position": "QA Analyst"
   },
   {
     "key": "andrzej.marut",
-    "name": "Marut Andrzej",
+    "name": "Andrzej Marut",
     "team": "QA",
     "position": "QA Analyst"
   },
   {
     "key": "michal.mioduszewski",
-    "name": "Mioduszewski Michał",
+    "name": "Michał Mioduszewski",
     "team": "QA",
     "position": "QA Analyst"
   },
   {
     "key": "marcin.pieprzowski",
-    "name": "Pieprzowski Marcin",
+    "name": "Marcin Pieprzowski",
     "team": "QA",
     "position": "QA Coordinator"
   },
   {
     "key": "maciej.bizon",
-    "name": "Bizoń Maciej",
+    "name": "Maciej Bizoń",
     "team": "QA",
     "position": "Junior QA Analyst"
   },
   {
     "key": "kristian.chelminski",
-    "name": "Chelminski Kristian",
+    "name": "Kristian Chelminski",
     "team": "QA",
     "position": "Junior QA Analyst"
   },
   {
     "key": "magdalena.czarnecka",
-    "name": "Czarnecka Magdalena",
+    "name": "Magdalena Czarnecka",
     "team": "QA",
     "position": "QA Lead"
   },
   {
     "key": "bartlomiej.gawor",
-    "name": "Gawor Bartłomiej",
+    "name": "Bartłomiej Gawor",
     "team": "QA",
     "position": "Junior QA Analyst"
   },
   {
     "key": "katarzyna.gozdowska",
-    "name": "Gozdowska Katarzyna",
+    "name": "Katarzyna Gozdowska",
     "team": "QA",
     "position": "Junior QA Analyst"
   },
   {
     "key": "jagoda.hapeta",
-    "name": "Hapeta Jagoda",
+    "name": "Jagoda Hapeta",
     "team": "QA",
     "position": "QA Analyst"
   },
   {
     "key": "tetiana.tereshchenko",
-    "name": "Tereshchenko Tetiana",
+    "name": "Tetiana Tereshchenko",
     "team": "QA",
     "position": "Junior QA Analyst"
   },
   {
     "key": "grzegorz.dominiak",
-    "name": "Dominiak Grzegorz",
+    "name": "Grzegorz Dominiak",
     "team": "QA",
     "position": "QA Analyst"
   },
   {
     "key": "arash.naderi",
-    "name": "Naderi Arash",
+    "name": "Arash Naderi",
     "team": "QA",
     "position": "QA Analyst"
   },
   {
     "key": "davy.hausser",
-    "name": "Hausser Davy",
+    "name": "Davy Hausser",
     "team": "Production",
     "position": "Producer"
   },
   {
     "key": "franciszek.roznowicz",
-    "name": "Różnowicz Franciszek",
+    "name": "Franciszek Różnowicz",
     "team": "Production",
     "position": "Producer"
   },
   {
     "key": "maciej.wlodarkiewicz",
-    "name": "Włodarkiewicz Maciej",
+    "name": "Maciej Włodarkiewicz",
     "team": "Production",
     "position": "Lead Producer"
   },
   {
     "key": "max.zimnukhov",
-    "name": "Zimnukhov Maxim",
+    "name": "Maxim Zimnukhov",
     "team": "Production",
     "position": "Producer"
   },
   {
     "key": "lucas.johnston",
-    "name": "Johnston Lucas",
+    "name": "Lucas Johnston",
     "team": "Production",
     "position": "Producer"
   },
   {
     "key": "jason.slama",
-    "name": "Slama Jason",
+    "name": "Jason Slama",
     "team": "Management",
     "position": "Game Director"
   },
   {
     "key": "krzysztof.sobczak",
-    "name": "Krzysztof Sobczak",
+    "name": "Sobczak Krzysztof",
     "team": "Liveops",
     "position": "Backend Lead Developer"
   },
   {
     "key": "georgii.korshunov",
-    "name": "Korshunov Georgii",
+    "name": "Georgii Korshunov",
     "team": "Liveops",
     "position": "Backend Developer Coordinator"
   },
   {
     "key": "mkuc",
-    "name": "Kuć Marlena",
+    "name": "Marlena Kuć",
     "team": "Liveops",
     "position": "Backend Developer"
   },
   {
     "key": "eryk.przychocki",
-    "name": "Przychocki Eryk",
+    "name": "Eryk Przychocki",
     "team": "Liveops",
     "position": "Backend Developer"
   },
   {
     "key": "mieszko.malawski",
-    "name": "Malawski MIeszko",
+    "name": "MIeszko Malawski",
     "team": "Liveops",
     "position": "Backend Developer"
   },
   {
     "key": "leszek.krupinski",
-    "name": "Krupiński Leszek",
+    "name": "Leszek Krupiński",
     "team": "Liveops",
     "position": "Backend Developer"
   },
   {
     "key": "lukasz.staniec",
-    "name": "Staniec Łukasz",
+    "name": "Łukasz Staniec",
     "team": "Liveops",
     "position": "Backend Developer"
   },
   {
     "key": "yusuf.artun",
-    "name": "Artun Yusuf",
+    "name": "Yusuf Artun",
     "team": "Illustrators",
     "position": "2D Artist"
   },
   {
     "key": "valaisis.danel",
-    "name": "Danel Valaisis",
+    "name": "Valaisis Danel",
     "team": "Illustrators",
     "position": "Illustrator"
   },
   {
     "key": "katarzyna.bekus",
-    "name": "Bekus Katarzyna",
+    "name": "Katarzyna Bekus",
     "team": "Illustrators",
     "position": "Comic Illustrator"
   },
   {
     "key": "karol.bem",
-    "name": "Bem Karol",
+    "name": "Karol Bem",
     "team": "Illustrators",
     "position": "Junior 2D Artist"
   },
   {
     "key": "sandra.chlewinska",
-    "name": "Chlewińska Sandra",
+    "name": "Sandra Chlewińska",
     "team": "Illustrators",
     "position": "2D Artist"
   },
   {
     "key": "christof.grobelski",
-    "name": "Grobelski Christof",
+    "name": "Christof Grobelski",
     "team": "Illustrators",
     "position": "Illustrator"
   },
   {
     "key": "zuzanna.kapuscinska",
-    "name": "Kapuścińska Zuzanna",
+    "name": "Zuzanna Kapuścińska",
     "team": "Illustrators",
     "position": "2D Artist"
   },
   {
     "key": "lorenzo.mastroianni",
-    "name": "Mastroianni Lorenzo",
+    "name": "Lorenzo Mastroianni",
     "team": "Illustrators",
     "position": "Illustrators Coordinator"
   },
   {
     "key": "valeriy.vegera",
-    "name": "Vegera Valeriy",
+    "name": "Valeriy Vegera",
     "team": "Illustrators",
     "position": "Illustrator"
   },
   {
     "key": "aleksandra.wojtas",
-    "name": "Wojtas Aleksandra",
+    "name": "Aleksandra Wojtas",
     "team": "Illustrators",
     "position": "Illustrator"
   },
   {
     "key": "maciej.laszkiewicz",
-    "name": "Łaszkiewicz Maciej",
+    "name": "Maciej Łaszkiewicz",
     "team": "Illustrators",
     "position": "Junior 2D Artist"
   },
   {
     "key": "adrian.wiacek",
-    "name": "Wiącek Adrian",
+    "name": "Adrian Wiącek",
     "team": "Design",
     "position": "Junior Gameplay Designer"
   },
   {
     "key": "piotr.golus",
-    "name": "Golus Piotr",
+    "name": "Piotr Golus",
     "team": "Design",
     "position": "Gameplay Designer"
   },
   {
     "key": "marcin.szypura",
-    "name": "Marcin Szypura",
+    "name": "Szypura Marcin",
     "team": "Design",
     "position": "Gameplay Designer"
   },
   {
     "key": "michal.zabludowski",
-    "name": "Michał Zabłudowski",
+    "name": "Zabłudowski Michał",
     "team": "Design",
     "position": "Gameplay Designer"
   },
   {
     "key": "maciej.ostrowski",
-    "name": "Ostrowski Maciej",
+    "name": "Maciej Ostrowski",
     "team": "Design",
     "position": "Gameplay Design Coordinator"
   },
   {
     "key": "vladimir.tortsov",
-    "name": "Tortsov Vladmir",
+    "name": "Vladmir Tortsov",
     "team": "Comms",
     "position": "Communications Lead"
   },
   {
     "key": "pawel.burza",
-    "name": "Burza Paweł",
+    "name": "Paweł Burza",
     "team": "Comms",
     "position": "Community Manager"
   },
   {
     "key": "mateusz.greiner",
-    "name": "Greiner Mateusz",
+    "name": "Mateusz Greiner",
     "team": "Comms",
     "position": "Influencers relations"
   },
   {
     "key": "agnieszka.rogowska",
-    "name": "Rogowska Agnieszka",
+    "name": "Agnieszka Rogowska",
     "team": "UI",
     "position": "UI Programmer"
   },
   {
     "key": "natalia.nowacka",
-    "name": "Nowacka Natalia",
+    "name": "Natalia Nowacka",
     "team": "UI",
     "position": "Junior UI Programmer"
   },
   {
     "key": "adam.pach",
-    "name": "Pach Adam",
+    "name": "Adam Pach",
     "team": "UI",
     "position": "UI Programmer Coordinator"
   },
   {
     "key": "asil.karatas",
-    "name": "Karatas Asil",
+    "name": "Asil Karatas",
     "team": "UI",
     "position": "UI Programmer"
   },
   {
     "key": "darya.dzemidzenka",
-    "name": "Dzemidzenka Darya",
+    "name": "Darya Dzemidzenka",
     "team": "UI",
     "position": "UI Programmer"
   },
   {
     "key": "andrii.voloshchuk",
-    "name": "Voloshchuk Andrii",
+    "name": "Andrii Voloshchuk",
     "team": "Tech",
     "position": "Unity Programmer"
   },
   {
     "key": "michal.cwiek",
-    "name": "Ćwiek Michał",
+    "name": "Michał Ćwiek",
     "team": "Tech",
     "position": "Tech Programmer Coordinator"
   },
   {
     "key": "maciej.blady",
-    "name": "Blady Maciej",
+    "name": "Maciej Blady",
     "team": "Tech",
     "position": "Tech Programmer"
   },
   {
     "key": "dzmitry.ananchuk",
-    "name": "Dzmitry Ananchuk",
+    "name": "Ananchuk Dzmitry",
     "team": "Tech",
     "position": "Junior Tech Programmer"
   },
   {
     "key": "alexandr.pereverziev",
-    "name": "Pereverziev Oleksandr",
+    "name": "Oleksandr Pereverziev",
     "team": "Network",
     "position": "Senior Programmer"
   },
   {
     "key": "andrzej.slupek",
-    "name": "Słupek Andrzej",
+    "name": "Andrzej Słupek",
     "team": "Network",
     "position": "Multiplayer/Server Programmer"
   },
   {
     "key": "charlie.edmunds",
-    "name": "Edmunds Charlie",
+    "name": "Charlie Edmunds",
     "team": "Gameplay",
     "position": "Lead Gameplay Programmer"
   },
   {
     "key": "marcin.kowalski",
-    "name": "Kowalski Marcin",
+    "name": "Marcin Kowalski",
     "team": "Gameplay",
     "position": "Gameplay Programmer"
   },
   {
     "key": "lukasz.krasniewski",
-    "name": "Kraśniewski Łukasz",
+    "name": "Łukasz Kraśniewski",
     "team": "Gameplay",
     "position": "Gameplay Programmer"
   },
   {
     "key": "manuel.silva",
-    "name": "Silva Manuel",
+    "name": "Manuel Silva",
     "team": "Gameplay",
     "position": "Tools Programmer"
   },
   {
     "key": "kacper.koscienski",
-    "name": "Kościeński Kacper",
+    "name": "Kacper Kościeński",
     "team": "Code",
     "position": "Lead Programmer"
   },
   {
     "key": "paula.karbowniczek",
-    "name": "Karbowniczek Paula",
+    "name": "Paula Karbowniczek",
     "team": "Audio",
     "position": "Sound Designer Coordinator"
   },
   {
     "key": "mateusz.szymanski",
-    "name": "Szymański Mateusz",
+    "name": "Mateusz Szymański",
     "team": "Audio",
     "position": "Sound Designer"
   },
   {
     "key": "abhinav.goel",
-    "name": "Goel Abhinav",
+    "name": "Abhinav Goel",
     "team": "Animation",
     "position": "Animator"
   },
   {
     "key": "kamil.helbin",
-    "name": "Helbin Kamil",
+    "name": "Kamil Helbin",
     "team": "Animation",
     "position": "Animator"
   },
   {
     "key": "lucie.schaar",
-    "name": "Schaar Lucie",
+    "name": "Lucie Schaar",
     "team": "Animation",
     "position": "Animator Acting Lead"
   },
   {
     "key": "marta.slama",
-    "name": "Slama Marta",
+    "name": "Marta Slama",
     "team": "Animation",
     "position": "Animator"
   },
   {
     "key": "damian.welc",
-    "name": "Welc Damian",
+    "name": "Damian Welc",
     "team": "Analytics",
     "position": "Game Data Analyst"
   },
   {
     "key": "albert.bylica",
-    "name": "Bylica Albert",
+    "name": "Albert Bylica",
     "team": "Analytics",
     "position": "Game Data Analyst"
   },
   {
     "key": "lukasz.lazurek",
-    "name": "Lazurek Łukasz",
+    "name": "Łukasz Lazurek",
     "team": "3D Art",
     "position": "3D Artist"
   },
   {
     "key": "michal.wozniak",
-    "name": "Woźniak Michał",
+    "name": "Michał Woźniak",
     "team": "3D Art",
     "position": "3D Generalist"
   },
   {
     "key": "ewa.swiderska",
-    "name": "Świderska Ewa",
+    "name": "Ewa Świderska",
     "team": "3D Art",
     "position": "3D Generalist"
   },
   {
     "key": "stryjewski.tomasz",
-    "name": "Tomasz Stryjewski",
+    "name": "Stryjewski Tomasz",
     "team": "3D Art",
     "position": "3D Artist Lead"
   },
   {
     "key": "yamandu.orce",
-    "name": "Orce Orles",
+    "name": "Orles Orce",
     "team": "Illustrators",
     "position": "Comic illustrator"
   },
   {
     "key": "jakub.kowalski",
-    "name": "Kowalski Jakub",
+    "name": "Jakub Kowalski",
     "team": "Management",
     "position": "Monetization & Analytics Director"
   },
   {
     "key": "luigi.annicchiarico",
-    "name": "Annicchiarico Luigi",
+    "name": "Luigi Annicchiarico",
     "team": "Production",
     "position": "Art Producer"
+  },
+  {
+    "key": "remigiusz.nowakowski@cdprojektred.com",
+    "name": "Remigiusz Nowakowski",
+    "team": "Management",
+    "position": "Art Director"
+  },
+  {
+    "key": "anna.zielinska",
+    "name": "Anna Zielińska",
+    "team": "QA",
+    "position": "Junior QA Analyst"
+  },
+  {
+    "key": "kirill.filippov",
+    "name": "Kirill Filippov",
+    "team": "QA",
+    "position": "Junior QA Analyst"
   }
 ]
