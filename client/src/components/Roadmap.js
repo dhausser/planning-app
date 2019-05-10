@@ -47,19 +47,15 @@ export default function Roadmap() {
         pageSize: 10,
       }}
     >
-      {({
-        data: { issues: epics },
-        loading: loadingEpics,
-        error: errorEpics,
-      }) => {
+      {({ data: epics, loading: loadingEpics, error: errorEpics }) => {
         if (loadingEpics) return <Loading />
         if (errorEpics) return <Error error={errorEpics} />
 
         let jql = ''
-        if (epics.issues.length) {
+        if (epics.issues.issues.length) {
           jql = `fixVersion = ${
             version.id
-          } AND 'Epic Link' in (${epics.issues.map(({ id }) => id)})`
+          } AND 'Epic Link' in (${epics.issues.issues.map(({ id }) => id)})`
         }
 
         return (
@@ -71,18 +67,18 @@ export default function Roadmap() {
             }}
           >
             {({
-              data: { issues: stories },
+              data: stories,
               loading: loadingStories,
               error: errorStories,
             }) => {
               if (loadingStories) return <Loading />
               if (errorStories) return <Error error={errorStories} />
 
-              if (epics.issues.length) {
-                epics.issues.forEach(issue => {
+              if (epics.issues.issues.length) {
+                epics.issues.issues.forEach(issue => {
                   issue.children = []
-                  if (stories.issues.length) {
-                    stories.issues.forEach(child => {
+                  if (stories.issues.issues.length) {
+                    stories.issues.issues.forEach(child => {
                       if (child.parent === issue.key) {
                         issue.children.push(child)
                       }
@@ -92,7 +88,8 @@ export default function Roadmap() {
                 })
               }
 
-              const items = epics.issues.map(issue => issueReducer(issue)) || []
+              const items =
+                epics.issues.issues.map(issue => issueReducer(issue)) || []
 
               return (
                 <>
