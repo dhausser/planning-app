@@ -43,7 +43,7 @@ export default function Roadmap() {
       variables={{
         jql: `project = ${projectId} AND fixVersion = ${
           version.id
-        } AND issuetype = epic`,
+        } AND issuetype = epic ORDER BY key ASC`,
         pageSize: 10,
       }}
     >
@@ -55,7 +55,9 @@ export default function Roadmap() {
         if (epics.issues.issues.length) {
           jql = `fixVersion = ${
             version.id
-          } AND 'Epic Link' in (${epics.issues.issues.map(({ id }) => id)})`
+          } AND 'Epic Link' in (${epics.issues.issues.map(
+            ({ id }) => id,
+          )}) ORDER BY key ASC`
         }
 
         return (

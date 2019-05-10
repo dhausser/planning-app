@@ -1,6 +1,11 @@
 import React from 'react'
 // import { Editor, CollapsedEditor } from '@atlaskit/editor-core'
 
+/**
+ *
+ * TODO: Issue description editable
+ * @param {String} Description
+ */
 export default function CollapsibleEditor({ description }) {
   // const [isExpanded, setIsExpanded] = useState(false)
 
