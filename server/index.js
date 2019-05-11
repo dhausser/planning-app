@@ -9,8 +9,8 @@ import cookieParser from 'cookie-parser'
 import errorhandler from 'errorhandler'
 import morgan from 'morgan'
 import session from 'express-session'
-import resolvers from './graphql/resolvers'
-import typeDefs from './graphql/schema'
+import resolvers from './resolvers'
+import typeDefs from './schema'
 
 import IssueAPI from './datasources/issue'
 import AbsenceAPI from './datasources/absence'
@@ -26,9 +26,24 @@ const configurations = {
 const environment = process.env.NODE_ENV || 'production'
 const config = configurations[environment]
 
+function getUser(token) {
+  // console.log(`Getting user with token ${token}...`)
+  return { id: 'davy.hausser', name: 'Davy Hausser' }
+}
+
 const apollo = new ApolloServer({
   typeDefs,
   resolvers,
+  context: ({ req }) => {
+    // get user token from the headers
+    const token = req.headers.authorization || ''
+
+    // try to retrieve a user with the token
+    const user = getUser(token)
+
+    // add the user to the context
+    return { user, token }
+  },
   dataSources: () => ({
     issueAPI: new IssueAPI(),
     absenceAPI: new AbsenceAPI(),

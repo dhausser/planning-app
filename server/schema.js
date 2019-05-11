@@ -84,7 +84,7 @@ const typeDefs = gql`
   type Mutation {
     # if false, issue update failed -- check erros
     editIssue(issueId: ID!, summary: String): Int
-    login(email: String): String # login token
+    login(username: String!, password: String!): String # login token
   }
 
   type IssueUpdateResponse {

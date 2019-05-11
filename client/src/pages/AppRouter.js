@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import { Query, ApolloProvider } from 'react-apollo'
-import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks'
 
 import {
   LayoutManagerWithViewController,
@@ -14,7 +12,7 @@ import {
   productHomeView,
   productIssuesView,
   projectHomeView,
-} from './Nav'
+} from '../components/Nav'
 
 import {
   Dashboard,
@@ -29,12 +27,7 @@ import {
   Issue,
   Issues,
   Absences,
-} from '../pages'
-
-import apolloClient from '../lib/withData'
-import { IS_LOGGED_IN } from '../lib/queries'
-
-const client = apolloClient()
+} from '.'
 
 const App = ({ navigationViewController }) => {
   useEffect(() => {
@@ -65,22 +58,10 @@ const App = ({ navigationViewController }) => {
 }
 const AppWithNavigationViewController = withNavigationViewController(App)
 
-const AppRouter = () => (
+export default () => (
   <BrowserRouter>
     <NavigationProvider>
       <AppWithNavigationViewController />
     </NavigationProvider>
   </BrowserRouter>
-)
-
-export default () => (
-  <ApolloProvider client={client}>
-    <ApolloHooksProvider client={client}>
-      <Query query={IS_LOGGED_IN}>
-        {({ data }) =>
-          data.isLoggedIn ? <AppRouter client={client} /> : <AppRouter />
-        }
-      </Query>
-    </ApolloHooksProvider>
-  </ApolloProvider>
 )

@@ -16,7 +16,7 @@ import Loading from '../Loading'
 import Error from '../Error'
 import { getIcon } from '../Issue/Icon'
 
-import { GET_ISSUES, GET_STORIES, GET_FILTERS } from '../../lib/queries'
+import { GET_ISSUES, GET_STORIES, GET_FILTERS } from '../queries'
 
 /**
  * TODO: Remove static data dependency

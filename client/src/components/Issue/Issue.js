@@ -7,7 +7,7 @@ import { Status } from '@atlaskit/status'
 import { Summary, Loading, Error, Description, Assignee, Comments } from '..'
 import { getIcon } from './Icon'
 
-import { GET_ISSUE } from '../../lib/queries'
+import { GET_ISSUE } from '../queries'
 
 /**
  * TODO: Remove static data dependency

@@ -8,7 +8,7 @@ import Issues from '../Issue/Issues'
 import Absences from './Absences'
 import Header from '../Header'
 
-import { GET_RESOURCE } from '../../lib/queries'
+import { GET_RESOURCE } from '../queries'
 
 /**
  * TODO: Remove static data dependency

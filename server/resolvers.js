@@ -18,7 +18,9 @@ const resolvers = {
   },
   Mutation: {
     editIssue: async (_, { issueId, summary }, { dataSources }) =>
-      dataSources.issueAPI.editIssue({ issueId, summary }),
+      dataSources.issueAPI.editIssue(issueId, summary),
+    login: async (_, { username, password }, { dataSources }) =>
+      dataSources.issueAPI.loginUser(username, password),
   },
 }
 

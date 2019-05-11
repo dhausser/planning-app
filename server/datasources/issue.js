@@ -23,15 +23,23 @@ export default class IssueAPI extends RESTDataSource {
   }
 
   willSendRequest(request) {
-    /**
-     * TODO: Replace with authorization token from client
-     */
-    request.headers.set('Authorization', process.env.AUTHORIZATION)
-    request.params.set('notifyUsers', false)
+    request.headers.set('Authorization', this.context.token)
+    // request.headers.set('Content-Type', 'application/json')
+  }
+
+  async loginUser(username, password) {
+    const responseGet = await this.get(`auth/1/session`)
+    // const responsePost = await this.post(`auth/1/session`, {
+    //   username,
+    //   password,
+    // })
+    console.log(responseGet)
+    // console.log(responsePost)
+    return `${username}:${password}`
   }
 
   async getAllVersions(projectId, pageSize, after) {
-    const response = await this.get(`project/${projectId}/version`, {
+    const response = await this.get(`api/2/project/${projectId}/version`, {
       startAt: after,
       maxResults: pageSize,
       orderBy: 'name',
@@ -41,7 +49,7 @@ export default class IssueAPI extends RESTDataSource {
   }
 
   async getAllIssues(jql, pageSize, after) {
-    const response = await this.post('search', {
+    const response = await this.post('api/2/search', {
       jql,
       fields,
       startAt: after,
@@ -57,12 +65,14 @@ export default class IssueAPI extends RESTDataSource {
 
   async getIssueById({ issueId }) {
     const teamMapping = await this.teamMapping()
-    const response = await this.get(`issue/${issueId}?fields=${fields.join()}`)
+    const response = await this.get(
+      `api/2/issue/${issueId}?fields=${fields.join()}`,
+    )
     return this.issueReducer(response, teamMapping)
   }
 
-  async editIssue({ issueId, summary }) {
-    this.put(`issue/${issueId}`, { fields: { summary } })
+  async editIssue(issueId, summary) {
+    this.put(`api/2/issue/${issueId}`, { fields: { summary } })
   }
 
   issueReducer = (issue, teamMapping) => ({

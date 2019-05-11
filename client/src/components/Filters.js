@@ -4,9 +4,9 @@ import { useQuery } from 'react-apollo-hooks'
 import gql from 'graphql-tag'
 import Select from '@atlaskit/select'
 import Button from '@atlaskit/button'
-import EmptyState from '@atlaskit/empty-state'
+import Error from './Error'
 
-import { GET_VERSIONS, GET_TEAMS, GET_FILTERS } from '../lib/queries'
+import { GET_VERSIONS, GET_TEAMS, GET_FILTERS } from './queries'
 
 const TOGGLE_PROJECT = gql`
   mutation toggleVersion($project: Project!) {
@@ -59,13 +59,8 @@ export default function Filters(props) {
       </Button>
     )
   }
-  if (errorVersions || errorTeams)
-    return (
-      <EmptyState
-        header="Error"
-        description={[errorVersions, errorTeams].map(({ message }) => message)}
-      />
-    )
+  if (errorVersions) return <Error error={errorVersions} />
+  if (errorTeams) return <Error error={errorTeams} />
 
   /**
    * TODO: GET_PROJECTS query
@@ -123,7 +118,7 @@ export default function Filters(props) {
                 className="single-select"
                 classNamePrefix="react-select"
                 defaultValue={
-                  version ? { value: version.id, label: version.name } : null
+                  version && { value: version.id, label: version.name }
                 }
                 isDisabled={false}
                 isLoading={loadingVersions}
@@ -145,7 +140,7 @@ export default function Filters(props) {
                 spacing="compact"
                 className="single-select"
                 classNamePrefix="react-select"
-                defaultValue={team ? { value: team, label: team } : null}
+                defaultValue={team && { value: team, label: team }}
                 isDisabled={false}
                 isLoading={loadingTeams}
                 isClearable

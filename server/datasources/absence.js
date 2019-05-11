@@ -7,7 +7,7 @@ export default class AbsenceAPI extends RESTDataSource {
   }
 
   willSendRequest(request) {
-    request.params.set('apiKey', process.env.API_KEY)
+    request.params.set('apiKey', this.context.portalToken)
   }
 
   async getAllAbsences() {

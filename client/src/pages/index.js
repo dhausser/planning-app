@@ -1,3 +1,4 @@
+export { default as AppRouter } from './AppRouter'
 export { default as Absences } from './Absences'
 export { default as Dashboard } from './Dashboard'
 export { default as Issue } from './Issue'

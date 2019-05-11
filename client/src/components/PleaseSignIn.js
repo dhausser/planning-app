@@ -1,7 +1,7 @@
 import { Query } from 'react-apollo'
-import { CURRENT_USER_QUERY } from '../../lib/queries'
-import Signin from './Signin'
-import Loading from '../Loading'
+import { CURRENT_USER_QUERY } from '../lib/queries'
+import Signin from './LoginForm'
+import Loading from './Loading'
 
 export default () => (
   <Query query={CURRENT_USER_QUERY}>
