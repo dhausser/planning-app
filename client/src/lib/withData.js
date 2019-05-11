@@ -7,7 +7,7 @@ import { resolvers, typeDefs } from './resolvers'
 /**
  * TODO: Authentication and remove static data dependency
  */
-import { basicAuth, apiKey, defaultFixVersion } from '../credentials'
+import { basicAuth, apiKey } from '../credentials'
 
 export default function createClient() {
   const httpLink = createHttpLink({
@@ -35,12 +35,12 @@ export default function createClient() {
     typeDefs,
   })
 
-  const team =
-    localStorage.getItem('team') === null ? localStorage.getItem('team') : null
-  const version =
-    JSON.parse(localStorage.getItem('version')) || defaultFixVersion
-
-  console.log({ team, version })
+  const team = localStorage.getItem('team')
+    ? localStorage.getItem('team')
+    : null
+  const version = localStorage.getItem('version')
+    ? JSON.parse(localStorage.getItem('version'))
+    : null
 
   cache.writeData({
     data: {

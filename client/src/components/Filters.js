@@ -92,8 +92,6 @@ export default function Filters(props) {
     props.match.path,
   )
 
-  console.log({ team, version })
-
   return (
     <>
       {renderProjectFilter && (
