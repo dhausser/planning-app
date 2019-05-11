@@ -4,12 +4,15 @@ import { useQuery } from 'react-apollo-hooks'
 import { Grid, GridColumn } from '@atlaskit/page'
 import { Status } from '@atlaskit/status'
 
-import { Summary, Loading, Error, Description, Assignee, Comments } from '.'
+import { Summary, Loading, Error, Description, Assignee, Comments } from '..'
 import { getIcon } from './Icon'
 
-import { GET_ISSUE } from '../lib/queries'
+import { GET_ISSUE } from '../../lib/queries'
 
-import { hostname } from '../credentials'
+/**
+ * TODO: Remove static data dependency
+ */
+import { hostname } from '../../credentials'
 
 export default function Issue(props) {
   const {

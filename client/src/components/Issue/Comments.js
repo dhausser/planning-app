@@ -7,7 +7,10 @@ import Comment, {
   CommentTime,
 } from '@atlaskit/comment'
 
-import { hostname } from '../credentials'
+/**
+ * TODO: Remove static data dependency
+ */
+import { hostname } from '../../credentials'
 
 export default ({ comments }) => (
   <>

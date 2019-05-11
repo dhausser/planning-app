@@ -44,6 +44,8 @@ const consumer = new OAuth(
   privateKeyData,
 )
 
+console.log(consumer)
+
 app.get('/', function(request, response) {
   response.send('Hello World')
 })
@@ -85,7 +87,7 @@ app.get('/sessions/callback', function(request, response) {
         request.session.oauthAccessToken = oauthAccessToken
         request.session.oauthAccessTokenSecret = oauthAccessTokenSecret
         consumer.get(
-          `https://${process.env.HOST}/rest/api/latest/issue/JRADEV-8110.json`,
+          `https://${process.env.HOST}/rest/api/latest/issue/GWENT-64555.json`,
           request.session.oauthAccessToken,
           request.session.oauthAccessTokenSecret,
           'application/json',

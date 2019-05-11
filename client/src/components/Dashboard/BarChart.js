@@ -56,7 +56,7 @@ export default ({ dataset, maxResults = 0, total = 0 }) => {
   return (
     <div>
       <h5>
-        Displaying {results} of {total} issues in fixVersion
+        Displaying {results} of {total} issues
       </h5>
       <canvas id="BarChart" width="400" height="250" />
     </div>

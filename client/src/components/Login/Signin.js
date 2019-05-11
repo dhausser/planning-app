@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
-import Error from './Error'
-import { CURRENT_USER_QUERY } from '../lib/queries'
+import Error from '../Error'
+import { CURRENT_USER_QUERY } from '../../lib/queries'
 
 const SIGNIN_MUTATION = gql`
   mutation SIGNIN_MUTATION($email: String!, $password: String!) {

@@ -5,7 +5,7 @@ export const typeDefs = gql`
     isLoggedIn: Boolean!
     version: FixVersion
     versions: [FixVersion]
-    team: Team
+    team: String
     teams: [Team]
   }
 
@@ -17,19 +17,19 @@ export const typeDefs = gql`
 
 export const resolvers = {
   Mutation: {
-    toggleVersion: (_root, { version: update }, { cache }) => {
-      if (update) {
-        const version = {
-          id: update.value,
-          name: update.label,
-          __typename: 'FixVersion',
-        }
-        cache.writeData({ data: { version } })
-        localStorage.setItem('version', JSON.stringify(version))
-      }
+    toggleVersion: (_root, { version: filter }, { cache }) => {
+      const version = filter
+        ? {
+            id: filter.value,
+            name: filter.label,
+            __typename: 'FixVersion',
+          }
+        : null
+      cache.writeData({ data: { version } })
+      localStorage.setItem('version', JSON.stringify(version))
     },
-    toggleTeam: (_root, { team: update }, { cache }) => {
-      const team = update ? update.value : null
+    toggleTeam: (_root, { team: filter }, { cache }) => {
+      const team = filter ? filter.value : null
       cache.writeData({ data: { team } })
       localStorage.setItem('team', team)
     },

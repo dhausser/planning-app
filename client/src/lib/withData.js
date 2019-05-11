@@ -5,13 +5,10 @@ import { setContext } from 'apollo-link-context'
 import { resolvers, typeDefs } from './resolvers'
 
 /**
- * TODO: Authentication
+ * TODO: Authentication and remove static data dependency
  */
 import { basicAuth, apiKey, defaultFixVersion } from '../credentials'
 
-/**
- * TODO: Change production endpoint
- */
 export default function createClient() {
   const httpLink = createHttpLink({
     uri: '/graphql',
@@ -42,6 +39,8 @@ export default function createClient() {
     localStorage.getItem('team') === null ? localStorage.getItem('team') : null
   const version =
     JSON.parse(localStorage.getItem('version')) || defaultFixVersion
+
+  console.log({ team, version })
 
   cache.writeData({
     data: {

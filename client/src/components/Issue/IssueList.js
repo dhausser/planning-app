@@ -101,9 +101,10 @@ const issueRow = issue => ({
     },
     {
       key:
-        issue.fixVersions && issue.fixVersions[issue.fixVersions.length - 1].id,
+        issue.fixVersions.length &&
+        issue.fixVersions[issue.fixVersions.length - 1].id,
       content:
-        issue.fixVersions &&
+        issue.fixVersions.length &&
         issue.fixVersions[issue.fixVersions.length - 1].name,
     },
   ],

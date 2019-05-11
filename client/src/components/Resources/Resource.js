@@ -3,13 +3,17 @@ import { useQuery } from 'react-apollo-hooks'
 
 import Avatar from '@atlaskit/avatar'
 
-import Page, { NameWrapper, AvatarWrapper } from './Page'
-import Issues from './Issues'
+import Page, { NameWrapper, AvatarWrapper } from '../Page'
+import Issues from '../Issue/Issues'
 import Absences from './Absences'
-import Header from './Header'
+import Header from '../Header'
 
-import { GET_RESOURCE } from '../lib/queries'
-import { hostname } from '../credentials'
+import { GET_RESOURCE } from '../../lib/queries'
+
+/**
+ * TODO: Remove static data dependency
+ */
+import { hostname } from '../../credentials'
 
 export default function Resource(props) {
   const id = props.match.params.resourceId

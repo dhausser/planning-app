@@ -1,8 +1,8 @@
 import React from 'react'
 import { useQuery } from 'react-apollo-hooks'
 import HolidayList from './HolidayList'
-import Error from './Error'
-import { GET_ABSENCES } from '../lib/queries'
+import Error from '../Error'
+import { GET_ABSENCES } from '../../lib/queries'
 
 export default function Absences(props) {
   const { data, loading, error } = useQuery(GET_ABSENCES, {

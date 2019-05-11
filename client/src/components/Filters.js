@@ -5,9 +5,14 @@ import gql from 'graphql-tag'
 import Select from '@atlaskit/select'
 import Button from '@atlaskit/button'
 import EmptyState from '@atlaskit/empty-state'
-import { projectId } from '../credentials'
 
 import { GET_VERSIONS, GET_TEAMS, GET_FILTERS } from '../lib/queries'
+
+const TOGGLE_PROJECT = gql`
+  mutation toggleVersion($project: Project!) {
+    toggleProject(project: $project) @client
+  }
+`
 
 const TOGGLE_VERSION = gql`
   mutation toggleVersion($version: FixVersion!) {
@@ -16,12 +21,14 @@ const TOGGLE_VERSION = gql`
 `
 
 const TOGGLE_TEAM = gql`
-  mutation toggleTeam($team: String!) {
+  mutation toggleTeam($team: Team!) {
     toggleTeam(team: $team) @client
   }
 `
 
 export default function Filters(props) {
+  const projectId = 10500
+
   const {
     data: { versions },
     loading: loadingVersions,
@@ -37,7 +44,7 @@ export default function Filters(props) {
   } = useQuery(GET_TEAMS)
 
   const {
-    data: { version: versionFilter, team: teamFilter },
+    data: { version, team },
     loading: loadingFilters,
   } = useQuery(GET_FILTERS)
 
@@ -60,6 +67,15 @@ export default function Filters(props) {
       />
     )
 
+  /**
+   * TODO: GET_PROJECTS query
+   */
+  const projectOptions = [
+    { value: 10500, label: 'Gwent' },
+    { value: 10600, label: 'Cyberpunk' },
+    { value: 10700, label: 'IT' },
+  ]
+
   const versionOptions = versions.map(versionOption => ({
     value: versionOption.id,
     label: versionOption.name,
@@ -70,13 +86,36 @@ export default function Filters(props) {
     label: teamOption._id,
   }))
 
+  const renderProjectFilter = false
   const renderVersionFilter = props.match.path !== '/resources'
   const renderTeamFilter = !['/roadmap', '/resource/:resourceId'].includes(
     props.match.path,
   )
 
+  console.log({ team, version })
+
   return (
     <>
+      {renderProjectFilter && (
+        <div style={{ flex: '0 0 200px', marginLeft: 8 }}>
+          <Mutation mutation={TOGGLE_PROJECT}>
+            {toggleVersion => (
+              <Select
+                spacing="compact"
+                className="single-select"
+                classNamePrefix="react-select"
+                isDisabled={false}
+                isLoading={false}
+                isClearable
+                isSearchable
+                options={projectOptions}
+                placeholder="Choose a project"
+                onChange={e => toggleVersion({ variables: { id: e } })}
+              />
+            )}
+          </Mutation>
+        </div>
+      )}
       {renderVersionFilter && (
         <div style={{ flex: '0 0 200px', marginLeft: 8 }}>
           <Mutation mutation={TOGGLE_VERSION}>
@@ -85,9 +124,9 @@ export default function Filters(props) {
                 spacing="compact"
                 className="single-select"
                 classNamePrefix="react-select"
-                defaultValue={versionOptions.find(
-                  ({ value }) => value === versionFilter.id,
-                )}
+                defaultValue={
+                  version ? { value: version.id, label: version.name } : null
+                }
                 isDisabled={false}
                 isLoading={loadingVersions}
                 isClearable
@@ -108,18 +147,14 @@ export default function Filters(props) {
                 spacing="compact"
                 className="single-select"
                 classNamePrefix="react-select"
-                // defaultValue={teamOptions.find(
-                //   ({ value }) => value === teamFilter,
-                // )}
+                defaultValue={team ? { value: team, label: team } : null}
                 isDisabled={false}
                 isLoading={loadingTeams}
                 isClearable
                 isSearchable
                 options={teamOptions}
                 placeholder="Choose a team"
-                onChange={e =>
-                  toggleTeam({ variables: { team: e, teamFilter } })
-                }
+                onChange={e => toggleTeam({ variables: { team: e } })}
               />
             )}
           </Mutation>

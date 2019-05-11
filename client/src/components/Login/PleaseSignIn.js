@@ -1,9 +1,9 @@
 import { Query } from 'react-apollo'
-import { CURRENT_USER_QUERY } from '../lib/queries'
+import { CURRENT_USER_QUERY } from '../../lib/queries'
 import Signin from './Signin'
-import Loading from './Loading'
+import Loading from '../Loading'
 
-export default props => (
+export default () => (
   <Query query={CURRENT_USER_QUERY}>
     {({ data, loading }) => {
       if (loading) return <Loading />

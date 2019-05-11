@@ -12,12 +12,16 @@ import TableTree, {
 } from '@atlaskit/table-tree'
 import { Status } from '@atlaskit/status'
 
-import Loading from './Loading'
-import Error from './Error'
-import { getIcon } from './Icon'
+import Loading from '../Loading'
+import Error from '../Error'
+import { getIcon } from '../Issue/Icon'
 
-import { GET_ISSUES, GET_STORIES, GET_FILTERS } from '../lib/queries'
-import { projectId } from '../credentials'
+import { GET_ISSUES, GET_STORIES, GET_FILTERS } from '../../lib/queries'
+
+/**
+ * TODO: Remove static data dependency
+ */
+import { projectId } from '../../credentials'
 
 const issueReducer = issue => ({
   key: issue.key,

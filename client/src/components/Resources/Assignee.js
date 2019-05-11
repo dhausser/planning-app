@@ -1,9 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Avatar from '@atlaskit/avatar'
-import { NameWrapper, AvatarWrapper } from './Page'
+import { NameWrapper, AvatarWrapper } from '../Page'
 
-import { hostname } from '../credentials'
+/**
+ * TODO: Remove static data dependency
+ */
+import { hostname } from '../../credentials'
 
 export default ({ assignee }) =>
   assignee ? (
