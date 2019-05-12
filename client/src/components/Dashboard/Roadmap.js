@@ -41,13 +41,15 @@ export default function Roadmap() {
     data: { version },
   } = useQuery(GET_FILTERS)
 
+  const jql = `issuetype=epic ${
+    version ? ` AND fixVersion=${version.id}` : ''
+  }${projectId ? ` AND project=${projectId}` : ''} ORDER BY key ASC`
+
   return (
     <Query
       query={GET_ISSUES}
       variables={{
-        jql: `project = ${projectId} AND fixVersion = ${
-          version.id
-        } AND issuetype = epic ORDER BY key ASC`,
+        jql,
         pageSize: 10,
       }}
     >
@@ -55,20 +57,18 @@ export default function Roadmap() {
         if (loadingEpics) return <Loading />
         if (errorEpics) return <Error error={errorEpics} />
 
-        let jql = ''
+        let childrenQuery = ''
         if (epics.issues.issues.length) {
-          jql = `fixVersion = ${
-            version.id
-          } AND 'Epic Link' in (${epics.issues.issues.map(
+          childrenQuery = `'Epic Link' in (${epics.issues.issues.map(
             ({ id }) => id,
-          )}) ORDER BY key ASC`
+          )})${version ? ` AND fixVersion=${version.id}` : ''} ORDER BY key ASC`
         }
 
         return (
           <Query
             query={GET_STORIES}
             variables={{
-              jql,
+              jql: childrenQuery,
               pageSize: 25,
             }}
           >

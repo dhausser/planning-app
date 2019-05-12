@@ -6,7 +6,8 @@ import Select from '@atlaskit/select'
 import Button from '@atlaskit/button'
 import Error from './Error'
 
-import { GET_VERSIONS, GET_TEAMS, GET_FILTERS } from './queries'
+import { GET_PROJECTS, GET_VERSIONS, GET_TEAMS, GET_FILTERS } from './queries'
+import { projectId } from '../credentials.json'
 
 const TOGGLE_PROJECT = gql`
   mutation toggleVersion($project: Project!) {
@@ -27,14 +28,18 @@ const TOGGLE_TEAM = gql`
 `
 
 export default function Filters(props) {
-  const projectId = 10500
+  const {
+    data: { projects },
+    loading: loadingProjects,
+    error: errorProjects,
+  } = useQuery(GET_PROJECTS)
 
   const {
     data: { versions },
     loading: loadingVersions,
     error: errorVersions,
   } = useQuery(GET_VERSIONS, {
-    variables: { id: projectId, pageSize: 5, after: 5 },
+    variables: { id: projectId, pageSize: 10, after: 0 },
   })
 
   const {
@@ -44,66 +49,52 @@ export default function Filters(props) {
   } = useQuery(GET_TEAMS)
 
   const {
-    data: { version, team },
+    data: { project, version, team },
     loading: loadingFilters,
   } = useQuery(GET_FILTERS)
 
-  if (loadingVersions || loadingTeams || loadingFilters) {
+  if (loadingProjects || loadingVersions || loadingTeams || loadingFilters) {
     return (
-      <Button
-        key="team"
-        isLoading={loadingVersions || loadingTeams}
-        appearance="subtle"
-      >
+      <Button key="team" isLoading appearance="subtle">
         Filters
       </Button>
     )
   }
+  if (errorProjects) return <Error error={errorProjects} />
   if (errorVersions) return <Error error={errorVersions} />
   if (errorTeams) return <Error error={errorTeams} />
 
-  /**
-   * TODO: GET_PROJECTS query
-   */
-  const projectOptions = [
-    { value: 10500, label: 'Gwent' },
-    { value: 10600, label: 'Cyberpunk' },
-    { value: 10700, label: 'IT' },
-  ]
-
-  const versionOptions = versions.map(versionOption => ({
-    value: versionOption.id,
-    label: versionOption.name,
-  }))
-
-  const teamOptions = teams.map(teamOption => ({
-    value: teamOption._id,
-    label: teamOption._id,
-  }))
-
-  const renderProjectFilter = false
+  const renderProjectFilter = true
   const renderVersionFilter = props.match.path !== '/resources'
   const renderTeamFilter = !['/roadmap', '/resource/:resourceId'].includes(
     props.match.path,
   )
+
+  console.log({ projects, versions, teams })
 
   return (
     <>
       {renderProjectFilter && (
         <div style={{ flex: '0 0 200px', marginLeft: 8 }}>
           <Mutation mutation={TOGGLE_PROJECT}>
-            {toggleVersion => (
+            {toggleProject => (
               <Select
                 spacing="compact"
                 className="single-select"
                 classNamePrefix="react-select"
+                defaultValue={
+                  project && { value: project.id, label: project.name }
+                }
                 isDisabled={false}
                 isLoading={false}
                 isClearable
                 isSearchable
-                options={projectOptions}
+                options={projects.map(option => ({
+                  value: option.id,
+                  label: option.name,
+                }))}
                 placeholder="Choose a project"
-                onChange={e => toggleVersion({ variables: { id: e } })}
+                onChange={e => toggleProject({ variables: { id: e } })}
               />
             )}
           </Mutation>
@@ -124,7 +115,10 @@ export default function Filters(props) {
                 isLoading={loadingVersions}
                 isClearable
                 isSearchable
-                options={versionOptions}
+                options={versions.map(option => ({
+                  value: option.id,
+                  label: option.name,
+                }))}
                 placeholder="Choose a version"
                 onChange={e => toggleVersion({ variables: { version: e } })}
               />
@@ -145,7 +139,10 @@ export default function Filters(props) {
                 isLoading={loadingTeams}
                 isClearable
                 isSearchable
-                options={teamOptions}
+                options={teams.map(option => ({
+                  value: option._id,
+                  label: option._id,
+                }))}
                 placeholder="Choose a team"
                 onChange={e => toggleTeam({ variables: { team: e } })}
               />

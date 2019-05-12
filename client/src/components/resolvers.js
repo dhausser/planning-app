@@ -17,6 +17,17 @@ export const typeDefs = gql`
 
 export const resolvers = {
   Mutation: {
+    toggleProject: (_root, { project: filter }, { cache }) => {
+      const project = filter
+        ? {
+            id: filter.value,
+            name: filter.label,
+            __typename: '__Project',
+          }
+        : null
+      cache.writeData({ data: { project } })
+      localStorage.setItem('project', JSON.stringify(project))
+    },
     toggleVersion: (_root, { version: filter }, { cache }) => {
       const version = filter
         ? {

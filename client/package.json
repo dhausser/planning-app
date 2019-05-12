@@ -1,7 +1,7 @@
 {
   "name": "planning-app-client",
   "version": "1.0.0",
-  "description": "Planning app to extend Jira",
+  "description": "Roadmap app client",
   "repository": "https://github.com/dhausser/planning-app/",
   "homepage": "https://roadmap.cdprojektred.com",
   "main": "src/index.js",

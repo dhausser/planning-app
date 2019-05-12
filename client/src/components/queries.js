@@ -130,6 +130,16 @@ export const GET_RESOURCE = gql`
   }
 `
 
+export const GET_PROJECTS = gql`
+  query GetProjects {
+    projects {
+      id
+      key
+      name
+    }
+  }
+`
+
 export const GET_VERSIONS = gql`
   query GetVersions($id: ID!, $pageSize: Int, $after: Int) {
     versions(id: $id, pageSize: $pageSize, after: $after) {
@@ -154,6 +164,10 @@ export const GET_TEAMS = gql`
 export const GET_FILTERS = gql`
   query GetFilters {
     isLoggedIn @client
+    project @client {
+      id
+      name
+    }
     version @client {
       id
       name

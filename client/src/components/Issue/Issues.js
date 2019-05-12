@@ -20,8 +20,6 @@ export default function Issues(props) {
   const {
     data: { teams },
   } = useQuery(GET_TEAMS)
-  // if (loadingTeams) return <Loading />
-  // if (errorTeams) return <Error error={errorTeams} />
 
   let jql = `statusCategory in (new, indeterminate)
   ${version ? ` AND fixVersion=${version.id}` : ''}

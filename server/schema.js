@@ -10,6 +10,7 @@ const typeDefs = gql`
     teams: [Team]!
     team(id: ID!): Team
     absences(id: ID!): [Absence]!
+    projects: [Project]!
     me: User
   }
 
@@ -79,6 +80,12 @@ const typeDefs = gql`
     issues: [Issue]!
     absences: [Absence]!
     team: Team!
+  }
+
+  type Project {
+    id: ID!
+    key: String!
+    name: String!
   }
 
   type Mutation {

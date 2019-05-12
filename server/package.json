@@ -1,7 +1,9 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "",
+  "description": "Roadmap app server",
+  "repository": "https://github.com/dhausser/planning-app/",
+  "homepage": "https://roadmap.cdprojektred.com",
   "main": "index.js",
   "module": "main.js",
   "dependencies": {

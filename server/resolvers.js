@@ -15,6 +15,8 @@ const resolvers = {
       dataSources.resourceAPI.getResourcesByTeam({ teamId: id }),
     absences: (_, { id }, { dataSources }) =>
       dataSources.absenceAPI.getAbsencesById({ userId: id }),
+    projects: async (_, __, { dataSources }) =>
+      dataSources.issueAPI.getAllProjects(),
   },
   Mutation: {
     editIssue: async (_, { issueId, summary }, { dataSources }) =>

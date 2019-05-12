@@ -13,6 +13,7 @@ const fields = [
   'comment',
   'subtasks',
   'customfield_10006',
+  'customfield_10014',
   'customfield_20700',
 ]
 
@@ -28,18 +29,22 @@ export default class IssueAPI extends RESTDataSource {
   }
 
   async loginUser(username, password) {
-    const responseGet = await this.get(`auth/1/session`)
+    const response = await this.get(`auth/1/session`)
     // const responsePost = await this.post(`auth/1/session`, {
     //   username,
     //   password,
     // })
-    console.log(responseGet)
-    // console.log(responsePost)
+    console.log(response)
     return `${username}:${password}`
   }
 
+  async getAllProjects() {
+    const response = await this.get('api/latest/project/')
+    return response
+  }
+
   async getAllVersions(projectId, pageSize, after) {
-    const response = await this.get(`api/2/project/${projectId}/version`, {
+    const response = await this.get(`api/latest/project/${projectId}/version`, {
       startAt: after,
       maxResults: pageSize,
       orderBy: 'name',
@@ -49,7 +54,7 @@ export default class IssueAPI extends RESTDataSource {
   }
 
   async getAllIssues(jql, pageSize, after) {
-    const response = await this.post('api/2/search', {
+    const response = await this.post('api/latest/search', {
       jql,
       fields,
       startAt: after,
@@ -66,13 +71,13 @@ export default class IssueAPI extends RESTDataSource {
   async getIssueById({ issueId }) {
     const teamMapping = await this.teamMapping()
     const response = await this.get(
-      `api/2/issue/${issueId}?fields=${fields.join()}`,
+      `api/latest/issue/${issueId}?fields=${fields.join()}`,
     )
     return this.issueReducer(response, teamMapping)
   }
 
   async editIssue(issueId, summary) {
-    this.put(`api/2/issue/${issueId}`, { fields: { summary } })
+    this.put(`api/latest/issue/${issueId}`, { fields: { summary } })
   }
 
   issueReducer = (issue, teamMapping) => ({
@@ -113,7 +118,10 @@ export default class IssueAPI extends RESTDataSource {
       issue.fields.subtasks.map(subtask =>
         this.issueReducer(subtask, teamMapping),
       ),
-    parent: issue.fields.customfield_10006 || issue.fields.customfield_20700,
+    parent:
+      issue.fields.customfield_10006 ||
+      issue.fields.customfield_20700 ||
+      issue.fields.customfield_10014,
   })
 
   teamMapping = async () => {
