@@ -13,6 +13,11 @@ import IssueIcon from '@atlaskit/icon/glyph/issue'
 import PageIcon from '@atlaskit/icon/glyph/page'
 import PortfolioIcon from '@atlaskit/icon/glyph/portfolio'
 import ShipIcon from '@atlaskit/icon/glyph/ship'
+import RoadmapIcon from '@atlaskit/icon/glyph/roadmap'
+import PeopleIcon from '@atlaskit/icon/glyph/people'
+import { hostname } from 'os'
+
+import { hostname as baseURL, projectId } from '../credentials'
 
 export const MyGlobalNavigation = () => (
   <GlobalNavigation
@@ -87,7 +92,7 @@ export const productHomeView = {
           id: 'portfolio',
           before: PortfolioIcon,
           text: 'Portfolio',
-          to: '/roadmap',
+          to: '/portfolio',
         },
       ],
     },
@@ -110,8 +115,8 @@ export const productIssuesView = {
         {
           type: 'BackItem',
           id: 'back-item',
-          goTo: 'product/home',
-          text: 'Back to Jira',
+          goTo: 'project/home',
+          text: 'Back to Project',
         },
       ],
     },
@@ -226,10 +231,11 @@ export const projectHomeView = {
               itemState={itemState}
               appearance="square"
               size="large"
+              src={`https://${baseURL}/secure/projectavatar?pid=${projectId}`}
             />
           ),
-          text: 'My project',
-          subText: 'Project description',
+          text: 'Space Invader',
+          subText: 'Software project',
           id: 'project-header',
         },
       ],
@@ -243,9 +249,33 @@ export const projectHomeView = {
         {
           type: 'InlineComponent',
           component: LinkItem,
+          before: PortfolioIcon,
+          text: 'Porfolio',
+          to: '/portfolio',
+          id: 'portfolio',
+        },
+        {
+          type: 'InlineComponent',
+          component: LinkItem,
+          before: RoadmapIcon,
+          text: 'Roadmap',
+          to: '/roadmap',
+          id: 'roadmap',
+        },
+        {
+          type: 'InlineComponent',
+          component: LinkItem,
+          before: PeopleIcon,
+          text: 'People',
+          to: '/resources',
+          id: 'resources',
+        },
+        {
+          type: 'InlineComponent',
+          component: LinkItem,
           before: BacklogIcon,
           text: 'Backlog',
-          to: '/roadmap',
+          to: '/backlog',
           id: 'backlog',
         },
         {
@@ -264,7 +294,6 @@ export const projectHomeView = {
           to: '/reports',
           id: 'reports',
         },
-        { type: 'Separator', id: 'separator' },
         {
           type: 'InlineComponent',
           component: LinkItem,

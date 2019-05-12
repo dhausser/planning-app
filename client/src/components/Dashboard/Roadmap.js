@@ -99,9 +99,6 @@ export default function Roadmap() {
 
               return (
                 <>
-                  <p>
-                    <Link to="/">Back to Dashboards</Link>
-                  </p>
                   <TableTree>
                     <Headers>
                       <Header width={120}>Type</Header>

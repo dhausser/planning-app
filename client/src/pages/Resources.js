@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react'
 import { useQuery } from 'react-apollo-hooks'
 import { withNavigationViewController } from '@atlaskit/navigation-next'
-import { productHomeView } from '../components/Nav'
+import { projectHomeView } from '../components/Nav'
 
 import { ResourceList, Page, Header, Error } from '../components'
 import { GET_RESOURCES, GET_FILTERS } from '../components/queries'
 
 const ResourcesPage = props => {
   useEffect(() => {
-    props.navigationViewController.setView(productHomeView.id)
+    props.navigationViewController.setView(projectHomeView.id)
   }, [props.navigationViewController])
 
   const { data, loading, error } = useQuery(GET_RESOURCES)

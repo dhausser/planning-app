@@ -17,6 +17,7 @@ import {
 import {
   Dashboard,
   Roadmap,
+  Backlog,
   Sprints,
   Reports,
   Releases,
@@ -27,6 +28,7 @@ import {
   Issue,
   Issues,
   Absences,
+  Portfolio,
 } from '.'
 
 const App = ({ navigationViewController }) => {
@@ -51,7 +53,10 @@ const App = ({ navigationViewController }) => {
         <Route path="/absences" component={Absences} />
         <Route path="/roadmap" component={Roadmap} />
         <Route path="/issues" component={Issues} />
-        <Route path="/" component={Dashboard} />
+        <Route path="/reports" component={Dashboard} />
+        <Route path="/portfolio" component={Portfolio} />
+        <Route path="/backlog" component={Backlog} />
+        <Route path="/" component={Portfolio} />
       </Switch>
     </LayoutManagerWithViewController>
   )

@@ -1,20 +1,18 @@
 import React, { useEffect } from 'react'
-
 import { withNavigationViewController } from '@atlaskit/navigation-next'
 import { projectHomeView } from '../components/Nav'
+import { Page, Header } from '../components'
 
-import { Dashboard, Page, Header } from '../components'
-
-function DashboardPage(props) {
+const Portfolio = props => {
   useEffect(() => {
     props.navigationViewController.setView(projectHomeView.id)
   }, [props.navigationViewController])
 
   return (
-    <Page title="Dashboard">
-      <Header {...props} />
-      <Dashboard />
+    <Page>
+      <Header title="Portfolio" {...props} />
+      <p>This is the Portfolio page.</p>
     </Page>
   )
 }
-export default withNavigationViewController(DashboardPage)
+export default withNavigationViewController(Portfolio)
