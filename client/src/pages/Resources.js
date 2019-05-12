@@ -20,12 +20,12 @@ const ResourcesPage = props => {
   if (error) return <Error error={error} />
   if (!loading)
     resources = team
-      ? data.resources.filter(resource => resource.team === team)
+      ? data.resources.filter(resource => resource.team === team.id)
       : data.resources
 
   return (
-    <Page title="People">
-      <Header {...props} />
+    <Page>
+      <Header title="People" {...props} />
       <ResourceList resources={resources} isLoading={loading} />
     </Page>
   )

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { withNavigationViewController } from '@atlaskit/navigation-next'
 import { projectHomeView } from '../components/Nav'
-import { Page, Header } from '../components'
+import { Dashboard, Page, Header } from '../components'
 
 const Reports = props => {
   useEffect(() => {
@@ -11,7 +11,7 @@ const Reports = props => {
   return (
     <Page>
       <Header title="Reports" {...props} />
-      <p>This is the reports page.</p>
+      <Dashboard />
     </Page>
   )
 }

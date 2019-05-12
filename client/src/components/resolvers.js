@@ -3,17 +3,6 @@ import gql from 'graphql-tag'
 export const typeDefs = gql`
   extend type Query {
     isLoggedIn: Boolean!
-    # version: FixVersion
-    # versions: [FixVersion]
-    # team: String
-    # teams: [Team]
-    # project: Project
-    # projects: [Projects]
-  }
-
-  extend type Team {
-    id: ID!
-    filter: String
   }
 `
 
@@ -42,9 +31,15 @@ export const resolvers = {
       localStorage.setItem('version', JSON.stringify(version))
     },
     toggleTeam: (_root, { team: filter }, { cache }) => {
-      const team = filter ? filter.value : null
+      const team = filter
+        ? {
+            id: filter.value,
+            name: filter.label,
+            __typename: 'Team',
+          }
+        : null
       cache.writeData({ data: { team } })
-      localStorage.setItem('team', team)
+      localStorage.setItem('team', JSON.stringify(team))
     },
   },
 }

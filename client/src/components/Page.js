@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import Page, { Grid, GridColumn } from '@atlaskit/page'
+import Page from '@atlaskit/page'
 import { gridSize } from '@atlaskit/theme'
 
 export const Padding = styled.div`
@@ -19,10 +19,6 @@ export const AvatarWrapper = styled.div`
 
 export default props => (
   <Page>
-    <Grid>
-      <GridColumn>
-        <Padding>{props.children}</Padding>
-      </GridColumn>
-    </Grid>
+    <Padding>{props.children}</Padding>
   </Page>
 )

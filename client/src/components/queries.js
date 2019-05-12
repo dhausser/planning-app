@@ -172,7 +172,10 @@ export const GET_FILTERS = gql`
       id
       name
     }
-    team @client
+    team @client {
+      id
+      name
+    }
   }
 `
 

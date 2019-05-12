@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
 import { withNavigationViewController } from '@atlaskit/navigation-next'
-import { productIssuesView } from '../components/Nav'
+import { projectHomeView } from '../components/Nav'
 import { Resource } from '../components'
 
 function ResourcePage(props) {
   useEffect(() => {
-    props.navigationViewController.setView(productIssuesView.id)
+    props.navigationViewController.setView(projectHomeView.id)
   }, [props.navigationViewController])
 
   return <Resource {...props} />

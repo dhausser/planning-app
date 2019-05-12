@@ -15,7 +15,6 @@ import {
 } from '../components/Nav'
 
 import {
-  Dashboard,
   Roadmap,
   Backlog,
   Sprints,
@@ -53,7 +52,6 @@ const App = ({ navigationViewController }) => {
         <Route path="/absences" component={Absences} />
         <Route path="/roadmap" component={Roadmap} />
         <Route path="/issues" component={Issues} />
-        <Route path="/reports" component={Dashboard} />
         <Route path="/portfolio" component={Portfolio} />
         <Route path="/backlog" component={Backlog} />
         <Route path="/" component={Portfolio} />

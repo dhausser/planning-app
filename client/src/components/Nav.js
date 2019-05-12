@@ -15,9 +15,8 @@ import PortfolioIcon from '@atlaskit/icon/glyph/portfolio'
 import ShipIcon from '@atlaskit/icon/glyph/ship'
 import RoadmapIcon from '@atlaskit/icon/glyph/roadmap'
 import PeopleIcon from '@atlaskit/icon/glyph/people'
-import { hostname } from 'os'
 
-import { hostname as baseURL, projectId } from '../credentials'
+import { hostname, projectId } from '../credentials'
 
 export const MyGlobalNavigation = () => (
   <GlobalNavigation
@@ -231,7 +230,7 @@ export const projectHomeView = {
               itemState={itemState}
               appearance="square"
               size="large"
-              src={`https://${baseURL}/secure/projectavatar?pid=${projectId}`}
+              src={`https://${hostname}/secure/projectavatar?pid=${projectId}`}
             />
           ),
           text: 'Space Invader',

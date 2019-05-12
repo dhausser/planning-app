@@ -132,7 +132,7 @@ export default function Filters(props) {
                 spacing="compact"
                 className="single-select"
                 classNamePrefix="react-select"
-                defaultValue={team && { value: team, label: team }}
+                defaultValue={team && { value: team.id, label: team.name }}
                 isDisabled={false}
                 isLoading={loadingTeams}
                 isClearable

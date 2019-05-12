@@ -27,7 +27,7 @@ export default function Issues(props) {
 
   if (props.match.params.resourceId) {
     jql = `${jql} AND assignee in (${props.match.params.resourceId})`
-  } else if (team && teams) {
+  } else if (team.id && teams) {
     const { members } = teams.find(({ _id }) => _id === team)
     jql = `${jql} AND assignee in (${members.map(({ key }) => key)})`
   }

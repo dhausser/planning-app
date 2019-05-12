@@ -52,6 +52,7 @@
     "react-apollo": "^2.5.5",
     "react-apollo-hooks": "^0.4.5",
     "react-dom": "^16.8.6",
+    "react-google-charts": "^3.0.13",
     "react-intl": "^2.8.0",
     "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0",
