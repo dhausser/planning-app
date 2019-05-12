@@ -16,7 +16,7 @@ import IssueAPI from './datasources/issue'
 import AbsenceAPI from './datasources/absence'
 import ResourceAPI from './datasources/resource'
 
-import './db'
+import './utils'
 
 const configurations = {
   production: { ssl: false, port: 8080, hostname: 'localhost' },
@@ -56,13 +56,7 @@ apollo.applyMiddleware({ app })
 
 if (environment === 'development') {
   app.use(errorhandler())
-  app.use(
-    morgan('combined', {
-      skip(req, res) {
-        return res.statusCode < 400
-      },
-    }),
-  )
+  app.use(morgan('combined'))
   app.use(cookieParser())
   app.use(
     session({

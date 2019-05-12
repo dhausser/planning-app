@@ -22,12 +22,9 @@ export default props => (
     }}
   >
     <Form
-      onSubmit={data => {
-        props.login({ variables: { ...data } })
-        return new Promise(resolve => setTimeout(resolve, 500)).then(() =>
-          data.username === 'error' ? { username: 'IN_USE' } : undefined,
-        )
-      }}
+      onSubmit={data =>
+        new Promise(resolve => resolve(props.login({ variables: { ...data } })))
+      }
     >
       {({ formProps, submitting }) => (
         <form {...formProps}>

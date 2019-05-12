@@ -3,10 +3,12 @@ import gql from 'graphql-tag'
 export const typeDefs = gql`
   extend type Query {
     isLoggedIn: Boolean!
-    version: FixVersion
-    versions: [FixVersion]
-    team: String
-    teams: [Team]
+    # version: FixVersion
+    # versions: [FixVersion]
+    # team: String
+    # teams: [Team]
+    # project: Project
+    # projects: [Projects]
   }
 
   extend type Team {

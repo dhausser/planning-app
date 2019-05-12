@@ -3,5 +3,5 @@ require('dotenv').config()
 // eslint-disable-next-line no-global-assign
 require = require('esm')(module /* , options */)
 
-module.exports = require('./index')
-// module.exports = require('./oauth')
+module.exports = require('./src/index')
+// module.exports = require('./src/oauth')

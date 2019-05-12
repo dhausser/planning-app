@@ -12,7 +12,6 @@ import { resolvers, typeDefs } from './components/resolvers'
 
 import { Login, AppRouter } from './pages'
 import { IS_LOGGED_IN } from './components/queries'
-import { basicAuth } from './credentials'
 
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -20,13 +19,11 @@ const httpLink = createHttpLink({
 })
 
 const authLink = setContext((_, { headers }) => {
-  // get the authentication token from local storage if it exists
   const token = localStorage.getItem('token')
-  // return the headers to the context so httpLink can read them
   return {
     headers: {
       ...headers,
-      authorization: token ? `Basic ${token}` : `Basic ${basicAuth}`,
+      authorization: `Basic ${token}`,
     },
   }
 })

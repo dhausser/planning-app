@@ -23,7 +23,7 @@ export default function Issues(props) {
 
   let jql = `statusCategory in (new, indeterminate)
   ${version ? ` AND fixVersion=${version.id}` : ''}
-  ${projectId ? ` AND project=${projectId}` : ''}`
+  ${projectId ? ` AND project=${projectId}` : ''} ORDER BY key ASC`
 
   if (props.match.params.resourceId) {
     jql = `${jql} AND assignee in (${props.match.params.resourceId})`

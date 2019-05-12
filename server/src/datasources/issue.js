@@ -25,17 +25,20 @@ export default class IssueAPI extends RESTDataSource {
 
   willSendRequest(request) {
     request.headers.set('Authorization', this.context.token)
-    // request.headers.set('Content-Type', 'application/json')
   }
 
   async loginUser(username, password) {
-    const response = await this.get(`auth/1/session`)
-    // const responsePost = await this.post(`auth/1/session`, {
+    const token = null
+    /**
+     * TODO: Authenticate User
+     */
+    // const get = await this.get(`auth/1/session`)
+    // const post = await this.post(`auth/1/session`, {
     //   username,
     //   password,
     // })
-    console.log(response)
-    return `${username}:${password}`
+    // console.log({ get, post })
+    return token || `${username}:${password}`
   }
 
   async getAllProjects() {

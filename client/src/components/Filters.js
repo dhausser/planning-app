@@ -70,8 +70,6 @@ export default function Filters(props) {
     props.match.path,
   )
 
-  console.log({ projects, versions, teams })
-
   return (
     <>
       {renderProjectFilter && (
@@ -94,7 +92,7 @@ export default function Filters(props) {
                   label: option.name,
                 }))}
                 placeholder="Choose a project"
-                onChange={e => toggleProject({ variables: { id: e } })}
+                onChange={e => toggleProject({ variables: { project: e } })}
               />
             )}
           </Mutation>
