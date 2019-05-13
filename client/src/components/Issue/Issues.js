@@ -21,25 +21,33 @@ export default function Issues(props) {
     data: { teams },
   } = useQuery(GET_TEAMS)
 
-  let jql = `statusCategory in (new, indeterminate)
-  ${version ? ` AND fixVersion=${version.id}` : ''}
-  ${projectId ? ` AND project=${projectId}` : ''}`
+  let jql = `statusCategory in (new, indeterminate)${
+    version ? ` AND fixVersion=${version.id}` : ''
+  }${projectId ? ` AND project=${projectId}` : ''}`
 
   if (props.match.params.resourceId) {
     jql = `${jql} AND assignee in (${props.match.params.resourceId})`
-  } else if (team.id && teams) {
-    const { members } = teams.find(({ _id }) => _id === team)
+  } else if (team && teams) {
+    const { members } = teams.find(({ _id }) => _id === team.id)
     jql = `${jql} AND assignee in (${members.map(({ key }) => key)})`
   }
 
-  jql = `${jql}  ORDER BY key ASC`
+  jql = `${jql} ORDER BY key ASC`
 
-  const { data, loading, error } = useQuery(GET_ISSUES, {
+  const { data: results, loading, error } = useQuery(GET_ISSUES, {
     variables: { jql, pageSize: props.pageSize },
   })
 
-  if (loading) return <Loading />
   if (error) return <Error error={error} />
+
+  let data = {
+    issues: {
+      issues: [],
+      maxResults: 0,
+      total: 0,
+    },
+  }
+  if (!loading) data = results
 
   return (
     <IssueList

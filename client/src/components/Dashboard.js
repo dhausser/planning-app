@@ -1,10 +1,11 @@
 import React from 'react'
 import { useQuery } from 'react-apollo-hooks'
 
-import Loading from '../Loading'
-import Error from '../Error'
+import { Grid, GridColumn } from '@atlaskit/page'
+import Loading from './Loading'
+import Error from './Error'
 import BarChart from './BarChart'
-import { GET_DASHBOARD_ISSUES, GET_FILTERS } from '../queries'
+import { GET_DASHBOARD_ISSUES, GET_FILTERS } from './queries'
 
 const aggregateByAssignee = issues => {
   if (!issues) return []
@@ -52,8 +53,6 @@ export default function Dashboard() {
     version ? ` AND fixVersion=${version.id}` : ''
   }`
 
-  console.log(jql)
-
   const {
     data: { issues },
     loading,
@@ -68,11 +67,15 @@ export default function Dashboard() {
   if (error) return <Error error={error} />
   return (
     <>
-      {loading ? (
-        <Loading />
-      ) : (
-        <BarChart {...issues} dataset={filterByTeam(issues.issues, team)} />
-      )}
+      <Grid>
+        <GridColumn>
+          {loading ? (
+            <Loading />
+          ) : (
+            <BarChart {...issues} dataset={filterByTeam(issues.issues, team)} />
+          )}
+        </GridColumn>
+      </Grid>
     </>
   )
 }

@@ -12,16 +12,16 @@ import TableTree, {
 } from '@atlaskit/table-tree'
 import { Status } from '@atlaskit/status'
 
-import Loading from '../Loading'
-import Error from '../Error'
-import { getIcon } from '../Issue/Icon'
+import Loading from './Loading'
+import Error from './Error'
+import { getIcon } from './Issue/Icon'
 
-import { GET_ISSUES, GET_STORIES, GET_FILTERS } from '../queries'
+import { GET_ISSUES, GET_STORIES, GET_FILTERS } from './queries'
 
 /**
  * TODO: Remove static data dependency
  */
-import { projectId } from '../../credentials'
+import { projectId } from '../credentials'
 
 const issueReducer = issue => ({
   key: issue.key,
@@ -102,7 +102,7 @@ export default function Roadmap() {
                   <TableTree>
                     <Headers>
                       <Header width={120}>Type</Header>
-                      <Header width={450}>Summary</Header>
+                      <Header width={650}>Summary</Header>
                       <Header width={70}>Priority</Header>
                       <Header width={170}>Status</Header>
                     </Headers>
@@ -122,6 +122,7 @@ export default function Roadmap() {
                           itemId={key}
                           items={children}
                           hasChildren={children && children.length > 0}
+                          isExpanded
                         >
                           <Cell singleLine>{type}</Cell>
                           <Cell singleLine>
