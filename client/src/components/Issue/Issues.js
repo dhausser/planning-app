@@ -23,7 +23,7 @@ export default function Issues(props) {
 
   let jql = `statusCategory in (new, indeterminate)
   ${version ? ` AND fixVersion=${version.id}` : ''}
-  ${projectId ? ` AND project=${projectId}` : ''} ORDER BY key ASC`
+  ${projectId ? ` AND project=${projectId}` : ''}`
 
   if (props.match.params.resourceId) {
     jql = `${jql} AND assignee in (${props.match.params.resourceId})`
@@ -31,6 +31,8 @@ export default function Issues(props) {
     const { members } = teams.find(({ _id }) => _id === team)
     jql = `${jql} AND assignee in (${members.map(({ key }) => key)})`
   }
+
+  jql = `${jql}  ORDER BY key ASC`
 
   const { data, loading, error } = useQuery(GET_ISSUES, {
     variables: { jql, pageSize: props.pageSize },

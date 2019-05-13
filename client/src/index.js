@@ -46,8 +46,6 @@ const team = localStorage.getItem('team')
   ? JSON.parse(localStorage.getItem('team'))
   : null
 
-console.log({ project, version, team })
-
 cache.writeData({
   data: {
     isLoggedIn: !!localStorage.getItem('token'),

@@ -7,7 +7,7 @@ export default class AbsenceAPI extends RESTDataSource {
   }
 
   willSendRequest(request) {
-    request.params.set('apiKey', this.context.portalToken)
+    request.params.set('apiKey', process.env.PORTAL_API_KEY)
   }
 
   async getAllAbsences() {
@@ -16,7 +16,9 @@ export default class AbsenceAPI extends RESTDataSource {
   }
 
   async getAbsencesById({ userId }) {
+    console.log(userId)
     const response = await this.get(`?user[]=${userId}`)
+    console.log(response)
     return response
   }
 }

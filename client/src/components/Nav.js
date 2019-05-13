@@ -233,7 +233,7 @@ export const projectHomeView = {
               src={`https://${hostname}/secure/projectavatar?pid=${projectId}`}
             />
           ),
-          text: 'Space Invader',
+          text: 'Gwent Invader',
           subText: 'Software project',
           id: 'project-header',
         },
