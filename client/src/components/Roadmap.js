@@ -102,7 +102,7 @@ export default function Roadmap() {
                   <TableTree>
                     <Headers>
                       <Header width={120}>Type</Header>
-                      <Header width={160}>key</Header>
+                      <Header width={150}>key</Header>
                       <Header width={550}>Summary</Header>
                       <Header width={200}>Assignee</Header>
                       <Header width={70}>Priority</Header>
@@ -149,7 +149,7 @@ export default function Roadmap() {
                           <Cell singleLine>{priority}</Cell>
                           <Cell singleLine>{status}</Cell>
                           <Cell singleLine>
-                            <Tooltip content="Go to issue">
+                            <Tooltip content={`View ${key}`}>
                               <a
                                 href={`https://${hostname}/browse/${key}`}
                                 target="_blank"
