@@ -3,9 +3,12 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 import DynamicTable from '@atlaskit/dynamic-table'
+import Tooltip from '@atlaskit/tooltip'
+import CopyIcon from '@atlaskit/icon/glyph/copy'
 import { Status } from '@atlaskit/status'
-
 import { getIcon } from './Icon'
+
+import { hostname } from '../../credentials'
 
 const NameWrapper = styled.span`
   display: flex;
@@ -18,7 +21,7 @@ const head = {
       key: 'key',
       content: 'Key',
       isSortable: true,
-      width: 13,
+      width: 7,
     },
     {
       key: 'summary',
@@ -36,13 +39,13 @@ const head = {
       key: 'status',
       content: 'Status',
       isSortable: true,
-      width: 18,
+      width: 10,
     },
     {
       key: 'assignee',
       content: 'Assignee',
       isSortable: true,
-      width: 19,
+      width: 10,
     },
     {
       key: 'priority',
@@ -54,6 +57,11 @@ const head = {
       key: 'version',
       content: 'V',
       isSortable: true,
+      width: 6,
+    },
+    {
+      key: 'link',
+      content: 'Link',
       width: 6,
     },
   ],
@@ -106,6 +114,20 @@ const issueRow = issue => ({
       content:
         issue.fixVersions.length &&
         issue.fixVersions[issue.fixVersions.length - 1].name,
+    },
+    {
+      key: '',
+      content: (
+        <Tooltip content="Go to issue">
+          <a
+            href={`https://${hostname}/browse/${issue.key}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <CopyIcon size="medium" />
+          </a>
+        </Tooltip>
+      ),
     },
   ],
 })

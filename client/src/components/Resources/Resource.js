@@ -56,7 +56,7 @@ export default function Resource(props) {
     <Page>
       <Header title={title} {...props} />
       {link}
-      <Issues pageSize={10} {...props} />
+      <Issues pageSize={50} {...props} />
       <Absences {...props} />
     </Page>
   )

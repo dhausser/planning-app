@@ -11,7 +11,6 @@ import TableTree, {
   Cell,
 } from '@atlaskit/table-tree'
 import { Status } from '@atlaskit/status'
-import Button from '@atlaskit/button'
 import CopyIcon from '@atlaskit/icon/glyph/copy'
 import Tooltip from '@atlaskit/tooltip'
 
@@ -104,7 +103,7 @@ export default function Roadmap() {
                     <Headers>
                       <Header width={120}>Type</Header>
                       <Header width={160}>key</Header>
-                      <Header width={500}>Summary</Header>
+                      <Header width={550}>Summary</Header>
                       <Header width={200}>Assignee</Header>
                       <Header width={70}>Priority</Header>
                       <Header width={170}>Status</Header>
