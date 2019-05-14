@@ -26,20 +26,19 @@ const configurations = {
 const environment = process.env.NODE_ENV || 'production'
 const config = configurations[environment]
 
-function getUser(token) {
-  // console.log(`Getting user with token ${token}...`)
-  return { id: 'davy.hausser', name: 'Davy Hausser' }
-}
-
 const apollo = new ApolloServer({
   typeDefs,
   resolvers,
   context: ({ req }) => {
+    /**
+     * TODO: Get Jira user and add it to the context
+     */
+
     // get user token from the headers
     const token = req.headers.authorization || ''
 
     // try to retrieve a user with the token
-    const user = getUser(token)
+    const user = () => ({ id: 'davy.hausser', name: 'Davy Hausser' })
 
     // add the user to the context
     return { user, token }
@@ -55,20 +54,25 @@ const app = express()
 apollo.applyMiddleware({ app })
 
 if (environment === 'development') {
-  app.use(errorhandler())
-  app.use(morgan('combined'))
-  app.use(cookieParser())
   app.use(
-    session({
-      secret: 'keyboard cat',
-      resave: false,
-      saveUninitialized: true,
-      cookie: { secure: true },
+    morgan('combined', {
+      skip(req, res) {
+        return res.statusCode < 400
+      },
     }),
   )
 }
-
+app.use(errorhandler())
+app.use(cookieParser())
 app.use(compression())
+app.use(
+  session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true },
+  }),
+)
 
 app.use(express.static(path.join(__dirname, 'build')))
 

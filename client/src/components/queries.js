@@ -95,14 +95,7 @@ export const GET_STORIES = gql`
       issues {
         ...IssueTile
         children {
-          key
-          summary
-          type
-          priority
-          status {
-            name
-            category
-          }
+          ...IssueTile
         }
         parent
       }

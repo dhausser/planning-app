@@ -34,6 +34,9 @@ export default function Filters(props) {
     error: errorProjects,
   } = useQuery(GET_PROJECTS)
 
+  /**
+   * TODO: Sequential fetching of versions after projects
+   */
   const {
     data: { versions },
     loading: loadingVersions,

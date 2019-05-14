@@ -37,7 +37,7 @@ export default class IssueAPI extends RESTDataSource {
     //   username,
     //   password,
     // })
-    // console.log({ get, post })
+    // console.log(post)
     return token || `${username}:${password}`
   }
 

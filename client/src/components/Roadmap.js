@@ -11,22 +11,23 @@ import TableTree, {
   Cell,
 } from '@atlaskit/table-tree'
 import { Status } from '@atlaskit/status'
+import Button from '@atlaskit/button'
+import CopyIcon from '@atlaskit/icon/glyph/copy'
+import Tooltip from '@atlaskit/tooltip'
 
+import { getIcon } from './Issue/Icon'
 import Loading from './Loading'
 import Error from './Error'
-import { getIcon } from './Issue/Icon'
+
+import { hostname } from '../credentials'
 
 import { GET_ISSUES, GET_STORIES, GET_FILTERS } from './queries'
 
-/**
- * TODO: Remove static data dependency
- */
-import { projectId } from '../credentials'
-
 const issueReducer = issue => ({
   key: issue.key,
-  type: getIcon[issue.type],
   summary: issue.summary,
+  assignee: issue.assignee ? issue.assignee : { key: '', name: 'Unassigned' },
+  type: getIcon[issue.type],
   priority: getIcon[issue.priority],
   status: (
     <Status text={issue.status.name} color={getIcon[issue.status.category]} />
@@ -38,12 +39,12 @@ const issueReducer = issue => ({
 
 export default function Roadmap() {
   const {
-    data: { version },
+    data: { project, version },
   } = useQuery(GET_FILTERS)
 
   const jql = `issuetype=epic ${
     version ? ` AND fixVersion=${version.id}` : ''
-  }${projectId ? ` AND project=${projectId}` : ''} ORDER BY key ASC`
+  }${project ? ` AND project=${project.id}` : ''} ORDER BY key ASC`
 
   return (
     <Query
@@ -102,9 +103,12 @@ export default function Roadmap() {
                   <TableTree>
                     <Headers>
                       <Header width={120}>Type</Header>
-                      <Header width={650}>Summary</Header>
+                      <Header width={160}>key</Header>
+                      <Header width={500}>Summary</Header>
+                      <Header width={200}>Assignee</Header>
                       <Header width={70}>Priority</Header>
                       <Header width={170}>Status</Header>
+                      <Header width={80}>Link</Header>
                     </Headers>
                     <Rows
                       items={items}
@@ -112,6 +116,7 @@ export default function Roadmap() {
                         key,
                         summary,
                         type,
+                        assignee,
                         priority,
                         status,
                         children,
@@ -126,10 +131,35 @@ export default function Roadmap() {
                         >
                           <Cell singleLine>{type}</Cell>
                           <Cell singleLine>
-                            {<Link to={`/issue/${key}`}>{summary}</Link>}
+                            <a
+                              href={`https://${hostname}/browse/${key}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              {key}
+                            </a>
+                          </Cell>
+                          <Cell singleLine>
+                            <Link to={`/issue/${key}`}>{summary}</Link>
+                          </Cell>
+                          <Cell singleLine>
+                            <Link to={`/resource/${assignee.key}`}>
+                              {assignee.name}
+                            </Link>
                           </Cell>
                           <Cell singleLine>{priority}</Cell>
                           <Cell singleLine>{status}</Cell>
+                          <Cell singleLine>
+                            <Tooltip content="Go to issue">
+                              <a
+                                href={`https://${hostname}/browse/${key}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                <CopyIcon size="medium" />
+                              </a>
+                            </Tooltip>
+                          </Cell>
                         </Row>
                       )}
                     />

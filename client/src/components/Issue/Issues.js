@@ -1,20 +1,14 @@
 import React from 'react'
 import { useQuery } from 'react-apollo-hooks'
 
-import Loading from '../Loading'
 import Error from '../Error'
 import IssueList from './IssueList'
 
 import { GET_ISSUES, GET_FILTERS, GET_TEAMS } from '../queries'
 
-/**
- * TODO: Remove static data dependency
- */
-import { projectId } from '../../credentials'
-
 export default function Issues(props) {
   const {
-    data: { version, team },
+    data: { project, version, team },
   } = useQuery(GET_FILTERS)
 
   const {
@@ -23,7 +17,7 @@ export default function Issues(props) {
 
   let jql = `statusCategory in (new, indeterminate)${
     version ? ` AND fixVersion=${version.id}` : ''
-  }${projectId ? ` AND project=${projectId}` : ''}`
+  }${project ? ` AND project=${project.id}` : ''}`
 
   if (props.match.params.resourceId) {
     jql = `${jql} AND assignee in (${props.match.params.resourceId})`

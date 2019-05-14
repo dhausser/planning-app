@@ -2,6 +2,9 @@ import React from 'react'
 import Chart from 'react-google-charts'
 
 export default () => {
+  /**
+   * TODO: Fetch actual data
+   */
   console.log('Drawing a Gantt chart!')
 
   return (

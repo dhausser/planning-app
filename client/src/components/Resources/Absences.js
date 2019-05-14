@@ -11,7 +11,6 @@ export default function Absences(props) {
     variables: { id: resourceId },
   })
 
-  console.log({ props, data, resourceId })
   const absences = loading || error ? [] : data.absences
 
   return (
