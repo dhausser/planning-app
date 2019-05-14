@@ -40,7 +40,7 @@ const aggregateByTeam = issues => {
 const filterByTeam = (issues, team) =>
   team
     ? aggregateByAssignee(
-        issues.filter(({ assignee }) => assignee.team === team),
+        issues.filter(({ assignee }) => assignee.team === team.id),
       )
     : aggregateByTeam(issues)
 
