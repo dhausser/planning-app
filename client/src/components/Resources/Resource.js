@@ -52,11 +52,14 @@ export default function Resource(props) {
     </p>
   )
 
+  /**
+   * TODO: Implement pagination for issues
+   */
   return (
     <Page>
       <Header title={title} {...props} />
       {link}
-      <Issues pageSize={50} {...props} />
+      <Issues pageSize={20} {...props} />
       <Absences {...props} />
     </Page>
   )

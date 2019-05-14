@@ -118,7 +118,7 @@ const issueRow = issue => ({
     {
       key: '',
       content: (
-        <Tooltip content="Go to issue">
+        <Tooltip content={`View ${issue.key}`}>
           <a
             href={`https://${hostname}/browse/${issue.key}`}
             target="_blank"
