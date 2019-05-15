@@ -15,8 +15,8 @@ export default function Issues(props) {
     data: { teams },
   } = useQuery(GET_TEAMS)
 
-  let jql = `statusCategory in (new, indeterminate)${
-    version ? ` AND fixVersion=${version.id}` : ''
+  let jql = `statusCategory in (new, indeterminate) AND fixVersion in (${
+    version ? version.id : 'earliestUnreleasedVersion()'
   }${project ? ` AND project=${project.id}` : ''}`
 
   if (props.match.params.resourceId) {

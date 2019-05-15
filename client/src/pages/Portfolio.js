@@ -11,7 +11,6 @@ const Portfolio = props => {
   return (
     <Page>
       <Header title="Portfolio" {...props} />
-      <p>This is the Portfolio page.</p>
       <GanttChart />
     </Page>
   )

@@ -1,11 +1,10 @@
 import React from 'react'
 import { useQuery } from 'react-apollo-hooks'
-
 import { Grid, GridColumn } from '@atlaskit/page'
 import Loading from './Loading'
 import Error from './Error'
 import BarChart from './BarChart'
-import { GET_DASHBOARD_ISSUES, GET_FILTERS } from './queries'
+import { GET_DASHBOARD_ISSUES, GET_FILTERS, GET_TEAMS } from './queries'
 
 const aggregateByAssignee = issues => {
   if (!issues) return []
@@ -49,9 +48,23 @@ export default function Dashboard() {
     data: { version, team },
   } = useQuery(GET_FILTERS)
 
-  const jql = `statusCategory in (new, indeterminate)${
+  const {
+    data: { teams },
+  } = useQuery(GET_TEAMS)
+
+  let jql = `statusCategory in (new, indeterminate)${
     version ? ` AND fixVersion=${version.id}` : ''
-  }`
+  }
+  `
+
+  if (team && teams) {
+    const { members } = teams.find(({ _id }) => _id === team.id)
+    jql = `
+      ${jql}${
+      team && teams ? ` AND assignee in (${members.map(({ key }) => key)})` : ''
+    }
+    `
+  }
 
   const {
     data: { issues },
@@ -60,7 +73,7 @@ export default function Dashboard() {
   } = useQuery(GET_DASHBOARD_ISSUES, {
     variables: {
       jql,
-      pageSize: 1000,
+      pageSize: 3600,
     },
   })
 

@@ -61,7 +61,9 @@ export default function Roadmap() {
         if (epics.issues.issues.length) {
           childrenQuery = `'Epic Link' in (${epics.issues.issues.map(
             ({ id }) => id,
-          )})${version ? ` AND fixVersion=${version.id}` : ''} ORDER BY key ASC`
+          )}) AND fixVersion in (${
+            version ? version.id : 'earliestUnreleasedVersion()'
+          }) ORDER BY key ASC`
         }
 
         return (
@@ -102,7 +104,7 @@ export default function Roadmap() {
                   <TableTree>
                     <Headers>
                       <Header width={120}>Type</Header>
-                      <Header width={150}>key</Header>
+                      <Header width={150}>Key</Header>
                       <Header width={550}>Summary</Header>
                       <Header width={200}>Assignee</Header>
                       <Header width={70}>Priority</Header>

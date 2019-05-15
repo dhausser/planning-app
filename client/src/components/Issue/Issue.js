@@ -35,7 +35,7 @@ export default function Issue(props) {
       </GridColumn>
       <GridColumn medium={4}>
         <a
-          href={`https://${hostname}/browse/${issue.id}`}
+          href={`https://${hostname}/browse/${issue.key}`}
           target="_blank"
           rel="noopener noreferrer"
         >
