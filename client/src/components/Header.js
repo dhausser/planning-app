@@ -3,7 +3,7 @@ import { BreadcrumbsStateless, BreadcrumbsItem } from '@atlaskit/breadcrumbs'
 import Button, { ButtonGroup } from '@atlaskit/button'
 import PageHeader from '@atlaskit/page-header'
 
-import Filters from './Filters'
+import Filters from './Filters/Filters'
 
 export default props => {
   const breadcrumbs = (

@@ -1,4 +1,3 @@
-// @flow
 import React from 'react'
 import TextField from '@atlaskit/textfield'
 import Button, { ButtonGroup } from '@atlaskit/button'

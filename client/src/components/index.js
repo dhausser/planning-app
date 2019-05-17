@@ -1,7 +1,7 @@
 export { default as App } from '../pages/AppRouter'
 export { default as BarChart } from './BarChart'
 export { default as ContentWrapper } from './Page'
-export { default as Filters } from './Filters'
+export { default as Filters } from './Filters/Filters'
 export { default as HolidayList } from './Resources/HolidayList'
 export { default as IssueList } from './Issue/IssueList'
 export { default as Loading } from './Loading'
