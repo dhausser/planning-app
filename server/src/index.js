@@ -7,7 +7,6 @@ import http from 'http'
 import compression from 'compression'
 import cookieParser from 'cookie-parser'
 import errorhandler from 'errorhandler'
-import morgan from 'morgan'
 import session from 'express-session'
 import resolvers from './resolvers'
 import typeDefs from './schema'
@@ -53,15 +52,6 @@ const apollo = new ApolloServer({
 const app = express()
 apollo.applyMiddleware({ app })
 
-if (environment === 'development') {
-  app.use(
-    morgan('combined', {
-      skip(req, res) {
-        return res.statusCode < 400
-      },
-    }),
-  )
-}
 app.use(errorhandler())
 app.use(cookieParser())
 app.use(compression())

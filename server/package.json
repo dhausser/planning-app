@@ -19,7 +19,6 @@
     "express-session": "^1.16.1",
     "graphql": "^14.3.0",
     "mongodb": "^3.2.4",
-    "morgan": "^1.9.1",
     "oauth": "^0.9.15"
   },
   "devDependencies": {},

@@ -2,7 +2,6 @@ import React from 'react'
 import { useQuery, useMutation } from 'react-apollo-hooks'
 import gql from 'graphql-tag'
 import Select from '@atlaskit/select'
-import { ButtonLoading } from '../Loading'
 import Error from '../Error'
 import { GET_TEAMS } from '../queries'
 
@@ -16,7 +15,6 @@ export default ({ team }) => {
   const { data, loading, error } = useQuery(GET_TEAMS)
   const toggleTeam = useMutation(TOGGLE_TEAM)
 
-  if (loading) return <ButtonLoading />
   if (error) return <Error error={error} />
 
   return (
@@ -30,10 +28,13 @@ export default ({ team }) => {
         isLoading={loading}
         isClearable
         isSearchable
-        options={data.teams.map(option => ({
-          value: option._id,
-          label: option._id,
-        }))}
+        options={
+          data.teams &&
+          data.teams.map(option => ({
+            value: option._id,
+            label: option._id,
+          }))
+        }
         placeholder="Choose a team"
         onChange={e => toggleTeam({ variables: { team: e } })}
       />

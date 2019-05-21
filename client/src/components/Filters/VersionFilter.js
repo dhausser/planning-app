@@ -2,7 +2,6 @@ import React from 'react'
 import { useQuery, useMutation } from 'react-apollo-hooks'
 import gql from 'graphql-tag'
 import Select from '@atlaskit/select'
-import { ButtonLoading } from '../Loading'
 import Error from '../Error'
 import { GET_VERSIONS } from '../queries'
 import { projectId } from '../../credentials'
@@ -23,7 +22,6 @@ export default ({ version, project }) => {
   })
   const toggleVersion = useMutation(TOGGLE_VERSION)
 
-  if (loading) return <ButtonLoading />
   if (error) return <Error error={error} />
 
   return (
@@ -37,10 +35,13 @@ export default ({ version, project }) => {
         isLoading={loading}
         isClearable
         isSearchable
-        options={data.versions.map(option => ({
-          value: option.id,
-          label: option.name,
-        }))}
+        options={
+          data.versions &&
+          data.versions.map(option => ({
+            value: option.id,
+            label: option.name,
+          }))
+        }
         placeholder="Choose a version"
         onChange={e => toggleVersion({ variables: { version: e } })}
       />
