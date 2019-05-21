@@ -1,7 +1,6 @@
 import express from 'express'
 import errorhandler from 'errorhandler'
 import cookieParser from 'cookie-parser'
-import morgan from 'morgan'
 import session from 'express-session'
 import fs from 'fs'
 import { OAuth } from 'oauth'
@@ -12,13 +11,6 @@ const app = express()
 const env = process.env.NODE_ENV || 'development'
 if (env === 'development') {
   app.use(errorhandler())
-  app.use(
-    morgan('combined', {
-      skip(req, res) {
-        return res.statusCode < 400
-      },
-    }),
-  )
   app.use(cookieParser())
   app.use(
     session({

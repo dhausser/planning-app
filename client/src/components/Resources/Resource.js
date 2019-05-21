@@ -8,7 +8,7 @@ import Issues from '../Issue/Issues'
 import Absences from './Absences'
 import Header from '../Header'
 
-import { GET_RESOURCE } from '../queries'
+import { GET_RESOURCE, GET_FILTERS } from '../queries'
 
 /**
  * TODO: Remove static data dependency
@@ -20,6 +20,10 @@ export default function Resource(props) {
   const { data } = useQuery(GET_RESOURCE, {
     variables: { id },
   })
+  const {
+    data: { version },
+  } = useQuery(GET_FILTERS)
+
   const name = data.resource
     ? data.resource.name
     : id
@@ -43,7 +47,9 @@ export default function Resource(props) {
   const link = (
     <p>
       <a
-        href={`https://${hostname}/issues/?jql=assignee=${id}`}
+        href={`https://${hostname}/issues/?jql=assignee=${id}${
+          version ? ` AND fixVersion=${version.id}` : ``
+        } AND statusCategory != Done order by priority desc`}
         target="_blank"
         rel="noopener noreferrer"
       >

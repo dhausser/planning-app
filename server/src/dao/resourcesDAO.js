@@ -129,7 +129,6 @@ export default class ResourcesDAO {
   static async getResourcesByTeam({ teamId }) {
     let cursor
 
-    console.log(teamId)
     try {
       cursor = await resources
         .find({ team: teamId })
@@ -138,8 +137,6 @@ export default class ResourcesDAO {
       console.error(`Unable to issue find command, ${e}`)
       return []
     }
-
-    console.log(await cursor.toArray())
 
     return cursor.toArray()
   }
