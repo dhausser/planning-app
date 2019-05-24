@@ -13,13 +13,12 @@ const TOGGLE_VERSION = gql`
 `
 
 export default ({ version, project }) => {
-  const { data, loading, error } = useQuery(GET_VERSIONS, {
-    variables: {
-      id: (project && project.id) || projectId,
-      pageSize: 10,
-      after: 0,
-    },
-  })
+  const variables = {
+    id: (project && project.id) || projectId,
+    pageSize: 5,
+    after: 7,
+  }
+  const { data, loading, error } = useQuery(GET_VERSIONS, { variables })
   const toggleVersion = useMutation(TOGGLE_VERSION)
 
   if (error) return <Error error={error} />
@@ -29,6 +28,7 @@ export default ({ version, project }) => {
       <Select
         spacing="compact"
         className="single-select"
+        // className="multi-select"
         classNamePrefix="react-select"
         defaultValue={version && { value: version.id, label: version.name }}
         isDisabled={false}
@@ -42,7 +42,8 @@ export default ({ version, project }) => {
             label: option.name,
           }))
         }
-        placeholder="Choose a version"
+        // isMulti
+        placeholder="Choose a Version"
         onChange={e => toggleVersion({ variables: { version: e } })}
       />
     </div>

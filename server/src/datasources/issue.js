@@ -51,7 +51,6 @@ export default class IssueAPI extends RESTDataSource {
       startAt: after,
       maxResults: pageSize,
       orderBy: 'name',
-      status: 'unreleased',
     })
     return Array.isArray(response.values) ? response.values : []
   }

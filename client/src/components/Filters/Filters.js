@@ -13,19 +13,17 @@ export default function Filters(props) {
   if (loading) return <Loading />
   if (error) return <Error error={error} />
 
-  const renderProjectFilter = true
-  const renderVersionFilter = props.match.path !== '/resources'
-  const renderTeamFilter = !['/roadmap', '/resource/:resourceId'].includes(
+  const showProject = true
+  const showVersions = props.match.path !== '/resources'
+  const showTeams = !['/roadmap', '/resource/:resourceId'].includes(
     props.match.path,
   )
 
   return (
     <>
-      {renderProjectFilter && <ProjectFilter project={data.project} />}
-      {renderVersionFilter && (
-        <VersionFilter project={data.project} version={data.version} />
-      )}
-      {renderTeamFilter && <TeamFilter team={data.team} />}
+      {showProject && <ProjectFilter {...data} />}
+      {showVersions && <VersionFilter {...data} />}
+      {showTeams && <TeamFilter {...data} />}
     </>
   )
 }

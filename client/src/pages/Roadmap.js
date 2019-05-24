@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { withNavigationViewController } from '@atlaskit/navigation-next'
 import { projectHomeView } from '../components/Nav'
-import { Page, Header, Roadmap } from '../components'
+import { Page, Header, Epic } from '../components'
 
 function RoadmapPage(props) {
   useEffect(() => {
@@ -11,7 +11,7 @@ function RoadmapPage(props) {
   return (
     <Page title="Roadmap">
       <Header {...props} />
-      <Roadmap />
+      <Epic />
     </Page>
   )
 }

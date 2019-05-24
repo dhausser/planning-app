@@ -3,18 +3,16 @@ import { Link, Route } from 'react-router-dom'
 import GlobalNavigation from '@atlaskit/global-navigation'
 import { ItemAvatar } from '@atlaskit/navigation-next'
 import { JiraIcon, JiraWordmark } from '@atlaskit/logo'
-import BacklogIcon from '@atlaskit/icon/glyph/backlog'
-import BoardIcon from '@atlaskit/icon/glyph/board'
-import ComponentIcon from '@atlaskit/icon/glyph/component'
 import DashboardIcon from '@atlaskit/icon/glyph/dashboard'
 import FolderIcon from '@atlaskit/icon/glyph/folder'
 import GraphLineIcon from '@atlaskit/icon/glyph/graph-line'
 import IssueIcon from '@atlaskit/icon/glyph/issue'
-import PageIcon from '@atlaskit/icon/glyph/page'
 import PortfolioIcon from '@atlaskit/icon/glyph/portfolio'
-import ShipIcon from '@atlaskit/icon/glyph/ship'
 import RoadmapIcon from '@atlaskit/icon/glyph/roadmap'
 import PeopleIcon from '@atlaskit/icon/glyph/people'
+import BacklogIcon from '@atlaskit/icon/glyph/backlog'
+import BoardIcon from '@atlaskit/icon/glyph/board'
+import ShipIcon from '@atlaskit/icon/glyph/ship'
 
 import { hostname, projectId } from '../credentials'
 
@@ -308,22 +306,6 @@ export const projectHomeView = {
           text: 'Issues and filters',
           to: '/issues',
           id: 'issues-and-filters',
-        },
-        {
-          type: 'InlineComponent',
-          component: LinkItem,
-          before: PageIcon,
-          text: 'Pages',
-          to: '/pages',
-          id: 'pages',
-        },
-        {
-          type: 'InlineComponent',
-          component: LinkItem,
-          before: ComponentIcon,
-          text: 'Components',
-          to: '/components',
-          id: 'components',
         },
       ],
     },

@@ -22,6 +22,7 @@ export default ({ team }) => {
       <Select
         spacing="compact"
         className="single-select"
+        // className="multi-select"
         classNamePrefix="react-select"
         defaultValue={team && { value: team.id, label: team.name }}
         isDisabled={false}
@@ -35,7 +36,8 @@ export default ({ team }) => {
             label: option._id,
           }))
         }
-        placeholder="Choose a team"
+        // isMulti
+        placeholder="Choose a Team"
         onChange={e => toggleTeam({ variables: { team: e } })}
       />
     </div>
