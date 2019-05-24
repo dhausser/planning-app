@@ -9,9 +9,9 @@ export default props => {
   if (!props.epics.length) return []
 
   const jql = `'Epic Link' in (\
-    ${props.epics.map(({ id }) => id)}) AND fixVersion in (\
-    ${props.version ? props.version.id : 'earliestUnreleasedVersion()'}\
-    ) ORDER BY key ASC`
+  ${props.epics.map(({ id }) => id)}) AND fixVersion in (\
+  ${props.version ? props.version.id : 'earliestUnreleasedVersion()'}\
+  ) ORDER BY key ASC`
 
   const { data, loading, error } = useQuery(GET_STORIES, {
     variables: {

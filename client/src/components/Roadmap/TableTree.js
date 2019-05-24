@@ -14,32 +14,18 @@ import { getIcon } from '../Issue/Icon'
 
 import { hostname } from '../../credentials'
 
-const reducer = issue => ({
-  key: issue.key,
-  summary: issue.summary,
-  assignee: issue.assignee ? issue.assignee : { key: '', name: 'Unassigned' },
-  type: getIcon[issue.type],
-  priority: getIcon[issue.priority],
-  status: (
-    <Status text={issue.status.name} color={getIcon[issue.status.category]} />
-  ),
-  children: issue.children ? issue.children.map(child => reducer(child)) : [],
-})
-
 export default ({ epics, stories }) => {
-  if (epics.length) {
-    epics.forEach(issue => {
-      issue.children = []
-      if (stories.length) {
-        stories.forEach(child => {
-          if (child.parent === issue.key) {
-            issue.children.push(child)
-          }
-          return null
-        })
+  if (!epics.length) return null
+  if (!stories.length) return null
+
+  epics.forEach(issue => {
+    issue.children = []
+    stories.forEach(child => {
+      if (child.parent === issue.key) {
+        issue.children.push(child)
       }
     })
-  }
+  })
 
   const issues = epics.map(issue => reducer(issue)) || []
 
@@ -107,4 +93,18 @@ export default ({ epics, stories }) => {
       />
     </TableTree>
   )
+}
+
+function reducer(issue) {
+  return {
+    key: issue.key,
+    summary: issue.summary,
+    assignee: issue.assignee ? issue.assignee : { key: '', name: 'Unassigned' },
+    type: getIcon[issue.type],
+    priority: getIcon[issue.priority],
+    status: (
+      <Status text={issue.status.name} color={getIcon[issue.status.category]} />
+    ),
+    children: issue.children ? issue.children.map(child => reducer(child)) : [],
+  }
 }
