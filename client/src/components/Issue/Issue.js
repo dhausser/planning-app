@@ -4,7 +4,8 @@ import { useQuery } from 'react-apollo-hooks'
 import { Grid, GridColumn } from '@atlaskit/page'
 import { Status } from '@atlaskit/status'
 
-import { Summary, Loading, Error, Description, Assignee, Comments } from '..'
+import { Summary, Loading, Error, Description, Comments } from '..'
+import { Assignee } from './Assignee'
 import { getIcon } from './Icon'
 
 import { GET_ISSUE } from '../queries'

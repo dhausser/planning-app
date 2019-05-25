@@ -139,9 +139,11 @@ export default function IssueList({
   total,
   pageSize,
 }) {
-  const caption = `Listing ${
-    maxResults <= total ? maxResults : total
-  } issues of ${total}`
+  const caption = (
+    <p>
+      {maxResults <= total ? maxResults : total} of {total}
+    </p>
+  )
   return (
     <DynamicTable
       caption={caption}

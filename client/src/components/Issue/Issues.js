@@ -1,35 +1,50 @@
 import React from 'react'
 import { useQuery } from 'react-apollo-hooks'
-
+import Loading from '../Loading'
 import Error from '../Error'
 import IssueList from './IssueList'
-
 import { GET_ISSUES, GET_FILTERS, GET_TEAMS } from '../queries'
 
-export default function Issues(props) {
-  const {
-    data: { project, version, team },
-  } = useQuery(GET_FILTERS)
+export default props => {
+  const { data, loading, error } = useQuery(GET_FILTERS)
 
-  const {
-    data: { teams },
-  } = useQuery(GET_TEAMS)
+  if (loading) return <Loading />
+  if (error) return <Error error={error} />
 
-  let jql = `statusCategory in (new, indeterminate) AND fixVersion in (${
-    version ? version.id : 'earliestUnreleasedVersion()'
-  })${project ? ` AND project=${project.id}` : ''}`
+  return <Teams {...props} filters={data} />
+}
 
-  if (props.match.params.resourceId) {
-    jql = `${jql} AND assignee in (${props.match.params.resourceId})`
-  } else if (team && teams) {
-    const { members } = teams.find(({ _id }) => _id === team.id)
-    jql = `${jql} AND assignee in (${members.map(({ key }) => key)})`
-  }
+const Teams = props => {
+  const { data, loading, error } = useQuery(GET_TEAMS, {
+    fetchPolicy: 'cache-first',
+  })
 
-  jql = `${jql} ORDER BY key ASC`
+  if (loading) return <Loading />
+  if (error) return <Error error={error} />
+
+  return <Issues {...props} teams={data.teams} />
+}
+
+const Issues = ({ filters, teams, match, pageSize }) => {
+  const { project, version, team } = filters
+  const { resourceId } = match.params
+
+  const assignee =
+    resourceId != null
+      ? resourceId
+      : team && teams
+      ? teams.find(({ _id }) => _id === team.id).members.map(({ key }) => key)
+      : null
+
+  const jql = `${project ? `project=${project.id} and` : ''}\
+    ${version ? `fixVersion in (${version.id}) and` : ''}\
+    ${assignee ? `assignee in (${assignee}) and` : ''}\
+    statusCategory in (new, indeterminate)\
+    order by priority desc`
 
   const { data: results, loading, error } = useQuery(GET_ISSUES, {
-    variables: { jql, pageSize: props.pageSize },
+    variables: { jql, pageSize },
+    fetchPolicy: 'network-only',
   })
 
   if (error) return <Error error={error} />
@@ -48,7 +63,7 @@ export default function Issues(props) {
       issues={data.issues.issues}
       maxResults={data.issues.maxResults}
       total={data.issues.total}
-      pageSize={props.pageSize}
+      pageSize={pageSize}
       isLoading={loading}
     />
   )

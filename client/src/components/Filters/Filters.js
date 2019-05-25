@@ -13,17 +13,17 @@ export default function Filters(props) {
   if (loading) return <Loading />
   if (error) return <Error error={error} />
 
-  const showProject = true
-  const showVersions = props.match.path !== '/resources'
-  const showTeams = !['/roadmap', '/resource/:resourceId'].includes(
-    props.match.path,
-  )
+  // const showProject = true
+  // const showVersions = props.match.path !== '/resources'
+  // const showTeams = !['/roadmap', '/resource/:resourceId'].includes(
+  //   props.match.path,
+  // )
 
   return (
     <>
-      {showProject && <ProjectFilter {...data} />}
-      {showVersions && <VersionFilter {...data} />}
-      {showTeams && <TeamFilter {...data} />}
+      <ProjectFilter {...data} />
+      <VersionFilter {...data} />
+      <TeamFilter {...data} />
     </>
   )
 }
