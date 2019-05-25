@@ -11,7 +11,7 @@ function IssuesPage(props) {
   return (
     <Page>
       <Header title="Issues" {...props} />
-      <Issues pageSize={20} {...props} />
+      <Issues pageSize={50} {...props} />
     </Page>
   )
 }

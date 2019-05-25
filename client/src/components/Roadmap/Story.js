@@ -18,6 +18,7 @@ export default props => {
       jql,
       pageSize: 150,
     },
+    fetchPolicy: 'cache-and-network',
   })
 
   if (loading) return <Loading />

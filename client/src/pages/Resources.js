@@ -11,10 +11,13 @@ const ResourcesPage = props => {
     props.navigationViewController.setView(projectHomeView.id)
   }, [props.navigationViewController])
 
-  const { data, loading, error } = useQuery(GET_RESOURCES)
   const {
     data: { team },
   } = useQuery(GET_FILTERS)
+
+  const { data, loading, error } = useQuery(GET_RESOURCES, {
+    fetchPolicy: 'cache-first',
+  })
 
   let resources = []
   if (error) return <Error error={error} />

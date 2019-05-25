@@ -20,6 +20,7 @@ export default () => {
       jql,
       pageSize: 10,
     },
+    fetchPolicy: 'cache-and-network',
   })
 
   if (loading) return <Loading />
