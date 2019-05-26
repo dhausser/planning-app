@@ -1,22 +1,31 @@
-export { default as App } from '../pages/AppRouter'
-export { default as BarChart } from './BarChart'
-export { default as ContentWrapper } from './Page'
-export { default as Filters } from './Filters/Filters'
-export { default as HolidayList } from './Resources/HolidayList'
-export { default as IssueList } from './Issue/IssueList'
+// Common
+export { default as LoginForm } from './LoginForm'
+export { default as Page } from './Page'
+export { default as Header } from './Header'
 export { default as Loading } from './Loading'
 export { default as Error } from './Error'
-export { default as Page } from './Page'
-export { default as ResourceList } from './Resources/ResourceList'
-export { default as Header } from './Header'
-export { default as StoryBoard } from './StoryBoard'
-export { default as Dashboard } from './Dashboard'
-export { default as Assignee } from './Issue/Assignee'
-export { default as Comments } from './Issue/Comments'
-export { default as Description } from './Issue/Description'
-export { default as Summary } from './Issue/Summary'
-export { default as LoginForm } from './LoginForm'
+
+// Fitlers
+export { default as Filters } from './Filters/Filters'
+export { default as RefinementBar } from './Filters/RefinementBar'
+
+// Roadmap
 export { default as GanttChart } from './GanttChart'
-export { default as Resource } from './Resources/Resource'
-export { default as Issues } from './Issue/Issues'
-export { default as Issue } from './Issue/Issue'
+export { default as StoryBoard } from './StoryBoard'
+
+// Resource
+export { default as ResourceList } from './ResourceList'
+export { default as IssuesTable } from './IssuesTable'
+export { default as AbsencesTable } from './AbsencesTable'
+
+// Reports
+export { default as Dashboard } from './Dashboard'
+export { default as BarChart } from './BarChart'
+
+// IssueView
+export { default as Summary } from './IssueView/Summary'
+export { default as Description } from './IssueView/Description'
+export { default as Assignee } from './IssueView/Assignee'
+export { default as UserPicker } from './IssueView/UserPicker'
+export { default as Icon } from './IssueView/Icon'
+export { default as Comments } from './IssueView/Comments'

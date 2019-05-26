@@ -10,7 +10,7 @@ import TableTree, {
 import CopyIcon from '@atlaskit/icon/glyph/copy'
 import Tooltip from '@atlaskit/tooltip'
 import { Status } from '@atlaskit/status'
-import { getIcon } from './Issue/Icon'
+import Icon from './IssueView/Icon'
 
 import { hostname } from '../credentials'
 
@@ -100,10 +100,10 @@ function reducer(issue) {
     key: issue.key,
     summary: issue.summary,
     assignee: issue.assignee ? issue.assignee : { key: '', name: 'Unassigned' },
-    type: getIcon[issue.type],
-    priority: getIcon[issue.priority],
+    type: Icon[issue.type],
+    priority: Icon[issue.priority],
     status: (
-      <Status text={issue.status.name} color={getIcon[issue.status.category]} />
+      <Status text={issue.status.name} color={Icon[issue.status.category]} />
     ),
     children: issue.children ? issue.children.map(child => reducer(child)) : [],
   }

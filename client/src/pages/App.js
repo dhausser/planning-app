@@ -15,19 +15,15 @@ import {
 } from '../components/Nav'
 
 import {
+  Portfolio,
   Roadmap,
   Backlog,
-  Sprints,
-  Reports,
-  Releases,
-  Pages,
-  Components,
   Resource,
   Resources,
   Issue,
   Issues,
-  Absences,
-  Portfolio,
+  Reports,
+  Releases,
 } from '.'
 
 const App = ({ navigationViewController }) => {
@@ -40,16 +36,12 @@ const App = ({ navigationViewController }) => {
   return (
     <LayoutManagerWithViewController globalNavigation={MyGlobalNavigation}>
       <Switch>
-        <Route path="/sprints" component={Sprints} />
         <Route path="/reports" component={Reports} />
         <Route path="/releases" component={Releases} />
-        <Route path="/pages" component={Pages} />
-        <Route path="/components" component={Components} />
         <Route path="/resources" component={Resources} />
         <Route path="/resource/:resourceId" component={Resource} />
-        <Route path="/issues" component={Issues} />
+        <Route path="/issues/:filterId" component={Issues} />
         <Route path="/issue/:issueId" component={Issue} />
-        <Route path="/absences" component={Absences} />
         <Route path="/roadmap" component={Roadmap} />
         <Route path="/issues" component={Issues} />
         <Route path="/portfolio" component={Portfolio} />

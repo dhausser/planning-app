@@ -10,7 +10,7 @@ import LinkIcon from '@atlaskit/icon/glyph/link'
 import PageIcon from '@atlaskit/icon/glyph/page'
 import MoreIcon from '@atlaskit/icon/glyph/more'
 
-import { getIcon } from './Icon'
+import Icon from './Icon'
 
 export default ({ id, summary, type }) => {
   const breadcrumbs = (
@@ -22,7 +22,7 @@ export default ({ id, summary, type }) => {
       />
       <BreadcrumbsItem
         href={`/issue/${id}`}
-        iconBefore={getIcon[type]}
+        iconBefore={Icon[type]}
         text={id}
         key={id}
       />

@@ -4,17 +4,17 @@ import { useQuery } from 'react-apollo-hooks'
 import { withNavigationViewController } from '@atlaskit/navigation-next'
 import Button from '@atlaskit/button'
 import { productIssuesView } from '../components/Nav'
-import { Page, Header, Loading, Error, IssueList } from '../components'
+import { Page, Header, Loading, Error, IssuesTable } from '../components'
 import { GET_ISSUES, GET_FILTERS, GET_TEAMS } from '../components/queries'
 
-function IssuesPage(props) {
+export default withNavigationViewController(function IssuesPage(props) {
   const { data, loading, error } = useQuery(GET_FILTERS)
 
   if (loading) return <Loading />
   if (error) return <Error error={error} />
 
   return <Teams {...props} filters={data} />
-}
+})
 
 function Teams(props) {
   const { data, loading, error } = useQuery(GET_TEAMS, {
@@ -27,16 +27,12 @@ function Teams(props) {
   return <Issues {...props} teams={data.teams} />
 }
 
-function Issues(props) {
-  const { filters, teams, match, navigationViewController } = props
+function Issues({ navigationViewController, filters, teams }) {
   const { project, version, team } = filters
-  const { resourceId } = match.params
   const pageSize = 50
 
   const assignee =
-    resourceId != null
-      ? resourceId
-      : team && teams
+    team && teams
       ? teams.find(({ _id }) => _id === team.id).members.map(({ key }) => key)
       : null
 
@@ -48,7 +44,7 @@ function Issues(props) {
 
   const { data, loading, error, fetchMore } = useQuery(GET_ISSUES, {
     variables: { jql, pageSize },
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'network-only',
   })
 
   useEffect(() => {
@@ -59,8 +55,8 @@ function Issues(props) {
 
   return (
     <Page>
-      <Header title="Issues" {...props} />
-      <IssueList
+      <Header title="Issues" />
+      <IssuesTable
         issues={data.issues && data.issues.issues}
         maxResults={data.issues && data.issues.maxResults}
         total={data.issues && data.issues.total}
@@ -94,5 +90,3 @@ function Issues(props) {
     </Page>
   )
 }
-
-export default withNavigationViewController(IssuesPage)

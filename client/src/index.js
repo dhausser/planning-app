@@ -10,7 +10,7 @@ import { createHttpLink } from 'apollo-link-http'
 import { setContext } from 'apollo-link-context'
 import { resolvers, typeDefs } from './components/resolvers'
 
-import { Login, AppRouter } from './pages'
+import { Login, App } from './pages'
 import { IS_LOGGED_IN } from './components/queries'
 
 const httpLink = createHttpLink({
@@ -59,9 +59,7 @@ render(
   <ApolloProvider client={client}>
     <ApolloHooksProvider client={client}>
       <Query query={IS_LOGGED_IN}>
-        {({ data }) =>
-          data.isLoggedIn ? <AppRouter client={client} /> : <Login />
-        }
+        {({ data }) => (data.isLoggedIn ? <App client={client} /> : <Login />)}
       </Query>
     </ApolloHooksProvider>
   </ApolloProvider>,

@@ -6,9 +6,9 @@ import DynamicTable from '@atlaskit/dynamic-table'
 import Tooltip from '@atlaskit/tooltip'
 import CopyIcon from '@atlaskit/icon/glyph/copy'
 import { Status } from '@atlaskit/status'
-import { getIcon } from './Icon'
+import Icon from './IssueView/Icon'
 
-import { hostname } from '../../credentials'
+import { hostname } from '../credentials'
 
 const NameWrapper = styled.span`
   display: flex;
@@ -84,15 +84,12 @@ const issueRow = issue => ({
     },
     {
       key: issue.type,
-      content: getIcon[issue.type],
+      content: Icon[issue.type],
     },
     {
       key: issue.status.category,
       content: (
-        <Status
-          text={issue.status.name}
-          color={getIcon[issue.status.category]}
-        />
+        <Status text={issue.status.name} color={Icon[issue.status.category]} />
       ),
     },
     {
@@ -105,15 +102,16 @@ const issueRow = issue => ({
     },
     {
       key: issue.priority,
-      content: getIcon[issue.priority],
+      content: Icon[issue.priority],
     },
     {
       key:
         issue.fixVersions.length &&
         issue.fixVersions[issue.fixVersions.length - 1].id,
       content:
-        issue.fixVersions.length &&
-        issue.fixVersions[issue.fixVersions.length - 1].name,
+        (issue.fixVersions.length &&
+          issue.fixVersions[issue.fixVersions.length - 1].name) ||
+        '',
     },
     {
       key: '',

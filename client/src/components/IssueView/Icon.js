@@ -16,7 +16,7 @@ import Task16Icon from '@atlaskit/icon-object/glyph/task/16'
 import Subtask16Icon from '@atlaskit/icon-object/glyph/subtask/16'
 import Bug16Icon from '@atlaskit/icon-object/glyph/bug/16'
 
-export const getIcon = {
+export default {
   new: 'blue',
   indeterminate: 'yellow',
   done: 'green',

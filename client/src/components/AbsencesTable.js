@@ -1,9 +1,42 @@
 import React from 'react'
+import { useQuery } from 'react-apollo-hooks'
 import { Link } from 'react-router-dom'
-import { arrayOf, shape, string, number, bool } from 'prop-types'
-import DynamicTable from '@atlaskit/dynamic-table'
 
-const createHead = (withWidth, resources) => {
+import DynamicTable from '@atlaskit/dynamic-table'
+import Error from './Error'
+import { GET_ABSENCES } from './queries'
+
+export default function AbsencesTable({ resourceId }) {
+  const { data, loading, error } = useQuery(GET_ABSENCES, {
+    variables: { id: resourceId },
+  })
+
+  if (error) return <Error error={error} />
+
+  const absences = loading || error ? [] : data.absences
+  const caption = 'List of Absences'
+  const head = createHead(false)
+  const rows = createRows(absences)
+
+  return (
+    <DynamicTable
+      caption={caption}
+      head={head}
+      rows={rows}
+      rowsPerPage={10}
+      defaultPage={1}
+      loadingSpinnerSize="large"
+      isLoading={loading}
+      isFixedSize
+      defaultSortKey="date"
+      defaultSortOrder="DESC"
+      onSort={() => console.log('onSort')}
+      onSetPage={() => console.log('onSetPage')}
+    />
+  )
+}
+
+function createHead(withWidth, resources = null) {
   const head = {
     cells: [
       {
@@ -37,8 +70,8 @@ const createHead = (withWidth, resources) => {
   return head
 }
 
-const createRows = (absences, resources) =>
-  absences.map((holiday, index) => {
+function createRows(absences, resources = null) {
+  return absences.map((holiday, index) => {
     const row = {
       key: `row-${index}-${holiday.key}`,
       cells: [
@@ -67,42 +100,4 @@ const createRows = (absences, resources) =>
 
     return row
   })
-
-export default function HolidayList({ absences, resources, isLoading }) {
-  const caption = 'List of Absences'
-  const head = createHead(false, resources)
-  const rows = createRows(absences, resources)
-  return (
-    <DynamicTable
-      caption={caption}
-      head={head}
-      rows={rows}
-      rowsPerPage={resources ? 20 : 10}
-      defaultPage={1}
-      loadingSpinnerSize="large"
-      isLoading={isLoading}
-      isFixedSize
-      defaultSortKey="date"
-      defaultSortOrder="DESC"
-      onSort={() => console.log('onSort')}
-      onSetPage={() => console.log('onSetPage')}
-    />
-  )
-}
-
-HolidayList.propTypes = {
-  absences: arrayOf(
-    shape({
-      key: string,
-      date: string,
-      count: number,
-    }),
-  ).isRequired,
-  resources: arrayOf(
-    shape({
-      key: string,
-      name: string,
-    }),
-  ),
-  isLoading: bool,
 }
