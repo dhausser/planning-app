@@ -1,22 +1,23 @@
 import React from 'react'
 import { useQuery } from 'react-apollo-hooks'
-import Loading from '../Loading'
-import Error from '../Error'
+import Loading from './Loading'
+import Error from './Error'
 import TableTree from './TableTree'
-import { GET_STORIES } from '../queries'
+import { GET_STORIES } from './queries'
 
 export default props => {
-  if (!props.epics.length) return []
+  const { epics, version } = props
 
-  const jql = `'Epic Link' in (\
-  ${props.epics.map(({ id }) => id)}) AND fixVersion in (\
-  ${props.version ? props.version.id : 'earliestUnreleasedVersion()'}\
-  ) ORDER BY key ASC`
+  const jql = `
+  ${epics.lenght ? `'Epic Link' in (${epics.map(({ id }) => id)}) and ` : ''}
+  ${version ? `fixVersion in (${props.version.id}) and ` : ''}
+  issuetype=story
+  order by key asc`
 
   const { data, loading, error } = useQuery(GET_STORIES, {
     variables: {
       jql,
-      pageSize: 150,
+      pageSize: 50,
     },
     fetchPolicy: 'cache-and-network',
   })

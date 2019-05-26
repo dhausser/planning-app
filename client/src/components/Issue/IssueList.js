@@ -148,7 +148,7 @@ export default function IssueList({
     <DynamicTable
       caption={caption}
       head={head}
-      rows={issues.map(issueRow)}
+      rows={issues && issues.map(issueRow)}
       rowsPerPage={pageSize}
       defaultPage={1}
       loadingSpinnerSize="large"

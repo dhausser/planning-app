@@ -15,6 +15,8 @@ const typeDefs = gql`
   }
 
   type IssueConnection {
+    offet: Int!
+    limit: Int!
     startAt: Int!
     maxResults: Int!
     total: Int!

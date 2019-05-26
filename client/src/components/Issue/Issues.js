@@ -1,11 +1,12 @@
 import React from 'react'
 import { useQuery } from 'react-apollo-hooks'
-import Loading from '../Loading'
-import Error from '../Error'
+
+import Button from '@atlaskit/button'
+import { Loading, Error } from '..'
 import IssueList from './IssueList'
 import { GET_ISSUES, GET_FILTERS, GET_TEAMS } from '../queries'
 
-export default props => {
+export default function(props) {
   const { data, loading, error } = useQuery(GET_FILTERS)
 
   if (loading) return <Loading />
@@ -14,7 +15,7 @@ export default props => {
   return <Teams {...props} filters={data} />
 }
 
-const Teams = props => {
+function Teams(props) {
   const { data, loading, error } = useQuery(GET_TEAMS, {
     fetchPolicy: 'cache-first',
   })
@@ -25,7 +26,7 @@ const Teams = props => {
   return <Issues {...props} teams={data.teams} />
 }
 
-const Issues = ({ filters, teams, match, pageSize }) => {
+function Issues({ filters, teams, match, pageSize }) {
   const { project, version, team } = filters
   const { resourceId } = match.params
 
@@ -42,29 +43,46 @@ const Issues = ({ filters, teams, match, pageSize }) => {
     statusCategory in (new, indeterminate)\
     order by priority desc`
 
-  const { data: results, loading, error } = useQuery(GET_ISSUES, {
+  const { data, loading, error, fetchMore } = useQuery(GET_ISSUES, {
     variables: { jql, pageSize },
-    fetchPolicy: 'network-only',
+    fetchPolicy: 'cache-and-network',
   })
 
   if (error) return <Error error={error} />
 
-  let data = {
-    issues: {
-      issues: [],
-      maxResults: 0,
-      total: 0,
-    },
-  }
-  if (!loading) data = results
-
   return (
-    <IssueList
-      issues={data.issues.issues}
-      maxResults={data.issues.maxResults}
-      total={data.issues.total}
-      pageSize={pageSize}
-      isLoading={loading}
-    />
+    <>
+      <IssueList
+        issues={data.issues && data.issues.issues}
+        maxResults={data.issues && data.issues.maxResults}
+        total={data.issues && data.issues.total}
+        pageSize={pageSize}
+        isLoading={loading}
+      />
+      <Button
+        onClick={() =>
+          fetchMore({
+            variables: {
+              after: data.issues.maxResults,
+            },
+            updateQuery: (prev, { fetchMoreResult, ...rest }) => {
+              if (!fetchMoreResult) return prev
+              return {
+                ...fetchMoreResult,
+                issues: {
+                  ...fetchMoreResult.issues,
+                  issues: [
+                    ...prev.issues.issues,
+                    ...fetchMoreResult.issues.issues,
+                  ],
+                },
+              }
+            },
+          })
+        }
+      >
+        Load More
+      </Button>
+    </>
   )
 }

@@ -10,9 +10,9 @@ import TableTree, {
 import CopyIcon from '@atlaskit/icon/glyph/copy'
 import Tooltip from '@atlaskit/tooltip'
 import { Status } from '@atlaskit/status'
-import { getIcon } from '../Issue/Icon'
+import { getIcon } from './Issue/Icon'
 
-import { hostname } from '../../credentials'
+import { hostname } from '../credentials'
 
 export default ({ epics, stories }) => {
   if (!epics.length) return null
