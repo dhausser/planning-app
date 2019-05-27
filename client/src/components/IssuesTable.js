@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 import DynamicTable from '@atlaskit/dynamic-table'
+import Button from '@atlaskit/button'
 import Tooltip from '@atlaskit/tooltip'
 import CopyIcon from '@atlaskit/icon/glyph/copy'
 import { Status } from '@atlaskit/status'
@@ -10,10 +11,68 @@ import Icon from './IssueView/Icon'
 
 import { hostname } from '../credentials'
 
-const NameWrapper = styled.span`
-  display: flex;
-  align-items: center;
-`
+/**
+ * Dynamic Table
+ * https://atlaskit.atlassian.com/packages/core/dynamic-table
+ * @param {Int} maxResults
+ * @param {Int} total
+ * @param {Array} issues
+ * @param {Boolean} loading
+ * @param {Func} fetchMore
+ */
+export default function({ maxResults, total, issues, loading, fetchMore }) {
+  const [offset, setOffset] = useState(20)
+
+  return (
+    <>
+      <DynamicTable
+        caption={caption(offset, maxResults, total)}
+        head={head}
+        rows={!loading && issues.length && issues.map(issueRow)}
+        rowsPerPage={200}
+        defaultPage={1}
+        loadingSpinnerSize="large"
+        isLoading={loading}
+        isFixedSize
+        defaultSortKey="priority"
+        defaultSortOrder="ASC"
+      />
+      {total > offset && (
+        <Button
+          onClick={() => {
+            setOffset(offset + maxResults)
+            return fetchMore({
+              variables: {
+                startAt: offset,
+              },
+              updateQuery: (prev, { fetchMoreResult, ...rest }) => {
+                if (!fetchMoreResult) return prev
+                return {
+                  ...fetchMoreResult,
+                  issues: {
+                    ...fetchMoreResult.issues,
+                    issues: [
+                      ...prev.issues.issues,
+                      ...fetchMoreResult.issues.issues,
+                    ],
+                  },
+                }
+              },
+            })
+          }}
+        >
+          Load More
+        </Button>
+      )}
+    </>
+  )
+}
+
+const caption = (startAt, maxResults, total) => (
+  <p>
+    {maxResults <= total ? maxResults : total} of {total}
+  </p>
+)
 
 const head = {
   cells: [
@@ -130,30 +189,7 @@ const issueRow = issue => ({
   ],
 })
 
-export default function IssueList({
-  issues,
-  loading,
-  maxResults,
-  total,
-  pageSize,
-}) {
-  const caption = (
-    <p>
-      {maxResults <= total ? maxResults : total} of {total}
-    </p>
-  )
-  return (
-    <DynamicTable
-      caption={caption}
-      head={head}
-      rows={issues && issues.map(issueRow)}
-      rowsPerPage={pageSize}
-      defaultPage={1}
-      loadingSpinnerSize="large"
-      isLoading={loading}
-      isFixedSize
-      defaultSortKey="priority"
-      defaultSortOrder="ASC"
-    />
-  )
-}
+const NameWrapper = styled.span`
+  display: flex;
+  align-items: center;
+`

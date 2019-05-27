@@ -43,7 +43,7 @@ const Dashboard = ({ filters, teams }) => {
   const { data, loading, error } = useQuery(GET_DASHBOARD_ISSUES, {
     variables: {
       jql,
-      pageSize: 1500,
+      maxResults: 1500,
     },
     fetchPolicy: 'network-only',
   })

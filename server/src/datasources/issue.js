@@ -1,22 +1,6 @@
 import { RESTDataSource } from 'apollo-datasource-rest'
 import ResourcesDAO from '../dao/resourcesDAO'
 
-const fields = [
-  'summary',
-  'description',
-  'status',
-  'assignee',
-  'reporter',
-  'issuetype',
-  'priority',
-  'fixVersions',
-  'comment',
-  'subtasks',
-  'customfield_10006',
-  'customfield_10014',
-  'customfield_20700',
-]
-
 export default class IssueAPI extends RESTDataSource {
   constructor() {
     super()
@@ -46,28 +30,30 @@ export default class IssueAPI extends RESTDataSource {
     return response
   }
 
-  async getAllVersions(projectId, pageSize, after) {
+  async getAllVersions(projectId, startAt, maxResults) {
     const response = await this.get(`api/latest/project/${projectId}/version`, {
-      startAt: after,
-      maxResults: pageSize,
+      startAt,
+      maxResults,
       orderBy: 'name',
     })
     return Array.isArray(response.values) ? response.values : []
   }
 
-  async getAllIssues(jql, pageSize, after) {
+  async getAllIssues(jql, startAt, maxResults) {
+    console.log({ startAt, maxResults })
+
     const response = await this.post('api/latest/search', {
       jql,
       fields,
-      startAt: after,
-      maxResults: pageSize,
+      startAt,
+      maxResults,
     })
-    const { startAt, maxResults, total } = response
+    // const { startAt, maxResults, total } = response
     const teamMapping = await this.teamMapping()
     const issues = Array.isArray(response.issues)
       ? response.issues.map(issue => this.issueReducer(issue, teamMapping))
       : []
-    return { startAt, maxResults, total, issues }
+    return { ...response, issues }
   }
 
   async getIssueById({ issueId }) {
@@ -78,8 +64,16 @@ export default class IssueAPI extends RESTDataSource {
     return this.issueReducer(response, teamMapping)
   }
 
-  async editIssue(issueId, summary) {
-    this.put(`api/latest/issue/${issueId}`, { fields: { summary } })
+  async editIssue(issueId, summary, assignee) {
+    /**
+     * TODO: Dynamically choose the fields to update according to the input data
+     */
+    if (summary) {
+      this.put(`api/latest/issue/${issueId}`, { fields: { summary } })
+    }
+    if (assignee) {
+      this.put(`api/latest/issue/${issueId}`, { fields: { assignee } })
+    }
   }
 
   issueReducer = (issue, teamMapping) => ({
@@ -135,3 +129,19 @@ export default class IssueAPI extends RESTDataSource {
     return teamMapping
   }
 }
+
+const fields = [
+  'summary',
+  'description',
+  'status',
+  'assignee',
+  'reporter',
+  'issuetype',
+  'priority',
+  'fixVersions',
+  'comment',
+  'subtasks',
+  'customfield_10006',
+  'customfield_10014',
+  'customfield_20700',
+]

@@ -3,12 +3,12 @@ const resolvers = {
     /**
      * Jira REST API
      */
-    issues: (_, { jql, pageSize = 20, after = 0 }, { dataSources }) =>
-      dataSources.issueAPI.getAllIssues(jql, pageSize, after),
+    issues: (_, { jql, startAt = 0, maxResults = 20 }, { dataSources }) =>
+      dataSources.issueAPI.getAllIssues(jql, startAt, maxResults),
     issue: (_, { id }, { dataSources }) =>
       dataSources.issueAPI.getIssueById({ issueId: id }),
-    versions: (_, { id, pageSize = 4, after = 4 }, { dataSources }) =>
-      dataSources.issueAPI.getAllVersions(id, pageSize, after),
+    versions: (_, { id, startAt = 0, maxResults = 20 }, { dataSources }) =>
+      dataSources.issueAPI.getAllVersions(id, startAt, maxResults),
     projects: (_, __, { dataSources }) => dataSources.issueAPI.getAllProjects(),
 
     /**
@@ -34,8 +34,8 @@ const resolvers = {
      */
     login: async (_, { username, password }, { dataSources }) =>
       dataSources.issueAPI.loginUser(username, password),
-    editIssue: async (_, { issueId, summary }, { dataSources }) =>
-      dataSources.issueAPI.editIssue(issueId, summary),
+    editIssue: async (_, { issueId, summary, assignee }, { dataSources }) =>
+      dataSources.issueAPI.editIssue(issueId, summary, assignee),
   },
 }
 

@@ -11,7 +11,6 @@ import PortfolioIcon from '@atlaskit/icon/glyph/portfolio'
 import RoadmapIcon from '@atlaskit/icon/glyph/roadmap'
 import PeopleIcon from '@atlaskit/icon/glyph/people'
 import BacklogIcon from '@atlaskit/icon/glyph/backlog'
-import BoardIcon from '@atlaskit/icon/glyph/board'
 import ShipIcon from '@atlaskit/icon/glyph/ship'
 
 import { hostname, projectId } from '../credentials'
@@ -259,15 +258,6 @@ export const projectHomeView = {
           to: '/backlog',
           id: 'backlog',
         },
-        {
-          type: 'InlineComponent',
-          component: LinkItem,
-          before: BoardIcon,
-          text: 'Active sprints',
-          to: '/sprints',
-          id: 'active-sprints',
-        },
-
         {
           type: 'InlineComponent',
           component: LinkItem,

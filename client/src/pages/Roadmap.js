@@ -22,7 +22,6 @@ function RoadmapPage(props) {
   const { data, loading, error } = useQuery(GET_ISSUES, {
     variables: {
       jql,
-      pageSize: 10,
     },
     fetchPolicy: 'network-only',
   })

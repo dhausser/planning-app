@@ -9,7 +9,7 @@ export default props => {
   const { epics, version } = props
 
   const jql = `
-  ${epics.lenght ? `'Epic Link' in (${epics.map(({ id }) => id)}) and ` : ''}
+  ${epics.length ? `'Epic Link' in (${epics.map(({ id }) => id)}) and ` : ''}
   ${version ? `fixVersion in (${props.version.id}) and ` : ''}
   issuetype=story
   order by key asc`
@@ -17,7 +17,6 @@ export default props => {
   const { data, loading, error } = useQuery(GET_STORIES, {
     variables: {
       jql,
-      pageSize: 50,
     },
     fetchPolicy: 'cache-and-network',
   })

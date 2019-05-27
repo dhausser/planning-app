@@ -56,8 +56,8 @@ export const GET_ISSUE = gql`
 `
 
 export const GET_ISSUES = gql`
-  query issueList($jql: String, $pageSize: Int!) {
-    issues(jql: $jql, pageSize: $pageSize) {
+  query issueList($jql: String, $startAt: Int, $maxResults: Int) {
+    issues(jql: $jql, startAt: $startAt, maxResults: $maxResults) {
       ...IssuePagination
       issues {
         ...IssueTile
@@ -69,8 +69,8 @@ export const GET_ISSUES = gql`
 `
 
 export const GET_DASHBOARD_ISSUES = gql`
-  query issueList($jql: String, $pageSize: Int!) {
-    issues(jql: $jql, pageSize: $pageSize) {
+  query issueList($jql: String, $startAt: Int, $maxResults: Int) {
+    issues(jql: $jql, startAt: $startAt, maxResults: $maxResults) {
       ...IssuePagination
       issues {
         fixVersions {
@@ -89,8 +89,8 @@ export const GET_DASHBOARD_ISSUES = gql`
 `
 
 export const GET_STORIES = gql`
-  query issueList($jql: String, $pageSize: Int!) {
-    issues(jql: $jql, pageSize: $pageSize) {
+  query issueList($jql: String, $startAt: Int, $maxResults: Int) {
+    issues(jql: $jql, startAt: $startAt, maxResults: $maxResults) {
       ...IssuePagination
       issues {
         ...IssueTile
@@ -134,8 +134,8 @@ export const GET_PROJECTS = gql`
 `
 
 export const GET_VERSIONS = gql`
-  query GetVersions($id: ID!, $pageSize: Int, $after: Int) {
-    versions(id: $id, pageSize: $pageSize, after: $after) {
+  query GetVersions($id: ID!, $startAt: Int, $maxResults: Int) {
+    versions(id: $id, startAt: $startAt, maxResults: $maxResults) {
       id
       name
     }

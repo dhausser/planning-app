@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { useQuery } from 'react-apollo-hooks'
 
 import { withNavigationViewController } from '@atlaskit/navigation-next'
-import Button from '@atlaskit/button'
 import { productIssuesView } from '../components/Nav'
 import { Page, Header, Loading, Error, IssuesTable } from '../components'
 import { GET_ISSUES, GET_FILTERS, GET_TEAMS } from '../components/queries'
@@ -28,8 +27,12 @@ function Teams(props) {
 }
 
 function Issues({ navigationViewController, filters, teams }) {
+  useEffect(() => {
+    navigationViewController.setView(productIssuesView.id)
+  }, [navigationViewController])
+
   const { project, version, team } = filters
-  const pageSize = 50
+  const pageSize = 20
 
   const assignee =
     team && teams
@@ -43,50 +46,16 @@ function Issues({ navigationViewController, filters, teams }) {
     order by priority desc`
 
   const { data, loading, error, fetchMore } = useQuery(GET_ISSUES, {
-    variables: { jql, pageSize },
+    variables: { jql, startAt: 0, maxResults: pageSize },
     fetchPolicy: 'network-only',
   })
-
-  useEffect(() => {
-    navigationViewController.setView(productIssuesView.id)
-  }, [navigationViewController])
 
   if (error) return <Error error={error} />
 
   return (
     <Page>
       <Header title="Issues" />
-      <IssuesTable
-        issues={data.issues && data.issues.issues}
-        maxResults={data.issues && data.issues.maxResults}
-        total={data.issues && data.issues.total}
-        pageSize={pageSize}
-        isLoading={loading}
-      />
-      <Button
-        onClick={() =>
-          fetchMore({
-            variables: {
-              after: data.issues.maxResults,
-            },
-            updateQuery: (prev, { fetchMoreResult, ...rest }) => {
-              if (!fetchMoreResult) return prev
-              return {
-                ...fetchMoreResult,
-                issues: {
-                  ...fetchMoreResult.issues,
-                  issues: [
-                    ...prev.issues.issues,
-                    ...fetchMoreResult.issues.issues,
-                  ],
-                },
-              }
-            },
-          })
-        }
-      >
-        Load More
-      </Button>
+      <IssuesTable {...data.issues} fetchMore={fetchMore} loading={loading} />
     </Page>
   )
 }

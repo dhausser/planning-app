@@ -2,21 +2,19 @@ import { gql } from 'apollo-server-express'
 
 const typeDefs = gql`
   type Query {
-    issues(jql: String, pageSize: Int, after: String): IssueConnection!
+    issues(jql: String, startAt: Int, maxResults: Int): IssueConnection!
     issue(id: ID!): Issue
-    versions(id: ID!, pageSize: Int, after: Int): [FixVersion]
+    versions(id: ID!, startAt: Int, maxResults: Int): [FixVersion]
+    projects: [Project]!
     resources: [Resource]!
     resource(id: ID!): Resource
     teams: [Team]!
     team(id: ID!): Team
     absences(id: ID!): [Absence]!
-    projects: [Project]!
     me: User
   }
 
   type IssueConnection {
-    offet: Int!
-    limit: Int!
     startAt: Int!
     maxResults: Int!
     total: Int!
