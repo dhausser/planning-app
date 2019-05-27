@@ -14,9 +14,9 @@ import Icon from './IssueView/Icon'
 
 import { hostname } from '../credentials'
 
-export default ({ epics, stories }) => {
-  if (!epics.length) return null
-  if (!stories.length) return null
+export default props => {
+  const epics = props.epics.data.issues.issues
+  const stories = props.stories.data.issues.issues
 
   epics.forEach(issue => {
     issue.children = []

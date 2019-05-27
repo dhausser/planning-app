@@ -11,7 +11,7 @@ export { default as RefinementBar } from './Filters/RefinementBar'
 
 // Roadmap
 export { default as GanttChart } from './GanttChart'
-export { default as StoryBoard } from './StoryBoard'
+export { default as TableTree } from './TableTree'
 
 // Resource
 export { default as ResourceList } from './ResourceList'
