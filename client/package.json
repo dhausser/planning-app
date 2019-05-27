@@ -6,8 +6,7 @@
   "homepage": "https://roadmap.cdprojektred.com",
   "main": "src/index.js",
   "scripts": {
-    "start": "npm run dev",
-    "dev": "react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"

@@ -6,42 +6,31 @@ import Avatar from '@atlaskit/avatar'
 import { projectHomeView } from '../components/Nav'
 import Page, { NameWrapper, AvatarWrapper } from '../components/Page'
 import { Header, Error, IssuesTable, AbsencesTable } from '../components'
-import { GET_FILTERS, GET_RESOURCE, GET_ISSUES } from '../components/queries'
-
+import { GET_RESOURCE, GET_ISSUES, GET_FILTERS } from '../components/queries'
+import { jqlParser } from './Issues'
 import { hostname } from '../credentials'
 
-export default withNavigationViewController(function ResourcePage(props) {
+function ResourcePage(props) {
   useEffect(() => {
     props.navigationViewController.setView(projectHomeView.id)
   }, [props.navigationViewController])
 
   const { resourceId } = props.match.params
-  const pageSize = 20
-
-  const {
-    data: { project, version },
-  } = useQuery(GET_FILTERS)
-
-  const {
-    data: { resource },
-  } = useQuery(GET_RESOURCE, {
+  const { data: filters } = useQuery(GET_FILTERS)
+  const { data: resource } = useQuery(GET_RESOURCE, {
     variables: { id: resourceId },
   })
-
-  const jql = `${project ? `project=${project.id} and` : ''}\
-    ${version ? `fixVersion in (${version.id}) and` : ''}\
-    ${resourceId ? `assignee in (${resourceId}) and` : ''}\
-    statusCategory in (new, indeterminate)\
-    order by priority desc`
+  const jql = jqlParser(filters, resourceId)
 
   const { data, loading, error, fetchMore } = useQuery(GET_ISSUES, {
-    variables: { jql, startAt: 0, maxResults: pageSize },
+    variables: { jql, startAt: 0, maxResults: 20 },
     fetchPolicy: 'network-only',
   })
 
   if (error) return <Error error={error} />
 
-  const { title, link } = !loading && formatName(resource, resourceId, version)
+  const { title, link } =
+    !loading && formatName(resource, resourceId, filters.version)
 
   return (
     <Page>
@@ -51,7 +40,9 @@ export default withNavigationViewController(function ResourcePage(props) {
       <AbsencesTable resourceId={resourceId} />
     </Page>
   )
-})
+}
+
+export default withNavigationViewController(ResourcePage)
 
 function formatName(resource, resourceId, version) {
   const name = resource ? resource.name : ''
