@@ -3,8 +3,8 @@ import { useQuery } from 'react-apollo-hooks'
 
 import { withNavigationViewController } from '@atlaskit/navigation-next'
 import { productIssuesView } from '../components/Nav'
-import { Page, Header, Error, IssuesTable } from '../components'
-import { GET_FILTERS, GET_RESOURCES, GET_ISSUES } from '../components/queries'
+import { Page, Header, Error, DynamicTable } from '../components'
+import { GET_FILTERS, GET_RESOURCES, GET_ISSUES } from '../queries'
 
 function IssuesPage({ navigationViewController }) {
   useEffect(() => {
@@ -28,7 +28,7 @@ function IssuesPage({ navigationViewController }) {
   return (
     <Page>
       <Header title="Issues" />
-      <IssuesTable {...data.issues} fetchMore={fetchMore} loading={loading} />
+      <DynamicTable {...data.issues} fetchMore={fetchMore} loading={loading} />
     </Page>
   )
 }

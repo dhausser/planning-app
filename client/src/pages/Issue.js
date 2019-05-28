@@ -16,7 +16,7 @@ import {
 } from '../components'
 import { productIssuesView } from '../components/Nav'
 import Icon from '../components/IssueView/Icon'
-import { GET_ISSUE } from '../components/queries'
+import { GET_ISSUE } from '../queries'
 
 import { hostname } from '../credentials'
 

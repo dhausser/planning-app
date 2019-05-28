@@ -38,31 +38,40 @@ export default function({ maxResults, total, issues, loading, fetchMore }) {
         defaultSortOrder="ASC"
       />
       {total > offset && (
-        <Button
-          onClick={() => {
-            setOffset(offset + maxResults)
-            return fetchMore({
-              variables: {
-                startAt: offset,
-              },
-              updateQuery: (prev, { fetchMoreResult, ...rest }) => {
-                if (!fetchMoreResult) return prev
-                return {
-                  ...fetchMoreResult,
-                  issues: {
-                    ...fetchMoreResult.issues,
-                    issues: [
-                      ...prev.issues.issues,
-                      ...fetchMoreResult.issues.issues,
-                    ],
-                  },
-                }
-              },
-            })
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: '1em',
           }}
         >
-          Load More
-        </Button>
+          <Button
+            onClick={() => {
+              setOffset(offset + maxResults)
+              return fetchMore({
+                variables: {
+                  startAt: offset,
+                },
+                updateQuery: (prev, { fetchMoreResult, ...rest }) => {
+                  if (!fetchMoreResult) return prev
+                  return {
+                    ...fetchMoreResult,
+                    issues: {
+                      ...fetchMoreResult.issues,
+                      issues: [
+                        ...prev.issues.issues,
+                        ...fetchMoreResult.issues.issues,
+                      ],
+                    },
+                  }
+                },
+              })
+            }}
+          >
+            Load More
+          </Button>
+        </div>
       )}
     </>
   )

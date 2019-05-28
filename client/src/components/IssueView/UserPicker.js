@@ -2,7 +2,7 @@ import React from 'react'
 import { useQuery } from 'react-apollo-hooks'
 import UserPicker from '@atlaskit/user-picker'
 import { hostname } from '../../credentials'
-import { GET_RESOURCES } from '../queries'
+import { GET_RESOURCES } from '../../queries'
 
 export default ({ assignee }) => {
   const { data, loading, error } = useQuery(GET_RESOURCES, {

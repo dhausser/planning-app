@@ -8,10 +8,9 @@ import { ApolloClient } from 'apollo-client'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { createHttpLink } from 'apollo-link-http'
 import { setContext } from 'apollo-link-context'
-import { resolvers, typeDefs } from './components/resolvers'
-
 import { Login, App } from './pages'
-import { IS_LOGGED_IN } from './components/queries'
+import { resolvers, typeDefs } from './resolvers'
+import { IS_LOGGED_IN } from './queries'
 
 const httpLink = createHttpLink({
   uri: '/graphql',

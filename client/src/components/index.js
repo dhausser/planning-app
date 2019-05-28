@@ -15,11 +15,10 @@ export { default as TableTree } from './TableTree'
 
 // Resource
 export { default as ResourceList } from './ResourceList'
-export { default as IssuesTable } from './IssuesTable'
+export { default as DynamicTable } from './DynamicTable'
 export { default as AbsencesTable } from './AbsencesTable'
 
 // Reports
-export { default as Dashboard } from './Dashboard'
 export { default as BarChart } from './BarChart'
 
 // IssueView

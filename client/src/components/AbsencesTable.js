@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 import DynamicTable from '@atlaskit/dynamic-table'
 import Error from './Error'
-import { GET_ABSENCES } from './queries'
+import { GET_ABSENCES } from '../queries'
 
 export default function AbsencesTable({ resourceId }) {
   const { data, loading, error } = useQuery(GET_ABSENCES, {

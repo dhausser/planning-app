@@ -5,7 +5,7 @@ import { Status } from '@atlaskit/status'
 import { Page, Header, Loading, Error, TableTree } from '../components'
 import { projectHomeView } from '../components/Nav'
 import Icon from '../components/IssueView/Icon'
-import { GET_FILTERS, GET_ISSUES, GET_STORIES } from '../components/queries'
+import { GET_FILTERS, GET_ISSUES, GET_STORIES } from '../queries'
 
 function RoadmapPage(props) {
   useEffect(() => {

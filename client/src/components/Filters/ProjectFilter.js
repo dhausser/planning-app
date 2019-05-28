@@ -3,7 +3,7 @@ import { useQuery, useMutation } from 'react-apollo-hooks'
 import gql from 'graphql-tag'
 import Select from '@atlaskit/select'
 import Error from '../Error'
-import { GET_PROJECTS } from '../queries'
+import { GET_PROJECTS } from '../../queries'
 
 const TOGGLE_PROJECT = gql`
   mutation toggleProject($project: Project!) {

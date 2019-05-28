@@ -5,8 +5,8 @@ import { withNavigationViewController } from '@atlaskit/navigation-next'
 import Avatar from '@atlaskit/avatar'
 import { projectHomeView } from '../components/Nav'
 import Page, { NameWrapper, AvatarWrapper } from '../components/Page'
-import { Header, Error, IssuesTable, AbsencesTable } from '../components'
-import { GET_RESOURCE, GET_ISSUES, GET_FILTERS } from '../components/queries'
+import { Header, Error, DynamicTable, AbsencesTable } from '../components'
+import { GET_RESOURCE, GET_ISSUES, GET_FILTERS } from '../queries'
 import { jqlParser } from './Issues'
 import { hostname } from '../credentials'
 
@@ -36,7 +36,7 @@ function ResourcePage(props) {
     <Page>
       <Header title={title} {...props} />
       {link}
-      <IssuesTable {...data.issues} fetchMore={fetchMore} loading={loading} />
+      <DynamicTable {...data.issues} fetchMore={fetchMore} loading={loading} />
       <AbsencesTable resourceId={resourceId} />
     </Page>
   )

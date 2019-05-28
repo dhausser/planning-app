@@ -6,7 +6,7 @@ import Error from '../Error'
 import ProjectFilter from './ProjectFilter'
 import VersionFilter from './VersionFilter'
 import TeamFilter from './TeamFilter'
-import { GET_FILTERS } from '../queries'
+import { GET_FILTERS } from '../../queries'
 
 export default function Filters(props) {
   const { data, loading, error } = useQuery(GET_FILTERS)

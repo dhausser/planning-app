@@ -3,7 +3,7 @@ import { useQuery, useMutation } from 'react-apollo-hooks'
 import gql from 'graphql-tag'
 import Select from '@atlaskit/select'
 import Error from '../Error'
-import { GET_VERSIONS } from '../queries'
+import { GET_VERSIONS } from '../../queries'
 import { projectId } from '../../credentials'
 
 const TOGGLE_VERSION = gql`
