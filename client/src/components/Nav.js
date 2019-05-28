@@ -12,6 +12,7 @@ import RoadmapIcon from '@atlaskit/icon/glyph/roadmap'
 import PeopleIcon from '@atlaskit/icon/glyph/people'
 import BacklogIcon from '@atlaskit/icon/glyph/backlog'
 import ShipIcon from '@atlaskit/icon/glyph/ship'
+import SettingsIcon from '@atlaskit/icon/glyph/settings'
 
 import { hostname, projectId } from '../credentials'
 
@@ -62,18 +63,18 @@ export const productHomeView = {
         {
           type: 'InlineComponent',
           component: LinkItem,
-          id: 'dashboards',
-          before: DashboardIcon,
-          text: 'Dashboards',
-          to: '/',
+          id: 'project',
+          before: FolderIcon,
+          text: 'Project',
+          to: '/projects',
         },
         {
           type: 'InlineComponent',
           component: LinkItem,
-          id: 'people',
-          before: FolderIcon,
-          text: 'People',
-          to: '/resources',
+          id: 'dashboards',
+          before: DashboardIcon,
+          text: 'Dashboards',
+          to: '/',
         },
         {
           type: 'Item',
@@ -85,10 +86,10 @@ export const productHomeView = {
         {
           type: 'InlineComponent',
           component: LinkItem,
-          id: 'portfolio',
-          before: PortfolioIcon,
-          text: 'Portfolio',
-          to: '/portfolio',
+          id: 'settings',
+          before: SettingsIcon,
+          text: 'Settings',
+          to: '/settings',
         },
       ],
     },
@@ -266,6 +267,7 @@ export const projectHomeView = {
           to: '/releases',
           id: 'releases',
         },
+        { type: 'Separator', id: 'separator' },
         {
           type: 'Item',
           id: 'issues-and-filters',

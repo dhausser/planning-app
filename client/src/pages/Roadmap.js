@@ -14,27 +14,34 @@ function RoadmapPage(props) {
 
   let [epics, version] = useEpics()
   let stories = useStories(epics, version)
+  let issues = []
 
-  if (epics.loading || stories.loading) return <Loading />
-  if (epics.error || stories.error) return <Error />
+  if (!epics.loading && !stories.loading) {
+    epics = epics.data.issues.issues
+    stories = stories.data.issues.issues
 
-  epics = epics.data.issues.issues
-  stories = stories.data.issues.issues
-
-  epics.forEach(issue => {
-    issue.children = []
-    stories.forEach(child => {
-      if (child.parent === issue.key) {
-        issue.children.push(child)
-      }
+    epics.forEach(issue => {
+      issue.children = []
+      stories.forEach(child => {
+        if (child.parent === issue.key) {
+          issue.children.push(child)
+        }
+      })
     })
-  })
-  const issues = epics.map(issue => reducer(issue)) || []
+
+    issues = epics.map(issue => reducer(issue)) || []
+  }
 
   return (
     <Page title="Roadmap">
       <Header {...props} />
-      <TableTree issues={issues} />
+      {epics.loading || stories.loading ? (
+        <Loading />
+      ) : epics.error || stories.error ? (
+        <Error />
+      ) : (
+        <TableTree issues={issues} />
+      )}
     </Page>
   )
 }
@@ -46,13 +53,13 @@ function useEpics() {
   } = useQuery(GET_FILTERS)
   const jql = `issuetype=epic 
   ${project ? `and project=${project.id}` : ''}
-  ${version ? `and fixVersion=${version.id}` : ''} order by key asc`
+  ${version ? `and fixVersion=${version.id}` : ''} order by key desc`
 
   const { data, loading, error } = useQuery(GET_ISSUES, {
     variables: {
       jql,
     },
-    fetchPolicy: 'network-only',
+    fetchPolicy: 'cache-first',
   })
 
   return [{ data, loading, error }, version]
@@ -73,7 +80,7 @@ function useStories(epics, version) {
     variables: {
       jql,
     },
-    fetchPolicy: 'network-only',
+    fetchPolicy: 'cache-first',
   })
 
   return { data, loading, error }
