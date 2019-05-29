@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react'
 import { useQuery } from 'react-apollo-hooks'
-
 import { withNavigationViewController } from '@atlaskit/navigation-next'
 import Avatar from '@atlaskit/avatar'
 import { projectHomeView } from '../components/Nav'
 import Page, { NameWrapper, AvatarWrapper } from '../components/Page'
 import { Header, Error, DynamicTable, AbsencesTable } from '../components'
-import { GET_RESOURCE, GET_ISSUES, GET_FILTERS } from '../queries'
-import { jqlParser } from './Issues'
+import { GET_RESOURCE, GET_ISSUES } from '../queries'
+import { useIssues } from './Issues'
 import { hostname } from '../credentials'
 
 function ResourcePage(props) {
@@ -16,18 +15,13 @@ function ResourcePage(props) {
   }, [props.navigationViewController])
 
   const { resourceId } = props.match.params
-  const { data: filters } = useQuery(GET_FILTERS)
+
   const { data: resource } = useQuery(GET_RESOURCE, {
     variables: { id: resourceId },
   })
-  const jql = jqlParser(filters, resourceId)
 
-  const { data, loading, error, fetchMore } = useQuery(GET_ISSUES, {
-    variables: { jql, startAt: 0, maxResults: 20 },
-    fetchPolicy: 'network-only',
-  })
-
-  if (error) return <Error error={error} />
+  const [issues, filters] = useIssues(GET_ISSUES, resourceId)
+  const { data, loading, error, fetchMore } = issues
 
   const { title, link } =
     !loading && formatName(resource, resourceId, filters.version)
@@ -36,7 +30,15 @@ function ResourcePage(props) {
     <Page>
       <Header title={title} {...props} />
       {link}
-      <DynamicTable {...data.issues} fetchMore={fetchMore} loading={loading} />
+      {error ? (
+        <Error error={error} />
+      ) : (
+        <DynamicTable
+          {...data.issues}
+          fetchMore={fetchMore}
+          loading={loading}
+        />
+      )}
       <AbsencesTable resourceId={resourceId} />
     </Page>
   )

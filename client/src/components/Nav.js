@@ -88,7 +88,7 @@ export const productHomeView = {
           component: LinkItem,
           id: 'settings',
           before: SettingsIcon,
-          text: 'Settings',
+          text: 'Jira Settings',
           to: '/settings',
         },
       ],
@@ -112,8 +112,7 @@ export const productIssuesView = {
         {
           type: 'BackItem',
           id: 'back-item',
-          goTo: 'project/home',
-          text: 'Back to Project',
+          goTo: 'product/home',
         },
       ],
     },

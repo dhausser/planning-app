@@ -36,8 +36,11 @@ const config = dataset => ({
   },
 })
 
-export default ({ dataset, maxResults = 0, total = 0 }) => {
+export default ({ issues, maxResults = 0, total = 0, team = null }) => {
   const [chart, setChart] = useState(null)
+  const dataset = filterByTeam(issues, team)
+
+  console.log(dataset)
 
   useEffect(() => {
     if (chart === null) {
@@ -61,4 +64,42 @@ export default ({ dataset, maxResults = 0, total = 0 }) => {
       <canvas id="BarChart" width="400" height="250" />
     </div>
   )
+}
+
+function aggregateByAssignee(issues) {
+  if (!issues) return []
+
+  return issues.reduce((resources, issue) => {
+    if (issue.assignee && issue.assignee.name) {
+      const name = issue.assignee.name.split(' ').shift()
+      if (!resources[name]) {
+        resources[name] = 0
+      }
+      resources[name] += 1
+    }
+    return resources
+  }, {})
+}
+
+function aggregateByTeam(issues) {
+  if (!issues) return []
+
+  return issues.reduce((teams, issue) => {
+    if (issue.assignee && issue.assignee.team) {
+      const { team: teamName } = issue.assignee
+      if (!teams[teamName]) {
+        teams[teamName] = 0
+      }
+      teams[teamName] += 1
+    }
+    return teams
+  }, {})
+}
+
+function filterByTeam(issues, team) {
+  return team
+    ? aggregateByAssignee(
+        issues.filter(({ assignee }) => assignee.team === team.id),
+      )
+    : aggregateByTeam(issues)
 }

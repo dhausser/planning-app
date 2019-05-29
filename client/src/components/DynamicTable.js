@@ -28,8 +28,8 @@ export default function({ maxResults, total, issues, loading, fetchMore }) {
       <DynamicTable
         caption={caption(offset, maxResults, total)}
         head={head}
-        rows={!loading && issues.length && issues.map(issueRow)}
-        rowsPerPage={200}
+        rows={!loading && issues.length && issues.map(row)}
+        rowsPerPage={20}
         defaultPage={1}
         loadingSpinnerSize="large"
         isLoading={loading}
@@ -135,7 +135,7 @@ const head = {
   ],
 }
 
-const issueRow = issue => ({
+const row = issue => ({
   key: issue.id,
   cells: [
     {
