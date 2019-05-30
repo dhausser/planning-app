@@ -2,13 +2,12 @@
   "name": "server",
   "version": "1.0.0",
   "description": "Roadmap app server",
-  "repository": "https://github.com/dhausser/planning-app/",
-  "homepage": "https://roadmap.cdprojektred.com",
   "main": "index.js",
   "module": "main.js",
   "dependencies": {
     "apollo-datasource": "^0.4.0",
     "apollo-datasource-rest": "^0.4.0",
+    "apollo-server": "^2.5.1",
     "apollo-server-express": "^2.5.0",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.4",
@@ -23,8 +22,9 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon -r esm main.js"
+    "start": "nodemon esm main.js",
+    "dev": "nodemon esm main.js",
+    "prod": "node -r esm main.js"
   },
   "keywords": [],
   "author": "",

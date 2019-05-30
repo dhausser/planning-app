@@ -7,6 +7,7 @@ import Button from '@atlaskit/button'
 import Tooltip from '@atlaskit/tooltip'
 import CopyIcon from '@atlaskit/icon/glyph/copy'
 import { Status } from '@atlaskit/status'
+import EmptyState from '@atlaskit/empty-state'
 import Icon from './IssueView/Icon'
 
 import { hostname } from '../credentials'
@@ -30,12 +31,13 @@ export default function({ maxResults, total, issues, loading, fetchMore }) {
         head={head}
         rows={!loading && issues.length && issues.map(row)}
         rowsPerPage={20}
-        defaultPage={1}
         loadingSpinnerSize="large"
         isLoading={loading}
         isFixedSize
         defaultSortKey="priority"
         defaultSortOrder="ASC"
+        isRankable
+        emptyView={EmptyState}
       />
       {total > offset && (
         <div

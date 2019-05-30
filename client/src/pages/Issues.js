@@ -39,10 +39,22 @@ export function useIssues(QUERY = GET_ISSUES, resourceId = null) {
     error,
   } = useQuery(GET_RESOURCES)
 
+  // let assignee = null
+  // if (resourceId) {
+  //   assignee = resourceId
+  // } else if (team) {
+  //   assignee = resources
+  //     .filter(resource => resource.team === team.id)
+  //     .map(resource => resource.key)
+  // }
+
+  // const assignee = null
+  // console.log({ team })
+
   const assignee =
-    !loading && !error && resourceId != null
+    !loading && !error && resourceId
       ? resourceId
-      : team != null &&
+      : team &&
         resources
           .filter(resource => resource.team === team.id)
           .map(resource => resource.key)

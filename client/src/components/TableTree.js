@@ -40,7 +40,7 @@ export default ({ issues }) => (
           itemId={key}
           items={children}
           hasChildren={children && children.length > 0}
-          isExpanded
+          // isExpanded
         >
           <Cell singleLine>{type}</Cell>
           <Cell singleLine>

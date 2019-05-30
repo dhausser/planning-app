@@ -12,7 +12,9 @@ const TOGGLE_PROJECT = gql`
 `
 
 export default ({ project }) => {
-  const { data, loading, error } = useQuery(GET_PROJECTS)
+  const { data, loading, error } = useQuery(GET_PROJECTS, {
+    fetchPolicy: 'cache-first',
+  })
   const toggleProject = useMutation(TOGGLE_PROJECT)
 
   if (error) return <Error error={error} />

@@ -40,8 +40,6 @@ export default ({ issues, maxResults = 0, total = 0, team = null }) => {
   const [chart, setChart] = useState(null)
   const dataset = filterByTeam(issues, team)
 
-  console.log(dataset)
-
   useEffect(() => {
     if (chart === null) {
       setChart(new Chart('BarChart', config(dataset)))

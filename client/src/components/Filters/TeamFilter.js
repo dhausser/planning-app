@@ -12,7 +12,9 @@ const TOGGLE_TEAM = gql`
 `
 
 export default ({ team }) => {
-  const { data, loading, error } = useQuery(GET_TEAMS)
+  const { data, loading, error } = useQuery(GET_TEAMS, {
+    fetchPolicy: 'cache-first',
+  })
   const toggleTeam = useMutation(TOGGLE_TEAM)
 
   if (error) return <Error error={error} />

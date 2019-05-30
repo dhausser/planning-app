@@ -86,6 +86,15 @@ const typeDefs = gql`
     id: ID!
     key: String!
     name: String!
+    avatarUrls: AvatarUrls
+    projectTypeKey: String
+  }
+
+  type AvatarUrls {
+    large: String
+    small: String
+    xsmall: String
+    medium: String
   }
 
   type Mutation {

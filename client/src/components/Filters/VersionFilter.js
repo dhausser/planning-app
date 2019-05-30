@@ -18,7 +18,10 @@ export default ({ version, project }) => {
     startAt: 7,
     maxResults: 5,
   }
-  const { data, loading, error } = useQuery(GET_VERSIONS, { variables })
+  const { data, loading, error } = useQuery(GET_VERSIONS, {
+    variables,
+    fetchPolicy: 'cache-first',
+  })
   const toggleVersion = useMutation(TOGGLE_VERSION)
 
   if (error) return <Error error={error} />

@@ -39,19 +39,19 @@ const App = ({ navigationViewController }) => {
   return (
     <LayoutManagerWithViewController globalNavigation={MyGlobalNavigation}>
       <Switch>
-        <Route path="/" exact component={Dashboard} />
+        <Route path="/" exact component={Projects} />
+        <Route path="/dashboards" component={Dashboard} />
         <Route path="/reports" component={Reports} />
+        <Route path="/issues" component={Issues} />
+        <Route path="/settings" component={Settings} />
         <Route path="/releases" component={Releases} />
         <Route path="/resources" component={Resources} />
-        <Route path="/resource/:resourceId" component={Resource} />
-        <Route path="/issues/:filterId" component={Issues} />
-        <Route path="/issue/:issueId" component={Issue} />
         <Route path="/roadmap" component={Roadmap} />
-        <Route path="/issues" component={Issues} />
         <Route path="/portfolio" component={Portfolio} />
         <Route path="/backlog" component={Backlog} />
-        <Route path="/settings" component={Settings} />
-        <Route path="/projects" component={Projects} />
+        <Route path="/resource/:resourceId" component={Resource} />
+        <Route path="/issue/:issueId" component={Issue} />
+        <Route path="/issues/:filterId" component={Issues} />
       </Switch>
     </LayoutManagerWithViewController>
   )

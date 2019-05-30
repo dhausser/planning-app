@@ -16,18 +16,31 @@ export default class IssueAPI extends RESTDataSource {
     /**
      * TODO: Authenticate User
      */
+
     // const get = await this.get(`auth/1/session`)
     // const post = await this.post(`auth/1/session`, {
     //   username,
     //   password,
     // })
-    // console.log(post)
+    // console.log({ post })
+
     return token || `${username}:${password}`
   }
 
   async getAllProjects() {
     const response = await this.get('api/latest/project/')
-    return response
+
+    const projects = response.map(project => ({
+      ...project,
+      avatarUrls: {
+        large: project.avatarUrls['48x48'],
+        small: project.avatarUrls['24x24'],
+        xsmall: project.avatarUrls['16x16'],
+        medium: project.avatarUrls['32x32'],
+      },
+    }))
+
+    return projects
   }
 
   async getAllVersions(projectId, startAt, maxResults) {
@@ -40,15 +53,12 @@ export default class IssueAPI extends RESTDataSource {
   }
 
   async getAllIssues(jql, startAt, maxResults) {
-    console.log({ startAt, maxResults })
-
     const response = await this.post('api/latest/search', {
       jql,
       fields,
       startAt,
       maxResults,
     })
-    // const { startAt, maxResults, total } = response
     const teamMapping = await this.teamMapping()
     const issues = Array.isArray(response.issues)
       ? response.issues.map(issue => this.issueReducer(issue, teamMapping))

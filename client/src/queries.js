@@ -129,6 +129,13 @@ export const GET_PROJECTS = gql`
       id
       key
       name
+      avatarUrls {
+        # large
+        # xsmall
+        small
+        # medium
+      }
+      projectTypeKey
     }
   }
 `

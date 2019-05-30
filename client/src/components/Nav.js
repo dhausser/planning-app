@@ -1,27 +1,55 @@
 import React from 'react'
 import { Link, Route } from 'react-router-dom'
-import GlobalNavigation from '@atlaskit/global-navigation'
-import { ItemAvatar } from '@atlaskit/navigation-next'
-import { JiraIcon, JiraWordmark } from '@atlaskit/logo'
+import { GlobalItem, ItemAvatar } from '@atlaskit/navigation-next'
+import { JiraWordmark } from '@atlaskit/logo'
 import DashboardIcon from '@atlaskit/icon/glyph/dashboard'
 import FolderIcon from '@atlaskit/icon/glyph/folder'
 import GraphLineIcon from '@atlaskit/icon/glyph/graph-line'
-import IssueIcon from '@atlaskit/icon/glyph/issue'
+import IssuesIcon from '@atlaskit/icon/glyph/issues'
 import PortfolioIcon from '@atlaskit/icon/glyph/portfolio'
 import RoadmapIcon from '@atlaskit/icon/glyph/roadmap'
 import PeopleIcon from '@atlaskit/icon/glyph/people'
 import BacklogIcon from '@atlaskit/icon/glyph/backlog'
 import ShipIcon from '@atlaskit/icon/glyph/ship'
 import SettingsIcon from '@atlaskit/icon/glyph/settings'
+import EmojiAtlassianIcon from '@atlaskit/icon/glyph/emoji/atlassian'
+
+import AppSwitcherIcon from '@atlaskit/icon/glyph/app-switcher'
+import GlobalNavigation from '@atlaskit/global-navigation'
 
 import { hostname, projectId } from '../credentials'
 
-export const MyGlobalNavigation = () => (
-  <GlobalNavigation
-    productIcon={() => <JiraIcon size="medium" />}
-    onProductClick={() => {}}
+const AppSwitcherComponent = props => (
+  <GlobalItem
+    {...props}
+    icon={AppSwitcherIcon}
+    id="test"
+    onClick={() => console.log('AppSwitcher clicked')}
   />
 )
+
+export const MyGlobalNavigation = () => (
+  <GlobalNavigation
+    productIcon={EmojiAtlassianIcon}
+    productHref="#"
+    onProductClick={() => console.log('product clicked')}
+    onCreateClick={() => console.log('create clicked')}
+    onSearchClick={() => console.log('search clicked')}
+    onStarredClick={() => console.log('starred clicked')}
+    onHelpClick={() => console.log('help clicked')}
+    helpItems={() => <div />}
+    onNotificationClick={() => console.log('notification clicked')}
+    appSwitcherComponent={AppSwitcherComponent}
+    appSwitcherTooltip="Switch to ..."
+    onSettingsClick={() => console.log('settings clicked')}
+    loginHref="#login"
+  />
+)
+
+/**
+ * TODO: Apply styling to nav links
+ * color = '#DEEBFD'
+ */
 
 const LinkItem = ({ components: { Item }, to, ...props }) => (
   <Route
@@ -65,8 +93,8 @@ export const productHomeView = {
           component: LinkItem,
           id: 'project',
           before: FolderIcon,
-          text: 'Project',
-          to: '/projects',
+          text: 'Projects',
+          to: '/',
         },
         {
           type: 'InlineComponent',
@@ -74,13 +102,13 @@ export const productHomeView = {
           id: 'dashboards',
           before: DashboardIcon,
           text: 'Dashboards',
-          to: '/',
+          to: '/dashboards',
         },
         {
           type: 'Item',
           id: 'issues-and-filters',
           goTo: 'product/issues',
-          before: IssueIcon,
+          before: IssuesIcon,
           text: 'Issues and filters',
         },
         {
@@ -88,7 +116,7 @@ export const productHomeView = {
           component: LinkItem,
           id: 'settings',
           before: SettingsIcon,
-          text: 'Jira Settings',
+          text: 'Jira settings',
           to: '/settings',
         },
       ],
@@ -271,7 +299,7 @@ export const projectHomeView = {
           type: 'Item',
           id: 'issues-and-filters',
           goTo: 'product/issues',
-          before: IssueIcon,
+          before: IssuesIcon,
           text: 'Issues and filters',
         },
         {
