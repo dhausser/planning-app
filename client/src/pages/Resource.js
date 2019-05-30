@@ -4,7 +4,13 @@ import { withNavigationViewController } from '@atlaskit/navigation-next'
 import Avatar from '@atlaskit/avatar'
 import { projectHomeView } from '../components/Nav'
 import Page, { NameWrapper, AvatarWrapper } from '../components/Page'
-import { Header, Error, DynamicTable, AbsencesTable } from '../components'
+import {
+  Header,
+  Loading,
+  Error,
+  DynamicTable,
+  AbsencesTable,
+} from '../components'
 import { GET_RESOURCE, GET_ISSUES } from '../queries'
 import { useIssues } from './Issues'
 import { hostname } from '../credentials'
@@ -16,7 +22,7 @@ function ResourcePage(props) {
 
   const { resourceId } = props.match.params
 
-  const { data: resource } = useQuery(GET_RESOURCE, {
+  const { data: resource, loading: loadingResource } = useQuery(GET_RESOURCE, {
     variables: { id: resourceId },
   })
 
@@ -25,6 +31,8 @@ function ResourcePage(props) {
 
   const { title, link } =
     !loading && formatName(resource, resourceId, filters.version)
+
+  if (loadingResource || loading) return <Loading />
 
   return (
     <Page>
@@ -46,12 +54,8 @@ function ResourcePage(props) {
 
 export default withNavigationViewController(ResourcePage)
 
-function formatName(resource, resourceId, version) {
-  const name = resource ? resource.name : ''
-  // resourceId
-  //   .split('.')
-  //   .map(str => str.charAt(0).toUpperCase() + str.slice(1))
-  //   .join(' ')
+function formatName({ resource }, resourceId, version) {
+  const { name } = resource
 
   return {
     title: (

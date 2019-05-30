@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link, Route } from 'react-router-dom'
-import { GlobalItem, ItemAvatar } from '@atlaskit/navigation-next'
+import { GlobalItem, ItemAvatar, Switcher } from '@atlaskit/navigation-next'
 import { JiraWordmark } from '@atlaskit/logo'
 import DashboardIcon from '@atlaskit/icon/glyph/dashboard'
 import FolderIcon from '@atlaskit/icon/glyph/folder'
@@ -18,6 +18,8 @@ import AppSwitcherIcon from '@atlaskit/icon/glyph/app-switcher'
 import GlobalNavigation from '@atlaskit/global-navigation'
 
 import { hostname, projectId } from '../credentials'
+import { Wrapper, projects, items } from './NavData'
+import MySwitcher from './Switcher'
 
 const AppSwitcherComponent = props => (
   <GlobalItem
@@ -25,6 +27,18 @@ const AppSwitcherComponent = props => (
     icon={AppSwitcherIcon}
     id="test"
     onClick={() => console.log('AppSwitcher clicked')}
+  />
+)
+
+const selected = projects[0].options[0]
+
+const ProjectSwitcherComponent = props => (
+  <Switcher
+    create={() => {}}
+    onChange={() => {}}
+    options={projects}
+    target={selected}
+    value={selected}
   />
 )
 
@@ -42,14 +56,10 @@ export const MyGlobalNavigation = () => (
     appSwitcherComponent={AppSwitcherComponent}
     appSwitcherTooltip="Switch to ..."
     onSettingsClick={() => console.log('settings clicked')}
-    loginHref="#login"
+    profileItems={() => <div />}
+    profileIconUrl={`https://${hostname}/secure/useravatar?ownerId=davy.hausser`}
   />
 )
-
-/**
- * TODO: Apply styling to nav links
- * color = '#DEEBFD'
- */
 
 const LinkItem = ({ components: { Item }, to, ...props }) => (
   <Route
@@ -249,26 +259,31 @@ export const projectHomeView = {
       id: 'project/home:header',
       items: [
         {
-          type: 'ContainerHeader',
-          before: itemState => (
-            <ItemAvatar
-              itemState={itemState}
-              appearance="square"
-              size="large"
-              src={`https://${hostname}/secure/projectavatar?pid=${projectId}`}
-            />
-          ),
-          text: 'Gwent Invader',
-          subText: 'Software project',
-          id: 'project-header',
+          type: 'InlineComponent',
+          component: MySwitcher,
+          id: 'switcher',
         },
+        // {
+        //   type: 'ContainerHeader',
+        //   before: itemState => (
+        //     <ItemAvatar
+        //       itemState={itemState}
+        //       appearance="square"
+        //       size="large"
+        //       src={`https://${hostname}/secure/projectavatar?pid=${projectId}`}
+        //     />
+        //   ),
+        //   text: 'Gwent Invader',
+        //   subText: 'Software project',
+        //   id: 'project-header',
+        // },
       ],
     },
     {
       type: 'MenuSection',
       nestedGroupKey: 'menu',
       id: 'project/home:menu',
-      parentId: null,
+      parentId: 'product/home:menu',
       items: [
         {
           type: 'InlineComponent',
