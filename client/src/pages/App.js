@@ -8,11 +8,11 @@ import {
 } from '@atlaskit/navigation-next'
 
 import {
-  MyGlobalNavigation,
-  productHomeView,
-  productIssuesView,
-  projectHomeView,
-} from '../components/Nav'
+  GlobalNavigation,
+  ProductHomeView,
+  ProductIssuesView,
+  ProjectHomeView,
+} from '../components'
 
 import {
   Dashboard,
@@ -31,13 +31,13 @@ import {
 
 const App = ({ navigationViewController }) => {
   useEffect(() => {
-    navigationViewController.addView(productHomeView)
-    navigationViewController.addView(productIssuesView)
-    navigationViewController.addView(projectHomeView)
+    navigationViewController.addView(ProductHomeView)
+    navigationViewController.addView(ProductIssuesView)
+    navigationViewController.addView(ProjectHomeView)
   }, [navigationViewController])
 
   return (
-    <LayoutManagerWithViewController globalNavigation={MyGlobalNavigation}>
+    <LayoutManagerWithViewController globalNavigation={GlobalNavigation}>
       <Switch>
         <Route path="/" exact component={Projects} />
         <Route path="/dashboards" component={Dashboard} />

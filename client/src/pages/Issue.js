@@ -5,6 +5,7 @@ import { withNavigationViewController } from '@atlaskit/navigation-next'
 import { Grid, GridColumn } from '@atlaskit/page'
 import { Status } from '@atlaskit/status'
 import {
+  ProductIssuesView,
   Page,
   Loading,
   Error,
@@ -14,7 +15,6 @@ import {
   UserPicker,
   Comments,
 } from '../components'
-import { productIssuesView } from '../components/Nav'
 import Icon from '../components/IssueView/Icon'
 import { GET_ISSUE } from '../queries'
 
@@ -25,7 +25,7 @@ export default withNavigationViewController(function IssuePage({
   match,
 }) {
   useEffect(() => {
-    navigationViewController.setView(productIssuesView.id)
+    navigationViewController.setView(ProductIssuesView.id)
   }, [navigationViewController])
 
   const {

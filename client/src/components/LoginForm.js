@@ -35,10 +35,10 @@ export default props => (
             defaultValue=""
             validate={value => (value.length < 8 ? 'TOO_SHORT' : undefined)}
           >
-            {({ fieldProps, error, meta }) => (
+            {({ fieldProps, error }) => (
               <>
                 <TextField type="password" {...fieldProps} />
-                {!error && !meta.valid && (
+                {!error && (
                   <HelperMessage>Use your usual Jira password.</HelperMessage>
                 )}
               </>

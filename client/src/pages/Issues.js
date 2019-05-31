@@ -1,15 +1,20 @@
 import React, { useEffect } from 'react'
 import { useQuery } from 'react-apollo-hooks'
 import { withNavigationViewController } from '@atlaskit/navigation-next'
-import { productIssuesView } from '../components/Nav'
-import { Page, Header, Error, DynamicTable } from '../components'
+import {
+  ProductIssuesView,
+  Page,
+  Header,
+  Error,
+  DynamicTable,
+} from '../components'
 import { GET_FILTERS, GET_RESOURCES, GET_ISSUES } from '../queries'
 
 function IssuesPage({ navigationViewController }) {
   const [{ data, loading, error, fetchMore }] = useIssues(GET_ISSUES)
 
   useEffect(() => {
-    navigationViewController.setView(productIssuesView.id)
+    navigationViewController.setView(ProductIssuesView.id)
   }, [navigationViewController])
 
   return (
@@ -35,29 +40,15 @@ export function useIssues(QUERY = GET_ISSUES, resourceId = null) {
   } = useQuery(GET_FILTERS)
   const {
     data: { resources },
-    loading,
-    error,
   } = useQuery(GET_RESOURCES)
 
-  // let assignee = null
-  // if (resourceId) {
-  //   assignee = resourceId
-  // } else if (team) {
-  //   assignee = resources
-  //     .filter(resource => resource.team === team.id)
-  //     .map(resource => resource.key)
-  // }
-
-  // const assignee = null
-  // console.log({ team })
-
   const assignee =
-    !loading && !error && resourceId
-      ? resourceId
-      : team &&
-        resources
+    resourceId ||
+    (team
+      ? resources
           .filter(resource => resource.team === team.id)
-          .map(resource => resource.key)
+          .map(({ key }) => key)
+      : null)
 
   const jql = `${project ? `project=${project.id} and ` : ''}${
     version ? `fixVersion in (${version.id}) and ` : ''

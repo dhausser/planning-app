@@ -5,6 +5,12 @@ export { default as Header } from './Header'
 export { default as Loading } from './Loading'
 export { default as Error } from './Error'
 
+// Navigation
+export { default as GlobalNavigation } from './Nav/GlobalNavigation'
+export { default as ProductHomeView } from './Nav/ProductHomeView'
+export { default as ProductIssuesView } from './Nav/ProductIssuesView'
+export { default as ProjectHomeView } from './Nav/ProjectHomeView'
+
 // Fitlers
 export { default as Filters } from './Filters/Filters'
 export { default as RefinementBar } from './Filters/RefinementBar'

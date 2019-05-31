@@ -5,8 +5,7 @@ import { Link } from 'react-router-dom'
 import Avatar from '@atlaskit/avatar'
 import DynamicTable from '@atlaskit/dynamic-table'
 import { withNavigationViewController } from '@atlaskit/navigation-next'
-import { productHomeView } from '../components/Nav'
-import { Page, Loading, Error } from '../components'
+import { ProductHomeView, Page, Loading, Error } from '../components'
 import { NameWrapper, AvatarWrapper } from '../components/Page'
 
 import { GET_PROJECTS } from '../queries'
@@ -24,7 +23,7 @@ const Projects = props => {
   // const toggleProject = useMutation(TOGGLE_PROJECT)
 
   useEffect(() => {
-    props.navigationViewController.setView(productHomeView.id)
+    props.navigationViewController.setView(ProductHomeView.id)
   }, [props.navigationViewController])
 
   return (

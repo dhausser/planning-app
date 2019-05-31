@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react'
 import { withNavigationViewController } from '@atlaskit/navigation-next'
-import { productHomeView } from '../components/Nav'
-import { Page, Header } from '../components'
+import { ProductHomeView, Page, Header } from '../components'
 
 const Settings = props => {
   useEffect(() => {
-    props.navigationViewController.setView(productHomeView.id)
+    props.navigationViewController.setView(ProductHomeView.id)
   }, [props.navigationViewController])
 
   return (

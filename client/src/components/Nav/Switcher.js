@@ -8,9 +8,10 @@ import {
   Switcher,
   NavigationProvider,
 } from '@atlaskit/navigation-next'
-import { Loading, Error } from '.'
+import Loading from '../Loading'
+import Error from '../Error'
 
-import { GET_PROJECTS } from '../queries'
+import { GET_PROJECTS } from '../../queries'
 
 export default function() {
   const [selected, setSelected] = useState(projects[0].options[0])
@@ -47,7 +48,11 @@ export default function() {
       <Wrapper>
         <Switcher
           create={create()}
-          onChange={() => setSelected(selected)}
+          onChange={() => {
+            console.log(selected)
+            setSelected(selected)
+            console.log(selected)
+          }}
           options={options}
           target={target(selected)}
           value={selected}
@@ -91,10 +96,6 @@ const target = ({ id, subText, text }) => {
       text={text}
     />
   )
-}
-
-const onChange = selected => {
-  this.setState({ selected })
 }
 
 const Wrapper = props => (

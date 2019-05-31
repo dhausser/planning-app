@@ -1,15 +1,21 @@
 import React, { useEffect } from 'react'
 import { withNavigationViewController } from '@atlaskit/navigation-next'
 import { Grid, GridColumn } from '@atlaskit/page'
-import { productHomeView } from '../components/Nav'
-import { Page, Header, Loading, Error, BarChart } from '../components'
+import {
+  ProductHomeView,
+  Page,
+  Header,
+  Loading,
+  Error,
+  BarChart,
+} from '../components'
 import { GET_DASHBOARD_ISSUES } from '../queries'
 
 import { useIssues } from './Issues'
 
 function DashboardPage({ navigationViewController }) {
   useEffect(() => {
-    navigationViewController.setView(productHomeView.id)
+    navigationViewController.setView(ProductHomeView.id)
   }, [navigationViewController])
 
   const [issues, filters] = useIssues(GET_DASHBOARD_ISSUES)

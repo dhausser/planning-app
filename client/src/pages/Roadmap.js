@@ -2,14 +2,20 @@ import React, { useEffect } from 'react'
 import { useQuery } from 'react-apollo-hooks'
 import { withNavigationViewController } from '@atlaskit/navigation-next'
 import { Status } from '@atlaskit/status'
-import { Page, Header, Loading, Error, TableTree } from '../components'
-import { projectHomeView } from '../components/Nav'
+import {
+  ProjectHomeView,
+  Page,
+  Header,
+  Loading,
+  Error,
+  TableTree,
+} from '../components'
 import Icon from '../components/IssueView/Icon'
 import { GET_FILTERS, GET_ISSUES, GET_STORIES } from '../queries'
 
 function RoadmapPage(props) {
   useEffect(() => {
-    props.navigationViewController.setView(projectHomeView.id)
+    props.navigationViewController.setView(ProjectHomeView.id)
   }, [props.navigationViewController])
 
   let [epics, version] = useEpics()

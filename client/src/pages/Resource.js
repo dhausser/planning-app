@@ -2,9 +2,9 @@ import React, { useEffect } from 'react'
 import { useQuery } from 'react-apollo-hooks'
 import { withNavigationViewController } from '@atlaskit/navigation-next'
 import Avatar from '@atlaskit/avatar'
-import { projectHomeView } from '../components/Nav'
 import Page, { NameWrapper, AvatarWrapper } from '../components/Page'
 import {
+  ProjectHomeView,
   Header,
   Loading,
   Error,
@@ -17,18 +17,22 @@ import { hostname } from '../credentials'
 
 function ResourcePage(props) {
   useEffect(() => {
-    props.navigationViewController.setView(projectHomeView.id)
+    props.navigationViewController.setView(ProjectHomeView.id)
   }, [props.navigationViewController])
 
+  // Extract resource id from url parameters
   const { resourceId } = props.match.params
 
+  // Fetch resource from database
   const { data: resource, loading: loadingResource } = useQuery(GET_RESOURCE, {
     variables: { id: resourceId },
   })
 
+  // Fetch issues from REST API
   const [issues, filters] = useIssues(GET_ISSUES, resourceId)
   const { data, loading, error, fetchMore } = issues
 
+  // Format page title and link
   const { title, link } =
     !loading && formatName(resource, resourceId, filters.version)
 
