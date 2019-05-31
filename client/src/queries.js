@@ -31,6 +31,15 @@ const ISSUE_PAGINATION = gql`
   }
 `
 
+export const PROJECT_TILE_DATA = gql`
+  fragment ProjectTile on Project {
+    id
+    key
+    name
+    projectTypeKey
+  }
+`
+
 export const GET_ISSUE = gql`
   query GetIssueById($id: ID!) {
     issue(id: $id) {
@@ -119,23 +128,6 @@ export const GET_RESOURCE = gql`
   query getResourceById($id: ID!) {
     resource(id: $id) {
       name
-    }
-  }
-`
-
-export const GET_PROJECTS = gql`
-  query GetProjects {
-    projects {
-      id
-      key
-      name
-      avatarUrls {
-        # large
-        # xsmall
-        small
-        # medium
-      }
-      projectTypeKey
     }
   }
 `

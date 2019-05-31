@@ -32,6 +32,9 @@ export default class IssueAPI extends RESTDataSource {
 
     const projects = response.map(project => ({
       ...project,
+      projectTypeKey: `${project.projectTypeKey
+        .charAt(0)
+        .toUpperCase()}${project.projectTypeKey.slice(1)}`,
       avatarUrls: {
         large: project.avatarUrls['48x48'],
         small: project.avatarUrls['24x24'],

@@ -1,14 +1,25 @@
 import React, { useEffect } from 'react'
 import { useQuery } from 'react-apollo-hooks'
 import { Link } from 'react-router-dom'
-// import gql from 'graphql-tag'
+import gql from 'graphql-tag'
 import Avatar from '@atlaskit/avatar'
 import DynamicTable from '@atlaskit/dynamic-table'
 import { withNavigationViewController } from '@atlaskit/navigation-next'
 import { ProductHomeView, Page, Loading, Error } from '../components'
 import { NameWrapper, AvatarWrapper } from '../components/Page'
+import { PROJECT_TILE_DATA } from '../queries'
 
-import { GET_PROJECTS } from '../queries'
+export const GET_PROJECTS = gql`
+  query GetProjects {
+    projects {
+      ...ProjectTile
+      avatarUrls {
+        small
+      }
+    }
+  }
+  ${PROJECT_TILE_DATA}
+`
 
 // const TOGGLE_PROJECT = gql`
 //   mutation toggleProject($project: Project!) {
@@ -63,33 +74,12 @@ const head = {
       key: 'key',
       content: 'Key',
       isSortable: true,
-      width: 10,
     },
     {
       key: 'type',
       content: 'Type',
-      width: 15,
-    },
-    {
-      key: 'lead',
-      content: 'Lead',
-      isSortable: true,
-    },
-    {
-      key: 'url',
-      content: 'URL',
-      isSortable: true,
-    },
-    {
-      key: 'starred',
-      content: 'Starred',
     },
   ],
-}
-
-const resource = {
-  key: 'davy.hausser',
-  name: 'Davy Hausser',
 }
 
 const row = project => ({
@@ -118,31 +108,6 @@ const row = project => ({
     {
       key: project.projectTypeKey,
       content: project.projectTypeKey,
-    },
-    {
-      key: project.key,
-      content: (
-        <NameWrapper>
-          <AvatarWrapper>
-            <Avatar
-              name={resource.name}
-              size="small"
-              src={`https://jira.cdprojektred.com/secure/useravatar?ownerId=${
-                resource.key
-              }`}
-            />
-          </AvatarWrapper>
-          <Link to={`/resource/${resource.key}`}>{resource.name}</Link>
-        </NameWrapper>
-      ),
-    },
-    {
-      key: project.key,
-      content: '',
-    },
-    {
-      key: project.key,
-      content: '',
     },
   ],
 })

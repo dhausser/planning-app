@@ -3,7 +3,6 @@ import GlobalNavigation from '@atlaskit/global-navigation'
 import { GlobalItem } from '@atlaskit/navigation-next'
 import AppSwitcherIcon from '@atlaskit/icon/glyph/app-switcher'
 import EmojiAtlassianIcon from '@atlaskit/icon/glyph/emoji/atlassian'
-import { hostname } from '../../credentials'
 
 const AppSwitcherComponent = props => (
   <GlobalItem
@@ -29,6 +28,6 @@ export default () => (
     appSwitcherTooltip="Switch to ..."
     onSettingsClick={() => console.log('settings clicked')}
     profileItems={() => <div />}
-    profileIconUrl={`https://${hostname}/secure/useravatar?ownerId=davy.hausser`}
+    profileIconUrl="https://jira.cdprojektred.com/secure/useravatar?ownerId=davy.hausser"
   />
 )

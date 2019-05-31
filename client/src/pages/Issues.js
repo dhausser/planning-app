@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useQuery } from 'react-apollo-hooks'
 import { withNavigationViewController } from '@atlaskit/navigation-next'
+import EmptyState from '@atlaskit/empty-state'
 import {
   ProductIssuesView,
   Page,
@@ -27,6 +28,7 @@ function IssuesPage({ navigationViewController }) {
           {...data.issues}
           fetchMore={fetchMore}
           loading={loading}
+          emptyView={EmptyState}
         />
       )}
     </Page>
@@ -40,11 +42,13 @@ export function useIssues(QUERY = GET_ISSUES, resourceId = null) {
   } = useQuery(GET_FILTERS)
   const {
     data: { resources },
+    loading,
+    error,
   } = useQuery(GET_RESOURCES)
 
   const assignee =
     resourceId ||
-    (team
+    (team && !loading && !error
       ? resources
           .filter(resource => resource.team === team.id)
           .map(({ key }) => key)
