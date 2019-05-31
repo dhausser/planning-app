@@ -28,6 +28,6 @@ export default () => (
     appSwitcherTooltip="Switch to ..."
     onSettingsClick={() => console.log('settings clicked')}
     profileItems={() => <div />}
-    profileIconUrl="https://jira.cdprojektred.com/secure/useravatar?ownerId=davy.hausser"
+    profileIconUrl="https://solarsystem.atlassian.net/secure/useravatar?ownerId=admin"
   />
 )

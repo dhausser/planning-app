@@ -6,7 +6,7 @@ export default ({ components: { Item }, to, ...props }) => (
     render={({ location: { pathname } }) => (
       <Item
         component={({ children, className }) => (
-          <Link className={className} to={to}>
+          <Link css={{ color: '#DEEBFF' }} className={className} to={to}>
             {children}
           </Link>
         )}
