@@ -10,7 +10,7 @@ import Comment, {
 /**
  * TODO: Remove static data dependency
  */
-import { hostname } from '../../credentials'
+import { host } from '../../config'
 
 export default ({ comments }) => (
   <>
@@ -20,9 +20,9 @@ export default ({ comments }) => (
         key={comment.id}
         avatar={
           <Avatar
-            src={`https://${hostname}/secure/useravatar?ownerId=${
+            src={`https://${host}/secure/useravatar?ownerId=${
               comment.author.key
-            }`}
+              }`}
             label="Atlaskit avatar"
             size="medium"
           />

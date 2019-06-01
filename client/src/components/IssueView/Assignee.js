@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import Avatar from '@atlaskit/avatar'
 import { NameWrapper, AvatarWrapper } from '../Page'
-import { hostname } from '../../credentials'
+import { host } from '../../config'
 
 export default ({ assignee }) => (
   <>
@@ -12,9 +12,7 @@ export default ({ assignee }) => (
           <Avatar
             name={assignee.name}
             size="small"
-            src={`https://${hostname}/secure/useravatar?ownerId=${
-              assignee.key
-            }`}
+            src={`https://${host}/secure/useravatar?ownerId=${assignee.key}`}
           />
         </AvatarWrapper>
         <Link to={`/resource/${assignee.key}`}>{assignee.name}</Link>

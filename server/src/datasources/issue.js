@@ -1,10 +1,10 @@
 import { RESTDataSource } from 'apollo-datasource-rest'
-import ResourcesDAO from '../dao/resourcesDAO'
+import ResourceAPI from './resource'
 
 export default class IssueAPI extends RESTDataSource {
   constructor() {
     super()
-    this.baseURL = process.env.JIRA_URL
+    this.baseURL = `https://${process.env.HOST}/rest/`
   }
 
   willSendRequest(request) {
@@ -134,7 +134,7 @@ export default class IssueAPI extends RESTDataSource {
   })
 
   teamMapping = async () => {
-    const resources = await ResourcesDAO.getResources()
+    const resources = await ResourceAPI.getResources()
     const teamMapping = resources.reduce(function(acc, cur) {
       acc[cur.key] = cur.team
       return acc

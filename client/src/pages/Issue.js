@@ -18,7 +18,7 @@ import {
 import Icon from '../components/IssueView/Icon'
 import { GET_ISSUE } from '../queries'
 
-import { hostname } from '../credentials'
+import { host } from '../config'
 
 export default withNavigationViewController(function IssuePage({
   navigationViewController,
@@ -49,7 +49,7 @@ export default withNavigationViewController(function IssuePage({
         </GridColumn>
         <GridColumn medium={4}>
           <a
-            href={`https://${hostname}/browse/${issue.key}`}
+            href={`https://${host}/browse/${issue.key}`}
             target="_blank"
             rel="noopener noreferrer"
           >

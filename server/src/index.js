@@ -1,5 +1,8 @@
-import { ApolloServer } from 'apollo-server'
-
+import express from 'express'
+import { ApolloServer, AuthorizationError } from 'apollo-server-express'
+import { MongoClient } from 'mongodb'
+import path from 'path'
+import atob from 'atob'
 import resolvers from './resolvers'
 import typeDefs from './schema'
 
@@ -7,9 +10,14 @@ import IssueAPI from './datasources/issue'
 import AbsenceAPI from './datasources/absence'
 import ResourceAPI from './datasources/resource'
 
-import './db'
+MongoClient.connect(process.env.DATABASE, { useNewUrlParser: true })
+  .catch(err => {
+    console.log(err.stack)
+    process.exit(1)
+  })
+  .then(async client => ResourceAPI.injectDB(client))
 
-const server = new ApolloServer({
+const apollo = new ApolloServer({
   typeDefs,
   resolvers,
   formatError: error => {
@@ -17,8 +25,17 @@ const server = new ApolloServer({
     return error
   },
   context: ({ req }) => {
+    // get the user token from the headers
     const token = req.headers.authorization || ''
-    const user = () => ({ id: 'davy.hausser', name: 'Davy Hausser' })
+
+    // try to retrieve a user with the token
+    const user = atob(token.split(' ')[1]).split(':')[0]
+
+    // optionally block the user
+    // we could also check user roles/permissions here
+    if (!user) throw new AuthorizationError('you must be logged in')
+
+    // add the user to the context
     return { user, token }
   },
   dataSources: () => ({
@@ -28,6 +45,17 @@ const server = new ApolloServer({
   }),
 })
 
-server.listen().then(({ url }) => {
-  console.log(`🚀  Server ready at ${url}`)
-})
+const app = express()
+const port = process.env.NODE_ENV === 'production' ? 8080 : 4000
+apollo.applyMiddleware({ app })
+
+app.use(express.static(path.join(__dirname, 'build')))
+
+app.get('/*', (req, res) =>
+  res.sendFile(path.join(__dirname, 'build', 'index.html')))
+
+app.listen(port, () =>
+  console.log(
+    `🚀 Server ready at http://localhost:${port}${apollo.graphqlPath}`,
+  ),
+)

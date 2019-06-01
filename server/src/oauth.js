@@ -1,26 +1,26 @@
 import express from 'express'
-import errorhandler from 'errorhandler'
-import cookieParser from 'cookie-parser'
-import session from 'express-session'
+// import errorhandler from 'errorhandler'
+// import cookieParser from 'cookie-parser'
+// import session from 'express-session'
 import fs from 'fs'
 import { OAuth } from 'oauth'
 import { consumerPrivateKeyFile, consumerKey } from '../config'
 
 const app = express()
 
-const env = process.env.NODE_ENV || 'development'
-if (env === 'development') {
-  app.use(errorhandler())
-  app.use(cookieParser())
-  app.use(
-    session({
-      secret: 'keyboard cat',
-      resave: false,
-      saveUninitialized: true,
-      cookie: { secure: true },
-    }),
-  )
-}
+// const env = process.env.NODE_ENV || 'development'
+// if (env === 'development') {
+//   app.use(errorhandler())
+//   app.use(cookieParser())
+//   app.use(
+//     session({
+//       secret: 'keyboard cat',
+//       resave: false,
+//       saveUninitialized: true,
+//       cookie: { secure: true },
+//     }),
+//   )
+// }
 
 const privateKeyData = fs.readFileSync(consumerPrivateKeyFile, 'utf8')
 
@@ -38,12 +38,12 @@ const consumer = new OAuth(
 
 console.log(consumer)
 
-app.get('/', function(request, response) {
+app.get('/', function (request, response) {
   response.send('Hello World')
 })
 
-app.get('/sessions/connect', function(request, response) {
-  consumer.getOAuthRequestToken(function(
+app.get('/sessions/connect', function (request, response) {
+  consumer.getOAuthRequestToken(function (
     error,
     oauthToken,
     oauthTokenSecret,
@@ -57,21 +57,21 @@ app.get('/sessions/connect', function(request, response) {
       request.session.oauthRequestTokenSecret = oauthTokenSecret
       response.redirect(
         `https://${
-          process.env.HOST
+        process.env.HOST
         }/plugins/servlet/oauth/authorize?oauth_token=${
-          request.session.oauthRequestToken
+        request.session.oauthRequestToken
         }`,
       )
     }
   })
 })
 
-app.get('/sessions/callback', function(request, response) {
+app.get('/sessions/callback', function (request, response) {
   consumer.getOAuthAccessToken(
     request.session.oauthRequestToken,
     request.session.oauthRequestTokenSecret,
     request.query.oauth_verifier,
-    function(error, oauthAccessToken, oauthAccessTokenSecret, results) {
+    function (error, oauthAccessToken, oauthAccessTokenSecret, results) {
       if (error) {
         console.log(error.data)
         response.send('error getting access token')
@@ -83,7 +83,7 @@ app.get('/sessions/callback', function(request, response) {
           request.session.oauthAccessToken,
           request.session.oauthAccessTokenSecret,
           'application/json',
-          function(error, data, resp) {
+          function (error, data, resp) {
             console.log(data)
             const parsedData = JSON.parse(data)
             response.send(`I am looking at: ${parsedData.key}`)

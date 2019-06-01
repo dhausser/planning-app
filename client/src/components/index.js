@@ -20,7 +20,6 @@ export { default as GanttChart } from './GanttChart'
 export { default as TableTree } from './TableTree'
 
 // Resource
-export { default as ResourceList } from './ResourceList'
 export { default as DynamicTable } from './DynamicTable'
 export { default as AbsencesTable } from './AbsencesTable'
 

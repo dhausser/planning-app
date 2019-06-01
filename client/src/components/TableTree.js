@@ -10,7 +10,7 @@ import TableTree, {
 import CopyIcon from '@atlaskit/icon/glyph/copy'
 import Tooltip from '@atlaskit/tooltip'
 
-import { hostname } from '../credentials'
+import { host } from '../config'
 
 export default ({ issues }) => (
   <TableTree>
@@ -34,45 +34,45 @@ export default ({ issues }) => (
         status,
         children,
       }) => (
-        <Row
-          expandLabel="Expand"
-          collapseLabel="Collapse"
-          itemId={key}
-          items={children}
-          hasChildren={children && children.length > 0}
+          <Row
+            expandLabel="Expand"
+            collapseLabel="Collapse"
+            itemId={key}
+            items={children}
+            hasChildren={children && children.length > 0}
           // isExpanded
-        >
-          <Cell singleLine>{type}</Cell>
-          <Cell singleLine>
-            <a
-              href={`https://${hostname}/browse/${key}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {key}
-            </a>
-          </Cell>
-          <Cell singleLine>
-            <Link to={`/issue/${key}`}>{summary}</Link>
-          </Cell>
-          <Cell singleLine>
-            <Link to={`/resource/${assignee.key}`}>{assignee.name}</Link>
-          </Cell>
-          <Cell singleLine>{priority}</Cell>
-          <Cell singleLine>{status}</Cell>
-          <Cell singleLine>
-            <Tooltip content={`View ${key}`}>
+          >
+            <Cell singleLine>{type}</Cell>
+            <Cell singleLine>
               <a
-                href={`https://${hostname}/browse/${key}`}
+                href={`https://${host}/browse/${key}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <CopyIcon size="medium" />
+                {key}
               </a>
-            </Tooltip>
-          </Cell>
-        </Row>
-      )}
+            </Cell>
+            <Cell singleLine>
+              <Link to={`/issue/${key}`}>{summary}</Link>
+            </Cell>
+            <Cell singleLine>
+              <Link to={`/resource/${assignee.key}`}>{assignee.name}</Link>
+            </Cell>
+            <Cell singleLine>{priority}</Cell>
+            <Cell singleLine>{status}</Cell>
+            <Cell singleLine>
+              <Tooltip content={`View ${key}`}>
+                <a
+                  href={`https://${host}/browse/${key}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <CopyIcon size="medium" />
+                </a>
+              </Tooltip>
+            </Cell>
+          </Row>
+        )}
     />
   </TableTree>
 )

@@ -4,7 +4,6 @@ import gql from 'graphql-tag'
 import Select from '@atlaskit/select'
 import Error from '../Error'
 import { GET_VERSIONS } from '../../queries'
-import { projectId } from '../../credentials'
 
 const TOGGLE_VERSION = gql`
   mutation toggleVersion($version: FixVersion!) {
@@ -12,11 +11,17 @@ const TOGGLE_VERSION = gql`
   }
 `
 
+const DEFAULTS = {
+  projectId: 10500,
+  startAt: 7,
+  maxResults: 5,
+}
+
 export default ({ version, project }) => {
   const variables = {
-    id: (project && project.id) || projectId,
-    startAt: 7,
-    maxResults: 5,
+    id: (project && project.id) || DEFAULTS.projectId,
+    startAt: DEFAULTS.startAt,
+    maxResults: DEFAULTS.maxResults,
   }
   const { data, loading, error } = useQuery(GET_VERSIONS, {
     variables,

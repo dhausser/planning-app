@@ -1,7 +1,7 @@
 import React from 'react'
 import { useQuery } from 'react-apollo-hooks'
 import UserPicker from '@atlaskit/user-picker'
-import { hostname } from '../../credentials'
+import { host } from '../../config'
 import { GET_RESOURCES } from '../../queries'
 
 export default ({ assignee }) => {
@@ -20,8 +20,8 @@ export default ({ assignee }) => {
       fieldId="example"
       defaultValue={defaultValue}
       options={options}
-      onChange={() => {}}
-      onInputChange={() => {}}
+      onChange={() => { }}
+      onInputChange={() => { }}
     />
   )
 }
@@ -32,6 +32,6 @@ function reducer(user) {
     name: user.name,
     type: 'user',
     fixed: true,
-    avatarUrl: `https://${hostname}/secure/useravatar?ownerId=${user.key}`,
+    avatarUrl: `https://${host}/secure/useravatar?ownerId=${user.key}`,
   }
 }

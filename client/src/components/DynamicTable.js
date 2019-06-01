@@ -10,7 +10,7 @@ import { Status } from '@atlaskit/status'
 import EmptyState from '@atlaskit/empty-state'
 import Icon from './IssueView/Icon'
 
-import { hostname } from '../credentials'
+import { host } from '../config'
 
 /**
  * Dynamic Table
@@ -188,7 +188,7 @@ const row = issue => ({
       content: (
         <Tooltip content={`View ${issue.key}`}>
           <a
-            href={`https://${hostname}/browse/${issue.key}`}
+            href={`https://${host}/browse/${issue.key}`}
             target="_blank"
             rel="noopener noreferrer"
           >
