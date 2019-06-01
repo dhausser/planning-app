@@ -8,6 +8,7 @@ import { GET_ABSENCES } from '../queries'
 export default ({ resourceId }) => {
   const { data, loading, error } = useQuery(GET_ABSENCES, {
     variables: { id: resourceId },
+    fetchPolicy: 'cache-first',
   })
 
   if (loading) return <Loading />

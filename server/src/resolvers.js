@@ -3,10 +3,10 @@ const resolvers = {
     /**
      * Jira REST API
      */
-    issues: (_, { jql, startAt = 0, maxResults = 20 }, { dataSources, map }) =>
-      dataSources.issueAPI.getAllIssues(jql, startAt, maxResults, map),
-    issue: (_, { id }, { dataSources, map }) =>
-      dataSources.issueAPI.getIssueById({ issueId: id }, map),
+    issues: (_, { jql, startAt = 0, maxResults = 20 }, { dataSources }) =>
+      dataSources.issueAPI.getAllIssues(jql, startAt, maxResults),
+    issue: (_, { id }, { dataSources }) =>
+      dataSources.issueAPI.getIssueById({ issueId: id }),
     versions: (_, { id, startAt = 0, maxResults = 20 }, { dataSources }) =>
       dataSources.issueAPI.getAllVersions(id, startAt, maxResults),
     projects: (_, __, { dataSources }) => dataSources.issueAPI.getAllProjects(),

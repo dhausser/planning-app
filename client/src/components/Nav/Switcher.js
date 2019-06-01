@@ -9,7 +9,6 @@ import {
   Switcher,
   NavigationProvider,
 } from '@atlaskit/navigation-next'
-import Loading from '../Loading'
 import Error from '../Error'
 
 import { PROJECT_TILE_DATA, GET_FILTERS } from '../../queries'
@@ -84,7 +83,7 @@ export default function() {
     }
   }, [data.projects, error, filter, loading])
 
-  if (loading) return <Loading />
+  if (loading) return <div />
   if (error) return <Error error={error} />
 
   // const relevant = []

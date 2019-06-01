@@ -8,7 +8,7 @@ export default class IssueAPI extends RESTDataSource {
   }
 
   willSendRequest(request) {
-    request.headers.set('Authorization', this.context.token)
+    request.headers.set('Authorization', this.context.auth)
   }
 
   async getAllProjects() {
@@ -39,7 +39,7 @@ export default class IssueAPI extends RESTDataSource {
     return Array.isArray(response.values) ? response.values : []
   }
 
-  async getAllIssues(jql, startAt, maxResults, map) {
+  async getAllIssues(jql, startAt, maxResults) {
     const response = await this.post('api/latest/search', {
       jql,
       fields,
@@ -47,16 +47,16 @@ export default class IssueAPI extends RESTDataSource {
       maxResults,
     })
     const issues = Array.isArray(response.issues)
-      ? response.issues.map(issue => this.issueReducer(issue, map))
+      ? response.issues.map(issue => this.issueReducer(issue))
       : []
     return { ...response, issues }
   }
 
-  async getIssueById({ issueId }, map) {
+  async getIssueById({ issueId }) {
     const response = await this.get(
       `api/latest/issue/${issueId}?fields=${fields.join()}`,
     )
-    return this.issueReducer(response, map)
+    return this.issueReducer(response)
   }
 
   async editIssue(issueId, summary, assignee) {
@@ -71,7 +71,7 @@ export default class IssueAPI extends RESTDataSource {
     }
   }
 
-  issueReducer = (issue, teamMapping) => ({
+  issueReducer = issue => ({
     id: issue.id,
     key: issue.key,
     summary: issue.fields.summary,
@@ -88,7 +88,8 @@ export default class IssueAPI extends RESTDataSource {
       key: issue.fields.assignee && issue.fields.assignee.key,
       name: issue.fields.assignee && issue.fields.assignee.displayName,
       team:
-        (issue.fields.assignee && teamMapping[issue.fields.assignee.key]) ||
+        (issue.fields.assignee &&
+          this.context.resourceMap[issue.fields.assignee.key]) ||
         null,
     },
     reporter: {
@@ -107,7 +108,7 @@ export default class IssueAPI extends RESTDataSource {
     children:
       issue.fields.subtasks &&
       issue.fields.subtasks.map(subtask =>
-        this.issueReducer(subtask, teamMapping),
+        this.issueReducer(subtask, this.context.resourceMap),
       ),
     parent:
       issue.fields.customfield_10006 ||

@@ -97,7 +97,7 @@ const row = project => ({
               src={project.avatarUrls.small}
             />
           </AvatarWrapper>
-          <Link to={`/backlog/${project.key}`}>{project.name}</Link>
+          <Link to={`/resources/${project.key}`}>{project.name}</Link>
         </NameWrapper>
       ),
     },

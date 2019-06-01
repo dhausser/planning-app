@@ -1,20 +1,21 @@
 import { DataSource } from 'apollo-datasource'
 
-let resources
-
 export default class ResourceAPI extends DataSource {
-  static async injectDB(conn) {
-    if (resources) {
-      return
-    }
-    try {
-      await conn.db(process.env.PLANIFY_NS)
-      resources = await conn.db(process.env.PLANIFY_NS).collection('resources')
-    } catch (e) {
-      console.error(
-        `Unable to establish collection handles in resourceDAO: ${e}`,
-      )
-    }
+  constructor({ store }) {
+    super()
+    this.store = store
+  }
+
+  /**
+   * This is a function that gets called by ApolloServer when being setup.
+   * This function gets called with the datasource config including things
+   * like caches and context. We'll assign this.context to the request context
+   * here, so we can know about the user making requests
+   */
+  async initialize(config) {
+    this.context = config.context
+    this.store = await this.store
+    this.context.resourceMap = await this.getResourceMap()
   }
 
   /**
@@ -26,7 +27,7 @@ export default class ResourceAPI extends DataSource {
     let cursor
 
     try {
-      cursor = await resources
+      cursor = await this.store.resources
         .find()
         .project({ _id: 0, key: 1, name: 1, team: 1 })
     } catch (e) {
@@ -40,13 +41,13 @@ export default class ResourceAPI extends DataSource {
   /**
    * Finds and returns all resources.
    * Returns a list of objects, each object contains a key, name and a team
-   * @returns {Promise<ResourcesResult>} A promise that will resolve to a list of ResourcesResult.
+   * @returns {Promise<ResourcesMap>} A promise that will resolve to a list of ResourcesResult.
    */
-  static async getResources() {
+  async getResourceMap() {
     let cursor
 
     try {
-      cursor = await resources
+      cursor = await this.store.resources
         .find()
         .project({ _id: 0, key: 1, name: 1, team: 1 })
     } catch (e) {
@@ -54,7 +55,12 @@ export default class ResourceAPI extends DataSource {
       return []
     }
 
-    return cursor.toArray()
+    const array = await cursor.toArray()
+
+    return array.reduce((acc, resource) => {
+      acc[resource.key] = resource.team
+      return acc
+    }, {})
   }
 
   /**
@@ -67,7 +73,7 @@ export default class ResourceAPI extends DataSource {
     let cursor
 
     try {
-      cursor = await resources.findOne(
+      cursor = await this.store.resources.findOne(
         { key: resourceId },
         { projection: { _id: 0, key: 1, name: 1, team: 1 } },
       )
@@ -88,7 +94,7 @@ export default class ResourceAPI extends DataSource {
   async getTeams() {
     let cursor
     try {
-      cursor = await resources
+      cursor = await this.store.resources
         .aggregate([
           {
             $group: {
@@ -117,7 +123,7 @@ export default class ResourceAPI extends DataSource {
     let cursor
 
     try {
-      cursor = await resources
+      cursor = await this.store.resources
         .find({ team: teamId })
         .project({ _id: 0, key: 1, name: 1, team: 1 })
     } catch (e) {
@@ -126,27 +132,5 @@ export default class ResourceAPI extends DataSource {
     }
 
     return cursor.toArray()
-  }
-
-  /**
-   * Inserts and returns all resources.
-   * Returns a list of objects, each object contains a key, name and a team
-   * @returns {Promise<ResourcesResult>} A promise that will resolve to a list of ResourcesResult.
-   */
-  static async setResources(data) {
-    try {
-      console.log('Deleting Data...')
-      await resources.deleteMany()
-      console.log('Data successfully deleted')
-    } catch (e) {
-      console.error(e)
-    }
-    try {
-      resources.insertMany(data)
-      console.log('Database successfully updated')
-    } catch (e) {
-      console.log('\nError importing data')
-      console.log(e)
-    }
   }
 }

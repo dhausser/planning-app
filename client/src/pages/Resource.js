@@ -33,7 +33,7 @@ function ResourcePage(props) {
   const [issues, filters] = useIssues(GET_ISSUES, resourceId)
   const { data, loading, error, fetchMore } = issues
 
-  if (loadingResource || loading) return <Loading />
+  if (loadingResource) return <Loading />
 
   // Format page title and link
   const { title, link } = formatName(resource, resourceId, filters.version)
