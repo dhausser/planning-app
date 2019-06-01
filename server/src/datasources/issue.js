@@ -1,5 +1,5 @@
 import { RESTDataSource } from 'apollo-datasource-rest'
-import ResourceAPI from './resource'
+import btoa from 'btoa'
 
 export default class IssueAPI extends RESTDataSource {
   constructor() {
@@ -9,22 +9,6 @@ export default class IssueAPI extends RESTDataSource {
 
   willSendRequest(request) {
     request.headers.set('Authorization', this.context.token)
-  }
-
-  async loginUser(username, password) {
-    const token = null
-    /**
-     * TODO: Authenticate User
-     */
-
-    // const get = await this.get(`auth/1/session`)
-    // const post = await this.post(`auth/1/session`, {
-    //   username,
-    //   password,
-    // })
-    // console.log({ post })
-
-    return token || `${username}:${password}`
   }
 
   async getAllProjects() {
@@ -55,26 +39,24 @@ export default class IssueAPI extends RESTDataSource {
     return Array.isArray(response.values) ? response.values : []
   }
 
-  async getAllIssues(jql, startAt, maxResults) {
+  async getAllIssues(jql, startAt, maxResults, map) {
     const response = await this.post('api/latest/search', {
       jql,
       fields,
       startAt,
       maxResults,
     })
-    const teamMapping = await this.teamMapping()
     const issues = Array.isArray(response.issues)
-      ? response.issues.map(issue => this.issueReducer(issue, teamMapping))
+      ? response.issues.map(issue => this.issueReducer(issue, map))
       : []
     return { ...response, issues }
   }
 
-  async getIssueById({ issueId }) {
-    const teamMapping = await this.teamMapping()
+  async getIssueById({ issueId }, map) {
     const response = await this.get(
       `api/latest/issue/${issueId}?fields=${fields.join()}`,
     )
-    return this.issueReducer(response, teamMapping)
+    return this.issueReducer(response, map)
   }
 
   async editIssue(issueId, summary, assignee) {
@@ -133,13 +115,19 @@ export default class IssueAPI extends RESTDataSource {
       issue.fields.customfield_10014,
   })
 
-  teamMapping = async () => {
-    const resources = await ResourceAPI.getResources()
-    const teamMapping = resources.reduce(function(acc, cur) {
-      acc[cur.key] = cur.team
-      return acc
-    }, {})
-    return teamMapping
+  async basicAuth(username, password) {
+    /**
+     * TODO: Authenticate User
+     */
+
+    // const get = await this.get(`auth/1/session`)
+    // const post = await this.post(`auth/1/session`, {
+    //   username,
+    //   password,
+    // })
+    // console.log({ post })
+
+    return btoa(`${username}:${password}`)
   }
 }
 

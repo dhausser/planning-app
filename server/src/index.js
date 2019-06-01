@@ -10,6 +10,10 @@ import IssueAPI from './datasources/issue'
 import AbsenceAPI from './datasources/absence'
 import ResourceAPI from './datasources/resource'
 
+const issueAPI = new IssueAPI()
+const absenceAPI = new AbsenceAPI()
+const resourceAPI = new ResourceAPI()
+
 MongoClient.connect(process.env.DATABASE, { useNewUrlParser: true })
   .catch(err => {
     console.log(err.stack)
@@ -24,25 +28,8 @@ const apollo = new ApolloServer({
     console.log(error)
     return error
   },
-  context: ({ req }) => {
-    // get the user token from the headers
-    const token = req.headers.authorization || ''
-
-    // try to retrieve a user with the token
-    const user = atob(token.split(' ')[1]).split(':')[0]
-
-    // optionally block the user
-    // we could also check user roles/permissions here
-    if (!user) throw new AuthorizationError('you must be logged in')
-
-    // add the user to the context
-    return { user, token }
-  },
-  dataSources: () => ({
-    issueAPI: new IssueAPI(),
-    absenceAPI: new AbsenceAPI(),
-    resourceAPI: new ResourceAPI(),
-  }),
+  context: ({ req }) => initContext(req),
+  dataSources: () => ({ issueAPI, absenceAPI, resourceAPI }),
 })
 
 const app = express()
@@ -51,11 +38,34 @@ apollo.applyMiddleware({ app })
 
 app.use(express.static(path.join(__dirname, 'build')))
 
-app.get('/*', (req, res) =>
-  res.sendFile(path.join(__dirname, 'build', 'index.html')))
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'))
+})
 
 app.listen(port, () =>
   console.log(
     `🚀 Server ready at http://localhost:${port}${apollo.graphqlPath}`,
   ),
 )
+
+const initContext = async req => {
+  // get the user token from the headers
+  const token = req.headers.authorization || ''
+
+  // try to retrieve a user with the token
+  const user = atob(token.split(' ')[1]).split(':')[0]
+
+  // optionally block the user
+  // we could also check user roles/permissions here
+  if (!user) throw new AuthorizationError('you must be logged in')
+
+  const resources = await ResourceAPI.getResources()
+
+  const map = resources.reduce((acc, resource) => {
+    acc[resource.key] = resource.team
+    return acc
+  }, {})
+
+  // add the user to the context
+  return { user, token, map }
+}

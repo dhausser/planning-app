@@ -6,7 +6,7 @@ import { LoginForm, Error } from '../components'
 
 const LOGIN_USER = gql`
   mutation login($username: String!, $password: String!) {
-    login(username: $username, password: $password)
+    basicAuth(username: $username, password: $password)
   }
 `
 
@@ -16,9 +16,10 @@ export default function Login() {
       {client => (
         <Mutation
           mutation={LOGIN_USER}
-          onCompleted={({ login }) => {
-            if (login) {
-              localStorage.setItem('token', btoa(login))
+          onCompleted={({ basicAuth }) => {
+            console.log(basicAuth)
+            if (basicAuth) {
+              localStorage.setItem('token', basicAuth)
               client.writeData({ data: { isLoggedIn: true } })
             }
           }}
