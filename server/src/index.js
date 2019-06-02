@@ -1,6 +1,6 @@
 import express from 'express'
-import { ApolloServer } from 'apollo-server-express'
 import path from 'path'
+import { ApolloServer } from 'apollo-server-express'
 import createStore from './utils'
 import resolvers from './resolvers'
 import typeDefs from './schema'
@@ -10,6 +10,7 @@ import AbsenceAPI from './datasources/absence'
 import ResourceAPI from './datasources/resource'
 
 const store = createStore()
+const port = process.env.NODE_ENV === 'production' ? 8080 : 4000
 
 const apollo = new ApolloServer({
   typeDefs,
@@ -29,7 +30,6 @@ const apollo = new ApolloServer({
 })
 
 const app = express()
-const port = process.env.NODE_ENV === 'production' ? 8080 : 4000
 apollo.applyMiddleware({ app })
 
 app.use(express.static(path.join(__dirname, 'build')))

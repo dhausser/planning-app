@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 
 import {
   LayoutManagerWithViewController,
@@ -59,9 +59,7 @@ const App = ({ navigationViewController }) => {
 const AppWithNavigationViewController = withNavigationViewController(App)
 
 export default () => (
-  <BrowserRouter>
-    <NavigationProvider>
-      <AppWithNavigationViewController />
-    </NavigationProvider>
-  </BrowserRouter>
+  <NavigationProvider>
+    <AppWithNavigationViewController />
+  </NavigationProvider>
 )

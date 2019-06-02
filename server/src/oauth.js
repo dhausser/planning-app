@@ -1,49 +1,48 @@
 import express from 'express'
-// import errorhandler from 'errorhandler'
+import session from 'express-session'
 // import cookieParser from 'cookie-parser'
-// import session from 'express-session'
+// import errorhandler from 'errorhandler'
+// import morgan from 'morgan'
 import fs from 'fs'
 import { OAuth } from 'oauth'
-import { consumerPrivateKeyFile, consumerKey } from '../config'
+import { consumerKey, consumerPrivateKeyFile } from '../config'
 
 const app = express()
 
-// const env = process.env.NODE_ENV || 'development'
-// if (env === 'development') {
-//   app.use(errorhandler())
-//   app.use(cookieParser())
-//   app.use(
-//     session({
-//       secret: 'keyboard cat',
-//       resave: false,
-//       saveUninitialized: true,
-//       cookie: { secure: true },
-//     }),
-//   )
-// }
+const env = process.env.NODE_ENV || 'development'
+if (env === 'development') {
+  // app.use(errorhandler())
+  // app.use(cookieParser())
+  app.use(
+    session({
+      secret: 'keyboard cat',
+      resave: false,
+      saveUninitialized: true,
+      cookie: {},
+    }),
+  )
+  // app.use(
+  //   morgan('combined', {
+  //     skip(req, res) {
+  //       return res.statusCode < 400
+  //     },
+  //   }),
+  // )
+}
 
 const privateKeyData = fs.readFileSync(consumerPrivateKeyFile, 'utf8')
-
 const consumer = new OAuth(
-  `https://${process.env.HOST}/plugins/servlet/oauth/request-token`,
-  `https://${process.env.HOST}/plugins/servlet/oauth/access-token`,
+  `https://jira.cdprojektred.com/plugins/servlet/oauth/request-token`,
+  `https://jira.cdprojektred.com/plugins/servlet/oauth/access-token`,
   consumerKey,
-  '',
-  '1.0',
-  'http://localhost:8080/sessions/callback',
-  'RSA-SHA1',
-  null,
   privateKeyData,
+  '1.0',
+  'http://localhost:8080/callback',
+  'RSA-SHA1',
 )
 
-console.log(consumer)
-
-app.get('/', function (request, response) {
-  response.send('Hello World')
-})
-
-app.get('/sessions/connect', function (request, response) {
-  consumer.getOAuthRequestToken(function (
+app.get('/', function(request, response) {
+  consumer.getOAuthRequestToken(function(
     error,
     oauthToken,
     oauthTokenSecret,
@@ -51,44 +50,54 @@ app.get('/sessions/connect', function (request, response) {
   ) {
     if (error) {
       console.log(error.data)
-      response.send('Error getting OAuth access token')
+      response.send(error.data)
     } else {
       request.session.oauthRequestToken = oauthToken
       request.session.oauthRequestTokenSecret = oauthTokenSecret
       response.redirect(
-        `https://${
-        process.env.HOST
-        }/plugins/servlet/oauth/authorize?oauth_token=${
-        request.session.oauthRequestToken
+        `https://jira.cdprojektred.com/plugins/servlet/oauth/authorize?oauth_token=${
+          request.session.oauthRequestToken
         }`,
       )
     }
   })
 })
 
-app.get('/sessions/callback', function (request, response) {
+app.get('/callback', function(request, response) {
   consumer.getOAuthAccessToken(
     request.session.oauthRequestToken,
     request.session.oauthRequestTokenSecret,
     request.query.oauth_verifier,
-    function (error, oauthAccessToken, oauthAccessTokenSecret, results) {
+    function(error, oauthAccessToken, oauthAccessTokenSecret, results) {
       if (error) {
         console.log(error.data)
-        response.send('error getting access token')
+        response.send(error)
       } else {
         request.session.oauthAccessToken = oauthAccessToken
         request.session.oauthAccessTokenSecret = oauthAccessTokenSecret
-        consumer.get(
-          `https://${process.env.HOST}/rest/api/latest/issue/GWENT-64555.json`,
-          request.session.oauthAccessToken,
-          request.session.oauthAccessTokenSecret,
-          'application/json',
-          function (error, data, resp) {
-            console.log(data)
-            const parsedData = JSON.parse(data)
-            response.send(`I am looking at: ${parsedData.key}`)
-          },
-        )
+
+        response.send({ oauthAccessToken, oauthAccessTokenSecret })
+
+        // consumer.get(
+        //   'https://jira.cdprojektred.com/rest/api/latest/project',
+        //   request.session.oauthAccessToken,
+        //   request.session.oauthAccessTokenSecret,
+        //   function(e, data, res) {
+        //     if (e) {
+        //       console.error(e)
+        //       response.send(e.data)
+        //     }
+        //     console.log({
+        //       statusCode: res.statusCode,
+        //       statusMessage: res.statusMessage,
+        //     })
+        //     // console.log({ e, data, res })
+        //     // const result = JSON.parse(data)
+        //     // response.send('Hello world')
+        //     // response.send(data)
+        //     // done()
+        //   },
+        // )
       }
     },
   )

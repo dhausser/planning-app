@@ -11,6 +11,7 @@ const typeDefs = gql`
     teams: [Team]!
     team(id: ID!): Team
     absences(id: ID!): [Absence]!
+    requestToken: String
     me: User
   }
 
@@ -97,16 +98,15 @@ const typeDefs = gql`
     medium: String
   }
 
-  type Mutation {
-    # if false, issue update failed -- check erros
-    editIssue(issueId: ID!, summary: String): Int
-    basicAuth(username: String!, password: String!): String # login token
-  }
-
   type IssueUpdateResponse {
     success: Boolean!
     message: String
     issue: Issue
+  }
+
+  type Mutation {
+    editIssue(issueId: ID!, summary: String): Int
+    login(oauthVerifier: String!): String! # login token
   }
 `
 export default typeDefs

@@ -1,5 +1,14 @@
 import { RESTDataSource } from 'apollo-datasource-rest'
-import btoa from 'btoa'
+import fs from 'fs'
+import { OAuth } from 'oauth'
+import { consumerKey, consumerPrivateKeyFile } from '../../config'
+
+/**
+ * TODO: Figure out if this is safe and sound
+ */
+let consumer = null
+let oauthRequestToken = null
+let oauthRequestTokenSecret = null
 
 export default class IssueAPI extends RESTDataSource {
   constructor() {
@@ -9,6 +18,69 @@ export default class IssueAPI extends RESTDataSource {
 
   willSendRequest(request) {
     request.headers.set('Authorization', this.context.auth)
+  }
+
+  async getRequestToken(callbackURL) {
+    const privateKeyData = fs.readFileSync(consumerPrivateKeyFile, 'utf8')
+
+    consumer = new OAuth(
+      `https://${process.env.HOST}/plugins/servlet/oauth/request-token`,
+      `https://${process.env.HOST}/plugins/servlet/oauth/access-token`,
+      consumerKey,
+      privateKeyData,
+      '1.0',
+      callbackURL || 'http://localhost:3000/',
+      'RSA-SHA1',
+    )
+
+    function requestTokenPromise() {
+      return new Promise(function(resolve, reject) {
+        consumer.getOAuthRequestToken(function(
+          error,
+          oauthToken,
+          oauthTokenSecret,
+          results,
+        ) {
+          if (error) {
+            console.log(error.data)
+            reject(error)
+          }
+          oauthRequestToken = oauthToken
+          oauthRequestTokenSecret = oauthTokenSecret
+          resolve(oauthToken)
+        })
+      })
+    }
+
+    this.consumer = consumer
+    return requestTokenPromise()
+  }
+
+  async getAccessToken(oauthVerifier) {
+    console.log({
+      oauthRequestToken,
+      oauthRequestTokenSecret,
+      oauthVerifier,
+    })
+    function accessTokenPromise() {
+      return new Promise(function(resolve, reject) {
+        consumer.getOAuthAccessToken(
+          oauthRequestToken,
+          oauthRequestTokenSecret,
+          oauthVerifier,
+          function(error, oauthAccessToken, oauthAccessTokenSecret, results) {
+            if (error) {
+              console.log(error.data)
+              reject(error)
+            }
+            console.log({ oauthAccessToken, oauthAccessTokenSecret })
+            resolve(oauthAccessToken)
+          },
+        )
+      })
+    }
+
+    return accessTokenPromise()
   }
 
   async getAllProjects() {
@@ -115,21 +187,6 @@ export default class IssueAPI extends RESTDataSource {
       issue.fields.customfield_20700 ||
       issue.fields.customfield_10014,
   })
-
-  async basicAuth(username, password) {
-    /**
-     * TODO: Authenticate User
-     */
-
-    // const get = await this.get(`auth/1/session`)
-    // const post = await this.post(`auth/1/session`, {
-    //   username,
-    //   password,
-    // })
-    // console.log({ post })
-
-    return btoa(`${username}:${password}`)
-  }
 }
 
 const fields = [

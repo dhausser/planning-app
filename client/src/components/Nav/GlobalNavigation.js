@@ -2,7 +2,7 @@ import React from 'react'
 import GlobalNavigation from '@atlaskit/global-navigation'
 import { GlobalItem } from '@atlaskit/navigation-next'
 import AppSwitcherIcon from '@atlaskit/icon/glyph/app-switcher'
-import EmojiAtlassianIcon from '@atlaskit/icon/glyph/emoji/atlassian'
+import { JiraSoftwareIcon } from '@atlaskit/logo'
 
 const AppSwitcherComponent = props => (
   <GlobalItem
@@ -15,7 +15,7 @@ const AppSwitcherComponent = props => (
 
 export default () => (
   <GlobalNavigation
-    productIcon={EmojiAtlassianIcon}
+    productIcon={JiraSoftwareIcon}
     productHref="#"
     onProductClick={() => console.log('product clicked')}
     onCreateClick={() => console.log('create clicked')}
