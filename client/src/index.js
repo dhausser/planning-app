@@ -1,6 +1,5 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import '@atlaskit/css-reset'
 
 import { Query, ApolloProvider } from 'react-apollo'
@@ -56,22 +55,12 @@ cache.writeData({
 })
 
 render(
-  <BrowserRouter>
-    <ApolloProvider client={client}>
-      <ApolloHooksProvider client={client}>
-        <Query query={IS_LOGGED_IN}>
-          {({ data }) =>
-            data.isLoggedIn ? (
-              <App client={client} />
-            ) : (
-              <Switch>
-                <Route path="/" exact component={Login} />
-              </Switch>
-            )
-          }
-        </Query>
-      </ApolloHooksProvider>
-    </ApolloProvider>
-  </BrowserRouter>,
+  <ApolloProvider client={client}>
+    <ApolloHooksProvider client={client}>
+      <Query query={IS_LOGGED_IN}>
+        {({ data }) => (data.isLoggedIn ? <App client={client} /> : <Login />)}
+      </Query>
+    </ApolloHooksProvider>
+  </ApolloProvider>,
   document.getElementById('root'),
 )

@@ -7,8 +7,8 @@ import { consumerKey, consumerPrivateKeyFile } from '../../config'
  * TODO: Figure out if this is safe and sound
  */
 let consumer = null
-let oauthRequestToken = null
-let oauthRequestTokenSecret = null
+const oauthRequestToken = null
+const oauthRequestTokenSecret = null
 
 export default class IssueAPI extends RESTDataSource {
   constructor() {
@@ -17,6 +17,7 @@ export default class IssueAPI extends RESTDataSource {
   }
 
   willSendRequest(request) {
+    console.log(this.context.auth)
     request.headers.set('Authorization', this.context.auth)
   }
 
@@ -45,42 +46,47 @@ export default class IssueAPI extends RESTDataSource {
             console.log(error.data)
             reject(error)
           }
-          oauthRequestToken = oauthToken
-          oauthRequestTokenSecret = oauthTokenSecret
-          resolve(oauthToken)
+
+          resolve({
+            token: oauthToken,
+            secret: oauthTokenSecret,
+          })
         })
       })
     }
 
-    this.consumer = consumer
-    return requestTokenPromise()
+    const res = await requestTokenPromise()
+    console.log(res)
+    return res
   }
 
-  async getAccessToken(oauthVerifier) {
+  async getAccessToken(oauthToken, oauthSecret, oauthVerifier) {
     console.log({
-      oauthRequestToken,
-      oauthRequestTokenSecret,
+      oauthToken,
+      oauthSecret,
       oauthVerifier,
     })
+
     function accessTokenPromise() {
       return new Promise(function(resolve, reject) {
         consumer.getOAuthAccessToken(
-          oauthRequestToken,
-          oauthRequestTokenSecret,
+          oauthToken,
+          oauthSecret,
           oauthVerifier,
           function(error, oauthAccessToken, oauthAccessTokenSecret, results) {
             if (error) {
               console.log(error.data)
               reject(error)
             }
-            console.log({ oauthAccessToken, oauthAccessTokenSecret })
             resolve(oauthAccessToken)
           },
         )
       })
     }
 
-    return accessTokenPromise()
+    const res = await accessTokenPromise()
+    console.log({ accessToken: res })
+    return res
   }
 
   async getAllProjects() {

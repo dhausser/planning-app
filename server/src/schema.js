@@ -11,8 +11,13 @@ const typeDefs = gql`
     teams: [Team]!
     team(id: ID!): Team
     absences(id: ID!): [Absence]!
-    requestToken: String
+    oauthRequest: OauthRequest!
     me: User
+  }
+
+  type OauthRequest {
+    token: String!
+    secret: String!
   }
 
   type IssueConnection {
@@ -106,7 +111,11 @@ const typeDefs = gql`
 
   type Mutation {
     editIssue(issueId: ID!, summary: String): Int
-    login(oauthVerifier: String!): String! # login token
+    login(
+      oauthToken: String!
+      oauthSecret: String!
+      oauthVerifier: String!
+    ): String! # login token
   }
 `
 export default typeDefs

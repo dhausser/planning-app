@@ -69,6 +69,11 @@ app.get('/callback', function(request, response) {
     request.session.oauthRequestTokenSecret,
     request.query.oauth_verifier,
     function(error, oauthAccessToken, oauthAccessTokenSecret, results) {
+      console.log({
+        request: request.session.oauthRequestToken,
+        secret: request.session.oauthRequestTokenSecret,
+        verify: request.query.oauth_verifier,
+      })
       if (error) {
         console.log(error.data)
         response.send(error)
@@ -77,27 +82,6 @@ app.get('/callback', function(request, response) {
         request.session.oauthAccessTokenSecret = oauthAccessTokenSecret
 
         response.send({ oauthAccessToken, oauthAccessTokenSecret })
-
-        // consumer.get(
-        //   'https://jira.cdprojektred.com/rest/api/latest/project',
-        //   request.session.oauthAccessToken,
-        //   request.session.oauthAccessTokenSecret,
-        //   function(e, data, res) {
-        //     if (e) {
-        //       console.error(e)
-        //       response.send(e.data)
-        //     }
-        //     console.log({
-        //       statusCode: res.statusCode,
-        //       statusMessage: res.statusMessage,
-        //     })
-        //     // console.log({ e, data, res })
-        //     // const result = JSON.parse(data)
-        //     // response.send('Hello world')
-        //     // response.send(data)
-        //     // done()
-        //   },
-        // )
       }
     },
   )

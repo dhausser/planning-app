@@ -10,8 +10,11 @@ const resolvers = {
     versions: (_, { id, startAt = 0, maxResults = 20 }, { dataSources }) =>
       dataSources.issueAPI.getAllVersions(id, startAt, maxResults),
     projects: (_, __, { dataSources }) => dataSources.issueAPI.getAllProjects(),
-    requestToken: (_, __, { dataSources }) =>
-      dataSources.issueAPI.getRequestToken(),
+    oauthRequest: async (_, __, { dataSources }) => {
+      const res = await dataSources.issueAPI.getRequestToken()
+      console.log(res)
+      return res
+    },
 
     /**
      * CDPR Portal REST API
@@ -35,8 +38,16 @@ const resolvers = {
     /**
      * Jira REST API
      */
-    login: async (_, { oauthVerifier }, { dataSources }) =>
-      dataSources.issueAPI.getAccessToken(oauthVerifier),
+    login: async (
+      _,
+      { oauthToken, oauthSecret, oauthVerifier },
+      { dataSources },
+    ) =>
+      dataSources.issueAPI.getAccessToken(
+        oauthToken,
+        oauthSecret,
+        oauthVerifier,
+      ),
     editIssue: async (_, { issueId, summary, assignee }, { dataSources }) =>
       dataSources.issueAPI.editIssue(issueId, summary, assignee),
   },

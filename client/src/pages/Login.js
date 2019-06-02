@@ -1,34 +1,44 @@
 import React, { useState } from 'react'
 import { useQuery } from 'react-apollo-hooks'
 import { ApolloConsumer, Mutation } from 'react-apollo'
-import { withRouter } from 'react-router'
 import gql from 'graphql-tag'
 import Modal, { ModalTransition } from '@atlaskit/modal-dialog'
 import Spinner from '@atlaskit/spinner'
 import EmptyState from '@atlaskit/empty-state'
 
 const LOGIN_USER = gql`
-  mutation login($oauthVerifier: String!) {
-    login(oauthVerifier: $oauthVerifier)
+  mutation login(
+    $oauthToken: String!
+    $oauthSecret: String!
+    $oauthVerifier: String!
+  ) {
+    login(
+      oauthToken: $oauthToken
+      oauthSecret: $oauthSecret
+      oauthVerifier: $oauthVerifier
+    )
   }
 `
 
 const REQUEST_TOKEN = gql`
-  query requestToken {
-    requestToken
+  query oauthRequest {
+    oauthRequest {
+      token
+      secret
+    }
   }
 `
 
-function Login() {
-  const [oauthVerifier, setOauthVerifier] = useState()
-  const {
-    data: { requestToken },
-    loading,
-    error,
-  } = useQuery(REQUEST_TOKEN)
+export default () => {
+  const [temp, setTemp] = useState(false)
+  const { data, loading, error } = useQuery(REQUEST_TOKEN)
 
   if (loading) return <Spinner size="medium" />
   if (error) return <EmptyState header="Error" description={error.message} />
+
+  const { token, secret } = data.oauthRequest
+
+  console.log({ data })
 
   return (
     <ApolloConsumer>
@@ -38,8 +48,8 @@ function Login() {
           onCompleted={({ login }) => {
             if (login) {
               console.log({ login })
-              localStorage.setItem('token', login)
-              client.writeData({ data: { isLoggedIn: true } })
+              // localStorage.setItem('token', login)
+              // client.writeData({ data: { isLoggedIn: true } })
             }
           }}
         >
@@ -50,19 +60,26 @@ function Login() {
             const actions = [
               {
                 text: 'Login with Jira',
-                onClick: () => authenticate(client, requestToken),
+                onClick: () => authenticate(client, token),
               },
             ]
 
+            /**
+             * TODO: Ensure this code run only once per flow
+             */
             const { search } = window.location
             if (search) {
               const url = new URL(window.location)
               const searchParams = new URLSearchParams(url.search)
               window.history.pushState({}, document.title, '/')
               try {
-                const param = searchParams.get('oauth_verifier')
-                setOauthVerifier(param)
-                login({ variables: { oauthVerifier: param } })
+                const oauthToken = searchParams.get('oauth_token')
+                const oauthSecret = secret
+                const oauthVerifier = searchParams.get('oauth_verifier')
+                setTemp(true)
+                login({
+                  variables: { oauthToken, oauthSecret, oauthVerifier },
+                })
               } catch (err) {
                 return <EmptyState header="Error" description={err.message} />
               }
@@ -70,7 +87,7 @@ function Login() {
 
             return (
               <>
-                {requestToken && !oauthVerifier && (
+                {token && !temp ? (
                   <ModalTransition>
                     <Modal actions={actions} heading="Hi there 👋">
                       <p>
@@ -79,6 +96,8 @@ function Login() {
                       </p>
                     </Modal>
                   </ModalTransition>
+                ) : (
+                  <p>Trying to login...</p>
                 )}
               </>
             )
@@ -88,7 +107,6 @@ function Login() {
     </ApolloConsumer>
   )
 }
-export default withRouter(Login)
 
 function authenticate(client, requestToken) {
   window.location.replace(
