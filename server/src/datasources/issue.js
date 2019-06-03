@@ -1,14 +1,4 @@
 import { RESTDataSource } from 'apollo-datasource-rest'
-import fs from 'fs'
-import { OAuth } from 'oauth'
-import { consumerKey, consumerPrivateKeyFile } from '../../config'
-
-/**
- * TODO: Figure out if this is safe and sound
- */
-let consumer = null
-const oauthRequestToken = null
-const oauthRequestTokenSecret = null
 
 export default class IssueAPI extends RESTDataSource {
   constructor() {
@@ -17,79 +7,10 @@ export default class IssueAPI extends RESTDataSource {
   }
 
   willSendRequest(request) {
-    console.log(this.context.auth)
     request.headers.set('Authorization', this.context.auth)
   }
 
-  async getRequestToken(callbackURL) {
-    const privateKeyData = fs.readFileSync(consumerPrivateKeyFile, 'utf8')
-
-    consumer = new OAuth(
-      `https://${process.env.HOST}/plugins/servlet/oauth/request-token`,
-      `https://${process.env.HOST}/plugins/servlet/oauth/access-token`,
-      consumerKey,
-      privateKeyData,
-      '1.0',
-      callbackURL || 'http://localhost:3000/',
-      'RSA-SHA1',
-    )
-
-    function requestTokenPromise() {
-      return new Promise(function(resolve, reject) {
-        consumer.getOAuthRequestToken(function(
-          error,
-          oauthToken,
-          oauthTokenSecret,
-          results,
-        ) {
-          if (error) {
-            console.log(error.data)
-            reject(error)
-          }
-
-          resolve({
-            token: oauthToken,
-            secret: oauthTokenSecret,
-          })
-        })
-      })
-    }
-
-    const res = await requestTokenPromise()
-    console.log(res)
-    return res
-  }
-
-  async getAccessToken(oauthToken, oauthSecret, oauthVerifier) {
-    console.log({
-      oauthToken,
-      oauthSecret,
-      oauthVerifier,
-    })
-
-    function accessTokenPromise() {
-      return new Promise(function(resolve, reject) {
-        consumer.getOAuthAccessToken(
-          oauthToken,
-          oauthSecret,
-          oauthVerifier,
-          function(error, oauthAccessToken, oauthAccessTokenSecret, results) {
-            if (error) {
-              console.log(error.data)
-              reject(error)
-            }
-            resolve(oauthAccessToken)
-          },
-        )
-      })
-    }
-
-    const res = await accessTokenPromise()
-    console.log({ accessToken: res })
-    return res
-  }
-
-  async getAllProjects() {
+  async getProjects() {
     const response = await this.get('api/latest/project/')
 
     const projects = response.map(project => ({
@@ -108,7 +29,7 @@ export default class IssueAPI extends RESTDataSource {
     return projects
   }
 
-  async getAllVersions(projectId, startAt, maxResults) {
+  async getVersions(projectId, startAt, maxResults) {
     const response = await this.get(`api/latest/project/${projectId}/version`, {
       startAt,
       maxResults,
@@ -117,7 +38,7 @@ export default class IssueAPI extends RESTDataSource {
     return Array.isArray(response.values) ? response.values : []
   }
 
-  async getAllIssues(jql, startAt, maxResults) {
+  async getIssues(jql, startAt, maxResults) {
     const response = await this.post('api/latest/search', {
       jql,
       fields,

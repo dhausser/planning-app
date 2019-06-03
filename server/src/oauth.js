@@ -1,8 +1,8 @@
 import express from 'express'
 import session from 'express-session'
-// import cookieParser from 'cookie-parser'
-// import errorhandler from 'errorhandler'
-// import morgan from 'morgan'
+import cookieParser from 'cookie-parser'
+import errorhandler from 'errorhandler'
+import morgan from 'morgan'
 import fs from 'fs'
 import { OAuth } from 'oauth'
 import { consumerKey, consumerPrivateKeyFile } from '../config'
@@ -11,8 +11,8 @@ const app = express()
 
 const env = process.env.NODE_ENV || 'development'
 if (env === 'development') {
-  // app.use(errorhandler())
-  // app.use(cookieParser())
+  app.use(errorhandler())
+  app.use(cookieParser())
   app.use(
     session({
       secret: 'keyboard cat',
@@ -21,13 +21,13 @@ if (env === 'development') {
       cookie: {},
     }),
   )
-  // app.use(
-  //   morgan('combined', {
-  //     skip(req, res) {
-  //       return res.statusCode < 400
-  //     },
-  //   }),
-  // )
+  app.use(
+    morgan('combined', {
+      skip(req, res) {
+        return res.statusCode < 400
+      },
+    }),
+  )
 }
 
 const privateKeyData = fs.readFileSync(consumerPrivateKeyFile, 'utf8')
@@ -81,7 +81,23 @@ app.get('/callback', function(request, response) {
         request.session.oauthAccessToken = oauthAccessToken
         request.session.oauthAccessTokenSecret = oauthAccessTokenSecret
 
-        response.send({ oauthAccessToken, oauthAccessTokenSecret })
+        console.log({
+          access: oauthAccessToken,
+          secret: oauthAccessTokenSecret,
+        })
+
+        consumer.get(
+          'https://jira.cdprojektred.com/rest/api/latest/project',
+          request.session.oauthAccessToken,
+          request.session.oauthAccessTokenSecret,
+          function(error, data, resp) {
+            console.log(data)
+            const result = JSON.parse(data)
+            response.send(`I am looking at: ${result.key}`)
+          },
+        )
+
+        // response.send({ oauthAccessToken, oauthAccessTokenSecret })
       }
     },
   )

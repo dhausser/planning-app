@@ -11,11 +11,12 @@ const typeDefs = gql`
     teams: [Team]!
     team(id: ID!): Team
     absences(id: ID!): [Absence]!
-    oauthRequest: OauthRequest!
+    oauthRequest: OauthToken
+    oauthAccess(oauthVerifier: String!): OauthToken
     me: User
   }
 
-  type OauthRequest {
+  type OauthToken {
     token: String!
     secret: String!
   }
