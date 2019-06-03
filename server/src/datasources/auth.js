@@ -3,13 +3,6 @@ import fs from 'fs'
 import { OAuth } from 'oauth'
 import { consumerKey, consumerPrivateKeyFile } from '../../config'
 
-/**
- * TODO: Figure out if this is safe and sound
- */
-// const consumer = null
-// const oauthRequestToken = null
-// const oauthRequestTokenSecret = null
-
 export default class AuthAPI extends RESTDataSource {
   constructor() {
     super()
@@ -29,7 +22,7 @@ export default class AuthAPI extends RESTDataSource {
       consumerKey,
       privateKeyData,
       '1.0',
-      callbackURL || 'http://localhost:3000/',
+      'http://localhost:3000/',
       'RSA-SHA1',
     )
 

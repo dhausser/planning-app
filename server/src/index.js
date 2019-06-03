@@ -77,12 +77,11 @@ const consumer = new OAuth(
   consumerKey,
   privateKeyData,
   '1.0',
-  'http://localhost:3000/auth/callback',
+  'http://localhost:4000/auth/callback',
   'RSA-SHA1',
 )
 
 app.get('/auth/connect', function(request, response) {
-  // response.json({ token: 'thisistheauthenticationtoken123456' })
   consumer.getOAuthRequestToken(function(
     error,
     oauthToken,
@@ -95,12 +94,8 @@ app.get('/auth/connect', function(request, response) {
     } else {
       request.session.oauthRequestToken = oauthToken
       request.session.oauthRequestTokenSecret = oauthTokenSecret
-
-      const url = `https://jira.cdprojektred.com/plugins/servlet/oauth/authorize?oauth_token=${
-        request.session.oauthRequestToken
-      }`
-
-      response.json({ url })
+      console.log({ oauthToken })
+      response.json({ token: oauthToken })
     }
   })
 })
@@ -116,6 +111,7 @@ app.get('/auth/callback', function(request, response) {
         secret: request.session.oauthRequestTokenSecret,
         verify: request.query.oauth_verifier,
       })
+
       if (error) {
         console.log(error.data)
         response.send(error)
@@ -128,18 +124,11 @@ app.get('/auth/callback', function(request, response) {
           secret: oauthAccessTokenSecret,
         })
 
-        consumer.get(
-          'https://jira.cdprojektred.com/rest/api/latest/project',
-          request.session.oauthAccessToken,
-          request.session.oauthAccessTokenSecret,
-          function(error, data, resp) {
-            console.log(data)
-            const result = JSON.parse(data)
-            response.send(`I am looking at: ${result.key}`)
-          },
+        response.redirect(
+          `http://localhost:3000/login?oauth_access_token=${
+            request.session.oauthAccessToken
+          }`,
         )
-
-        // response.send({ oauthAccessToken, oauthAccessTokenSecret })
       }
     },
   )

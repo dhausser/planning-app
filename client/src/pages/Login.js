@@ -1,79 +1,116 @@
 import React, { useState, useEffect } from 'react'
-import gql from 'graphql-tag'
-// import { useQuery } from 'react-apollo-hooks'
-// import { ApolloConsumer, Mutation } from 'react-apollo'
-// import Modal, { ModalTransition } from '@atlaskit/modal-dialog'
-// import Spinner from '@atlaskit/spinner'
-import EmptyState from '@atlaskit/empty-state'
+import Modal, { ModalTransition } from '@atlaskit/modal-dialog'
+import { Redirect, withRouter } from 'react-router-dom'
 
-const LOGIN_USER = gql`
-  mutation login(
-    $oauthToken: String!
-    $oauthSecret: String!
-    $oauthVerifier: String!
-  ) {
-    login(
-      oauthToken: $oauthToken
-      oauthSecret: $oauthSecret
-      oauthVerifier: $oauthVerifier
-    )
-  }
-`
-
-const REQUEST_TOKEN = gql`
-  query oauthRequest {
-    oauthRequest {
-      token
-      secret
-    }
-  }
-`
-
-const ACCESS_TOKEN = gql`
-  query oauthAccess($oauthVerifier: String!) {
-    oauthAccess(oauthVerifier: $oauthVerifier) {
-      token
-      secret
-    }
-  }
-`
-
-export default () => {
-  const [link, setLink] = useState()
+export default withRouter(({ history }) => {
+  const [requestToken, setRequestToken] = useState(
+    localStorage.getItem('requestToken'),
+  )
+  const [accessToken, setAccessToken] = useState(localStorage.getItem('token'))
 
   useEffect(() => {
-    async function auth() {
-      const response = await fetch('/auth/connect')
-      const { url } = await response.json()
-      setLink(url)
-    }
-    if (!link) {
-      console.log('Link is not set')
-      auth()
-    } else {
-      console.log('Link is set')
-      const { search } = window.location
-      if (search) {
-        console.log('Reading search params...')
-        const url = new URL(window.location)
-        const searchParams = new URLSearchParams(url.search)
-        //               window.history.pushState({}, document.title, '/')
-        try {
-          const oauthToken = searchParams.get('oauth_token')
-          const oauthSecret = 'secret'
-          const oauthVerifier = searchParams.get('oauth_verifier')
-          console.log({ oauthToken, oauthSecret, oauthVerifier })
-          //                 login({
-          //                   variables: { oauthToken, oauthSecret, oauthVerifier },
-          //                 })
-        } catch (err) {
-          return <EmptyState header="Error" description={err.message} />
+    async function getRequestToken() {
+      try {
+        const response = await fetch('/auth/connect')
+        const { token } = await response.json()
+        if (token) {
+          setRequestToken(token)
+          localStorage.setItem('requestToken', token)
         }
+      } catch (error) {
+        console.error(error)
       }
     }
-  }, [link])
-  return <>{link ? <a href={link}>Login to Jira</a> : <p>Hello world!</p>}</>
-}
+
+    if (!requestToken) {
+      getRequestToken()
+    } else if (window.location.search) {
+      const url = new URL(window.location)
+      const searchParams = new URLSearchParams(url.search)
+      window.history.pushState({}, document.title, '/')
+      try {
+        const token = searchParams.get('oauth_access_token')
+        if (token) {
+          localStorage.setItem('token', token)
+          setAccessToken(token)
+          history.push('/projects')
+          // localStorage.remove('requestToken')
+          // console.log({ token })
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    }
+  }, [requestToken, accessToken, history])
+
+  const actions = [
+    {
+      text: 'Login with Jira',
+      onClick: () =>
+        window.location.replace(
+          `https://jira.cdprojektred.com/plugins/servlet/oauth/authorize?oauth_token=${requestToken}`,
+        ),
+    },
+  ]
+
+  return (
+    <>
+      {accessToken ? (
+        // Redirect to dashboard page
+        <p>{accessToken}</p>
+      ) : (
+        // <Redirect to={{ pathname: '/projects' }} />
+        <ModalTransition>
+          <Modal actions={actions} heading="Hi there 👋">
+            <p>
+              In order to proceed please authorise this app to access your Jira
+              data
+            </p>
+          </Modal>
+        </ModalTransition>
+      )}
+    </>
+  )
+})
+
+// import gql from 'graphql-tag'
+// import {useQuery, useMutation } from 'react-apollo-hooks'
+// import {ApolloConsumer, Mutation } from 'react-apollo'
+// import Spinner from '@atlaskit/spinner'
+// import EmptyState from '@atlaskit/empty-state'
+// import Spinner from '@atlaskit/spinner'
+
+// const LOGIN_USER = gql`
+//   mutation login(
+//     $oauthToken: String!
+//     $oauthSecret: String!
+//     $oauthVerifier: String!
+//   ) {
+//     login(
+//       oauthToken: $oauthToken
+//       oauthSecret: $oauthSecret
+//       oauthVerifier: $oauthVerifier
+//     )
+//   }
+// `
+
+// const REQUEST_TOKEN = gql`
+//   query oauthRequest {
+//     oauthRequest {
+//       token
+//       secret
+//     }
+//   }
+// `
+
+// const ACCESS_TOKEN = gql`
+//   query oauthAccess($oauthVerifier: String!) {
+//     oauthAccess(oauthVerifier: $oauthVerifier) {
+//       token
+//       secret
+//     }
+//   }
+// `
 
 // useEffect(() => {
 //   fetch('/auth/connect')
