@@ -13,6 +13,11 @@ export default class AuthAPI extends RESTDataSource {
     this.context = config.context
   }
 
+  findUser(token) {
+    console.log({ token })
+    return token
+  }
+
   getRequestToken(callbackURL) {
     const privateKeyData = fs.readFileSync(consumerPrivateKeyFile, 'utf8')
 
@@ -51,13 +56,6 @@ export default class AuthAPI extends RESTDataSource {
   }
 
   getAccessToken(oauthToken, oauthSecret, oauthVerifier) {
-    console.log(this.context)
-    // console.log({
-    //   oauthToken: [this.context.oauthToken, oauthToken],
-    //   oauthSecret: [this.context.oauthTokenSecret, oauthToken],
-    //   oauthVerifier,
-    // })
-
     return (function() {
       return new Promise(function(resolve, reject) {
         this.context.consumer.getOAuthAccessToken(
@@ -69,19 +67,6 @@ export default class AuthAPI extends RESTDataSource {
               console.log(error.data)
               reject(error)
             } else {
-              // console.log('Inputs:')
-              // console.log({
-              //   oauthToken,
-              //   oauthSecret,
-              //   oauthVerifier,
-              // })
-
-              // console.log('Outputs:')
-              // console.log({
-              //   oauthAccessToken,
-              //   oauthAccessTokenSecret,
-              // })
-
               resolve(oauthAccessToken)
             }
           },

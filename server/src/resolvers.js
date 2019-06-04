@@ -3,12 +3,6 @@ const resolvers = {
     /**
      * Jira REST API
      */
-    // Authentication
-    oauthRequest: async (_, __, { dataSources }) =>
-      dataSources.authAPI.getRequestToken(),
-    oauthAccess: async (_, { oauthVerifier }, { dataSources }) =>
-      dataSources.authAPI.getAccessToken(oauthVerifier),
-    // Resources
     issues: (_, { jql, startAt = 0, maxResults = 20 }, { dataSources }) =>
       dataSources.issueAPI.getIssues(jql, startAt, maxResults),
     issue: (_, { id }, { dataSources }) =>
@@ -40,18 +34,10 @@ const resolvers = {
      * Jira REST API
      */
     // Authentication
-    login: async (
-      _,
-      { oauthToken, oauthSecret, oauthVerifier },
-      { dataSources },
-    ) =>
-      dataSources.authAPI.getAccessToken(
-        oauthToken,
-        oauthSecret,
-        oauthVerifier,
-      ),
+    login: (_, { token }, { dataSources }) =>
+      dataSources.authAPI.findUser(token),
     // Resources
-    editIssue: async (_, { issueId, summary, assignee }, { dataSources }) =>
+    editIssue: (_, { issueId, summary, assignee }, { dataSources }) =>
       dataSources.issueAPI.editIssue(issueId, summary, assignee),
   },
 }

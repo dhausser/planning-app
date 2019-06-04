@@ -39,7 +39,7 @@ const App = ({ navigationViewController }) => {
   return (
     <LayoutManagerWithViewController globalNavigation={GlobalNavigation}>
       <Switch>
-        <Route path="/projects" component={Projects} />
+        <Route path="/" exact component={Projects} />
         <Route path="/dashboards" component={Dashboard} />
         <Route path="/reports" component={Reports} />
         <Route path="/issues" component={Issues} />

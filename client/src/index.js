@@ -18,15 +18,15 @@ const httpLink = createHttpLink({
   credentials: 'same-origin',
 })
 
-const authLink = setContext((_, { headers }) => {
-  const token = localStorage.getItem('token')
-  return {
+const authLink = setContext((_, { headers }) =>
+  // const token = localStorage.getItem('token')
+  ({
     headers: {
       ...headers,
-      authorization: `Bearer ${token}`,
+      authorization: 'Basic ZGF2eS5oYXVzc2VyOnJhZG5hLjE0NTc=',
     },
-  }
-})
+  }),
+)
 
 const cache = new InMemoryCache()
 const client = new ApolloClient({

@@ -1,5 +1,6 @@
 import express from 'express'
 import session from 'express-session'
+import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import errorhandler from 'errorhandler'
 import morgan from 'morgan'
@@ -24,6 +25,7 @@ const port = process.env.NODE_ENV === 'production' ? 8080 : 4000
 const store = createStore()
 
 app.use(errorhandler())
+app.use(bodyParser())
 app.use(cookieParser())
 app.use(
   session({
@@ -40,31 +42,6 @@ app.use(
     },
   }),
 )
-
-const apollo = new ApolloServer({
-  typeDefs,
-  resolvers,
-  formatError: error => {
-    console.log(error)
-    return error
-  },
-  context: ({ req }) => ({
-    auth: req.headers.authorization,
-    oauth: {
-      consumer: null,
-      oauthToken: null,
-      oauthTokenSecret: null,
-    },
-  }),
-  dataSources: () => ({
-    authAPI: new AuthAPI(),
-    issueAPI: new IssueAPI(),
-    absenceAPI: new AbsenceAPI(),
-    resourceAPI: new ResourceAPI({ store }),
-  }),
-})
-
-apollo.applyMiddleware({ app })
 
 /**
  * AUTHENTICATION *******************************************************************
@@ -94,8 +71,7 @@ app.get('/auth/connect', function(request, response) {
     } else {
       request.session.oauthRequestToken = oauthToken
       request.session.oauthRequestTokenSecret = oauthTokenSecret
-      console.log({ oauthToken })
-      response.json({ token: oauthToken })
+      response.json({ oauthToken })
     }
   })
 })
@@ -106,28 +82,14 @@ app.get('/auth/callback', function(request, response) {
     request.session.oauthRequestTokenSecret,
     request.query.oauth_verifier,
     function(error, oauthAccessToken, oauthAccessTokenSecret, results) {
-      console.log({
-        request: request.session.oauthRequestToken,
-        secret: request.session.oauthRequestTokenSecret,
-        verify: request.query.oauth_verifier,
-      })
-
       if (error) {
         console.log(error.data)
         response.send(error)
       } else {
         request.session.oauthAccessToken = oauthAccessToken
         request.session.oauthAccessTokenSecret = oauthAccessTokenSecret
-
-        console.log({
-          access: oauthAccessToken,
-          secret: oauthAccessTokenSecret,
-        })
-
         response.redirect(
-          `http://localhost:3000/login?oauth_access_token=${
-            request.session.oauthAccessToken
-          }`,
+          `http://localhost:3000/?token=${request.session.oauthAccessToken}`,
         )
       }
     },
@@ -137,6 +99,27 @@ app.get('/auth/callback', function(request, response) {
 /**
  *************************************************************************************
  */
+
+const apollo = new ApolloServer({
+  typeDefs,
+  resolvers,
+  formatError: error => {
+    console.log(error)
+    return error
+  },
+  context: ({ req }) => ({
+    auth: req.headers.authorization,
+    // user: req.request.user,
+  }),
+  dataSources: () => ({
+    authAPI: new AuthAPI(),
+    issueAPI: new IssueAPI(),
+    absenceAPI: new AbsenceAPI(),
+    resourceAPI: new ResourceAPI({ store }),
+  }),
+})
+
+apollo.applyMiddleware({ app })
 
 app.use(express.static(path.join(__dirname, 'build')))
 
