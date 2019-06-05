@@ -4,6 +4,14 @@ import fs from 'fs'
 import { OAuth } from 'oauth'
 import { consumerKey, consumerPrivateKeyFile } from '../config'
 
+/**
+ * TODO: Callback URL should be set to the app hostname
+ * localhost:3000 in dev
+ * localhost:4000 in build
+ * roadmap.cdprojektred in prod
+ */
+const callbackURL = 'http://localhost:4000/auth/callback'
+
 const router = express.Router()
 const privateKeyData = fs.readFileSync(consumerPrivateKeyFile, 'utf8')
 const consumer = new OAuth(
@@ -12,7 +20,7 @@ const consumer = new OAuth(
   consumerKey,
   privateKeyData,
   '1.0',
-  'http://localhost:4000/auth/callback',
+  callbackURL,
   'RSA-SHA1',
 )
 

@@ -2,7 +2,6 @@ import React from 'react'
 import { render } from 'react-dom'
 import { BrowserRouter as Router } from 'react-router-dom'
 import '@atlaskit/css-reset'
-
 import { Query, ApolloProvider } from 'react-apollo'
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks'
 import { ApolloClient } from 'apollo-client'
@@ -15,18 +14,18 @@ import { IS_LOGGED_IN } from './queries'
 
 const httpLink = createHttpLink({
   uri: '/graphql',
-  credentials: 'same-origin',
 })
 
-const authLink = setContext((_, { headers }) =>
-  // const token = localStorage.getItem('token')
-  ({
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem('token')
+  return {
     headers: {
       ...headers,
-      authorization: 'Basic ZGF2eS5oYXVzc2VyOnJhZG5hLjE0NTc=',
+      authorization: token ? `Bearer ${token}` : '',
+      // authorization: token ? 'Basic ZGF2eS5oYXVzc2VyOnJhZG5hLjE0NTc=' : '',
     },
-  }),
-)
+  }
+})
 
 const cache = new InMemoryCache()
 const client = new ApolloClient({

@@ -86,36 +86,6 @@ export default function() {
   if (loading) return <div />
   if (error) return <Error error={error} />
 
-  // const relevant = []
-  // const garbage = []
-
-  // data.projects.forEach(project => {
-  //   const option = {
-  //     avatar: project.avatarUrls.large,
-  //     id: project.id,
-  //     pathname: `/projects/${project.key}`,
-  //     text: project.name,
-  //     subText: `${project.projectTypeKey} project`,
-  //   }
-
-  //   if (['10500', '16000', '16001'].includes(project.id)) {
-  //     relevant.push(option)
-  //   } else {
-  //     garbage.push(option)
-  //   }
-  // })
-
-  // const options = [
-  //   {
-  //     label: 'Recent Projects',
-  //     options: relevant,
-  //   },
-  //   {
-  //     label: 'Other Projects',
-  //     options: garbage,
-  //   },
-  // ]
-
   return (
     <NavigationProvider>
       <Wrapper>
@@ -156,6 +126,9 @@ const create = () => ({
   text: 'Create board',
 })
 
+/**
+ * TODO: TypeError: Cannot read property 'id' of undefined
+ */
 const target = ({ id, subText, text, avatar }) => (
   <ContainerHeader
     before={s => <ItemAvatar appearance="square" itemState={s} src={avatar} />}
