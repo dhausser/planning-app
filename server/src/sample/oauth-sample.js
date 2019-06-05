@@ -13,7 +13,7 @@ app.configure('development', function() {
   app.use(express.session({ secret: 'ssshhhh!' }))
 })
 
-const config = require('../config')
+const config = require('../../config')
 
 const privateKeyData = fs.readFileSync(config.consumerPrivateKeyFile, 'utf8')
 

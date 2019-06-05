@@ -5,7 +5,7 @@ import errorhandler from 'errorhandler'
 import morgan from 'morgan'
 import fs from 'fs'
 import { OAuth } from 'oauth'
-import { consumerKey, consumerPrivateKeyFile } from '../config'
+import { consumerKey, consumerPrivateKeyFile } from '../../config'
 
 const app = express()
 
@@ -69,22 +69,12 @@ app.get('/callback', function(request, response) {
     request.session.oauthRequestTokenSecret,
     request.query.oauth_verifier,
     function(error, oauthAccessToken, oauthAccessTokenSecret, results) {
-      console.log({
-        request: request.session.oauthRequestToken,
-        secret: request.session.oauthRequestTokenSecret,
-        verify: request.query.oauth_verifier,
-      })
       if (error) {
         console.log(error.data)
         response.send(error)
       } else {
         request.session.oauthAccessToken = oauthAccessToken
         request.session.oauthAccessTokenSecret = oauthAccessTokenSecret
-
-        console.log({
-          access: oauthAccessToken,
-          secret: oauthAccessTokenSecret,
-        })
 
         consumer.get(
           'https://jira.cdprojektred.com/rest/api/latest/project',
