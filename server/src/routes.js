@@ -1,6 +1,7 @@
 import express from 'express'
 import path from 'path'
 import fs from 'fs'
+import https from 'https'
 import { OAuth } from 'oauth'
 import { consumerKey, consumerPrivateKeyFile } from '../config'
 
@@ -15,8 +16,8 @@ const callbackURL = 'http://localhost:4000/auth/callback'
 const router = express.Router()
 const privateKeyData = fs.readFileSync(consumerPrivateKeyFile, 'utf8')
 const consumer = new OAuth(
-  `https://jira.cdprojektred.com/plugins/servlet/oauth/request-token`,
-  `https://jira.cdprojektred.com/plugins/servlet/oauth/access-token`,
+  `https://${process.env.HOST}/plugins/servlet/oauth/request-token`,
+  `https://${process.env.HOST}/plugins/servlet/oauth/access-token`,
   consumerKey,
   privateKeyData,
   '1.0',
@@ -54,10 +55,6 @@ router.get('/auth/callback', function(request, response) {
       } else {
         request.session.oauthAccessToken = oauthAccessToken
         request.session.oauthAccessTokenSecret = oauthAccessTokenSecret
-
-        // Test fetching data
-        // getData(request, response)
-
         response.redirect(
           `${process.env.APP_URL}/?token=${request.session.oauthAccessToken}`,
         )
@@ -65,6 +62,8 @@ router.get('/auth/callback', function(request, response) {
     },
   )
 })
+
+router.get('/issue', () => getRequest())
 
 router.use(express.static(path.join(__dirname, 'build')))
 
@@ -74,19 +73,32 @@ router.get('/*', (req, res) => {
 
 export default router
 
-function getData(request, response) {
-  const url = 'https://jira.cdprojektred.com/rest/api/latest/project'
-  consumer.get(
-    url,
-    request.session.oauthAccessToken,
-    request.session.oauthAccessTokenSecret,
-    function(error, data, resp) {
-      if (error) {
-        console.error(error)
-      }
-      console.log(data)
-      const result = JSON.parse(data)
-      response.send(`I am looking at: ${result.key}`)
+export function getRequest() {
+  const options = {
+    hostname: 'jira.cdprojektred.com',
+    port: 443,
+    path: '/rest/api/latest/issue/GWENT-63428',
+    method: 'GET',
+    headers: {
+      // 'Content-Type': 'application/json',
+      // Authorization: 'Basic ZGF2eS5oYXVzc2VyOnJhZG5hLjE0NTc=',
+      Authorization: 'Bearer 0YgkTFn43y25OocgdE5IF8JQWx6YdBZq',
     },
-  )
+  }
+
+  console.log({ options })
+
+  const req = https.request(options, res => {
+    console.log('statusCode:', res.statusCode)
+    console.log('headers:', res.headers)
+
+    res.on('data', d => {
+      process.stdout.write(d)
+    })
+  })
+
+  req.on('error', e => {
+    console.error(e)
+  })
+  req.end()
 }

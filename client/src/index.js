@@ -16,13 +16,17 @@ const httpLink = createHttpLink({
   uri: '/graphql',
 })
 
+/**
+ * TODO: Investigate access token validity
+ */
 const authLink = setContext((_, { headers }) => {
-  const token = localStorage.getItem('token')
+  const token = null // localStorage.getItem('token')
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : '',
-      // authorization: token ? 'Basic ZGF2eS5oYXVzc2VyOnJhZG5hLjE0NTc=' : '',
+      authorization: token
+        ? `Bearer ${token}`
+        : 'Basic ZGF2eS5oYXVzc2VyOnJhZG5hLjE0NTc=',
     },
   }
 })
