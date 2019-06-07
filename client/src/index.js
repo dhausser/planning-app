@@ -20,7 +20,7 @@ const httpLink = createHttpLink({
  * TODO: Investigate access token validity
  */
 const authLink = setContext((_, { headers }) => {
-  const token = null // localStorage.getItem('token')
+  const token = localStorage.getItem('token')
   return {
     headers: {
       ...headers,

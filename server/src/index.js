@@ -4,6 +4,7 @@ import session from 'express-session'
 import cookieParser from 'cookie-parser'
 import errorhandler from 'errorhandler'
 import morgan from 'morgan'
+import passport from 'passport'
 import routes from './routes'
 import createStore from './db'
 import resolvers from './resolvers'
@@ -35,6 +36,15 @@ app.use(
     cookie: {},
   }),
 )
+app.use(passport.initialize())
+app.use(passport.session())
+// passport.serializeUser(function(user, done) {
+//   done(null, user)
+// })
+
+// passport.deserializeUser(function(user, done) {
+//   done(null, user)
+// })
 
 const apollo = new ApolloServer({
   typeDefs,
