@@ -2,8 +2,8 @@ import express from 'express'
 import path from 'path'
 import fs from 'fs'
 import https from 'https'
-import passport from 'passport'
-import OAuth1Strategy from 'passport-oauth1'
+// import passport from 'passport'
+// import OAuth1Strategy from 'passport-oauth1'
 import { OAuth } from 'oauth'
 import { consumerKey, consumerPrivateKeyFile } from '../config'
 
@@ -13,60 +13,60 @@ import { consumerKey, consumerPrivateKeyFile } from '../config'
  * localhost:4000 in build
  * roadmap.cdprojektred in prod
  */
-// const callbackURL = 'http://localhost:4000/auth/callback'
-const callbackURL = '/auth/callback'
+const callbackURL = 'http://localhost:4000/auth/callback'
+// const callbackURL = '/auth/callback'
 
 const router = express.Router()
 
 const privateKeyData = fs.readFileSync(consumerPrivateKeyFile, 'utf8')
 
-passport.use(
-  new OAuth1Strategy(
-    {
-      requestTokenURL: `https://${
-        process.env.HOST
-      }/plugins/servlet/oauth/request-token`,
-      accessTokenURL: `https://${
-        process.env.HOST
-      }/plugins/servlet/oauth/access-token`,
-      userAuthorizationURL:
-        'https://jira.cdprojektred.com/plugins/servlet/oauth/authorize',
-      consumerKey,
-      consumerSecret: privateKeyData,
-      callbackURL,
-      signatureMethod: 'RSA-SHA1',
-    },
-    function(token, tokenSecret, profile, cb) {
-      console.log({ token, tokenSecret, profile })
-      return cb(null, profile)
-    },
-  ),
-)
+// passport.use(
+//   new OAuth1Strategy(
+//     {
+//       requestTokenURL: `https://${
+//         process.env.HOST
+//       }/plugins/servlet/oauth/request-token`,
+//       accessTokenURL: `https://${
+//         process.env.HOST
+//       }/plugins/servlet/oauth/access-token`,
+//       userAuthorizationURL:
+//         'https://jira.cdprojektred.com/plugins/servlet/oauth/authorize',
+//       consumerKey,
+//       consumerSecret: privateKeyData,
+//       callbackURL,
+//       signatureMethod: 'RSA-SHA1',
+//     },
+//     function(token, tokenSecret, profile, cb) {
+//       console.log({ token, tokenSecret, profile })
+//       return cb(null, profile)
+//     },
+//   ),
+// )
 
-router.get('/auth', passport.authenticate('oauth'))
+// router.get('/auth', passport.authenticate('oauth'))
 
-router.get(
-  '/auth/callback',
-  passport.authenticate('oauth', { failureRedirect: '/login', session: false }),
-  function(req, res) {
-    // Successful authentication, redirect home.
-    res.redirect('/')
-  },
-)
+// router.get(
+//   '/auth/callback',
+//   passport.authenticate('oauth', { failureRedirect: '/login', session: false }),
+//   function(req, res) {
+//     // Successful authentication, redirect home.
+//     res.redirect('/')
+//   },
+// )
 
 router.get('/login', function(request, response) {
   response.send('Login page')
 })
 
-// const consumer = new OAuth(
-//   `https://${process.env.HOST}/plugins/servlet/oauth/request-token`,
-//   `https://${process.env.HOST}/plugins/servlet/oauth/access-token`,
-//   consumerKey,
-//   privateKeyData,
-//   '1.0',
-//   callbackURL,
-//   'RSA-SHA1',
-// )
+const consumer = new OAuth(
+  `https://${process.env.HOST}/plugins/servlet/oauth/request-token`,
+  `https://${process.env.HOST}/plugins/servlet/oauth/access-token`,
+  consumerKey,
+  privateKeyData,
+  '1.0',
+  callbackURL,
+  'RSA-SHA1',
+)
 
 router.get('/auth/connect', function(request, response) {
   consumer.getOAuthRequestToken(function(
@@ -101,24 +101,24 @@ router.get('/auth/callback', function(request, response) {
         request.session.oauthAccessToken = oauthAccessToken
         request.session.oauthAccessTokenSecret = oauthAccessTokenSecret
 
-        console.log('Trying to fetch some issue')
-        consumer.get(
-          'https://jira.cdprojektred.com/rest/api/latest/issue/GWENT-63428',
-          request.session.oauthAccessToken,
-          request.session.oauthAccessTokenSecret,
-          function(e, data, res) {
-            if (e) console.error(e)
-            console.log({ statusCode: e.statusCode, data: e.data })
-            console.log('Fetching...')
-            console.log({ data })
-            console.log('Done Fetching...')
-          },
-        )
-        console.log('Finished Fetching')
-
-        // response.redirect(
-        //   `${process.env.APP_URL}/?token=${request.session.oauthAccessToken}`,
+        // console.log('Trying to fetch some issue')
+        // consumer.get(
+        //   'https://jira.cdprojektred.com/rest/api/latest/issue/GWENT-63428',
+        //   request.session.oauthAccessToken,
+        //   request.session.oauthAccessTokenSecret,
+        //   function(e, data, res) {
+        //     if (e) console.error(e)
+        //     console.log({ statusCode: e.statusCode, data: e.data })
+        //     console.log('Fetching...')
+        //     console.log({ data })
+        //     console.log('Done Fetching...')
+        //   },
         // )
+        // console.log('Finished Fetching')
+
+        response.redirect(
+          `${process.env.APP_URL}/?token=${request.session.oauthAccessToken}`,
+        )
       }
     },
   )

@@ -6,26 +6,6 @@ export default ({ login }) => {
   const token = localStorage.getItem('token')
 
   useEffect(() => {
-    async function getRequestToken() {
-      try {
-        const response = await fetch('/auth/connect')
-        const { oauthToken } = await response.json()
-        if (oauthToken) {
-          setActions([
-            {
-              text: 'Login with Jira',
-              onClick: () =>
-                window.location.replace(
-                  `https://jira.cdprojektred.com/plugins/servlet/oauth/authorize?oauth_token=${oauthToken}`,
-                ),
-            },
-          ])
-        }
-      } catch (error) {
-        console.error(error)
-      }
-    }
-
     function getAccessToken() {
       const url = new URL(window.location)
       const searchParams = new URLSearchParams(url.search)
@@ -40,8 +20,15 @@ export default ({ login }) => {
 
     if (window.location.search) {
       getAccessToken()
-    } else if (!token) {
-      getRequestToken()
+    }
+
+    if (!token) {
+      setActions([
+        {
+          text: 'Login with Jira',
+          onClick: () => window.location.replace(`http://localhost:4000/login`),
+        },
+      ])
     }
   }, [login, token])
 
