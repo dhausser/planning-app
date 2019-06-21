@@ -7,8 +7,16 @@ export default class IssueAPI extends RESTDataSource {
   }
 
   willSendRequest(request) {
-    request.headers.set('Authorization', this.context.auth)
-    console.log({ user: this.context.user })
+    const headerToken = this.context.user
+    console.log(headerToken)
+    request.headers.set('Content-Type', 'application/x-www-form-urlencoded')
+    request.headers.set('Authorization', `Oauth ${headerToken}`)
+    // request.headers.set('Authorization', this.context.auth)
+  }
+
+  loginUser(user) {
+    console.log({ user })
+    return user
   }
 
   async getProjects() {

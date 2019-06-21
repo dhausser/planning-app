@@ -4,10 +4,15 @@ import { ApolloConsumer, Mutation } from 'react-apollo'
 import { LoginForm, Loading } from '../components'
 
 const LOGIN_USER = gql`
-  mutation login($token: String!) {
-    login(token: $token)
+  mutation login {
+    login
   }
 `
+// const LOGIN_USER = gql`
+//   mutation login($token: String!) {
+//     login(token: $token)
+//   }
+// `
 
 export default () => (
   <ApolloConsumer>

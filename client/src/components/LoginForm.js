@@ -1,32 +1,30 @@
 import React, { useEffect } from 'react'
 import Modal, { ModalTransition } from '@atlaskit/modal-dialog'
 
+const authUrl =
+  `http://localhost:4000/auth/provider` ||
+  `https://roadmap.cdprojektred.com/auth/provider`
+
 export default ({ login }) => {
-  // const token = localStorage.getItem('token')
+  useEffect(() => {
+    function getAccessToken() {
+      try {
+        window.history.replaceState(null, null, window.location.pathname)
+        login()
+      } catch (error) {
+        console.error(error)
+      }
+    }
 
-  // useEffect(() => {
-  //   function getAccessToken() {
-  //     const url = new URL(window.location)
-  //     const searchParams = new URLSearchParams(url.search)
-  //     try {
-  //       window.history.replaceState(null, null, window.location.pathname)
-  //       const param = searchParams.get('token')
-  //       login({ variables: { token: param } })
-  //     } catch (error) {
-  //       console.error(error)
-  //     }
-  //   }
-
-  //   if (window.location.search) {
-  //     getAccessToken()
-  //   }
-  // }, [login])
+    if (window.location.search) {
+      getAccessToken()
+    }
+  }, [login])
 
   const actions = [
     {
       text: 'Login with Jira',
-      onClick: () =>
-        window.location.replace(`http://localhost:4000/auth/provider`),
+      onClick: () => window.location.replace(authUrl),
     },
   ]
 

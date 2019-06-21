@@ -3,18 +3,15 @@ import passport from 'passport'
 import path from 'path'
 
 const router = express.Router()
-
-/**
- * TODO: Callback URL should be set to the app hostname
- * localhost:3000 in dev
- * localhost:4000 in build
- * roadmap.cdprojektred in prod
- */
+const baseUrl =
+  process.env.NODE_ENV === 'production'
+    ? 'https://roadmap.cdprojektred'
+    : 'http://localhost:3000'
 
 // Redirect the user to the OAuth provider for authentication.  When
 // complete, the provider will redirect the user back to the application at
 //     /auth/provider/callback
-router.get('/auth/provider', passport.authenticate('provider'))
+router.get('/auth/provider', passport.authenticate('jira'))
 
 // The OAuth provider has redirected the user back to the application.
 // Finish the authentication process by attempting to obtain an access
@@ -22,9 +19,9 @@ router.get('/auth/provider', passport.authenticate('provider'))
 // Otherwise, authentication has failed.
 router.get(
   '/auth/provider/callback',
-  passport.authenticate('provider', {
-    successRedirect: 'http://localhost:3000',
-    failureRedirect: 'http://localhost:3000/login',
+  passport.authenticate('jira', {
+    successRedirect: `${baseUrl}?token`,
+    failureRedirect: `${baseUrl}/login`,
   }),
 )
 

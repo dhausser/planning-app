@@ -104,8 +104,8 @@ const typeDefs = gql`
   }
 
   type Mutation {
+    login: String! # login token
     editIssue(issueId: ID!, summary: String): Int
-    login(token: String!): String! # login token
   }
 `
 export default typeDefs

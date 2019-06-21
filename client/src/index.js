@@ -24,9 +24,7 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      authorization: token
-        ? `Bearer ${token}`
-        : 'Basic ZGF2eS5oYXVzc2VyOnJhZG5hLjE0NTc=',
+      authorization: `Oauth ${token}`,
     },
   }
 })
