@@ -3,4 +3,3 @@ require('dotenv').config()
 require = require('esm')(module)
 
 module.exports = require('./src/index')
-// module.exports = require('./src/sample/oauth')
