@@ -9,9 +9,7 @@
     "apollo-datasource-rest": "^0.5.0",
     "apollo-server-express": "^2.5.0",
     "body-parser": "^1.19.0",
-    "btoa": "^1.2.1",
     "cookie-parser": "^1.4.4",
-    "crypto2": "^2.0.0",
     "dotenv": "^8.0.0",
     "errorhandler": "^1.5.1",
     "esm": "^3.2.22",
@@ -27,8 +25,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "nodemon esm main.js",
-    "dev": "nodemon esm main.js",
+    "start": "nodemon esm --inspect main.js",
     "prod": "node -r esm main.js"
   },
   "keywords": [],

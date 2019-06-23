@@ -1,10 +1,5 @@
 node_modules
-.env
-.next
-.vscode
-.DS_Store
 build
-data
-*.iml
-*.idea
+.env
+.DS_Store
 *.pem

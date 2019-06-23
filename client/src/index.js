@@ -1,13 +1,13 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
-import '@atlaskit/css-reset';
 import { Query, ApolloProvider } from 'react-apollo';
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks';
 import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { createHttpLink } from 'apollo-link-http';
 import { setContext } from 'apollo-link-context';
+import '@atlaskit/css-reset';
 
 import App from './app';
 import { Login } from './pages';
@@ -18,9 +18,6 @@ const httpLink = createHttpLink({
   uri: '/graphql',
 });
 
-/**
- * TODO: Investigate access token validity
- */
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem('token');
   return {
