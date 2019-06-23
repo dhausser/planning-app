@@ -1,8 +1,10 @@
-import React from 'react'
-import EmptyState from '@atlaskit/empty-state'
-import Button from '@atlaskit/button'
+/* eslint-disable no-console */
+import React from 'react';
+import PropTypes from 'prop-types';
+import EmptyState from '@atlaskit/empty-state';
+import Button from '@atlaskit/button';
 
-export default ({ error }) => {
+function Error({ error }) {
   const primaryAction = (
     <Button
       appearance="primary"
@@ -10,13 +12,13 @@ export default ({ error }) => {
     >
       Primary action
     </Button>
-  )
+  );
 
   const secondaryAction = (
     <Button onClick={() => console.log('secondary action clicked')}>
       Secondary action
     </Button>
-  )
+  );
 
   const tertiaryAction = (
     <Button
@@ -26,7 +28,7 @@ export default ({ error }) => {
     >
       Tertiary action
     </Button>
-  )
+  );
 
   const props = {
     header: 'Error',
@@ -35,7 +37,13 @@ export default ({ error }) => {
     primaryAction,
     secondaryAction,
     tertiaryAction,
-  }
+  };
 
-  return <EmptyState {...props} />
+  return <EmptyState {...props} />;
 }
+
+Error.propTypes = {
+  error: PropTypes.string.isRequired,
+};
+
+export default Error;

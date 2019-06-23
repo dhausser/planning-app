@@ -1,4 +1,4 @@
-import { gql } from 'apollo-server-express'
+import { gql } from 'apollo-server-express';
 
 const typeDefs = gql`
   type Query {
@@ -107,5 +107,5 @@ const typeDefs = gql`
     login: String! # login token
     editIssue(issueId: ID!, summary: String): Int
   }
-`
-export default typeDefs
+`;
+export default typeDefs;

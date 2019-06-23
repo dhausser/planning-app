@@ -1,32 +1,32 @@
-import React, { useEffect } from 'react'
-import Modal, { ModalTransition } from '@atlaskit/modal-dialog'
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+import Modal, { ModalTransition } from '@atlaskit/modal-dialog';
 
-const authUrl =
-  `http://localhost:4000/auth/provider` ||
-  `https://roadmap.cdprojektred.com/auth/provider`
+const authUrl = 'http://localhost:4000/auth/provider'
+  || 'https://roadmap.cdprojektred.com/auth/provider';
 
-export default ({ login }) => {
+function LoginForm({ login }) {
   useEffect(() => {
     function getAccessToken() {
       try {
-        window.history.replaceState(null, null, window.location.pathname)
-        login()
+        window.history.replaceState(null, null, window.location.pathname);
+        login();
       } catch (error) {
-        console.error(error)
+        console.error(error);
       }
     }
 
     if (window.location.search) {
-      getAccessToken()
+      getAccessToken();
     }
-  }, [login])
+  }, [login]);
 
   const actions = [
     {
       text: 'Login with Jira',
       onClick: () => window.location.replace(authUrl),
     },
-  ]
+  ];
 
   return (
     <ModalTransition>
@@ -36,5 +36,12 @@ export default ({ login }) => {
         </p>
       </Modal>
     </ModalTransition>
-  )
+  );
 }
+
+LoginForm.propTypes = {
+  login: PropTypes.func.isRequired,
+};
+
+
+export default LoginForm;

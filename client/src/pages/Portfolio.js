@@ -1,17 +1,25 @@
-import React, { useEffect } from 'react'
-import { withNavigationViewController } from '@atlaskit/navigation-next'
-import { ProjectHomeView, Page, Header, GanttChart } from '../components'
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { withNavigationViewController } from '@atlaskit/navigation-next';
+import {
+  ProjectHomeView, Page, Header, GanttChart,
+} from '../components';
 
-const Portfolio = props => {
+function Portfolio({ navigationViewController }) {
   useEffect(() => {
-    props.navigationViewController.setView(ProjectHomeView.id)
-  }, [props.navigationViewController])
+    navigationViewController.setView(ProjectHomeView.id);
+  }, [navigationViewController]);
 
   return (
     <Page>
-      <Header title="Portfolio" {...props} />
+      <Header title="Portfolio" />
       <GanttChart />
     </Page>
-  )
+  );
 }
-export default withNavigationViewController(Portfolio)
+
+Portfolio.propTypes = {
+  navigationViewController: PropTypes.func.isRequired,
+};
+
+export default withNavigationViewController(Portfolio);

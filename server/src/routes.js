@@ -1,17 +1,16 @@
-import express from 'express'
-import passport from 'passport'
-import path from 'path'
+import express from 'express';
+import passport from 'passport';
+import path from 'path';
 
-const router = express.Router()
-const baseUrl =
-  process.env.NODE_ENV === 'production'
-    ? 'https://roadmap.cdprojektred'
-    : 'http://localhost:3000'
+const router = express.Router();
+const baseUrl = process.env.NODE_ENV === 'production'
+  ? 'https://roadmap.cdprojektred'
+  : 'http://localhost:3000';
 
 // Redirect the user to the OAuth provider for authentication.  When
 // complete, the provider will redirect the user back to the application at
 //     /auth/provider/callback
-router.get('/auth/provider', passport.authenticate('oauth'))
+router.get('/auth/provider', passport.authenticate('oauth'));
 
 // The OAuth provider has redirected the user back to the application.
 // Finish the authentication process by attempting to obtain an access
@@ -23,11 +22,11 @@ router.get(
     successRedirect: `${baseUrl}?token`,
     failureRedirect: `${baseUrl}/login`,
   }),
-)
+);
 
-router.use(express.static(path.join(__dirname, 'build')))
-router.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'))
-})
+router.use(express.static(path.join(__dirname, 'build')));
+router.get('/*', (_req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
-export default router
+export default router;

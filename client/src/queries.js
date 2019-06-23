@@ -1,4 +1,4 @@
-import gql from 'graphql-tag'
+import gql from 'graphql-tag';
 
 const ISSUE_TILE_DATA = gql`
   fragment IssueTile on Issue {
@@ -21,7 +21,7 @@ const ISSUE_TILE_DATA = gql`
       team
     }
   }
-`
+`;
 
 const ISSUE_PAGINATION = gql`
   fragment IssuePagination on IssueConnection {
@@ -29,7 +29,7 @@ const ISSUE_PAGINATION = gql`
     maxResults
     total
   }
-`
+`;
 
 export const PROJECT_TILE_DATA = gql`
   fragment ProjectTile on Project {
@@ -38,7 +38,7 @@ export const PROJECT_TILE_DATA = gql`
     name
     projectTypeKey
   }
-`
+`;
 
 export const GET_ISSUE = gql`
   query GetIssueById($id: ID!) {
@@ -62,7 +62,7 @@ export const GET_ISSUE = gql`
     }
   }
   ${ISSUE_TILE_DATA}
-`
+`;
 
 export const GET_ISSUES = gql`
   query issueList($jql: String, $startAt: Int, $maxResults: Int) {
@@ -75,7 +75,7 @@ export const GET_ISSUES = gql`
   }
   ${ISSUE_PAGINATION}
   ${ISSUE_TILE_DATA}
-`
+`;
 
 export const GET_DASHBOARD_ISSUES = gql`
   query issueList($jql: String, $startAt: Int, $maxResults: Int) {
@@ -95,7 +95,7 @@ export const GET_DASHBOARD_ISSUES = gql`
     }
   }
   ${ISSUE_PAGINATION}
-`
+`;
 
 export const GET_STORIES = gql`
   query issueList($jql: String, $startAt: Int, $maxResults: Int) {
@@ -112,7 +112,7 @@ export const GET_STORIES = gql`
   }
   ${ISSUE_PAGINATION}
   ${ISSUE_TILE_DATA}
-`
+`;
 
 export const GET_RESOURCES = gql`
   query resourceList {
@@ -122,7 +122,7 @@ export const GET_RESOURCES = gql`
       team
     }
   }
-`
+`;
 
 export const GET_RESOURCE = gql`
   query getResourceById($id: ID!) {
@@ -130,7 +130,7 @@ export const GET_RESOURCE = gql`
       name
     }
   }
-`
+`;
 
 export const GET_VERSIONS = gql`
   query GetVersions($id: ID!, $startAt: Int, $maxResults: Int) {
@@ -139,7 +139,7 @@ export const GET_VERSIONS = gql`
       name
     }
   }
-`
+`;
 
 export const GET_TEAMS = gql`
   query GetTeams {
@@ -151,7 +151,7 @@ export const GET_TEAMS = gql`
       }
     }
   }
-`
+`;
 
 export const GET_FILTERS = gql`
   query GetFilters {
@@ -169,7 +169,7 @@ export const GET_FILTERS = gql`
       name
     }
   }
-`
+`;
 
 export const GET_ABSENCES = gql`
   query absenceList($id: ID!) {
@@ -178,7 +178,7 @@ export const GET_ABSENCES = gql`
       date
     }
   }
-`
+`;
 
 export const CURRENT_USER_QUERY = gql`
   query {
@@ -189,10 +189,10 @@ export const CURRENT_USER_QUERY = gql`
       permissions
     }
   }
-`
+`;
 
 export const IS_LOGGED_IN = gql`
   query IsUserLoggedIn {
     isLoggedIn @client
   }
-`
+`;

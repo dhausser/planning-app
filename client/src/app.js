@@ -1,18 +1,19 @@
-import React, { useEffect } from 'react'
-import { Route, Switch } from 'react-router-dom'
+import React, { useEffect } from 'react';
+import { Route, Switch } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import {
   LayoutManagerWithViewController,
   NavigationProvider,
   withNavigationViewController,
-} from '@atlaskit/navigation-next'
+} from '@atlaskit/navigation-next';
 
 import {
   GlobalNavigation,
   ProductHomeView,
   ProductIssuesView,
   ProjectHomeView,
-} from '../components'
+} from './components';
 
 import {
   Dashboard,
@@ -27,14 +28,14 @@ import {
   Releases,
   Settings,
   Projects,
-} from '.'
+} from './pages';
 
 const App = ({ navigationViewController }) => {
   useEffect(() => {
-    navigationViewController.addView(ProductHomeView)
-    navigationViewController.addView(ProductIssuesView)
-    navigationViewController.addView(ProjectHomeView)
-  }, [navigationViewController])
+    navigationViewController.addView(ProductHomeView);
+    navigationViewController.addView(ProductIssuesView);
+    navigationViewController.addView(ProjectHomeView);
+  }, [navigationViewController]);
 
   return (
     <LayoutManagerWithViewController globalNavigation={GlobalNavigation}>
@@ -54,12 +55,16 @@ const App = ({ navigationViewController }) => {
         <Route path="/issues/:filterId" component={Issues} />
       </Switch>
     </LayoutManagerWithViewController>
-  )
-}
-const AppWithNavigationViewController = withNavigationViewController(App)
+  );
+};
+const AppWithNavigationViewController = withNavigationViewController(App);
+
+App.propTypes = {
+  navigationViewController: PropTypes.func.isRequired,
+};
 
 export default () => (
   <NavigationProvider>
     <AppWithNavigationViewController />
   </NavigationProvider>
-)
+);

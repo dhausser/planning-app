@@ -1,17 +1,23 @@
-import React, { useEffect } from 'react'
-import { withNavigationViewController } from '@atlaskit/navigation-next'
-import { ProjectHomeView, Page, Header } from '../components'
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { withNavigationViewController } from '@atlaskit/navigation-next';
+import { ProjectHomeView, Page, Header } from '../components';
 
-const Backlog = props => {
+function Backlog({ navigationViewController }) {
   useEffect(() => {
-    props.navigationViewController.setView(ProjectHomeView.id)
-  }, [props.navigationViewController])
+    navigationViewController.setView(ProjectHomeView.id);
+  }, [navigationViewController]);
 
   return (
     <Page>
-      <Header title="Backlog" {...props} />
+      <Header title="Backlog" />
       <p>This is the Backlog page.</p>
     </Page>
-  )
+  );
 }
-export default withNavigationViewController(Backlog)
+
+Backlog.propTypes = {
+  navigationViewController: PropTypes.func.isRequired,
+};
+
+export default withNavigationViewController(Backlog);

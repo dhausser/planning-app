@@ -1,10 +1,11 @@
-import React from 'react'
-import { useQuery, useMutation } from 'react-apollo-hooks'
-import gql from 'graphql-tag'
-import Select from '@atlaskit/select'
-import Error from '../Error'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { useQuery, useMutation } from 'react-apollo-hooks';
+import gql from 'graphql-tag';
+import Select from '@atlaskit/select';
+import Error from '../Error';
 
-import { PROJECT_TILE_DATA } from '../../queries'
+import { PROJECT_TILE_DATA } from '../../queries';
 
 const GET_PROJECTS = gql`
   query GetProjects {
@@ -13,21 +14,21 @@ const GET_PROJECTS = gql`
     }
   }
   ${PROJECT_TILE_DATA}
-`
+`;
 
 const TOGGLE_PROJECT = gql`
   mutation toggleProject($project: Project!) {
     toggleProject(project: $project) @client
   }
-`
+`;
 
-export default ({ project }) => {
+function ProjectFilter({ project }) {
   const { data, loading, error } = useQuery(GET_PROJECTS, {
     fetchPolicy: 'cache-first',
-  })
-  const toggleProject = useMutation(TOGGLE_PROJECT)
+  });
+  const toggleProject = useMutation(TOGGLE_PROJECT);
 
-  if (error) return <Error error={error} />
+  if (error) return <Error error={error} />;
 
   return (
     <div style={{ flex: '0 0 200px', marginLeft: 8 }}>
@@ -41,8 +42,8 @@ export default ({ project }) => {
         isClearable
         isSearchable
         options={
-          data.projects &&
-          data.projects.map(option => ({
+          data.projects
+          && data.projects.map(option => ({
             value: option.id,
             label: option.name,
           }))
@@ -51,5 +52,11 @@ export default ({ project }) => {
         onChange={e => toggleProject({ variables: { project: e } })}
       />
     </div>
-  )
+  );
 }
+
+ProjectFilter.propTypes = {
+  project: PropTypes.objectOf(PropTypes.string).isRequired,
+};
+
+export default ProjectFilter;

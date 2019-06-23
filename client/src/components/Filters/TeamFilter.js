@@ -1,23 +1,24 @@
-import React from 'react'
-import { useQuery, useMutation } from 'react-apollo-hooks'
-import gql from 'graphql-tag'
-import Select from '@atlaskit/select'
-import Error from '../Error'
-import { GET_TEAMS } from '../../queries'
+/* eslint-disable no-underscore-dangle */
+import React from 'react';
+import PropTypes from 'prop-types';
+import { useQuery, useMutation } from 'react-apollo-hooks';
+import gql from 'graphql-tag';
+import Select from '@atlaskit/select';
+import Error from '../Error';
+import { GET_TEAMS } from '../../queries';
 
 const TOGGLE_TEAM = gql`
   mutation toggleTeam($team: Team!) {
     toggleTeam(team: $team) @client
   }
-`
-
-export default ({ team }) => {
+`;
+function TeamFilter({ team }) {
   const { data, loading, error } = useQuery(GET_TEAMS, {
     fetchPolicy: 'cache-first',
-  })
-  const toggleTeam = useMutation(TOGGLE_TEAM)
+  });
+  const toggleTeam = useMutation(TOGGLE_TEAM);
 
-  if (error) return <Error error={error} />
+  if (error) return <Error error={error} />;
 
   return (
     <div style={{ flex: '0 0 200px', marginLeft: 8 }}>
@@ -32,8 +33,8 @@ export default ({ team }) => {
         isClearable
         isSearchable
         options={
-          data.teams &&
-          data.teams.map(option => ({
+          data.teams
+          && data.teams.map(option => ({
             value: option._id,
             label: option._id,
           }))
@@ -43,5 +44,11 @@ export default ({ team }) => {
         onChange={e => toggleTeam({ variables: { team: e } })}
       />
     </div>
-  )
+  );
 }
+
+TeamFilter.propTypes = {
+  team: PropTypes.objectOf(PropTypes.string).isRequired,
+};
+
+export default TeamFilter;

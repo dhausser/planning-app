@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react'
-import { useQuery } from 'react-apollo-hooks'
-
-import { withNavigationViewController } from '@atlaskit/navigation-next'
-import { Grid, GridColumn } from '@atlaskit/page'
-import { Status } from '@atlaskit/status'
+import React, { useEffect } from 'react';
+import { useQuery } from 'react-apollo-hooks';
+import PropTypes from 'prop-types';
+import { withNavigationViewController } from '@atlaskit/navigation-next';
+import { Grid, GridColumn } from '@atlaskit/page';
+import { Status } from '@atlaskit/status';
 import {
   ProductIssuesView,
   Page,
@@ -14,19 +14,16 @@ import {
   Assignee,
   UserPicker,
   Comments,
-} from '../components'
-import Icon from '../components/IssueView/Icon'
-import { GET_ISSUE } from '../queries'
+} from '../components';
+import Icon from '../components/IssueView/Icon';
+import { GET_ISSUE } from '../queries';
 
-import { host } from '../config'
+import { host } from '../config';
 
-export default withNavigationViewController(function IssuePage({
-  navigationViewController,
-  match,
-}) {
+function Issue({ navigationViewController, match }) {
   useEffect(() => {
-    navigationViewController.setView(ProductIssuesView.id)
-  }, [navigationViewController])
+    navigationViewController.setView(ProductIssuesView.id);
+  }, [navigationViewController]);
 
   const {
     data: { issue },
@@ -34,10 +31,10 @@ export default withNavigationViewController(function IssuePage({
     error,
   } = useQuery(GET_ISSUE, {
     variables: { id: match.params.issueId },
-  })
+  });
 
-  if (loading) return <Loading />
-  if (error) return <Error error={error} />
+  if (loading) return <Loading />;
+  if (error) return <Error error={error} />;
 
   return (
     <Page>
@@ -71,5 +68,12 @@ export default withNavigationViewController(function IssuePage({
         </GridColumn>
       </Grid>
     </Page>
-  )
-})
+  );
+}
+
+Issue.propTypes = {
+  navigationViewController: PropTypes.func.isRequired,
+  match: PropTypes.func.isRequired,
+};
+
+export default withNavigationViewController(Issue);

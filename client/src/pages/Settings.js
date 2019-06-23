@@ -1,17 +1,23 @@
-import React, { useEffect } from 'react'
-import { withNavigationViewController } from '@atlaskit/navigation-next'
-import { ProductHomeView, Page, Header } from '../components'
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { withNavigationViewController } from '@atlaskit/navigation-next';
+import { ProductHomeView, Page, Header } from '../components';
 
-const Settings = props => {
+function Settings({ navigationViewController }) {
   useEffect(() => {
-    props.navigationViewController.setView(ProductHomeView.id)
-  }, [props.navigationViewController])
+    navigationViewController.setView(ProductHomeView.id);
+  }, [navigationViewController]);
 
   return (
     <Page>
-      <Header title="Settings" {...props} />
+      <Header title="Settings" />
       <p>This is the Settings page.</p>
     </Page>
-  )
+  );
 }
-export default withNavigationViewController(Settings)
+
+Settings.propTypes = {
+  navigationViewController: PropTypes.func.isRequired,
+};
+
+export default withNavigationViewController(Settings);

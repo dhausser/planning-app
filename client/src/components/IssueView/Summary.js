@@ -1,18 +1,18 @@
-import React from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
+import PageHeader from '@atlaskit/page-header';
+import { BreadcrumbsStateless, BreadcrumbsItem } from '@atlaskit/breadcrumbs';
+import Button, { ButtonGroup } from '@atlaskit/button';
+import Tooltip from '@atlaskit/tooltip';
 
-import PageHeader from '@atlaskit/page-header'
-import { BreadcrumbsStateless, BreadcrumbsItem } from '@atlaskit/breadcrumbs'
-import Button, { ButtonGroup } from '@atlaskit/button'
-import Tooltip from '@atlaskit/tooltip'
+import AttachmentIcon from '@atlaskit/icon/glyph/attachment';
+import LinkIcon from '@atlaskit/icon/glyph/link';
+import PageIcon from '@atlaskit/icon/glyph/page';
+import MoreIcon from '@atlaskit/icon/glyph/more';
 
-import AttachmentIcon from '@atlaskit/icon/glyph/attachment'
-import LinkIcon from '@atlaskit/icon/glyph/link'
-import PageIcon from '@atlaskit/icon/glyph/page'
-import MoreIcon from '@atlaskit/icon/glyph/more'
+import Icon from './Icon';
 
-import Icon from './Icon'
-
-export default ({ id, summary, type }) => {
+function Summary({ id, summary, type }) {
   const breadcrumbs = (
     <BreadcrumbsStateless>
       <BreadcrumbsItem
@@ -27,7 +27,7 @@ export default ({ id, summary, type }) => {
         key={id}
       />
     </BreadcrumbsStateless>
-  )
+  );
   const barContent = (
     <ButtonGroup>
       <Tooltip content="Add attachement">
@@ -41,7 +41,7 @@ export default ({ id, summary, type }) => {
       </Tooltip>
       <Button iconBefore={MoreIcon()} />
     </ButtonGroup>
-  )
+  );
 
   return (
     <>
@@ -49,5 +49,13 @@ export default ({ id, summary, type }) => {
         {summary}
       </PageHeader>
     </>
-  )
+  );
 }
+
+Summary.propTypes = {
+  id: PropTypes.string.isRequired,
+  summary: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+};
+
+export default Summary;

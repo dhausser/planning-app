@@ -1,9 +1,9 @@
-import { DataSource } from 'apollo-datasource'
+import { DataSource } from 'apollo-datasource';
 
-export default class ResourceAPI extends DataSource {
+class ResourceAPI extends DataSource {
   constructor({ store }) {
-    super()
-    this.store = store
+    super();
+    this.store = store;
   }
 
   /**
@@ -13,9 +13,9 @@ export default class ResourceAPI extends DataSource {
    * here, so we can know about the user making requests
    */
   async initialize(config) {
-    this.context = config.context
-    this.store = await this.store
-    this.context.resourceMap = await this.getResourceMap()
+    this.context = config.context;
+    this.store = await this.store;
+    this.context.resourceMap = await this.getResourceMap();
   }
 
   /**
@@ -24,18 +24,20 @@ export default class ResourceAPI extends DataSource {
    * @returns {Promise<ResourcesResult>} A promise that will resolve to a list of ResourcesResult.
    */
   async getResources() {
-    let cursor
+    let cursor;
 
     try {
       cursor = await this.store.resources
         .find()
-        .project({ _id: 0, key: 1, name: 1, team: 1 })
+        .project({
+          _id: 0, key: 1, name: 1, team: 1,
+        });
     } catch (e) {
-      console.error(`Unable to issue find command, ${e}`)
-      return []
+      console.error(`Unable to issue find command, ${e}`);
+      return [];
     }
 
-    return cursor.toArray()
+    return cursor.toArray();
   }
 
   /**
@@ -44,23 +46,25 @@ export default class ResourceAPI extends DataSource {
    * @returns {Promise<ResourcesMap>} A promise that will resolve to a list of ResourcesResult.
    */
   async getResourceMap() {
-    let cursor
+    let cursor;
 
     try {
       cursor = await this.store.resources
         .find()
-        .project({ _id: 0, key: 1, name: 1, team: 1 })
+        .project({
+          _id: 0, key: 1, name: 1, team: 1,
+        });
     } catch (e) {
-      console.error(`Unable to issue find command, ${e}`)
-      return []
+      console.error(`Unable to issue find command, ${e}`);
+      return [];
     }
 
-    const array = await cursor.toArray()
+    const array = await cursor.toArray();
 
     return array.reduce((acc, resource) => {
-      acc[resource.key] = resource.team
-      return acc
-    }, {})
+      acc[resource.key] = resource.team;
+      return acc;
+    }, {});
   }
 
   /**
@@ -70,19 +74,23 @@ export default class ResourceAPI extends DataSource {
    * @returns {Promise<ResourcesResult>} A promise that will resolve to a list of ResourcesResult.
    */
   async getResourceById({ resourceId }) {
-    let cursor
+    let cursor;
 
     try {
       cursor = await this.store.resources.findOne(
         { key: resourceId },
-        { projection: { _id: 0, key: 1, name: 1, team: 1 } },
-      )
+        {
+          projection: {
+            _id: 0, key: 1, name: 1, team: 1,
+          },
+        },
+      );
     } catch (e) {
-      console.error(`Unable to issue find command, ${e}`)
-      return []
+      console.error(`Unable to issue find command, ${e}`);
+      return [];
     }
 
-    return cursor
+    return cursor;
   }
 
   /**
@@ -92,7 +100,7 @@ export default class ResourceAPI extends DataSource {
    * @returns {Promise<TeamsResult>} A promise that will resolve to a list of TeamResults.
    */
   async getTeams() {
-    let cursor
+    let cursor;
     try {
       cursor = await this.store.resources
         .aggregate([
@@ -104,33 +112,38 @@ export default class ResourceAPI extends DataSource {
             },
           },
         ])
-        .project({ _id: 1, size: 1, members: 1 })
+        .project({ _id: 1, size: 1, members: 1 });
     } catch (e) {
-      console.error(`Unable to issue find command, ${e}`)
-      return []
+      console.error(`Unable to issue find command, ${e}`);
+      return [];
     }
 
-    return cursor.toArray()
+    return cursor.toArray();
   }
 
   /**
    * Finds and returns resources originating from one or more teams.
    * Returns a list of objects, each object contains a key, name and a team
    * @param {string[]} teams - The list of teams.
-   * @returns {Promise<ResourcesByTeamResult>} A promise that will resolve to a list of ResourcesByTeamResult.
+   * @returns {Promise<ResourcesByTeamResult>} A promise that will resolve to
+   * a list of ResourcesByTeamResult.
    */
   async getResourcesByTeam({ teamId }) {
-    let cursor
+    let cursor;
 
     try {
       cursor = await this.store.resources
         .find({ team: teamId })
-        .project({ _id: 0, key: 1, name: 1, team: 1 })
+        .project({
+          _id: 0, key: 1, name: 1, team: 1,
+        });
     } catch (e) {
-      console.error(`Unable to issue find command, ${e}`)
-      return []
+      console.error(`Unable to issue find command, ${e}`);
+      return [];
     }
 
-    return cursor.toArray()
+    return cursor.toArray();
   }
 }
+
+export default ResourceAPI;

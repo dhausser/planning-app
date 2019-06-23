@@ -1,18 +1,16 @@
-import React from 'react'
-// import { Editor, CollapsedEditor } from '@atlaskit/editor-core'
+import React from 'react';
+import PropTypes from 'prop-types';
 
 /**
  *
- * TODO: Issue description editable
- * @param {String} Description
+ * @param {TODO}
  */
-export default function CollapsibleEditor({ description }) {
+// import { Editor, CollapsedEditor } from '@atlaskit/editor-core'
+
+function Description({ description }) {
   // const [isExpanded, setIsExpanded] = useState(false)
-
   // const expandEditor = () => setIsExpanded(true)
-
   // const collapseEditor = () => setIsExpanded(false)
-
   // const onSave = () => setIsExpanded(false)
 
   return (
@@ -32,5 +30,11 @@ export default function CollapsibleEditor({ description }) {
         />
       </CollapsedEditor> */}
     </>
-  )
+  );
 }
+
+Description.propTypes = {
+  description: PropTypes.string.isRequired,
+};
+
+export default Description;

@@ -1,89 +1,26 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-import styled from 'styled-components'
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import DynamicTable from '@atlaskit/dynamic-table';
+import Button from '@atlaskit/button';
+import Tooltip from '@atlaskit/tooltip';
+import CopyIcon from '@atlaskit/icon/glyph/copy';
+import { Status } from '@atlaskit/status';
+import EmptyState from '@atlaskit/empty-state';
+import Icon from './IssueView/Icon';
 
-import DynamicTable from '@atlaskit/dynamic-table'
-import Button from '@atlaskit/button'
-import Tooltip from '@atlaskit/tooltip'
-import CopyIcon from '@atlaskit/icon/glyph/copy'
-import { Status } from '@atlaskit/status'
-import EmptyState from '@atlaskit/empty-state'
-import Icon from './IssueView/Icon'
-
-import { host } from '../config'
-
-/**
- * Dynamic Table
- * https://atlaskit.atlassian.com/packages/core/dynamic-table
- * @param {Int} maxResults
- * @param {Int} total
- * @param {Array} issues
- * @param {Boolean} loading
- * @param {Func} fetchMore
- */
-export default function({ maxResults, total, issues, loading, fetchMore }) {
-  const [offset, setOffset] = useState(20)
-
-  return (
-    <>
-      <DynamicTable
-        caption={caption(offset, maxResults, total)}
-        head={head}
-        rows={!loading && issues.length && issues.map(row)}
-        rowsPerPage={20}
-        loadingSpinnerSize="large"
-        isLoading={loading}
-        isFixedSize
-        defaultSortKey="priority"
-        defaultSortOrder="ASC"
-        isRankable
-        emptyView={EmptyState}
-      />
-      {total > offset && (
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            padding: '1em',
-          }}
-        >
-          <Button
-            onClick={() => {
-              setOffset(offset + maxResults)
-              return fetchMore({
-                variables: {
-                  startAt: offset,
-                },
-                updateQuery: (prev, { fetchMoreResult, ...rest }) => {
-                  if (!fetchMoreResult) return prev
-                  return {
-                    ...fetchMoreResult,
-                    issues: {
-                      ...fetchMoreResult.issues,
-                      issues: [
-                        ...prev.issues.issues,
-                        ...fetchMoreResult.issues.issues,
-                      ],
-                    },
-                  }
-                },
-              })
-            }}
-          >
-            Load More
-          </Button>
-        </div>
-      )}
-    </>
-  )
-}
+import { host } from '../config';
 
 const caption = (startAt, maxResults, total) => (
   <p>
-    {maxResults <= total ? maxResults : total} of {total}
+    {maxResults <= total ? maxResults : total}
+    {' '}
+of
+    {' '}
+    {total}
   </p>
-)
+);
 
 const head = {
   cells: [
@@ -135,7 +72,7 @@ const head = {
       width: 6,
     },
   ],
-}
+};
 
 const row = issue => ({
   key: issue.id,
@@ -176,12 +113,12 @@ const row = issue => ({
     },
     {
       key:
-        issue.fixVersions.length &&
-        issue.fixVersions[issue.fixVersions.length - 1].id,
+        issue.fixVersions.length
+        && issue.fixVersions[issue.fixVersions.length - 1].id,
       content:
-        (issue.fixVersions.length &&
-          issue.fixVersions[issue.fixVersions.length - 1].name) ||
-        '',
+        (issue.fixVersions.length
+          && issue.fixVersions[issue.fixVersions.length - 1].name)
+        || '',
     },
     {
       key: '',
@@ -198,9 +135,88 @@ const row = issue => ({
       ),
     },
   ],
-})
+});
 
 const NameWrapper = styled.span`
   display: flex;
   align-items: center;
-`
+`;
+
+/**
+ * Dynamic Table
+ * https://atlaskit.atlassian.com/packages/core/dynamic-table
+ * @param {Int} maxResults
+ * @param {Int} total
+ * @param {Array} issues
+ * @param {Boolean} loading
+ * @param {Func} fetchMore
+ */
+function IssueTable({
+  maxResults, total, issues, loading, fetchMore,
+}) {
+  const [offset, setOffset] = useState(20);
+
+  return (
+    <>
+      <DynamicTable
+        caption={caption(offset, maxResults, total)}
+        head={head}
+        rows={!loading && issues.length && issues.map(row)}
+        rowsPerPage={20}
+        loadingSpinnerSize="large"
+        isLoading={loading}
+        isFixedSize
+        defaultSortKey="priority"
+        defaultSortOrder="ASC"
+        isRankable
+        emptyView={EmptyState}
+      />
+      {total > offset && (
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: '1em',
+          }}
+        >
+          <Button
+            onClick={() => {
+              setOffset(offset + maxResults);
+              return fetchMore({
+                variables: {
+                  startAt: offset,
+                },
+                updateQuery: (prev, { fetchMoreResult }) => {
+                  if (!fetchMoreResult) return prev;
+                  return {
+                    ...fetchMoreResult,
+                    issues: {
+                      ...fetchMoreResult.issues,
+                      issues: [
+                        ...prev.issues.issues,
+                        ...fetchMoreResult.issues.issues,
+                      ],
+                    },
+                  };
+                },
+              });
+            }}
+          >
+            Load More
+          </Button>
+        </div>
+      )}
+    </>
+  );
+}
+
+IssueTable.propTypes = {
+  maxResults: PropTypes.number.isRequired,
+  total: PropTypes.number.isRequired,
+  issues: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
+  loading: PropTypes.bool.isRequired,
+  fetchMore: PropTypes.func.isRequired,
+};
+
+export default IssueTable;

@@ -1,8 +1,9 @@
-import React from 'react'
-import GlobalNavigation from '@atlaskit/global-navigation'
-import { GlobalItem } from '@atlaskit/navigation-next'
-import AppSwitcherIcon from '@atlaskit/icon/glyph/app-switcher'
-import { JiraSoftwareIcon } from '@atlaskit/logo'
+/* eslint-disable no-console */
+import React from 'react';
+import GlobalNavigation from '@atlaskit/global-navigation';
+import { GlobalItem } from '@atlaskit/navigation-next';
+import AppSwitcherIcon from '@atlaskit/icon/glyph/app-switcher';
+import { JiraSoftwareIcon } from '@atlaskit/logo';
 
 const AppSwitcherComponent = props => (
   <GlobalItem
@@ -11,7 +12,7 @@ const AppSwitcherComponent = props => (
     id="test"
     onClick={() => console.log('AppSwitcher clicked')}
   />
-)
+);
 
 export default () => (
   <GlobalNavigation
@@ -30,4 +31,4 @@ export default () => (
     profileItems={() => <div />}
     profileIconUrl="https://solarsystem.atlassian.net/secure/useravatar?ownerId=admin"
   />
-)
+);

@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react'
-import { withNavigationViewController } from '@atlaskit/navigation-next'
-import { Grid, GridColumn } from '@atlaskit/page'
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { withNavigationViewController } from '@atlaskit/navigation-next';
+import { Grid, GridColumn } from '@atlaskit/page';
 import {
   ProductHomeView,
   Page,
@@ -8,34 +9,36 @@ import {
   Loading,
   Error,
   BarChart,
-} from '../components'
-import { GET_DASHBOARD_ISSUES } from '../queries'
+} from '../components';
+import { GET_DASHBOARD_ISSUES } from '../queries';
 
-import { useIssues } from './Issues'
+import { useIssues } from './Issues';
 
-function DashboardPage({ navigationViewController }) {
+function Dashboard({ navigationViewController }) {
   useEffect(() => {
-    navigationViewController.setView(ProductHomeView.id)
-  }, [navigationViewController])
+    navigationViewController.setView(ProductHomeView.id);
+  }, [navigationViewController]);
 
-  const [issues, filters] = useIssues(GET_DASHBOARD_ISSUES)
-  const { data, loading, error } = issues
+  const [issues, filters] = useIssues(GET_DASHBOARD_ISSUES);
+  const { data, loading, error } = issues;
+
+  if (loading) return <Loading />;
+  if (error) return <Error error={error} />;
 
   return (
     <Page>
       <Header title="Dashboard" />
       <Grid>
         <GridColumn>
-          {loading ? (
-            <Loading />
-          ) : error ? (
-            <Error error={error} />
-          ) : (
-            <BarChart {...data.issues} team={filters.team} />
-          )}
+          <BarChart {...data.issues} team={filters.team} />
         </GridColumn>
       </Grid>
     </Page>
-  )
+  );
 }
-export default withNavigationViewController(DashboardPage)
+
+Dashboard.propTypes = {
+  navigationViewController: PropTypes.func.isRequired,
+};
+
+export default withNavigationViewController(Dashboard);
