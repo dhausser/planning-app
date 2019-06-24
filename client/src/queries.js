@@ -31,6 +31,7 @@ const ISSUE_PAGINATION = gql`
   }
 `;
 
+
 export const PROJECT_TILE_DATA = gql`
   fragment ProjectTile on Project {
     id
@@ -151,6 +152,15 @@ export const GET_TEAMS = gql`
       }
     }
   }
+`;
+
+export const GET_PROJECTS = gql`
+  query GetProjects {
+    projects {
+      ...ProjectTile
+    }
+  }
+  ${PROJECT_TILE_DATA}
 `;
 
 export const GET_FILTERS = gql`

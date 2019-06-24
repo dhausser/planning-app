@@ -13,14 +13,13 @@ const TOGGLE_VERSION = gql`
 `;
 
 function VersionFilter({ version, project }) {
-  const variables = {
-    id: (project && project.id),
-    startAt: 7,
-    maxResults: 5,
-  };
   const { data, loading, error } = useQuery(GET_VERSIONS, {
-    variables,
-    fetchPolicy: 'network-only',
+    variables: {
+      id: (project && project.id),
+      startAt: 7,
+      maxResults: 5,
+    },
+    fetchPolicy: 'cache-first',
   });
   const toggleVersion = useMutation(TOGGLE_VERSION);
 

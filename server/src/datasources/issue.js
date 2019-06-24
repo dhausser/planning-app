@@ -32,7 +32,8 @@ class IssueAPI extends RESTDataSource {
     const { token, tokenSecret } = JSON.parse(this.context.auth);
     const { method, path } = request;
     const baseURI = `${this.baseURL}${path}`;
-    const nonce = Math.random().toString(36).substring(2, 15);
+    const nonce = Math.random().toString(36).substring(2, 15)
+    + Math.random().toString(36).substring(2, 15);
     const timestamp = Math.floor(Date.now() / 1000);
     const params = {
       oauth_consumer_key: 'RDM',
