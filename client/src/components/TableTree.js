@@ -1,46 +1,46 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import TableTree, {
   Headers,
   Header,
   Rows,
   Row,
   Cell,
-} from '@atlaskit/table-tree'
-import CopyIcon from '@atlaskit/icon/glyph/copy'
-import Tooltip from '@atlaskit/tooltip'
+} from '@atlaskit/table-tree';
+import CopyIcon from '@atlaskit/icon/glyph/copy';
+import Tooltip from '@atlaskit/tooltip';
+import { host } from '../config';
 
-import { host } from '../config'
-
-export default ({ issues }) => (
-  <TableTree>
-    <Headers>
-      <Header width={120}>Type</Header>
-      <Header width={150}>Key</Header>
-      <Header width={550}>Summary</Header>
-      <Header width={200}>Assignee</Header>
-      <Header width={70}>Priority</Header>
-      <Header width={170}>Status</Header>
-      <Header width={80}>Link</Header>
-    </Headers>
-    <Rows
-      items={issues}
-      render={({
-        key,
-        summary,
-        type,
-        assignee,
-        priority,
-        status,
-        children,
-      }) => (
+function EpicTree({ issues }) {
+  return (
+    <TableTree>
+      <Headers>
+        <Header width={120}>Type</Header>
+        <Header width={150}>Key</Header>
+        <Header width={550}>Summary</Header>
+        <Header width={200}>Assignee</Header>
+        <Header width={70}>Priority</Header>
+        <Header width={170}>Status</Header>
+        <Header width={80}>Link</Header>
+      </Headers>
+      <Rows
+        items={issues}
+        render={({
+          key,
+          summary,
+          type,
+          assignee,
+          priority,
+          status,
+          children,
+        }) => (
           <Row
             expandLabel="Expand"
             collapseLabel="Collapse"
             itemId={key}
             items={children}
             hasChildren={children && children.length > 0}
-          // isExpanded
           >
             <Cell singleLine>{type}</Cell>
             <Cell singleLine>
@@ -73,6 +73,13 @@ export default ({ issues }) => (
             </Cell>
           </Row>
         )}
-    />
-  </TableTree>
-)
+      />
+    </TableTree>
+  );
+}
+
+EpicTree.propTypes = {
+  issues: PropTypes.objectOf(PropTypes.string).isRequired,
+};
+
+export default EpicTree;
