@@ -17,7 +17,7 @@ function Backlog({ navigationViewController }) {
 }
 
 Backlog.propTypes = {
-  navigationViewController: PropTypes.func.isRequired,
+  navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
 };
 
 export default withNavigationViewController(Backlog);

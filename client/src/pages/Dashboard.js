@@ -38,7 +38,7 @@ function Dashboard({ navigationViewController }) {
 }
 
 Dashboard.propTypes = {
-  navigationViewController: PropTypes.func.isRequired,
+  navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
 };
 
 export default withNavigationViewController(Dashboard);

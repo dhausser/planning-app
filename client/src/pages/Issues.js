@@ -70,7 +70,7 @@ function Issues({ navigationViewController }) {
 }
 
 Issues.propTypes = {
-  navigationViewController: PropTypes.func.isRequired,
+  navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
 };
 
 export default withNavigationViewController(Issues);

@@ -92,7 +92,7 @@ function Resource({ navigationViewController, match }) {
 }
 
 Resource.propTypes = {
-  navigationViewController: PropTypes.func.isRequired,
+  navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
   match: PropTypes.func.isRequired,
 };
 

@@ -27,7 +27,7 @@ function PaddedPage({ children }) {
 }
 
 PaddedPage.propTypes = {
-  children: PropTypes.func.isRequired,
+  children: PropTypes.arrayOf(PropTypes.objectOf).isRequired,
 };
 
 export default PaddedPage;

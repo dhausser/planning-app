@@ -104,8 +104,14 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    login: String! # login token
+    login: AccessTokens!
     editIssue(issueId: ID!, summary: String): Int
   }
+
+  type AccessTokens {
+    token: String!
+    tokenSecret: String!
+  }
 `;
+
 export default typeDefs;

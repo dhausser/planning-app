@@ -44,9 +44,8 @@ const resolvers = {
     /**
      * Jira REST API
      */
-    login: (_, __, { user }) => (
-      user.token
-    ),
+    // token: $token, tokenSecret: $tokenSecret
+    login: (_, __, { user }) => user,
     // Resources
     editIssue: (_, { issueId, summary, assignee }, { dataSources }) => (
       dataSources.issueAPI.editIssue(issueId, summary, assignee)

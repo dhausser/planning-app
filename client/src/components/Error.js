@@ -33,7 +33,6 @@ function Error({ error }) {
   const props = {
     header: 'Error',
     description: error.message,
-    // imageUrl: exampleImage,
     primaryAction,
     secondaryAction,
     tertiaryAction,
@@ -43,7 +42,7 @@ function Error({ error }) {
 }
 
 Error.propTypes = {
-  error: PropTypes.string.isRequired,
+  error: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
 };
 
 export default Error;

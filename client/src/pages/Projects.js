@@ -105,7 +105,7 @@ function Projects({ navigationViewController }) {
 }
 
 Projects.propTypes = {
-  navigationViewController: PropTypes.func.isRequired,
+  navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
 };
 
 export default withNavigationViewController(Projects);

@@ -55,8 +55,12 @@ function ProjectFilter({ project }) {
   );
 }
 
+ProjectFilter.defaultProps = {
+  project: {},
+};
+
 ProjectFilter.propTypes = {
-  project: PropTypes.objectOf(PropTypes.string).isRequired,
+  project: PropTypes.objectOf(PropTypes.string),
 };
 
 export default ProjectFilter;

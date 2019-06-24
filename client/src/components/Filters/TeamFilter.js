@@ -47,8 +47,12 @@ function TeamFilter({ team }) {
   );
 }
 
+TeamFilter.defaultProps = {
+  team: {},
+};
+
 TeamFilter.propTypes = {
-  team: PropTypes.objectOf(PropTypes.string).isRequired,
+  team: PropTypes.objectOf(PropTypes.string),
 };
 
 export default TeamFilter;

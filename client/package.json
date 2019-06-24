@@ -33,7 +33,6 @@
     "@atlaskit/navigation-next": "^6.0.5",
     "@atlaskit/page": "^11.0.0",
     "@atlaskit/page-header": "^9.0.0",
-    "@atlaskit/refinement-bar": "^0.4.3",
     "@atlaskit/select": "^9.1.2",
     "@atlaskit/spinner": "^12.0.0",
     "@atlaskit/status": "^0.9.1",
@@ -58,7 +57,7 @@
     "react-intl": "^2.9.0",
     "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0",
-    "styled-components": "^3.5.0-0"
+    "styled-components": "^5.0.0-beta.5"
   },
   "devDependencies": {
     "react-scripts": "^3.0.0"

@@ -20,10 +20,11 @@ const httpLink = createHttpLink({
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem('token');
+  const tokenSecret = localStorage.getItem('tokenSecret');
   return {
     headers: {
       ...headers,
-      authorization: `Oauth ${token}`,
+      authorization: JSON.stringify({ token, tokenSecret }),
     },
   };
 });
@@ -48,7 +49,7 @@ const team = localStorage.getItem('team')
 
 cache.writeData({
   data: {
-    isLoggedIn: !!localStorage.getItem('token'),
+    isLoggedIn: !!localStorage.getItem('token') && !!localStorage.getItem('tokenSecret'),
     project,
     version,
     team,

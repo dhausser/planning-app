@@ -72,7 +72,7 @@ function Issue({ navigationViewController, match }) {
 }
 
 Issue.propTypes = {
-  navigationViewController: PropTypes.func.isRequired,
+  navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
   match: PropTypes.func.isRequired,
 };
 

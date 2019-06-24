@@ -1,5 +1,6 @@
 import { rsasign } from 'oauth-sign';
 import { RESTDataSource } from 'apollo-datasource-rest';
+import consumerSecret from '../auth';
 
 const fields = [
   'summary',
@@ -24,20 +25,14 @@ class IssueAPI extends RESTDataSource {
   }
 
   willSendRequest(request) {
-    const authorization = this.signRequest(request);
-    request.headers.set('Authorization', authorization);
+    request.headers.set('Authorization', this.signRequest(request));
   }
 
   signRequest(request) {
-    const { token, tokenSecret, consumerSecret } = this.context.user;
+    const { token, tokenSecret } = JSON.parse(this.context.auth);
     const { method, path } = request;
-    const baseURI = `${this.baseURL}/${path}`;
-    const nonce = Math.random()
-      .toString(36)
-      .substring(2, 15)
-      + Math.random()
-        .toString(36)
-        .substring(2, 15);
+    const baseURI = `${this.baseURL}${path}`;
+    const nonce = Math.random().toString(36).substring(2, 15);
     const timestamp = Math.floor(Date.now() / 1000);
     const params = {
       oauth_consumer_key: 'RDM',
@@ -55,7 +50,12 @@ class IssueAPI extends RESTDataSource {
       tokenSecret,
     );
     const signature = encodeURIComponent(rsaSign);
-    const authorization = `OAuth oauth_consumer_key="RDM", oauth_nonce="${nonce}", oauth_signature="${signature}", oauth_signature_method="RSA-SHA1", oauth_timestamp="${timestamp}", oauth_token="${token}", oauth_version="1.0"`;
+    const authorization = `OAuth oauth_consumer_key="RDM", oauth_nonce="${
+      nonce}", oauth_signature="${
+      signature}", oauth_signature_method="RSA-SHA1", oauth_timestamp="${
+      timestamp}", oauth_token="${
+      token}", oauth_version="1.0"`;
+
     return authorization;
   }
 

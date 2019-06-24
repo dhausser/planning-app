@@ -17,8 +17,8 @@ passport.use(
       callbackURL: '/auth/provider/callback',
       signatureMethod: 'RSA-SHA1',
     },
-    ((token, tokenSecret, profile, done) => {
-      done(null, { token, tokenSecret, consumerSecret });
+    ((token, tokenSecret, _profile, done) => {
+      done(null, { token, tokenSecret });
     }),
   ),
 );
@@ -26,3 +26,5 @@ passport.use(
 passport.serializeUser(async (user, done) => done(null, user));
 
 passport.deserializeUser((id, done) => done(null, id));
+
+export default consumerSecret;

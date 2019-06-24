@@ -97,7 +97,7 @@ function Resources({ navigationViewController }) {
 }
 
 Resources.propTypes = {
-  navigationViewController: PropTypes.func.isRequired,
+  navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
 };
 
 export default withNavigationViewController(Resources);

@@ -60,7 +60,7 @@ const App = ({ navigationViewController }) => {
 const AppWithNavigationViewController = withNavigationViewController(App);
 
 App.propTypes = {
-  navigationViewController: PropTypes.func.isRequired,
+  navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
 };
 
 export default () => (

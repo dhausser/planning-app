@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
 import DynamicTable from '@atlaskit/dynamic-table';
 import Button from '@atlaskit/button';
 import Tooltip from '@atlaskit/tooltip';
@@ -80,9 +79,7 @@ const row = issue => ({
     {
       key: issue.id,
       content: (
-        <NameWrapper>
-          <Link to={`/issue/${issue.key}`}>{issue.key}</Link>
-        </NameWrapper>
+        <Link to={`/issue/${issue.key}`}>{issue.key}</Link>
       ),
     },
     {
@@ -136,11 +133,6 @@ const row = issue => ({
     },
   ],
 });
-
-const NameWrapper = styled.span`
-  display: flex;
-  align-items: center;
-`;
 
 /**
  * Dynamic Table

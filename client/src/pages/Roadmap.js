@@ -105,7 +105,7 @@ function Roadmap({ navigationViewController }) {
 }
 
 Roadmap.propTypes = {
-  navigationViewController: PropTypes.func.isRequired,
+  navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
 };
 
 export default withNavigationViewController(Roadmap);

@@ -3,9 +3,18 @@ import gql from 'graphql-tag';
 import { ApolloConsumer, Mutation } from 'react-apollo';
 import { LoginForm, Loading } from '../components';
 
+// const LOGIN_USER = gql`
+//   mutation login($token: String!, $tokenSecret: String!) {
+//     login(token: $token, tokenSecret: $tokenSecret)
+//   }
+// `;
+
 const LOGIN_USER = gql`
   mutation login {
-    login
+    login {
+      token,
+      tokenSecret
+    }
   }
 `;
 
@@ -16,7 +25,8 @@ function Login() {
         <Mutation
           mutation={LOGIN_USER}
           onCompleted={({ login }) => {
-            localStorage.setItem('token', login);
+            localStorage.setItem('token', login.token);
+            localStorage.setItem('tokenSecret', login.tokenSecret);
             client.writeData({ data: { isLoggedIn: true } });
           }}
         >

@@ -21,6 +21,8 @@ function LinkItem({ components: { Item }, to, ...props }) {
 }
 
 LinkItem.propTypes = {
-  components: PropTypes.arrayOf(PropTypes.func).isRequired,
-  to: PropTypes.objectOf(PropTypes.string).isRequired,
+  components: PropTypes.objectOf(PropTypes.func).isRequired,
+  to: PropTypes.string.isRequired,
 };
+
+export default LinkItem;

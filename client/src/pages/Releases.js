@@ -17,7 +17,7 @@ function Releases({ navigationViewController }) {
 }
 
 Releases.propTypes = {
-  navigationViewController: PropTypes.func.isRequired,
+  navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
 };
 
 export default withNavigationViewController(Releases);
