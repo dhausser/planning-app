@@ -12,7 +12,7 @@ import CopyIcon from '@atlaskit/icon/glyph/copy';
 import Tooltip from '@atlaskit/tooltip';
 import { host } from '../config';
 
-function EpicTree({ issues }) {
+function EpicTree({ epics }) {
   return (
     <TableTree>
       <Headers>
@@ -25,7 +25,7 @@ function EpicTree({ issues }) {
         <Header width={80}>Link</Header>
       </Headers>
       <Rows
-        items={issues}
+        items={epics}
         render={({
           key,
           summary,
@@ -79,7 +79,7 @@ function EpicTree({ issues }) {
 }
 
 EpicTree.propTypes = {
-  issues: PropTypes.arrayOf(PropTypes.objectOf).isRequired,
+  epics: PropTypes.arrayOf(PropTypes.objectOf).isRequired,
 };
 
 export default EpicTree;

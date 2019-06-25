@@ -14,6 +14,10 @@ import {
 import Icon from '../components/IssueView/Icon';
 import { GET_FILTERS, GET_ISSUES, GET_STORIES } from '../queries';
 
+/**
+ *
+ * @param {Object} issue to be reduced
+ */
 function reducer(issue) {
   return {
     key: issue.key,
@@ -28,71 +32,69 @@ function reducer(issue) {
   };
 }
 
+/**
+ * Roadmap page functional component
+ * @param {Object} navigationViewController controlling the navigation bar display
+ */
 function Roadmap({ navigationViewController }) {
   useEffect(() => {
     navigationViewController.setView(ProjectHomeView.id);
   }, [navigationViewController]);
 
+  let epics = null;
+  let stories = null;
+  let jql = null;
+
+  // Fetching Project and Version
   const { data: { project, version } } = useQuery(GET_FILTERS);
 
-  let jql = `issuetype=epic ${
-    project ? `and project=${project.id}` : ''
-  }${
-    version ? `and fixVersion=${version.id}` : ''
-  } order by key desc`;
+  // Fetching Epics from Project and Version
+  jql = `issuetype=epic${project
+    ? ` and project=${project.id}` : ''}${version
+    ? ` and fixVersion=${version.id}` : ''} order by key desc`;
+  epics = useQuery(GET_ISSUES, { variables: { jql } });
 
-  let epics = useQuery(GET_ISSUES, {
-    variables: { jql },
-    fetchPolicy: 'network-only',
-  });
+  // Fetching User Stories from Epics
+  jql = `issuetype=story${epics.data.issues && epics.data.issues.issues.length
+    ? ` and 'Epic Link' in (${epics.data.issues.issues.map(({ id }) => id)}) ` : ''}${version
+    ? ` and fixVersion in (${version.id}) and ` : ''} order by key asc`;
+  stories = useQuery(GET_STORIES, { variables: { jql } });
 
-  jql = `${
-    epics.data.issues && epics.data.issues.issues.length
-      ? `'Epic Link' in (${epics.data.issues.issues.map(({ id }) => id)
-      }) and ` : ''
-  }${
-    version ? `fixVersion in (${version.id}) and ` : ''
-  } issuetype=story order by key asc`;
-
-  let stories = useQuery(GET_STORIES, {
-    variables: { jql },
-    fetchPolicy: 'network-only',
-  });
-
-  let issues = [];
-
-  if (!epics.loading && !stories.loading) {
-    epics = epics.data.issues.issues;
-    stories = stories.data.issues.issues;
-
-    epics = epics.map((epic) => {
-      const children = [];
-      stories.forEach((child) => {
-        if (child.parent === epic.key) {
-          children.push(child);
-          stories.pop(child);
-        }
-      });
-      return Object.assign({}, { ...epic, children });
-    });
-
-    issues = epics.map(issue => reducer(issue)) || [];
+  if (epics.loading || stories.loading) {
+    return <Loading />;
   }
-
-  if (epics.loading || stories.loading) return <Loading />;
   if (epics.error) {
     return (
-      <EmptyState header={epics.error.name} description={epics.error.message} />);
+      <EmptyState
+        header={epics.error.name || stories.error.name}
+        description={epics.error.message || stories.error.message}
+      />
+    );
   }
-  if (stories.error) {
-    return (
-      <EmptyState header={stories.error.name} description={stories.error.message} />);
-  }
+
+  // Reducing data model if fetching was successfull
+  epics = epics.data.issues.issues;
+  stories = stories.data.issues.issues;
+
+  // Mapping User Stories to corresponding Epic
+  epics = epics.map((epic) => {
+    const children = [];
+    stories.forEach((child) => {
+      if (child.parent === epic.key) {
+        children.push(child);
+        stories.pop(child);
+      }
+    });
+    return Object.assign({}, { ...epic, children });
+  });
+
+  // Reducing data model to a hierarchical tree of parent and children
+  epics = epics.map(issue => reducer(issue)) || [];
 
   return (
     <Page>
       <Header title="Roadmap" />
-      <EpicTree issues={issues} />
+      <EpicTree epics={epics} />
     </Page>
   );
 }
