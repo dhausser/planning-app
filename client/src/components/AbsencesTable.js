@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useQuery } from 'react-apollo-hooks';
 import DynamicTable from '@atlaskit/dynamic-table';
+import EmptyState from '@atlaskit/empty-state';
 import Loading from './Loading';
-import Error from './Error';
 import { GET_ABSENCES } from '../queries';
 
 const head = {
@@ -61,7 +61,7 @@ function AbsencesTable({ resourceId }) {
   });
 
   if (loading) return <Loading />;
-  if (error) return <Error error={error} />;
+  if (error) return <EmptyState header={error.name} description={error.message} />;
 
   const dates = data.absences.map(absence => new Date(absence.date));
 

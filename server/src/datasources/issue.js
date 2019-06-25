@@ -1,6 +1,5 @@
 import { rsasign } from 'oauth-sign';
 import { RESTDataSource } from 'apollo-datasource-rest';
-import consumerSecret from '../auth';
 
 const fields = [
   'summary',
@@ -19,8 +18,9 @@ const fields = [
 ];
 
 class IssueAPI extends RESTDataSource {
-  constructor() {
+  constructor({ consumerSecret }) {
     super();
+    this.consumerSecret = consumerSecret;
     this.baseURL = `https://${process.env.HOST}/rest/`;
   }
 
@@ -47,7 +47,7 @@ class IssueAPI extends RESTDataSource {
       method,
       baseURI,
       params,
-      consumerSecret,
+      this.consumerSecret,
       tokenSecret,
     );
     const signature = encodeURIComponent(rsaSign);

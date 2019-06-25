@@ -1,20 +1,43 @@
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
+import { OAuthStrategy } from 'passport-oauth';
+import passport from 'passport';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import errorhandler from 'errorhandler';
 import bodyParser from 'body-parser';
-import passport from 'passport';
+import os from 'os';
+import fs from 'fs';
 import routes from './routes';
 import createStore from './db';
 import resolvers from './resolvers';
 import typeDefs from './schema';
-
 import IssueAPI from './datasources/issue';
 import AbsenceAPI from './datasources/absence';
 import ResourceAPI from './datasources/resource';
 
-import './auth';
+const consumerPrivateKeyFile = `${os.homedir()}\\oauth\\jira_privatekey.pem`;
+const consumerSecret = fs.readFileSync(consumerPrivateKeyFile, 'utf8');
+
+passport.use(
+  new OAuthStrategy(
+    {
+      requestTokenURL: 'https://jira.cdprojektred.com/plugins/servlet/oauth/request-token',
+      accessTokenURL: 'https://jira.cdprojektred.com/plugins/servlet/oauth/access-token',
+      userAuthorizationURL:
+        'https://jira.cdprojektred.com/plugins/servlet/oauth/authorize',
+      consumerKey: 'RDM',
+      consumerSecret,
+      callbackURL: '/auth/provider/callback',
+      signatureMethod: 'RSA-SHA1',
+    },
+    ((token, tokenSecret, _profile, done) => {
+      done(null, { token, tokenSecret });
+    }),
+  ),
+);
+passport.serializeUser(async (user, done) => done(null, user));
+passport.deserializeUser((id, done) => done(null, id));
 
 const app = express();
 const port = process.env.PORT;
@@ -47,7 +70,7 @@ const apollo = new ApolloServer({
     user: req.user,
   }),
   dataSources: () => ({
-    issueAPI: new IssueAPI(),
+    issueAPI: new IssueAPI({ consumerSecret }),
     absenceAPI: new AbsenceAPI(),
     resourceAPI: new ResourceAPI({ store }),
   }),

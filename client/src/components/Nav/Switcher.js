@@ -10,7 +10,8 @@ import {
   Switcher,
   NavigationProvider,
 } from '@atlaskit/navigation-next';
-import Error from '../Error';
+import EmptyState from '@atlaskit/empty-state';
+
 
 import { PROJECT_TILE_DATA, GET_FILTERS } from '../../queries';
 
@@ -124,7 +125,7 @@ function ProjectSwitcher() {
   }, [data.projects, error, filter, loading]);
 
   if (loading) return <div />;
-  if (error) return <Error error={error} />;
+  if (error) return <EmptyState header={error.name} description={error.message} />;
 
   return (
     <NavigationProvider>

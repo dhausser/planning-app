@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import { Grid, GridColumn } from '@atlaskit/page';
 import { Status } from '@atlaskit/status';
+import EmptyState from '@atlaskit/empty-state';
 import {
   ProductIssuesView,
   Page,
   Loading,
-  Error,
   Summary,
   Description,
   Assignee,
@@ -34,7 +34,7 @@ function Issue({ navigationViewController, match }) {
   });
 
   if (loading) return <Loading />;
-  if (error) return <Error error={error} />;
+  if (error) return <EmptyState header={error.name} description={error.message} />;
 
   return (
     <Page>

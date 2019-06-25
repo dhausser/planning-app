@@ -7,7 +7,6 @@ import {
   ProductIssuesView,
   Page,
   Header,
-  Error,
   DynamicTable,
 } from '../components';
 import { GET_FILTERS, GET_RESOURCES, GET_ISSUES } from '../queries';
@@ -52,19 +51,17 @@ function Issues({ navigationViewController }) {
     navigationViewController.setView(ProductIssuesView.id);
   }, [navigationViewController]);
 
+  if (error) return <EmptyState header={error.name} description={error.message} />;
+
   return (
     <Page>
       <Header title="Issues" />
-      {error ? (
-        <Error error={error} />
-      ) : (
-        <DynamicTable
-          {...data.issues}
-          fetchMore={fetchMore}
-          loading={loading}
-          emptyView={EmptyState}
-        />
-      )}
+      <DynamicTable
+        {...data.issues}
+        fetchMore={fetchMore}
+        loading={loading}
+        emptyView={EmptyState}
+      />
     </Page>
   );
 }

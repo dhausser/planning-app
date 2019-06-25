@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import { useQuery } from 'react-apollo-hooks';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import { Status } from '@atlaskit/status';
+import EmptyState from '@atlaskit/empty-state';
 import {
   ProjectHomeView,
   Page,
   Header,
   Loading,
-  Error,
   TableTree,
 } from '../components';
 import Icon from '../components/IssueView/Icon';
@@ -94,7 +94,14 @@ function Roadmap({ navigationViewController }) {
   }
 
   if (epics.loading || stories.loading) return <Loading />;
-  if (epics.error || stories.error) return <Error />;
+  if (epics.error) {
+    return (
+      <EmptyState header={epics.error.name} description={epics.error.message} />);
+  }
+  if (stories.error) {
+    return (
+      <EmptyState header={stories.error.name} description={stories.error.message} />);
+  }
 
   return (
     <Page title="Roadmap">

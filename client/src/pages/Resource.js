@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import { useQuery } from 'react-apollo-hooks';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import Avatar from '@atlaskit/avatar';
+import EmptyState from '@atlaskit/empty-state';
 import Page, { NameWrapper, AvatarWrapper } from '../components/Page';
 import {
   ProjectHomeView,
   Header,
   Loading,
-  Error,
   DynamicTable,
   AbsencesTable,
 } from '../components';
@@ -78,7 +78,7 @@ function Resource({ navigationViewController, match }) {
       <Header title={title} />
       {link}
       {error ? (
-        <Error error={error} />
+        <EmptyState header={error.name} description={error.message} />
       ) : (
         <DynamicTable
           {...data.issues}

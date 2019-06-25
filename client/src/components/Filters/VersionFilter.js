@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useQuery, useMutation } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
 import Select from '@atlaskit/select';
-import Error from '../Error';
+
 import { GET_VERSIONS } from '../../queries';
 
 const TOGGLE_VERSION = gql`
@@ -23,7 +23,16 @@ function VersionFilter({ version, project }) {
   });
   const toggleVersion = useMutation(TOGGLE_VERSION);
 
-  if (error) return <Error error={error} />;
+  let options = [];
+
+  if (!error) {
+    options = data.versions && data.versions.map(option => ({
+      value: option.id,
+      label: option.name,
+    }));
+  } else {
+    console.error(error);
+  }
 
   return (
     <div style={{ flex: '0 0 200px', marginLeft: 8 }}>
@@ -36,13 +45,7 @@ function VersionFilter({ version, project }) {
         isLoading={loading}
         isClearable
         isSearchable
-        options={
-          data.versions
-          && data.versions.map(option => ({
-            value: option.id,
-            label: option.name,
-          }))
-        }
+        options={options}
         placeholder="Choose a Version"
         onChange={e => toggleVersion({ variables: { version: e } })}
       />

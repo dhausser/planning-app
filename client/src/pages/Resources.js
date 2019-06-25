@@ -5,10 +5,12 @@ import { Link } from 'react-router-dom';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import DynamicTable from '@atlaskit/dynamic-table';
 import Avatar from '@atlaskit/avatar';
+import EmptyState from '@atlaskit/empty-state';
 import { NameWrapper, AvatarWrapper } from '../components/Page';
 import {
-  ProjectHomeView, Page, Header, Error,
+  ProjectHomeView, Page, Header,
 } from '../components';
+
 import { GET_RESOURCES, GET_FILTERS } from '../queries';
 
 function createKey(input) {
@@ -72,7 +74,7 @@ function Resources({ navigationViewController }) {
   });
 
   let resources = [];
-  if (error) return <Error error={error} />;
+  if (error) return <EmptyState header={error.name} description={error.message} />;
   if (!loading) {
     resources = team
       ? data.resources.filter(resource => resource.team === team.id)

@@ -3,11 +3,12 @@ import { useQuery } from 'react-apollo-hooks';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
+import { withNavigationViewController } from '@atlaskit/navigation-next';
 import Avatar from '@atlaskit/avatar';
 import DynamicTable from '@atlaskit/dynamic-table';
-import { withNavigationViewController } from '@atlaskit/navigation-next';
+import EmptyState from '@atlaskit/empty-state';
 import {
-  ProductHomeView, Page, Loading, Error,
+  ProductHomeView, Page, Loading,
 } from '../components';
 import { NameWrapper, AvatarWrapper } from '../components/Page';
 import { PROJECT_TILE_DATA } from '../queries';
@@ -84,7 +85,7 @@ function Projects({ navigationViewController }) {
   }, [navigationViewController]);
 
   if (loading) return <Loading />;
-  if (error) return <Error error={error} />;
+  if (error) return <EmptyState header={error.name} description={error.message} />;
 
   return (
     <Page>
