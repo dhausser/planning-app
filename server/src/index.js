@@ -16,6 +16,8 @@ import IssueAPI from './datasources/issue';
 import AbsenceAPI from './datasources/absence';
 import ResourceAPI from './datasources/resource';
 
+// SSL Parameters
+const consumerKey = 'RDM';
 const consumerPrivateKeyFile = `${os.homedir()}\\oauth\\jira_privatekey.pem`;
 const consumerSecret = fs.readFileSync(consumerPrivateKeyFile, 'utf8');
 
@@ -70,7 +72,7 @@ const apollo = new ApolloServer({
     user: req.user,
   }),
   dataSources: () => ({
-    issueAPI: new IssueAPI({ consumerSecret }),
+    issueAPI: new IssueAPI({ consumerKey, consumerSecret }),
     absenceAPI: new AbsenceAPI(),
     resourceAPI: new ResourceAPI({ store }),
   }),

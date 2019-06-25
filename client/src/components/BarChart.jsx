@@ -117,11 +117,18 @@ issues
   );
 }
 
+BarChart.defaultProps = {
+  team: null,
+  maxResults: 0,
+  total: 0,
+  issues: [],
+};
+
 BarChart.propTypes = {
-  maxResults: PropTypes.number.isRequired,
-  total: PropTypes.number.isRequired,
-  issues: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
-  team: PropTypes.objectOf(PropTypes.string).isRequired,
+  team: PropTypes.objectOf(PropTypes.string),
+  maxResults: PropTypes.number,
+  total: PropTypes.number,
+  issues: PropTypes.arrayOf(PropTypes.objectOf),
 };
 
 export default BarChart;

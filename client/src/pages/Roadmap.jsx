@@ -9,46 +9,10 @@ import {
   Page,
   Header,
   Loading,
-  TableTree,
+  EpicTree,
 } from '../components';
 import Icon from '../components/IssueView/Icon';
 import { GET_FILTERS, GET_ISSUES, GET_STORIES } from '../queries';
-
-function useEpics(project, version) {
-  const jql = `issuetype=epic 
-  ${project ? `and project=${project.id}` : ''}
-  ${version ? `and fixVersion=${version.id}` : ''} order by key desc`;
-
-  const { data, loading, error } = useQuery(GET_ISSUES, {
-    variables: {
-      jql,
-    },
-    fetchPolicy: 'cache-first',
-  });
-
-  return [{ data, loading, error }, version];
-}
-
-function useStories(epics, version) {
-  const jql = `
-  ${
-  epics.data.issues && epics.data.issues.issues.length
-    ? `'Epic Link' in (${epics.data.issues.issues.map(({ id }) => id)}) and `
-    : ''
-}
-  ${version ? `fixVersion in (${version.id}) and ` : ''}
-  issuetype=story
-  order by key asc`;
-
-  const { data, loading, error } = useQuery(GET_STORIES, {
-    variables: {
-      jql,
-    },
-    fetchPolicy: 'cache-first',
-  });
-
-  return { data, loading, error };
-}
 
 function reducer(issue) {
   return {
@@ -71,8 +35,30 @@ function Roadmap({ navigationViewController }) {
 
   const { data: { project, version } } = useQuery(GET_FILTERS);
 
-  let epics = useEpics(project, version);
-  let stories = useStories(epics, version);
+  let jql = `issuetype=epic ${
+    project ? `and project=${project.id}` : ''
+  }${
+    version ? `and fixVersion=${version.id}` : ''
+  } order by key desc`;
+
+  let epics = useQuery(GET_ISSUES, {
+    variables: { jql },
+    fetchPolicy: 'network-only',
+  });
+
+  jql = `${
+    epics.data.issues && epics.data.issues.issues.length
+      ? `'Epic Link' in (${epics.data.issues.issues.map(({ id }) => id)
+      }) and ` : ''
+  }${
+    version ? `fixVersion in (${version.id}) and ` : ''
+  } issuetype=story order by key asc`;
+
+  let stories = useQuery(GET_STORIES, {
+    variables: { jql },
+    fetchPolicy: 'network-only',
+  });
+
   let issues = [];
 
   if (!epics.loading && !stories.loading) {
@@ -104,9 +90,9 @@ function Roadmap({ navigationViewController }) {
   }
 
   return (
-    <Page title="Roadmap">
-      <Header />
-      <TableTree issues={issues} />
+    <Page>
+      <Header title="Roadmap" />
+      <EpicTree issues={issues} />
     </Page>
   );
 }

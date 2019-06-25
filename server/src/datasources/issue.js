@@ -1,5 +1,5 @@
-import { rsasign } from 'oauth-sign';
 import { RESTDataSource } from 'apollo-datasource-rest';
+import { rsasign } from 'oauth-sign';
 
 const fields = [
   'summary',
@@ -18,8 +18,9 @@ const fields = [
 ];
 
 class IssueAPI extends RESTDataSource {
-  constructor({ consumerSecret }) {
+  constructor({ consumerKey, consumerSecret }) {
     super();
+    this.consumerKey = consumerKey;
     this.consumerSecret = consumerSecret;
     this.baseURL = `https://${process.env.HOST}/rest/`;
   }
@@ -30,13 +31,21 @@ class IssueAPI extends RESTDataSource {
 
   signRequest(request) {
     const { token, tokenSecret } = JSON.parse(this.context.auth);
-    const { method, path } = request;
-    const baseURI = `${this.baseURL}${path}`;
-    const nonce = Math.random().toString(36).substring(2, 15)
-    + Math.random().toString(36).substring(2, 15);
+    const { method, path, params } = request;
+
+    /**
+     * TODO: Fix construction of the baseURI and signature for get request with parameters
+     */
+    const baseURI = encodeURI(
+      `${this.baseURL}${path}${
+        params.toString() ? encodeURIComponent(`?${params.toString()}`) : ''
+      }`,
+    );
+
+    const nonce = Math.random().toString(36).substring(2, 15);
     const timestamp = Math.floor(Date.now() / 1000);
-    const params = {
-      oauth_consumer_key: 'RDM',
+    const oauthParams = {
+      oauth_consumer_key: this.consumerKey,
       oauth_nonce: nonce,
       oauth_signature_method: 'RSA-SHA1',
       oauth_timestamp: timestamp,
@@ -46,7 +55,7 @@ class IssueAPI extends RESTDataSource {
     const rsaSign = rsasign(
       method,
       baseURI,
-      params,
+      oauthParams,
       this.consumerSecret,
       tokenSecret,
     );
@@ -61,7 +70,7 @@ class IssueAPI extends RESTDataSource {
   }
 
   async getProjects() {
-    const response = await this.get('api/latest/project/');
+    const response = await this.get('api/latest/project');
 
     const projects = response.map(project => ({
       ...project,
@@ -80,10 +89,13 @@ class IssueAPI extends RESTDataSource {
   }
 
   async getVersions(projectId, startAt, maxResults) {
+    /**
+     * TODO: Fix construction of the baseURI and signature for get request with parameters
+     */
     const response = await this.get(`api/latest/project/${projectId}/version`, {
-      startAt,
-      maxResults,
-      orderBy: 'name',
+      // startAt,
+      // maxResults,
+      // orderBy: 'name',
     });
     return Array.isArray(response.values) ? response.values : [];
   }

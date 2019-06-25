@@ -203,10 +203,16 @@ function IssueTable({
   );
 }
 
+IssueTable.defaultProps = {
+  maxResults: 0,
+  total: 0,
+  issues: [],
+};
+
 IssueTable.propTypes = {
-  maxResults: PropTypes.number.isRequired,
-  total: PropTypes.number.isRequired,
-  issues: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
+  maxResults: PropTypes.number,
+  total: PropTypes.number,
+  issues: PropTypes.arrayOf(PropTypes.objectOf),
   loading: PropTypes.bool.isRequired,
   fetchMore: PropTypes.func.isRequired,
 };

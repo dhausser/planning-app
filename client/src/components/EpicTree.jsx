@@ -79,7 +79,7 @@ function EpicTree({ issues }) {
 }
 
 EpicTree.propTypes = {
-  issues: PropTypes.objectOf(PropTypes.string).isRequired,
+  issues: PropTypes.arrayOf(PropTypes.objectOf).isRequired,
 };
 
 export default EpicTree;

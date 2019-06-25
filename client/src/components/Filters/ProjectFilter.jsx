@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { useQuery, useMutation } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
 import Select from '@atlaskit/select';
-import EmptyState from '@atlaskit/empty-state';
 
 import { GET_PROJECTS } from '../../queries';
 
@@ -18,8 +17,6 @@ function ProjectFilter({ project }) {
     fetchPolicy: 'cache-first',
   });
   const toggleProject = useMutation(TOGGLE_PROJECT);
-
-  if (error) return <EmptyState header={error.name} description={error.message} />;
 
   let options = [];
   if (!error) {
