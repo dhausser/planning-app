@@ -65,8 +65,7 @@ function Resource({ navigationViewController, match }) {
     <p>
       <a
         href={`https://${host}/issues/?jql=assignee=${resourceId}${version
-          ? ` AND fixVersion=${version.id}` : ''} AND statusCategory != Done \
-          order by priority desc`}
+          ? ` AND fixVersion=${version.id}` : ''} AND statusCategory != Done order by priority desc`}
         target="_blank"
         rel="noopener noreferrer"
       >
