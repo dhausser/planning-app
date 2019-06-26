@@ -2,7 +2,7 @@
   "name": "planning-app",
   "version": "1.0.0",
   "description": "An app for roadmap planning on top of Jira Software",
-  "main": "index.js",
+  "main": "./server/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

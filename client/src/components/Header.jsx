@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { BreadcrumbsStateless, BreadcrumbsItem } from '@atlaskit/breadcrumbs';
 import Button, { ButtonGroup } from '@atlaskit/button';
 import PageHeader from '@atlaskit/page-header';
+import { NameWrapper } from './Page';
 import Filters from './Filters/Filters';
 
-const Header = ({ title }) => {
+const Header = ({ title, avatar }) => {
   const breadcrumbs = (
     <BreadcrumbsStateless>
       <BreadcrumbsItem text="Some project" key="Some project" />
@@ -24,6 +25,7 @@ const Header = ({ title }) => {
       <Filters />
     </div>
   );
+
   return (
     <>
       <PageHeader
@@ -31,14 +33,26 @@ const Header = ({ title }) => {
         actions={actionsContent}
         bottomBar={barContent}
       >
-        {title}
+        {avatar
+          ? (
+            <NameWrapper>
+              {avatar}
+              {title}
+            </NameWrapper>
+          )
+          : title}
       </PageHeader>
     </>
   );
 };
 
+Header.defaultProps = {
+  avatar: null,
+};
+
 Header.propTypes = {
   title: PropTypes.string.isRequired,
+  avatar: PropTypes.element,
 };
 
 export default Header;

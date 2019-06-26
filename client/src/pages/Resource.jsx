@@ -4,7 +4,7 @@ import { useQuery } from 'react-apollo-hooks';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import Avatar from '@atlaskit/avatar';
 import EmptyState from '@atlaskit/empty-state';
-import Page, { NameWrapper, AvatarWrapper } from '../components/Page';
+import Page, { AvatarWrapper } from '../components/Page';
 import {
   ProjectHomeView,
   Header,
@@ -12,41 +12,9 @@ import {
   DynamicTable,
   AbsencesTable,
 } from '../components';
-import { GET_RESOURCE, GET_ISSUES } from '../queries';
+import { GET_RESOURCE_NAME, GET_ISSUES } from '../queries';
 import { useIssues } from './Issues';
 import { host } from '../config';
-
-function formatName({ resource }, resourceId, version) {
-  const { name } = resource;
-
-  return {
-    title: (
-      <NameWrapper>
-        <AvatarWrapper>
-          <Avatar
-            name={name}
-            size="large"
-            src={`https://${host}/secure/useravatar?ownerId=${resourceId}`}
-          />
-        </AvatarWrapper>
-        {name}
-      </NameWrapper>
-    ),
-    link: (
-      <p>
-        <a
-          href={`https://${host}/issues/?jql=assignee=${resourceId}${
-            version ? ` AND fixVersion=${version.id}` : ''
-          } AND statusCategory != Done order by priority desc`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          View in Issue Navigator
-        </a>
-      </p>
-    ),
-  };
-}
 
 function Resource({ navigationViewController, match }) {
   useEffect(() => {
@@ -57,25 +25,59 @@ function Resource({ navigationViewController, match }) {
   const { resourceId } = match.params;
 
   // Fetch resource from database
-  const { data: resource, loading: loadingResource } = useQuery(GET_RESOURCE, {
+  const {
+    data: { resource },
+    loading: loadingResource,
+    error: errorResource,
+  } = useQuery(GET_RESOURCE_NAME, {
     variables: { id: resourceId },
     fetchPolicy: 'cache-first',
   });
 
   // Fetch issues from REST API
-  const [issues, filters] = useIssues(GET_ISSUES, resourceId);
+  const [issues, { version }] = useIssues(GET_ISSUES, resourceId);
   const {
-    data, loading, error, fetchMore,
+    data, loading: loadingIssues, error, fetchMore,
   } = issues;
 
   if (loadingResource) return <Loading />;
+  if (errorResource) {
+    return (
+      <EmptyState
+        header={errorResource.name}
+        description={errorResource.message}
+      />
+    );
+  }
 
-  // Format page title and link
-  const { title, link } = formatName(resource, resourceId, filters.version);
+
+  const avatar = (
+    <AvatarWrapper>
+      <Avatar
+        name={resource.name}
+        size="large"
+        src={`https://${host}/secure/useravatar?ownerId=${resourceId}`}
+      />
+    </AvatarWrapper>
+  );
+
+  const link = (
+    <p>
+      <a
+        href={`https://${host}/issues/?jql=assignee=${resourceId}${version
+          ? ` AND fixVersion=${version.id}` : ''} AND statusCategory != Done \
+          order by priority desc`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        View in Issue Navigator
+      </a>
+    </p>
+  );
 
   return (
     <Page>
-      <Header title={title} />
+      <Header title={resource.name} avatar={avatar} />
       {link}
       {error ? (
         <EmptyState header={error.name} description={error.message} />
@@ -83,7 +85,7 @@ function Resource({ navigationViewController, match }) {
         <DynamicTable
           {...data.issues}
           fetchMore={fetchMore}
-          loading={loading}
+          loading={loadingIssues}
         />
       )}
       <AbsencesTable resourceId={resourceId} />
@@ -93,7 +95,7 @@ function Resource({ navigationViewController, match }) {
 
 Resource.propTypes = {
   navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
-  match: PropTypes.func.isRequired,
+  match: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
 };
 
 export default withNavigationViewController(Resource);

@@ -125,7 +125,7 @@ export const GET_RESOURCES = gql`
   }
 `;
 
-export const GET_RESOURCE = gql`
+export const GET_RESOURCE_NAME = gql`
   query getResourceById($id: ID!) {
     resource(id: $id) {
       name
