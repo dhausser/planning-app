@@ -21,16 +21,22 @@ function Dashboard({ navigationViewController }) {
 
   const [issues, filters] = useIssues(GET_DASHBOARD_ISSUES);
   const { data, loading, error } = issues;
+  let content;
 
-  if (loading) return <Loading />;
-  if (error) return <EmptyState header={error.name} description={error.message} />;
+  if (loading) {
+    content = <Loading />;
+  } else if (error) {
+    content = <EmptyState header={error.name} description={error.message} />;
+  } else {
+    content = <BarChart {...data.issues} team={filters.team} />;
+  }
 
   return (
     <Page>
       <Header title="Dashboard" />
       <Grid>
         <GridColumn>
-          <BarChart {...data.issues} team={filters.team} />
+          {content}
         </GridColumn>
       </Grid>
     </Page>

@@ -13,7 +13,7 @@ export const resolvers = {
         ? {
           id: filter.value,
           name: filter.label,
-          __typename: '__Project',
+          __typename: 'Project',
         }
         : null;
       cache.writeData({ data: { project } });

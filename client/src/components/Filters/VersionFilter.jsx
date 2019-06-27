@@ -6,6 +6,7 @@ import Select from '@atlaskit/select';
 
 import { GET_VERSIONS } from '../../queries';
 
+const PROJECT_ID = '10500';
 const TOGGLE_VERSION = gql`
   mutation toggleVersion($version: FixVersion!) {
     toggleVersion(version: $version) @client
@@ -15,11 +16,10 @@ const TOGGLE_VERSION = gql`
 function VersionFilter({ version, project }) {
   const { data, loading, error } = useQuery(GET_VERSIONS, {
     variables: {
-      id: (project && project.id),
-      startAt: 7,
+      id: (project && project.id) || PROJECT_ID,
+      startAt: 11,
       maxResults: 5,
     },
-    fetchPolicy: 'cache-first',
   });
   const toggleVersion = useMutation(TOGGLE_VERSION);
 

@@ -41,9 +41,10 @@ function Roadmap({ navigationViewController }) {
     navigationViewController.setView(ProjectHomeView.id);
   }, [navigationViewController]);
 
-  let epics = null;
-  let stories = null;
-  let jql = null;
+  let content;
+  let epics;
+  let stories;
+  let jql;
 
   // Fetching Project and Version
   const { data: { project, version } } = useQuery(GET_FILTERS);
@@ -56,45 +57,49 @@ function Roadmap({ navigationViewController }) {
 
   // Fetching User Stories from Epics
   jql = `issuetype=story${epics.data.issues && epics.data.issues.issues.length
-    ? ` and 'Epic Link' in (${epics.data.issues.issues.map(({ id }) => id)}) ` : ''}${version
-    ? ` and fixVersion in (${version.id}) and ` : ''} order by key asc`;
+    ? ` and 'Epic Link' in (${epics.data.issues.issues.map(({ id }) => id)})` : ''}${version
+    ? ` and fixVersion=${version.id}` : ''} order by key asc`;
   stories = useQuery(GET_STORIES, { variables: { jql } });
 
   if (epics.loading || stories.loading) {
-    return <Loading />;
+    content = <Loading />;
   }
   if (epics.error) {
-    return (
+    content = (
       <EmptyState
         header={epics.error.name || stories.error.name}
         description={epics.error.message || stories.error.message}
       />
     );
-  }
+  } else if (!epics.data.issues || !stories.data.issues) {
+    epics = [];
+    content = <EpicTree epics={epics} />;
+  } else {
+    // Reducing data model if fetching was successfull
+    epics = epics.data.issues.issues;
+    stories = stories.data.issues.issues;
 
-  // Reducing data model if fetching was successfull
-  epics = epics.data.issues.issues;
-  stories = stories.data.issues.issues;
-
-  // Mapping User Stories to corresponding Epic
-  epics = epics.map((epic) => {
-    const children = [];
-    stories.forEach((child) => {
-      if (child.parent === epic.key) {
-        children.push(child);
-        stories.pop(child);
-      }
+    // Mapping User Stories to corresponding Epic
+    epics = epics.map((epic) => {
+      const children = [];
+      stories.forEach((child) => {
+        if (child.parent === epic.key) {
+          children.push(child);
+          stories.pop(child);
+        }
+      });
+      return Object.assign({}, { ...epic, children });
     });
-    return Object.assign({}, { ...epic, children });
-  });
 
-  // Reducing data model to a hierarchical tree of parent and children
-  epics = epics.map(issue => reducer(issue)) || [];
+    // Reducing data model to a hierarchical tree of parent and children
+    epics = epics.map(issue => reducer(issue)) || [];
+    content = <EpicTree epics={epics} />;
+  }
 
   return (
     <Page>
       <Header title="Roadmap" />
-      <EpicTree epics={epics} />
+      {content}
     </Page>
   );
 }

@@ -4,7 +4,9 @@
   "description": "An app for roadmap planning on top of Jira Software",
   "main": "./server/main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "cd ./server && npm start",
+    "client": "cd ./client && npm start"
   },
   "repository": {
     "type": "git",
