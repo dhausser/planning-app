@@ -22,20 +22,18 @@ function Comments({ comments }) {
           key={comment.id}
           avatar={(
             <Avatar
-              src={`https://${host}/secure/useravatar?ownerId=${
-                comment.author.key
-              }`}
+              src={`https://${host}/secure/useravatar?ownerId=${comment.author.key}`}
               label="Atlaskit avatar"
               size="medium"
             />
-)}
+          )}
           author={<CommentAuthor>{comment.author.name}</CommentAuthor>}
           edited={comment.updated && <CommentEdited>Edited</CommentEdited>}
           time={(
             <CommentTime>
               {new Date(comment.created).toLocaleDateString()}
             </CommentTime>
-)}
+          )}
           content={<p>{comment.body}</p>}
           actions={[
             <CommentAction>Reply</CommentAction>,
@@ -48,8 +46,12 @@ function Comments({ comments }) {
   );
 }
 
+Comments.defaultProps = {
+  comments: null,
+};
+
 Comments.propTypes = {
-  comments: PropTypes.objectOf(PropTypes.string).isRequired,
+  comments: PropTypes.arrayOf(PropTypes.objectOf),
 };
 
 export default Comments;

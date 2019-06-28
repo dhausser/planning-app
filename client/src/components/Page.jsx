@@ -21,13 +21,15 @@ export const AvatarWrapper = styled.div`
 function PaddedPage({ children }) {
   return (
     <Page>
-      <Padding>{children}</Padding>
+      <Padding>
+        {children}
+      </Padding>
     </Page>
   );
 }
 
 PaddedPage.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.objectOf).isRequired,
+  children: PropTypes.element.isRequired,
 };
 
 export default PaddedPage;

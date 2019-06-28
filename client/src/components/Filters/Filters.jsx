@@ -7,7 +7,7 @@ import VersionFilter from './VersionFilter';
 import TeamFilter from './TeamFilter';
 import { GET_FILTERS } from '../../queries';
 
-export default function Filters() {
+function Filters() {
   const { data, loading, error } = useQuery(GET_FILTERS);
 
   if (loading) return <Loading />;
@@ -21,3 +21,5 @@ export default function Filters() {
     </>
   );
 }
+
+export default Filters;

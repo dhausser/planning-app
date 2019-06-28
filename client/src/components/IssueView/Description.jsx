@@ -33,8 +33,12 @@ function Description({ description }) {
   );
 }
 
+Description.defaultProps = {
+  description: '',
+};
+
 Description.propTypes = {
-  description: PropTypes.string.isRequired,
+  description: PropTypes.string,
 };
 
 export default Description;
