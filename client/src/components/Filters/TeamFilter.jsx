@@ -1,27 +1,34 @@
-/* eslint-disable no-underscore-dangle */
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useQuery, useMutation } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
 import Select from '@atlaskit/select';
 import { GET_TEAMS } from '../../queries';
+
+const GET_TEAM = gql`
+  query GetFilters {
+    team @client {
+      id
+      name
+    }
+  }
+`;
 
 const TOGGLE_TEAM = gql`
   mutation toggleTeam($team: Team!) {
     toggleTeam(team: $team) @client
   }
 `;
-function TeamFilter({ team }) {
-  const { data, loading, error } = useQuery(GET_TEAMS, {
-    fetchPolicy: 'cache-first',
-  });
+
+function TeamFilter() {
+  const { data: { team } } = useQuery(GET_TEAM);
+  const { data, loading, error } = useQuery(GET_TEAMS);
   const toggleTeam = useMutation(TOGGLE_TEAM);
 
   let options = [];
   if (!error) {
-    options = data.teams && data.teams.map(option => ({
-      value: option._id,
-      label: option._id,
+    options = data.teams && data.teams.map(({ _id: id }) => ({
+      value: id,
+      label: id,
     }));
   } else {
     console.error(error);
@@ -45,13 +52,5 @@ function TeamFilter({ team }) {
     </div>
   );
 }
-
-TeamFilter.defaultProps = {
-  team: {},
-};
-
-TeamFilter.propTypes = {
-  team: PropTypes.objectOf(PropTypes.string),
-};
 
 export default TeamFilter;

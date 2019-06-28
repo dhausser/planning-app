@@ -11,7 +11,9 @@ export { default as ProductIssuesView } from './Nav/ProductIssuesView';
 export { default as ProjectHomeView } from './Nav/ProjectHomeView';
 
 // Filters
-export { default as Filters } from './Filters/Filters';
+export { default as ProjectFilter } from './Filters/ProjectFilter';
+export { default as VersionFilter } from './Filters/VersionFilter';
+export { default as TeamFilter } from './Filters/TeamFilter';
 
 // Roadmap
 export { default as GanttChart } from './GanttChart';

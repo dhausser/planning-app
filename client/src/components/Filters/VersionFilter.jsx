@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useQuery, useMutation } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
 import Select from '@atlaskit/select';
@@ -7,13 +6,29 @@ import Select from '@atlaskit/select';
 import { GET_VERSIONS } from '../../queries';
 
 const PROJECT_ID = '10500';
+
+const GET_FILTERS = gql`
+  query GetFilters {
+    isLoggedIn @client
+    project @client {
+      id
+      name
+    }
+    version @client {
+      id
+      name
+    }
+  }
+`;
+
 const TOGGLE_VERSION = gql`
   mutation toggleVersion($version: FixVersion!) {
     toggleVersion(version: $version) @client
   }
 `;
 
-function VersionFilter({ version, project }) {
+function VersionFilter() {
+  const { data: { project, version } } = useQuery(GET_FILTERS);
   const { data, loading, error } = useQuery(GET_VERSIONS, {
     variables: {
       id: (project && project.id) || PROJECT_ID,
@@ -52,15 +67,5 @@ function VersionFilter({ version, project }) {
     </div>
   );
 }
-
-VersionFilter.defaultProps = {
-  project: { id: '10500' },
-  version: {},
-};
-
-VersionFilter.propTypes = {
-  project: PropTypes.objectOf(PropTypes.string),
-  version: PropTypes.objectOf(PropTypes.string),
-};
 
 export default VersionFilter;

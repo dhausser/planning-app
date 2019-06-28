@@ -1,10 +1,18 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useQuery, useMutation } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
 import Select from '@atlaskit/select';
 
 import { GET_PROJECTS } from '../../queries';
+
+const GET_PROJECT = gql`
+  query GetFilters {
+    project @client {
+      id
+      name
+    }
+  }
+`;
 
 const TOGGLE_PROJECT = gql`
   mutation toggleProject($project: Project!) {
@@ -12,10 +20,9 @@ const TOGGLE_PROJECT = gql`
   }
 `;
 
-function ProjectFilter({ project }) {
-  const { data, loading, error } = useQuery(GET_PROJECTS, {
-    fetchPolicy: 'cache-first',
-  });
+function ProjectFilter() {
+  const { data: { project } } = useQuery(GET_PROJECT);
+  const { data, loading, error } = useQuery(GET_PROJECTS);
   const toggleProject = useMutation(TOGGLE_PROJECT);
 
   let options = [];
@@ -46,13 +53,5 @@ function ProjectFilter({ project }) {
     </div>
   );
 }
-
-ProjectFilter.defaultProps = {
-  project: {},
-};
-
-ProjectFilter.propTypes = {
-  project: PropTypes.objectOf(PropTypes.string),
-};
 
 export default ProjectFilter;
