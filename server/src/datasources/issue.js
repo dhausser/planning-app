@@ -1,12 +1,6 @@
 import { RESTDataSource } from 'apollo-datasource-rest';
 import { sign } from 'oauth-sign';
 
-const fields = [
-  'summary', 'description', 'status', 'assignee', 'reporter',
-  'issuetype', 'priority', 'fixVersions', 'comment', 'subtasks',
-  'customfield_10006', 'customfield_10014', 'customfield_20700',
-];
-
 class IssueAPI extends RESTDataSource {
   constructor({ consumerKey, consumerSecret }) {
     super();
@@ -87,12 +81,19 @@ class IssueAPI extends RESTDataSource {
   }
 
   async getIssues(jql, startAt, maxResults) {
+    const fields = [
+      'summary', 'description', 'status', 'assignee', 'reporter', 'issuetype',
+      'priority', 'fixVersions', 'comment', 'subtasks', 'customfield_10006',
+      'customfield_10014', 'customfield_20700',
+    ];
+
     const response = await this.post('api/latest/search', {
       jql,
       fields,
       startAt,
       maxResults,
     });
+
     const issues = Array.isArray(response.issues)
       ? response.issues.map(issue => this.issueReducer(issue))
       : [];
@@ -100,9 +101,15 @@ class IssueAPI extends RESTDataSource {
   }
 
   async getIssueById({ issueId }) {
-    const response = await this.get(
-      `api/latest/issue/${issueId}?fields=${fields.join()}`,
-    );
+    const fields = [
+      'summary', 'description', 'status', 'assignee', 'reporter', 'issuetype',
+      'priority', 'fixVersions', 'comment',
+    ];
+
+    const response = await this.get(`api/latest/issue/${issueId}`, {
+      fields,
+    });
+
     return this.issueReducer(response);
   }
 
