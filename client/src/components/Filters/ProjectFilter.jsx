@@ -3,11 +3,18 @@ import { useQuery, useMutation } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
 import Select from '@atlaskit/select';
 
-import { GET_PROJECTS } from '../../queries';
-
 const GET_PROJECT = gql`
   query GetFilters {
     project @client {
+      id
+      name
+    }
+  }
+`;
+
+const GET_PROJECTS = gql`
+  query GetProjects {
+    projects {
       id
       name
     }
@@ -22,17 +29,15 @@ const TOGGLE_PROJECT = gql`
 
 function ProjectFilter() {
   const { data: { project } } = useQuery(GET_PROJECT);
-  const { data, loading, error } = useQuery(GET_PROJECTS);
+  const { data: { projects }, loading, error } = useQuery(GET_PROJECTS);
   const toggleProject = useMutation(TOGGLE_PROJECT);
 
   let options = [];
-  if (!error) {
-    options = data.projects && data.projects.map(option => ({
-      value: option.id,
-      label: option.name,
+  if (!loading && !error) {
+    options = projects && projects.map(({ id, name }) => ({
+      value: id,
+      label: name,
     }));
-  } else {
-    console.error(error);
   }
 
   return (

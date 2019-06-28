@@ -3,8 +3,6 @@ import { useQuery, useMutation } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
 import Select from '@atlaskit/select';
 
-import { GET_VERSIONS } from '../../queries';
-
 const PROJECT_ID = '10500';
 
 const GET_FILTERS = gql`
@@ -21,6 +19,15 @@ const GET_FILTERS = gql`
   }
 `;
 
+const GET_VERSIONS = gql`
+  query GetVersions($id: ID!, $startAt: Int, $maxResults: Int) {
+    versions(id: $id, startAt: $startAt, maxResults: $maxResults) {
+      id
+      name
+    }
+  }
+`;
+
 const TOGGLE_VERSION = gql`
   mutation toggleVersion($version: FixVersion!) {
     toggleVersion(version: $version) @client
@@ -29,7 +36,7 @@ const TOGGLE_VERSION = gql`
 
 function VersionFilter() {
   const { data: { project, version } } = useQuery(GET_FILTERS);
-  const { data, loading, error } = useQuery(GET_VERSIONS, {
+  const { data: { versions }, loading, error } = useQuery(GET_VERSIONS, {
     variables: {
       id: (project && project.id) || PROJECT_ID,
       startAt: 11,
@@ -39,14 +46,11 @@ function VersionFilter() {
   const toggleVersion = useMutation(TOGGLE_VERSION);
 
   let options = [];
-
-  if (!error) {
-    options = data.versions && data.versions.map(option => ({
-      value: option.id,
-      label: option.name,
+  if (!loading && !error) {
+    options = versions && versions.map(({ id, name }) => ({
+      value: id,
+      label: name,
     }));
-  } else {
-    console.error(error);
   }
 
   return (
