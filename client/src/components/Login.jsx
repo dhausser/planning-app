@@ -3,12 +3,6 @@ import gql from 'graphql-tag';
 import { ApolloConsumer, Mutation } from 'react-apollo';
 import { LoginForm, Loading } from '.';
 
-// const LOGIN_USER = gql`
-//   mutation login($token: String!, $tokenSecret: String!) {
-//     login(token: $token, tokenSecret: $tokenSecret)
-//   }
-// `;
-
 const LOGIN_USER = gql`
   mutation login {
     login {

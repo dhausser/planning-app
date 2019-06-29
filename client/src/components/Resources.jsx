@@ -9,7 +9,10 @@ import Avatar from '@atlaskit/avatar';
 import EmptyState from '@atlaskit/empty-state';
 import Page from '@atlaskit/page';
 import PageHeader from '@atlaskit/page-header';
-import { ProjectHomeView } from '.';
+import TextField from '@atlaskit/textfield';
+import {
+  ProjectHomeView, TeamFilter,
+} from '.';
 
 import { GET_RESOURCES, GET_FILTERS } from '../queries';
 
@@ -21,6 +24,15 @@ const NameWrapper = styled.span`
 const AvatarWrapper = styled.div`
   margin-right: 8px;
 `;
+
+const barContent = (
+  <div style={{ display: 'flex' }}>
+    <div style={{ flex: '0 0 200px' }}>
+      <TextField isCompact placeholder="Filter" aria-label="Filter" />
+    </div>
+    <TeamFilter />
+  </div>
+);
 
 function createKey(input) {
   return input ? input.replace(/^(the|a|an)/, '').replace(/\s/g, '') : input;
@@ -91,7 +103,7 @@ function Resources({ navigationViewController }) {
   }
   return (
     <Page>
-      <PageHeader>People</PageHeader>
+      <PageHeader bottomBar={barContent}>People</PageHeader>
       <DynamicTable
         caption={`${resources.length} people`}
         head={head}

@@ -4,11 +4,26 @@ import Page, { Grid, GridColumn } from '@atlaskit/page';
 import PageHeader from '@atlaskit/page-header';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import EmptyState from '@atlaskit/empty-state';
-import { ProductHomeView, Loading } from '..';
+import TextField from '@atlaskit/textfield';
+import {
+  ProductHomeView, ProjectFilter, VersionFilter, TeamFilter, Loading,
+} from '..';
 import BarChart from './BarChart';
 import { GET_DASHBOARD_ISSUES } from '../../queries';
 
 import { useIssues } from '../Issues/Issues';
+
+const barContent = (
+  <div style={{ display: 'flex' }}>
+    <div style={{ flex: '0 0 200px' }}>
+      <TextField isCompact placeholder="Filter" aria-label="Filter" />
+    </div>
+    <ProjectFilter />
+    <VersionFilter />
+    <TeamFilter />
+  </div>
+);
+
 
 function Dashboard({ navigationViewController }) {
   useEffect(() => {
@@ -29,7 +44,7 @@ function Dashboard({ navigationViewController }) {
 
   return (
     <Page>
-      <PageHeader>Dashboard</PageHeader>
+      <PageHeader bottomBar={barContent}>Dashboard</PageHeader>
       <Grid>
         <GridColumn>
           {content}

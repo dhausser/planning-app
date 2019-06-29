@@ -2,6 +2,9 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Modal, { ModalTransition } from '@atlaskit/modal-dialog';
 
+/**
+ * TODO: Production Setup
+ */
 const authUrl = 'http://localhost:4000/auth/provider'
   || 'https://roadmap.cdprojektred.com/auth/provider';
 

@@ -6,11 +6,23 @@ import { Status } from '@atlaskit/status';
 import EmptyState from '@atlaskit/empty-state';
 import Page from '@atlaskit/page';
 import PageHeader from '@atlaskit/page-header';
+import TextField from '@atlaskit/textfield';
 import {
-  ProjectHomeView, Loading, Icon,
+  ProjectHomeView, ProjectFilter, VersionFilter, TeamFilter, Loading, Icon,
 } from '..';
 import EpicTree from './EpicTree';
 import { GET_FILTERS, GET_ISSUES, GET_STORIES } from '../../queries';
+
+const barContent = (
+  <div style={{ display: 'flex' }}>
+    <div style={{ flex: '0 0 200px' }}>
+      <TextField isCompact placeholder="Filter" aria-label="Filter" />
+    </div>
+    <ProjectFilter />
+    <VersionFilter />
+    <TeamFilter />
+  </div>
+);
 
 /**
  *
@@ -96,7 +108,7 @@ function Roadmap({ navigationViewController }) {
 
   return (
     <Page>
-      <PageHeader>Roadmap</PageHeader>
+      <PageHeader bottomBar={barContent}>Roadmap</PageHeader>
       {content}
     </Page>
   );

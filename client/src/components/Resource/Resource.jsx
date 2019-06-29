@@ -8,7 +8,10 @@ import Avatar from '@atlaskit/avatar';
 import EmptyState from '@atlaskit/empty-state';
 import Page from '@atlaskit/page';
 import PageHeader from '@atlaskit/page-header';
-import { ProjectHomeView, Loading } from '..';
+import TextField from '@atlaskit/textfield';
+import {
+  ProjectHomeView, ProjectFilter, VersionFilter, Loading,
+} from '..';
 
 import IssueTable from '../Issues/IssueTable';
 import AbsencesTable from './AbsencesTable';
@@ -25,6 +28,16 @@ const NameWrapper = styled.span`
 const AvatarWrapper = styled.div`
   margin-right: 8px;
 `;
+
+const barContent = (
+  <div style={{ display: 'flex' }}>
+    <div style={{ flex: '0 0 200px' }}>
+      <TextField isCompact placeholder="Filter" aria-label="Filter" />
+    </div>
+    <ProjectFilter />
+    <VersionFilter />
+  </div>
+);
 
 function Resource({ navigationViewController, match }) {
   useEffect(() => {
@@ -88,7 +101,7 @@ function Resource({ navigationViewController, match }) {
 
   return (
     <Page>
-      <PageHeader>
+      <PageHeader bottomBar={barContent}>
         {avatar}
         {resource.name}
       </PageHeader>
