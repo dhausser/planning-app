@@ -7,9 +7,9 @@ import Tooltip from '@atlaskit/tooltip';
 import CopyIcon from '@atlaskit/icon/glyph/copy';
 import { Status } from '@atlaskit/status';
 import EmptyState from '@atlaskit/empty-state';
-import Icon from './IssueView/Icon';
+import { Icon } from '..';
 
-import { host } from '../config';
+import { host } from '../../config';
 
 const caption = (startAt, maxResults, total) => (
   <p>

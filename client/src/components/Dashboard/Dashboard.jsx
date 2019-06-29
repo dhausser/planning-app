@@ -1,18 +1,14 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import Page, { Grid, GridColumn } from '@atlaskit/page';
+import PageHeader from '@atlaskit/page-header';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
-import { Grid, GridColumn } from '@atlaskit/page';
 import EmptyState from '@atlaskit/empty-state';
-import {
-  ProductHomeView,
-  Page,
-  Header,
-  Loading,
-  BarChart,
-} from '../components';
-import { GET_DASHBOARD_ISSUES } from '../queries';
+import { ProductHomeView, Loading } from '..';
+import BarChart from './BarChart';
+import { GET_DASHBOARD_ISSUES } from '../../queries';
 
-import { useIssues } from './Issues';
+import { useIssues } from '../Issues/Issues';
 
 function Dashboard({ navigationViewController }) {
   useEffect(() => {
@@ -33,7 +29,7 @@ function Dashboard({ navigationViewController }) {
 
   return (
     <Page>
-      <Header title="Dashboard" />
+      <PageHeader>Dashboard</PageHeader>
       <Grid>
         <GridColumn>
           {content}

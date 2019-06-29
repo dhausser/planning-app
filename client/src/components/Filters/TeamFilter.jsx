@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useQuery, useMutation } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
 import Select from '@atlaskit/select';
@@ -27,26 +27,13 @@ const TOGGLE_TEAM = gql`
 `;
 
 function TeamFilter() {
-  const [data, setData] = useState({
-    team: null, teams: null, loading: false, error: null,
-  });
+  const { data: { team } } = useQuery(GET_TEAM);
+  const { data: { teams }, loading, error } = useQuery(GET_TEAMS);
   const toggleTeam = useMutation(TOGGLE_TEAM);
 
-  useEffect(() => {
-    function fetchData() {
-      const { data: { team } } = useQuery(GET_TEAM);
-      const { data: { teams }, loading, error } = useQuery(GET_TEAMS);
-      setData({
-        team, teams, loading, error,
-      });
-    }
-
-    fetchData();
-  }, []);
-
   let options = [];
-  if (!data.loading && !data.error) {
-    options = data.teams && data.teams.map(({ _id: id }) => ({
+  if (!loading && !error) {
+    options = teams && teams.map(({ _id: id }) => ({
       value: id,
       label: id,
     }));
@@ -58,9 +45,9 @@ function TeamFilter() {
         spacing="compact"
         className="single-select"
         classNamePrefix="react-select"
-        defaultValue={data.team && { value: data.team.id, label: data.team.name }}
+        defaultValue={team && { value: team.id, label: team.name }}
         isDisabled={false}
-        isLoading={data.loading}
+        isLoading={loading}
         isClearable
         isSearchable
         options={options}

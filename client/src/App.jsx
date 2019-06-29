@@ -12,14 +12,16 @@ import {
   NavigationProvider,
   withNavigationViewController,
 } from '@atlaskit/navigation-next';
+import Page from '@atlaskit/page';
+import { gridSize } from '@atlaskit/theme';
 import '@atlaskit/css-reset';
+import styled from 'styled-components';
+
 import {
   GlobalNavigation,
   ProductHomeView,
   ProductIssuesView,
   ProjectHomeView,
-} from '.';
-import {
   Login,
   Dashboard,
   Portfolio,
@@ -33,9 +35,16 @@ import {
   Releases,
   Settings,
   Projects,
-} from '../pages';
-import { resolvers, typeDefs } from '../resolvers';
-import { IS_LOGGED_IN } from '../queries';
+} from './components';
+
+import { resolvers, typeDefs } from './resolvers';
+import { IS_LOGGED_IN } from './queries';
+
+
+const Padding = styled.div`
+  margin: ${gridSize() * 4}px ${gridSize() * 8}px;
+  padding-bottom: ${gridSize() * 3}px;
+`;
 
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -87,23 +96,27 @@ const App = ({ navigationViewController }) => {
   }, [navigationViewController]);
 
   return (
-    <LayoutManagerWithViewController globalNavigation={GlobalNavigation}>
-      <Switch>
-        <Route path="/" exact component={Projects} />
-        <Route path="/dashboards" component={Dashboard} />
-        <Route path="/reports" component={Reports} />
-        <Route path="/issues" component={Issues} />
-        <Route path="/settings" component={Settings} />
-        <Route path="/releases" component={Releases} />
-        <Route path="/resources" component={Resources} />
-        <Route path="/roadmap" component={Roadmap} />
-        <Route path="/portfolio" component={Portfolio} />
-        <Route path="/backlog" component={Backlog} />
-        <Route path="/resource/:resourceId" component={Resource} />
-        <Route path="/issue/:issueId" component={Issue} />
-        <Route path="/issues/:filterId" component={Issues} />
-      </Switch>
-    </LayoutManagerWithViewController>
+    <Page>
+      <Padding>
+        <LayoutManagerWithViewController globalNavigation={GlobalNavigation}>
+          <Switch>
+            <Route path="/" exact component={Projects} />
+            <Route path="/dashboards" component={Dashboard} />
+            <Route path="/reports" component={Reports} />
+            <Route path="/issues" component={Issues} />
+            <Route path="/settings" component={Settings} />
+            <Route path="/releases" component={Releases} />
+            <Route path="/resources" component={Resources} />
+            <Route path="/roadmap" component={Roadmap} />
+            <Route path="/portfolio" component={Portfolio} />
+            <Route path="/backlog" component={Backlog} />
+            <Route path="/resource/:resourceId" component={Resource} />
+            <Route path="/issue/:issueId" component={Issue} />
+            <Route path="/issues/:filterId" component={Issues} />
+          </Switch>
+        </LayoutManagerWithViewController>
+      </Padding>
+    </Page>
   );
 };
 const AppWithNavigationViewController = withNavigationViewController(App);

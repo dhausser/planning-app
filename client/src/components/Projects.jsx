@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useQuery } from 'react-apollo-hooks';
+import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
@@ -7,11 +8,21 @@ import { withNavigationViewController } from '@atlaskit/navigation-next';
 import Avatar from '@atlaskit/avatar';
 import DynamicTable from '@atlaskit/dynamic-table';
 import EmptyState from '@atlaskit/empty-state';
+import Page from '@atlaskit/page';
+import PageHeader from '@atlaskit/page-header';
 import {
-  ProductHomeView, Page, Loading,
-} from '../components';
-import { NameWrapper, AvatarWrapper } from '../components/Page';
+  ProductHomeView, Loading,
+} from '.';
 import { PROJECT_TILE_DATA } from '../queries';
+
+const NameWrapper = styled.span`
+  display: flex;
+  align-items: center;
+`;
+
+const AvatarWrapper = styled.div`
+  margin-right: 8px;
+`;
 
 export const GET_PROJECTS = gql`
   query GetProjects {
@@ -89,7 +100,7 @@ function Projects({ navigationViewController }) {
 
   return (
     <Page>
-      <h1>Projects</h1>
+      <PageHeader>Projects</PageHeader>
       <DynamicTable
         caption={`Displaying ${data.projects.length} projects`}
         head={head}

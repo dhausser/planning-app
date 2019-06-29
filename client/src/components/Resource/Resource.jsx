@@ -1,20 +1,30 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useQuery } from 'react-apollo-hooks';
+import styled from 'styled-components';
+
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import Avatar from '@atlaskit/avatar';
 import EmptyState from '@atlaskit/empty-state';
-import Page, { AvatarWrapper } from '../components/Page';
-import {
-  ProjectHomeView,
-  Header,
-  Loading,
-  DynamicTable,
-  AbsencesTable,
-} from '../components';
-import { GET_RESOURCE_NAME, GET_ISSUES } from '../queries';
-import { useIssues } from './Issues';
-import { host } from '../config';
+import Page from '@atlaskit/page';
+import PageHeader from '@atlaskit/page-header';
+import { ProjectHomeView, Loading } from '..';
+
+import IssueTable from '../Issues/IssueTable';
+import AbsencesTable from './AbsencesTable';
+
+import { useIssues } from '../Issues/Issues';
+import { GET_RESOURCE_NAME, GET_ISSUES } from '../../queries';
+import { host } from '../../config';
+
+const NameWrapper = styled.span`
+  display: flex;
+  align-items: center;
+`;
+
+const AvatarWrapper = styled.div`
+  margin-right: 8px;
+`;
 
 function Resource({ navigationViewController, match }) {
   useEffect(() => {
@@ -52,13 +62,15 @@ function Resource({ navigationViewController, match }) {
 
 
   const avatar = (
-    <AvatarWrapper>
-      <Avatar
-        name={resource.name}
-        size="large"
-        src={`https://${host}/secure/useravatar?ownerId=${resourceId}`}
-      />
-    </AvatarWrapper>
+    <NameWrapper>
+      <AvatarWrapper>
+        <Avatar
+          name={resource.name}
+          size="large"
+          src={`https://${host}/secure/useravatar?ownerId=${resourceId}`}
+        />
+      </AvatarWrapper>
+    </NameWrapper>
   );
 
   const link = (
@@ -76,12 +88,15 @@ function Resource({ navigationViewController, match }) {
 
   return (
     <Page>
-      <Header title={resource.name} avatar={avatar} />
+      <PageHeader>
+        {avatar}
+        {resource.name}
+      </PageHeader>
       {link}
       {error ? (
         <EmptyState header={error.name} description={error.message} />
       ) : (
-        <DynamicTable
+        <IssueTable
           {...data.issues}
           fetchMore={fetchMore}
           loading={loadingIssues}

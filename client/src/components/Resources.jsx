@@ -1,17 +1,26 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import { useQuery } from 'react-apollo-hooks';
 import { Link } from 'react-router-dom';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import DynamicTable from '@atlaskit/dynamic-table';
 import Avatar from '@atlaskit/avatar';
 import EmptyState from '@atlaskit/empty-state';
-import { NameWrapper, AvatarWrapper } from '../components/Page';
-import {
-  ProjectHomeView, Page, Header,
-} from '../components';
+import Page from '@atlaskit/page';
+import PageHeader from '@atlaskit/page-header';
+import { ProjectHomeView } from '.';
 
 import { GET_RESOURCES, GET_FILTERS } from '../queries';
+
+const NameWrapper = styled.span`
+  display: flex;
+  align-items: center;
+`;
+
+const AvatarWrapper = styled.div`
+  margin-right: 8px;
+`;
 
 function createKey(input) {
   return input ? input.replace(/^(the|a|an)/, '').replace(/\s/g, '') : input;
@@ -82,7 +91,7 @@ function Resources({ navigationViewController }) {
   }
   return (
     <Page>
-      <Header title="People" />
+      <PageHeader>People</PageHeader>
       <DynamicTable
         caption={`${resources.length} people`}
         head={head}

@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import Page from '@atlaskit/page';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
-import { ProductHomeView, Page, Header } from '../components';
+import PageHeader from '@atlaskit/page-header';
+import { ProductHomeView } from '.';
 
 function Settings({ navigationViewController }) {
   useEffect(() => {
@@ -10,7 +12,7 @@ function Settings({ navigationViewController }) {
 
   return (
     <Page>
-      <Header title="Settings" />
+      <PageHeader>Settings</PageHeader>
       <p>This is the Settings page.</p>
     </Page>
   );

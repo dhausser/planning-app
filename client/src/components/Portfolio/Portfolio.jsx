@@ -1,23 +1,26 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
-import { ProjectHomeView, Page, Header } from '../components';
+import Page from '@atlaskit/page';
+import PageHeader from '@atlaskit/page-header';
+import { ProjectHomeView } from '..';
+import GanttChart from './GanttChart';
 
-function Backlog({ navigationViewController }) {
+function Portfolio({ navigationViewController }) {
   useEffect(() => {
     navigationViewController.setView(ProjectHomeView.id);
   }, [navigationViewController]);
 
   return (
     <Page>
-      <Header title="Backlog" />
-      <p>This is the Backlog page.</p>
+      <PageHeader>Portfolio</PageHeader>
+      <GanttChart />
     </Page>
   );
 }
 
-Backlog.propTypes = {
+Portfolio.propTypes = {
   navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
 };
 
-export default withNavigationViewController(Backlog);
+export default withNavigationViewController(Portfolio);

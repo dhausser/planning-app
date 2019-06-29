@@ -10,7 +10,7 @@ import TableTree, {
 } from '@atlaskit/table-tree';
 import CopyIcon from '@atlaskit/icon/glyph/copy';
 import Tooltip from '@atlaskit/tooltip';
-import { host } from '../config';
+import { host } from '../../config';
 
 function EpicTree({ epics }) {
   return (

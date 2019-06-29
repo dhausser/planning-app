@@ -4,15 +4,13 @@ import { useQuery } from 'react-apollo-hooks';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import { Status } from '@atlaskit/status';
 import EmptyState from '@atlaskit/empty-state';
+import Page from '@atlaskit/page';
+import PageHeader from '@atlaskit/page-header';
 import {
-  ProjectHomeView,
-  Page,
-  Header,
-  Loading,
-  EpicTree,
-} from '../components';
-import Icon from '../components/IssueView/Icon';
-import { GET_FILTERS, GET_ISSUES, GET_STORIES } from '../queries';
+  ProjectHomeView, Loading, Icon,
+} from '..';
+import EpicTree from './EpicTree';
+import { GET_FILTERS, GET_ISSUES, GET_STORIES } from '../../queries';
 
 /**
  *
@@ -98,7 +96,7 @@ function Roadmap({ navigationViewController }) {
 
   return (
     <Page>
-      <Header title="Roadmap" />
+      <PageHeader>Roadmap</PageHeader>
       {content}
     </Page>
   );

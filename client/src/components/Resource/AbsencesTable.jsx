@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { useQuery } from 'react-apollo-hooks';
 import DynamicTable from '@atlaskit/dynamic-table';
 import EmptyState from '@atlaskit/empty-state';
-import Loading from './Loading';
-import { GET_ABSENCES } from '../queries';
+import Loading from '../Loading';
+import { GET_ABSENCES } from '../../queries';
 
 const head = {
   cells: [

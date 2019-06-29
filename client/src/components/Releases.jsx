@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import Page from '@atlaskit/page';
+import PageHeader from '@atlaskit/page-header';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
-import { ProjectHomeView, Page, Header } from '../components';
+import { ProjectHomeView } from '.';
 
 function Releases({ navigationViewController }) {
   useEffect(() => {
@@ -10,7 +12,7 @@ function Releases({ navigationViewController }) {
 
   return (
     <Page>
-      <Header title="Releases" />
+      <PageHeader>Releases</PageHeader>
       <p>This is the releases page.</p>
     </Page>
   );

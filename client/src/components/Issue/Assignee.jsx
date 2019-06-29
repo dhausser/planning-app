@@ -1,9 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 import Avatar from '@atlaskit/avatar';
-import { NameWrapper, AvatarWrapper } from '../Page';
 import { host } from '../../config';
+
+const NameWrapper = styled.span`
+  display: flex;
+  align-items: center;
+`;
+
+const AvatarWrapper = styled.div`
+  margin-right: 8px;
+`;
 
 function Assignee({ assignee }) {
   return (
