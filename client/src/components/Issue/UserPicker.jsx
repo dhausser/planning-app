@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useQuery } from 'react-apollo-hooks';
+import { useQuery } from '@apollo/react-hooks';
 import UserPicker from '@atlaskit/user-picker';
 import { host } from '../../config';
 import { GET_RESOURCES } from '../../queries';

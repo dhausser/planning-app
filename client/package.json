@@ -4,7 +4,7 @@
   "description": "Roadmap app client",
   "repository": "https://github.com/dhausser/planning-app/",
   "homepage": "https://roadmap.cdprojektred.com",
-  "main": "src/index.js",
+  "main": "src/index.jsx",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -15,6 +15,7 @@
   "author": "Davy Hausser",
   "license": "ISC",
   "dependencies": {
+    "@apollo/react-hooks": "0.1.0-beta.10",
     "@atlaskit/avatar": "^16.0.5",
     "@atlaskit/breadcrumbs": "^8.0.1",
     "@atlaskit/button": "^13.0.8",
@@ -46,7 +47,7 @@
     "apollo-link-context": "^1.0.18",
     "apollo-link-http": "^1.5.15",
     "chart.js": "^2.8.0",
-    "graphql": "^14.4.0",
+    "graphql": "^14.4.1",
     "graphql-tag": "^2.10.1",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
@@ -57,7 +58,7 @@
     "react-intl": "^2.9.0",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1",
-    "styled-components": "^5.0.0-beta.5-removefoldedcomponentids"
+    "styled-components": "^5.0.0-beta.6-ej2"
   },
   "devDependencies": {
     "react-scripts": "^3.0.0"

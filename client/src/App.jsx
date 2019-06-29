@@ -1,17 +1,13 @@
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Query, ApolloProvider } from 'react-apollo';
-import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks';
+import PropTypes from 'prop-types';
+import { ApolloProvider as LegacyProvider } from 'react-apollo'
+import { ApolloProvider, useQuery } from '@apollo/react-hooks';
 import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { createHttpLink } from 'apollo-link-http';
 import { setContext } from 'apollo-link-context';
-import {
-  LayoutManagerWithViewController,
-  NavigationProvider,
-  withNavigationViewController,
-} from '@atlaskit/navigation-next';
+import { withNavigationViewController, LayoutManagerWithViewController, NavigationProvider } from '@atlaskit/navigation-next';
 import Page from '@atlaskit/page';
 import { gridSize } from '@atlaskit/theme';
 import '@atlaskit/css-reset';
@@ -37,14 +33,8 @@ import {
   Projects,
 } from './components';
 
-import { resolvers, typeDefs } from './resolvers';
 import { IS_LOGGED_IN } from './queries';
-
-
-const Padding = styled.div`
-  margin: ${gridSize() * 4}px ${gridSize() * 8}px;
-  padding-bottom: ${gridSize() * 3}px;
-`;
+import { resolvers, typeDefs } from './resolvers';
 
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -88,17 +78,22 @@ cache.writeData({
   },
 });
 
-const App = ({ navigationViewController }) => {
+const Padding = styled.div`
+  margin: ${gridSize() * 4}px ${gridSize() * 8}px;
+  padding-bottom: ${gridSize() * 3}px;
+`;
+
+function AppRouter({ navigationViewController }) {
   useEffect(() => {
     navigationViewController.addView(ProductHomeView);
     navigationViewController.addView(ProductIssuesView);
     navigationViewController.addView(ProjectHomeView);
   }, [navigationViewController]);
-
+  const { data } = useQuery(IS_LOGGED_IN);
   return (
-    <Page>
-      <Padding>
-        <LayoutManagerWithViewController globalNavigation={GlobalNavigation}>
+    <Router>
+      <LayoutManagerWithViewController globalNavigation={GlobalNavigation}>
+        {data.isLoggedIn ? (
           <Switch>
             <Route path="/" exact component={Projects} />
             <Route path="/dashboards" component={Dashboard} />
@@ -114,32 +109,33 @@ const App = ({ navigationViewController }) => {
             <Route path="/issue/:issueId" component={Issue} />
             <Route path="/issues/:filterId" component={Issues} />
           </Switch>
-        </LayoutManagerWithViewController>
-      </Padding>
-    </Page>
+        ) : <Login />
+      }
+      </LayoutManagerWithViewController>
+    </Router>
   );
-};
-const AppWithNavigationViewController = withNavigationViewController(App);
+}
 
-App.propTypes = {
+const AppWithNavigationViewController = withNavigationViewController(AppRouter);
+
+AppRouter.propTypes = {
   navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
 };
 
-export default () => (
-  <Router>
+function App() {
+  return (
     <ApolloProvider client={client}>
-      <ApolloHooksProvider client={client}>
-        <Query query={IS_LOGGED_IN}>
-          {({ data }) => (data.isLoggedIn
-            ? (
-              <NavigationProvider>
-                <AppWithNavigationViewController client={client} />
-              </NavigationProvider>
-            )
-            : <Login />)
-      }
-        </Query>
-      </ApolloHooksProvider>
+      <LegacyProvider client={client}>
+        <NavigationProvider>
+          <Page>
+            <Padding>
+              <AppWithNavigationViewController />
+            </Padding>
+          </Page>
+        </NavigationProvider>
+      </LegacyProvider>
     </ApolloProvider>
-  </Router>
-);
+  );
+}
+
+export default App;
