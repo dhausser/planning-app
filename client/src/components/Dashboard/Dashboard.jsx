@@ -26,13 +26,13 @@ const barContent = (
 
 
 function Dashboard({ navigationViewController }) {
-  useEffect(() => {
-    navigationViewController.setView(ProductHomeView.id);
-  }, [navigationViewController]);
-
   const [issues, filters] = useIssues(GET_DASHBOARD_ISSUES);
   const { data, loading, error } = issues;
   let content;
+
+  useEffect(() => {
+    navigationViewController.setView(ProductHomeView.id);
+  }, [navigationViewController]);
 
   if (loading) {
     content = <Loading />;

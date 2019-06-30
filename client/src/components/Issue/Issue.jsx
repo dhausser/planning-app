@@ -18,17 +18,13 @@ import { GET_ISSUE } from '../../queries';
 import { host } from '../../config';
 
 function Issue({ navigationViewController, match }) {
+  const { data: { issue }, loading, error } = useQuery(GET_ISSUE, {
+    variables: { id: match.params.issueId },
+  });
+
   useEffect(() => {
     navigationViewController.setView(ProductIssuesView.id);
   }, [navigationViewController]);
-
-  const {
-    data: { issue },
-    loading,
-    error,
-  } = useQuery(GET_ISSUE, {
-    variables: { id: match.params.issueId },
-  });
 
   if (loading) return <Loading />;
   if (error) return <EmptyState header={error.name} description={error.message} />;
