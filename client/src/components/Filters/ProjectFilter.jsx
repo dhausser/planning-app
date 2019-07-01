@@ -30,7 +30,7 @@ const TOGGLE_PROJECT = gql`
 function ProjectFilter() {
   const { data: { project } } = useQuery(GET_PROJECT);
   const { data: { projects }, loading, error } = useQuery(GET_PROJECTS);
-  const toggleProject = useMutation(TOGGLE_PROJECT);
+  const [toggleProject] = useMutation(TOGGLE_PROJECT);
 
   let options = [];
   if (!loading && !error) {

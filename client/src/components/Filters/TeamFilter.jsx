@@ -29,7 +29,7 @@ const TOGGLE_TEAM = gql`
 function TeamFilter() {
   const { data: { team } } = useQuery(GET_TEAM);
   const { data: { teams }, loading, error } = useQuery(GET_TEAMS);
-  const toggleTeam = useMutation(TOGGLE_TEAM);
+  const [toggleTeam] = useMutation(TOGGLE_TEAM);
 
   let options = [];
   if (!loading && !error) {

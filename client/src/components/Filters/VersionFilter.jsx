@@ -43,7 +43,7 @@ function VersionFilter() {
       maxResults: 5,
     },
   });
-  const toggleVersion = useMutation(TOGGLE_VERSION);
+  const [toggleVersion] = useMutation(TOGGLE_VERSION);
 
   let options = [];
   if (!loading && !error) {
