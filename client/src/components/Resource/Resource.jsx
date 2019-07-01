@@ -58,10 +58,9 @@ function Resource({ navigationViewController, match }) {
   });
 
   // Fetch issues from REST API
-  const [issues, { version }] = useIssues(GET_ISSUES, resourceId);
-  const {
-    data, loading: loadingIssues, error, fetchMore,
-  } = issues;
+  const [{
+    data, loading: loadingIssues, error: errorIssues, fetchMore,
+  }, { version }] = useIssues(GET_ISSUES, resourceId);
 
   if (loadingResource) return <Loading />;
   if (errorResource) {
@@ -106,8 +105,8 @@ function Resource({ navigationViewController, match }) {
         {resource.name}
       </PageHeader>
       {link}
-      {error ? (
-        <EmptyState header={error.name} description={error.message} />
+      {errorIssues ? (
+        <EmptyState header={errorIssues.name} description={errorIssues.message} />
       ) : (
         <IssueTable
           {...data.issues}
