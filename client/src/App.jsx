@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { ApolloProvider as LegacyProvider } from 'react-apollo'
+import { ApolloProvider as LegacyProvider } from 'react-apollo';
 import { ApolloProvider, useQuery } from '@apollo/react-hooks';
 import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
@@ -37,7 +37,7 @@ import { IS_LOGGED_IN } from './queries';
 import { resolvers, typeDefs } from './resolvers';
 
 const httpLink = createHttpLink({
-  uri: '/graphql',
+  uri: 'http://localhost:8080/graphql',
 });
 
 const authLink = setContext((_, { headers }) => {
