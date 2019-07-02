@@ -2,7 +2,8 @@
   "name": "planning-app",
   "version": "1.0.0",
   "description": "An app for roadmap planning on top of Jira Software",
-  "main": "./server/main.js",
+  "main": "./server/index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "cd ./server && npm start",

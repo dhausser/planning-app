@@ -4,6 +4,7 @@
   "description": "Roadmap app server",
   "main": "index.js",
   "module": "main.js",
+  "type": "module",
   "dependencies": {
     "apollo-datasource": "^0.5.0",
     "apollo-datasource-rest": "^0.5.0",
@@ -24,7 +25,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "nodemon esm main.js",
+    "start": "nodemon -r esm main.js",
+    "dev": "node --experimental-modules index.js",
     "prod": "node -r esm main.js"
   },
   "keywords": [],

@@ -76,7 +76,7 @@ const Wrapper = props => (
 function ProjectSwitcher() {
   const [selected, setSelected] = useState({});
   const [options, setOptions] = useState([]);
-  const toggleProject = useMutation(TOGGLE_PROJECT);
+  const [toggleProject] = useMutation(TOGGLE_PROJECT);
   const {
     data: { project: filter },
   } = useQuery(GET_FILTERS);
