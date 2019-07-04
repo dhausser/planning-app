@@ -37,7 +37,7 @@ import { IS_LOGGED_IN } from './queries';
 import { resolvers, typeDefs } from './resolvers';
 
 const httpLink = createHttpLink({
-  uri: 'http://localhost:8080/graphql',
+  uri: '/graphql',
 });
 
 const authLink = setContext((_, { headers }) => {

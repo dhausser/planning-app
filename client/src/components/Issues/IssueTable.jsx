@@ -11,7 +11,7 @@ import { Icon } from '..';
 
 import { host } from '../../config';
 
-const emptyView = <EmptyState header="Empty State" description="No issues found meetings the search criteria" />;
+const emptyView = <EmptyState description="No issues found meetings the search criteria" />;
 
 const caption = (startAt, maxResults, total) => (
   <p>

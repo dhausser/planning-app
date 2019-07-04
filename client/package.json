@@ -25,13 +25,13 @@
     "@atlaskit/dynamic-table": "^13.1.1",
     "@atlaskit/empty-state": "^5.0.3",
     "@atlaskit/form": "^6.1.0",
-    "@atlaskit/global-navigation": "^7.2.6",
+    "@atlaskit/global-navigation": "^7.3.0",
     "@atlaskit/icon": "^17.1.2",
     "@atlaskit/icon-object": "^4.0.4",
     "@atlaskit/icon-priority": "^4.0.4",
     "@atlaskit/logo": "^12.0.4",
     "@atlaskit/modal-dialog": "^10.0.6",
-    "@atlaskit/navigation-next": "^6.3.0",
+    "@atlaskit/navigation-next": "^6.3.1",
     "@atlaskit/page": "^11.0.2",
     "@atlaskit/page-header": "^9.0.3",
     "@atlaskit/select": "^9.1.7",
@@ -41,13 +41,13 @@
     "@atlaskit/textfield": "^2.0.2",
     "@atlaskit/theme": "^9.1.1",
     "@atlaskit/tooltip": "^14.0.3",
-    "@atlaskit/user-picker": "^4.0.8",
+    "@atlaskit/user-picker": "^4.0.11",
     "apollo-cache-inmemory": "^1.6.2",
     "apollo-client": "^2.6.3",
     "apollo-link-context": "^1.0.18",
     "apollo-link-http": "^1.5.15",
     "chart.js": "^2.8.0",
-    "graphql": "^14.4.1",
+    "graphql": "^14.4.2",
     "graphql-tag": "^2.10.1",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
@@ -57,10 +57,10 @@
     "react-intl": "^2.9.0",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1",
-    "styled-components": "^5.0.0-beta.6-ej2"
+    "styled-components": "^5.0.0-beta.6-ej4"
   },
   "devDependencies": {
-    "react-scripts": "^3.0.0"
+    "react-scripts": "^3.0.1"
   },
   "browserslist": [
     ">0.2%",
@@ -68,5 +68,5 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "proxy": "http://localhost:8080"
+  "proxy": "http://localhost:4000"
 }

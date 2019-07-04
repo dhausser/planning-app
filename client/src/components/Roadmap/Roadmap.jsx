@@ -8,7 +8,7 @@ import Page from '@atlaskit/page';
 import PageHeader from '@atlaskit/page-header';
 import TextField from '@atlaskit/textfield';
 import {
-  ProjectHomeView, ProjectFilter, VersionFilter, TeamFilter, Loading, Icon,
+  ProjectHomeView, ProjectFilter, VersionFilter, Loading, Icon,
 } from '..';
 import EpicTree from './EpicTree';
 import { GET_FILTERS, GET_ISSUES, GET_STORIES } from '../../queries';
@@ -20,7 +20,6 @@ const barContent = (
     </div>
     <ProjectFilter />
     <VersionFilter />
-    <TeamFilter />
   </div>
 );
 
@@ -67,9 +66,12 @@ function Roadmap({ navigationViewController }) {
 
   // Fetching User Stories from Epics
   jql = `issuetype=story${epics.data.issues && epics.data.issues.issues.length
-    ? ` and 'Epic Link' in (${epics.data.issues.issues.map(({ id }) => id)})` : ''}${version
-    ? ` and fixVersion=${version.id}` : ''} order by key asc`;
-  stories = useQuery(GET_STORIES, { variables: { jql } });
+    ? ` and 'Epic Link' in (${epics.data.issues.issues.map(({ id }) => id)})` : ''}\
+    order by key asc`;
+  // jql = `issuetype=story${epics.data.issues && epics.data.issues.issues.length
+  //   ? ` and 'Epic Link' in (${epics.data.issues.issues.map(({ id }) => id)})` : ''}${version
+  //   ? ` and fixVersion=${version.id}` : ''} order by key asc`;
+  stories = useQuery(GET_STORIES, { variables: { jql, maxResults: 100 } });
 
   if (epics.loading || stories.loading) {
     content = <Loading />;
