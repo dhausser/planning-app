@@ -149,8 +149,6 @@ export function useIssues(resourceId = null) {
       .map(({ key }) => key)
     : null);
 
-  console.log(assignee);
-
   const jql = `${project ? `project=${project.id} and ` : ''}${version
     ? `fixVersion in (${version.id}) and ` : ''}${assignee
     ? `assignee in (${assignee}) and ` : ''}statusCategory in (new, indeterminate)\
