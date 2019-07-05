@@ -1,10 +1,18 @@
 /* eslint-disable no-param-reassign */
-/**
- * TODO: fix no-param-reassign
- */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useQuery } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
 import Chart from 'chart.js';
+
+const GET_TEAM = gql`
+  query GetTeam {
+    team @client {
+      id
+      name
+    }
+  }
+`;
 
 const transparency = '0.3';
 const colors = [
@@ -42,8 +50,6 @@ const config = dataset => ({
 });
 
 function aggregateByAssignee(issues) {
-  if (!issues) return [];
-
   return issues.reduce((resources, issue) => {
     if (issue.assignee && issue.assignee.name) {
       const name = issue.assignee.name.split(' ').shift();
@@ -57,8 +63,6 @@ function aggregateByAssignee(issues) {
 }
 
 function aggregateByTeam(issues) {
-  if (!issues) return [];
-
   return issues.reduce((teams, issue) => {
     if (issue.assignee && issue.assignee.team) {
       const { team: teamName } = issue.assignee;
@@ -79,56 +83,48 @@ function filterByTeam(issues, team) {
     : aggregateByTeam(issues);
 }
 
-function BarChart({
-  issues, maxResults = 0, total = 0, team = null,
-}) {
+function updateChart(chart, dataset) {
+  chart.data.labels = Object.keys(dataset);
+  chart.data.datasets[0].data = Object.values(dataset);
+  chart.data.datasets[0].backgroundColor = Object.entries(dataset).map(
+    (_entry, index) => colors[index % colors.length].value,
+  );
+  chart.update();
+}
+
+function BarChart({ issues, maxResults, total }) {
   const [chart, setChart] = useState(null);
+  const { data: { team } } = useQuery(GET_TEAM);
   const dataset = filterByTeam(issues, team);
 
   useEffect(() => {
     if (chart === null) {
       setChart(new Chart('BarChart', config(dataset)));
     } else {
-      chart.data.labels = Object.keys(dataset);
-      chart.data.datasets[0].data = Object.values(dataset);
-      chart.data.datasets[0].backgroundColor = Object.entries(dataset).map(
-        (entry, index) => colors[index % colors.length].value,
-      );
-      chart.update();
+      updateChart(chart, dataset);
     }
-  }, [chart, dataset]);
+  }, [dataset, chart]);
 
   const results = maxResults > total ? total : maxResults;
+
   return (
     <div>
-      <h5>
-        Displaying
-        {' '}
-        {results}
-        {' '}
-of
-        {' '}
-        {total}
-        {' '}
-issues
-      </h5>
+      <h5>{`Displaying ${results} of ${total}`}</h5>
       <canvas id="BarChart" width="400" height="250" />
     </div>
   );
 }
 
 BarChart.defaultProps = {
-  team: null,
+  issues: [],
   maxResults: 0,
   total: 0,
-  issues: [],
 };
 
 BarChart.propTypes = {
-  team: PropTypes.objectOf(PropTypes.string),
+  issues: PropTypes.arrayOf(PropTypes.objectOf),
   maxResults: PropTypes.number,
   total: PropTypes.number,
-  issues: PropTypes.arrayOf(PropTypes.objectOf),
 };
 
 export default BarChart;

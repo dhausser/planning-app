@@ -135,7 +135,7 @@ const row = issue => ({
   ],
 });
 
-export function useIssues(resourceId = null) {
+export function useIssues(query = GET_ISSUES, resourceId = null) {
   const { data: { project, version, team } } = useQuery(GET_FILTERS);
   const {
     data: { resources },
@@ -154,7 +154,7 @@ export function useIssues(resourceId = null) {
     ? `assignee in (${assignee}) and ` : ''}statusCategory in (new, indeterminate)\
     order by priority desc, key asc`;
 
-  const issues = useQuery(GET_ISSUES, { variables: { jql, startAt: 0, maxResults: 20 } });
+  const issues = useQuery(query, { variables: { jql, startAt: 0, maxResults: 20 } });
 
   return issues;
 }

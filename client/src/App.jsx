@@ -36,9 +36,8 @@ import {
 import { IS_LOGGED_IN } from './queries';
 import { resolvers, typeDefs } from './resolvers';
 
-const httpLink = createHttpLink({
-  uri: '/graphql',
-});
+const uri = `${process.env.NODE_ENV === 'production' ? 'http://localhost:8080' : ''}/graphql`;
+const httpLink = createHttpLink({ uri });
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem('token');

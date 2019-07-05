@@ -3,15 +3,14 @@ import PropTypes from 'prop-types';
 import Page, { Grid, GridColumn } from '@atlaskit/page';
 import PageHeader from '@atlaskit/page-header';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
-import EmptyState from '@atlaskit/empty-state';
 import TextField from '@atlaskit/textfield';
+import EmptyState from '@atlaskit/empty-state';
+import BarChart from './BarChart';
 import {
   ProductHomeView, ProjectFilter, VersionFilter, TeamFilter, Loading,
 } from '..';
-import BarChart from './BarChart';
-import { GET_DASHBOARD_ISSUES } from '../../queries';
-
 import { useIssues } from '../Issues/IssueTable';
+import { GET_DASHBOARD_ISSUES } from '../../queries';
 
 const barContent = (
   <div style={{ display: 'flex' }}>
@@ -26,8 +25,7 @@ const barContent = (
 
 
 function Dashboard({ navigationViewController }) {
-  const [issues, filters] = useIssues(GET_DASHBOARD_ISSUES);
-  const { data, loading, error } = issues;
+  const { data, loading, error } = useIssues(GET_DASHBOARD_ISSUES);
   let content;
 
   useEffect(() => {
@@ -39,7 +37,7 @@ function Dashboard({ navigationViewController }) {
   } else if (error) {
     content = <EmptyState header={error.name} description={error.message} />;
   } else {
-    content = <BarChart {...data.issues} team={filters.team} />;
+    content = <BarChart {...data.issues} />;
   }
 
   return (
