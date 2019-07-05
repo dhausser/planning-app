@@ -11,7 +11,7 @@ import {
 import BarChart from './BarChart';
 import { GET_DASHBOARD_ISSUES } from '../../queries';
 
-import { useIssues } from '../Issues/Issues';
+import { useIssues } from '../Issues/IssueTable';
 
 const barContent = (
   <div style={{ display: 'flex' }}>

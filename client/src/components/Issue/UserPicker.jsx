@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useQuery } from '@apollo/react-hooks';
 import UserPicker from '@atlaskit/user-picker';
-import { host } from '../../config';
 import { GET_RESOURCES } from '../../queries';
 
 function reducer(user) {
@@ -11,7 +10,7 @@ function reducer(user) {
     name: user.name,
     type: 'user',
     fixed: true,
-    avatarUrl: `https://${host}/secure/useravatar?ownerId=${user.key}`,
+    avatarUrl: `https://${process.env.REACT_APP_HOST}/secure/useravatar?ownerId=${user.key}`,
   };
 }
 

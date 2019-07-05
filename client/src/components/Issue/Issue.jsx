@@ -15,8 +15,6 @@ import Icon from './Icon';
 import { ProductIssuesView, Loading } from '..';
 import { GET_ISSUE } from '../../queries';
 
-import { host } from '../../config';
-
 function Issue({ navigationViewController, match }) {
   const { data: { issue }, loading, error } = useQuery(GET_ISSUE, {
     variables: { id: match.params.issueId },
@@ -38,7 +36,7 @@ function Issue({ navigationViewController, match }) {
       </GridColumn>
       <GridColumn medium={4}>
         <a
-          href={`https://${host}/browse/${issue.key}`}
+          href={`https://${process.env.REACT_APP_HOST}/browse/${issue.key}`}
           target="_blank"
           rel="noopener noreferrer"
         >

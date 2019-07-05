@@ -8,11 +8,6 @@ import Comment, {
   CommentTime,
 } from '@atlaskit/comment';
 
-/**
- * TODO: Remove static data dependency
- */
-import { host } from '../../config';
-
 function Comments({ comments }) {
   return (
     <>
@@ -22,7 +17,7 @@ function Comments({ comments }) {
           key={comment.id}
           avatar={(
             <Avatar
-              src={`https://${host}/secure/useravatar?ownerId=${comment.author.key}`}
+              src={`https://${process.env.REACT_APP_HOST}/secure/useravatar?ownerId=${comment.author.key}`}
               label="Atlaskit avatar"
               size="medium"
             />

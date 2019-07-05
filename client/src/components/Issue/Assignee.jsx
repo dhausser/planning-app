@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Avatar from '@atlaskit/avatar';
-import { host } from '../../config';
 
 const NameWrapper = styled.span`
   display: flex;
@@ -23,7 +22,7 @@ function Assignee({ assignee }) {
             <Avatar
               name={assignee.name}
               size="small"
-              src={`https://${host}/secure/useravatar?ownerId=${assignee.key}`}
+              src={`https://${process.env.REACT_APP_HOST}/secure/useravatar?ownerId=${assignee.key}`}
             />
           </AvatarWrapper>
           <Link to={`/resource/${assignee.key}`}>{assignee.name}</Link>

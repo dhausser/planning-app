@@ -21,6 +21,7 @@ export { default as Resource } from './Resource/Resource';
 export { default as Resources } from './Resources';
 export { default as Roadmap } from './Roadmap/Roadmap';
 export { default as Issues } from './Issues/Issues';
+export { default as IssueTable } from './Issues/IssueTable';
 export { default as Issue } from './Issue/Issue';
 export { default as Projects } from './Projects';
 export { default as Backlog } from './Backlog';

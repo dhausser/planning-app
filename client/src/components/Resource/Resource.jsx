@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useQuery } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
 import styled from 'styled-components';
 
 import { withNavigationViewController } from '@atlaskit/navigation-next';
@@ -10,15 +11,17 @@ import Page from '@atlaskit/page';
 import PageHeader from '@atlaskit/page-header';
 import TextField from '@atlaskit/textfield';
 import {
-  ProjectHomeView, ProjectFilter, VersionFilter, Loading,
+  ProjectHomeView, ProjectFilter, VersionFilter, Loading, IssueTable,
 } from '..';
-
-import IssueTable from '../Issues/IssueTable';
 import AbsencesTable from './AbsencesTable';
 
-import { useIssues } from '../Issues/Issues';
-import { GET_RESOURCE_NAME, GET_ISSUES } from '../../queries';
-import { host } from '../../config';
+const GET_RESOURCE_NAME = gql`
+  query getResourceById($id: ID!) {
+    resource(id: $id) {
+      name
+    }
+  }
+`;
 
 const NameWrapper = styled.span`
   display: flex;
@@ -40,46 +43,29 @@ const barContent = (
 );
 
 function Resource({ navigationViewController, match }) {
-  useEffect(() => {
-    navigationViewController.setView(ProjectHomeView.id);
-  }, [navigationViewController]);
-
   // Extract resource id from url parameters
   const { resourceId } = match.params;
 
   // Fetch resource from database
-  const {
-    data: { resource },
-    loading: loadingResource,
-    error: errorResource,
-  } = useQuery(GET_RESOURCE_NAME, {
+  const { data, loading, error } = useQuery(GET_RESOURCE_NAME, {
     variables: { id: resourceId },
     fetchPolicy: 'cache-first',
   });
 
-  // Fetch issues from REST API
-  const [{
-    data, loading: loadingIssues, error: errorIssues, fetchMore,
-  }, { version }] = useIssues(GET_ISSUES, resourceId);
+  useEffect(() => {
+    navigationViewController.setView(ProjectHomeView.id);
+  }, [navigationViewController]);
 
-  if (loadingResource) return <Loading />;
-  if (errorResource) {
-    return (
-      <EmptyState
-        header={errorResource.name}
-        description={errorResource.message}
-      />
-    );
-  }
-
+  if (loading) return <Loading />;
+  if (error) return <EmptyState header={error.name} description={error.message} />;
 
   const avatar = (
     <NameWrapper>
       <AvatarWrapper>
         <Avatar
-          name={resource.name}
+          name={data.resource.name}
           size="large"
-          src={`https://${host}/secure/useravatar?ownerId=${resourceId}`}
+          src={`https://${process.env.REACT_APP_HOST}/secure/useravatar?ownerId=${resourceId}`}
         />
       </AvatarWrapper>
     </NameWrapper>
@@ -88,8 +74,8 @@ function Resource({ navigationViewController, match }) {
   const link = (
     <p>
       <a
-        href={`https://${host}/issues/?jql=assignee=${resourceId}${version
-          ? ` AND fixVersion=${version.id}` : ''} AND statusCategory != Done order by priority desc`}
+        href={`https://${process.env.REACT_APP_HOST}/issues/?jql=assignee=${resourceId}\
+        AND statusCategory != Done order by priority desc`}
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -102,18 +88,10 @@ function Resource({ navigationViewController, match }) {
     <Page>
       <PageHeader bottomBar={barContent}>
         {avatar}
-        {resource.name}
+        {data.resource.name}
       </PageHeader>
       {link}
-      {errorIssues ? (
-        <EmptyState header={errorIssues.name} description={errorIssues.message} />
-      ) : (
-        <IssueTable
-          {...data.issues}
-          fetchMore={fetchMore}
-          loading={loadingIssues}
-        />
-      )}
+      <IssueTable resourceId={resourceId} />
       <AbsencesTable resourceId={resourceId} />
     </Page>
   );

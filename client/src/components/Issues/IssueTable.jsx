@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useQuery } from '@apollo/react-hooks';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import DynamicTable from '@atlaskit/dynamic-table';
@@ -9,9 +10,7 @@ import { Status } from '@atlaskit/status';
 import EmptyState from '@atlaskit/empty-state';
 import { Icon } from '..';
 
-import { host } from '../../config';
-
-const emptyView = <EmptyState description="No issues found meetings the search criteria" />;
+import { GET_FILTERS, GET_RESOURCES, GET_ISSUES } from '../../queries';
 
 const caption = (startAt, maxResults, total) => (
   <p>
@@ -124,7 +123,7 @@ const row = issue => ({
       content: (
         <Tooltip content={`View ${issue.key}`}>
           <a
-            href={`https://${host}/browse/${issue.key}`}
+            href={`https://${process.env.REACT_APP_HOST}/browse/${issue.key}`}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -136,26 +135,46 @@ const row = issue => ({
   ],
 });
 
-/**
- * Dynamic Table
- * https://atlaskit.atlassian.com/packages/core/dynamic-table
- * @param {Int} maxResults
- * @param {Int} total
- * @param {Array} issues
- * @param {Boolean} loading
- * @param {Func} fetchMore
- */
-function IssueTable({
-  maxResults, total, issues, loading, fetchMore,
-}) {
+export function useIssues(resourceId = null) {
+  const { data: { project, version, team } } = useQuery(GET_FILTERS);
+  const {
+    data: { resources },
+    loading: loadingResources,
+    error: errorResources,
+  } = useQuery(GET_RESOURCES);
+
+  const assignee = resourceId || (team && !loadingResources && !errorResources
+    ? resources
+      .filter(resource => resource.team === team.id)
+      .map(({ key }) => key)
+    : null);
+
+  console.log(assignee);
+
+  const jql = `${project ? `project=${project.id} and ` : ''}${version
+    ? `fixVersion in (${version.id}) and ` : ''}${assignee
+    ? `assignee in (${assignee}) and ` : ''}statusCategory in (new, indeterminate)\
+    order by priority desc, key asc`;
+
+  const issues = useQuery(GET_ISSUES, { variables: { jql, startAt: 0, maxResults: 20 } });
+
+  return issues;
+}
+
+function IssueTable({ resourceId = null }) {
   const [offset, setOffset] = useState(20);
+  const {
+    data, loading, error, fetchMore,
+  } = useIssues(resourceId);
+
+  if (error) return <EmptyState description={error.message} />;
 
   return (
     <>
       <DynamicTable
-        caption={caption(offset, maxResults, total)}
+        caption={!loading && caption(offset, data.issues.maxResults, data.issues.total)}
         head={head}
-        rows={!loading && issues.length && issues.map(row)}
+        rows={!loading && data.issues.issues.length && data.issues.issues.map(row)}
         rowsPerPage={20}
         loadingSpinnerSize="large"
         isLoading={loading}
@@ -163,9 +182,8 @@ function IssueTable({
         defaultSortKey="priority"
         defaultSortOrder="ASC"
         isRankable
-        emptyView={emptyView}
       />
-      {total > offset && (
+      {!loading && data.issues.total > offset && (
         <div
           style={{
             display: 'flex',
@@ -176,7 +194,7 @@ function IssueTable({
         >
           <Button
             onClick={() => {
-              setOffset(offset + maxResults);
+              setOffset(offset + data.issues.maxResults);
               return fetchMore({
                 variables: {
                   startAt: offset,
@@ -206,17 +224,11 @@ function IssueTable({
 }
 
 IssueTable.defaultProps = {
-  maxResults: 0,
-  total: 0,
-  issues: [],
+  resourceId: null,
 };
 
 IssueTable.propTypes = {
-  maxResults: PropTypes.number,
-  total: PropTypes.number,
-  issues: PropTypes.arrayOf(PropTypes.objectOf),
-  loading: PropTypes.bool.isRequired,
-  fetchMore: PropTypes.func.isRequired,
+  resourceId: PropTypes.string,
 };
 
 export default IssueTable;

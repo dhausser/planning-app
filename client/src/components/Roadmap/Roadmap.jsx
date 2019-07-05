@@ -68,9 +68,6 @@ function Roadmap({ navigationViewController }) {
   jql = `issuetype=story${epics.data.issues && epics.data.issues.issues.length
     ? ` and 'Epic Link' in (${epics.data.issues.issues.map(({ id }) => id)})` : ''}\
     order by key asc`;
-  // jql = `issuetype=story${epics.data.issues && epics.data.issues.issues.length
-  //   ? ` and 'Epic Link' in (${epics.data.issues.issues.map(({ id }) => id)})` : ''}${version
-  //   ? ` and fixVersion=${version.id}` : ''} order by key asc`;
   stories = useQuery(GET_STORIES, { variables: { jql, maxResults: 100 } });
 
   if (epics.loading || stories.loading) {

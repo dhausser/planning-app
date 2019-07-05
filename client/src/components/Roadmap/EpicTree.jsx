@@ -10,7 +10,6 @@ import TableTree, {
 } from '@atlaskit/table-tree';
 import CopyIcon from '@atlaskit/icon/glyph/copy';
 import Tooltip from '@atlaskit/tooltip';
-import { host } from '../../config';
 
 function EpicTree({ epics }) {
   return (
@@ -45,7 +44,7 @@ function EpicTree({ epics }) {
             <Cell singleLine>{type}</Cell>
             <Cell singleLine>
               <a
-                href={`https://${host}/browse/${key}`}
+                href={`https://${process.env.REACT_APP_HOST}/browse/${key}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -63,7 +62,7 @@ function EpicTree({ epics }) {
             <Cell singleLine>
               <Tooltip content={`View ${key}`}>
                 <a
-                  href={`https://${host}/browse/${key}`}
+                  href={`https://${process.env.REACT_APP_HOST}/browse/${key}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
