@@ -68,6 +68,7 @@ function Resource({ navigationViewController, match }) {
           src={`https://${process.env.REACT_APP_HOST}/secure/useravatar?ownerId=${resourceId}`}
         />
       </AvatarWrapper>
+      {data.resource.name}
     </NameWrapper>
   );
 
@@ -88,7 +89,6 @@ function Resource({ navigationViewController, match }) {
     <Page>
       <PageHeader bottomBar={barContent}>
         {avatar}
-        {data.resource.name}
       </PageHeader>
       {link}
       <IssueTable resourceId={resourceId} />

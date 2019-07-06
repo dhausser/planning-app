@@ -12,14 +12,8 @@ import { Icon } from '..';
 
 import { GET_FILTERS, GET_RESOURCES, GET_ISSUES } from '../../queries';
 
-const caption = (startAt, maxResults, total) => (
-  <p>
-    {maxResults <= total ? maxResults : total}
-    {' '}
-of
-    {' '}
-    {total}
-  </p>
+const caption = (maxResults, total) => (
+  <p>{`${maxResults <= total ? maxResults : total} of ${total}`}</p>
 );
 
 const head = {
@@ -163,14 +157,14 @@ function IssueTable({ resourceId = null }) {
   const [offset, setOffset] = useState(20);
   const {
     data, loading, error, fetchMore,
-  } = useIssues(resourceId);
+  } = useIssues(GET_ISSUES, resourceId);
 
   if (error) return <EmptyState description={error.message} />;
 
   return (
     <>
       <DynamicTable
-        caption={!loading && caption(offset, data.issues.maxResults, data.issues.total)}
+        caption={!loading && caption(data.issues.maxResults, data.issues.total)}
         head={head}
         rows={!loading && data.issues.issues.length && data.issues.issues.map(row)}
         rowsPerPage={20}
