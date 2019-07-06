@@ -9,7 +9,7 @@ import BarChart from './BarChart';
 import {
   ProductHomeView, ProjectFilter, VersionFilter, TeamFilter, Loading,
 } from '..';
-import { useIssues } from '../Issues/IssueTable';
+import { useIssues } from '../Issues/Issues';
 import { GET_DASHBOARD_ISSUES } from '../../queries';
 
 const barContent = (

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useQuery } from '@apollo/react-hooks';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import DynamicTable from '@atlaskit/dynamic-table';
@@ -9,8 +8,6 @@ import CopyIcon from '@atlaskit/icon/glyph/copy';
 import { Status } from '@atlaskit/status';
 import EmptyState from '@atlaskit/empty-state';
 import { Icon } from '..';
-
-import { GET_FILTERS, GET_RESOURCES, GET_ISSUES } from '../../queries';
 
 const caption = (maxResults, total) => (
   <p>{`${maxResults <= total ? maxResults : total} of ${total}`}</p>
@@ -129,37 +126,11 @@ const row = issue => ({
   ],
 });
 
-export function useIssues(query = GET_ISSUES, resourceId = null) {
-  const { data: { project, version, team } } = useQuery(GET_FILTERS);
-  const {
-    data: { resources },
-    loading: loadingResources,
-    error: errorResources,
-  } = useQuery(GET_RESOURCES);
 
-  const assignee = resourceId || (team && !loadingResources && !errorResources
-    ? resources
-      .filter(resource => resource.team === team.id)
-      .map(({ key }) => key)
-    : null);
-
-  const jql = `${project ? `project=${project.id} and ` : ''}${version
-    ? `fixVersion in (${version.id}) and ` : ''}${assignee
-    ? `assignee in (${assignee}) and ` : ''}statusCategory in (new, indeterminate)\
-    order by priority desc, key asc`;
-
-  const issues = useQuery(query, { variables: { jql, startAt: 0, maxResults: 20 } });
-
-  return issues;
-}
-
-function IssueTable({ resourceId = null }) {
+function IssueTable({
+  data, loading, error, fetchMore,
+}) {
   const [offset, setOffset] = useState(20);
-  const {
-    data, loading, error, fetchMore,
-  } = useIssues(GET_ISSUES, resourceId);
-
-  if (error) return <EmptyState description={error.message} />;
 
   return (
     <>
@@ -174,6 +145,7 @@ function IssueTable({ resourceId = null }) {
         defaultSortKey="priority"
         defaultSortOrder="ASC"
         isRankable
+        emptyView={error && <EmptyState description={error.message} />}
       />
       {!loading && data.issues.total > offset && (
         <div
@@ -216,11 +188,16 @@ function IssueTable({ resourceId = null }) {
 }
 
 IssueTable.defaultProps = {
-  resourceId: null,
+  data: {},
+  loading: false,
+  error: null,
 };
 
 IssueTable.propTypes = {
-  resourceId: PropTypes.string,
+  data: PropTypes.objectOf,
+  loading: PropTypes.bool,
+  error: PropTypes.objectOf,
+  fetchMore: PropTypes.func.isRequired,
 };
 
 export default IssueTable;

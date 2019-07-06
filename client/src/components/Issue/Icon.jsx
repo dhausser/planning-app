@@ -17,10 +17,12 @@ import Subtask16Icon from '@atlaskit/icon-object/glyph/subtask/16';
 import Bug16Icon from '@atlaskit/icon-object/glyph/bug/16';
 
 export default {
+  // Status colors
   new: 'blue',
   indeterminate: 'yellow',
   done: 'green',
 
+  // Priorities
   P0: (
     <Tooltip content="P0">
       <PriorityBlockerIcon size="small" />
@@ -56,6 +58,8 @@ export default {
       <PriorityTrivialIcon size="small" />
     </Tooltip>
   ),
+
+  // Standard issuetypes
   Epic: (
     <Tooltip content="Epic">
       <Epic16Icon />
@@ -79,6 +83,33 @@ export default {
   Bug: (
     <Tooltip content="Bug">
       <Bug16Icon />
+    </Tooltip>
+  ),
+
+  // Custom issuetypes
+  Card: (
+    <Tooltip content="Card">
+      <Story16Icon />
+    </Tooltip>
+  ),
+  Product: (
+    <Tooltip content="Product">
+      <Story16Icon />
+    </Tooltip>
+  ),
+  'Live Event': (
+    <Tooltip content="Live Event">
+      <Task16Icon />
+    </Tooltip>
+  ),
+  Feedback: (
+    <Tooltip content="Feedback">
+      <Task16Icon />
+    </Tooltip>
+  ),
+  Backend: (
+    <Tooltip content="Backend">
+      <Task16Icon />
     </Tooltip>
   ),
 };

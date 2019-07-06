@@ -14,6 +14,9 @@ import {
   ProjectHomeView, ProjectFilter, VersionFilter, Loading, IssueTable,
 } from '..';
 import AbsencesTable from './AbsencesTable';
+import { useIssues } from '../Issues/Issues';
+import { GET_ISSUES } from '../../queries';
+
 
 const GET_RESOURCE_NAME = gql`
   query getResourceById($id: ID!) {
@@ -45,6 +48,7 @@ const barContent = (
 function Resource({ navigationViewController, match }) {
   // Extract resource id from url parameters
   const { resourceId } = match.params;
+  const issues = useIssues(GET_ISSUES, match.params.resourceId);
 
   // Fetch resource from database
   const { data, loading, error } = useQuery(GET_RESOURCE_NAME, {
@@ -91,7 +95,7 @@ function Resource({ navigationViewController, match }) {
         {avatar}
       </PageHeader>
       {link}
-      <IssueTable resourceId={resourceId} />
+      <IssueTable {...issues} />
       <AbsencesTable resourceId={resourceId} />
     </Page>
   );

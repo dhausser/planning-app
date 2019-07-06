@@ -46,10 +46,6 @@ function reducer(issue) {
  * @param {Object} navigationViewController controlling the navigation bar display
  */
 function Roadmap({ navigationViewController }) {
-  useEffect(() => {
-    navigationViewController.setView(ProjectHomeView.id);
-  }, [navigationViewController]);
-
   let content;
   let epics;
   let stories;
@@ -59,16 +55,24 @@ function Roadmap({ navigationViewController }) {
   const { data: { project, version } } = useQuery(GET_FILTERS);
 
   // Fetching Epics from Project and Version
-  jql = `issuetype=epic${project
-    ? ` and project=${project.id}` : ''}${version
-    ? ` and fixVersion=${version.id}` : ''} order by key desc`;
-  epics = useQuery(GET_ISSUES, { variables: { jql } });
+  jql = `issuetype=epic\
+  ${project ? `and project=${project.id}` : ''}\
+  ${version ? `and fixVersion=${version.id}` : ''}\
+  and status not in (Closed) order by key asc`;
+
+  epics = useQuery(GET_ISSUES, { variables: { jql, maxResults: 100 } });
 
   // Fetching User Stories from Epics
-  jql = `issuetype=story${epics.data.issues && epics.data.issues.issues.length
-    ? ` and 'Epic Link' in (${epics.data.issues.issues.map(({ id }) => id)})` : ''}\
-    order by key asc`;
+  jql = `issuetype=story\
+  ${epics.data.issues && epics.data.issues.issues.length ? `and 'Epic Link' in (
+  ${epics.data.issues.issues.map(({ id }) => id)})` : ''}\
+  order by key asc`;
+
   stories = useQuery(GET_STORIES, { variables: { jql, maxResults: 100 } });
+
+  useEffect(() => {
+    navigationViewController.setView(ProjectHomeView.id);
+  }, [navigationViewController]);
 
   if (epics.loading || stories.loading) {
     content = <Loading />;
