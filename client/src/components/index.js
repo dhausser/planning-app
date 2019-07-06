@@ -1,6 +1,5 @@
 // Common
 export { default as Loading } from './Loading';
-export { default as LoginForm } from './LoginForm';
 
 // Navigation
 export { default as GlobalNavigation } from './Nav/GlobalNavigation';
@@ -28,4 +27,4 @@ export { default as Backlog } from './Unused/Backlog';
 export { default as Releases } from './Unused/Releases';
 export { default as Reports } from './Unused/Reports';
 export { default as Settings } from './Unused/Settings';
-export { default as Login } from './Login';
+export { default as Login } from './Login/Login';

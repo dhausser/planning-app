@@ -29,6 +29,7 @@ export default {
       id: 'project/home:menu',
       parentId: 'product/home:menu',
       items: [
+        // { type: 'Separator', id: 'separator' },
         {
           type: 'InlineComponent',
           component: LinkItem,
@@ -53,7 +54,6 @@ export default {
           to: '/releases',
           id: 'releases',
         },
-        { type: 'Separator', id: 'separator' },
         {
           type: 'Item',
           id: 'issues-and-filters',

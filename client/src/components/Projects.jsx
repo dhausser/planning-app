@@ -10,9 +10,7 @@ import DynamicTable from '@atlaskit/dynamic-table';
 import EmptyState from '@atlaskit/empty-state';
 import Page from '@atlaskit/page';
 import PageHeader from '@atlaskit/page-header';
-import {
-  ProductHomeView, Loading,
-} from '.';
+import { ProductHomeView } from '.';
 import { PROJECT_TILE_DATA } from '../queries';
 
 const NameWrapper = styled.span`
@@ -95,14 +93,13 @@ function Projects({ navigationViewController }) {
     navigationViewController.setView(ProductHomeView.id);
   }, [navigationViewController]);
 
-  if (loading) return <Loading />;
   if (error) return <EmptyState header={error.name} description={error.message} />;
 
   return (
     <Page>
       <PageHeader>Projects</PageHeader>
       <DynamicTable
-        caption={`Displaying ${data.projects.length} projects`}
+        caption={`Displaying ${(!loading && data.projects.length) || 0} projects`}
         head={head}
         rows={!loading && data.projects.length && data.projects.map(row)}
         rowsPerPage={20}
