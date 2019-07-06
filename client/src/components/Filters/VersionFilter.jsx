@@ -3,8 +3,6 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import Select from '@atlaskit/select';
 
-const PROJECT_ID = '10500';
-
 const GET_FILTERS = gql`
   query GetFilters {
     isLoggedIn @client
@@ -38,9 +36,9 @@ function VersionFilter() {
   const { data: { project, version } } = useQuery(GET_FILTERS);
   const { data: { versions }, loading, error } = useQuery(GET_VERSIONS, {
     variables: {
-      id: (project && project.id) || PROJECT_ID,
-      startAt: 11,
-      maxResults: 5,
+      id: (project && project.id) || process.env.REACT_APP_PROJECT_ID,
+      startAt: parseInt(process.env.REACT_APP_VERSION_START_AT, 10),
+      maxResults: parseInt(process.env.REACT_APP_VERSION_MAX_RESULTS, 10),
     },
   });
   const [toggleVersion] = useMutation(TOGGLE_VERSION);

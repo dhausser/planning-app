@@ -14,42 +14,45 @@ class IssueAPI extends RESTDataSource {
   }
 
   signRequest(req) {
-    const { token, tokenSecret } = JSON.parse(this.context.auth);
+    // Initialize Oauth parameters
+    const { token: oauthToken } = this.context;
     const { method, path, params } = req;
-
-    const requestParams = Object.fromEntries(params.entries());
-    const baseURI = encodeURI(`${this.baseURL}${path}`);
-    const nonce = Math.random().toString(36).substring(2, 15);
+    const oauthVersion = '1.0';
+    const signatureMethod = 'RSA-SHA1';
+    const baseURI = `${this.baseURL}${path}`;
     const timestamp = Math.floor(Date.now() / 1000);
+    const nonce = Math.random().toString(36).substring(2, 15);
+    const requestParams = Object.fromEntries(params.entries());
 
-    const parameters = {
+    // Assemble Oauth parameters
+    const oauthParams = {
       ...requestParams,
       oauth_consumer_key: this.consumerKey,
       oauth_nonce: nonce,
-      oauth_signature_method: 'RSA-SHA1',
+      oauth_signature_method: signatureMethod,
       oauth_timestamp: timestamp,
-      oauth_token: token,
-      oauth_version: '1.0',
+      oauth_token: oauthToken,
+      oauth_version: oauthVersion,
     };
 
-    const rsaSign = sign(
-      'RSA-SHA1',
+    // Generate Oauth signature
+    const oauthSignature = encodeURIComponent(sign(
+      signatureMethod,
       method,
       baseURI,
-      parameters,
+      oauthParams,
       this.consumerSecret,
-      tokenSecret,
-    );
+    ));
 
-    const signature = encodeURIComponent(rsaSign);
-
-    const authorization = `OAuth oauth_consumer_key="RDM", oauth_nonce="${
-      nonce}", oauth_signature="${
-      signature}", oauth_signature_method="RSA-SHA1", oauth_timestamp="${
-      timestamp}", oauth_token="${
-      token}", oauth_version="1.0"`;
-
-    return authorization;
+    // Compose Oauth authorization header
+    return `OAuth\
+    oauth_consumer_key="${this.consumerKey}",\
+    oauth_nonce="${nonce}",\
+    oauth_signature="${oauthSignature}",\
+    oauth_signature_method="${signatureMethod}",\
+    oauth_timestamp="${timestamp}",\
+    oauth_token="${oauthToken}",\
+    oauth_version="${oauthVersion}"`;
   }
 
   async getProjects() {

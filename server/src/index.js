@@ -33,8 +33,8 @@ passport.use(
       callbackURL: '/auth/provider/callback',
       signatureMethod: 'RSA-SHA1',
     },
-    ((token, tokenSecret, _profile, done) => {
-      done(null, { token, tokenSecret });
+    ((token, _tokenSecret, _profile, done) => {
+      done(null, { token });
     }),
   ),
 );
@@ -68,7 +68,7 @@ const apollo = new ApolloServer({
     return error;
   },
   context: ({ req }) => ({
-    auth: req.headers.authorization,
+    token: req.headers.token,
     user: req.user,
   }),
   dataSources: () => ({

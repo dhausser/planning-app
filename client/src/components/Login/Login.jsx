@@ -8,7 +8,7 @@ const LOGIN_USER = gql`
   mutation login {
     login {
       token,
-      tokenSecret
+      # tokenSecret
     }
   }
 `;
@@ -21,7 +21,7 @@ function Login() {
           mutation={LOGIN_USER}
           onCompleted={({ login }) => {
             localStorage.setItem('token', login.token);
-            localStorage.setItem('tokenSecret', login.tokenSecret);
+            // localStorage.setItem('tokenSecret', login.tokenSecret);
             client.writeData({ data: { isLoggedIn: true } });
           }}
         >

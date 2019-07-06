@@ -41,11 +41,11 @@ const httpLink = createHttpLink({ uri });
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem('token');
-  const tokenSecret = localStorage.getItem('tokenSecret');
+  // const tokenSecret = localStorage.getItem('tokenSecret');
   return {
     headers: {
       ...headers,
-      authorization: JSON.stringify({ token, tokenSecret }),
+      token,
     },
   };
 });
@@ -70,7 +70,7 @@ const team = localStorage.getItem('team')
 
 cache.writeData({
   data: {
-    isLoggedIn: !!localStorage.getItem('token') && !!localStorage.getItem('tokenSecret'),
+    isLoggedIn: !!localStorage.getItem('token'),
     project,
     version,
     team,
