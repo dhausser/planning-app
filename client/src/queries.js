@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-const ISSUE_TILE_DATA = gql`
+export const ISSUE_TILE_DATA = gql`
   fragment IssueTile on Issue {
     id
     key
@@ -23,7 +23,7 @@ const ISSUE_TILE_DATA = gql`
   }
 `;
 
-const ISSUE_PAGINATION = gql`
+export const ISSUE_PAGINATION = gql`
   fragment IssuePagination on IssueConnection {
     startAt
     maxResults

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import { Status } from '@atlaskit/status';
@@ -11,7 +12,63 @@ import {
   ProjectHomeView, ProjectFilter, VersionFilter, Loading, Icon,
 } from '..';
 import EpicTree from './EpicTree';
-import { GET_FILTERS, GET_ISSUES, GET_STORIES } from '../../queries';
+
+const ROADMAP_ROW_DATA = gql`
+  fragment RoadmapRow on Issue {
+    id
+    key
+    summary
+    type
+    priority
+    status {
+      name
+      category
+    }
+    assignee {
+      name
+    }
+  }
+`;
+
+const GET_FILTERS = gql`
+  query GetFilters {
+    isLoggedIn @client
+    project @client {
+      id
+      name
+    }
+    version @client {
+      id
+      name
+    }
+  }
+`;
+
+const GET_EPICS = gql`
+  query issueList($jql: String, $startAt: Int, $maxResults: Int) {
+    issues(jql: $jql, startAt: $startAt, maxResults: $maxResults) {
+      issues {
+        ...RoadmapRow
+      }
+    }
+  }
+  ${ROADMAP_ROW_DATA}
+`;
+
+const GET_STORIES = gql`
+  query issueList($jql: String, $startAt: Int, $maxResults: Int) {
+    issues(jql: $jql, startAt: $startAt, maxResults: $maxResults) {
+      issues {
+        ...RoadmapRow
+        children {
+          ...RoadmapRow
+        }
+        parent
+      }
+    }
+  }
+  ${ROADMAP_ROW_DATA}
+`;
 
 const barContent = (
   <div style={{ display: 'flex' }}>
@@ -60,7 +117,7 @@ function Roadmap({ navigationViewController }) {
   ${version ? `and fixVersion=${version.id}` : ''}\
   and status not in (Closed) order by key asc`;
 
-  epics = useQuery(GET_ISSUES, { variables: { jql, maxResults: 100 } });
+  epics = useQuery(GET_EPICS, { variables: { jql, maxResults: 100 } });
 
   // Fetching User Stories from Epics
   jql = `issuetype=story\
