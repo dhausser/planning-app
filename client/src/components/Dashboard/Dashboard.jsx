@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import gql from 'graphql-tag';
 import Page, { Grid, GridColumn } from '@atlaskit/page';
 import PageHeader from '@atlaskit/page-header';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
@@ -10,7 +11,19 @@ import {
   ProductHomeView, ProjectFilter, VersionFilter, TeamFilter, Loading,
 } from '..';
 import { useIssues } from '../Issues/Issues';
-import { GET_DASHBOARD_ISSUES } from '../../queries';
+
+const GET_ISSUES = gql`
+  query issueList($jql: String, $startAt: Int, $maxResults: Int) {
+    issues(jql: $jql, startAt: $startAt, maxResults: $maxResults) {
+      issues {
+        assignee {
+          name
+          team
+        }
+      }
+    }
+  }
+`;
 
 const barContent = (
   <div style={{ display: 'flex' }}>
@@ -25,7 +38,7 @@ const barContent = (
 
 
 function Dashboard({ navigationViewController }) {
-  const { data, loading, error } = useIssues(GET_DASHBOARD_ISSUES);
+  const { data, loading, error } = useIssues(GET_ISSUES);
   let content;
 
   useEffect(() => {
