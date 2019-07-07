@@ -19,14 +19,14 @@ router.get('/auth/provider', passport.authenticate('oauth'));
 router.get(
   '/auth/provider/callback',
   passport.authenticate('oauth', {
-    successRedirect: `${baseUrl}?token`,
-    failureRedirect: `${baseUrl}/login`,
+    successRedirect: `${baseUrl}/login`,
+    failureRedirect: `${baseUrl}`,
   }),
 );
 
 router.use(express.static(path.join(__dirname, '../build')));
-router.get('/*', (_req, res) => {
-  res.sendFile(path.join(__dirname, '../build', 'index.html'));
-});
+// router.get('/*', (_req, res) => {
+//   res.sendFile(path.join(__dirname, '../build', 'index.html'));
+// });
 
 export default router;

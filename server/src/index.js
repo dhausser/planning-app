@@ -18,7 +18,7 @@ import ResourceAPI from './datasources/resource';
 
 // SSL Parameters
 const consumerKey = 'RDM';
-const consumerPrivateKeyFile = `${os.homedir()}\\oauth\\jira_privatekey.pem`;
+const consumerPrivateKeyFile = `${os.homedir()}/oauth/jira_privatekey.pem`;
 const consumerSecret = fs.readFileSync(consumerPrivateKeyFile, 'utf8');
 
 passport.use(
@@ -42,7 +42,8 @@ passport.serializeUser(async (user, done) => done(null, user));
 passport.deserializeUser((id, done) => done(null, id));
 
 const app = express();
-const port = process.env.PORT;
+const port = process.env.NODE_ENV === 'production'
+  ? process.env.PROD_PORT : process.env.DEV_PORT;
 const store = createStore();
 
 app.use(errorhandler());

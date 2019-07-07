@@ -2,32 +2,19 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Modal, { ModalTransition } from '@atlaskit/modal-dialog';
 
-/**
- * TODO: Production Setup
- */
-const authUrl = 'http://localhost:4000/auth/provider'
-  || 'https://roadmap.cdprojektred.com/auth/provider';
-
 function LoginForm({ login }) {
   useEffect(() => {
-    function getAccessToken() {
-      try {
-        window.history.replaceState(null, null, window.location.pathname);
-        login();
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
-    if (window.location.search) {
-      getAccessToken();
+    if (window.location.pathname === '/login') {
+      login();
     }
   }, [login]);
 
   const actions = [
     {
       text: 'Login with Jira',
-      onClick: () => window.location.replace(authUrl),
+      onClick: () => window.location.replace(
+        `http://localhost:${process.env.NODE_ENV === 'production' ? 8080 : 4000}/auth/provider`,
+      ),
     },
   ];
 

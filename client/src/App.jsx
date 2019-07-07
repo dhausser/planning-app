@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {
+  BrowserRouter as Router, Route, Switch, withRouter,
+} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { ApolloProvider as LegacyProvider } from 'react-apollo';
 import { ApolloProvider, useQuery } from '@apollo/react-hooks';
@@ -41,7 +43,6 @@ const httpLink = createHttpLink({ uri });
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem('token');
-  // const tokenSecret = localStorage.getItem('tokenSecret');
   return {
     headers: {
       ...headers,
@@ -82,6 +83,8 @@ const Padding = styled.div`
   padding-bottom: ${gridSize() * 3}px;
 `;
 
+const LoginWithRouter = withRouter(Login);
+
 function AppRouter({ navigationViewController }) {
   useEffect(() => {
     navigationViewController.addView(ProductHomeView);
@@ -108,7 +111,7 @@ function AppRouter({ navigationViewController }) {
             <Route path="/issue/:issueId" component={Issue} />
             <Route path="/issues/:filterId" component={Issues} />
           </Switch>
-        ) : <Login />
+        ) : <LoginWithRouter />
       }
       </LayoutManagerWithViewController>
     </Router>
