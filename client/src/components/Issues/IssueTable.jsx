@@ -194,9 +194,9 @@ IssueTable.defaultProps = {
 };
 
 IssueTable.propTypes = {
-  data: PropTypes.objectOf,
+  data: PropTypes.objectOf(PropTypes.objectOf),
   loading: PropTypes.bool,
-  error: PropTypes.objectOf,
+  error: PropTypes.objectOf(PropTypes.objectOf),
   fetchMore: PropTypes.func.isRequired,
 };
 

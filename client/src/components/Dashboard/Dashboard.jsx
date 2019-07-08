@@ -14,7 +14,7 @@ import { useIssues } from '../Issues/Issues';
 
 const GET_ISSUES = gql`
   query issueList($jql: String, $startAt: Int, $maxResults: Int) {
-    issues(jql: $jql, startAt: $startAt, maxResults: $maxResults) {
+    dashboardIssues(jql: $jql, startAt: $startAt, maxResults: $maxResults) {
       issues {
         assignee {
           name
@@ -50,7 +50,7 @@ function Dashboard({ navigationViewController }) {
   } else if (error) {
     content = <EmptyState header={error.name} description={error.message} />;
   } else {
-    content = <BarChart {...data.issues} />;
+    content = <BarChart {...data.dashboardIssues} />;
   }
 
   return (

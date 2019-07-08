@@ -46,7 +46,7 @@ const GET_FILTERS = gql`
 
 const GET_EPICS = gql`
   query issueList($jql: String, $startAt: Int, $maxResults: Int) {
-    issues(jql: $jql, startAt: $startAt, maxResults: $maxResults) {
+    roadmapIssues(jql: $jql, startAt: $startAt, maxResults: $maxResults) {
       issues {
         ...RoadmapRow
       }
@@ -57,7 +57,7 @@ const GET_EPICS = gql`
 
 const GET_STORIES = gql`
   query issueList($jql: String, $startAt: Int, $maxResults: Int) {
-    issues(jql: $jql, startAt: $startAt, maxResults: $maxResults) {
+    roadmapIssues(jql: $jql, startAt: $startAt, maxResults: $maxResults) {
       issues {
         ...RoadmapRow
         children {
@@ -121,8 +121,8 @@ function Roadmap({ navigationViewController }) {
 
   // Fetching User Stories from Epics
   jql = `issuetype=story\
-  ${epics.data.issues && epics.data.issues.issues.length ? `and 'Epic Link' in (
-  ${epics.data.issues.issues.map(({ id }) => id)})` : ''}\
+  ${epics.data.roadmapIssues && epics.data.roadmapIssues.issues.length ? `and 'Epic Link' in (
+  ${epics.data.roadmapIssues.issues.map(({ id }) => id)})` : ''}\
   order by key asc`;
 
   stories = useQuery(GET_STORIES, { variables: { jql, maxResults: 100 } });
@@ -141,13 +141,13 @@ function Roadmap({ navigationViewController }) {
         description={epics.error.message || stories.error.message}
       />
     );
-  } else if (!epics.data.issues || !stories.data.issues) {
+  } else if (!epics.data.roadmapIssues || !stories.data.roadmapIssues) {
     epics = [];
     content = <EpicTree epics={epics} />;
   } else {
     // Reducing data model if fetching was successfull
-    epics = epics.data.issues.issues;
-    stories = stories.data.issues.issues;
+    epics = epics.data.roadmapIssues.issues;
+    stories = stories.data.roadmapIssues.issues;
 
     // Mapping User Stories to corresponding Epic
     epics = epics.map((epic) => {

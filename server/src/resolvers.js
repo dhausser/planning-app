@@ -6,6 +6,12 @@ const resolvers = {
     issues: (_, { jql, startAt = 0, maxResults = 20 }, { dataSources }) => (
       dataSources.issueAPI.getIssues(jql, startAt, maxResults)
     ),
+    dashboardIssues: (_, { jql, startAt = 0, maxResults = 20 }, { dataSources }) => (
+      dataSources.issueAPI.getDashboardIssues(jql, startAt, maxResults)
+    ),
+    roadmapIssues: (_, { jql, startAt = 0, maxResults = 20 }, { dataSources }) => (
+      dataSources.issueAPI.getRoadmapIssues(jql, startAt, maxResults)
+    ),
     issue: (_, { id }, { dataSources }) => (
       dataSources.issueAPI.getIssueById({ issueId: id })
     ),

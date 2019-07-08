@@ -103,6 +103,42 @@ class IssueAPI extends RESTDataSource {
     return { ...response, issues };
   }
 
+  async getDashboardIssues(jql, startAt, maxResults) {
+    const fields = ['assignee'];
+
+    const response = await this.post('api/latest/search', {
+      jql,
+      fields,
+      startAt,
+      maxResults,
+    });
+
+    const issues = Array.isArray(response.issues)
+      ? response.issues.map(issue => this.dashboardIssueReducer(issue))
+      : [];
+    return { ...response, issues };
+  }
+
+  async getRoadmapIssues(jql, startAt, maxResults) {
+    const fields = [
+      'summary', 'status', 'assignee', 'issuetype',
+      'priority', 'fixVersions', 'subtasks', 'customfield_10006',
+      'customfield_10014', 'customfield_20700',
+    ];
+
+    const response = await this.post('api/latest/search', {
+      jql,
+      fields,
+      startAt,
+      maxResults,
+    });
+
+    const issues = Array.isArray(response.issues)
+      ? response.issues.map(issue => this.roadmapIssueReducer(issue))
+      : [];
+    return { ...response, issues };
+  }
+
   async getIssueById({ issueId }) {
     const fields = [
       'summary', 'description', 'status', 'assignee', 'reporter', 'issuetype',
@@ -123,6 +159,54 @@ class IssueAPI extends RESTDataSource {
     if (assignee) {
       this.put(`api/latest/issue/${issueId}`, { fields: { assignee } });
     }
+  }
+
+  dashboardIssueReducer(issue) {
+    return {
+      id: issue.id,
+      key: issue.key,
+      assignee: {
+        key: issue.fields.assignee && issue.fields.assignee.key,
+        name: issue.fields.assignee && issue.fields.assignee.displayName,
+        team:
+          (issue.fields.assignee
+            && this.context.resourceMap[issue.fields.assignee.key])
+          || null,
+      },
+    };
+  }
+
+  roadmapIssueReducer(issue) {
+    return {
+      id: issue.id,
+      key: issue.key,
+      summary: issue.fields.summary,
+      priority: issue.fields.priority.name,
+      type: issue.fields.issuetype.name,
+      status: {
+        id: issue.fields.status.id,
+        name: issue.fields.status.name,
+        category: issue.fields.status.statusCategory.key,
+      },
+      fixVersions: issue.fields.fixVersions,
+      assignee: {
+        key: issue.fields.assignee && issue.fields.assignee.key,
+        name: issue.fields.assignee && issue.fields.assignee.displayName,
+        team:
+          (issue.fields.assignee
+            && this.context.resourceMap[issue.fields.assignee.key])
+          || null,
+      },
+      children:
+        issue.fields.subtasks
+        && issue.fields.subtasks.map(subtask => (
+          this.issueReducer(subtask, this.context.resourceMap)
+        )),
+      parent:
+        issue.fields.customfield_10006
+        || issue.fields.customfield_20700
+        || issue.fields.customfield_10014,
+    };
   }
 
   issueReducer(issue) {
