@@ -55,8 +55,6 @@ function Dashboard({ navigationViewController }) {
     content = <BarChart {...data.dashboardIssues} />;
   }
 
-  console.log({ data });
-
   return (
     <Page>
       <PageHeader bottomBar={barContent}>Dashboard</PageHeader>

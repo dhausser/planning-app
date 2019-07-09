@@ -13,7 +13,8 @@ function LoginForm({ login }) {
     {
       text: 'Login with Jira',
       onClick: () => window.location.replace(
-        `${process.env.NODE_ENV === 'production' ? process.env.REACT_APP_URL : ''}/auth/provider`,
+        `${process.env.NODE_ENV === 'production'
+          ? process.env.REACT_APP_URL : 'http://localhost:4000'}/auth/provider`,
       ),
     },
   ];

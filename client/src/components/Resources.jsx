@@ -19,9 +19,6 @@ import { GET_RESOURCES, GET_FILTERS } from '../queries';
 const NameWrapper = styled.span`
   display: flex;
   align-items: center;
-`;
-
-const AvatarWrapper = styled.div`
   margin-right: 8px;
 `;
 
@@ -61,15 +58,13 @@ const rows = resources => resources.map(resource => ({
       key: createKey(resource.name),
       content: (
         <NameWrapper>
-          <AvatarWrapper>
-            <Avatar
-              name={resource.name}
-              size="medium"
-              src={`https://jira.cdprojektred.com/secure/useravatar?ownerId=${
-                resource.key
-              }`}
-            />
-          </AvatarWrapper>
+          <Avatar
+            name={resource.name}
+            size="medium"
+            src={`https://jira.cdprojektred.com/secure/useravatar?ownerId=${
+              resource.key
+            }`}
+          />
           <Link to={`/resource/${resource.key}`}>{resource.name}</Link>
         </NameWrapper>
       ),
