@@ -38,7 +38,7 @@ import {
 import { IS_LOGGED_IN } from './queries';
 import { resolvers, typeDefs } from './resolvers';
 
-const uri = `${process.env.NODE_ENV === 'production' ? 'http://localhost:8080' : ''}/graphql`;
+const uri = `${process.env.NODE_ENV === 'production' ? process.env.REACT_APP_URL : ''}/graphql`;
 const httpLink = createHttpLink({ uri });
 
 const authLink = setContext((_, { headers }) => {

@@ -4,7 +4,7 @@ import path from 'path';
 
 const router = express.Router();
 const baseUrl = process.env.NODE_ENV === 'production'
-  ? 'https://roadmap.cdprojektred'
+  ? 'https://roadmap.cdprojektred.com'
   : 'http://localhost:3000';
 
 // Redirect the user to the OAuth provider for authentication.  When
@@ -25,8 +25,8 @@ router.get(
 );
 
 router.use(express.static(path.join(__dirname, '../build')));
-// router.get('/*', (_req, res) => {
-//   res.sendFile(path.join(__dirname, '../build', 'index.html'));
-// });
+router.get('/*', (_req, res) => {
+  res.sendFile(path.join(__dirname, '../build', 'index.html'));
+});
 
 export default router;
