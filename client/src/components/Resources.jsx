@@ -7,7 +7,6 @@ import { withNavigationViewController } from '@atlaskit/navigation-next';
 import DynamicTable from '@atlaskit/dynamic-table';
 import Avatar from '@atlaskit/avatar';
 import EmptyState from '@atlaskit/empty-state';
-import Page from '@atlaskit/page';
 import PageHeader from '@atlaskit/page-header';
 import TextField from '@atlaskit/textfield';
 import {
@@ -97,7 +96,7 @@ function Resources({ navigationViewController }) {
       : data.resources;
   }
   return (
-    <Page>
+    <>
       <PageHeader bottomBar={barContent}>People</PageHeader>
       <DynamicTable
         caption={`${resources.length} people`}
@@ -110,7 +109,7 @@ function Resources({ navigationViewController }) {
         defaultSortKey="name"
         defaultSortOrder="ASC"
       />
-    </Page>
+    </>
   );
 }
 

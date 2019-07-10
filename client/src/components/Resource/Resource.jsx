@@ -7,11 +7,10 @@ import styled from 'styled-components';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import Avatar from '@atlaskit/avatar';
 import EmptyState from '@atlaskit/empty-state';
-import Page from '@atlaskit/page';
 import PageHeader from '@atlaskit/page-header';
 import TextField from '@atlaskit/textfield';
 import {
-  ProjectHomeView, ProjectFilter, VersionFilter, Loading, IssueTable,
+  ProjectHomeView, VersionFilter, Loading, IssueTable,
 } from '..';
 import AbsencesTable from './AbsencesTable';
 import { useIssues } from '../Issues/Issues';
@@ -40,7 +39,6 @@ const barContent = (
     <div style={{ flex: '0 0 200px' }}>
       <TextField isCompact placeholder="Filter" aria-label="Filter" />
     </div>
-    <ProjectFilter />
     <VersionFilter />
   </div>
 );
@@ -90,14 +88,14 @@ function Resource({ navigationViewController, match }) {
   );
 
   return (
-    <Page>
+    <>
       <PageHeader bottomBar={barContent}>
         {avatar}
       </PageHeader>
       {link}
       <IssueTable {...issues} />
       <AbsencesTable resourceId={resourceId} />
-    </Page>
+    </>
   );
 }
 

@@ -17,7 +17,7 @@ function EpicTree({ epics }) {
       <Headers>
         <Header width={120}>Type</Header>
         <Header width={150}>Key</Header>
-        <Header width={550}>Summary</Header>
+        <Header width={400}>Summary</Header>
         <Header width={200}>Assignee</Header>
         <Header width={70}>Priority</Header>
         <Header width={170}>Status</Header>

@@ -5,11 +5,11 @@ import { useQuery } from '@apollo/react-hooks';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import { Status } from '@atlaskit/status';
 import EmptyState from '@atlaskit/empty-state';
-import Page from '@atlaskit/page';
+import { Grid } from '@atlaskit/page';
 import PageHeader from '@atlaskit/page-header';
 import TextField from '@atlaskit/textfield';
 import {
-  ProjectHomeView, ProjectFilter, VersionFilter, Loading, Icon,
+  ProjectHomeView, VersionFilter, Loading, Icon,
 } from '..';
 import EpicTree from './EpicTree';
 
@@ -75,7 +75,6 @@ const barContent = (
     <div style={{ flex: '0 0 200px' }}>
       <TextField isCompact placeholder="Filter" aria-label="Filter" />
     </div>
-    <ProjectFilter />
     <VersionFilter />
   </div>
 );
@@ -167,10 +166,10 @@ function Roadmap({ navigationViewController }) {
   }
 
   return (
-    <Page>
+    <Grid>
       <PageHeader bottomBar={barContent}>Roadmap</PageHeader>
       {content}
-    </Page>
+    </Grid>
   );
 }
 

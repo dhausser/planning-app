@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
-import Page, { Grid, GridColumn } from '@atlaskit/page';
+import { Grid, GridColumn } from '@atlaskit/page';
 import PageHeader from '@atlaskit/page-header';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import TextField from '@atlaskit/textfield';
@@ -56,14 +56,14 @@ function Dashboard({ navigationViewController }) {
   }
 
   return (
-    <Page>
+    <>
       <PageHeader bottomBar={barContent}>Dashboard</PageHeader>
       <Grid>
         <GridColumn>
           {content}
         </GridColumn>
       </Grid>
-    </Page>
+    </>
   );
 }
 

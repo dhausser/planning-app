@@ -8,7 +8,6 @@ import { withNavigationViewController } from '@atlaskit/navigation-next';
 import Avatar from '@atlaskit/avatar';
 import DynamicTable from '@atlaskit/dynamic-table';
 import EmptyState from '@atlaskit/empty-state';
-import Page from '@atlaskit/page';
 import PageHeader from '@atlaskit/page-header';
 import { ProductHomeView } from '.';
 import { PROJECT_TILE_DATA } from '../queries';
@@ -96,7 +95,7 @@ function Projects({ navigationViewController }) {
   if (error) return <EmptyState header={error.name} description={error.message} />;
 
   return (
-    <Page>
+    <>
       <PageHeader>Projects</PageHeader>
       <DynamicTable
         caption={`Displaying ${(!loading && data.projects.length) || 0} projects`}
@@ -109,7 +108,7 @@ function Projects({ navigationViewController }) {
         defaultSortKey="name"
         defaultSortOrder="ASC"
       />
-    </Page>
+    </>
   );
 }
 

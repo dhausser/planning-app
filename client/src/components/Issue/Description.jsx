@@ -15,7 +15,7 @@ function Description({ description }) {
 
   return (
     <>
-      <h4>Description</h4>
+      <h5>Description</h5>
       <p>{description}</p>
       {/* <CollapsedEditor
         placeholder={description}
