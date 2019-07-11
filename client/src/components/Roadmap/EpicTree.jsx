@@ -10,8 +10,10 @@ import TableTree, {
 } from '@atlaskit/table-tree';
 import CopyIcon from '@atlaskit/icon/glyph/copy';
 import Tooltip from '@atlaskit/tooltip';
+import { Status } from '@atlaskit/status';
+import { Icon } from '..';
 
-function EpicTree({ epics }) {
+function EpicTree({ roadmapIssues }) {
   return (
     <TableTree>
       <Headers>
@@ -24,7 +26,7 @@ function EpicTree({ epics }) {
         <Header width={80}>Link</Header>
       </Headers>
       <Rows
-        items={epics}
+        items={roadmapIssues}
         render={({
           key,
           summary,
@@ -35,13 +37,14 @@ function EpicTree({ epics }) {
           children,
         }) => (
           <Row
+            key
             expandLabel="Expand"
             collapseLabel="Collapse"
             itemId={key}
             items={children}
             hasChildren={children && children.length > 0}
           >
-            <Cell singleLine>{type}</Cell>
+            <Cell singleLine>{Icon[type]}</Cell>
             <Cell singleLine>
               <a
                 href={`https://${process.env.REACT_APP_HOST}/browse/${key}`}
@@ -57,8 +60,10 @@ function EpicTree({ epics }) {
             <Cell singleLine>
               <Link to={`/resource/${assignee.key}`}>{assignee.name}</Link>
             </Cell>
-            <Cell singleLine>{priority}</Cell>
-            <Cell singleLine>{status}</Cell>
+            <Cell singleLine>{Icon[priority]}</Cell>
+            <Cell singleLine>
+              <Status text={status.name} color={Icon[status.category]} />
+            </Cell>
             <Cell singleLine>
               <Tooltip content={`View ${key}`}>
                 <a
@@ -78,7 +83,7 @@ function EpicTree({ epics }) {
 }
 
 EpicTree.propTypes = {
-  epics: PropTypes.arrayOf(PropTypes.objectOf).isRequired,
+  roadmapIssues: PropTypes.arrayOf(PropTypes.objectOf).isRequired,
 };
 
 export default EpicTree;

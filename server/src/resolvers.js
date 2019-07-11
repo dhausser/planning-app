@@ -9,8 +9,8 @@ const resolvers = {
     dashboardIssues: (_, { jql, startAt = 0, maxResults = 20 }, { dataSources }) => (
       dataSources.issueAPI.getDashboardIssues(jql, startAt, maxResults)
     ),
-    roadmapIssues: (_, { jql, startAt = 0, maxResults = 20 }, { dataSources }) => (
-      dataSources.issueAPI.getRoadmapIssues(jql, startAt, maxResults)
+    roadmapIssues: (_, { jql }, { dataSources }) => (
+      dataSources.issueAPI.getRoadmapIssues(jql)
     ),
     issue: (_, { id }, { dataSources }) => (
       dataSources.issueAPI.getIssueById({ issueId: id })

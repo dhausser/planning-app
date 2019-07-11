@@ -4,7 +4,7 @@ const typeDefs = gql`
   type Query {
     issues(jql: String, startAt: Int, maxResults: Int): IssueConnection!
     dashboardIssues(jql: String, startAt: Int, maxResults: Int): IssueConnection!
-    roadmapIssues(jql: String, startAt: Int, maxResults: Int): IssueConnection!
+    roadmapIssues(jql: String): [Issue]!
     issue(id: ID!): Issue
     versions(id: ID!, startAt: Int, maxResults: Int): [FixVersion]
     projects: [Project]!

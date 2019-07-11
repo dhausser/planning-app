@@ -119,24 +119,31 @@ class IssueAPI extends RESTDataSource {
     return { ...response, issues };
   }
 
-  async getRoadmapIssues(jql, startAt, maxResults) {
+  async getRoadmapIssues(jql) {
     const fields = [
       'summary', 'status', 'assignee', 'issuetype',
       'priority', 'fixVersions', 'subtasks', 'customfield_10006',
-      'customfield_10014', 'customfield_20700',
     ];
+    const maxResults = 250;
 
-    const response = await this.post('api/latest/search', {
-      jql,
-      fields,
-      startAt,
-      maxResults,
-    });
+    const response = await this.post('api/latest/search', { jql, fields, maxResults });
 
     const issues = Array.isArray(response.issues)
       ? response.issues.map(issue => this.roadmapIssueReducer(issue))
       : [];
-    return { ...response, issues };
+
+    issues
+      .filter(({ type }) => type !== 'Epic')
+      .forEach((issue) => {
+        const parent = issues
+          .filter(({ type }) => type === 'Epic')
+          .find(epic => epic.key === issue.parent);
+        if (parent) {
+          parent.children.push(issue);
+        }
+      });
+
+    return issues.filter(({ type, children }) => type === 'Epic' && children.length);
   }
 
   async getIssueById({ issueId }) {
@@ -145,9 +152,7 @@ class IssueAPI extends RESTDataSource {
       'priority', 'fixVersions', 'comment',
     ];
 
-    const response = await this.get(`api/latest/issue/${issueId}`, {
-      fields,
-    });
+    const response = await this.get(`api/latest/issue/${issueId}`, { fields });
 
     return this.issueReducer(response);
   }
@@ -202,6 +207,7 @@ class IssueAPI extends RESTDataSource {
         && issue.fields.subtasks.map(subtask => (
           this.issueReducer(subtask, this.context.resourceMap)
         )),
+      // children: issue.children ? issue.children.map(child => reducer(child)) : [],
       parent:
         issue.fields.customfield_10006
         || issue.fields.customfield_20700
