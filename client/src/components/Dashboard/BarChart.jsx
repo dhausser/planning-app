@@ -31,7 +31,7 @@ const config = dataset => ({
         label: '# of Issues',
         data: Object.values(dataset),
         backgroundColor: Object.entries(dataset).map(
-          (entry, index) => colors[index % colors.length].value,
+          (_entry, index) => colors[index % colors.length].value,
         ),
       },
     ],

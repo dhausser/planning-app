@@ -13,9 +13,7 @@ import {
   ProjectHomeView, VersionFilter, Loading, IssueTable,
 } from '..';
 import AbsencesTable from './AbsencesTable';
-import { useIssues } from '../Issues/Issues';
-import { GET_ISSUES } from '../../queries';
-
+import { GET_ISSUES, useIssues } from '../Issues/Issues';
 
 const GET_RESOURCE_NAME = gql`
   query getResourceById($id: ID!) {

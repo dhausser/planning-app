@@ -1,10 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import DynamicTable from '@atlaskit/dynamic-table';
 import EmptyState from '@atlaskit/empty-state';
 import Loading from '../Loading';
-import { GET_ABSENCES } from '../../queries';
+
+const GET_ABSENCES = gql`
+  query absenceList($id: ID!) {
+    absences(id: $id) {
+      key
+      date
+    }
+  }
+`;
 
 const head = {
   cells: [

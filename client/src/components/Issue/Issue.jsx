@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import PropTypes from 'prop-types';
-
+import gql from 'graphql-tag';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import { Grid, GridColumn } from '@atlaskit/page';
 import { Status } from '@atlaskit/status';
@@ -13,7 +13,53 @@ import UserPicker from './UserPicker';
 import Comments from './Comments';
 import Icon from './Icon';
 import { ProductIssuesView, Loading } from '..';
-import { GET_ISSUE } from '../../queries';
+
+const ISSUE_TILE_DATA = gql`
+  fragment IssueTile on Issue {
+    id
+    key
+    summary
+    type
+    priority
+    status {
+      name
+      category
+    }
+    fixVersions {
+      id
+      name
+    }
+    assignee {
+      key
+      name
+      team
+    }
+  }
+`;
+
+const GET_ISSUE = gql`
+  query GetIssueById($id: ID!) {
+    issue(id: $id) {
+      ...IssueTile
+      description
+      reporter {
+        key
+        name
+      }
+      comments {
+        id
+        author {
+          key
+          name
+        }
+        body
+        created
+        updated
+      }
+    }
+  }
+  ${ISSUE_TILE_DATA}
+`;
 
 function Issue({ navigationViewController, match }) {
   const { data: { issue }, loading, error } = useQuery(GET_ISSUE, {

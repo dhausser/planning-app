@@ -12,8 +12,14 @@ import {
 } from '@atlaskit/navigation-next';
 import EmptyState from '@atlaskit/empty-state';
 
-
-import { PROJECT_TILE_DATA, GET_FILTERS } from '../../queries';
+const PROJECT_TILE_DATA = gql`
+  fragment ProjectTile on Project {
+    id
+    key
+    name
+    projectTypeKey
+  }
+`;
 
 const GET_PROJECTS = gql`
   query GetProjects {
@@ -25,6 +31,17 @@ const GET_PROJECTS = gql`
     }
   }
   ${PROJECT_TILE_DATA}
+`;
+
+const GET_VISIBILITY_FILTER = gql`
+  query GetVisibilityFilter {
+    visibilityFilter @client {
+      project @client {
+        id
+        name
+      }
+    }
+  }
 `;
 
 const TOGGLE_FILTER = gql`
@@ -74,9 +91,7 @@ function ProjectSwitcher() {
   const [selected, setSelected] = useState({});
   const [options, setOptions] = useState([]);
   const [toggleFilter] = useMutation(TOGGLE_FILTER);
-  const {
-    data: { project: filter },
-  } = useQuery(GET_FILTERS);
+  const { data: { visibilityFilter: { project: filter } } } = useQuery(GET_VISIBILITY_FILTER);
 
   const { data, loading, error } = useQuery(GET_PROJECTS, {
     fetchPolicy: 'cache-first',

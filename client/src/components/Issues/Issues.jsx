@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import PropTypes from 'prop-types';
+import gql from 'graphql-tag';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import PageHeader from '@atlaskit/page-header';
 import TextField from '@atlaskit/textfield';
@@ -8,10 +9,81 @@ import {
   ProductIssuesView, ProjectFilter, VersionFilter, TeamFilter,
 } from '..';
 import IssueTable from './IssueTable';
-import { GET_FILTERS, GET_RESOURCES, GET_ISSUES } from '../../queries';
+
+const ISSUE_TILE_DATA = gql`
+  fragment IssueTile on Issue {
+    id
+    key
+    summary
+    type
+    priority
+    status {
+      name
+      category
+    }
+    fixVersions {
+      id
+      name
+    }
+    assignee {
+      key
+      name
+      team
+    }
+  }
+`;
+
+export const ISSUE_PAGINATION = gql`
+  fragment IssuePagination on IssueConnection {
+    startAt
+    maxResults
+    total
+  }
+`;
+
+export const GET_ISSUES = gql`
+  query issueList($jql: String, $startAt: Int, $maxResults: Int) {
+    issues(jql: $jql, startAt: $startAt, maxResults: $maxResults) {
+      ...IssuePagination
+      issues {
+        ...IssueTile
+      }
+    }
+  }
+  ${ISSUE_PAGINATION}
+  ${ISSUE_TILE_DATA}
+`;
+
+const GET_RESOURCES = gql`
+  query resourceList {
+    resources {
+      key
+      name
+      team
+    }
+  }
+`;
+
+const GET_VISIBILITY_FILTER = gql`
+  query GetVisibilityFilter {
+    project @client {
+      id
+      name
+    }
+    version @client {
+      id
+      name
+    }
+    team @client {
+      id
+      name
+    }
+  }
+`;
 
 export function useIssues(query = GET_ISSUES, resourceId = null) {
-  const { data: { project, version, team } } = useQuery(GET_FILTERS);
+  const { data: { project, version, team } } = useQuery(GET_VISIBILITY_FILTER);
+
   const {
     data: { resources },
     loading: loadingResources,

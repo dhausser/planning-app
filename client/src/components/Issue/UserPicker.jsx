@@ -1,8 +1,18 @@
 import React from 'react';
+import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
 import { useQuery } from '@apollo/react-hooks';
 import UserPicker from '@atlaskit/user-picker';
-import { GET_RESOURCES } from '../../queries';
+
+const GET_RESOURCES = gql`
+  query resourceList {
+    resources {
+      key
+      name
+      team
+    }
+  }
+`;
 
 function reducer(user) {
   return {

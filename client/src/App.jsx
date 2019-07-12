@@ -3,6 +3,7 @@ import {
   BrowserRouter as Router, Route, Switch, withRouter,
 } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import gql from 'graphql-tag';
 import { ApolloProvider as LegacyProvider } from 'react-apollo';
 import { ApolloProvider, useQuery } from '@apollo/react-hooks';
 import { ApolloClient } from 'apollo-client';
@@ -39,8 +40,13 @@ import {
   Projects,
 } from './components';
 
-import { IS_LOGGED_IN } from './queries';
 import { resolvers, typeDefs } from './resolvers';
+
+const IS_LOGGED_IN = gql`
+  query IsUserLoggedIn {
+    isLoggedIn @client
+  }
+`;
 
 const uri = `${process.env.NODE_ENV === 'production' ? process.env.REACT_APP_URL : ''}/graphql`;
 const httpLink = createHttpLink({

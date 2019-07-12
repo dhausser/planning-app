@@ -10,18 +10,17 @@ import DynamicTable from '@atlaskit/dynamic-table';
 import EmptyState from '@atlaskit/empty-state';
 import PageHeader from '@atlaskit/page-header';
 import { ProductHomeView } from '.';
-import { PROJECT_TILE_DATA } from '../queries';
 
-const NameWrapper = styled.span`
-  display: flex;
-  align-items: center;
+const PROJECT_TILE_DATA = gql`
+  fragment ProjectTile on Project {
+    id
+    key
+    name
+    projectTypeKey
+  }
 `;
 
-const AvatarWrapper = styled.div`
-  margin-right: 8px;
-`;
-
-export const GET_PROJECTS = gql`
+const GET_PROJECTS = gql`
   query GetProjects {
     projects {
       ...ProjectTile
@@ -31,6 +30,15 @@ export const GET_PROJECTS = gql`
     }
   }
   ${PROJECT_TILE_DATA}
+`;
+
+const NameWrapper = styled.span`
+  display: flex;
+  align-items: center;
+`;
+
+const AvatarWrapper = styled.div`
+  margin-right: 8px;
 `;
 
 const head = {
