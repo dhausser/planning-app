@@ -9,7 +9,11 @@ import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { createHttpLink } from 'apollo-link-http';
 import { setContext } from 'apollo-link-context';
-import { withNavigationViewController, LayoutManagerWithViewController, NavigationProvider } from '@atlaskit/navigation-next';
+import {
+  withNavigationViewController,
+  LayoutManagerWithViewController,
+  NavigationProvider,
+} from '@atlaskit/navigation-next';
 import Page from '@atlaskit/page';
 import { gridSize } from '@atlaskit/theme';
 import '@atlaskit/css-reset';
@@ -39,7 +43,10 @@ import { IS_LOGGED_IN } from './queries';
 import { resolvers, typeDefs } from './resolvers';
 
 const uri = `${process.env.NODE_ENV === 'production' ? process.env.REACT_APP_URL : ''}/graphql`;
-const httpLink = createHttpLink({ uri });
+const httpLink = createHttpLink({
+  uri,
+  credentials: 'same-origin',
+});
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem('token');
@@ -59,22 +66,13 @@ const client = new ApolloClient({
   typeDefs,
 });
 
-const project = localStorage.getItem('project')
-  ? JSON.parse(localStorage.getItem('project'))
-  : null;
-const version = localStorage.getItem('version')
-  ? JSON.parse(localStorage.getItem('version'))
-  : null;
-const team = localStorage.getItem('team')
-  ? JSON.parse(localStorage.getItem('team'))
-  : null;
-
 cache.writeData({
   data: {
     isLoggedIn: !!localStorage.getItem('token'),
-    project,
-    version,
-    team,
+    visibilityFilter: JSON.parse(localStorage.getItem('visibilityFilter'))
+    || {
+      project: null, version: null, team: null, __typename: 'VisibilityFilter',
+    },
   },
 });
 
@@ -91,7 +89,9 @@ function AppRouter({ navigationViewController }) {
     navigationViewController.addView(ProductIssuesView);
     navigationViewController.addView(ProjectHomeView);
   }, [navigationViewController]);
+
   const { data } = useQuery(IS_LOGGED_IN);
+
   return (
     <Router>
       <LayoutManagerWithViewController globalNavigation={GlobalNavigation}>

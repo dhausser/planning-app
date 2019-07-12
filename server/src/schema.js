@@ -106,8 +106,11 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    loginUser: String!
+    # Edit Jira Issues
     editIssue(issueId: ID!, summary: String): Int
+
+    # Return Access Token
+    loginUser: String!
   }
 `;
 

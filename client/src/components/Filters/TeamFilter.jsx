@@ -3,15 +3,6 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import Select from '@atlaskit/select';
 
-const GET_TEAM = gql`
-  query GetFilters {
-    team @client {
-      id
-      name
-    }
-  }
-`;
-
 const GET_TEAMS = gql`
   query GetTeams {
     teams {
@@ -20,16 +11,27 @@ const GET_TEAMS = gql`
   }
 `;
 
-const TOGGLE_TEAM = gql`
-  mutation toggleTeam($team: Team!) {
-    toggleTeam(team: $team) @client
+const GET_VISIBILITY_FILTER = gql`
+  query GetVisibilityFilter {
+    visibilityFilter @client {
+      team @client {
+        id
+        name
+      }
+    }
+  }
+`;
+
+const TOGGLE_FILTER = gql`
+  mutation toggleFilter($value: ID!, $label: String!, $__typename: String!) {
+    toggleFilter(value: $value, label: $label, __typename: $__typename) @client
   }
 `;
 
 function TeamFilter() {
-  const { data: { team } } = useQuery(GET_TEAM);
+  const { data: { visibilityFilter: { team } } } = useQuery(GET_VISIBILITY_FILTER);
   const { data: { teams }, loading, error } = useQuery(GET_TEAMS);
-  const [toggleTeam] = useMutation(TOGGLE_TEAM);
+  const [toggleFilter] = useMutation(TOGGLE_FILTER);
 
   let options = [];
   if (!loading && !error) {
@@ -52,7 +54,7 @@ function TeamFilter() {
         isSearchable
         options={options}
         placeholder="Choose a Team"
-        onChange={e => toggleTeam({ variables: { team: e } })}
+        onChange={e => toggleFilter({ variables: { ...e, __typename: 'Team' } })}
       />
     </div>
   );

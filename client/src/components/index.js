@@ -15,16 +15,16 @@ export { default as Icon } from './Issue/Icon';
 
 // Pages
 export { default as Dashboard } from './Dashboard/Dashboard';
-export { default as Portfolio } from './Portfolio/Portfolio';
+export { default as Portfolio } from './Portfolio';
 export { default as Resource } from './Resource/Resource';
 export { default as Resources } from './Resources';
-export { default as Roadmap } from './Roadmap/Roadmap';
+export { default as Roadmap } from './Roadmap';
 export { default as Issues } from './Issues/Issues';
 export { default as IssueTable } from './Issues/IssueTable';
 export { default as Issue } from './Issue/Issue';
 export { default as Projects } from './Projects';
-export { default as Backlog } from './Unused/Backlog';
-export { default as Releases } from './Unused/Releases';
-export { default as Reports } from './Unused/Reports';
-export { default as Settings } from './Unused/Settings';
+export { default as Backlog } from './Backlog';
+export { default as Releases } from './Releases';
+export { default as Reports } from './Reports';
+export { default as Settings } from './Settings';
 export { default as Login } from './Login/Login';

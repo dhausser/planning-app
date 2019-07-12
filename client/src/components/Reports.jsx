@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import Page from '@atlaskit/page';
 import PageHeader from '@atlaskit/page-header';
-import { ProjectHomeView } from '..';
+import { ProjectHomeView } from '.';
 
 function Reports({ navigationViewController }) {
   useEffect(() => {

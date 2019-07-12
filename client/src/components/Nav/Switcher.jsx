@@ -27,9 +27,9 @@ const GET_PROJECTS = gql`
   ${PROJECT_TILE_DATA}
 `;
 
-const TOGGLE_PROJECT = gql`
-  mutation toggleProject($project: Project!) {
-    toggleProject(project: $project) @client
+const TOGGLE_FILTER = gql`
+  mutation toggleFilter($value: ID!, $label: String!, $__typename: String!) {
+    toggleFilter(value: $value, label: $label, __typename: $__typename) @client
   }
 `;
 
@@ -47,9 +47,6 @@ const create = () => ({
   text: 'Create board',
 });
 
-/**
- * TODO: TypeError: Cannot read property 'id' of undefined
- */
 const target = ({
   id, subText, text, avatar,
 }) => (
@@ -76,7 +73,7 @@ const Wrapper = props => (
 function ProjectSwitcher() {
   const [selected, setSelected] = useState({});
   const [options, setOptions] = useState([]);
-  const [toggleProject] = useMutation(TOGGLE_PROJECT);
+  const [toggleFilter] = useMutation(TOGGLE_FILTER);
   const {
     data: { project: filter },
   } = useQuery(GET_FILTERS);
@@ -133,13 +130,11 @@ function ProjectSwitcher() {
         <Switcher
           create={create()}
           onChange={(e) => {
-            toggleProject({
+            toggleFilter({
               variables: {
-                project: {
-                  value: e.id,
-                  label: e.text,
-                  __typename: 'FixVersion',
-                },
+                value: e.id,
+                label: e.text,
+                __typename: 'Project',
               },
             });
             setSelected(e);

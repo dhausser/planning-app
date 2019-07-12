@@ -1,5 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import Chart from 'react-google-charts';
+import { withNavigationViewController } from '@atlaskit/navigation-next';
+import Page from '@atlaskit/page';
+import PageHeader from '@atlaskit/page-header';
+import { ProjectHomeView } from '.';
 
 function GanttChart() {
   return (
@@ -69,4 +74,21 @@ function GanttChart() {
   );
 }
 
-export default GanttChart;
+function Portfolio({ navigationViewController }) {
+  useEffect(() => {
+    navigationViewController.setView(ProjectHomeView.id);
+  }, [navigationViewController]);
+
+  return (
+    <Page>
+      <PageHeader>Portfolio</PageHeader>
+      <GanttChart />
+    </Page>
+  );
+}
+
+Portfolio.propTypes = {
+  navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
+};
+
+export default withNavigationViewController(Portfolio);

@@ -182,17 +182,6 @@ export const GET_ABSENCES = gql`
   }
 `;
 
-export const CURRENT_USER_QUERY = gql`
-  query {
-    me {
-      id
-      email
-      name
-      permissions
-    }
-  }
-`;
-
 export const IS_LOGGED_IN = gql`
   query IsUserLoggedIn {
     isLoggedIn @client

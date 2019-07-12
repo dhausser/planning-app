@@ -3,20 +3,6 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import Select from '@atlaskit/select';
 
-const GET_FILTERS = gql`
-  query GetFilters {
-    isLoggedIn @client
-    project @client {
-      id
-      name
-    }
-    version @client {
-      id
-      name
-    }
-  }
-`;
-
 const GET_VERSIONS = gql`
   query GetVersions($id: ID!, $startAt: Int, $maxResults: Int) {
     versions(id: $id, startAt: $startAt, maxResults: $maxResults) {
@@ -26,14 +12,29 @@ const GET_VERSIONS = gql`
   }
 `;
 
-const TOGGLE_VERSION = gql`
-  mutation toggleVersion($version: FixVersion!) {
-    toggleVersion(version: $version) @client
+const GET_VISIBILITY_FILTER = gql`
+  query GetVisibilityFilter {
+    visibilityFilter @client {
+      project {
+        id
+        name
+      }
+      version {
+        id
+        name
+      }
+    }
+  }
+`;
+
+const TOGGLE_FILTER = gql`
+  mutation toggleFilter($value: ID!, $label: String!, $__typename: String!) {
+    toggleFilter(value: $value, label: $label, __typename: $__typename) @client
   }
 `;
 
 function VersionFilter() {
-  const { data: { project, version } } = useQuery(GET_FILTERS);
+  const { data: { visibilityFilter: { project, version } } } = useQuery(GET_VISIBILITY_FILTER);
   const { data: { versions }, loading, error } = useQuery(GET_VERSIONS, {
     variables: {
       id: (project && project.id) || process.env.REACT_APP_PROJECT_ID,
@@ -41,7 +42,7 @@ function VersionFilter() {
       maxResults: parseInt(process.env.REACT_APP_VERSION_MAX_RESULTS, 10),
     },
   });
-  const [toggleVersion] = useMutation(TOGGLE_VERSION);
+  const [toggleFilter] = useMutation(TOGGLE_FILTER);
 
   let options = [];
   if (!loading && !error) {
@@ -64,7 +65,7 @@ function VersionFilter() {
         isSearchable
         options={options}
         placeholder="Choose a Version"
-        onChange={e => toggleVersion({ variables: { version: e } })}
+        onChange={e => toggleFilter({ variables: { ...e, __typename: 'FixVersion' } })}
       />
     </div>
   );

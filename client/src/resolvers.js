@@ -1,45 +1,59 @@
 import gql from 'graphql-tag';
 
+const GET_VISIBILITY_FILTER = gql`
+  query GetVisibilityFilter {
+    visibilityFilter @client {
+      project {
+        id
+        name
+      }
+      version {
+        id
+        name
+      }
+      team {
+        id
+        name
+      }
+    }
+  }
+`;
+
+const getType = {
+  Project: 'project',
+  FixVersion: 'version',
+  Team: 'team',
+};
+
 export const typeDefs = gql`
   extend type Query {
     isLoggedIn: Boolean!
+    visibilityFilter: VisibilityFilter
+  }
+
+  type VisibilityFilter {
+    project: Project
+    version: FixVersion
+    team: Team
+  }
+
+  extend type Mutation {
+    toggleFilter(id: ID!, name: String!, type: String!): Int
   }
 `;
 
 export const resolvers = {
   Mutation: {
-    toggleProject: (_root, { project: filter }, { cache }) => {
-      const project = filter
-        ? {
-          id: filter.value,
-          name: filter.label,
-          __typename: 'Project',
-        }
-        : null;
-      cache.writeData({ data: { project } });
-      localStorage.setItem('project', JSON.stringify(project));
-    },
-    toggleVersion: (_root, { version: filter }, { cache }) => {
-      const version = filter
-        ? {
-          id: filter.value,
-          name: filter.label,
-          __typename: 'FixVersion',
-        }
-        : null;
-      cache.writeData({ data: { version } });
-      localStorage.setItem('version', JSON.stringify(version));
-    },
-    toggleTeam: (_root, { team: filter }, { cache }) => {
-      const team = filter
-        ? {
-          id: filter.value,
-          name: filter.label,
-          __typename: 'Team',
-        }
-        : null;
-      cache.writeData({ data: { team } });
-      localStorage.setItem('team', JSON.stringify(team));
+    toggleFilter: (_root, { value, label, __typename }, { cache }) => {
+      const { visibilityFilter } = cache.readQuery({ query: GET_VISIBILITY_FILTER });
+      // eslint-disable-next-line no-underscore-dangle
+      const type = getType[__typename];
+      const update = value ? { id: value, name: label, __typename } : null;
+      visibilityFilter[type] = update;
+      const data = { ...visibilityFilter };
+      cache.writeData({ data });
+      localStorage.setItem('visibilityFilter', JSON.stringify(visibilityFilter));
+      return null;
     },
   },
 };

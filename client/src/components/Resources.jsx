@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import gql from 'graphql-tag';
 import styled from 'styled-components';
 import { useQuery } from '@apollo/react-hooks';
 import { Link } from 'react-router-dom';
@@ -13,7 +14,26 @@ import {
   ProjectHomeView, TeamFilter,
 } from '.';
 
-import { GET_RESOURCES, GET_FILTERS } from '../queries';
+const GET_VISIBILITY_FILTER = gql`
+  query GetVisibilityFilter {
+    visibilityFilter @client {
+      team @client {
+        id
+        name
+      }
+    }
+  }
+`;
+
+const GET_RESOURCES = gql`
+  query resourceList {
+    resources {
+      key
+      name
+      team
+    }
+  }
+`;
 
 const NameWrapper = styled.span`
   display: flex;
@@ -80,9 +100,8 @@ function Resources({ navigationViewController }) {
     navigationViewController.setView(ProjectHomeView.id);
   }, [navigationViewController]);
 
-  const {
-    data: { team },
-  } = useQuery(GET_FILTERS);
+  // const { data: { team } } = useQuery(GET_FILTERS);
+  const { data: { visibilityFilter: { team } } } = useQuery(GET_VISIBILITY_FILTER);
 
   const { data, loading, error } = useQuery(GET_RESOURCES, {
     fetchPolicy: 'cache-first',
