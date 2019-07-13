@@ -1,16 +1,20 @@
 import { RESTDataSource } from 'apollo-datasource-rest';
 import { sign } from 'oauth-sign';
+import { consumerKey, consumerSecret } from '../passport';
 
 class IssueAPI extends RESTDataSource {
-  constructor({ consumerKey, consumerSecret }) {
+  constructor() {
     super();
-    this.consumerKey = consumerKey;
-    this.consumerSecret = consumerSecret;
     this.baseURL = `https://${process.env.HOST}/rest/`;
   }
 
   willSendRequest(req) {
-    req.headers.set('Authorization', this.signRequest(req));
+    req.headers.set(
+      'Authorization',
+      process.env.PLATFORM === 'cloud'
+        ? `Basic ${process.env.AUTH}`
+        : this.signRequest(req),
+    );
   }
 
   signRequest(req) {
@@ -27,7 +31,7 @@ class IssueAPI extends RESTDataSource {
     // Assemble Oauth parameters
     const oauthParams = {
       ...requestParams,
-      oauth_consumer_key: this.consumerKey,
+      oauth_consumer_key: consumerKey,
       oauth_nonce: nonce,
       oauth_signature_method: signatureMethod,
       oauth_timestamp: timestamp,
@@ -41,18 +45,18 @@ class IssueAPI extends RESTDataSource {
       method,
       baseURI,
       oauthParams,
-      this.consumerSecret,
+      consumerSecret,
     ));
 
     // Compose Oauth authorization header
     return `OAuth\
-    oauth_consumer_key="${this.consumerKey}",\
-    oauth_nonce="${nonce}",\
-    oauth_signature="${oauthSignature}",\
-    oauth_signature_method="${signatureMethod}",\
-    oauth_timestamp="${timestamp}",\
-    oauth_token="${oauthToken}",\
-    oauth_version="${oauthVersion}"`;
+      oauth_consumer_key="${consumerKey}",\
+      oauth_nonce="${nonce}",\
+      oauth_signature="${oauthSignature}",\
+      oauth_signature_method="${signatureMethod}",\
+      oauth_timestamp="${timestamp}",\
+      oauth_token="${oauthToken}",\
+      oauth_version="${oauthVersion}"`;
   }
 
   async getProjects() {

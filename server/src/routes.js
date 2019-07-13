@@ -9,7 +9,7 @@ const baseUrl = process.env.NODE_ENV === 'production'
 
 // Redirect the user to the OAuth provider for authentication.  When
 // complete, the provider will redirect the user back to the application at
-//     /auth/provider/callback
+// /auth/provider/callback
 router.get('/auth/provider', passport.authenticate('oauth'));
 
 // The OAuth provider has redirected the user back to the application.

@@ -1,5 +1,8 @@
+/* eslint-disable no-global-assign */
 require('dotenv').config();
-// eslint-disable-next-line no-global-assign
+
 require = require('esm')(module);
 
-module.exports = require('./src/index');
+module.exports = process.env.PLATFORM === 'cloud'
+  ? require('./src/server')
+  : require('./src/index');

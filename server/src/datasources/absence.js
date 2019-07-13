@@ -16,7 +16,8 @@ class AbsenceAPI extends RESTDataSource {
     /**
      * TODO: Using @client fields as variables
      */
-    // console.log({ secret, versionId });
+    // eslint-disable-next-line no-console
+    console.log({ secret, versionId });
     const response = await this.get(`?user[]=${userId}`, { apiKey: this.apiKey });
     return response;
   }

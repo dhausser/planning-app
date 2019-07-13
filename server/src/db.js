@@ -12,6 +12,8 @@ export default async () => {
 
   try {
     const resources = client.db('davyJSDB').collection('resources');
+    // eslint-disable-next-line no-console
+    console.log('Connected to MongoDB');
     return { resources };
   } catch (e) {
     console.error(
