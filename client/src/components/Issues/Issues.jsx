@@ -85,7 +85,13 @@ const GET_VISIBILITY_FILTER = gql`
 export function useIssues({
   query = GET_ISSUES, resourceId = null, startAt = 0, maxResults = 20,
 }) {
-  const { data: { visibilityFilter: { project, version, team } } } = useQuery(GET_VISIBILITY_FILTER);
+  const {
+    data:
+    {
+      visibilityFilter:
+      { project, version, team },
+    },
+  } = useQuery(GET_VISIBILITY_FILTER);
 
   const {
     data: { resources },

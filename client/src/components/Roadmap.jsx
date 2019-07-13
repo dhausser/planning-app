@@ -89,13 +89,12 @@ function Roadmap({ navigationViewController }) {
   /**
    * TODO: Adjust query for relevant results when no fixversion is selected
    */
-  const jql = `${project ? `project = ${project.id} AND ` : ''}\
-  ${version ? `fixVersion = ${version.id} AND ` : ''}\
-  (issuetype = Epic OR issueType in (Story, Task)\
-  AND "Epic Link" is not EMPTY)\
-  ORDER BY issuetype ASC, priority DESC`;
+  const jql = `(issuetype = Epic OR issueType in (Story, Task) AND "Epic Link" is not EMPTY) AND status != closed
+  ${project ? `AND project = ${project.id} ` : ''}\
+  ${version ? `AND fixVersion = ${version.id} ` : ''}\
+  ORDER BY issuetype ASC, status DESC`;
 
-  const { data, loading, error } = useQuery(GET_ISSUES, { variables: { jql } });
+  const { data, loading, error } = useQuery(GET_ISSUES, { variables: { jql, maxResults: 1000 } });
 
   return (
     <>

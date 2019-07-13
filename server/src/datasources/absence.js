@@ -7,17 +7,17 @@ class AbsenceAPI extends RESTDataSource {
     this.apiKey = process.env.PORTAL_API_KEY;
   }
 
-  willSendRequest(request) {
-    request.params.set('apiKey', this.apiKey);
-  }
-
   async getAllAbsences() {
-    const response = await this.get();
+    const response = await this.get('', { apiKey: this.apiKey });
     return Array.isArray(response) ? response : [];
   }
 
-  async getAbsencesById({ userId }) {
-    const response = await this.get(`?user[]=${userId}`);
+  async getAbsencesById({ userId, secret, versionId }) {
+    /**
+     * TODO: Using @client fields as variables
+     */
+    // console.log({ secret, versionId });
+    const response = await this.get(`?user[]=${userId}`, { apiKey: this.apiKey });
     return response;
   }
 }

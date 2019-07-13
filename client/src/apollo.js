@@ -37,6 +37,8 @@ cache.writeData({
   data: {
     isLoggedIn: !!localStorage.getItem('token'),
     visibilityFilter,
+    secret: 'Hello, World!',
+    versionId: '42',
   },
 });
 

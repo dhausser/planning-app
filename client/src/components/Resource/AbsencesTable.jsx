@@ -6,9 +6,19 @@ import DynamicTable from '@atlaskit/dynamic-table';
 import EmptyState from '@atlaskit/empty-state';
 import Loading from '../Loading';
 
+/**
+ * TODO: Using @client fields as variables
+ */
 const GET_ABSENCES = gql`
-  query absenceList($id: ID!) {
-    absences(id: $id) {
+  query absenceList($id: ID!, $secret: String, $versionId: String) {
+    secret @client @export(as: "secret")
+    versionId @client @export(as: "versionId")
+    # visibilityFilter @client {
+    #   version {
+    #     id @export(as: "versionId")
+    #   }
+    # }
+    absences(id: $id, secret: $secret, versionId: $versionId) {
       key
       date
     }

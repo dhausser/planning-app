@@ -25,8 +25,8 @@ const resolvers = {
     /**
      * CDPR Portal REST API
      */
-    absences: (_, { id }, { dataSources }) => (
-      dataSources.absenceAPI.getAbsencesById({ userId: id })
+    absences: (_, { id, secret, versionId }, { dataSources }) => (
+      dataSources.absenceAPI.getAbsencesById({ userId: id, secret, versionId })
     ),
 
     /**

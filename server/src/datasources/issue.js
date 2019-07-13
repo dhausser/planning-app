@@ -207,7 +207,6 @@ class IssueAPI extends RESTDataSource {
         && issue.fields.subtasks.map(subtask => (
           this.issueReducer(subtask, this.context.resourceMap)
         )),
-      // children: issue.children ? issue.children.map(child => reducer(child)) : [],
       parent:
         issue.fields.customfield_10006
         || issue.fields.customfield_20700
