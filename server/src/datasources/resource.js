@@ -108,11 +108,20 @@ class ResourceAPI extends DataSource {
             $group: {
               _id: '$team',
               members: { $push: '$$ROOT' },
-              size: { $sum: 1 },
             },
           },
-        ])
-        .project({ _id: 1, size: 1, members: 1 });
+          {
+            $project: {
+              _id: 0,
+              id: '$_id',
+              name: '$_id',
+              members: 1,
+            },
+          },
+          {
+            $sort: { name: 1 },
+          },
+        ]);
     } catch (e) {
       console.error(`Unable to issue find command, ${e}`);
       return [];

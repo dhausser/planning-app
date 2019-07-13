@@ -40,27 +40,22 @@ const barContent = (
 
 
 function Dashboard({ navigationViewController }) {
-  const { data, loading, error } = useIssues(GET_ISSUES);
-  let content;
+  const { data, loading, error } = useIssues({ query: GET_ISSUES, maxResults: 1000 });
 
   useEffect(() => {
     navigationViewController.setView(ProductHomeView.id);
   }, [navigationViewController]);
-
-  if (loading) {
-    content = <Loading />;
-  } else if (error) {
-    content = <EmptyState header={error.name} description={error.message} />;
-  } else {
-    content = <BarChart {...data.dashboardIssues} />;
-  }
 
   return (
     <>
       <PageHeader bottomBar={barContent}>Dashboard</PageHeader>
       <Grid>
         <GridColumn>
-          {content}
+          {error && <EmptyState header={error.name} description={error.message} />}
+          {loading
+            ? <Loading />
+            : <BarChart {...data.dashboardIssues} />
+          }
         </GridColumn>
       </Grid>
     </>

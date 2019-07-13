@@ -23,13 +23,15 @@ import {
 const GET_VISIBILITY_FILTER = gql`
   query GetFilters {
     isLoggedIn @client
-    project @client {
-      id
-      name
-    }
-    version @client {
-      id
-      name
+    visibilityFilter @client {
+      project @client {
+        id
+        name
+      }
+      version @client {
+        id
+        name
+      }
     }
   }
 `;
@@ -64,7 +66,7 @@ const GET_ISSUES = gql`
 
 function Roadmap({ navigationViewController }) {
   const [isExpanded, setIsExpanded] = useState(true);
-  const { data: { project, version } } = useQuery(GET_VISIBILITY_FILTER);
+  const { data: { visibilityFilter: { project, version } } } = useQuery(GET_VISIBILITY_FILTER);
   const barContent = (
     <div style={{ display: 'flex' }}>
       <div style={{ flex: '0 0 200px', marginLeft: 8 }}>

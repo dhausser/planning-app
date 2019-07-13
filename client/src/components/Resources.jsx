@@ -100,7 +100,7 @@ function Resources({ navigationViewController }) {
     navigationViewController.setView(ProjectHomeView.id);
   }, [navigationViewController]);
 
-  const { data: { team } } = useQuery(GET_VISIBILITY_FILTER);
+  const { data: { visibilityFilter: { team } } } = useQuery(GET_VISIBILITY_FILTER);
 
   const { data, loading, error } = useQuery(GET_RESOURCES, {
     fetchPolicy: 'cache-first',

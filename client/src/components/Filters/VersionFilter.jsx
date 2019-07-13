@@ -35,7 +35,7 @@ const TOGGLE_FILTER = gql`
 
 function VersionFilter() {
   const { data: { visibilityFilter: { project, version } } } = useQuery(GET_VISIBILITY_FILTER);
-  const { data: { versions }, loading, error } = useQuery(GET_VERSIONS, {
+  const { data: { versions }, loading } = useQuery(GET_VERSIONS, {
     variables: {
       id: (project && project.id) || process.env.REACT_APP_PROJECT_ID,
       startAt: parseInt(process.env.REACT_APP_VERSION_START_AT, 10),
@@ -43,14 +43,6 @@ function VersionFilter() {
     },
   });
   const [toggleFilter] = useMutation(TOGGLE_FILTER);
-
-  let options = [];
-  if (!loading && !error) {
-    options = versions && versions.map(({ id, name }) => ({
-      value: id,
-      label: name,
-    }));
-  }
 
   return (
     <div style={{ flex: '0 0 200px', marginLeft: 8 }}>
@@ -63,7 +55,10 @@ function VersionFilter() {
         isLoading={loading}
         isClearable
         isSearchable
-        options={options}
+        options={versions && versions.map(({ id, name }) => ({
+          value: id,
+          label: name,
+        }))}
         placeholder="Choose a Version"
         onChange={e => toggleFilter({ variables: { ...e, __typename: 'FixVersion' } })}
       />

@@ -6,7 +6,7 @@ import Select from '@atlaskit/select';
 const GET_TEAMS = gql`
   query GetTeams {
     teams {
-      _id
+      id
     }
   }
 `;
@@ -14,9 +14,8 @@ const GET_TEAMS = gql`
 const GET_VISIBILITY_FILTER = gql`
   query GetVisibilityFilter {
     visibilityFilter @client {
-      team @client {
+      team {
         id
-        name
       }
     }
   }
@@ -30,16 +29,8 @@ const TOGGLE_FILTER = gql`
 
 function TeamFilter() {
   const { data: { visibilityFilter: { team } } } = useQuery(GET_VISIBILITY_FILTER);
-  const { data: { teams }, loading, error } = useQuery(GET_TEAMS);
+  const { data: { teams }, loading } = useQuery(GET_TEAMS);
   const [toggleFilter] = useMutation(TOGGLE_FILTER);
-
-  let options = [];
-  if (!loading && !error) {
-    options = teams && teams.map(({ _id: id }) => ({
-      value: id,
-      label: id,
-    }));
-  }
 
   return (
     <div style={{ flex: '0 0 200px', marginLeft: 8 }}>
@@ -47,12 +38,15 @@ function TeamFilter() {
         spacing="compact"
         className="single-select"
         classNamePrefix="react-select"
-        defaultValue={team && { value: team.id, label: team.name }}
+        defaultValue={team && { value: team.id, label: team.id }}
         isDisabled={false}
         isLoading={loading}
         isClearable
         isSearchable
-        options={options}
+        options={teams && teams.map(({ id }) => ({
+          value: id,
+          label: id,
+        }))}
         placeholder="Choose a Team"
         onChange={e => toggleFilter({ variables: { ...e, __typename: 'Team' } })}
       />

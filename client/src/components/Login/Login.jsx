@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 import { ApolloConsumer, Mutation } from 'react-apollo';
@@ -43,4 +44,4 @@ Login.propTypes = {
   history: PropTypes.objectOf,
 };
 
-export default Login;
+export default withRouter(Login);

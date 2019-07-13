@@ -44,7 +44,7 @@ const barContent = (
 function Resource({ navigationViewController, match }) {
   // Extract resource id from url parameters
   const { resourceId } = match.params;
-  const issues = useIssues(GET_ISSUES, match.params.resourceId);
+  const issues = useIssues({ query: GET_ISSUES, assignee: match.params.resourceId });
 
   // Fetch resource from database
   const { data, loading, error } = useQuery(GET_RESOURCE_NAME, {

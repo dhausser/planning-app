@@ -31,17 +31,8 @@ const TOGGLE_FILTER = gql`
 
 function ProjectFilter() {
   const { data: { visibilityFilter: { project } } } = useQuery(GET_VISIBILITY_FILTER);
-  // const { data: { project } } = useQuery(GET_VISIBILITY_FILTER);
-  const { data: { projects }, loading, error } = useQuery(GET_PROJECTS);
+  const { data: { projects }, loading } = useQuery(GET_PROJECTS);
   const [toggleFilter] = useMutation(TOGGLE_FILTER);
-
-  let options = [];
-  if (!loading && !error) {
-    options = projects && projects.map(({ id, name }) => ({
-      value: id,
-      label: name,
-    }));
-  }
 
   return (
     <div style={{ flex: '0 0 200px', marginLeft: 8 }}>
@@ -54,7 +45,10 @@ function ProjectFilter() {
         isLoading={loading}
         isClearable
         isSearchable
-        options={options}
+        options={projects && projects.map(({ id, name }) => ({
+          value: id,
+          label: name,
+        }))}
         placeholder="Choose a project"
         onChange={e => toggleFilter({ variables: { ...e, __typename: 'Project' } })}
       />

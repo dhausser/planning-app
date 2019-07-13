@@ -5,11 +5,12 @@ import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import Chart from 'chart.js';
 
-const GET_TEAM = gql`
-  query GetTeam {
-    team @client {
-      id
-      name
+const GET_VISIBILITY_FILTER = gql`
+  query GetVisibilityFilter {
+    visibilityFilter @client {
+      team {
+        name
+      }
     }
   }
 `;
@@ -78,7 +79,7 @@ function aggregateByTeam(issues) {
 function filterByTeam(issues, team) {
   return team
     ? aggregateByAssignee(
-      issues.filter(({ assignee }) => assignee.team === team.id),
+      issues.filter(({ assignee }) => assignee.team === team.name),
     )
     : aggregateByTeam(issues);
 }
@@ -94,7 +95,8 @@ function updateChart(chart, dataset) {
 
 function BarChart({ issues, maxResults, total }) {
   const [chart, setChart] = useState(null);
-  const { data: { team } } = useQuery(GET_TEAM);
+  const { data: { visibilityFilter: { team } } } = useQuery(GET_VISIBILITY_FILTER);
+
   const dataset = filterByTeam(issues, team);
 
   useEffect(() => {

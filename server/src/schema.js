@@ -1,28 +1,6 @@
 import { gql } from 'apollo-server-express';
 
 const typeDefs = gql`
-  type Query {
-    issues(jql: String, startAt: Int, maxResults: Int): IssueConnection!
-    dashboardIssues(jql: String, startAt: Int, maxResults: Int): IssueConnection!
-    roadmapIssues(jql: String): [Issue]!
-    issue(id: ID!): Issue
-    versions(id: ID!, startAt: Int, maxResults: Int): [FixVersion]
-    projects: [Project]!
-    resources: [Resource]!
-    resource(id: ID!): Resource
-    teams: [Team]!
-    team(id: ID!): Team
-    absences(id: ID!): [Absence]!
-    me: User
-  }
-
-  type IssueConnection {
-    startAt: Int!
-    maxResults: Int!
-    total: Int!
-    issues: [Issue]!
-  }
-
   type Issue {
     id: ID!
     key: String!
@@ -39,6 +17,39 @@ const typeDefs = gql`
     parent: String
   }
 
+  type IssueConnection {
+    startAt: Int!
+    maxResults: Int!
+    total: Int!
+    issues: [Issue]!
+  }
+
+  type IssueUpdateResponse {
+    success: Boolean!
+    message: String
+    issue: Issue
+  }
+
+  type Project {
+    id: ID!
+    key: String!
+    name: String!
+    avatarUrls: AvatarUrls
+    projectTypeKey: String
+  }
+
+  type FixVersion {
+    id: ID!
+    name: String!
+    description: String
+  }
+
+  type Team {
+    id: ID!
+    name: String!
+    members: [Resource]!
+  }
+
   type Comment {
     id: ID!
     author: Resource!
@@ -53,27 +64,22 @@ const typeDefs = gql`
     category: String!
   }
 
-  type FixVersion {
-    id: ID!
-    name: String!
-    description: String
-  }
-
   type Resource {
     key: ID
     name: String
     team: String
   }
 
-  type Team {
-    _id: ID!
-    size: Int!
-    members: [Resource]!
-  }
-
   type Absence {
     key: String!
     date: String!
+  }
+
+  type AvatarUrls {
+    large: String
+    small: String
+    xsmall: String
+    medium: String
   }
 
   type User {
@@ -84,25 +90,19 @@ const typeDefs = gql`
     team: Team!
   }
 
-  type Project {
-    id: ID!
-    key: String!
-    name: String!
-    avatarUrls: AvatarUrls
-    projectTypeKey: String
-  }
-
-  type AvatarUrls {
-    large: String
-    small: String
-    xsmall: String
-    medium: String
-  }
-
-  type IssueUpdateResponse {
-    success: Boolean!
-    message: String
-    issue: Issue
+  type Query {
+    issues(jql: String, startAt: Int, maxResults: Int): IssueConnection!
+    dashboardIssues(jql: String, startAt: Int, maxResults: Int): IssueConnection!
+    roadmapIssues(jql: String): [Issue]!
+    issue(id: ID!): Issue
+    versions(id: ID!, startAt: Int, maxResults: Int): [FixVersion]
+    projects: [Project]!
+    resources: [Resource]!
+    resource(id: ID!): Resource
+    teams: [Team]!
+    team(id: ID!): Team
+    absences(id: ID!): [Absence]!
+    me: User
   }
 
   type Mutation {

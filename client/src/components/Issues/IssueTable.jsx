@@ -9,8 +9,8 @@ import { Status } from '@atlaskit/status';
 import EmptyState from '@atlaskit/empty-state';
 import { Icon } from '..';
 
-const caption = (maxResults, total) => (
-  <p>{`${maxResults <= total ? maxResults : total} of ${total}`}</p>
+const caption = ({ maxResults, total }) => (
+  `${(maxResults && (maxResults <= total ? maxResults : total)) || 0} of ${total || 0}`
 );
 
 const head = {
@@ -135,7 +135,7 @@ function IssueTable({
   return (
     <>
       <DynamicTable
-        caption={!loading && caption(data.issues.maxResults, data.issues.total)}
+        caption={caption(data.issues || {})}
         head={head}
         rows={!loading && data.issues.issues.length && data.issues.issues.map(row)}
         rowsPerPage={20}

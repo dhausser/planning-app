@@ -33,7 +33,7 @@ const ISSUE_TILE_DATA = gql`
   }
 `;
 
-export const ISSUE_PAGINATION = gql`
+const ISSUE_PAGINATION = gql`
   fragment IssuePagination on IssueConnection {
     startAt
     maxResults
@@ -66,23 +66,26 @@ const GET_RESOURCES = gql`
 
 const GET_VISIBILITY_FILTER = gql`
   query GetVisibilityFilter {
-    project @client {
-      id
-      name
-    }
-    version @client {
-      id
-      name
-    }
-    team @client {
-      id
-      name
+    visibilityFilter @client {
+      project {
+        id
+        name
+      }
+      version {
+        id
+        name
+      }
+      team {
+        id
+      }
     }
   }
 `;
 
-export function useIssues(query = GET_ISSUES, resourceId = null) {
-  const { data: { project, version, team } } = useQuery(GET_VISIBILITY_FILTER);
+export function useIssues({
+  query = GET_ISSUES, resourceId = null, startAt = 0, maxResults = 20,
+}) {
+  const { data: { visibilityFilter: { project, version, team } } } = useQuery(GET_VISIBILITY_FILTER);
 
   const {
     data: { resources },
@@ -90,18 +93,21 @@ export function useIssues(query = GET_ISSUES, resourceId = null) {
     error: errorResources,
   } = useQuery(GET_RESOURCES);
 
-  const assignee = resourceId || (team && !loadingResources && !errorResources
-    ? resources
-      .filter(resource => resource.team === team.id)
-      .map(({ key }) => key)
-    : null);
+  const assignee = resourceId
+    || (team && !loadingResources && !errorResources
+      ? resources
+        .filter(resource => resource.team === team.id)
+        .map(({ key }) => key)
+      : null);
 
-  const jql = `${project ? `project=${project.id} and ` : ''}${version
-    ? `fixVersion in (${version.id}) and ` : ''}${assignee
-    ? `assignee in (${assignee}) and ` : ''}statusCategory in (new, indeterminate)\
-    order by priority desc, key asc`;
+  const jql = `\
+  ${project ? `project=${project.id} and ` : ''}\
+  ${version ? `fixVersion in (${version.id}) and ` : ''}\
+  ${assignee ? `assignee in (${assignee}) and ` : ''}\
+  statusCategory in (new, indeterminate)\
+  order by priority desc, key asc`;
 
-  const issues = useQuery(query, { variables: { jql, startAt: 0, maxResults: 20 } });
+  const issues = useQuery(query, { variables: { jql, startAt, maxResults } });
 
   return issues;
 }
@@ -118,7 +124,7 @@ const barContent = (
 );
 
 function Issues({ navigationViewController }) {
-  const issues = useIssues(GET_ISSUES);
+  const issues = useIssues({ query: GET_ISSUES });
 
   useEffect(() => {
     navigationViewController.setView(ProductIssuesView.id);
