@@ -60,7 +60,7 @@ function VersionFilter() {
           label: name,
         }))}
         placeholder="Choose a Version"
-        onChange={e => toggleFilter({ variables: { ...e, __typename: 'FixVersion' } })}
+        onChange={e => toggleFilter({ variables: { ...e, __typename: 'Version' } })}
       />
     </div>
   );

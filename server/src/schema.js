@@ -9,7 +9,7 @@ const typeDefs = gql`
     type: String!
     description: String
     status: Status!
-    fixVersions: [FixVersion]
+    fixVersions: [Version]
     assignee: Resource
     reporter: Resource
     comments: [Comment]
@@ -38,7 +38,7 @@ const typeDefs = gql`
     projectTypeKey: String
   }
 
-  type FixVersion {
+  type Version {
     id: ID!
     name: String!
     description: String
@@ -95,7 +95,7 @@ const typeDefs = gql`
     dashboardIssues(jql: String, startAt: Int, maxResults: Int): IssueConnection!
     roadmapIssues(jql: String): [Issue]!
     issue(id: ID!): Issue
-    versions(id: ID!, startAt: Int, maxResults: Int): [FixVersion]
+    versions(id: ID!, startAt: Int, maxResults: Int): [Version]
     projects: [Project]!
     resources: [Resource]!
     resource(id: ID!): Resource

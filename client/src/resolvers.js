@@ -1,15 +1,15 @@
 import gql from 'graphql-tag';
 
 export const typeDefs = gql`
-  type VisibilityFilter {
-    project: Project
-    version: FixVersion
-    team: Team
-  }
-  
   extend type Query {
     isLoggedIn: Boolean!
     visibilityFilter: VisibilityFilter
+  }
+
+  type VisibilityFilter {
+    project: Project
+    version: Version
+    team: Team
   }
 
   extend type Mutation {
@@ -36,12 +36,6 @@ const GET_VISIBILITY_FILTER = gql`
   }
 `;
 
-const typeMap = {
-  Project: 'project',
-  FixVersion: 'version',
-  Team: 'team',
-};
-
 export const resolvers = {
   Query: {
     visibilityFilter: (_root, __, { cache }) => (
@@ -52,7 +46,7 @@ export const resolvers = {
     toggleFilter: (_root, { value, label, __typename: type }, { cache }) => {
       const { visibilityFilter } = cache.readQuery({ query: GET_VISIBILITY_FILTER });
 
-      visibilityFilter[typeMap[type]] = value
+      visibilityFilter[type.toLowerCase()] = value
         ? { id: value, name: label, __typename: type }
         : null;
 
