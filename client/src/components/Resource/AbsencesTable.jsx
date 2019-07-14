@@ -10,7 +10,7 @@ import Loading from '../Loading';
  * TODO: Using @client fields as variables
  */
 const GET_ABSENCES = gql`
-  query absenceList($id: ID!, $secret: String, $versionId: String) {
+  query absenceList($id: ID!, $secret: String, $versionId: Int) {
     secret @client @export(as: "secret")
     versionId @client @export(as: "versionId")
     # visibilityFilter @client {

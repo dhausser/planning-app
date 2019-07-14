@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
+import { useQuery } from '@apollo/react-hooks';
 import PropTypes from 'prop-types';
-import gql from 'graphql-tag';
+// import gql from 'graphql-tag';
 import { Grid, GridColumn } from '@atlaskit/page';
 import PageHeader from '@atlaskit/page-header';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
@@ -10,22 +11,22 @@ import BarChart from './BarChart';
 import {
   ProductHomeView, ProjectFilter, VersionFilter, TeamFilter, Loading,
 } from '..';
-import { useIssues } from '../Issues/Issues';
+import { GET_ISSUES } from '../Issues/Issues';
 
-const GET_ISSUES = gql`
-  query issueList($jql: String, $startAt: Int, $maxResults: Int) {
-    dashboardIssues(jql: $jql, startAt: $startAt, maxResults: $maxResults) {
-      maxResults
-      total
-      issues {
-        assignee {
-          name
-          team
-        }
-      }
-    }
-  }
-`;
+// const GET_ISSUES = gql`
+//   query issueList($jql: String, $startAt: Int, $maxResults: Int) {
+//     dashboardIssues(jql: $jql, startAt: $startAt, maxResults: $maxResults) {
+//       maxResults
+//       total
+//       issues {
+//         assignee {
+//           name
+//           team
+//         }
+//       }
+//     }
+//   }
+// `;
 
 const barContent = (
   <div style={{ display: 'flex' }}>
@@ -40,7 +41,7 @@ const barContent = (
 
 
 function Dashboard({ navigationViewController }) {
-  const { data, loading, error } = useIssues({ query: GET_ISSUES, maxResults: 1000 });
+  const { data, loading, error } = useQuery(GET_ISSUES, { variables: { maxResults: 1000 } });
 
   useEffect(() => {
     navigationViewController.setView(ProductHomeView.id);

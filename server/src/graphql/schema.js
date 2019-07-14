@@ -2,7 +2,7 @@ import { gql } from 'apollo-server-express';
 
 const typeDefs = gql`
   type Query {
-    issues(jql: String, startAt: Int, maxResults: Int): IssueConnection!
+    issues(jql: String, startAt: Int, maxResults: Int, isLoggedIn: Boolean, projectId: String, versionId: String, teamId: String, resourceId: String): IssueConnection!
     dashboardIssues(jql: String, startAt: Int, maxResults: Int): IssueConnection!
     roadmapIssues(jql: String): [Issue]!
     issue(id: ID!): Issue
@@ -13,7 +13,7 @@ const typeDefs = gql`
     teams: [Team]!
     team(id: ID!): Team
     absences(id: ID!, secret: String, versionId: String): [Absence]!
-    me: User
+    user(isLoggedIn: Boolean, projectId: String, versionId: String, teamId: String): User
   }
 
   type Issue {
@@ -100,9 +100,9 @@ const typeDefs = gql`
   type User {
     id: ID!
     email: String!
-    issues: [Issue]!
-    absences: [Absence]!
-    team: Team!
+    team: Team
+    issues: [Issue]
+    absences: [Absence]
   }
 
   type Mutation {

@@ -35,7 +35,7 @@ const TOGGLE_FILTER = gql`
 
 function VersionFilter() {
   const { data: { visibilityFilter: { project, version } } } = useQuery(GET_VISIBILITY_FILTER);
-  const { data: { versions }, loading } = useQuery(GET_VERSIONS, {
+  const { data, loading } = useQuery(GET_VERSIONS, {
     variables: {
       id: (project && project.id) || process.env.REACT_APP_PROJECT_ID,
       startAt: parseInt(process.env.REACT_APP_VERSION_START_AT, 10),
@@ -55,7 +55,7 @@ function VersionFilter() {
         isLoading={loading}
         isClearable
         isSearchable
-        options={versions && versions.map(({ id, name }) => ({
+        options={data && data.versions && data.versions.map(({ id, name }) => ({
           value: id,
           label: name,
         }))}

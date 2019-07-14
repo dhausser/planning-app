@@ -8,7 +8,9 @@ class IssueAPI extends RESTDataSource {
     this.baseURL = `https://${process.env.HOST}/rest/`;
   }
 
+  // eslint-disable-next-line class-methods-use-this
   willSendRequest(req) {
+    // req.headers.set('Authorization', 'Basic ZGF2eS5oYXVzc2VyQGdtYWlsLmNvbTpCZFpwTmZvWGtOeEVya294MHh4dDAxODM=');
     req.headers.set(
       'Authorization',
       process.env.PLATFORM === 'cloud'
@@ -79,23 +81,44 @@ class IssueAPI extends RESTDataSource {
   }
 
   async getVersions(projectId, startAt, maxResults) {
-    const response = await this.get(`api/latest/project/${projectId}/version`, {
+    const response = await this.get(`api/latest/project/${projectId}/version${process.env.PLATFORM === 'cloud' ? 's' : ''}`, {
       startAt,
       maxResults,
       orderBy: 'name',
     });
+
+    if (process.env.PLATFORM === 'cloud') return response;
     return Array.isArray(response.values) ? response.values : [];
   }
 
-  async getIssues(jql, startAt, maxResults) {
+  async getIssues(jql, startAt, maxResults, isLoggedIn, projectId, versionId, teamId, resourceId) {
     const fields = [
       'summary', 'description', 'status', 'assignee', 'reporter', 'issuetype',
       'priority', 'fixVersions', 'comment', 'subtasks', 'customfield_10006',
       'customfield_10014', 'customfield_20700',
     ];
 
+    // console.log({ projectId, versionId, teamId });
+    const clientQuery = `statusCategory in (new, indeterminate) ${projectId && `AND project=${projectId}`} ${versionId && `AND fixVersion=${versionId}`} order by priority desc, key asc`;
+
+    // Team Management
+    // TODOL: Use this.context.resourceMap
+    // const assignee = resourceId
+    //   || (team && !loadingResources && !errorResources
+    //     ? resources
+    //       .filter(resource => resource.team === team.id)
+    //       .map(({ key }) => key)
+    //     : null);
+
+    // const jql = `\
+    // ${project ? `project=${project.id} and ` : ''}\
+    // ${version ? `fixVersion in (${version.id}) and ` : ''}\
+    // ${assignee ? `assignee in (${assignee}) and ` : ''}\
+    // statusCategory in (new, indeterminate)\
+    // order by priority desc, key asc`;
+
     const response = await this.post('api/latest/search', {
-      jql,
+      jql: jql || clientQuery,
       fields,
       startAt,
       maxResults,

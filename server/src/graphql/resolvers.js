@@ -3,8 +3,12 @@ const resolvers = {
     /**
      * Jira REST API
      */
-    issues: (_, { jql, startAt = 0, maxResults = 20 }, { dataSources }) => (
-      dataSources.issueAPI.getIssues(jql, startAt, maxResults)
+    issues: (_, {
+      jql, startAt = 0, maxResults = 20, isLoggedIn, projectId, versionId, teamId, resourceId,
+    }, { dataSources }) => (
+      dataSources.issueAPI.getIssues(
+        jql, startAt, maxResults, isLoggedIn, projectId, versionId, teamId, resourceId,
+      )
     ),
     dashboardIssues: (_, { jql, startAt = 0, maxResults = 20 }, { dataSources }) => (
       dataSources.issueAPI.getDashboardIssues(jql, startAt, maxResults)
@@ -21,6 +25,20 @@ const resolvers = {
     projects: (_, __, { dataSources }) => (
       dataSources.issueAPI.getProjects()
     ),
+    user: (_, {
+      isLoggedIn, projectId, versionId, teamId,
+    }) => {
+      const user = {
+        id: 10110,
+        email: 'user@email.io',
+      };
+
+      console.log({
+        isLoggedIn, projectId, versionId, teamId,
+      });
+
+      return isLoggedIn ? user : null;
+    },
 
     /**
      * CDPR Portal REST API

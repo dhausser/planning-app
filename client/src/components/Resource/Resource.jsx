@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { useQuery } from '@apollo/react-hooks';
+import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 import styled from 'styled-components';
 
@@ -13,7 +13,7 @@ import {
   ProjectHomeView, VersionFilter, Loading, IssueTable,
 } from '..';
 import AbsencesTable from './AbsencesTable';
-import { GET_ISSUES, useIssues } from '../Issues/Issues';
+import { GET_ISSUES } from '../Issues/Issues';
 
 const GET_RESOURCE_NAME = gql`
   query getResourceById($id: ID!) {
@@ -44,7 +44,7 @@ const barContent = (
 function Resource({ navigationViewController, match }) {
   // Extract resource id from url parameters
   const { resourceId } = match.params;
-  const issues = useIssues({ query: GET_ISSUES, resourceId: match.params.resourceId });
+  const issues = useQuery(GET_ISSUES, { variables: { resourceId } });
 
   // Fetch resource from database
   const { data, loading, error } = useQuery(GET_RESOURCE_NAME, {
