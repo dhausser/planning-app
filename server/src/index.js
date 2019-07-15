@@ -20,10 +20,8 @@ app.use(
     cookie: {},
   }),
 );
-if (process.env.PLATFORM === 'cloud') {
-  app.use(passport.initialize());
-  app.use(passport.session());
-}
+app.use(passport.initialize());
+app.use(passport.session());
 app.use('/', routes);
 
 apollo.applyMiddleware({ app });

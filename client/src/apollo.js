@@ -4,8 +4,7 @@ import { createHttpLink } from 'apollo-link-http';
 import { setContext } from 'apollo-link-context';
 import { resolvers, typeDefs } from './resolvers';
 
-// const uri = `${process.env.NODE_ENV === 'production' ? process.env.REACT_APP_URL : ''}/graphql`;
-const uri = 'http://localhost:4000';
+const uri = `${process.env.NODE_ENV === 'production' ? process.env.REACT_APP_URL : ''}/graphql`;
 const httpLink = createHttpLink({
   uri,
   credentials: 'same-origin',
@@ -36,11 +35,8 @@ const visibilityFilter = JSON.parse(localStorage.getItem('visibilityFilter'))
 
 cache.writeData({
   data: {
-    isLoggedIn: true || !!localStorage.getItem('token'),
+    isLoggedIn: !!localStorage.getItem('token'),
     visibilityFilter,
-    secret: 'Hello, World!',
-    // projectId: 10000,
-    // versionId: 42,
   },
 });
 

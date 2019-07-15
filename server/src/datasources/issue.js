@@ -8,15 +8,9 @@ class IssueAPI extends RESTDataSource {
     this.baseURL = `https://${process.env.HOST}/rest/`;
   }
 
-  // eslint-disable-next-line class-methods-use-this
   willSendRequest(req) {
-    // req.headers.set('Authorization', 'Basic ZGF2eS5oYXVzc2VyQGdtYWlsLmNvbTpCZFpwTmZvWGtOeEVya294MHh4dDAxODM=');
-    req.headers.set(
-      'Authorization',
-      process.env.PLATFORM === 'cloud'
-        ? `Basic ${process.env.AUTH}`
-        : this.signRequest(req),
-    );
+    req.headers.set('Authorization', this.signRequest(req));
+    // req.headers.set('Authorization', `Basic ${process.env.AUTH}`);
   }
 
   signRequest(req) {
@@ -81,7 +75,8 @@ class IssueAPI extends RESTDataSource {
   }
 
   async getVersions(projectId, startAt, maxResults) {
-    const response = await this.get(`api/latest/project/${projectId}/version${process.env.PLATFORM === 'cloud' ? 's' : ''}`, {
+    // const response = await this.get(`api/latest/project/${projectId}/versions`, {
+    const response = await this.get(`api/latest/project/${projectId}/version`, {
       startAt,
       maxResults,
       orderBy: 'name',
