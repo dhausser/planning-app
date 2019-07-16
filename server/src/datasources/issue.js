@@ -86,37 +86,28 @@ class IssueAPI extends RESTDataSource {
     return Array.isArray(response.values) ? response.values : [];
   }
 
-  async getIssues(startAt, maxResults, projectId, versionId, teamId, resourceId) {
-    // console.log({
-    //   projectId, versionId, teamId, resourceId,
-    // });
-
+  async getIssues(projectId, versionId, teamId, resourceId, startAt = 0, maxResults = 20) {
     const fields = [
       'summary', 'description', 'status', 'assignee', 'reporter', 'issuetype',
       'priority', 'fixVersions', 'comment', 'subtasks', 'customfield_10006',
       'customfield_10014', 'customfield_20700',
     ];
 
+    let assignee = null;
+    if (resourceId) {
+      assignee = resourceId;
+    } else if (teamId) {
+      assignee = await this.context.dataSources.resourceAPI.getResourcesByTeam({ teamId });
+      assignee = assignee.map(({ key }) => key);
+    }
+
     const jql = `statusCategory in (new, indeterminate)\
     ${projectId ? `AND project=${projectId}` : ''}\
     ${versionId ? `AND fixVersion=${versionId}` : ''}\
+    ${assignee ? `AND assignee in (${assignee})` : ''}\
     order by priority desc, key asc`;
 
-    // Team Management
-    // TODO: Use this.context.resourceMap
-    // const assignee = resourceId
-    //   || (team && !loadingResources && !errorResources
-    //     ? resources
-    //       .filter(resource => resource.team === team.id)
-    //       .map(({ key }) => key)
-    //     : null);
-
-    // const jql = `\
-    // ${project ? `project=${project.id} and ` : ''}\
-    // ${version ? `fixVersion in (${version.id}) and ` : ''}\
-    // ${assignee ? `assignee in (${assignee}) and ` : ''}\
-    // statusCategory in (new, indeterminate)\
-    // order by priority desc, key asc`;
+    console.log(jql);
 
     const response = await this.post('api/latest/search', {
       jql,
@@ -131,13 +122,17 @@ class IssueAPI extends RESTDataSource {
     return { ...response, issues };
   }
 
-  async getDashboardIssues(jql, startAt, maxResults) {
+  async getDashboardIssues(projectId, versionId, teamId, maxResults = 1000) {
     const fields = ['assignee'];
+
+    const jql = `statusCategory in (new, indeterminate)\
+    ${projectId ? `AND project=${projectId}` : ''}\
+    ${versionId ? `AND fixVersion=${versionId}` : ''}\
+    order by priority desc, key asc`;
 
     const response = await this.post('api/latest/search', {
       jql,
       fields,
-      startAt,
       maxResults,
     });
 

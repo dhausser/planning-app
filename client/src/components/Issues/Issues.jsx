@@ -42,7 +42,7 @@ const ISSUE_PAGINATION = gql`
 `;
 
 export const GET_ISSUES = gql`
-  query issueList($startAt: Int, $maxResults: Int, $projectId: String, $versionId: String, $teamId: String, $resourceId: String) {
+  query GetIssues($projectId: String, $versionId: String, $teamId: String, $resourceId: String, $startAt: Int, $maxResults: Int) {
     filter @client {
       project {
         id @export(as: "projectId")
@@ -54,9 +54,6 @@ export const GET_ISSUES = gql`
         id @export(as: "teamId")
       }
     }
-    # projectId @client @export(as: "projectId")
-    # versionId @client @export(as: "versionId")
-    # teamId @client @export(as:"teamId")
     issues(startAt: $startAt, maxResults: $maxResults, projectId: $projectId, versionId: $versionId, teamId: $teamId, resourceId: $resourceId) {
       ...IssuePagination
       issues {
@@ -87,7 +84,7 @@ function Issues({ navigationViewController }) {
   return (
     <>
       <PageHeader bottomBar={barContent}>Search Issues</PageHeader>
-      <IssueTable {...useQuery(GET_ISSUES)} />
+      <IssueTable {...useQuery(GET_ISSUES, { fetchPolicy: 'cache-and-network' })} />
     </>
   );
 }

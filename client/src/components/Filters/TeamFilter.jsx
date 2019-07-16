@@ -28,8 +28,8 @@ const TOGGLE_FILTER = gql`
 `;
 
 function TeamFilter() {
-  const { data: { filter: { team } } } = useQuery(GET_FILTER);
-  const { data: { teams }, loading } = useQuery(GET_TEAMS);
+  const { data: { filter: { team: { id: value, name: label } } } } = useQuery(GET_FILTER);
+  const { data: { teams }, loading } = useQuery(GET_TEAMS, { fetchPolicy: 'cache-first' });
   const [toggleFilter] = useMutation(TOGGLE_FILTER);
 
   return (
@@ -38,7 +38,7 @@ function TeamFilter() {
         spacing="compact"
         className="single-select"
         classNamePrefix="react-select"
-        defaultValue={team && { value: team.id, label: team.id }}
+        defaultValue={value && { value, label }}
         isDisabled={false}
         isLoading={loading}
         isClearable

@@ -4,14 +4,16 @@ const resolvers = {
      * Jira REST API
      */
     issues: (_, {
-      startAt, maxResults, projectId, versionId, teamId, resourceId,
+      projectId, versionId, teamId, resourceId, startAt, maxResults,
     }, { dataSources }) => (
       dataSources.issueAPI.getIssues(
-        startAt, maxResults, projectId, versionId, teamId, resourceId,
+        projectId, versionId, teamId, resourceId, startAt, maxResults,
       )
     ),
-    dashboardIssues: (_, { jql, startAt, maxResults }, { dataSources }) => (
-      dataSources.issueAPI.getDashboardIssues(jql, startAt, maxResults)
+    dashboardIssues: (_, {
+      projectId, versionId, teamId, startAt, maxResults,
+    }, { dataSources }) => (
+      dataSources.issueAPI.getDashboardIssues(projectId, versionId, teamId, startAt, maxResults)
     ),
     roadmapIssues: (_, { jql }, { dataSources }) => (
       dataSources.issueAPI.getRoadmapIssues(jql)

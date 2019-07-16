@@ -34,13 +34,14 @@ const TOGGLE_FILTER = gql`
 `;
 
 function VersionFilter() {
-  const { data: { filter: { project, version } } } = useQuery(GET_FILTER);
-  const { data, loading } = useQuery(GET_VERSIONS, {
+  const { data: { filter: { project, version: { id: value, name: label } } } } = useQuery(GET_FILTER);
+  const { data: { versions }, loading } = useQuery(GET_VERSIONS, {
     variables: {
       id: (project && project.id) || process.env.REACT_APP_PROJECT_ID,
       startAt: parseInt(process.env.REACT_APP_VERSION_START_AT, 10),
       maxResults: parseInt(process.env.REACT_APP_VERSION_MAX_RESULTS, 10),
     },
+    fetchPolicy: 'cache-first',
   });
   const [toggleFilter] = useMutation(TOGGLE_FILTER);
 
@@ -50,12 +51,12 @@ function VersionFilter() {
         spacing="compact"
         className="single-select"
         classNamePrefix="react-select"
-        defaultValue={version && { value: version.id, label: version.name }}
+        defaultValue={value && { value, label }}
         isDisabled={false}
         isLoading={loading}
         isClearable
         isSearchable
-        options={data && data.versions && data.versions.map(({ id, name }) => ({
+        options={versions && versions.map(({ id, name }) => ({
           value: id,
           label: name,
         }))}

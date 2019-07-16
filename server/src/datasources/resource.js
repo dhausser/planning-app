@@ -144,7 +144,7 @@ class ResourceAPI extends DataSource {
       cursor = await this.store.resources
         .find({ team: teamId })
         .project({
-          _id: 0, key: 1, name: 1, team: 1,
+          _id: 0, key: 1,
         });
     } catch (e) {
       console.error(`Unable to issue find command, ${e}`);

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import PropTypes from 'prop-types';
-// import gql from 'graphql-tag';
+import gql from 'graphql-tag';
 import { Grid, GridColumn } from '@atlaskit/page';
 import PageHeader from '@atlaskit/page-header';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
@@ -11,22 +11,32 @@ import BarChart from './BarChart';
 import {
   ProductHomeView, ProjectFilter, VersionFilter, TeamFilter, Loading,
 } from '..';
-import { GET_ISSUES } from '../Issues/Issues';
 
-// const GET_ISSUES = gql`
-//   query issueList($jql: String, $startAt: Int, $maxResults: Int) {
-//     dashboardIssues(jql: $jql, startAt: $startAt, maxResults: $maxResults) {
-//       maxResults
-//       total
-//       issues {
-//         assignee {
-//           name
-//           team
-//         }
-//       }
-//     }
-//   }
-// `;
+const GET_ISSUES = gql`
+  query GetDashboardIssues($projectId: String, $versionId: String, $teamId: String, $startAt: Int, $maxResults: Int) {
+    filter @client {
+      project {
+        id @export(as: "projectId")
+      }
+      version {
+        id @export(as: "versionId")
+      }
+      team {
+        id @export(as: "teamId")
+      }
+    }
+    dashboardIssues(projectId: $projectId, versionId: $versionId, teamId: $teamId, startAt: $startAt, maxResults: $maxResults) {
+      maxResults
+      total
+      issues {
+        assignee {
+          name
+          team
+        }
+      }
+    }
+  }
+`;
 
 const barContent = (
   <div style={{ display: 'flex' }}>

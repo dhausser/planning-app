@@ -30,8 +30,8 @@ const TOGGLE_FILTER = gql`
 `;
 
 function ProjectFilter() {
-  const { data: { filter: { project } } } = useQuery(GET_FILTER);
-  const { data: { projects }, loading } = useQuery(GET_PROJECTS);
+  const { data: { filter: { project: { id: value, name: label } } } } = useQuery(GET_FILTER);
+  const { data: { projects }, loading } = useQuery(GET_PROJECTS, { fetchPolicy: 'cache-first' });
   const [toggleFilter] = useMutation(TOGGLE_FILTER);
 
   return (
@@ -40,7 +40,7 @@ function ProjectFilter() {
         spacing="compact"
         className="single-select"
         classNamePrefix="react-select"
-        defaultValue={project && { value: project.id, label: project.name }}
+        defaultValue={value && { value, label }}
         isDisabled={false}
         isLoading={loading}
         isClearable

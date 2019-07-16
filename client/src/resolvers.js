@@ -38,16 +38,11 @@ const GET_FILTER = gql`
 
 export const resolvers = {
   Mutation: {
-    toggleFilter: (_root, { value, label, __typename: type }, { cache }) => {
+    toggleFilter: (_root, { value, label, __typename }, { cache }) => {
       const { filter } = cache.readQuery({ query: GET_FILTER });
-
-      filter[type.toLowerCase()] = value
-        ? { id: value, name: label, __typename: type }
-        : null;
-
-      cache.writeData({ data: { filter } });
+      filter[__typename.toLowerCase()] = { id: value || null, name: label || null, __typename };
+      cache.writeData({ data: { filter, __typename: 'Filter' } });
       localStorage.setItem('filter', JSON.stringify(filter));
-
       return null;
     },
   },
