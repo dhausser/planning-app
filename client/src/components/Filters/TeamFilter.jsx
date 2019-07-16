@@ -28,7 +28,7 @@ const TOGGLE_FILTER = gql`
 `;
 
 function TeamFilter() {
-  const { data: { filter: { team: { id: value, name: label } } } } = useQuery(GET_FILTER);
+  const { data: { filter: { team: { id } } } } = useQuery(GET_FILTER);
   const { data: { teams }, loading } = useQuery(GET_TEAMS, { fetchPolicy: 'cache-first' });
   const [toggleFilter] = useMutation(TOGGLE_FILTER);
 
@@ -38,14 +38,14 @@ function TeamFilter() {
         spacing="compact"
         className="single-select"
         classNamePrefix="react-select"
-        defaultValue={value && { value, label }}
+        defaultValue={id != null && { value: id, label: id }}
         isDisabled={false}
         isLoading={loading}
         isClearable
         isSearchable
-        options={teams && teams.map(({ id }) => ({
-          value: id,
-          label: id,
+        options={teams && teams.map(team => ({
+          value: team.id,
+          label: team.id,
         }))}
         placeholder="Choose a Team"
         onChange={e => toggleFilter({ variables: { ...e, __typename: 'Team' } })}

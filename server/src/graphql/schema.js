@@ -8,7 +8,7 @@ const typeDefs = gql`
     issue(id: ID!): Issue
     versions(id: ID!, startAt: Int, maxResults: Int): [Version]
     projects: [Project]!
-    resources: [Resource]!
+    resources(teamId: String): [Resource]!
     resource(id: ID!): Resource
     teams: [Team]!
     team(id: ID!): Team

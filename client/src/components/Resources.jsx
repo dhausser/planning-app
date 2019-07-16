@@ -26,8 +26,13 @@ const GET_FILTER = gql`
 `;
 
 const GET_RESOURCES = gql`
-  query resourceList {
-    resources {
+  query GetResources($teamId: String) {
+    filter @client {
+      team {
+        id @export(as: "teamId")
+      }
+    }
+    resources(teamId: $teamId) {
       key
       name
       team
@@ -102,17 +107,16 @@ function Resources({ navigationViewController }) {
 
   const { data: { filter: { team } } } = useQuery(GET_FILTER);
 
-  const { data, loading, error } = useQuery(GET_RESOURCES, {
-    fetchPolicy: 'cache-first',
-  });
+  const { data, loading, error } = useQuery(GET_RESOURCES);
 
   let resources = [];
   if (error) return <EmptyState header={error.name} description={error.message} />;
   if (!loading) {
-    resources = team
+    resources = team.id
       ? data.resources.filter(resource => resource.team === team.id)
       : data.resources;
   }
+
   return (
     <>
       <PageHeader bottomBar={barContent}>People</PageHeader>
