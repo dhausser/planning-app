@@ -4,13 +4,13 @@ const resolvers = {
      * Jira REST API
      */
     issues: (_, {
-      jql, startAt = 0, maxResults = 20, isLoggedIn, projectId, versionId, teamId, resourceId,
+      startAt, maxResults, projectId, versionId, teamId, resourceId,
     }, { dataSources }) => (
       dataSources.issueAPI.getIssues(
-        jql, startAt, maxResults, isLoggedIn, projectId, versionId, teamId, resourceId,
+        startAt, maxResults, projectId, versionId, teamId, resourceId,
       )
     ),
-    dashboardIssues: (_, { jql, startAt = 0, maxResults = 20 }, { dataSources }) => (
+    dashboardIssues: (_, { jql, startAt, maxResults }, { dataSources }) => (
       dataSources.issueAPI.getDashboardIssues(jql, startAt, maxResults)
     ),
     roadmapIssues: (_, { jql }, { dataSources }) => (
@@ -19,26 +19,12 @@ const resolvers = {
     issue: (_, { id }, { dataSources }) => (
       dataSources.issueAPI.getIssueById({ issueId: id })
     ),
-    versions: (_, { id, startAt = 0, maxResults = 20 }, { dataSources }) => (
+    versions: (_, { id, startAt, maxResults }, { dataSources }) => (
       dataSources.issueAPI.getVersions(id, startAt, maxResults)
     ),
     projects: (_, __, { dataSources }) => (
       dataSources.issueAPI.getProjects()
     ),
-    user: (_, {
-      isLoggedIn, projectId, versionId, teamId,
-    }) => {
-      const user = {
-        id: 10110,
-        email: 'user@email.io',
-      };
-
-      console.log({
-        isLoggedIn, projectId, versionId, teamId,
-      });
-
-      return isLoggedIn ? user : null;
-    },
 
     /**
      * CDPR Portal REST API

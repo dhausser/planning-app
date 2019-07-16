@@ -13,7 +13,7 @@ const GET_ABSENCES = gql`
   query absenceList($id: ID!, $secret: String, $versionId: Int) {
     secret @client @export(as: "secret")
     versionId @client @export(as: "versionId")
-    # visibilityFilter @client {
+    # filter @client {
     #   version {
     #     id @export(as: "versionId")
     #   }

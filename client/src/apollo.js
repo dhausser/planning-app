@@ -28,15 +28,30 @@ const client = new ApolloClient({
   typeDefs,
 });
 
-const visibilityFilter = JSON.parse(localStorage.getItem('visibilityFilter'))
+const filter = JSON.parse(localStorage.getItem('filter'))
   || {
-    project: null, version: null, team: null, __typename: 'VisibilityFilter',
+    project: {
+      id: null,
+      name: null,
+      __typename: 'Project',
+    },
+    version: {
+      id: null,
+      name: null,
+      __typename: 'Version',
+    },
+    team: {
+      id: null,
+      name: null,
+      __typename: 'Team',
+    },
+    __typename: 'Filter',
   };
 
 cache.writeData({
   data: {
     isLoggedIn: !!localStorage.getItem('token'),
-    visibilityFilter,
+    filter,
   },
 });
 

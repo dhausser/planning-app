@@ -86,18 +86,24 @@ class IssueAPI extends RESTDataSource {
     return Array.isArray(response.values) ? response.values : [];
   }
 
-  async getIssues(jql, startAt, maxResults, isLoggedIn, projectId, versionId, teamId, resourceId) {
+  async getIssues(startAt, maxResults, projectId, versionId, teamId, resourceId) {
+    // console.log({
+    //   projectId, versionId, teamId, resourceId,
+    // });
+
     const fields = [
       'summary', 'description', 'status', 'assignee', 'reporter', 'issuetype',
       'priority', 'fixVersions', 'comment', 'subtasks', 'customfield_10006',
       'customfield_10014', 'customfield_20700',
     ];
 
-    // console.log({ projectId, versionId, teamId });
-    const clientQuery = `statusCategory in (new, indeterminate) ${projectId && `AND project=${projectId}`} ${versionId && `AND fixVersion=${versionId}`} order by priority desc, key asc`;
+    const jql = `statusCategory in (new, indeterminate)\
+    ${projectId ? `AND project=${projectId}` : ''}\
+    ${versionId ? `AND fixVersion=${versionId}` : ''}\
+    order by priority desc, key asc`;
 
     // Team Management
-    // TODOL: Use this.context.resourceMap
+    // TODO: Use this.context.resourceMap
     // const assignee = resourceId
     //   || (team && !loadingResources && !errorResources
     //     ? resources
@@ -113,7 +119,7 @@ class IssueAPI extends RESTDataSource {
     // order by priority desc, key asc`;
 
     const response = await this.post('api/latest/search', {
-      jql: jql || clientQuery,
+      jql,
       fields,
       startAt,
       maxResults,

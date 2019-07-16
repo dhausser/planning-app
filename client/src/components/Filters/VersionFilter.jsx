@@ -12,9 +12,9 @@ const GET_VERSIONS = gql`
   }
 `;
 
-const GET_VISIBILITY_FILTER = gql`
-  query GetVisibilityFilter {
-    visibilityFilter @client {
+const GET_FILTER = gql`
+  query GetFilter {
+    filter @client {
       project {
         id
         name
@@ -34,7 +34,7 @@ const TOGGLE_FILTER = gql`
 `;
 
 function VersionFilter() {
-  const { data: { visibilityFilter: { project, version } } } = useQuery(GET_VISIBILITY_FILTER);
+  const { data: { filter: { project, version } } } = useQuery(GET_FILTER);
   const { data, loading } = useQuery(GET_VERSIONS, {
     variables: {
       id: (project && project.id) || process.env.REACT_APP_PROJECT_ID,

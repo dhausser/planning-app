@@ -2,7 +2,7 @@ import { gql } from 'apollo-server-express';
 
 const typeDefs = gql`
   type Query {
-    issues(jql: String, startAt: Int, maxResults: Int, isLoggedIn: Boolean, projectId: String, versionId: String, teamId: String, resourceId: String): IssueConnection!
+    issues(startAt: Int, maxResults: Int, projectId: String, versionId: String, teamId: String, resourceId: String): IssueConnection!
     dashboardIssues(jql: String, startAt: Int, maxResults: Int): IssueConnection!
     roadmapIssues(jql: String): [Issue]!
     issue(id: ID!): Issue
@@ -13,7 +13,26 @@ const typeDefs = gql`
     teams: [Team]!
     team(id: ID!): Team
     absences(id: ID!, secret: String, versionId: String): [Absence]!
-    user(isLoggedIn: Boolean, projectId: String, versionId: String, teamId: String): User
+  }
+
+  type Project {
+    id: ID!
+    key: String!
+    name: String!
+    avatarUrls: AvatarUrls
+    projectTypeKey: String
+  }
+
+  type Version {
+    id: ID!
+    name: String!
+    description: String
+  }
+
+  type Team {
+    id: ID!
+    name: String!
+    members: [Resource]!
   }
 
   type Issue {
@@ -43,26 +62,6 @@ const typeDefs = gql`
     success: Boolean!
     message: String
     issue: Issue
-  }
-
-  type Project {
-    id: ID!
-    key: String!
-    name: String!
-    avatarUrls: AvatarUrls
-    projectTypeKey: String
-  }
-
-  type Version {
-    id: ID!
-    name: String!
-    description: String
-  }
-
-  type Team {
-    id: ID!
-    name: String!
-    members: [Resource]!
   }
 
   type Comment {

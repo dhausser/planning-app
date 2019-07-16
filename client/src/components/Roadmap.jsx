@@ -20,10 +20,10 @@ import {
   ProjectHomeView, VersionFilter, Icon,
 } from '.';
 
-const GET_VISIBILITY_FILTER = gql`
+const GET_FILTER = gql`
   query GetFilters {
     isLoggedIn @client
-    visibilityFilter @client {
+    filter @client {
       project @client {
         id
         name
@@ -66,7 +66,7 @@ const GET_ISSUES = gql`
 
 function Roadmap({ navigationViewController }) {
   const [isExpanded, setIsExpanded] = useState(true);
-  const { data: { visibilityFilter: { project, version } } } = useQuery(GET_VISIBILITY_FILTER);
+  const { data: { filter: { project, version } } } = useQuery(GET_FILTER);
   const barContent = (
     <div style={{ display: 'flex' }}>
       <div style={{ flex: '0 0 200px', marginLeft: 8 }}>

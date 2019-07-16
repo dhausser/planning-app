@@ -14,9 +14,9 @@ import {
   ProjectHomeView, TeamFilter,
 } from '.';
 
-const GET_VISIBILITY_FILTER = gql`
-  query GetVisibilityFilter {
-    visibilityFilter @client {
+const GET_FILTER = gql`
+  query GetFilter {
+    filter @client {
       team {
         id
         name
@@ -100,7 +100,7 @@ function Resources({ navigationViewController }) {
     navigationViewController.setView(ProjectHomeView.id);
   }, [navigationViewController]);
 
-  const { data: { visibilityFilter: { team } } } = useQuery(GET_VISIBILITY_FILTER);
+  const { data: { filter: { team } } } = useQuery(GET_FILTER);
 
   const { data, loading, error } = useQuery(GET_RESOURCES, {
     fetchPolicy: 'cache-first',

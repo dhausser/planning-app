@@ -33,9 +33,9 @@ const GET_PROJECTS = gql`
   ${PROJECT_TILE_DATA}
 `;
 
-const GET_VISIBILITY_FILTER = gql`
-  query GetVisibilityFilter {
-    visibilityFilter @client {
+const GET_FILTER = gql`
+  query GetFilter {
+    filter @client {
       project @client {
         id
         name
@@ -91,7 +91,7 @@ function ProjectSwitcher() {
   const [selected, setSelected] = useState({});
   const [options, setOptions] = useState([]);
   const [toggleFilter] = useMutation(TOGGLE_FILTER);
-  const { data: { visibilityFilter: { project: filter } } } = useQuery(GET_VISIBILITY_FILTER);
+  const { data: { filter: { project: filter } } } = useQuery(GET_FILTER);
 
   const { data, loading, error } = useQuery(GET_PROJECTS, {
     fetchPolicy: 'cache-first',

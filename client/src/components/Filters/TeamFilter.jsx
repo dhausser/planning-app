@@ -11,9 +11,9 @@ const GET_TEAMS = gql`
   }
 `;
 
-const GET_VISIBILITY_FILTER = gql`
-  query GetVisibilityFilter {
-    visibilityFilter @client {
+const GET_FILTER = gql`
+  query GetFilter {
+    filter @client {
       team {
         id
       }
@@ -28,7 +28,7 @@ const TOGGLE_FILTER = gql`
 `;
 
 function TeamFilter() {
-  const { data: { visibilityFilter: { team } } } = useQuery(GET_VISIBILITY_FILTER);
+  const { data: { filter: { team } } } = useQuery(GET_FILTER);
   const { data: { teams }, loading } = useQuery(GET_TEAMS);
   const [toggleFilter] = useMutation(TOGGLE_FILTER);
 

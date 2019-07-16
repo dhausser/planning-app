@@ -12,9 +12,9 @@ const GET_PROJECTS = gql`
   }
 `;
 
-const GET_VISIBILITY_FILTER = gql`
-  query GetVisibilityFilter {
-    visibilityFilter @client {
+const GET_FILTER = gql`
+  query GetFilter {
+    filter @client {
       project {
         id
         name
@@ -30,7 +30,7 @@ const TOGGLE_FILTER = gql`
 `;
 
 function ProjectFilter() {
-  const { data: { visibilityFilter: { project } } } = useQuery(GET_VISIBILITY_FILTER);
+  const { data: { filter: { project } } } = useQuery(GET_FILTER);
   const { data: { projects }, loading } = useQuery(GET_PROJECTS);
   const [toggleFilter] = useMutation(TOGGLE_FILTER);
 

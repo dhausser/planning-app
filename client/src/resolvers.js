@@ -3,10 +3,10 @@ import gql from 'graphql-tag';
 export const typeDefs = gql`
   extend type Query {
     isLoggedIn: Boolean!
-    visibilityFilter: VisibilityFilter
+    filter: Filter
   }
 
-  type VisibilityFilter {
+  type Filter {
     project: Project
     version: Version
     team: Team
@@ -17,9 +17,9 @@ export const typeDefs = gql`
   }
 `;
 
-const GET_VISIBILITY_FILTER = gql`
-  query GetVisibilityFilter {
-    visibilityFilter @client {
+const GET_FILTER = gql`
+  query GetFilter {
+    filter @client {
       project {
         id
         name
@@ -36,61 +36,17 @@ const GET_VISIBILITY_FILTER = gql`
   }
 `;
 
-const GET_PROJECT_ID = gql`
-  query GetProjectId {
-    visibilityFilter @client {
-      project {
-        id
-      }
-    }
-  }
-`;
-
-const GET_VERSION_ID = gql`
-  query GetVersionId {
-    visibilityFilter @client {
-      version {
-        id
-      }
-    }
-  }
-`;
-
-// const GET_TEAM_ID = gql`
-//   query GetTeamId {
-//     visibilityFilter @client {
-//       team {
-//         id
-//       }
-//     }
-//   }
-// `;
-
 export const resolvers = {
-  Query: {
-    visibilityFilter: (_root, __, { cache }) => (
-      cache.readQuery({ query: GET_VISIBILITY_FILTER })
-    ),
-    projectId: (_root, __, { cache }) => (
-      cache.readQuery({ query: GET_PROJECT_ID }).visibilityFilter.project.id
-    ),
-    versionId: (_root, __, { cache }) => (
-      cache.readQuery({ query: GET_VERSION_ID }).visibilityFilter.version.id
-    ),
-    teamId: (_root, __, { cache }) => (
-      null // cache.readQuery({ query: GET_TEAM_ID }).visibilityFilter.team.id
-    ),
-  },
   Mutation: {
     toggleFilter: (_root, { value, label, __typename: type }, { cache }) => {
-      const { visibilityFilter } = cache.readQuery({ query: GET_VISIBILITY_FILTER });
+      const { filter } = cache.readQuery({ query: GET_FILTER });
 
-      visibilityFilter[type.toLowerCase()] = value
+      filter[type.toLowerCase()] = value
         ? { id: value, name: label, __typename: type }
         : null;
 
-      cache.writeData({ data: { visibilityFilter } });
-      localStorage.setItem('visibilityFilter', JSON.stringify(visibilityFilter));
+      cache.writeData({ data: { filter } });
+      localStorage.setItem('filter', JSON.stringify(filter));
 
       return null;
     },

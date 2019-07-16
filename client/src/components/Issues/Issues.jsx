@@ -42,12 +42,22 @@ const ISSUE_PAGINATION = gql`
 `;
 
 export const GET_ISSUES = gql`
-  query issueList($jql: String, $startAt: Int, $maxResults: Int, $isLoggedIn: Boolean, $projectId: String, $versionId: String, $teamId: String, $resourceId: String) {
-    isLoggedIn @client @export(as: "isLoggedIn")
-    projectId @client @export(as: "projectId")
-    versionId @client @export(as: "versionId")
-    teamId @client @export(as:"teamId")
-    issues(jql: $jql, startAt: $startAt, maxResults: $maxResults, isLoggedIn: $isLoggedIn, projectId: $projectId, versionId: $versionId, teamId: $teamId, resourceId: $resourceId) {
+  query issueList($startAt: Int, $maxResults: Int, $projectId: String, $versionId: String, $teamId: String, $resourceId: String) {
+    filter @client {
+      project {
+        id @export(as: "projectId")
+      }
+      version {
+        id @export(as: "versionId")
+      }
+      team {
+        id @export(as: "teamId")
+      }
+    }
+    # projectId @client @export(as: "projectId")
+    # versionId @client @export(as: "versionId")
+    # teamId @client @export(as:"teamId")
+    issues(startAt: $startAt, maxResults: $maxResults, projectId: $projectId, versionId: $versionId, teamId: $teamId, resourceId: $resourceId) {
       ...IssuePagination
       issues {
         ...IssueTile

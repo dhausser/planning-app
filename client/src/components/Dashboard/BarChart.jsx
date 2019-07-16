@@ -5,9 +5,9 @@ import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import Chart from 'chart.js';
 
-const GET_VISIBILITY_FILTER = gql`
-  query GetVisibilityFilter {
-    visibilityFilter @client {
+const GET_FILTER = gql`
+  query GetFilter {
+    filter @client {
       team {
         name
       }
@@ -95,7 +95,7 @@ function updateChart(chart, dataset) {
 
 function BarChart({ issues, maxResults, total }) {
   const [chart, setChart] = useState(null);
-  const { data: { visibilityFilter: { team } } } = useQuery(GET_VISIBILITY_FILTER);
+  const { data: { filter: { team } } } = useQuery(GET_FILTER);
 
   const dataset = filterByTeam(issues, team);
 
