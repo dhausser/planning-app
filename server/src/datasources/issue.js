@@ -122,6 +122,48 @@ class IssueAPI extends RESTDataSource {
     return { ...response, issues };
   }
 
+  aggregateByAssignee(issues) {
+    const { context } = this;
+
+    return issues.reduce((resources, issue) => {
+      if (issue.assignee && issue.assignee.name) {
+        const name = issue.assignee.name.split(' ').shift();
+        if (!resources[name]) {
+          resources[name] = 0;
+        }
+        resources[name] += 1;
+      }
+
+      return resources;
+    }, {});
+  }
+
+  aggregateByTeam(issues) {
+    const teams = this.context.dataSources.resourceAPI.getTeams();
+
+    return issues.reduce((teams, issue) => {
+      if (issue.assignee && issue.assignee.team) {
+        const { team: teamName } = issue.assignee;
+        if (!teams[teamName]) {
+          teams[teamName] = 0;
+        }
+        teams[teamName] += 1;
+      }
+
+      return teams;
+    }, {});
+  }
+
+  filterByTeam(issues, team) {
+    const { context } = this;
+
+    return team
+      ? this.aggregateByAssignee(
+        issues.filter(({ assignee }) => assignee.team === team.name),
+      )
+      : this.aggregateByTeam(issues);
+  }
+
   async getDashboardIssues(projectId, versionId, teamId, maxResults = 1000) {
     const jql = `statusCategory in (new, indeterminate)\
     ${projectId ? `AND project=${projectId}` : ''}\

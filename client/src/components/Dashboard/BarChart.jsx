@@ -1,19 +1,19 @@
 /* eslint-disable no-param-reassign */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useQuery } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
+// import { useQuery } from '@apollo/react-hooks';
+// import gql from 'graphql-tag';
 import Chart from 'chart.js';
 
-const GET_FILTER = gql`
-  query GetFilter {
-    filter @client {
-      team {
-        name
-      }
-    }
-  }
-`;
+// const GET_FILTER = gql`
+//   query GetFilter {
+//     filter @client {
+//       team {
+//         name
+//       }
+//     }
+//   }
+// `;
 
 const transparency = '0.3';
 const colors = [
@@ -95,9 +95,10 @@ function updateChart(chart, dataset) {
 
 function BarChart({ issues, maxResults, total }) {
   const [chart, setChart] = useState(null);
-  const { data: { filter: { team } } } = useQuery(GET_FILTER);
+  const dataset = aggregateByTeam(issues);
 
-  const dataset = filterByTeam(issues, team);
+  // const { data: { filter: { team } } } = useQuery(GET_FILTER);
+  // const dataset = filterByTeam(issues, team);
 
   useEffect(() => {
     if (chart === null) {
