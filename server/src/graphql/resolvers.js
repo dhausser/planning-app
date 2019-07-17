@@ -15,11 +15,11 @@ const resolvers = {
     }, { dataSources }) => (
       dataSources.issueAPI.getDashboardIssues(projectId, versionId, teamId, startAt, maxResults)
     ),
-    roadmapIssues: (_, { jql }, { dataSources }) => (
-      dataSources.issueAPI.getRoadmapIssues(jql)
+    roadmapIssues: (_, { projectId, versionId }, { dataSources }) => (
+      dataSources.issueAPI.getRoadmapIssues(projectId, versionId)
     ),
     issue: (_, { id }, { dataSources }) => (
-      dataSources.issueAPI.getIssueById({ issueId: id })
+      dataSources.issueAPI.getIssueById(id)
     ),
     versions: (_, { id, startAt, maxResults }, { dataSources }) => (
       dataSources.issueAPI.getVersions(id, startAt, maxResults)
@@ -31,8 +31,8 @@ const resolvers = {
     /**
      * CDPR Portal REST API
      */
-    absences: (_, { id, secret, versionId }, { dataSources }) => (
-      dataSources.absenceAPI.getAbsencesById({ userId: id, secret, versionId })
+    absences: (_, { id, versionId }, { dataSources }) => (
+      dataSources.absenceAPI.getAbsencesById({ userId: id, versionId })
     ),
 
     /**

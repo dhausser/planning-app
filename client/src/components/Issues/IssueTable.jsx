@@ -9,6 +9,8 @@ import { Status } from '@atlaskit/status';
 import EmptyState from '@atlaskit/empty-state';
 import { Icon } from '..';
 
+const ROWS_PER_PAGE = 50;
+
 const caption = ({ maxResults, total }) => (
   `${(maxResults && (maxResults <= total ? maxResults : total)) || 0} of ${total || 0}`
 );
@@ -130,7 +132,7 @@ const row = issue => ({
 function IssueTable({
   data, loading, error, fetchMore,
 }) {
-  const [offset, setOffset] = useState(20);
+  const [offset, setOffset] = useState(ROWS_PER_PAGE);
 
   return (
     <>
@@ -138,7 +140,7 @@ function IssueTable({
         caption={caption(data.issues || {})}
         head={head}
         rows={!loading && data.issues.issues.length && data.issues.issues.map(row)}
-        rowsPerPage={20}
+        rowsPerPage={ROWS_PER_PAGE}
         loadingSpinnerSize="large"
         isLoading={loading}
         isFixedSize

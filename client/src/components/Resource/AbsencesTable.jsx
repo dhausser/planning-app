@@ -10,15 +10,13 @@ import Loading from '../Loading';
  * TODO: Using @client fields as variables
  */
 const GET_ABSENCES = gql`
-  query absenceList($id: ID!, $secret: String, $versionId: Int) {
-    secret @client @export(as: "secret")
-    versionId @client @export(as: "versionId")
-    # filter @client {
-    #   version {
-    #     id @export(as: "versionId")
-    #   }
-    # }
-    absences(id: $id, secret: $secret, versionId: $versionId) {
+  query absenceList($id: ID!, $versionId: String) {
+    filter @client {
+      version {
+        id @export(as: "versionId")
+      }
+    }
+    absences(id: $id, versionId: $versionId) {
       key
       date
     }

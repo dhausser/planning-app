@@ -10,7 +10,6 @@ class IssueAPI extends RESTDataSource {
 
   willSendRequest(req) {
     req.headers.set('Authorization', this.signRequest(req));
-    // req.headers.set('Authorization', `Basic ${process.env.AUTH}`);
   }
 
   signRequest(req) {
@@ -75,7 +74,6 @@ class IssueAPI extends RESTDataSource {
   }
 
   async getVersions(projectId, startAt, maxResults) {
-    // const response = await this.get(`api/latest/project/${projectId}/versions`, {
     const response = await this.get(`api/latest/project/${projectId}/version`, {
       startAt,
       maxResults,
@@ -86,13 +84,7 @@ class IssueAPI extends RESTDataSource {
     return Array.isArray(response.values) ? response.values : [];
   }
 
-  async getIssues(projectId, versionId, teamId, resourceId, startAt = 0, maxResults = 20) {
-    const fields = [
-      'summary', 'description', 'status', 'assignee', 'reporter', 'issuetype',
-      'priority', 'fixVersions', 'comment', 'subtasks', 'customfield_10006',
-      'customfield_10014', 'customfield_20700',
-    ];
-
+  async getIssues(projectId, versionId, teamId, resourceId, startAt, maxResults) {
     let assignee = null;
     if (resourceId) {
       assignee = resourceId;
@@ -101,19 +93,27 @@ class IssueAPI extends RESTDataSource {
       assignee = assignee.map(({ key }) => key);
     }
 
+    /**
+     * TODO: List of issues is not ordered by priority on single resource page
+     */
     const jql = `statusCategory in (new, indeterminate)\
     ${projectId ? `AND project=${projectId}` : ''}\
     ${versionId ? `AND fixVersion=${versionId}` : ''}\
-    ${assignee ? `AND assignee in (${assignee})` : ''}\
-    order by priority desc, key asc`;
-
-    console.log(jql);
+    ${assignee ? `AND assignee in (${assignee})` : ''} order by priority desc`;
 
     const response = await this.post('api/latest/search', {
       jql,
-      fields,
-      startAt,
-      maxResults,
+      fields: [
+        'summary',
+        'description',
+        'status',
+        'assignee',
+        'reporter',
+        'issuetype',
+        'priority',
+        'fixVersions',
+        'comment',
+      ],
     });
 
     const issues = Array.isArray(response.issues)
@@ -123,16 +123,13 @@ class IssueAPI extends RESTDataSource {
   }
 
   async getDashboardIssues(projectId, versionId, teamId, maxResults = 1000) {
-    const fields = ['assignee'];
-
     const jql = `statusCategory in (new, indeterminate)\
     ${projectId ? `AND project=${projectId}` : ''}\
-    ${versionId ? `AND fixVersion=${versionId}` : ''}\
-    order by priority desc, key asc`;
+    ${versionId ? `AND fixVersion=${versionId}` : ''}`;
 
     const response = await this.post('api/latest/search', {
       jql,
-      fields,
+      fields: ['assignee'],
       maxResults,
     });
 
@@ -142,14 +139,26 @@ class IssueAPI extends RESTDataSource {
     return { ...response, issues };
   }
 
-  async getRoadmapIssues(jql) {
-    const fields = [
-      'summary', 'status', 'assignee', 'issuetype',
-      'priority', 'fixVersions', 'subtasks', 'customfield_10006',
-    ];
-    const maxResults = 250;
+  async getRoadmapIssues(projectId, versionId) {
+    const jql = `(issuetype = Epic OR issueType in (Story, Task) AND "Epic Link" is not EMPTY) AND status != closed
+    ${projectId ? `AND project = ${projectId} ` : ''}\
+    ${versionId ? `AND fixVersion = ${versionId} ` : ''}\
+    ORDER BY issuetype ASC, status DESC`;
 
-    const response = await this.post('api/latest/search', { jql, fields, maxResults });
+    const response = await this.post('api/latest/search', {
+      jql,
+      fields: [
+        'summary',
+        'status',
+        'assignee',
+        'issuetype',
+        'priority',
+        'fixVersions',
+        'subtasks',
+        'customfield_10006',
+      ],
+      maxResults: 250,
+    });
 
     const issues = Array.isArray(response.issues)
       ? response.issues.map(issue => this.roadmapIssueReducer(issue))
@@ -169,7 +178,7 @@ class IssueAPI extends RESTDataSource {
     return issues.filter(({ type, children }) => type === 'Epic' && children.length);
   }
 
-  async getIssueById({ issueId }) {
+  async getIssueById(issueId) {
     const fields = [
       'summary', 'description', 'status', 'assignee', 'reporter', 'issuetype',
       'priority', 'fixVersions', 'comment',

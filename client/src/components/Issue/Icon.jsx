@@ -3,10 +3,14 @@ import Tooltip from '@atlaskit/tooltip';
 
 // Import Priority Icons
 import PriorityBlockerIcon from '@atlaskit/icon-priority/glyph/priority-blocker';
+import PriorityCriticalIcon from '@atlaskit/icon-priority/glyph/priority-critical';
+// import PriorityMajorIcon from '@atlaskit/icon-priority/glyph/priority-major';
 import PriorityHighestIcon from '@atlaskit/icon-priority/glyph/priority-highest';
+// import PriorityHighIcon from '@atlaskit/icon-priority/glyph/priority-high';
 import PriorityMediumIcon from '@atlaskit/icon-priority/glyph/priority-medium';
-import PriorityLowestIcon from '@atlaskit/icon-priority/glyph/priority-lowest';
-import PriorityMinorIcon from '@atlaskit/icon-priority/glyph/priority-minor';
+import PriorityLowIcon from '@atlaskit/icon-priority/glyph/priority-low';
+// import PriorityLowestIcon from '@atlaskit/icon-priority/glyph/priority-lowest';
+// import PriorityMinorIcon from '@atlaskit/icon-priority/glyph/priority-minor';
 import PriorityTrivialIcon from '@atlaskit/icon-priority/glyph/priority-trivial';
 
 // Import Status Icons
@@ -23,38 +27,33 @@ export default {
   done: 'green',
 
   // Priorities
-  P0: (
-    <Tooltip content="P0">
+  Outage: (
+    <Tooltip content="Outage">
       <PriorityBlockerIcon size="small" />
     </Tooltip>
   ),
-  P1: (
-    <Tooltip content="P1">
+  Problem: (
+    <Tooltip content="Problem">
+      <PriorityCriticalIcon size="small" />
+    </Tooltip>
+  ),
+  Must: (
+    <Tooltip content="Must">
       <PriorityHighestIcon size="small" />
     </Tooltip>
   ),
-  P2: (
-    <Tooltip content="P2">
+  Should: (
+    <Tooltip content="Should">
       <PriorityMediumIcon size="small" />
     </Tooltip>
   ),
-  Medium: (
-    <Tooltip content="P2">
-      <PriorityMediumIcon size="small" />
+  Could: (
+    <Tooltip content="Could">
+      <PriorityLowIcon size="small" />
     </Tooltip>
   ),
-  P3: (
-    <Tooltip content="P3">
-      <PriorityLowestIcon size="small" />
-    </Tooltip>
-  ),
-  P4: (
-    <Tooltip content="P4">
-      <PriorityMinorIcon size="small" />
-    </Tooltip>
-  ),
-  P5: (
-    <Tooltip content="P5">
+  "Won't": (
+    <Tooltip content="Won't">
       <PriorityTrivialIcon size="small" />
     </Tooltip>
   ),

@@ -12,12 +12,7 @@ class AbsenceAPI extends RESTDataSource {
     return Array.isArray(response) ? response : [];
   }
 
-  async getAbsencesById({ userId, secret, versionId }) {
-    /**
-     * TODO: Using @client fields as variables
-     */
-    // eslint-disable-next-line no-console
-    console.log({ secret, versionId });
+  async getAbsencesById({ userId, versionId }) {
     const response = await this.get(`?user[]=${userId}`, { apiKey: this.apiKey });
     return response;
   }

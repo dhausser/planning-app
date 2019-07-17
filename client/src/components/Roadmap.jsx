@@ -20,22 +20,6 @@ import {
   ProjectHomeView, VersionFilter, Icon,
 } from '.';
 
-const GET_FILTER = gql`
-  query GetFilters {
-    isLoggedIn @client
-    filter @client {
-      project @client {
-        id
-        name
-      }
-      version @client {
-        id
-        name
-      }
-    }
-  }
-`;
-
 const ROADMAP_ROW_DATA = gql`
   fragment RoadmapRow on Issue {
     key
@@ -49,8 +33,16 @@ const ROADMAP_ROW_DATA = gql`
 `;
 
 const GET_ISSUES = gql`
-  query issueList($jql: String) {
-    roadmapIssues(jql: $jql) {
+  query issueList($projectId: String, $versionId: String) {
+    filter @client {
+      project {
+        id @export(as: "projectId")
+      }
+      version {
+        id @export(as: "versionId")
+      }
+    }
+    roadmapIssues(projectId: $projectId, versionId: $versionId) {
       ...RoadmapRow
       children {
         ...RoadmapRow
@@ -66,39 +58,32 @@ const GET_ISSUES = gql`
 
 function Roadmap({ navigationViewController }) {
   const [isExpanded, setIsExpanded] = useState(true);
-  const { data: { filter: { project, version } } } = useQuery(GET_FILTER);
-  const barContent = (
-    <div style={{ display: 'flex' }}>
-      <div style={{ flex: '0 0 200px', marginLeft: 8 }}>
-        <TextField isCompact placeholder="Filter" aria-label="Filter" />
-      </div>
-      <VersionFilter />
-      <div style={{ flex: '0 0 200px', marginLeft: 8 }}>
-        <Button onClick={() => setIsExpanded(!isExpanded)}>
-          {isExpanded ? 'Collapse' : 'Expand'}
-        </Button>
-      </div>
-    </div>
-  );
 
   useEffect(() => {
     navigationViewController.setView(ProjectHomeView.id);
   }, [navigationViewController]);
 
-
-  /**
-   * TODO: Adjust query for relevant results when no fixversion is selected
-   */
-  const jql = `(issuetype = Epic OR issueType in (Story, Task) AND "Epic Link" is not EMPTY) AND status != closed
-  ${project ? `AND project = ${project.id} ` : ''}\
-  ${version ? `AND fixVersion = ${version.id} ` : ''}\
-  ORDER BY issuetype ASC, status DESC`;
-
-  const { data, loading, error } = useQuery(GET_ISSUES, { variables: { jql, maxResults: 1000 } });
+  const { data, loading, error } = useQuery(GET_ISSUES);
 
   return (
     <>
-      <PageHeader bottomBar={barContent}>Roadmap</PageHeader>
+      <PageHeader
+        bottomBar={(
+          <div style={{ display: 'flex' }}>
+            <div style={{ flex: '0 0 200px', marginLeft: 8 }}>
+              <TextField isCompact placeholder="Filter" aria-label="Filter" />
+            </div>
+            <VersionFilter />
+            <div style={{ flex: '0 0 200px', marginLeft: 8 }}>
+              <Button onClick={() => setIsExpanded(!isExpanded)}>
+                {isExpanded ? 'Collapse' : 'Expand'}
+              </Button>
+            </div>
+          </div>
+        )}
+      >
+        Roadmap
+      </PageHeader>
       {error
         ? <EmptyState header={error.name} description={error.message} />
         : (

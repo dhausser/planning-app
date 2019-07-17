@@ -10,10 +10,31 @@ import EmptyState from '@atlaskit/empty-state';
 import PageHeader from '@atlaskit/page-header';
 import TextField from '@atlaskit/textfield';
 import {
-  ProjectHomeView, VersionFilter, Loading, IssueTable,
+  ProjectHomeView, ProjectFilter, VersionFilter, Loading, IssueTable,
 } from '..';
 import AbsencesTable from './AbsencesTable';
-import { GET_ISSUES } from '../Issues/Issues';
+import { ISSUE_TILE_DATA, ISSUE_PAGINATION } from '../Issues/Issues';
+
+const GET_ISSUES = gql`
+  query GetIssues($projectId: String, $versionId: String, $resourceId: String, $startAt: Int, $maxResults: Int) {
+    filter @client {
+      project {
+        id @export(as: "projectId")
+      }
+      version {
+        id @export(as: "versionId")
+      }
+    }
+    issues(projectId: $projectId, versionId: $versionId, resourceId: $resourceId, startAt: $startAt, maxResults: $maxResults) {
+      ...IssuePagination
+      issues {
+        ...IssueTile
+      }
+    }
+  }
+  ${ISSUE_PAGINATION}
+  ${ISSUE_TILE_DATA}
+`;
 
 const GET_RESOURCE_NAME = gql`
   query getResourceById($id: ID!) {
@@ -37,6 +58,7 @@ const barContent = (
     <div style={{ flex: '0 0 200px' }}>
       <TextField isCompact placeholder="Filter" aria-label="Filter" />
     </div>
+    <ProjectFilter />
     <VersionFilter />
   </div>
 );
@@ -59,38 +81,30 @@ function Resource({ navigationViewController, match }) {
   if (loading) return <Loading />;
   if (error) return <EmptyState header={error.name} description={error.message} />;
 
-  const avatar = (
-    <NameWrapper>
-      <AvatarWrapper>
-        <Avatar
-          name={data.resource.name}
-          size="large"
-          src={`https://${process.env.REACT_APP_HOST}/secure/useravatar?ownerId=${resourceId}`}
-        />
-      </AvatarWrapper>
-      {data.resource.name}
-    </NameWrapper>
-  );
-
-  const link = (
-    <p>
-      <a
-        href={`https://${process.env.REACT_APP_HOST}/issues/?jql=assignee=${resourceId}\
-        AND statusCategory != Done order by priority desc`}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        View in Issue Navigator
-      </a>
-    </p>
-  );
-
   return (
     <>
       <PageHeader bottomBar={barContent}>
-        {avatar}
+        <NameWrapper>
+          <AvatarWrapper>
+            <Avatar
+              name={data.resource.name}
+              size="large"
+              src={`https://${process.env.REACT_APP_HOST}/secure/useravatar?ownerId=${resourceId}`}
+            />
+          </AvatarWrapper>
+          {data.resource.name}
+        </NameWrapper>
       </PageHeader>
-      {link}
+      <p>
+        <a
+          href={`https://${process.env.REACT_APP_HOST}/issues/?jql=assignee=${resourceId}\
+          AND statusCategory != Done order by priority desc`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+        View in Issue Navigator
+        </a>
+      </p>
       <IssueTable {...issues} />
       <AbsencesTable resourceId={resourceId} />
     </>

@@ -4,7 +4,7 @@ const typeDefs = gql`
   type Query {
     issues(projectId: String, versionId: String, teamId: String, resourceId: String, startAt: Int, maxResults: Int): IssueConnection!
     dashboardIssues(projectId: String, versionId: String, teamId: String, startAt: Int, maxResults: Int): IssueConnection!
-    roadmapIssues(jql: String): [Issue]!
+    roadmapIssues(projectId: String, versionId: String): [Issue]!
     issue(id: ID!): Issue
     versions(id: ID!, startAt: Int, maxResults: Int): [Version]
     projects: [Project]!
@@ -12,7 +12,7 @@ const typeDefs = gql`
     resource(id: ID!): Resource
     teams: [Team]!
     team(id: ID!): Team
-    absences(id: ID!, secret: String, versionId: String): [Absence]!
+    absences(id: ID!, versionId: String): [Absence]!
   }
 
   type Project {

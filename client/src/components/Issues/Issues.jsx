@@ -10,7 +10,7 @@ import {
 } from '..';
 import IssueTable from './IssueTable';
 
-const ISSUE_TILE_DATA = gql`
+export const ISSUE_TILE_DATA = gql`
   fragment IssueTile on Issue {
     id
     key
@@ -33,7 +33,7 @@ const ISSUE_TILE_DATA = gql`
   }
 `;
 
-const ISSUE_PAGINATION = gql`
+export const ISSUE_PAGINATION = gql`
   fragment IssuePagination on IssueConnection {
     startAt
     maxResults
@@ -41,7 +41,7 @@ const ISSUE_PAGINATION = gql`
   }
 `;
 
-export const GET_ISSUES = gql`
+const GET_ISSUES = gql`
   query GetIssues($projectId: String, $versionId: String, $teamId: String, $resourceId: String, $startAt: Int, $maxResults: Int) {
     filter @client {
       project {
@@ -54,7 +54,7 @@ export const GET_ISSUES = gql`
         id @export(as: "teamId")
       }
     }
-    issues(startAt: $startAt, maxResults: $maxResults, projectId: $projectId, versionId: $versionId, teamId: $teamId, resourceId: $resourceId) {
+    issues(projectId: $projectId, versionId: $versionId, teamId: $teamId, resourceId: $resourceId, startAt: $startAt, maxResults: $maxResults) {
       ...IssuePagination
       issues {
         ...IssueTile
