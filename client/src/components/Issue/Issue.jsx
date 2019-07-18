@@ -39,7 +39,7 @@ const ISSUE_TILE_DATA = gql`
     }
     assignee {
       key
-      name
+      displayName
       team
     }
   }
@@ -52,17 +52,19 @@ const GET_ISSUE = gql`
       description
       reporter {
         key
-        name
+        displayName
       }
-      comments {
-        id
-        author {
-          key
-          name
+      comment {
+        comments {
+          id
+          author {
+            key
+            displayName
+          }
+          body
+          created
+          updated
         }
-        body
-        created
-        updated
       }
     }
   }
@@ -86,7 +88,7 @@ function Issue({ navigationViewController, match }) {
       <GridColumn medium={8}>
         <Summary id={issue.key} summary={issue.summary} issuetypeId={issue.issuetype.id} />
         <Description description={issue.description} />
-        <Comments comments={issue.comments} />
+        <Comments comments={issue.comment.comments} />
       </GridColumn>
       <GridColumn medium={4}>
         <a

@@ -17,7 +17,7 @@ const GET_RESOURCES = gql`
 function reducer(user) {
   return {
     id: user.key,
-    name: user.name,
+    name: user.displayName,
     type: 'user',
     fixed: true,
     avatarUrl: `https://${process.env.REACT_APP_HOST}/secure/useravatar?ownerId=${user.key}`,

@@ -26,7 +26,7 @@ const typeDefs = gql`
     fixVersions: [Version]
     assignee: Resource
     reporter: Resource
-    comments: [Comment]
+    comment: CommentConnection
     children: [Issue]
     parent: String
   }
@@ -58,6 +58,13 @@ const typeDefs = gql`
     colorName: String!
   }
 
+  type CommentConnection {
+    comments: [Comment]!
+    maxResults: Int!
+    total: Int!
+    startAt: Int!
+  }
+
   type Comment {
     id: ID!
     author: Resource!
@@ -81,7 +88,8 @@ const typeDefs = gql`
 
   type Resource {
     key: ID!
-    name: String!
+    displayName: String
+    name: String
     team: String
   }
   

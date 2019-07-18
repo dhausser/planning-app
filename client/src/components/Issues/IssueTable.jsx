@@ -67,60 +67,62 @@ const head = {
   ],
 };
 
-const row = issue => ({
-  key: issue.id,
+const row = ({
+  key, summary, issuetype, status, priority, fixVersions, assignee = '',
+}) => ({
+  key,
   cells: [
     {
-      key: issue.id,
+      key,
       content: (
-        <Link to={`/issue/${issue.key}`}>{issue.key}</Link>
+        <Link to={`/issue/${key}`}>{key}</Link>
       ),
     },
     {
-      key: issue.summary,
-      content: issue.summary,
+      key: summary,
+      content: summary,
     },
     {
-      key: issue.issuetype,
-      content: issuetypeIconMap[issue.issuetype],
+      key: issuetype.id,
+      content: issuetypeIconMap[issuetype.id],
     },
     {
-      key: issue.status.category,
+      key: status.category,
       content: (
         <Status
-          text={issue.status.name}
+          text={status.name}
           color={
-          statusCatecoryColorMap[issue.status.statusCategory.id]
+          statusCatecoryColorMap[status.statusCategory.id]
       } />
       ),
     },
     {
-      key: (issue.assignee && issue.assignee.key) || '',
+      key: assignee && assignee.key,
       content: (
-        <Link to={`/resource/${(issue.assignee && issue.assignee.key) || ''}`}>
-          {(issue.assignee && issue.assignee.name) || ''}
+        <Link to={`/resource/${assignee && assignee.key}`}>
+          {assignee && assignee.displayName}
         </Link>
       ),
     },
     {
-      key: issue.priority,
-      content: priorityIconMap[issue.priority.id],
+      key: priority,
+      content: priorityIconMap[priority.id],
     },
     {
       key:
-        issue.fixVersions.length
-        && issue.fixVersions[issue.fixVersions.length - 1].id,
+        fixVersions.length
+        && fixVersions[fixVersions.length - 1].id,
       content:
-        (issue.fixVersions.length
-          && issue.fixVersions[issue.fixVersions.length - 1].name)
+        (fixVersions.length
+          && fixVersions[fixVersions.length - 1].name)
         || '',
     },
     {
       key: '',
       content: (
-        <Tooltip content={`View ${issue.key}`}>
+        <Tooltip content={`View ${key}`}>
           <a
-            href={`https://${process.env.REACT_APP_HOST}/browse/${issue.key}`}
+            href={`https://${process.env.REACT_APP_HOST}/browse/${key}`}
             target="_blank"
             rel="noopener noreferrer"
           >

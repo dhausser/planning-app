@@ -20,12 +20,12 @@ function Assignee({ assignee }) {
         <NameWrapper>
           <AvatarWrapper>
             <Avatar
-              name={assignee.name}
+              name={assignee.displayName}
               size="small"
               src={`https://${process.env.REACT_APP_HOST}/secure/useravatar?ownerId=${assignee.key}`}
             />
           </AvatarWrapper>
-          <Link to={`/resource/${assignee.key}`}>{assignee.name}</Link>
+          <Link to={`/resource/${assignee.key}`}>{assignee.displayName}</Link>
         </NameWrapper>
       ) : (
         <NameWrapper>

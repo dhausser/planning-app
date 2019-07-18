@@ -35,7 +35,7 @@ export const ISSUE_ROW_DATA = gql`
     }
     assignee {
       key
-      name
+      displayName
       team
     }
   }

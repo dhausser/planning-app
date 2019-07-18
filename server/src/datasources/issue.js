@@ -2,6 +2,42 @@ import { RESTDataSource } from 'apollo-datasource-rest';
 import { sign } from 'oauth-sign';
 import { consumerKey, consumerSecret } from '../passport';
 
+function aggregateByAssignee(issues) {
+  return issues.reduce((resources, issue) => {
+    if (issue.assignee && issue.assignee.name) {
+      const name = issue.assignee.name.split(' ').shift();
+      if (!resources[name]) {
+        resources[name] = 0;
+      }
+      resources[name] += 1;
+    }
+
+    return resources;
+  }, {});
+}
+
+function aggregateByTeam(issues) {
+  return issues.reduce((teams, issue) => {
+    if (issue.assignee && issue.assignee.team) {
+      const { team: teamName } = issue.assignee;
+      if (!teams[teamName]) {
+        teams[teamName] = 0;
+      }
+      teams[teamName] += 1;
+    }
+
+    return teams;
+  }, {});
+}
+
+function filterByTeam(issues, team) {
+  return team
+    ? this.aggregateByAssignee(
+      issues.filter(({ assignee }) => assignee.team === team.name),
+    )
+    : this.aggregateByTeam(issues);
+}
+
 class IssueAPI extends RESTDataSource {
   constructor() {
     super();
@@ -93,9 +129,6 @@ class IssueAPI extends RESTDataSource {
       assignee = assignee.map(({ key }) => key);
     }
 
-    /**
-     * TODO: List of issues is not ordered by priority on single resource page
-     */
     const jql = `statusCategory in (new, indeterminate)\
     ${projectId ? `AND project=${projectId}` : ''}\
     ${versionId ? `AND fixVersion=${versionId}` : ''}\
@@ -117,52 +150,12 @@ class IssueAPI extends RESTDataSource {
     });
 
     const issues = Array.isArray(response.issues)
-      ? response.issues.map(issue => this.issueReducer(issue))
+      ? response.issues.map(this.issueReducer)
       : [];
 
+    console.log(issues);
+
     return { ...response, issues };
-  }
-
-  aggregateByAssignee(issues) {
-    const { context } = this;
-
-    return issues.reduce((resources, issue) => {
-      if (issue.assignee && issue.assignee.name) {
-        const name = issue.assignee.name.split(' ').shift();
-        if (!resources[name]) {
-          resources[name] = 0;
-        }
-        resources[name] += 1;
-      }
-
-      return resources;
-    }, {});
-  }
-
-  aggregateByTeam(issues) {
-    const teams = this.context.dataSources.resourceAPI.getTeams();
-
-    return issues.reduce((teams, issue) => {
-      if (issue.assignee && issue.assignee.team) {
-        const { team: teamName } = issue.assignee;
-        if (!teams[teamName]) {
-          teams[teamName] = 0;
-        }
-        teams[teamName] += 1;
-      }
-
-      return teams;
-    }, {});
-  }
-
-  filterByTeam(issues, team) {
-    const { context } = this;
-
-    return team
-      ? this.aggregateByAssignee(
-        issues.filter(({ assignee }) => assignee.team === team.name),
-      )
-      : this.aggregateByTeam(issues);
   }
 
   async getDashboardIssues(projectId, versionId, teamId, maxResults = 1000) {
@@ -177,7 +170,18 @@ class IssueAPI extends RESTDataSource {
     });
 
     const issues = Array.isArray(response.issues)
-      ? response.issues.map(issue => this.dashboardIssueReducer(issue))
+      // ? response.issues.map(this.issueReducer)
+      ? response.issues.map(({ id, key, fields }) => ({
+        id,
+        key,
+        assignee: {
+          ...fields.assignee,
+          team:
+              (fields.assignee
+                && this.context.resourceMap[fields.assignee.key])
+              || null,
+        },
+      }))
       : [];
     return { ...response, issues };
   }
@@ -204,7 +208,21 @@ class IssueAPI extends RESTDataSource {
     });
 
     const issues = Array.isArray(response.issues)
-      ? response.issues.map(issue => this.roadmapIssueReducer(issue))
+      // ? response.issues.map(this.issueReducer)
+      ? response.issues.map(({ key, fields }) => ({
+        key,
+        ...fields,
+        children:
+          fields.subtasks
+          && fields.subtasks.map(issue => ({
+            key: issue.key,
+            ...issue.fields,
+          })),
+        parent:
+          fields.customfield_10006
+          || fields.customfield_20700
+          || fields.customfield_10014,
+      }))
       : [];
 
     issues
@@ -218,7 +236,7 @@ class IssueAPI extends RESTDataSource {
         }
       });
 
-    return issues.filter(({ issuetype, children }) => (issuetype.id === '10000' && children.length)); // && children.length);
+    return issues.filter(({ issuetype, children }) => (issuetype.id === '10000' && children.length));
   }
 
   async getIssueById(issueId) {
@@ -241,67 +259,15 @@ class IssueAPI extends RESTDataSource {
     }
   }
 
-  issueReducer(issue) {
+  issueReducer({ id, key, fields }) {
     return {
-      id: issue.id,
-      key: issue.key,
-      summary: issue.fields.summary,
-      issuetype: issue.fields.issuetype,
-      priority: issue.fields.priority,
-      status: issue.fields.status,
-      fixVersions: issue.fields.fixVersions,
-      description: issue.fields.description,
-      assignee: issue.fields.assignee && {
-        key: issue.fields.assignee.key,
-        name: issue.fields.assignee.displayName,
-        team: this.context.resourceMap[issue.fields.assignee.key],
+      id,
+      key,
+      assignee: fields.assignee && {
+        ...fields.assignee,
+        team: 'Gameplay', // this.context.resourceMap[fields.assignee.key],
       },
-      reporter: {
-        key: issue.fields.reporter && issue.fields.reporter.key,
-        name: issue.fields.reporter && issue.fields.reporter.displayName,
-      },
-      comments:
-        issue.fields.comment
-        && issue.fields.comment.comments.map(comment => ({
-          id: comment.id,
-          created: comment.created,
-          updated: comment.updated,
-          author: { key: comment.author.key, name: comment.author.displayName },
-          body: comment.body,
-        })),
-    };
-  }
-
-  dashboardIssueReducer(issue) {
-    return {
-      id: issue.id,
-      key: issue.key,
-      assignee: {
-        key: issue.fields.assignee && issue.fields.assignee.key,
-        name: issue.fields.assignee && issue.fields.assignee.displayName,
-        team:
-          (issue.fields.assignee
-            && this.context.resourceMap[issue.fields.assignee.key])
-          || null,
-      },
-    };
-  }
-
-  roadmapIssueReducer(issue) {
-    return {
-      key: issue.key,
-      summary: issue.fields.summary,
-      issuetype: issue.fields.issuetype,
-      status: issue.fields.status,
-      children:
-        issue.fields.subtasks
-        && issue.fields.subtasks.map(subtask => (
-          this.roadmapIssueReducer(subtask)
-        )),
-      parent:
-        issue.fields.customfield_10006
-        || issue.fields.customfield_20700
-        || issue.fields.customfield_10014,
+      ...fields,
     };
   }
 }
