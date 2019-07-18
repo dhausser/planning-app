@@ -10,9 +10,9 @@ import LinkIcon from '@atlaskit/icon/glyph/link';
 import PageIcon from '@atlaskit/icon/glyph/page';
 import MoreIcon from '@atlaskit/icon/glyph/more';
 
-import Icon from './Icon';
+import { issuetypeIconMap } from './Icon';
 
-function Summary({ id, summary, type }) {
+function Summary({ id, summary, issuetypeId }) {
   const breadcrumbs = (
     <BreadcrumbsStateless>
       <BreadcrumbsItem
@@ -22,7 +22,7 @@ function Summary({ id, summary, type }) {
       />
       <BreadcrumbsItem
         href={`/issue/${id}`}
-        iconBefore={Icon[type]}
+        iconBefore={issuetypeIconMap[issuetypeId]}
         text={id}
         key={id}
       />
@@ -55,7 +55,7 @@ function Summary({ id, summary, type }) {
 Summary.propTypes = {
   id: PropTypes.string.isRequired,
   summary: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
+  issuetypeId: PropTypes.string.isRequired,
 };
 
 export default Summary;

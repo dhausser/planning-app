@@ -17,17 +17,24 @@ import TableTree, {
   Cell,
 } from '@atlaskit/table-tree';
 import {
-  ProjectHomeView, VersionFilter, Icon,
+  ProjectHomeView, VersionFilter,
 } from '.';
+import { statusCatecoryColorMap, issuetypeIconMap } from './Issue/Icon';
+
 
 const ROADMAP_ROW_DATA = gql`
   fragment RoadmapRow on Issue {
     key
     summary
-    type
+    issuetype {
+      id
+      name
+    }
     status {
       name
-      category
+      statusCategory {
+        id
+      }
     }
   }
 `;
@@ -65,6 +72,8 @@ function Roadmap({ navigationViewController }) {
 
   const { data, loading, error } = useQuery(GET_ISSUES);
 
+  console.log(data);
+
   return (
     <>
       <PageHeader
@@ -98,7 +107,7 @@ function Roadmap({ navigationViewController }) {
               render={({
                 key,
                 summary,
-                type,
+                issuetype,
                 status,
                 children,
               }) => (
@@ -109,10 +118,10 @@ function Roadmap({ navigationViewController }) {
                   hasChildren={children && children.length > 0}
                   isDefaultExpanded={isExpanded}
                 >
-                  <Cell singleLine>{Icon[type]}</Cell>
+                  <Cell singleLine>{issuetypeIconMap[issuetype.id]}</Cell>
 
                   <Cell singleLine>
-                    <Status text={status.name} color={Icon[status.category]} />
+                    <Status text={status.name} color={statusCatecoryColorMap[status.statusCategory.id]} />
                   </Cell>
                   <Cell singleLine>
                     <Link to={`/issue/${key}`}>{summary}</Link>

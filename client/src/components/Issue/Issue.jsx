@@ -11,7 +11,7 @@ import Description from './Description';
 import Assignee from './Assignee';
 import UserPicker from './UserPicker';
 import Comments from './Comments';
-import Icon from './Icon';
+import { statusCatecoryColorMap, priorityIconMap } from './Icon';
 import { ProductIssuesView, Loading } from '..';
 
 const ISSUE_TILE_DATA = gql`
@@ -19,11 +19,19 @@ const ISSUE_TILE_DATA = gql`
     id
     key
     summary
-    type
-    priority
+    issuetype {
+      id
+      name
+    }
+    priority {
+      id
+      name
+    }
     status {
       name
-      category
+      statusCategory {
+        id
+      }
     }
     fixVersions {
       id
@@ -76,7 +84,7 @@ function Issue({ navigationViewController, match }) {
   return (
     <Grid>
       <GridColumn medium={8}>
-        <Summary id={issue.key} summary={issue.summary} type={issue.type} />
+        <Summary id={issue.key} summary={issue.summary} issuetypeId={issue.issuetype.id} />
         <Description description={issue.description} />
         <Comments comments={issue.comments} />
       </GridColumn>
@@ -91,14 +99,14 @@ function Issue({ navigationViewController, match }) {
         <p>Status</p>
         <Status
           text={issue.status.name}
-          color={Icon[issue.status.category]}
+          color={statusCatecoryColorMap[issue.status.statusCategory.id]}
         />
         <p>Assignee</p>
         <UserPicker assignee={issue.assignee} />
         <p>FixVersion</p>
         {issue.fixVersions[0] && issue.fixVersions[0].name}
         <p>Priotity</p>
-        {Icon[issue.priority]}
+        {priorityIconMap[issue.priority.id]}
         <p>Reporter</p>
         <Assignee assignee={issue.reporter} />
       </GridColumn>

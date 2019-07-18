@@ -44,9 +44,9 @@ const typeDefs = gql`
 
   type Issuetype {
     id: ID!
+    name: String!
     description: String!
     iconUrl: String!
-    name: String!
     subtask: Boolean!
     avatarId: Int!
   }

@@ -120,8 +120,6 @@ class IssueAPI extends RESTDataSource {
       ? response.issues.map(issue => this.issueReducer(issue))
       : [];
 
-    console.log(issues);
-
     return { ...response, issues };
   }
 
@@ -210,17 +208,17 @@ class IssueAPI extends RESTDataSource {
       : [];
 
     issues
-      .filter(({ type }) => type !== 'Epic')
+      .filter(({ issuetype }) => issuetype.id !== '10000')
       .forEach((issue) => {
         const parent = issues
-          .filter(({ type }) => type === 'Epic')
+          .filter(({ issuetype }) => issuetype.id === '10000')
           .find(epic => epic.key === issue.parent);
         if (parent) {
           parent.children.push(issue);
         }
       });
 
-    return issues.filter(({ type, children }) => type === 'Epic' && children.length);
+    return issues.filter(({ issuetype, children }) => (issuetype.id === '10000' && children.length)); // && children.length);
   }
 
   async getIssueById(issueId) {
@@ -248,8 +246,8 @@ class IssueAPI extends RESTDataSource {
       id: issue.id,
       key: issue.key,
       summary: issue.fields.summary,
-      priority: issue.fields.priority,
       issuetype: issue.fields.issuetype,
+      priority: issue.fields.priority,
       status: issue.fields.status,
       fixVersions: issue.fields.fixVersions,
       description: issue.fields.description,
@@ -291,29 +289,14 @@ class IssueAPI extends RESTDataSource {
 
   roadmapIssueReducer(issue) {
     return {
-      id: issue.id,
       key: issue.key,
       summary: issue.fields.summary,
-      priority: issue.fields.priority,
-      type: issue.fields.issuetype.name,
-      status: {
-        id: issue.fields.status.id,
-        name: issue.fields.status.name,
-        category: issue.fields.status.statusCategory.key,
-      },
-      fixVersions: issue.fields.fixVersions,
-      assignee: {
-        key: issue.fields.assignee && issue.fields.assignee.key,
-        name: issue.fields.assignee && issue.fields.assignee.displayName,
-        team:
-          (issue.fields.assignee
-            && this.context.resourceMap[issue.fields.assignee.key])
-          || null,
-      },
+      issuetype: issue.fields.issuetype,
+      status: issue.fields.status,
       children:
         issue.fields.subtasks
         && issue.fields.subtasks.map(subtask => (
-          this.issueReducer(subtask, this.context.resourceMap)
+          this.roadmapIssueReducer(subtask)
         )),
       parent:
         issue.fields.customfield_10006
