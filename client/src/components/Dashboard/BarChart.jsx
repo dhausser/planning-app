@@ -1,19 +1,6 @@
-/* eslint-disable no-param-reassign */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-// import { useQuery } from '@apollo/react-hooks';
-// import gql from 'graphql-tag';
 import Chart from 'chart.js';
-
-// const GET_FILTER = gql`
-//   query GetFilter {
-//     filter @client {
-//       team {
-//         name
-//       }
-//     }
-//   }
-// `;
 
 const transparency = '0.3';
 const colors = [
@@ -23,17 +10,18 @@ const colors = [
   { key: 'P200 - Pastelli', value: `rgba(135, 119, 217, ${transparency})` },
 ];
 
-const config = dataset => ({
+const config = ({ labels, values }) => ({
   type: 'bar',
   data: {
-    labels: Object.keys(dataset),
+    labels,
     datasets: [
       {
         label: '# of Issues',
-        data: Object.values(dataset),
-        backgroundColor: Object.entries(dataset).map(
-          (_entry, index) => colors[index % colors.length].value,
-        ),
+        data: values,
+        backgroundColor: colors[2].value,
+        // values.map(
+        //   (_entry, index) => colors[index % colors.length].value,
+        // ),
       },
     ],
   },
@@ -50,42 +38,27 @@ const config = dataset => ({
   },
 });
 
-function aggregateByTeam(issues) {
-  return issues.reduce((teams, issue) => {
-    if (issue.assignee && issue.assignee.team) {
-      const { team: teamName } = issue.assignee;
-      if (!teams[teamName]) {
-        teams[teamName] = 0;
-      }
-      teams[teamName] += 1;
-    }
-    return teams;
-  }, {});
-}
-
-function updateChart(chart, dataset) {
-  chart.data.labels = Object.keys(dataset);
-  chart.data.datasets[0].data = Object.values(dataset);
-  chart.data.datasets[0].backgroundColor = Object.entries(dataset).map(
-    (_entry, index) => colors[index % colors.length].value,
-  );
+function updateChart(chart, { labels, values }) {
+  chart.data.labels = labels;
+  chart.data.datasets[0].data = values;
+  // chart.data.datasets[0].backgroundColor = values.map(
+  //   (_entry, index) => colors[index % colors.length].value,
+  // );
   chart.update();
 }
 
-function BarChart({ issues, maxResults, total }) {
+function BarChart({
+  labels, values, maxResults, total,
+}) {
   const [chart, setChart] = useState(null);
-  const dataset = aggregateByTeam(issues);
-
-  // const { data: { filter: { team } } } = useQuery(GET_FILTER);
-  // const dataset = filterByTeam(issues, team);
 
   useEffect(() => {
     if (chart === null) {
-      setChart(new Chart('BarChart', config(dataset)));
+      setChart(new Chart('BarChart', config({ labels, values })));
     } else {
-      updateChart(chart, dataset);
+      updateChart(chart, { labels, values });
     }
-  }, [dataset, chart]);
+  }, [labels, values, chart]);
 
   const results = maxResults > total ? total : maxResults;
 
@@ -98,13 +71,14 @@ function BarChart({ issues, maxResults, total }) {
 }
 
 BarChart.defaultProps = {
-  issues: [],
+  // dataset: [],
   maxResults: 0,
   total: 0,
 };
 
 BarChart.propTypes = {
-  issues: PropTypes.arrayOf(PropTypes.objectOf),
+  labels: PropTypes.arrayOf(PropTypes.string).isRequired,
+  values: PropTypes.arrayOf(PropTypes.number).isRequired,
   maxResults: PropTypes.number,
   total: PropTypes.number,
 };

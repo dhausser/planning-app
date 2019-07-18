@@ -4,12 +4,12 @@ import { consumerKey, consumerSecret } from '../passport';
 
 function aggregateByAssignee(issues) {
   return issues.reduce((resources, issue) => {
-    if (issue.assignee && issue.assignee.name) {
-      const name = issue.assignee.name.split(' ').shift();
-      if (!resources[name]) {
-        resources[name] = 0;
+    if (issue.assignee && issue.assignee.displayName) {
+      const firstName = issue.assignee.displayName.split(' ').shift();
+      if (!resources[firstName]) {
+        resources[firstName] = 0;
       }
-      resources[name] += 1;
+      resources[firstName] += 1;
     }
 
     return resources;
@@ -28,14 +28,6 @@ function aggregateByTeam(issues) {
 
     return teams;
   }, {});
-}
-
-function filterByTeam(issues, team) {
-  return team
-    ? this.aggregateByAssignee(
-      issues.filter(({ assignee }) => assignee.team === team.name),
-    )
-    : this.aggregateByTeam(issues);
 }
 
 class IssueAPI extends RESTDataSource {
@@ -120,7 +112,7 @@ class IssueAPI extends RESTDataSource {
     return Array.isArray(response.values) ? response.values : [];
   }
 
-  async getIssues(projectId, versionId, teamId, resourceId, startAt, maxResults) {
+  async getIssues(projectId, versionId, teamId, resourceId, maxResults, startAt) {
     let assignee = null;
     if (resourceId) {
       assignee = resourceId;
@@ -147,21 +139,29 @@ class IssueAPI extends RESTDataSource {
         'fixVersions',
         'comment',
       ],
+      maxResults,
+      startAt,
     });
 
     const issues = Array.isArray(response.issues)
-      ? response.issues.map(this.issueReducer)
+      ? response.issues.map(({ id, key, fields }) => ({
+        id,
+        key,
+        ...fields,
+        assignee: fields.assignee && {
+          ...fields.assignee,
+          team: this.context.resourceMap[fields.assignee.key],
+        },
+      }))
       : [];
-
-    console.log(issues);
 
     return { ...response, issues };
   }
 
-  async getDashboardIssues(projectId, versionId, teamId, maxResults = 1000) {
+  async getDashboardIssues(projectId, versionId, teamId, maxResults = 500) {
     const jql = `statusCategory in (new, indeterminate)\
     ${projectId ? `AND project=${projectId}` : ''}\
-    ${versionId ? `AND fixVersion=${versionId}` : ''}`;
+    ${versionId ? `AND fixVersion=${versionId}` : ''} order by priority`;
 
     const response = await this.post('api/latest/search', {
       jql,
@@ -170,20 +170,25 @@ class IssueAPI extends RESTDataSource {
     });
 
     const issues = Array.isArray(response.issues)
-      // ? response.issues.map(this.issueReducer)
       ? response.issues.map(({ id, key, fields }) => ({
         id,
         key,
-        assignee: {
+        assignee: fields.assignee && {
           ...fields.assignee,
-          team:
-              (fields.assignee
-                && this.context.resourceMap[fields.assignee.key])
-              || null,
+          team: this.context.resourceMap[fields.assignee.key],
         },
       }))
       : [];
-    return { ...response, issues };
+
+    const data = teamId
+      ? aggregateByAssignee(issues.filter(({ assignee }) => assignee.team === teamId))
+      : aggregateByTeam(issues);
+
+    return {
+      ...response,
+      labels: Object.keys(data),
+      values: Object.values(data),
+    };
   }
 
   async getRoadmapIssues(projectId, versionId) {
@@ -208,7 +213,6 @@ class IssueAPI extends RESTDataSource {
     });
 
     const issues = Array.isArray(response.issues)
-      // ? response.issues.map(this.issueReducer)
       ? response.issues.map(({ key, fields }) => ({
         key,
         ...fields,
@@ -257,18 +261,6 @@ class IssueAPI extends RESTDataSource {
     if (assignee) {
       this.put(`api/latest/issue/${issueId}`, { fields: { assignee } });
     }
-  }
-
-  issueReducer({ id, key, fields }) {
-    return {
-      id,
-      key,
-      assignee: fields.assignee && {
-        ...fields.assignee,
-        team: 'Gameplay', // this.context.resourceMap[fields.assignee.key],
-      },
-      ...fields,
-    };
   }
 }
 

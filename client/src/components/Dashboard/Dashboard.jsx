@@ -28,12 +28,8 @@ const GET_ISSUES = gql`
     dashboardIssues(projectId: $projectId, versionId: $versionId, teamId: $teamId, startAt: $startAt, maxResults: $maxResults) {
       maxResults
       total
-      issues {
-        assignee {
-          name
-          team
-        }
-      }
+      labels
+      values
     }
   }
 `;
@@ -51,7 +47,7 @@ const barContent = (
 
 
 function Dashboard({ navigationViewController }) {
-  const { data, loading, error } = useQuery(GET_ISSUES, { variables: { maxResults: 1000 } });
+  const { data, loading, error } = useQuery(GET_ISSUES);
 
   useEffect(() => {
     navigationViewController.setView(ProductHomeView.id);

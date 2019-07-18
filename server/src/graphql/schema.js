@@ -3,7 +3,7 @@ import { gql } from 'apollo-server-express';
 const typeDefs = gql`
   type Query {
     issues(projectId: String, versionId: String, teamId: String, resourceId: String, startAt: Int, maxResults: Int): IssueConnection!
-    dashboardIssues(projectId: String, versionId: String, teamId: String, startAt: Int, maxResults: Int): IssueConnection!
+    dashboardIssues(projectId: String, versionId: String, teamId: String, startAt: Int, maxResults: Int): DashboardIssueConnection!
     roadmapIssues(projectId: String, versionId: String): [Issue]!
     issue(id: ID!): Issue
     versions(id: ID!, startAt: Int, maxResults: Int): [Version]
@@ -78,6 +78,14 @@ const typeDefs = gql`
     maxResults: Int!
     total: Int!
     issues: [Issue]!
+  }
+
+  type DashboardIssueConnection {
+    startAt: Int!
+    maxResults: Int!
+    total: Int!
+    labels: [String]
+    values: [Int]
   }
 
   type IssueUpdateResponse {
