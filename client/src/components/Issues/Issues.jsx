@@ -10,16 +10,24 @@ import {
 } from '..';
 import IssueTable from './IssueTable';
 
-export const ISSUE_TILE_DATA = gql`
-  fragment IssueTile on Issue {
+export const ISSUE_ROW_DATA = gql`
+  fragment IssueRow on Issue {
     id
     key
     summary
-    type
-    priority
+    issuetype {
+      id
+      name
+    }
+    priority {
+      id
+      name
+    }
     status {
       name
-      category
+      statusCategory {
+        id
+      }
     }
     fixVersions {
       id
@@ -57,12 +65,12 @@ const GET_ISSUES = gql`
     issues(projectId: $projectId, versionId: $versionId, teamId: $teamId, resourceId: $resourceId, startAt: $startAt, maxResults: $maxResults) {
       ...IssuePagination
       issues {
-        ...IssueTile
+        ...IssueRow
       }
     }
   }
   ${ISSUE_PAGINATION}
-  ${ISSUE_TILE_DATA}
+  ${ISSUE_ROW_DATA}
 `;
 
 const barContent = (
@@ -84,7 +92,7 @@ function Issues({ navigationViewController }) {
   return (
     <>
       <PageHeader bottomBar={barContent}>Search Issues</PageHeader>
-      <IssueTable {...useQuery(GET_ISSUES, { fetchPolicy: 'cache-and-network' })} />
+      <IssueTable {...useQuery(GET_ISSUES)} />
     </>
   );
 }

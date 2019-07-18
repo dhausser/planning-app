@@ -7,7 +7,7 @@ import Tooltip from '@atlaskit/tooltip';
 import CopyIcon from '@atlaskit/icon/glyph/copy';
 import { Status } from '@atlaskit/status';
 import EmptyState from '@atlaskit/empty-state';
-import { Icon } from '..';
+import { statusCatecoryColorMap, priorityIconMap, issuetypeIconMap } from '../Issue/Icon';
 
 const ROWS_PER_PAGE = 50;
 
@@ -81,13 +81,17 @@ const row = issue => ({
       content: issue.summary,
     },
     {
-      key: issue.type,
-      content: Icon[issue.type],
+      key: issue.issuetype,
+      content: issuetypeIconMap[issue.issuetype],
     },
     {
       key: issue.status.category,
       content: (
-        <Status text={issue.status.name} color={Icon[issue.status.category]} />
+        <Status
+          text={issue.status.name}
+          color={
+          statusCatecoryColorMap[issue.status.statusCategory.id]
+      } />
       ),
     },
     {
@@ -100,7 +104,7 @@ const row = issue => ({
     },
     {
       key: issue.priority,
-      content: Icon[issue.priority],
+      content: priorityIconMap[issue.priority.id],
     },
     {
       key:

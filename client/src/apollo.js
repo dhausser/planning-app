@@ -4,7 +4,6 @@ import { createHttpLink } from 'apollo-link-http';
 import { setContext } from 'apollo-link-context';
 import { resolvers, typeDefs } from './resolvers';
 
-// const uri = `${process.env.NODE_ENV === 'production' ? process.env.REACT_APP_URL : ''}/graphql`;
 const httpLink = createHttpLink({
   uri: '/graphql',
   credentials: 'same-origin',

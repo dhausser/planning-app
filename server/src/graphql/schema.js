@@ -15,6 +15,76 @@ const typeDefs = gql`
     absences(id: ID!, versionId: String): [Absence]!
   }
 
+  type Issue {
+    id: ID!
+    key: String!
+    summary: String!
+    priority: Priority!
+    issuetype: Issuetype!
+    description: String
+    status: Status!
+    fixVersions: [Version]
+    assignee: Resource
+    reporter: Resource
+    comments: [Comment]
+    children: [Issue]
+    parent: String
+  }
+
+  type Priority {
+    id: String
+    name: String
+  }
+
+  type Status {
+    id: ID!
+    name: String!
+    statusCategory: StatusCategory!
+  }
+
+  type Issuetype {
+    id: ID!
+    description: String!
+    iconUrl: String!
+    name: String!
+    subtask: Boolean!
+    avatarId: Int!
+  }
+
+  type StatusCategory {
+    id: ID!
+    key: String!
+    name: String!
+    colorName: String!
+  }
+
+  type Comment {
+    id: ID!
+    author: Resource!
+    body: String!
+    created: String!
+    updated: String
+  }
+
+  type IssueConnection {
+    startAt: Int!
+    maxResults: Int!
+    total: Int!
+    issues: [Issue]!
+  }
+
+  type IssueUpdateResponse {
+    success: Boolean!
+    message: String
+    issue: Issue
+  }
+
+  type Resource {
+    key: ID!
+    name: String!
+    team: String
+  }
+  
   type Project {
     id: ID!
     key: String!
@@ -33,55 +103,6 @@ const typeDefs = gql`
     id: ID!
     name: String!
     members: [Resource]!
-  }
-
-  type Issue {
-    id: ID!
-    key: String!
-    summary: String!
-    priority: String!
-    type: String!
-    description: String
-    status: Status!
-    fixVersions: [Version]
-    assignee: Resource
-    reporter: Resource
-    comments: [Comment]
-    children: [Issue]
-    parent: String
-  }
-
-  type IssueConnection {
-    startAt: Int!
-    maxResults: Int!
-    total: Int!
-    issues: [Issue]!
-  }
-
-  type IssueUpdateResponse {
-    success: Boolean!
-    message: String
-    issue: Issue
-  }
-
-  type Comment {
-    id: ID!
-    author: Resource!
-    body: String!
-    created: String!
-    updated: String
-  }
-
-  type Status {
-    id: ID!
-    name: String!
-    category: String!
-  }
-
-  type Resource {
-    key: ID
-    name: String
-    team: String
   }
 
   type Absence {

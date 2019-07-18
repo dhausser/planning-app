@@ -119,6 +119,9 @@ class IssueAPI extends RESTDataSource {
     const issues = Array.isArray(response.issues)
       ? response.issues.map(issue => this.issueReducer(issue))
       : [];
+
+    console.log(issues);
+
     return { ...response, issues };
   }
 
@@ -240,6 +243,37 @@ class IssueAPI extends RESTDataSource {
     }
   }
 
+  issueReducer(issue) {
+    return {
+      id: issue.id,
+      key: issue.key,
+      summary: issue.fields.summary,
+      priority: issue.fields.priority,
+      issuetype: issue.fields.issuetype,
+      status: issue.fields.status,
+      fixVersions: issue.fields.fixVersions,
+      description: issue.fields.description,
+      assignee: issue.fields.assignee && {
+        key: issue.fields.assignee.key,
+        name: issue.fields.assignee.displayName,
+        team: this.context.resourceMap[issue.fields.assignee.key],
+      },
+      reporter: {
+        key: issue.fields.reporter && issue.fields.reporter.key,
+        name: issue.fields.reporter && issue.fields.reporter.displayName,
+      },
+      comments:
+        issue.fields.comment
+        && issue.fields.comment.comments.map(comment => ({
+          id: comment.id,
+          created: comment.created,
+          updated: comment.updated,
+          author: { key: comment.author.key, name: comment.author.displayName },
+          body: comment.body,
+        })),
+    };
+  }
+
   dashboardIssueReducer(issue) {
     return {
       id: issue.id,
@@ -260,7 +294,7 @@ class IssueAPI extends RESTDataSource {
       id: issue.id,
       key: issue.key,
       summary: issue.fields.summary,
-      priority: issue.fields.priority.name,
+      priority: issue.fields.priority,
       type: issue.fields.issuetype.name,
       status: {
         id: issue.fields.status.id,
@@ -276,53 +310,6 @@ class IssueAPI extends RESTDataSource {
             && this.context.resourceMap[issue.fields.assignee.key])
           || null,
       },
-      children:
-        issue.fields.subtasks
-        && issue.fields.subtasks.map(subtask => (
-          this.issueReducer(subtask, this.context.resourceMap)
-        )),
-      parent:
-        issue.fields.customfield_10006
-        || issue.fields.customfield_20700
-        || issue.fields.customfield_10014,
-    };
-  }
-
-  issueReducer(issue) {
-    return {
-      id: issue.id,
-      key: issue.key,
-      summary: issue.fields.summary,
-      priority: issue.fields.priority.name,
-      type: issue.fields.issuetype.name,
-      status: {
-        id: issue.fields.status.id,
-        name: issue.fields.status.name,
-        category: issue.fields.status.statusCategory.key,
-      },
-      fixVersions: issue.fields.fixVersions,
-      description: issue.fields.description,
-      assignee: {
-        key: issue.fields.assignee && issue.fields.assignee.key,
-        name: issue.fields.assignee && issue.fields.assignee.displayName,
-        team:
-          (issue.fields.assignee
-            && this.context.resourceMap[issue.fields.assignee.key])
-          || null,
-      },
-      reporter: {
-        key: issue.fields.reporter && issue.fields.reporter.key,
-        name: issue.fields.reporter && issue.fields.reporter.displayName,
-      },
-      comments:
-        issue.fields.comment
-        && issue.fields.comment.comments.map(comment => ({
-          id: comment.id,
-          created: comment.created,
-          updated: comment.updated,
-          author: { key: comment.author.key, name: comment.author.displayName },
-          body: comment.body,
-        })),
       children:
         issue.fields.subtasks
         && issue.fields.subtasks.map(subtask => (

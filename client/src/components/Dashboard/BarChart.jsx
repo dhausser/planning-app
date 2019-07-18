@@ -50,19 +50,6 @@ const config = dataset => ({
   },
 });
 
-function aggregateByAssignee(issues) {
-  return issues.reduce((resources, issue) => {
-    if (issue.assignee && issue.assignee.name) {
-      const name = issue.assignee.name.split(' ').shift();
-      if (!resources[name]) {
-        resources[name] = 0;
-      }
-      resources[name] += 1;
-    }
-    return resources;
-  }, {});
-}
-
 function aggregateByTeam(issues) {
   return issues.reduce((teams, issue) => {
     if (issue.assignee && issue.assignee.team) {
@@ -74,14 +61,6 @@ function aggregateByTeam(issues) {
     }
     return teams;
   }, {});
-}
-
-function filterByTeam(issues, team) {
-  return team
-    ? aggregateByAssignee(
-      issues.filter(({ assignee }) => assignee.team === team.name),
-    )
-    : aggregateByTeam(issues);
 }
 
 function updateChart(chart, dataset) {
@@ -131,3 +110,24 @@ BarChart.propTypes = {
 };
 
 export default BarChart;
+
+// function aggregateByAssignee(issues) {
+//   return issues.reduce((resources, issue) => {
+//     if (issue.assignee && issue.assignee.name) {
+//       const name = issue.assignee.name.split(' ').shift();
+//       if (!resources[name]) {
+//         resources[name] = 0;
+//       }
+//       resources[name] += 1;
+//     }
+//     return resources;
+//   }, {});
+// }
+
+// function filterByTeam(issues, team) {
+//   return team
+//     ? aggregateByAssignee(
+//       issues.filter(({ assignee }) => assignee.team === team.name),
+//     )
+//     : aggregateByTeam(issues);
+// }

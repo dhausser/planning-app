@@ -24,9 +24,11 @@ router.get(
   }),
 );
 
-router.use(express.static(path.join(__dirname, '../build')));
-router.get('/*', (_req, res) => {
-  res.sendFile(path.join(__dirname, '../build', 'index.html'));
-});
+if (process.env.NODE_ENV === 'production') {
+  router.use(express.static(path.join(__dirname, '../build')));
+  router.get('/*', (_req, res) => {
+    res.sendFile(path.join(__dirname, '../build', 'index.html'));
+  });
+}
 
 export default router;

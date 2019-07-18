@@ -13,7 +13,7 @@ import {
   ProjectHomeView, ProjectFilter, VersionFilter, Loading, IssueTable,
 } from '..';
 import AbsencesTable from './AbsencesTable';
-import { ISSUE_TILE_DATA, ISSUE_PAGINATION } from '../Issues/Issues';
+import { ISSUE_ROW_DATA, ISSUE_PAGINATION } from '../Issues/Issues';
 
 const GET_ISSUES = gql`
   query GetIssues($projectId: String, $versionId: String, $resourceId: String, $startAt: Int, $maxResults: Int) {
@@ -28,12 +28,12 @@ const GET_ISSUES = gql`
     issues(projectId: $projectId, versionId: $versionId, resourceId: $resourceId, startAt: $startAt, maxResults: $maxResults) {
       ...IssuePagination
       issues {
-        ...IssueTile
+        ...IssueRow
       }
     }
   }
   ${ISSUE_PAGINATION}
-  ${ISSUE_TILE_DATA}
+  ${ISSUE_ROW_DATA}
 `;
 
 const GET_RESOURCE_NAME = gql`
