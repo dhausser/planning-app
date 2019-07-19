@@ -114,6 +114,7 @@ class IssueAPI extends RESTDataSource {
 
   async getIssues(projectId, versionId, teamId, resourceId, maxResults, startAt) {
     let assignee = null;
+
     if (resourceId) {
       assignee = resourceId;
     } else if (teamId) {
@@ -144,24 +145,27 @@ class IssueAPI extends RESTDataSource {
     });
 
     const issues = Array.isArray(response.issues)
-      ? response.issues.map(({ id, key, fields }) => ({
-        id,
-        key,
-        ...fields,
-        assignee: fields.assignee && {
-          ...fields.assignee,
-          team: this.context.resourceMap[fields.assignee.key],
-        },
-      }))
+      ? response.issues.map(issue => this.issueReducer(issue))
       : [];
 
     return { ...response, issues };
   }
 
   async getDashboardIssues(projectId, versionId, teamId, maxResults = 500) {
+    /**
+     * TODO:
+     * If no teamId then select all assignees in database
+     * Else if teamId then select members of the team
+     */
+    const resources = await this.context.dataSources.resourceAPI.getResources();
+    const assignee = resources.map(({ key }) => key);
+
+    // console.log(assignee);
+
     const jql = `statusCategory in (new, indeterminate)\
     ${projectId ? `AND project=${projectId}` : ''}\
-    ${versionId ? `AND fixVersion=${versionId}` : ''} order by priority`;
+    ${versionId ? `AND fixVersion=${versionId}` : ''}\
+    AND assignee in (${assignee}) order by priority`;
 
     const response = await this.post('api/latest/search', {
       jql,
@@ -180,8 +184,22 @@ class IssueAPI extends RESTDataSource {
       }))
       : [];
 
+    const { length } = issues;
+    let i = 0;
+    let count = 0;
+
+    for (;i < length; i += 1) {
+      if (issues[i].assignee.team) {
+        count += 1;
+      } else {
+        console.log(issues[i].assignee.key);
+      }
+    }
+
+    console.log(count);
+
     const data = teamId
-      ? aggregateByAssignee(issues.filter(({ assignee }) => assignee.team === teamId))
+      ? aggregateByAssignee(issues.filter(issue => issue.assignee.team === teamId))
       : aggregateByTeam(issues);
 
     return {
@@ -261,6 +279,18 @@ class IssueAPI extends RESTDataSource {
     if (assignee) {
       this.put(`api/latest/issue/${issueId}`, { fields: { assignee } });
     }
+  }
+
+  issueReducer({ id, key, fields }) {
+    return {
+      id,
+      key,
+      ...fields,
+      assignee: fields.assignee && {
+        ...fields.assignee,
+        team: this.context.resourceMap[fields.assignee.key],
+      },
+    };
   }
 }
 
