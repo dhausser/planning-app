@@ -119,7 +119,10 @@ class ResourceAPI extends DataSource {
             },
           },
           {
-            $sort: { name: 1 },
+            $addFields: { count: 0 },
+          },
+          {
+            $sort: { id: 1 },
           },
         ]);
     } catch (e) {

@@ -25,7 +25,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "nodemon -r esm main.js",
+    "start": "nodemon -r esm ./src/index.js",
     "dev": "node --experimental-modules index.js",
     "prod": "node -r esm main.js"
   },

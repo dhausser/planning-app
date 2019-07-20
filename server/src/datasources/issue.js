@@ -37,7 +37,9 @@ class IssueAPI extends RESTDataSource {
   }
 
   willSendRequest(req) {
-    req.headers.set('Authorization', this.signRequest(req));
+    req.headers.set('Authorization', this.baseURL === 'https://solarsystem.atlassian.net/rest/'
+      ? `Basic ${process.env.AUTH}`
+      : this.signRequest(req));
   }
 
   signRequest(req) {
@@ -102,13 +104,12 @@ class IssueAPI extends RESTDataSource {
   }
 
   async getVersions(projectId, startAt, maxResults) {
-    const response = await this.get(`api/latest/project/${projectId}/version`, {
+    const response = await this.get(`api/2/project/${projectId}/version`, {
       startAt,
       maxResults,
       orderBy: 'name',
     });
 
-    if (process.env.PLATFORM === 'cloud') return response;
     return Array.isArray(response.values) ? response.values : [];
   }
 
@@ -127,7 +128,7 @@ class IssueAPI extends RESTDataSource {
     ${versionId ? `AND fixVersion=${versionId}` : ''}\
     ${assignee ? `AND assignee in (${assignee})` : ''} order by priority desc`;
 
-    const response = await this.post('api/latest/search', {
+    const response = await this.post('api/2/search', {
       jql,
       fields: [
         'summary',
@@ -153,19 +154,18 @@ class IssueAPI extends RESTDataSource {
 
   async getDashboardIssues(projectId, versionId, teamId, maxResults = 500) {
     /**
-     * TODO:
-     * If no teamId then select all assignees in database
-     * Else if teamId then select members of the team
+     * TODO: Stack by team member if teamId is specified
      */
+    const teams = await this.context.dataSources.resourceAPI.getTeams();
     const resources = await this.context.dataSources.resourceAPI.getResources();
     const assignee = resources.map(({ key }) => key);
 
-    // console.log(assignee);
+    assignee.push('admin');
 
     const jql = `statusCategory in (new, indeterminate)\
     ${projectId ? `AND project=${projectId}` : ''}\
     ${versionId ? `AND fixVersion=${versionId}` : ''}\
-    AND assignee in (${assignee}) order by priority`;
+    ${assignee.length ? `AND assignee in (${assignee})` : ''} order by priority`;
 
     const response = await this.post('api/latest/search', {
       jql,
@@ -184,23 +184,28 @@ class IssueAPI extends RESTDataSource {
       }))
       : [];
 
-    const { length } = issues;
+    // Make an object from the teams array
+    const data = {};
+    let { length } = teams;
     let i = 0;
-    let count = 0;
 
     for (;i < length; i += 1) {
-      if (issues[i].assignee.team) {
-        count += 1;
-      } else {
-        console.log(issues[i].assignee.key);
+      data[teams[i].id] = 0;
+    }
+
+    // Iterate over issues and increment teams
+    ({ length } = issues);
+    i = 0;
+
+    for (;i < length; i += 1) {
+      if (data[issues[i].assignee.team]) {
+        data[issues[i].assignee.team] += 1;
       }
     }
 
-    console.log(count);
-
-    const data = teamId
-      ? aggregateByAssignee(issues.filter(issue => issue.assignee.team === teamId))
-      : aggregateByTeam(issues);
+    // const data = teamId
+    //   ? aggregateByAssignee(issues.filter(issue => issue.assignee.team === teamId))
+    //   : aggregateByTeam(issues);
 
     return {
       ...response,
@@ -215,7 +220,7 @@ class IssueAPI extends RESTDataSource {
     ${versionId ? `AND fixVersion = ${versionId} ` : ''}\
     ORDER BY issuetype ASC, status DESC`;
 
-    const response = await this.post('api/latest/search', {
+    const response = await this.post('api/2/search', {
       jql,
       fields: [
         'summary',
@@ -267,17 +272,17 @@ class IssueAPI extends RESTDataSource {
       'priority', 'fixVersions', 'comment',
     ];
 
-    const response = await this.get(`api/latest/issue/${issueId}`, { fields });
+    const response = await this.get(`api/2/issue/${issueId}`, { fields });
 
     return this.issueReducer(response);
   }
 
   editIssue(issueId, summary, assignee) {
     if (summary) {
-      this.put(`api/latest/issue/${issueId}`, { fields: { summary } });
+      this.put(`api/2/issue/${issueId}`, { fields: { summary } });
     }
     if (assignee) {
-      this.put(`api/latest/issue/${issueId}`, { fields: { assignee } });
+      this.put(`api/2/issue/${issueId}`, { fields: { assignee } });
     }
   }
 
