@@ -151,15 +151,18 @@ class IssueAPI extends RESTDataSource {
       maxResults,
     });
 
-    const { issues } = response;
-    const data = teamId
-      ? this.sumIssuesByAssignee(issues)
-      : this.sumIssuesByTeam(issues);
+    const { issues, total } = response;
+    const data = this.sumIssues(issues, teamId);
+
+    // const data = teamId
+    //   ? this.sumIssuesByAssignee(issues)
+    //   : this.sumIssuesByTeam(issues);
 
     return {
-      ...response,
       labels: Object.keys(data),
       values: Object.values(data),
+      maxResults,
+      total,
     };
   }
 
@@ -260,18 +263,15 @@ class IssueAPI extends RESTDataSource {
       : [];
   }
 
-  /**
-   * TODO: Merge sumIssues methods
-   */
-
   // eslint-disable-next-line class-methods-use-this
-  sumIssuesByAssignee(issues) {
+  sumIssues(issues, teamId) {
     const data = {};
     const { length } = issues;
     let i = 0;
 
     for (; i < length; i += 1) {
-      const { key } = issues[i].fields.assignee;
+      let { key } = issues[i].fields.assignee;
+      if (teamId) key = this.context.resourceMap[key];
       if (Object.prototype.hasOwnProperty.call(data, key)) {
         data[key] += 1;
       } else if (key != null) {
@@ -281,27 +281,45 @@ class IssueAPI extends RESTDataSource {
 
     return data;
   }
-
-  sumIssuesByTeam(issues) {
-    const data = {};
-    const { length } = issues;
-    let i = 0;
-
-    for (;i < length; i += 1) {
-      const { key } = issues[i].fields.assignee;
-      const team = this.context.resourceMap[key];
-      if (Object.prototype.hasOwnProperty.call(data, team)) {
-        data[team] += 1;
-      } else if (team != null) {
-        data[team] = 1;
-      }
-    }
-
-    return data;
-  }
 }
 
 export default IssueAPI;
+
+// eslint-disable-next-line class-methods-use-this
+// sumIssuesByAssignee(issues) {
+//   const data = {};
+//   const { length } = issues;
+//   let i = 0;
+
+//   for (; i < length; i += 1) {
+//     const { key } = issues[i].fields.assignee;
+//     if (Object.prototype.hasOwnProperty.call(data, key)) {
+//       data[key] += 1;
+//     } else if (key != null) {
+//       data[key] = 1;
+//     }
+//   }
+
+//   return data;
+// }
+
+// sumIssuesByTeam(issues) {
+//   const data = {};
+//   const { length } = issues;
+//   let i = 0;
+
+//   for (;i < length; i += 1) {
+//     const { key } = issues[i].fields.assignee;
+//     const team = this.context.resourceMap[key];
+//     if (Object.prototype.hasOwnProperty.call(data, team)) {
+//       data[team] += 1;
+//     } else if (team != null) {
+//       data[team] = 1;
+//     }
+//   }
+
+//   return data;
+// }
 
 // function aggregateByAssignee(issues) {
 //   return issues.reduce((resources, issue) => {
