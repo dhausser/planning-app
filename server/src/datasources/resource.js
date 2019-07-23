@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { DataSource } from 'apollo-datasource';
 
 class ResourceAPI extends DataSource {

@@ -10,34 +10,6 @@ function getQueryString({ projectId, versionId, assignee }) {
     order by priority`;
 }
 
-function aggregateByAssignee(issues) {
-  return issues.reduce((resources, issue) => {
-    if (issue.assignee && issue.assignee.displayName) {
-      const firstName = issue.assignee.displayName.split(' ').shift();
-      if (!resources[firstName]) {
-        resources[firstName] = 0;
-      }
-      resources[firstName] += 1;
-    }
-
-    return resources;
-  }, {});
-}
-
-function aggregateByTeam(issues) {
-  return issues.reduce((teams, issue) => {
-    if (issue.assignee && issue.assignee.team) {
-      const { team: teamName } = issue.assignee;
-      if (!teams[teamName]) {
-        teams[teamName] = 0;
-      }
-      teams[teamName] += 1;
-    }
-
-    return teams;
-  }, {});
-}
-
 class IssueAPI extends RESTDataSource {
   constructor() {
     super();
@@ -168,34 +140,21 @@ class IssueAPI extends RESTDataSource {
    * @param {String} maxResults Maximum number of issues to be fetched
    */
   async getDashboardIssues(projectId, versionId, teamId, maxResults = 1000) {
-    const teams = await this.context.dataSources.resourceAPI.getTeams();
+    const resources = teamId
+      ? await this.context.dataSources.resourceAPI.getResourcesByTeam({ teamId })
+      : await this.context.dataSources.resourceAPI.getResources();
+    const assignee = resources.map(({ key }) => key);
 
-    // Retrieve the list of assignee per team if teamId is provided or else all resources
-    let assignee;
-    if (teamId) {
-      /**
-       * TODO: MongoDB aggregation pipeline function to retrieve list of team members keys by teamId
-       */
-      const [team] = teams.filter(({ id }) => id === teamId);
-      const { members } = team;
-      assignee = members.map(({ key }) => key);
-    } else {
-      const resources = await this.context.dataSources.resourceAPI.getResources();
-      assignee = resources.map(({ key }) => key);
-    }
-
-    // Fetching issues from REST API
     const response = await this.post('api/latest/search', {
       jql: getQueryString({ projectId, versionId, assignee }),
       fields: ['assignee'],
       maxResults,
     });
 
-    // Reducing raw issues from REST to GraphQL schema defined data models
     const { issues } = response;
     const data = teamId
-      ? this.sumIssuesByAssignee(issues, assignee)
-      : this.sumIssuesByTeam(issues, teams);
+      ? this.sumIssuesByAssignee(issues)
+      : this.sumIssuesByTeam(issues);
 
     return {
       ...response,
@@ -301,44 +260,41 @@ class IssueAPI extends RESTDataSource {
       : [];
   }
 
+  /**
+   * TODO: Merge sumIssues methods
+   */
+
   // eslint-disable-next-line class-methods-use-this
-  sumIssuesByAssignee(issues, assignee) {
+  sumIssuesByAssignee(issues) {
     const data = {};
-    let { length } = assignee;
+    const { length } = issues;
     let i = 0;
 
     for (; i < length; i += 1) {
-      data[assignee[i]] = 0;
-    }
-
-    ({ length } = issues);
-    i = 0;
-
-    for (; i < length; i += 1) {
-      data[issues[i].fields.assignee.key] += 1;
+      const { key } = issues[i].fields.assignee;
+      if (Object.prototype.hasOwnProperty.call(data, key)) {
+        data[key] += 1;
+      } else if (key != null) {
+        data[key] = 1;
+      }
     }
 
     return data;
   }
 
-  sumIssuesByTeam(issues, teams) {
-  // Make an object from the teams array
+  sumIssuesByTeam(issues) {
     const data = {};
-    let { length } = teams;
+    const { length } = issues;
     let i = 0;
 
     for (;i < length; i += 1) {
-      data[teams[i].id] = 0;
-    }
-
-    ({ length } = issues);
-    i = 0;
-
-    // Iterate over issues and increment teams
-    for (;i < length; i += 1) {
       const { key } = issues[i].fields.assignee;
       const team = this.context.resourceMap[key];
-      if (Object.prototype.hasOwnProperty.call(data, team)) data[team] += 1;
+      if (Object.prototype.hasOwnProperty.call(data, team)) {
+        data[team] += 1;
+      } else if (team != null) {
+        data[team] = 1;
+      }
     }
 
     return data;
@@ -346,3 +302,31 @@ class IssueAPI extends RESTDataSource {
 }
 
 export default IssueAPI;
+
+// function aggregateByAssignee(issues) {
+//   return issues.reduce((resources, issue) => {
+//     if (issue.assignee && issue.assignee.displayName) {
+//       const firstName = issue.assignee.displayName.split(' ').shift();
+//       if (!resources[firstName]) {
+//         resources[firstName] = 0;
+//       }
+//       resources[firstName] += 1;
+//     }
+
+//     return resources;
+//   }, {});
+// }
+
+// function aggregateByTeam(issues) {
+//   return issues.reduce((teams, issue) => {
+//     if (issue.assignee && issue.assignee.team) {
+//       const { team: teamName } = issue.assignee;
+//       if (!teams[teamName]) {
+//         teams[teamName] = 0;
+//       }
+//       teams[teamName] += 1;
+//     }
+
+//     return teams;
+//   }, {});
+// }
