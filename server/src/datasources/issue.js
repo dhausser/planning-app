@@ -2,32 +2,12 @@ import { RESTDataSource } from 'apollo-datasource-rest';
 import { sign } from 'oauth-sign';
 import { consumerKey, consumerSecret } from '../passport';
 
-function aggregateByAssignee(issues) {
-  return issues.reduce((resources, issue) => {
-    if (issue.assignee && issue.assignee.displayName) {
-      const firstName = issue.assignee.displayName.split(' ').shift();
-      if (!resources[firstName]) {
-        resources[firstName] = 0;
-      }
-      resources[firstName] += 1;
-    }
-
-    return resources;
-  }, {});
-}
-
-function aggregateByTeam(issues) {
-  return issues.reduce((teams, issue) => {
-    if (issue.assignee && issue.assignee.team) {
-      const { team: teamName } = issue.assignee;
-      if (!teams[teamName]) {
-        teams[teamName] = 0;
-      }
-      teams[teamName] += 1;
-    }
-
-    return teams;
-  }, {});
+function getQueryString({ projectId, versionId, assignee }) {
+  return `statusCategory in (new, indeterminate)\
+    ${projectId ? `AND project=${projectId}` : ''}\
+    ${versionId ? `AND fixVersion=${versionId}` : ''}\
+    ${assignee.length ? `AND assignee in (${assignee})` : ''}\
+    order by priority`;
 }
 
 class IssueAPI extends RESTDataSource {
@@ -152,40 +132,92 @@ class IssueAPI extends RESTDataSource {
     return { ...response, issues };
   }
 
-  async getDashboardIssues(projectId, versionId, teamId, maxResults = 500) {
-    /**
-     * TODO: Stack by team member if teamId is specified
-     */
+  // function aggregateByAssignee(issues) {
+  //   return issues.reduce((resources, issue) => {
+  //     if (issue.assignee && issue.assignee.displayName) {
+  //       const firstName = issue.assignee.displayName.split(' ').shift();
+  //       if (!resources[firstName]) {
+  //         resources[firstName] = 0;
+  //       }
+  //       resources[firstName] += 1;
+  //     }
+
+  //     return resources;
+  //   }, {});
+  // }
+
+  // function aggregateByTeam(issues) {
+  //   return issues.reduce((teams, issue) => {
+  //     if (issue.assignee && issue.assignee.team) {
+  //       const { team: teamName } = issue.assignee;
+  //       if (!teams[teamName]) {
+  //         teams[teamName] = 0;
+  //       }
+  //       teams[teamName] += 1;
+  //     }
+
+  //     return teams;
+  //   }, {});
+  // }
+
+  /**
+   * Fetch issues for barchart dashboard and aggregate by team or assignee
+   * @param {String} projectId Project identifier
+   * @param {String} versionId Version identifier
+   * @param {String} teamId Team identifier
+   * @param {String} maxResults Maximum number of issues to be fetched
+   */
+  async getDashboardIssues(projectId, versionId, teamId, maxResults = 1000) {
     const teams = await this.context.dataSources.resourceAPI.getTeams();
-    const resources = await this.context.dataSources.resourceAPI.getResources();
-    const assignee = resources.map(({ key }) => key);
 
-    assignee.push('admin');
+    // Retrieve the list of assignee per team if teamId is provided or else all resources
+    let assignee;
+    if (teamId) {
+      /**
+       * TODO: MongoDB aggregation pipeline function to retrieve list of team members keys by teamId
+       */
+      const [team] = teams.filter(({ id }) => id === teamId);
+      const { members } = team;
+      assignee = members.map(({ key }) => key);
+    } else {
+      const resources = await this.context.dataSources.resourceAPI.getResources();
+      assignee = resources.map(({ key }) => key);
+    }
 
-    const jql = `statusCategory in (new, indeterminate)\
-    ${projectId ? `AND project=${projectId}` : ''}\
-    ${versionId ? `AND fixVersion=${versionId}` : ''}\
-    ${assignee.length ? `AND assignee in (${assignee})` : ''} order by priority`;
-
+    // Fetching issues from REST API
     const response = await this.post('api/latest/search', {
-      jql,
+      jql: getQueryString({ projectId, versionId, assignee }),
       fields: ['assignee'],
       maxResults,
     });
 
-    const issues = Array.isArray(response.issues)
-      ? response.issues.map(({ id, key, fields }) => ({
-        id,
-        key,
-        assignee: fields.assignee && {
-          ...fields.assignee,
-          team: this.context.resourceMap[fields.assignee.key],
-        },
-      }))
-      : [];
+    // Reducing raw issues from REST to GraphQL schema defined data models
+    const { issues } = response;
+    const data = {};
+
+    if (teamId) {
+      let { length } = assignee;
+      let i = 0;
+
+      for (; i < length; i += 1) {
+        data[assignee[i]] = 0;
+      }
+
+      ({ length } = issues);
+      i = 0;
+
+      for (; i < length; i += 1) {
+        data[issues[i].fields.assignee.key] += 1;
+      }
+
+      return {
+        ...response,
+        labels: Object.keys(data),
+        values: Object.values(data),
+      };
+    }
 
     // Make an object from the teams array
-    const data = {};
     let { length } = teams;
     let i = 0;
 
@@ -198,14 +230,10 @@ class IssueAPI extends RESTDataSource {
     i = 0;
 
     for (;i < length; i += 1) {
-      if (data[issues[i].assignee.team]) {
-        data[issues[i].assignee.team] += 1;
-      }
+      const { key } = issues[i].fields.assignee;
+      const team = this.context.resourceMap[key];
+      if (Object.prototype.hasOwnProperty.call(data, team)) data[team] += 1;
     }
-
-    // const data = teamId
-    //   ? aggregateByAssignee(issues.filter(issue => issue.assignee.team === teamId))
-    //   : aggregateByTeam(issues);
 
     return {
       ...response,
@@ -296,6 +324,19 @@ class IssueAPI extends RESTDataSource {
         team: this.context.resourceMap[fields.assignee.key],
       },
     };
+  }
+
+  issueDashboardReducer(issues) {
+    return Array.isArray(issues)
+      ? issues.map(({ id, key, fields }) => ({
+        id,
+        key,
+        assignee: fields.assignee && {
+          ...fields.assignee,
+          team: this.context.resourceMap[fields.assignee.key],
+        },
+      }))
+      : [];
   }
 }
 
