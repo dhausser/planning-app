@@ -10,6 +10,34 @@ function getQueryString({ projectId, versionId, assignee }) {
     order by priority`;
 }
 
+function aggregateByAssignee(issues) {
+  return issues.reduce((resources, issue) => {
+    if (issue.assignee && issue.assignee.displayName) {
+      const firstName = issue.assignee.displayName.split(' ').shift();
+      if (!resources[firstName]) {
+        resources[firstName] = 0;
+      }
+      resources[firstName] += 1;
+    }
+
+    return resources;
+  }, {});
+}
+
+function aggregateByTeam(issues) {
+  return issues.reduce((teams, issue) => {
+    if (issue.assignee && issue.assignee.team) {
+      const { team: teamName } = issue.assignee;
+      if (!teams[teamName]) {
+        teams[teamName] = 0;
+      }
+      teams[teamName] += 1;
+    }
+
+    return teams;
+  }, {});
+}
+
 class IssueAPI extends RESTDataSource {
   constructor() {
     super();
@@ -132,34 +160,6 @@ class IssueAPI extends RESTDataSource {
     return { ...response, issues };
   }
 
-  // function aggregateByAssignee(issues) {
-  //   return issues.reduce((resources, issue) => {
-  //     if (issue.assignee && issue.assignee.displayName) {
-  //       const firstName = issue.assignee.displayName.split(' ').shift();
-  //       if (!resources[firstName]) {
-  //         resources[firstName] = 0;
-  //       }
-  //       resources[firstName] += 1;
-  //     }
-
-  //     return resources;
-  //   }, {});
-  // }
-
-  // function aggregateByTeam(issues) {
-  //   return issues.reduce((teams, issue) => {
-  //     if (issue.assignee && issue.assignee.team) {
-  //       const { team: teamName } = issue.assignee;
-  //       if (!teams[teamName]) {
-  //         teams[teamName] = 0;
-  //       }
-  //       teams[teamName] += 1;
-  //     }
-
-  //     return teams;
-  //   }, {});
-  // }
-
   /**
    * Fetch issues for barchart dashboard and aggregate by team or assignee
    * @param {String} projectId Project identifier
@@ -193,47 +193,9 @@ class IssueAPI extends RESTDataSource {
 
     // Reducing raw issues from REST to GraphQL schema defined data models
     const { issues } = response;
-    const data = {};
-
-    if (teamId) {
-      let { length } = assignee;
-      let i = 0;
-
-      for (; i < length; i += 1) {
-        data[assignee[i]] = 0;
-      }
-
-      ({ length } = issues);
-      i = 0;
-
-      for (; i < length; i += 1) {
-        data[issues[i].fields.assignee.key] += 1;
-      }
-
-      return {
-        ...response,
-        labels: Object.keys(data),
-        values: Object.values(data),
-      };
-    }
-
-    // Make an object from the teams array
-    let { length } = teams;
-    let i = 0;
-
-    for (;i < length; i += 1) {
-      data[teams[i].id] = 0;
-    }
-
-    // Iterate over issues and increment teams
-    ({ length } = issues);
-    i = 0;
-
-    for (;i < length; i += 1) {
-      const { key } = issues[i].fields.assignee;
-      const team = this.context.resourceMap[key];
-      if (Object.prototype.hasOwnProperty.call(data, team)) data[team] += 1;
-    }
+    const data = teamId
+      ? this.sumIssuesByAssignee(issues, assignee)
+      : this.sumIssuesByTeam(issues, teams);
 
     return {
       ...response,
@@ -337,6 +299,49 @@ class IssueAPI extends RESTDataSource {
         },
       }))
       : [];
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  sumIssuesByAssignee(issues, assignee) {
+    const data = {};
+    let { length } = assignee;
+    let i = 0;
+
+    for (; i < length; i += 1) {
+      data[assignee[i]] = 0;
+    }
+
+    ({ length } = issues);
+    i = 0;
+
+    for (; i < length; i += 1) {
+      data[issues[i].fields.assignee.key] += 1;
+    }
+
+    return data;
+  }
+
+  sumIssuesByTeam(issues, teams) {
+  // Make an object from the teams array
+    const data = {};
+    let { length } = teams;
+    let i = 0;
+
+    for (;i < length; i += 1) {
+      data[teams[i].id] = 0;
+    }
+
+    ({ length } = issues);
+    i = 0;
+
+    // Iterate over issues and increment teams
+    for (;i < length; i += 1) {
+      const { key } = issues[i].fields.assignee;
+      const team = this.context.resourceMap[key];
+      if (Object.prototype.hasOwnProperty.call(data, team)) data[team] += 1;
+    }
+
+    return data;
   }
 }
 
