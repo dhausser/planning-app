@@ -263,7 +263,6 @@ class IssueAPI extends RESTDataSource {
       : [];
   }
 
-  // eslint-disable-next-line class-methods-use-this
   sumIssues(issues, teamId) {
     const data = {};
     const { length } = issues;
@@ -271,7 +270,7 @@ class IssueAPI extends RESTDataSource {
 
     for (; i < length; i += 1) {
       let { key } = issues[i].fields.assignee;
-      if (teamId) key = this.context.resourceMap[key];
+      if (!teamId) key = this.context.resourceMap[key];
       if (Object.prototype.hasOwnProperty.call(data, key)) {
         data[key] += 1;
       } else if (key != null) {
@@ -284,67 +283,3 @@ class IssueAPI extends RESTDataSource {
 }
 
 export default IssueAPI;
-
-// eslint-disable-next-line class-methods-use-this
-// sumIssuesByAssignee(issues) {
-//   const data = {};
-//   const { length } = issues;
-//   let i = 0;
-
-//   for (; i < length; i += 1) {
-//     const { key } = issues[i].fields.assignee;
-//     if (Object.prototype.hasOwnProperty.call(data, key)) {
-//       data[key] += 1;
-//     } else if (key != null) {
-//       data[key] = 1;
-//     }
-//   }
-
-//   return data;
-// }
-
-// sumIssuesByTeam(issues) {
-//   const data = {};
-//   const { length } = issues;
-//   let i = 0;
-
-//   for (;i < length; i += 1) {
-//     const { key } = issues[i].fields.assignee;
-//     const team = this.context.resourceMap[key];
-//     if (Object.prototype.hasOwnProperty.call(data, team)) {
-//       data[team] += 1;
-//     } else if (team != null) {
-//       data[team] = 1;
-//     }
-//   }
-
-//   return data;
-// }
-
-// function aggregateByAssignee(issues) {
-//   return issues.reduce((resources, issue) => {
-//     if (issue.assignee && issue.assignee.displayName) {
-//       const firstName = issue.assignee.displayName.split(' ').shift();
-//       if (!resources[firstName]) {
-//         resources[firstName] = 0;
-//       }
-//       resources[firstName] += 1;
-//     }
-
-//     return resources;
-//   }, {});
-// }
-
-// function aggregateByTeam(issues) {
-//   return issues.reduce((teams, issue) => {
-//     if (issue.assignee && issue.assignee.team) {
-//       const { team: teamName } = issue.assignee;
-//       if (!teams[teamName]) {
-//         teams[teamName] = 0;
-//       }
-//       teams[teamName] += 1;
-//     }
-
-//     return teams;
-//   }, {});
-// }
