@@ -2,6 +2,38 @@ import { RESTDataSource } from 'apollo-datasource-rest';
 import { sign } from 'oauth-sign';
 import { consumerKey, consumerSecret } from '../passport';
 
+function aggregateIssueTree(rawIssues) {
+  const issues = Array.isArray(rawIssues)
+    ? rawIssues.map(({ key, fields }) => ({
+      key,
+      ...fields,
+      children:
+      fields.subtasks
+      && fields.subtasks.map(issue => ({
+        key: issue.key,
+        ...issue.fields,
+      })),
+      parent:
+      fields.customfield_10006
+      || fields.customfield_20700
+      || fields.customfield_10014,
+    }))
+    : [];
+
+  issues
+    .filter(({ issuetype }) => issuetype.id !== '10000')
+    .forEach((issue) => {
+      const parent = issues
+        .filter(({ issuetype }) => issuetype.id === '10000')
+        .find(epic => epic.key === issue.parent);
+      if (parent) {
+        parent.children.push(issue);
+      }
+    });
+
+  return issues.filter(({ issuetype }) => (issuetype.id === '10000'));
+}
+
 function getIssuesQueryString({ projectId, versionId, assignee }) {
   return `statusCategory in (new, indeterminate)\
     ${projectId ? `AND project=${projectId}` : ''}\
@@ -211,35 +243,21 @@ class IssueAPI extends RESTDataSource {
       maxResults: 250,
     });
 
-    const issues = Array.isArray(response.issues)
-      ? response.issues.map(({ key, fields }) => ({
-        key,
-        ...fields,
-        children:
-          fields.subtasks
-          && fields.subtasks.map(issue => ({
-            key: issue.key,
-            ...issue.fields,
-          })),
-        parent:
-          fields.customfield_10006
-          || fields.customfield_20700
-          || fields.customfield_10014,
-      }))
-      : [];
+    const { issues, issues: { length } } = response;
+    const issueTree = {};
+    let i = 0;
 
-    issues
-      .filter(({ issuetype }) => issuetype.id !== '10000')
-      .forEach((issue) => {
-        const parent = issues
-          .filter(({ issuetype }) => issuetype.id === '10000')
-          .find(epic => epic.key === issue.parent);
-        if (parent) {
-          parent.children.push(issue);
-        }
-      });
+    for (; i < length; i += 1) {
+      const issue = issues[i];
 
-    return issues.filter(({ issuetype, children }) => (issuetype.id === '10000' && children.length));
+      if (issue.fields.issuetype.id === '10000') {
+        issueTree[issue.id] = issue;
+      }
+    }
+
+    // console.log(issueTree);
+
+    return aggregateIssueTree(response.issues);
   }
 
   /**

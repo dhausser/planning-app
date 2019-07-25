@@ -71,6 +71,8 @@ function Roadmap({ navigationViewController }) {
 
   const { data, loading, error } = useQuery(GET_ISSUES);
 
+  console.table(data.roadmapIssues);
+
   return (
     <>
       <PageHeader
