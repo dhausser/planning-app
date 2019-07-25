@@ -14,6 +14,13 @@ const AppSwitcherComponent = props => (
   />
 );
 
+/**
+ * TODO: Fetch current user Id
+ */
+const user = {
+  id: 'davy.hausser',
+};
+
 export default () => (
   <GlobalNavigation
     productIcon={JiraSoftwareIcon}
@@ -29,6 +36,6 @@ export default () => (
     appSwitcherTooltip="Switch to ..."
     onSettingsClick={() => console.log('settings clicked')}
     profileItems={() => <div />}
-    profileIconUrl="https://solarsystem.atlassian.net/secure/useravatar?ownerId=admin"
+    profileIconUrl={`https://${process.env.REACT_APP_HOST}/secure/useravatar?ownerId=${user.id}`}
   />
 );

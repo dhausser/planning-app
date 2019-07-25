@@ -5,9 +5,8 @@ import gql from 'graphql-tag';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import PageHeader from '@atlaskit/page-header';
 import TextField from '@atlaskit/textfield';
-import {
-  ProductIssuesView, ProjectFilter, VersionFilter, TeamFilter,
-} from '..';
+import { ProductIssuesView } from '..';
+import { ProjectFilter, VersionFilter, TeamFilter } from '../Filters';
 import IssueTable from './IssueTable';
 
 export const ISSUE_ROW_DATA = gql`

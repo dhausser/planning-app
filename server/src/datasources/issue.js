@@ -2,13 +2,28 @@ import { RESTDataSource } from 'apollo-datasource-rest';
 import { sign } from 'oauth-sign';
 import { consumerKey, consumerSecret } from '../passport';
 
-function getQueryString({ projectId, versionId, assignee }) {
+function getIssuesQueryString({ projectId, versionId, assignee }) {
+  return `statusCategory in (new, indeterminate)\
+    ${projectId ? `AND project=${projectId}` : ''}\
+    ${versionId ? `AND fixVersion=${versionId}` : ''}\
+    ${assignee ? `AND assignee in (${assignee})` : ''} order by priority desc`;
+}
+
+function getDashboardQueryString({ projectId, versionId, assignee }) {
   return `statusCategory in (new, indeterminate)\
     ${projectId ? `AND project=${projectId}` : ''}\
     ${versionId ? `AND fixVersion=${versionId}` : ''}\
     ${assignee.length ? `AND assignee in (${assignee})` : ''}\
     order by priority`;
 }
+
+function getRoadmapQueryString({ projectId, versionId }) {
+  return `(issuetype = Epic OR issueType in (Story, Task) AND "Epic Link" is not EMPTY) AND status != closed
+  ${projectId ? `AND project = ${projectId} ` : ''}\
+  ${versionId ? `AND fixVersion = ${versionId} ` : ''}\
+  ORDER BY issuetype ASC, status DESC`;
+}
+
 
 class IssueAPI extends RESTDataSource {
   constructor() {
@@ -64,6 +79,9 @@ class IssueAPI extends RESTDataSource {
       oauth_version="${oauthVersion}"`;
   }
 
+  /**
+   * Fetch all projects
+   */
   async getProjects() {
     const response = await this.get('api/latest/project');
 
@@ -83,6 +101,12 @@ class IssueAPI extends RESTDataSource {
     return projects;
   }
 
+  /**
+   * Fetch all version for project
+   * @param {String} projectId Project identifier
+   * @param {String} maxResults Maximum number of issues to be fetched
+   * @param {String} startAt Starting index number of issues to be fetched
+   */
   async getVersions(projectId, startAt, maxResults) {
     const response = await this.get(`api/2/project/${projectId}/version`, {
       startAt,
@@ -93,6 +117,15 @@ class IssueAPI extends RESTDataSource {
     return Array.isArray(response.values) ? response.values : [];
   }
 
+  /**
+   * Fetch issues for issues table
+   * @param {String} projectId Project identifier
+   * @param {String} versionId Version identifier
+   * @param {String} teamId Team identifier
+   * @param {String} resourceId Single resource identifier
+   * @param {String} maxResults Maximum number of issues to be fetched
+   * @param {String} startAt Starting index number of issues to be fetched
+   */
   async getIssues(projectId, versionId, teamId, resourceId, maxResults, startAt) {
     let assignee = null;
 
@@ -103,13 +136,8 @@ class IssueAPI extends RESTDataSource {
       assignee = assignee.map(({ key }) => key);
     }
 
-    const jql = `statusCategory in (new, indeterminate)\
-    ${projectId ? `AND project=${projectId}` : ''}\
-    ${versionId ? `AND fixVersion=${versionId}` : ''}\
-    ${assignee ? `AND assignee in (${assignee})` : ''} order by priority desc`;
-
     const response = await this.post('api/2/search', {
-      jql,
+      jql: getIssuesQueryString({ projectId, versionId, assignee }),
       fields: [
         'summary',
         'description',
@@ -146,17 +174,13 @@ class IssueAPI extends RESTDataSource {
     const assignee = resources.map(({ key }) => key);
 
     const response = await this.post('api/latest/search', {
-      jql: getQueryString({ projectId, versionId, assignee }),
+      jql: getDashboardQueryString({ projectId, versionId, assignee }),
       fields: ['assignee'],
       maxResults,
     });
 
     const { issues, total } = response;
     const data = this.sumIssues(issues, teamId);
-
-    // const data = teamId
-    //   ? this.sumIssuesByAssignee(issues)
-    //   : this.sumIssuesByTeam(issues);
 
     return {
       labels: Object.keys(data),
@@ -166,14 +190,14 @@ class IssueAPI extends RESTDataSource {
     };
   }
 
+  /**
+   * Fetch issues for roadmap table tree
+   * @param {String} projectId Project identifier
+   * @param {String} versionId Version identifier
+   */
   async getRoadmapIssues(projectId, versionId) {
-    const jql = `(issuetype = Epic OR issueType in (Story, Task) AND "Epic Link" is not EMPTY) AND status != closed
-    ${projectId ? `AND project = ${projectId} ` : ''}\
-    ${versionId ? `AND fixVersion = ${versionId} ` : ''}\
-    ORDER BY issuetype ASC, status DESC`;
-
     const response = await this.post('api/2/search', {
-      jql,
+      jql: getRoadmapQueryString({ projectId, versionId }),
       fields: [
         'summary',
         'status',
@@ -218,6 +242,10 @@ class IssueAPI extends RESTDataSource {
     return issues.filter(({ issuetype, children }) => (issuetype.id === '10000' && children.length));
   }
 
+  /**
+   * Fetch single issue by id
+   * @param {String} issueId Issue identifier
+   */
   async getIssueById(issueId) {
     const fields = [
       'summary', 'description', 'status', 'assignee', 'reporter', 'issuetype',

@@ -9,9 +9,9 @@ import Avatar from '@atlaskit/avatar';
 import EmptyState from '@atlaskit/empty-state';
 import PageHeader from '@atlaskit/page-header';
 import TextField from '@atlaskit/textfield';
-import {
-  ProjectHomeView, ProjectFilter, VersionFilter, Loading, IssueTable,
-} from '..';
+import { ProjectHomeView, Loading } from '..';
+import { ProjectFilter, VersionFilter } from '../Filters';
+import IssueTable from '../Issues/IssueTable';
 import AbsencesTable from './AbsencesTable';
 import { ISSUE_ROW_DATA, ISSUE_PAGINATION } from '../Issues/Issues';
 

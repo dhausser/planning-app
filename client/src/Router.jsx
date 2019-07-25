@@ -3,27 +3,25 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
-
 import { withNavigationViewController, LayoutManagerWithViewController } from '@atlaskit/navigation-next';
-import {
-  GlobalNavigation,
-  ProductHomeView,
-  ProductIssuesView,
-  ProjectHomeView,
-  Login,
-  Dashboard,
-  Portfolio,
-  Roadmap,
-  Backlog,
-  Resource,
-  Resources,
-  Issue,
-  Issues,
-  Reports,
-  Releases,
-  Settings,
-  Projects,
-} from './components';
+
+import GlobalNavigation from './components/Nav/GlobalNavigation';
+import ProductHomeView from './components/Nav/ProductHomeView';
+import ProductIssuesView from './components/Nav/ProductIssuesView';
+import ProjectHomeView from './components/Nav/ProjectHomeView';
+import Dashboard from './components/Dashboard/Dashboard';
+import Portfolio from './components/Portfolio';
+import Resource from './components/Resource/Resource';
+import Resources from './components/Resources';
+import Roadmap from './components/Roadmap';
+import Issues from './components/Issues/Issues';
+import Issue from './components/Issue/Issue';
+import Projects from './components/Projects';
+import Backlog from './components/Backlog';
+import Releases from './components/Releases';
+import Reports from './components/Reports';
+import Settings from './components/Settings';
+import Login from './components/Login/Login';
 
 const IS_LOGGED_IN = gql`
   query IsUserLoggedIn {

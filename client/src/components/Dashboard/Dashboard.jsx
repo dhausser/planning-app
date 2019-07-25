@@ -8,9 +8,9 @@ import { withNavigationViewController } from '@atlaskit/navigation-next';
 import TextField from '@atlaskit/textfield';
 import EmptyState from '@atlaskit/empty-state';
 import BarChart from './BarChart';
-import {
-  ProductHomeView, ProjectFilter, VersionFilter, TeamFilter, Loading,
-} from '..';
+import { ProductHomeView, Loading } from '..';
+import { ProjectFilter, VersionFilter, TeamFilter } from '../Filters';
+
 
 const GET_ISSUES = gql`
   query GetDashboardIssues($projectId: String, $versionId: String, $teamId: String, $startAt: Int, $maxResults: Int) {

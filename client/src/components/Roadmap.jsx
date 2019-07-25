@@ -16,9 +16,8 @@ import TableTree, {
   Row,
   Cell,
 } from '@atlaskit/table-tree';
-import {
-  ProjectHomeView, VersionFilter,
-} from '.';
+import { ProjectHomeView } from '.';
+import { VersionFilter } from './Filters';
 import { statusCatecoryColorMap, issuetypeIconMap } from './Issue/Icon';
 
 
@@ -119,7 +118,10 @@ function Roadmap({ navigationViewController }) {
                   <Cell singleLine>{issuetypeIconMap[issuetype.id]}</Cell>
 
                   <Cell singleLine>
-                    <Status text={status.name} color={statusCatecoryColorMap[status.statusCategory.id]} />
+                    <Status
+                      text={status.name}
+                      color={statusCatecoryColorMap[status.statusCategory.id]}
+                    />
                   </Cell>
                   <Cell singleLine>
                     <Link to={`/issue/${key}`}>{summary}</Link>

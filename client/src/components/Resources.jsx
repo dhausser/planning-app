@@ -10,9 +10,9 @@ import Avatar from '@atlaskit/avatar';
 import EmptyState from '@atlaskit/empty-state';
 import PageHeader from '@atlaskit/page-header';
 import TextField from '@atlaskit/textfield';
-import {
-  ProjectHomeView, TeamFilter,
-} from '.';
+import { ProjectHomeView } from '.';
+import { TeamFilter } from './Filters';
+
 
 const GET_FILTER = gql`
   query GetFilter {
@@ -85,7 +85,8 @@ const rows = resources => resources.map(resource => ({
           <Avatar
             name={resource.name}
             size="medium"
-            src={`https://jira.cdprojektred.com/secure/useravatar?ownerId=${
+            src={`https://${
+              process.env.REACT_APP_HOST}/secure/useravatar?ownerId=${
               resource.key
             }`}
           />
