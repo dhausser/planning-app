@@ -24,15 +24,17 @@ import { statusCatecoryColorMap, issuetypeIconMap } from './Issue/Icon';
 const ROADMAP_ROW_DATA = gql`
   fragment RoadmapRow on Issue {
     key
-    summary
-    issuetype {
-      id
-      name
-    }
-    status {
-      name
-      statusCategory {
+    fields {
+      summary
+      issuetype {
         id
+        name
+      }
+      status {
+        name
+        statusCategory {
+          id
+        }
       }
     }
   }
@@ -71,8 +73,6 @@ function Roadmap({ navigationViewController }) {
 
   const { data, loading, error } = useQuery(GET_ISSUES);
 
-  console.table(data.roadmapIssues);
-
   return (
     <>
       <PageHeader
@@ -105,9 +105,7 @@ function Roadmap({ navigationViewController }) {
               items={loading ? null : data.roadmapIssues}
               render={({
                 key,
-                summary,
-                issuetype,
-                status,
+                fields,
                 children,
               }) => (
                 <Row
@@ -117,16 +115,16 @@ function Roadmap({ navigationViewController }) {
                   hasChildren={children && children.length > 0}
                   isDefaultExpanded={isExpanded}
                 >
-                  <Cell singleLine>{issuetypeIconMap[issuetype.id]}</Cell>
+                  <Cell singleLine>{issuetypeIconMap[fields.issuetype.id]}</Cell>
 
                   <Cell singleLine>
                     <Status
-                      text={status.name}
-                      color={statusCatecoryColorMap[status.statusCategory.id]}
+                      text={fields.status.name}
+                      color={statusCatecoryColorMap[fields.status.statusCategory.id]}
                     />
                   </Cell>
                   <Cell singleLine>
-                    <Link to={`/issue/${key}`}>{summary}</Link>
+                    <Link to={`/issue/${key}`}>{fields.summary}</Link>
                   </Cell>
                 </Row>
               )}

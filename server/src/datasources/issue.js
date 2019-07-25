@@ -2,36 +2,14 @@ import { RESTDataSource } from 'apollo-datasource-rest';
 import { sign } from 'oauth-sign';
 import { consumerKey, consumerSecret } from '../passport';
 
-function aggregateIssueTree(rawIssues) {
-  const issues = Array.isArray(rawIssues)
-    ? rawIssues.map(({ key, fields }) => ({
-      key,
-      ...fields,
-      children:
-      fields.subtasks
-      && fields.subtasks.map(issue => ({
-        key: issue.key,
-        ...issue.fields,
-      })),
-      parent:
-      fields.customfield_10006
-      || fields.customfield_20700
-      || fields.customfield_10014,
-    }))
-    : [];
-
-  issues
-    .filter(({ issuetype }) => issuetype.id !== '10000')
-    .forEach((issue) => {
-      const parent = issues
-        .filter(({ issuetype }) => issuetype.id === '10000')
-        .find(epic => epic.key === issue.parent);
-      if (parent) {
-        parent.children.push(issue);
-      }
-    });
-
-  return issues.filter(({ issuetype }) => (issuetype.id === '10000'));
+function addPropertyToObject({ object, property, issue }) {
+  Object.defineProperty(object, property, {
+    value: {
+      ...issue,
+      children: [],
+    },
+    enumerable: true,
+  });
 }
 
 function getIssuesQueryString({ projectId, versionId, assignee }) {
@@ -63,10 +41,12 @@ class IssueAPI extends RESTDataSource {
     this.baseURL = `https://${process.env.HOST}/rest/`;
   }
 
+  // eslint-disable-next-line class-methods-use-this
   willSendRequest(req) {
-    req.headers.set('Authorization', this.baseURL === 'https://solarsystem.atlassian.net/rest/'
-      ? `Basic ${process.env.AUTH}`
-      : this.signRequest(req));
+    req.headers.set('Authorization', `Basic ${process.env.AUTH}`);
+    // req.headers.set('Authorization', this.baseURL === 'https://solarsystem.atlassian.net/rest/'
+    //   ? `Basic ${process.env.AUTH}`
+    //   : this.signRequest(req));
   }
 
   signRequest(req) {
@@ -240,24 +220,34 @@ class IssueAPI extends RESTDataSource {
         'subtasks',
         'customfield_10006',
       ],
-      maxResults: 250,
+      maxResults: 100,
     });
 
     const { issues, issues: { length } } = response;
-    const issueTree = {};
+    const data = {};
     let i = 0;
 
     for (; i < length; i += 1) {
-      const issue = issues[i];
+      const issue = {
+        ...issues[i],
+        children: issues[i].fields.subtasks,
+      };
 
       if (issue.fields.issuetype.id === '10000') {
-        issueTree[issue.id] = issue;
+        addPropertyToObject({ object: data, property: issue.key, issue });
+      } else {
+        const { customfield_10006: parent } = issue.fields;
+
+        if (!Object.prototype.hasOwnProperty.call(data, parent)) {
+          addPropertyToObject({ object: data, property: parent, issue });
+        }
+
+        const { children } = data[parent];
+        data[parent].children = [issue, ...children];
       }
     }
 
-    // console.log(issueTree);
-
-    return aggregateIssueTree(response.issues);
+    return Object.values(data);
   }
 
   /**
@@ -329,3 +319,35 @@ class IssueAPI extends RESTDataSource {
 }
 
 export default IssueAPI;
+
+// function aggregateIssueTree(rawIssues) {
+//   const issues = Array.isArray(rawIssues)
+//     ? rawIssues.map(({ key, fields }) => ({
+//       key,
+//       ...fields,
+//       children:
+//       fields.subtasks
+//       && fields.subtasks.map(issue => ({
+//         key: issue.key,
+//         ...issue.fields,
+//       })),
+//       parent:
+//       fields.customfield_10006
+//       || fields.customfield_20700
+//       || fields.customfield_10014,
+//     }))
+//     : [];
+
+//   issues
+//     .filter(({ issuetype }) => issuetype.id !== '10000')
+//     .forEach((issue) => {
+//       const parent = issues
+//         .filter(({ issuetype }) => issuetype.id === '10000')
+//         .find(epic => epic.key === issue.parent);
+//       if (parent) {
+//         parent.children.push(issue);
+//       }
+//     });
+
+//   return issues.filter(({ issuetype }) => (issuetype.id === '10000'));
+// }
