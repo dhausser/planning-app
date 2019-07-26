@@ -28,7 +28,7 @@ function getDashboardQueryString({ projectId, versionId, assignee }) {
 }
 
 function getRoadmapQueryString({ projectId, versionId }) {
-  return `(issuetype = Epic OR issueType in (Story, Task) AND "Epic Link" is not EMPTY) AND status != closed
+  return `(issuetype = Epic OR issueType in (Story, Task) AND "Epic Link" is not EMPTY)
   ${projectId ? `AND project = ${projectId} ` : ''}\
   ${versionId ? `AND fixVersion = ${versionId} ` : ''}\
   ORDER BY issuetype ASC, status DESC`;
@@ -43,10 +43,10 @@ class IssueAPI extends RESTDataSource {
 
   // eslint-disable-next-line class-methods-use-this
   willSendRequest(req) {
-    req.headers.set('Authorization', `Basic ${process.env.AUTH}`);
-    // req.headers.set('Authorization', this.baseURL === 'https://solarsystem.atlassian.net/rest/'
-    //   ? `Basic ${process.env.AUTH}`
-    //   : this.signRequest(req));
+    // req.headers.set('Authorization', `Basic ${process.env.AUTH}`);
+    req.headers.set('Authorization', this.baseURL === 'https://solarsystem.atlassian.net/rest/'
+      ? `Basic ${process.env.AUTH}`
+      : this.signRequest(req));
   }
 
   signRequest(req) {
@@ -208,20 +208,11 @@ class IssueAPI extends RESTDataSource {
    * @param {String} versionId Version identifier
    */
   async getRoadmapIssues(projectId, versionId) {
-    const response = await this.post('api/2/search', {
-      jql: getRoadmapQueryString({ projectId, versionId }),
-      fields: [
-        'summary',
-        'status',
-        'assignee',
-        'issuetype',
-        'priority',
-        'fixVersions',
-        'subtasks',
-        'customfield_10006',
-      ],
-      maxResults: 100,
-    });
+    const jql = getRoadmapQueryString({ projectId, versionId });
+    const fields = ['summary', 'status', 'issuetype', 'subtasks', 'customfield_10006'];
+    const maxResults = 1000;
+
+    const response = await this.post('api/2/search', { jql, fields, maxResults });
 
     const { issues, issues: { length } } = response;
     const data = {};
@@ -233,17 +224,13 @@ class IssueAPI extends RESTDataSource {
         children: issues[i].fields.subtasks,
       };
 
-      if (issue.fields.issuetype.id === '10000') {
-        addPropertyToObject({ object: data, property: issue.key, issue });
-      } else {
+      addPropertyToObject({ object: data, property: issue.key, issue });
+
+      if (issue.fields.issuetype.id !== '10000') {
         const { customfield_10006: parent } = issue.fields;
-
-        if (!Object.prototype.hasOwnProperty.call(data, parent)) {
-          addPropertyToObject({ object: data, property: parent, issue });
+        if (Object.prototype.hasOwnProperty.call(data, parent)) {
+          data[parent].children = [issue, ...data[parent].children];
         }
-
-        const { children } = data[parent];
-        data[parent].children = [issue, ...children];
       }
     }
 

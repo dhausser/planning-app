@@ -98,8 +98,8 @@ function Roadmap({ navigationViewController }) {
           <TableTree>
             <Headers>
               <Header width={120}>Type</Header>
+              <Header width={700}>Summary</Header>
               <Header width={150}>Status</Header>
-              <Header width={600}>Summary</Header>
             </Headers>
             <Rows
               items={loading ? null : data.roadmapIssues}
@@ -116,16 +116,16 @@ function Roadmap({ navigationViewController }) {
                   isDefaultExpanded={isExpanded}
                 >
                   <Cell singleLine>{issuetypeIconMap[fields.issuetype.id]}</Cell>
-
+                  <Cell singleLine>
+                    <Link to={`/issue/${key}`}>{fields.summary}</Link>
+                  </Cell>
                   <Cell singleLine>
                     <Status
                       text={fields.status.name}
                       color={statusCatecoryColorMap[fields.status.statusCategory.id]}
                     />
                   </Cell>
-                  <Cell singleLine>
-                    <Link to={`/issue/${key}`}>{fields.summary}</Link>
-                  </Cell>
+
                 </Row>
               )}
             />

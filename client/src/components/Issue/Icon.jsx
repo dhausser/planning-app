@@ -38,9 +38,9 @@ export const priorityIconMap = {
 };
 
 export const statusCatecoryColorMap = {
-  2: 'blue',
+  2: 'purple',
   3: 'green',
-  4: 'yellow',
+  4: 'blue',
 };
 
 export default {
