@@ -1,99 +1,21 @@
 import { RESTDataSource } from 'apollo-datasource-rest';
-import { sign } from 'oauth-sign';
-import { consumerKey, consumerSecret } from '../passport';
-
-function addPropertyToObject({ object, property, issue }) {
-  Object.defineProperty(object, property, {
-    value: {
-      ...issue,
-      children: [],
-    },
-    enumerable: true,
-  });
-}
-
-function getIssuesQueryString({ projectId, versionId, assignee }) {
-  return `statusCategory in (new, indeterminate)\
-    ${projectId ? `AND project=${projectId}` : ''}\
-    ${versionId ? `AND fixVersion=${versionId}` : ''}\
-    ${assignee ? `AND assignee in (${assignee})` : ''} order by priority desc`;
-}
-
-function getDashboardQueryString({ projectId, versionId, assignee }) {
-  return `statusCategory in (new, indeterminate)\
-    ${projectId ? `AND project=${projectId}` : ''}\
-    ${versionId ? `AND fixVersion=${versionId}` : ''}\
-    ${assignee.length ? `AND assignee in (${assignee})` : ''}\
-    order by priority`;
-}
-
-function getRoadmapQueryString({ projectId, versionId }) {
-  return `(issuetype = Epic OR issueType in (Story, Task) AND "Epic Link" is not EMPTY)
-  ${projectId ? `AND project = ${projectId} ` : ''}\
-  ${versionId ? `AND fixVersion = ${versionId} ` : ''}\
-  ORDER BY issuetype ASC, status DESC`;
-}
-
+import Issues from '../models/Issues';
+import Dashboard from '../models/Dashboard';
+import Roadmap from '../models/Roadmap';
+import Oauth from '../models/Auth';
 
 class IssueAPI extends RESTDataSource {
   constructor() {
     super();
     this.baseURL = `https://${process.env.HOST}/rest/`;
+    this.oauth = new Oauth(this.baseURL);
   }
 
-  // eslint-disable-next-line class-methods-use-this
   willSendRequest(req) {
-    // req.headers.set('Authorization', `Basic ${process.env.AUTH}`);
-    req.headers.set('Authorization', this.baseURL === 'https://solarsystem.atlassian.net/rest/'
-      ? `Basic ${process.env.AUTH}`
-      : this.signRequest(req));
+    const { token } = this.context;
+    req.headers.set('Authorization', this.oauth.sign(req, token));
   }
 
-  signRequest(req) {
-    // Initialize Oauth parameters
-    const { token: oauthToken } = this.context;
-    const { method, path, params } = req;
-    const oauthVersion = '1.0';
-    const signatureMethod = 'RSA-SHA1';
-    const baseURI = `${this.baseURL}${path}`;
-    const timestamp = Math.floor(Date.now() / 1000);
-    const nonce = Math.random().toString(36).substring(2, 15);
-    const requestParams = Object.fromEntries(params.entries());
-
-    // Assemble Oauth parameters
-    const oauthParams = {
-      ...requestParams,
-      oauth_consumer_key: consumerKey,
-      oauth_nonce: nonce,
-      oauth_signature_method: signatureMethod,
-      oauth_timestamp: timestamp,
-      oauth_token: oauthToken,
-      oauth_version: oauthVersion,
-    };
-
-    // Generate Oauth signature
-    const oauthSignature = encodeURIComponent(sign(
-      signatureMethod,
-      method,
-      baseURI,
-      oauthParams,
-      consumerSecret,
-    ));
-
-    // Compose Oauth authorization header
-    return `OAuth\
-      oauth_consumer_key="${consumerKey}",\
-      oauth_nonce="${nonce}",\
-      oauth_signature="${oauthSignature}",\
-      oauth_signature_method="${signatureMethod}",\
-      oauth_timestamp="${timestamp}",\
-      oauth_token="${oauthToken}",\
-      oauth_version="${oauthVersion}"`;
-  }
-
-  /**
-   * Fetch all projects
-   */
   async getProjects() {
     const response = await this.get('api/latest/project');
 
@@ -113,12 +35,6 @@ class IssueAPI extends RESTDataSource {
     return projects;
   }
 
-  /**
-   * Fetch all version for project
-   * @param {String} projectId Project identifier
-   * @param {String} maxResults Maximum number of issues to be fetched
-   * @param {String} startAt Starting index number of issues to be fetched
-   */
   async getVersions(projectId, startAt, maxResults) {
     const response = await this.get(`api/2/project/${projectId}/version`, {
       startAt,
@@ -129,118 +45,38 @@ class IssueAPI extends RESTDataSource {
     return Array.isArray(response.values) ? response.values : [];
   }
 
-  /**
-   * Fetch issues for issues table
-   * @param {String} projectId Project identifier
-   * @param {String} versionId Version identifier
-   * @param {String} teamId Team identifier
-   * @param {String} resourceId Single resource identifier
-   * @param {String} maxResults Maximum number of issues to be fetched
-   * @param {String} startAt Starting index number of issues to be fetched
-   */
   async getIssues(projectId, versionId, teamId, resourceId, maxResults, startAt) {
-    let assignee = null;
-
-    if (resourceId) {
-      assignee = resourceId;
-    } else if (teamId) {
-      assignee = await this.context.dataSources.resourceAPI.getResourcesByTeam({ teamId });
-      assignee = assignee.map(({ key }) => key);
-    }
-
-    const response = await this.post('api/2/search', {
-      jql: getIssuesQueryString({ projectId, versionId, assignee }),
-      fields: [
-        'summary',
-        'description',
-        'status',
-        'assignee',
-        'reporter',
-        'issuetype',
-        'priority',
-        'fixVersions',
-        'comment',
-      ],
-      maxResults,
-      startAt,
+    const issues = new Issues({
+      context: this.context, projectId, versionId, teamId, resourceId, startAt, maxResults,
     });
+    const response = await this.post('api/2/search', issues.getParams());
 
-    const issues = Array.isArray(response.issues)
-      ? response.issues.map(issue => this.issueReducer(issue))
-      : [];
-
-    return { ...response, issues };
+    return { ...response, issues: issues.getIssues(response) };
   }
 
-  /**
-   * Fetch issues for barchart dashboard and aggregate by team or assignee
-   * @param {String} projectId Project identifier
-   * @param {String} versionId Version identifier
-   * @param {String} teamId Team identifier
-   * @param {String} maxResults Maximum number of issues to be fetched
-   */
-  async getDashboardIssues(projectId, versionId, teamId, maxResults = 1000) {
+  async getDashboardIssues(projectId, versionId, teamId) {
     const resources = teamId
       ? await this.context.dataSources.resourceAPI.getResourcesByTeam({ teamId })
       : await this.context.dataSources.resourceAPI.getResources();
     const assignee = resources.map(({ key }) => key);
 
-    const response = await this.post('api/latest/search', {
-      jql: getDashboardQueryString({ projectId, versionId, assignee }),
-      fields: ['assignee'],
-      maxResults,
+    const dashboard = new Dashboard({
+      projectId, versionId, teamId, assignee, resourceMap: this.context.resourceMap,
     });
+    const { jql, fields, maxResults } = dashboard;
 
-    const { issues, total } = response;
-    const data = this.sumIssues(issues, teamId);
-
-    return {
-      labels: Object.keys(data),
-      values: Object.values(data),
-      maxResults,
-      total,
-    };
+    const response = await this.post('api/latest/search', { jql, fields, maxResults });
+    return dashboard.getDataset(response);
   }
 
-  /**
-   * Fetch issues for roadmap table tree
-   * @param {String} projectId Project identifier
-   * @param {String} versionId Version identifier
-   */
   async getRoadmapIssues(projectId, versionId) {
-    const jql = getRoadmapQueryString({ projectId, versionId });
-    const fields = ['summary', 'status', 'issuetype', 'subtasks', 'customfield_10006'];
-    const maxResults = 1000;
-
+    const roadmap = new Roadmap(projectId, versionId);
+    const { jql, fields, maxResults } = roadmap;
     const response = await this.post('api/2/search', { jql, fields, maxResults });
 
-    const { issues, issues: { length } } = response;
-    const data = {};
-    let i = 0;
-
-    for (; i < length; i += 1) {
-      const issue = {
-        ...issues[i],
-        children: issues[i].fields.subtasks,
-      };
-
-      addPropertyToObject({ object: data, property: issue.key, issue });
-
-      if (issue.fields.issuetype.id !== '10000') {
-        const { customfield_10006: parent } = issue.fields;
-        if (Object.prototype.hasOwnProperty.call(data, parent)) {
-          data[parent].children = [issue, ...data[parent].children];
-        }
-      }
-    }
-
-    return Object.values(data);
+    return roadmap.getRoadmapTree(response);
   }
 
-  /**
-   * Fetch single issue by id
-   * @param {String} issueId Issue identifier
-   */
   async getIssueById(issueId) {
     const fields = [
       'summary', 'description', 'status', 'assignee', 'reporter', 'issuetype',
@@ -272,69 +108,6 @@ class IssueAPI extends RESTDataSource {
       },
     };
   }
-
-  issueDashboardReducer(issues) {
-    return Array.isArray(issues)
-      ? issues.map(({ id, key, fields }) => ({
-        id,
-        key,
-        assignee: fields.assignee && {
-          ...fields.assignee,
-          team: this.context.resourceMap[fields.assignee.key],
-        },
-      }))
-      : [];
-  }
-
-  sumIssues(issues, teamId) {
-    const data = {};
-    const { length } = issues;
-    let i = 0;
-
-    for (; i < length; i += 1) {
-      let { key } = issues[i].fields.assignee;
-      if (!teamId) key = this.context.resourceMap[key];
-      if (Object.prototype.hasOwnProperty.call(data, key)) {
-        data[key] += 1;
-      } else if (key != null) {
-        data[key] = 1;
-      }
-    }
-
-    return data;
-  }
 }
 
 export default IssueAPI;
-
-// function aggregateIssueTree(rawIssues) {
-//   const issues = Array.isArray(rawIssues)
-//     ? rawIssues.map(({ key, fields }) => ({
-//       key,
-//       ...fields,
-//       children:
-//       fields.subtasks
-//       && fields.subtasks.map(issue => ({
-//         key: issue.key,
-//         ...issue.fields,
-//       })),
-//       parent:
-//       fields.customfield_10006
-//       || fields.customfield_20700
-//       || fields.customfield_10014,
-//     }))
-//     : [];
-
-//   issues
-//     .filter(({ issuetype }) => issuetype.id !== '10000')
-//     .forEach((issue) => {
-//       const parent = issues
-//         .filter(({ issuetype }) => issuetype.id === '10000')
-//         .find(epic => epic.key === issue.parent);
-//       if (parent) {
-//         parent.children.push(issue);
-//       }
-//     });
-
-//   return issues.filter(({ issuetype }) => (issuetype.id === '10000'));
-// }
