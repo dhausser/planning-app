@@ -115,9 +115,7 @@ export function ProjectFilter() {
  */
 export function VersionFilter() {
   const {
-    data: {
-      filter: { project, version: { id: value, name: label } },
-    },
+    data: { filter: { project, version: { id: value, name: label } } },
   } = useQuery(GET_VERSION);
   const { data: { versions }, loading } = useQuery(GET_VERSIONS, {
     variables: {
@@ -127,6 +125,7 @@ export function VersionFilter() {
     },
     fetchPolicy: 'cache-first',
   });
+
   const [toggleFilter] = useMutation(TOGGLE_FILTER);
 
   return (

@@ -13,62 +13,34 @@ import UserPicker from './UserPicker';
 import Comments from './Comments';
 import { statusCatecoryColorMap, priorityIconMap } from './Icon';
 import { ProductIssuesView, Loading } from '..';
-
-const ISSUE_TILE_DATA = gql`
-  fragment IssueTile on Issue {
-    id
-    key
-    summary
-    issuetype {
-      id
-      name
-    }
-    priority {
-      id
-      name
-    }
-    status {
-      name
-      statusCategory {
-        id
-      }
-    }
-    fixVersions {
-      id
-      name
-    }
-    assignee {
-      key
-      displayName
-      team
-    }
-  }
-`;
+import { ISSUE_ROW_DATA } from '../Issues/Issues';
 
 const GET_ISSUE = gql`
   query GetIssueById($id: ID!) {
     issue(id: $id) {
-      ...IssueTile
-      description
-      reporter {
-        key
-        displayName
-      }
-      comment {
-        comments {
-          id
-          author {
-            key
-            displayName
+      ...IssueRow
+      fields {
+        description
+        reporter {
+          key
+          displayName
+        }
+        comment {
+          comments {
+            id
+            author {
+              key
+              displayName
+            }
+            body
+            created
+            updated
           }
-          body
-          created
-          updated
         }
       }
     }
   }
-  ${ISSUE_TILE_DATA}
+  ${ISSUE_ROW_DATA}
 `;
 
 function Issue({ navigationViewController, match }) {
@@ -86,9 +58,9 @@ function Issue({ navigationViewController, match }) {
   return (
     <Grid>
       <GridColumn medium={8}>
-        <Summary id={issue.key} summary={issue.summary} issuetypeId={issue.issuetype.id} />
-        <Description description={issue.description} />
-        <Comments comments={issue.comment.comments} />
+        <Summary id={issue.key} summary={issue.fields.summary} issuetypeId={issue.fields.issuetype.id} />
+        <Description description={issue.fields.description} />
+        <Comments comments={issue.fields.comment.comments} />
       </GridColumn>
       <GridColumn medium={4}>
         <a
@@ -100,17 +72,17 @@ function Issue({ navigationViewController, match }) {
         </a>
         <p>Status</p>
         <Status
-          text={issue.status.name}
-          color={statusCatecoryColorMap[issue.status.statusCategory.id]}
+          text={issue.fields.status.name}
+          color={statusCatecoryColorMap[issue.fields.status.statusCategory.id]}
         />
         <p>Assignee</p>
-        <UserPicker assignee={issue.assignee} />
+        <UserPicker assignee={issue.fields.assignee} />
         <p>FixVersion</p>
-        {issue.fixVersions[0] && issue.fixVersions[0].name}
+        {issue.fields.fixVersions[0] && issue.fields.fixVersions[0].name}
         <p>Priotity</p>
-        {priorityIconMap[issue.priority.id]}
+        {priorityIconMap[issue.fields.priority.id]}
         <p>Reporter</p>
-        <Assignee assignee={issue.reporter} />
+        <Assignee assignee={issue.fields.reporter} />
       </GridColumn>
     </Grid>
   );

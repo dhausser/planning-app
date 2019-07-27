@@ -68,7 +68,14 @@ const head = {
 };
 
 const row = ({
-  key, summary, issuetype, status, priority, fixVersions, assignee = '',
+  key, fields: {
+    summary,
+    issuetype,
+    status,
+    priority,
+    fixVersions,
+    assignee,
+  },
 }) => ({
   key,
   cells: [

@@ -1,5 +1,4 @@
 import { ApolloServer } from 'apollo-server-express';
-import { consumerKey, consumerSecret } from './passport';
 
 import createStore from './db';
 
@@ -24,7 +23,7 @@ const apollo = new ApolloServer({
     user: req.user,
   }),
   dataSources: () => ({
-    issueAPI: new IssueAPI({ consumerKey, consumerSecret }),
+    issueAPI: new IssueAPI(),
     absenceAPI: new AbsenceAPI(),
     resourceAPI: new ResourceAPI({ store }),
   }),

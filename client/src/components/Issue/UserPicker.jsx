@@ -14,7 +14,7 @@ const GET_RESOURCES = gql`
   }
 `;
 
-function reducer(user) {
+function getAssignee(user) {
   return {
     id: user.key,
     name: user.displayName,
@@ -24,24 +24,30 @@ function reducer(user) {
   };
 }
 
+function getResource(user) {
+  return {
+    id: user.key,
+    name: user.name,
+    type: 'user',
+    fixed: true,
+    avatarUrl: `https://${process.env.REACT_APP_HOST}/secure/useravatar?ownerId=${user.key}`,
+  };
+}
+
 function AssignUser({ assignee }) {
-  const { data, loading, error } = useQuery(GET_RESOURCES, {
-    fetchPolicy: 'cache-first',
-  });
+  const { data, loading, error } = useQuery(GET_RESOURCES);
 
   if (loading) return <p>Loading</p>;
   if (error) return <p>{error.message}</p>;
 
-  const defaultValue = reducer(assignee);
-  const options = data.resources.map(resource => reducer(resource)).sort();
-
   return (
     <UserPicker
       fieldId="example"
-      defaultValue={defaultValue}
-      options={options}
-      onChange={() => { }}
-      onInputChange={() => { }}
+      defaultValue={getAssignee(assignee)}
+      options={data.resources.map(getResource)}
+      subtle
+      // onChange={() => {}}
+      // onInputChange={() => {}}
     />
   );
 }

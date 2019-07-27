@@ -18,25 +18,20 @@ const typeDefs = gql`
   type Issue {
     id: ID!
     key: String!
-    summary: String!
-    status: Status!
-    priority: Priority!
-    issuetype: Issuetype!
-    description: String
-    fixVersions: [Version]
-    assignee: Resource
-    reporter: Resource
-    comment: CommentConnection
-    children: [Issue]
-    parent: String
-    # TODO: Revise schema for consistency and avoid duplication
     fields: Fields
+    children: [Issue]
   }
 
   type Fields {
     summary: String!
     status: Status!
     issuetype: Issuetype!
+    priority: Priority!
+    fixVersions: [Version]
+    assignee: Resource
+    description: String
+    reporter: Resource
+    comment: CommentConnection
   }
 
   type Priority {

@@ -10,10 +10,8 @@ const resolvers = {
         projectId, versionId, teamId, resourceId, startAt, maxResults,
       )
     ),
-    dashboardIssues: (_, {
-      projectId, versionId, teamId, startAt, maxResults,
-    }, { dataSources }) => (
-      dataSources.issueAPI.getDashboardIssues(projectId, versionId, teamId, startAt, maxResults)
+    dashboardIssues: (_, { projectId, versionId, teamId }, { dataSources }) => (
+      dataSources.issueAPI.getDashboardIssues({ projectId, versionId, teamId })
     ),
     roadmapIssues: (_, { projectId, versionId }, { dataSources }) => (
       dataSources.issueAPI.getRoadmapIssues(projectId, versionId)

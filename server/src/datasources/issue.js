@@ -18,7 +18,6 @@ class IssueAPI extends RESTDataSource {
 
   async getProjects() {
     const response = await this.get('api/latest/project');
-
     const projects = response.map(project => ({
       ...project,
       projectTypeKey: `${project.projectTypeKey
@@ -31,7 +30,6 @@ class IssueAPI extends RESTDataSource {
         medium: project.avatarUrls['32x32'],
       },
     }));
-
     return projects;
   }
 
@@ -41,40 +39,47 @@ class IssueAPI extends RESTDataSource {
       maxResults,
       orderBy: 'name',
     });
-
     return Array.isArray(response.values) ? response.values : [];
   }
 
-  async getIssues(projectId, versionId, teamId, resourceId, maxResults, startAt) {
-    const issues = new Issues({
-      context: this.context, projectId, versionId, teamId, resourceId, startAt, maxResults,
-    });
-    const response = await this.post('api/2/search', issues.getParams());
-
-    return { ...response, issues: issues.getIssues(response) };
-  }
-
-  async getDashboardIssues(projectId, versionId, teamId) {
+  async getAssignee(teamId) {
     const resources = teamId
       ? await this.context.dataSources.resourceAPI.getResourcesByTeam({ teamId })
       : await this.context.dataSources.resourceAPI.getResources();
-    const assignee = resources.map(({ key }) => key);
+    return resources.map(({ key }) => key);
+  }
 
-    const dashboard = new Dashboard({
-      projectId, versionId, teamId, assignee, resourceMap: this.context.resourceMap,
+  async getIssues(projectId, versionId, teamId, resourceId, maxResults, startAt) {
+    const assignee = resourceId || await this.getAssignee(teamId);
+    const issues = new Issues({
+      projectId,
+      versionId,
+      assignee,
+      resourceMap: this.context.resourceMap,
+      startAt,
+      maxResults,
     });
-    const { jql, fields, maxResults } = dashboard;
+    const response = await this.post('api/2/search', issues.getParams());
+    return { ...response };
+  }
 
-    const response = await this.post('api/latest/search', { jql, fields, maxResults });
+  async getDashboardIssues({ projectId, versionId, teamId }) {
+    const assignee = await this.getAssignee(teamId);
+    const dashboard = new Dashboard({
+      projectId,
+      versionId,
+      teamId,
+      assignee,
+      resourceMap: this.context.resourceMap,
+    });
+    const response = await this.post('api/latest/search', dashboard.getParams());
     return dashboard.getDataset(response);
   }
 
   async getRoadmapIssues(projectId, versionId) {
-    const roadmap = new Roadmap(projectId, versionId);
-    const { jql, fields, maxResults } = roadmap;
-    const response = await this.post('api/2/search', { jql, fields, maxResults });
-
-    return roadmap.getRoadmapTree(response);
+    const roadmap = new Roadmap({ projectId, versionId });
+    const response = await this.post('api/2/search', roadmap.getParams());
+    return roadmap.getDataset(response.issues);
   }
 
   async getIssueById(issueId) {
@@ -82,10 +87,7 @@ class IssueAPI extends RESTDataSource {
       'summary', 'description', 'status', 'assignee', 'reporter', 'issuetype',
       'priority', 'fixVersions', 'comment',
     ];
-
-    const response = await this.get(`api/2/issue/${issueId}`, { fields });
-
-    return this.issueReducer(response);
+    return this.get(`api/2/issue/${issueId}`, { fields });
   }
 
   editIssue(issueId, summary, assignee) {
@@ -95,18 +97,6 @@ class IssueAPI extends RESTDataSource {
     if (assignee) {
       this.put(`api/2/issue/${issueId}`, { fields: { assignee } });
     }
-  }
-
-  issueReducer({ id, key, fields }) {
-    return {
-      id,
-      key,
-      ...fields,
-      assignee: fields.assignee && {
-        ...fields.assignee,
-        team: this.context.resourceMap[fields.assignee.key],
-      },
-    };
   }
 }
 

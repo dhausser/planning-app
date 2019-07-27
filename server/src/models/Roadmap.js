@@ -5,49 +5,66 @@
  */
 
 class Roadmap {
-  constructor(projectId, versionId) {
-    this.projectId = projectId;
-    this.versionId = versionId;
+  constructor({ projectId, versionId }) {
+    this.data = {};
     this.fields = ['summary', 'status', 'issuetype', 'subtasks', 'customfield_10006'];
     this.maxResults = 50;
-    this.jql = this.getQueryString();
+    this.projectId = projectId;
+    this.versionId = versionId;
+    this.jql = '';
   }
 
-  getQueryString() {
-    return `(issuetype = Epic OR issueType in (Story, Task) AND "Epic Link" is not EMPTY)
+  getQuery() {
+    this.jql = `(issuetype = Epic OR issueType in (Story, Task) AND "Epic Link" is not EMPTY)
     ${this.projectId ? `AND project = ${this.projectId} ` : ''}\
     ${this.versionId ? `AND fixVersion = ${this.versionId} ` : ''}\
     ORDER BY issuetype ASC, status DESC`;
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  async getRoadmapTree(response) {
-    const { issues, issues: { length } } = response;
-    const data = {};
-    let i = 0;
+  getParams() {
+    this.getQuery();
+    return {
+      jql: this.jql,
+      fields: this.fields,
+      maxResults: this.maxResults,
+    };
+  }
 
-    for (; i < length; i += 1) {
-      const issue = {
-        ...issues[i],
-        children: issues[i].fields.subtasks,
-      };
+  addToBaseTree(issue) {
+    Object.defineProperty(this.data, issue.key, { value: issue, enumerable: true });
+  }
 
-      if (issue.fields.issuetype.id === '10000') {
-        Object.defineProperty(data, issue.key, { value: issue, enumerable: true });
-      }
+  addToParent(issue) {
+    const parent = issue.fields.customfield_10006;
+    this.data[parent].children = [issue, ...this.data[parent].children];
+  }
 
-      if (issue.fields.issuetype.id !== '10000') {
-        const { customfield_10006: parent } = issue.fields;
+  addToDataset(issue) {
+    const { id } = issue.fields.issuetype;
+    switch (id) {
+      case '10000':
+        this.addToBaseTree(issue);
+        break;
 
-        if (Object.prototype.hasOwnProperty.call(data, parent)) {
-          data[parent].children = [issue, ...data[parent].children];
+      default:
+        if (Object.prototype.hasOwnProperty.call(this.data, issue.fields.customfield_10006)) {
+          this.addToParent(issue);
         } else {
-          Object.defineProperty(data, issue.key, { value: issue, enumerable: true });
+          this.addToBaseTree(issue);
         }
-      }
     }
+  }
 
-    return Object.values(data);
+  buildDataset(issues) {
+    for (let i = 0; i < issues.length; i += 1) {
+      const issue = { ...issues[i], children: issues[i].fields.subtasks };
+      this.addToDataset(issue);
+    }
+  }
+
+  getDataset(issues) {
+    this.buildDataset(issues);
+    return Object.values(this.data);
   }
 }
 

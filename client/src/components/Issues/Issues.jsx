@@ -13,29 +13,30 @@ export const ISSUE_ROW_DATA = gql`
   fragment IssueRow on Issue {
     id
     key
-    summary
-    issuetype {
-      id
-      name
-    }
-    priority {
-      id
-      name
-    }
-    status {
-      name
-      statusCategory {
+    fields {
+      summary
+      issuetype {
         id
+        name
       }
-    }
-    fixVersions {
-      id
-      name
-    }
-    assignee {
-      key
-      displayName
-      team
+      priority {
+        id
+        name
+      }
+      status {
+        name
+        statusCategory {
+          id
+        }
+      }
+      fixVersions {
+        id
+        name
+      }
+      assignee {
+        key
+        displayName
+      }
     }
   }
 `;
