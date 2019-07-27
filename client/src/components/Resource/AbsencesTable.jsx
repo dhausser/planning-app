@@ -80,14 +80,14 @@ function AbsencesTable({ resourceId }) {
   if (loading) return <Loading />;
   if (error) return <EmptyState header={error.name} description={error.message} />;
 
-  const dates = data.absences.map(absence => new Date(absence.date));
+  const dates = data.absences && data.absences.map(absence => new Date(absence.date));
 
   return (
     <DynamicTable
       caption="Absences"
       head={head}
       rows={parseRows(dates)}
-      // rowsPerPage={10}
+      rowsPerPage={10}
       loadingSpinnerSize="large"
       isLoading={loading}
       defaultSortKey="date"

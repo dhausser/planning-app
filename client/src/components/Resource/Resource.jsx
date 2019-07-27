@@ -68,8 +68,6 @@ function Resource({ navigationViewController, match }) {
   const { resourceId } = match.params;
   const issues = useQuery(GET_ISSUES, { variables: { resourceId } });
 
-  console.log(issues);
-
   // Fetch resource from database
   const { data, loading, error } = useQuery(GET_RESOURCE_NAME, {
     variables: { id: resourceId },

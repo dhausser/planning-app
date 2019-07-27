@@ -18,7 +18,7 @@ const AppSwitcherComponent = props => (
  * TODO: Fetch current user Id
  */
 const user = {
-  id: 'davy.hausser',
+  id: process.env.REACT_APP_USER,
 };
 
 export default () => (

@@ -99,37 +99,24 @@ function ProjectSwitcher() {
 
   useEffect(() => {
     if (!loading && !error) {
-      const relevant = [];
-      const garbage = [];
+      const projects = [
+        {
+          label: 'Recent Projects',
+          options: [],
+        },
+      ];
 
       data.projects.forEach((project) => {
-        const option = {
+        projects[0].options.push({
           avatar: project.avatarUrls.large,
           id: project.id,
           pathname: `/projects/${project.key}`,
           text: project.name,
           subText: `${project.projectTypeKey} project`,
-        };
-
-        if (['10500', '16000', '16001'].includes(project.id)) {
-          relevant.push(option);
-        } else {
-          garbage.push(option);
-        }
+        });
       });
 
-      const projects = [
-        {
-          label: 'Recent Projects',
-          options: relevant,
-        },
-        {
-          label: 'Other Projects',
-          options: garbage,
-        },
-      ];
-
-      const current = filter && [...relevant, ...garbage].find(({ id }) => id === filter.id);
+      const current = filter && projects[0].options.find(({ id }) => id === filter.id);
 
       setOptions(projects);
       setSelected(current || projects[0].options[0]);
