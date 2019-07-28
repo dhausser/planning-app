@@ -26,6 +26,11 @@ export const issuetypeIconMap = {
   5: <Subtask16Icon />,
   10000: <Epic16Icon />,
   10001: <Story16Icon />,
+  // Jira Cloud issuetype id
+  10005: <Story16Icon />,
+  10006: <Task16Icon />,
+  10007: <Subtask16Icon />,
+  10008: <Bug16Icon />,
 };
 
 export const priorityIconMap = {

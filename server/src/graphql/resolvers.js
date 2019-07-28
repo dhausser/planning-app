@@ -25,6 +25,12 @@ const resolvers = {
     projects: (_, __, { dataSources }) => (
       dataSources.issueAPI.getProjects()
     ),
+    myself: (_, __, { dataSources }) => (
+      dataSources.issueAPI.getCurrentUser()
+    ),
+    user: (_, { id }, { dataSources }) => (
+      dataSources.issueAPI.getUser(id)
+    ),
 
     /**
      * CDPR Portal REST API
@@ -56,8 +62,8 @@ const resolvers = {
      */
     loginUser: (_, __, { user }) => user.token,
     // Resources
-    editIssue: (_, { issueId, summary, assignee }, { dataSources }) => (
-      dataSources.issueAPI.editIssue(issueId, summary, assignee)
+    editIssue: (_, { id, value, type }, { dataSources }) => (
+      dataSources.issueAPI.editIssue({ id, value, type })
     ),
   },
 };

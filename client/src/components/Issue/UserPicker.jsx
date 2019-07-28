@@ -14,13 +14,14 @@ const GET_RESOURCES = gql`
   }
 `;
 
-function getAssignee(user) {
+function getAssignee({ key, displayName }) {
+  if (key == null) return {};
   return {
-    id: user.key,
-    name: user.displayName,
+    id: key,
+    name: displayName,
     type: 'user',
     fixed: true,
-    avatarUrl: `https://${process.env.REACT_APP_HOST}/secure/useravatar?ownerId=${user.key}`,
+    avatarUrl: `https://${process.env.REACT_APP_HOST}/secure/useravatar?ownerId=${key}`,
   };
 }
 
@@ -43,7 +44,7 @@ function AssignUser({ assignee }) {
   return (
     <UserPicker
       fieldId="example"
-      defaultValue={getAssignee(assignee)}
+      defaultValue={assignee && getAssignee(assignee)}
       options={data.resources.map(getResource)}
       subtle
       // onChange={() => {}}
@@ -52,8 +53,12 @@ function AssignUser({ assignee }) {
   );
 }
 
+AssignUser.defaultProps = {
+  assignee: {},
+};
+
 AssignUser.propTypes = {
-  assignee: PropTypes.objectOf(PropTypes.string).isRequired,
+  assignee: PropTypes.objectOf(PropTypes.string),
 };
 
 export default AssignUser;

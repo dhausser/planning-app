@@ -4,10 +4,19 @@ import Dashboard from '../models/Dashboard';
 import Roadmap from '../models/Roadmap';
 import Oauth from '../models/Auth';
 
+function parseAvatarUrls(avatarUrls) {
+  return {
+    large: avatarUrls['48x48'],
+    small: avatarUrls['24x24'],
+    xsmall: avatarUrls['16x16'],
+    medium: avatarUrls['32x32'],
+  };
+}
+
 class IssueAPI extends RESTDataSource {
   constructor() {
     super();
-    this.baseURL = `https://${process.env.HOST}/rest/`;
+    this.baseURL = `https://${process.env.HOST}`;
     this.oauth = new Oauth(this.baseURL);
   }
 
@@ -21,24 +30,19 @@ class IssueAPI extends RESTDataSource {
   }
 
   async getProjects() {
-    const response = await this.get('api/latest/project');
+    const response = await this.get('/rest/api/2/project');
     const projects = response.map(project => ({
       ...project,
       projectTypeKey: `${project.projectTypeKey
         .charAt(0)
         .toUpperCase()}${project.projectTypeKey.slice(1)}`,
-      avatarUrls: {
-        large: project.avatarUrls['48x48'],
-        small: project.avatarUrls['24x24'],
-        xsmall: project.avatarUrls['16x16'],
-        medium: project.avatarUrls['32x32'],
-      },
+      avatarUrls: parseAvatarUrls(project.avatarUrls),
     }));
     return projects;
   }
 
   async getVersions(projectId, startAt, maxResults) {
-    const response = await this.get(`api/2/project/${projectId}/version`, {
+    const response = await this.get(`/rest/api/2/project/${projectId}/version`, {
       startAt,
       maxResults,
       orderBy: 'name',
@@ -46,15 +50,14 @@ class IssueAPI extends RESTDataSource {
     return Array.isArray(response.values) ? response.values : [];
   }
 
-  async getAssignee(teamId) {
-    const resources = teamId
-      ? await this.context.dataSources.resourceAPI.getResourcesByTeam({ teamId })
-      : await this.context.dataSources.resourceAPI.getResources();
-    return resources.map(({ key }) => key);
-  }
-
   async getIssues(projectId, versionId, teamId, resourceId, maxResults, startAt) {
-    const assignee = resourceId || await this.getAssignee(teamId);
+    let assignee = resourceId;
+
+    if (teamId) {
+      const resources = await this.context.dataSources.resourceAPI.getResourcesByTeam({ teamId });
+      assignee = resources.map(({ key }) => key);
+    }
+
     const issues = new Issues({
       projectId,
       versionId,
@@ -63,12 +66,17 @@ class IssueAPI extends RESTDataSource {
       startAt,
       maxResults,
     });
-    const response = await this.post('api/2/search', issues.getParams());
+    const response = await this.post('/rest/api/2/search', issues.getParams());
+
     return { ...response };
   }
 
   async getDashboardIssues({ projectId, versionId, teamId }) {
-    const assignee = await this.getAssignee(teamId);
+    const resources = teamId
+      ? await this.context.dataSources.resourceAPI.getResourcesByTeam({ teamId })
+      : await this.context.dataSources.resourceAPI.getResources();
+    const assignee = resources.map(({ key }) => key);
+
     const dashboard = new Dashboard({
       projectId,
       versionId,
@@ -76,13 +84,15 @@ class IssueAPI extends RESTDataSource {
       assignee,
       resourceMap: this.context.resourceMap,
     });
-    const response = await this.post('api/latest/search', dashboard.getParams());
+
+    const response = await this.post('/rest/api/2/search', dashboard.getParams());
+
     return dashboard.getDataset(response);
   }
 
   async getRoadmapIssues(projectId, versionId) {
     const roadmap = new Roadmap({ projectId, versionId });
-    const response = await this.post('api/2/search', roadmap.getParams());
+    const response = await this.post('/rest/api/2/search', roadmap.getParams());
     return roadmap.getDataset(response.issues);
   }
 
@@ -91,16 +101,28 @@ class IssueAPI extends RESTDataSource {
       'summary', 'description', 'status', 'assignee', 'reporter', 'issuetype',
       'priority', 'fixVersions', 'comment',
     ];
-    return this.get(`api/2/issue/${issueId}`, { fields });
+    return this.get(`/rest/api/2/issue/${issueId}`, { fields });
   }
 
-  editIssue(issueId, summary, assignee) {
-    if (summary) {
-      this.put(`api/2/issue/${issueId}`, { fields: { summary } });
-    }
-    if (assignee) {
-      this.put(`api/2/issue/${issueId}`, { fields: { assignee } });
-    }
+  async getCurrentUser() {
+    const user = await this.get('/rest/api/2/myself');
+    return {
+      ...user,
+      avatarUrls: parseAvatarUrls(user.avatarUrls),
+    };
+  }
+
+  async getUser(key) {
+    const user = await this.get('/rest/api/2/user', { key });
+    return {
+      ...user,
+      avatarUrls: parseAvatarUrls(user.avatarUrls),
+    };
+  }
+
+  /* Mutations */
+  editIssue({ id, value, type }) {
+    this.put(`/rest/api/2/issue/${id}`, { fields: { [type]: value } });
   }
 }
 

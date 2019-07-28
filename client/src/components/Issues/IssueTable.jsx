@@ -9,7 +9,7 @@ import { Status } from '@atlaskit/status';
 import EmptyState from '@atlaskit/empty-state';
 import { statusCatecoryColorMap, priorityIconMap, issuetypeIconMap } from '../Issue/Icon';
 
-const ROWS_PER_PAGE = 50;
+const ROWS_PER_PAGE = 10;
 
 const caption = ({ maxResults, total }) => (
   `${(maxResults && (maxResults <= total ? maxResults : total)) || 0} of ${total || 0}`

@@ -15,6 +15,19 @@ import IssueTable from '../Issues/IssueTable';
 import AbsencesTable from './AbsencesTable';
 import { ISSUE_ROW_DATA, ISSUE_PAGINATION } from '../Issues/Issues';
 
+/**
+ * TODO: Get User from REST API
+ */
+// const GET_USER = gql`
+//   query GetUser($id: ID!) {
+//     user(id: $id) {
+//       avatarUrls {
+//         small
+//       }
+//     }
+//   }
+// `;
+
 const GET_ISSUES = gql`
   query GetIssues($projectId: String, $versionId: String, $resourceId: String, $startAt: Int, $maxResults: Int) {
     filter @client {
@@ -73,6 +86,12 @@ function Resource({ navigationViewController, match }) {
     variables: { id: resourceId },
     fetchPolicy: 'cache-first',
   });
+
+  // Fetch assignee from REST API
+  /**
+   * TODO
+   */
+  // const { data, loading, error } = useQuery(GET_USER, { variables: { id: resourceId } });
 
   useEffect(() => {
     navigationViewController.setView(ProjectHomeView.id);

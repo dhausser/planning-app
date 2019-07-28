@@ -13,6 +13,30 @@ const typeDefs = gql`
     teams: [Team]!
     team(id: ID!): Team
     absences(id: ID!, versionId: String): [Absence]!
+    user(id: ID!): User!
+    myself: User!
+  }
+
+  type User {
+    key: String!
+    accountId: String!
+    name: String!
+    emailAddress: String!
+    avatarUrls: AvatarUrls!
+    displayName: String!
+    active: Boolean!
+    timeZone: String!
+    groups: Groups
+  }
+
+  type Groups {
+    size: Int!
+    items: [Group]!
+  }
+
+  type Group {
+    name: String!
+    self: String!
   }
 
   type Issue {
@@ -136,17 +160,9 @@ const typeDefs = gql`
     medium: String
   }
 
-  type User {
-    id: ID!
-    email: String!
-    team: Team
-    issues: [Issue]
-    absences: [Absence]
-  }
-
   type Mutation {
     # Edit Jira Issues
-    editIssue(issueId: ID!, summary: String): Int
+    editIssue(id: ID!, value: String!, type: String!): Int
 
     # Return Access Token
     loginUser: String!
