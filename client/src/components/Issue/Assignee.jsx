@@ -13,34 +13,26 @@ const AvatarWrapper = styled.div`
   margin-right: 8px;
 `;
 
-function Assignee({ assignee }) {
+function Assignee({ key, displayName, avatarUrls }) {
   return (
-    <>
-      {assignee ? (
-        <NameWrapper>
-          <AvatarWrapper>
-            <Avatar
-              name={assignee.displayName}
-              size="small"
-              src={`https://${process.env.REACT_APP_HOST}/secure/useravatar?ownerId=${assignee.key}`}
-            />
-          </AvatarWrapper>
-          <Link to={`/resource/${assignee.key}`}>{assignee.displayName}</Link>
-        </NameWrapper>
-      ) : (
-        <NameWrapper>
-          <AvatarWrapper>
-            <Avatar name="Unassigned" size="large" />
-          </AvatarWrapper>
-        Unassigned
-        </NameWrapper>
-      )}
-    </>
+    <NameWrapper>
+      <AvatarWrapper>
+        <Avatar
+          name={displayName}
+          size="small"
+          src={avatarUrls.small}
+        />
+      </AvatarWrapper>
+      <Link to={`/resource/${key}`}>{displayName}</Link>
+    </NameWrapper>
+
   );
 }
 
 Assignee.propTypes = {
-  assignee: PropTypes.objectOf(PropTypes.string).isRequired,
+  key: PropTypes.string.isRequired,
+  displayName: PropTypes.string.isRequired,
+  avatarUrls: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
 export default Assignee;

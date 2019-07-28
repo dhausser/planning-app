@@ -36,7 +36,7 @@ function Description({ id, description }) {
     >
       <InlineEdit
         defaultValue={editValue}
-        label="Description"
+        // label="Description"
         editView={(fieldProps, ref) => (
         // @ts-ignore - textarea does not currently correctly pass through ref as a prop
           <TextArea {...fieldProps} ref={ref} />

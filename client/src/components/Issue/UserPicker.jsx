@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
-import { useQuery } from '@apollo/react-hooks';
 import UserPicker from '@atlaskit/user-picker';
 
 const GET_RESOURCES = gql`
@@ -14,14 +14,20 @@ const GET_RESOURCES = gql`
   }
 `;
 
-function getAssignee({ key, displayName }) {
+const EDIT_ISSUE = gql`
+  mutation EditIssue($id: ID!, $value: String!, $type: String!) {
+    editIssue(id: $id, value: $value, type: $type)
+  }
+`;
+
+function getAssignee({ key, displayName, avatarUrls }) {
   if (key == null) return {};
   return {
     id: key,
     name: displayName,
     type: 'user',
     fixed: true,
-    avatarUrl: `https://${process.env.REACT_APP_HOST}/secure/useravatar?ownerId=${key}`,
+    avatarUrl: avatarUrls.small,
   };
 }
 
@@ -31,12 +37,17 @@ function getResource(user) {
     name: user.name,
     type: 'user',
     fixed: true,
-    avatarUrl: `https://${process.env.REACT_APP_HOST}/secure/useravatar?ownerId=${user.key}`,
+    /**
+     * TODO: Replace
+     */
+    // avatarUrl: `https://${process.env.REACT_APP_HOST}/secure/useravatar?ownerId=${user.key}`,
   };
 }
 
-function AssignUser({ assignee }) {
+function AssignUser({ id, fields }) {
+  const [assignee, setAssignee] = useState(fields.assignee);
   const { data, loading, error } = useQuery(GET_RESOURCES);
+  const [editIssue] = useMutation(EDIT_ISSUE);
 
   if (loading) return <p>Loading</p>;
   if (error) return <p>{error.message}</p>;
@@ -47,18 +58,26 @@ function AssignUser({ assignee }) {
       defaultValue={assignee && getAssignee(assignee)}
       options={data.resources.map(getResource)}
       subtle
-      // onChange={() => {}}
+      onChange={(value) => {
+        setAssignee(value);
+        if (value) {
+          editIssue({
+            variables: {
+              id,
+              value: value.id,
+              type: 'assignee',
+            },
+          });
+        }
+      }}
       // onInputChange={() => {}}
     />
   );
 }
 
-AssignUser.defaultProps = {
-  assignee: {},
-};
-
 AssignUser.propTypes = {
-  assignee: PropTypes.objectOf(PropTypes.string),
+  id: PropTypes.string.isRequired,
+  fields: PropTypes.objectOf(PropTypes.objectOf).isRequired,
 };
 
 export default AssignUser;

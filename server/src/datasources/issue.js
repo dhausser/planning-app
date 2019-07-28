@@ -101,7 +101,15 @@ class IssueAPI extends RESTDataSource {
       'summary', 'description', 'status', 'assignee', 'reporter', 'issuetype',
       'priority', 'fixVersions', 'comment',
     ];
-    return this.get(`/rest/api/2/issue/${issueId}`, { fields });
+    const issue = await this.get(`/rest/api/2/issue/${issueId}`, { fields });
+    const { assignee, reporter } = issue.fields;
+    if (assignee) {
+      assignee.avatarUrls = parseAvatarUrls(assignee.avatarUrls);
+    }
+    if (reporter) {
+      reporter.avatarUrls = parseAvatarUrls(reporter.avatarUrls);
+    }
+    return issue;
   }
 
   async getCurrentUser() {
@@ -122,6 +130,7 @@ class IssueAPI extends RESTDataSource {
 
   /* Mutations */
   editIssue({ id, value, type }) {
+    console.log({ id, value, type });
     this.put(`/rest/api/2/issue/${id}`, { fields: { [type]: value } });
   }
 }

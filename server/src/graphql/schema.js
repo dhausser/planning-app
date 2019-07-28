@@ -126,6 +126,7 @@ const typeDefs = gql`
     displayName: String
     name: String
     team: String
+    avatarUrls: AvatarUrls
   }
   
   type Project {

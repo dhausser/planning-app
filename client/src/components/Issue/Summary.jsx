@@ -45,7 +45,7 @@ function Summary({ id, summary, issuetype }) {
       />
       <BreadcrumbsItem
         href={`/issue/${id}`}
-        iconBefore={issuetypeIconMap[issuetype]}
+        iconBefore={issuetypeIconMap[issuetype.id]}
         text={id}
         key={id}
       />
