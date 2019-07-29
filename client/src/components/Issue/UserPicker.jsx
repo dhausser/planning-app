@@ -14,9 +14,18 @@ const GET_RESOURCES = gql`
   }
 `;
 
-const EDIT_ISSUE = gql`
-  mutation EditIssue($id: ID!, $value: String!, $type: String!) {
-    editIssue(id: $id, value: $value, type: $type)
+const GET_ASSIGNABLE_USERS = gql`
+  query GetAssignableUsers($id: ID!) {
+    assignableUsers(id: $id) {
+      key
+      displayName
+    }
+  }
+`;
+
+const ASSIGN_ISSUE = gql`
+  mutation AssignIssue($id: ID!, $key: String) {
+    assignIssue(id: $id, key: $key)
   }
 `;
 
@@ -44,13 +53,19 @@ function getResource(user) {
   };
 }
 
-function AssignUser({ id, fields }) {
+function AssignUser({ id, issueKey, fields }) {
   const [assignee, setAssignee] = useState(fields.assignee);
   const { data, loading, error } = useQuery(GET_RESOURCES);
-  const [editIssue] = useMutation(EDIT_ISSUE);
+  // const users = useQuery(GET_ASSIGNABLE_USERS, { variables: { id: issueKey } });
+  const [assignIssue, { error: assignError, assignData }] = useMutation(ASSIGN_ISSUE);
 
   if (loading) return <p>Loading</p>;
   if (error) return <p>{error.message}</p>;
+
+  if (assignError || assignData) {
+    console.log(assignError);
+    console.log(assignData);
+  }
 
   return (
     <UserPicker
@@ -58,17 +73,18 @@ function AssignUser({ id, fields }) {
       defaultValue={assignee && getAssignee(assignee)}
       options={data.resources.map(getResource)}
       subtle
+      isClearable={false}
       onChange={(value) => {
+        console.log(value);
         setAssignee(value);
-        if (value) {
-          editIssue({
-            variables: {
-              id,
-              value: value.id,
-              type: 'assignee',
-            },
-          });
-        }
+        assignIssue({
+          variables: {
+            id,
+            key: value.id,
+          },
+        });
+        // if (value) {
+        // }
       }}
       // onInputChange={() => {}}
     />
@@ -77,6 +93,7 @@ function AssignUser({ id, fields }) {
 
 AssignUser.propTypes = {
   id: PropTypes.string.isRequired,
+  issueKey: PropTypes.string.isRequired,
   fields: PropTypes.objectOf(PropTypes.objectOf).isRequired,
 };
 

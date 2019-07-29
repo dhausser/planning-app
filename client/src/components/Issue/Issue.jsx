@@ -81,9 +81,7 @@ function Issue({ navigationViewController, match }) {
       summary,
       description,
       reporter,
-      issuetype: {
-        id: issuetype,
-      },
+      issuetype,
       status,
       priority,
       fixVersions,
@@ -99,7 +97,7 @@ function Issue({ navigationViewController, match }) {
       <p>Description</p>
       <Description id={id} description={description} />
       <p>Assignee</p>
-      <UserPicker {...issue} />
+      <UserPicker {...issue} issueKey={key} />
       <p>Reporter</p>
       <NameWrapper>
         <AvatarWrapper>
@@ -109,7 +107,7 @@ function Issue({ navigationViewController, match }) {
             src={reporter.avatarUrls.small}
           />
         </AvatarWrapper>
-        <Link to={`/resource/${key}`}>{reporter.displayName}</Link>
+        <Link to={`/resource/${reporter.key}`}>{reporter.displayName}</Link>
       </NameWrapper>
       <p>Status</p>
       <Status

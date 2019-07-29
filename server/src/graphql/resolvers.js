@@ -31,6 +31,9 @@ const resolvers = {
     user: (_, { id }, { dataSources }) => (
       dataSources.issueAPI.getUser(id)
     ),
+    assignableUsers: (_, { id }, { dataSources }) => (
+      dataSources.issueAPI.getAssignableUsers({ issueKey: id })
+    ),
 
     /**
      * CDPR Portal REST API
@@ -64,6 +67,9 @@ const resolvers = {
     // Resources
     editIssue: (_, { id, value, type }, { dataSources }) => (
       dataSources.issueAPI.editIssue({ id, value, type })
+    ),
+    assignIssue: (_, { id, key }, { dataSources }) => (
+      dataSources.issueAPI.assignIssue({ id, key })
     ),
   },
 };

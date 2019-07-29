@@ -128,10 +128,22 @@ class IssueAPI extends RESTDataSource {
     };
   }
 
+  async getAssignableUsers({ issueKey }) {
+    return this.get('rest/api/2/user/assignable/search', { issueKey, maxResults: 1000 });
+  }
+
   /* Mutations */
-  editIssue({ id, value, type }) {
-    console.log({ id, value, type });
-    this.put(`/rest/api/2/issue/${id}`, { fields: { [type]: value } });
+  async editIssue({ id, value, type }) {
+    const response = await this.put(`/rest/api/2/issue/${id}`, { fields: { [type]: value } });
+    console.log({ response });
+    return response;
+  }
+
+  async assignIssue({ id, key }) {
+    console.log({ id, key });
+    const response = await this.put(`/rest/api/2/issue/${id}/assignee`, { name: key });
+    console.log({ response });
+    return response;
   }
 }
 

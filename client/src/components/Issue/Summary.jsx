@@ -90,7 +90,7 @@ function Summary({ id, summary, issuetype }) {
 Summary.propTypes = {
   id: PropTypes.string.isRequired,
   summary: PropTypes.string.isRequired,
-  issuetype: PropTypes.string.isRequired,
+  issuetype: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
 export default Summary;

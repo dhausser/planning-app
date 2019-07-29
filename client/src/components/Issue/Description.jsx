@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
+import InlineEdit from '@atlaskit/inline-edit';
 import TextArea from '@atlaskit/textarea';
 import { gridSize, fontSize } from '@atlaskit/theme';
-
-import InlineEdit from '@atlaskit/inline-edit';
+// import { Editor } from '@atlaskit/editor-core';
 import styled from 'styled-components';
 
 const EDIT_ISSUE = gql`

@@ -15,6 +15,7 @@ const typeDefs = gql`
     absences(id: ID!, versionId: String): [Absence]!
     user(id: ID!): User!
     myself: User!
+    assignableUsers(id: ID!): [User]!
   }
 
   type User {
@@ -163,7 +164,8 @@ const typeDefs = gql`
 
   type Mutation {
     # Edit Jira Issues
-    editIssue(id: ID!, value: String!, type: String!): Int
+    editIssue(id: ID!, value: String!, type: String!): String
+    assignIssue(id: ID!, key: String): String
 
     # Return Access Token
     loginUser: String!
