@@ -12,7 +12,8 @@ import TextField from '@atlaskit/textfield';
 import { ProjectHomeView, Loading } from '..';
 import { ProjectFilter, VersionFilter } from '../Filters';
 import IssueTable from '../Issues/IssueTable';
-import AbsencesTable from './AbsencesTable';
+import AbsencesList from './AbsencesList';
+// import AbsencesTable from './AbsencesTable';
 import { ISSUE_ROW_DATA, ISSUE_PAGINATION } from '../Issues/Issues';
 
 /**
@@ -125,7 +126,8 @@ function Resource({ navigationViewController, match }) {
         </a>
       </p>
       <IssueTable {...issues} />
-      <AbsencesTable resourceId={resourceId} />
+      <AbsencesList resourceId={resourceId} />
+      {/* <AbsencesTable resourceId={resourceId} /> */}
     </>
   );
 }

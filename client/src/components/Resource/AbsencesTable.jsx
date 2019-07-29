@@ -1,14 +1,11 @@
 import React from 'react';
+import { useQuery } from '@apollo/react-hooks';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
-import { useQuery } from '@apollo/react-hooks';
 import DynamicTable from '@atlaskit/dynamic-table';
 import EmptyState from '@atlaskit/empty-state';
 import Loading from '../Loading';
 
-/**
- * TODO: Using @client fields as variables
- */
 const GET_ABSENCES = gql`
   query absenceList($id: ID!, $versionId: String) {
     filter @client {

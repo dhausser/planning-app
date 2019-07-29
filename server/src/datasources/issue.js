@@ -134,16 +134,11 @@ class IssueAPI extends RESTDataSource {
 
   /* Mutations */
   async editIssue({ id, value, type }) {
-    const response = await this.put(`/rest/api/2/issue/${id}`, { fields: { [type]: value } });
-    console.log({ response });
-    return response;
+    return this.put(`/rest/api/2/issue/${id}`, { fields: { [type]: value } });
   }
 
   async assignIssue({ id, key }) {
-    console.log({ id, key });
-    const response = await this.put(`/rest/api/2/issue/${id}/assignee`, { name: key });
-    console.log({ response });
-    return response;
+    return this.put(`/rest/api/2/issue/${id}/assignee`, { name: key });
   }
 }
 
