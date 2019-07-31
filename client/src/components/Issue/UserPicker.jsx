@@ -56,7 +56,7 @@ function getResource(user) {
   };
 }
 
-function AssignUser({ id, issueKey, user }) {
+function AssignUser({ id, user }) {
   const [assignee, setAssignee] = useState(user);
   const { data, loading, error } = useQuery(GET_RESOURCES, { fetchPolicy: 'cache-first' });
   // const { data, loading, error } = useQuery(GET_ASSIGNABLE_USERS, {
@@ -94,7 +94,7 @@ function AssignUser({ id, issueKey, user }) {
 
 AssignUser.propTypes = {
   id: PropTypes.string.isRequired,
-  issueKey: PropTypes.string.isRequired,
+  // issueKey: PropTypes.string.isRequired,
   user: PropTypes.objectOf(PropTypes.objectOf).isRequired,
 };
 

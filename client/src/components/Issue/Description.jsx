@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
-import InlineEdit from '@atlaskit/inline-edit';
-import TextArea from '@atlaskit/textarea';
-import { gridSize, fontSize } from '@atlaskit/theme';
-// import { Editor } from '@atlaskit/editor-core';
 import styled from 'styled-components';
+
+import { gridSize, fontSize } from '@atlaskit/theme';
+import TextArea from '@atlaskit/textarea';
+import InlineEdit from '@atlaskit/inline-edit';
 
 const EDIT_ISSUE = gql`
   mutation EditIssue($id: ID!, $value: String!, $type: String!) {
@@ -28,32 +28,24 @@ function Description({ id, description }) {
   const [editIssue] = useMutation(EDIT_ISSUE);
 
   return (
-    <div
-      style={{
-        padding: `${gridSize()}px ${gridSize()}px ${gridSize() * 6}px`,
-        width: '70%',
-      }}
-    >
-      <InlineEdit
-        defaultValue={editValue}
+    <InlineEdit
+      defaultValue={editValue}
         // label="Description"
-        editView={(fieldProps, ref) => (
-        // @ts-ignore - textarea does not currently correctly pass through ref as a prop
-          <TextArea {...fieldProps} ref={ref} />
-        )}
-        readView={() => (
-          <ReadViewContainer>
-            {editValue || 'Click to enter value'}
-          </ReadViewContainer>
-        )}
-        onConfirm={(value) => {
-          setEditValue(value);
-          editIssue({ variables: { id, value, type: 'description' } });
-        }}
-        keepEditViewOpenOnBlur
-        readViewFitContainerWidth
-      />
-    </div>
+      editView={(fieldProps, ref) => (
+        <TextArea {...fieldProps} ref={ref} />
+      )}
+      readView={() => (
+        <ReadViewContainer>
+          {editValue || 'Click to enter value'}
+        </ReadViewContainer>
+      )}
+      onConfirm={(value) => {
+        setEditValue(value);
+        editIssue({ variables: { id, value, type: 'description' } });
+      }}
+      keepEditViewOpenOnBlur
+      readViewFitContainerWidth
+    />
   );
 }
 

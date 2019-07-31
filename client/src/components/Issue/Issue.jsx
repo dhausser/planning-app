@@ -11,7 +11,7 @@ import Lozenge from '@atlaskit/lozenge';
 import { Grid, GridColumn } from '@atlaskit/page';
 
 // Components
-import Summary from './Summary';
+import Header from './Header';
 import Description from './Description';
 import UserPicker from './UserPicker';
 import Comments from './Comments';
@@ -52,10 +52,6 @@ const GET_ISSUE = gql`
   ${ISSUE_ROW_DATA}
 `;
 
-const Wrapper = props => (
-  <div style={{ padding: '4px', display: 'block' }} {...props} />
-);
-
 function Issue({ navigationViewController, match }) {
   const { data: { issue }, loading, error } = useQuery(GET_ISSUE, {
     variables: { id: match.params.issueId },
@@ -89,24 +85,25 @@ function Issue({ navigationViewController, match }) {
   return (
     <Grid layout="fluid">
       <GridColumn medium={10}>
-        <Summary id={key} summary={summary} issuetype={issuetype} />
-        <p>Description</p>
+        <Header id={key} summary={summary} issuetype={issuetype} />
+        <h5>Description</h5>
         <Description id={id} description={description} />
+        <h5>Activity</h5>
         <Comments comments={comments} />
       </GridColumn>
       <GridColumn medium={2}>
-        <p>Assignee</p>
-        <UserPicker id={id} issueKey={key} user={assignee} />
-        <p>Reporter</p>
-        <UserPicker id={id} issueKey={key} user={reporter} />
-        <p>Status</p>
+        <h6>STATUS</h6>
         <Status
           text={status.name}
           color={statusCatecoryColorMap[status.statusCategory.id]}
         />
-        <p>FixVersion</p>
+        <h6>ASSIGNEE</h6>
+        <UserPicker id={id} user={assignee} />
+        <h6>REPORTER</h6>
+        <UserPicker id={id} user={reporter} />
+        <h6>Fix Versions</h6>
         <Lozenge appearance="default">{fixVersions[0].name}</Lozenge>
-        <p>Priority</p>
+        <h6>Priority</h6>
         {priorityIconMap[priority.id]}
       </GridColumn>
     </Grid>
