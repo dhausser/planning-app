@@ -4,17 +4,18 @@ import { Link } from 'react-router-dom';
 import DynamicTable from '@atlaskit/dynamic-table';
 import Button from '@atlaskit/button';
 import Tooltip from '@atlaskit/tooltip';
-import CopyIcon from '@atlaskit/icon/glyph/copy';
-import { Status } from '@atlaskit/status';
+// import CopyIcon from '@atlaskit/icon/glyph/copy';
 import EmptyState from '@atlaskit/empty-state';
+import Lozenge from '@atlaskit/lozenge';
+import { Status } from '@atlaskit/status';
+
 import { statusCatecoryColorMap, priorityIconMap, issuetypeIconMap } from '../Issue/Icon';
+// import { copyLink } from '../Issue/Summary';
 
 const ROWS_PER_PAGE = 10;
-
 const caption = ({ maxResults, total }) => (
   `${(maxResults && (maxResults <= total ? maxResults : total)) || 0} of ${total || 0}`
 );
-
 const head = {
   cells: [
     {
@@ -59,14 +60,13 @@ const head = {
       isSortable: true,
       width: 6,
     },
-    {
-      key: 'link',
-      content: 'Link',
-      width: 6,
-    },
+    // {
+    //   key: 'link',
+    //   content: 'Link',
+    //   width: 6,
+    // },
   ],
 };
-
 const row = ({
   key, fields: {
     summary,
@@ -98,9 +98,8 @@ const row = ({
       content: (
         <Status
           text={status.name}
-          color={
-          statusCatecoryColorMap[status.statusCategory.id]
-      } />
+          color={statusCatecoryColorMap[status.statusCategory.id]}
+        />
       ),
     },
     {
@@ -116,28 +115,25 @@ const row = ({
       content: priorityIconMap[priority.id],
     },
     {
-      key:
-        fixVersions.length
-        && fixVersions[fixVersions.length - 1].id,
-      content:
-        (fixVersions.length
-          && fixVersions[fixVersions.length - 1].name)
-        || '',
-    },
-    {
-      key: '',
+      key: fixVersions[0] ? fixVersions[0].id : null,
       content: (
-        <Tooltip content={`View ${key}`}>
-          <a
-            href={`https://${process.env.REACT_APP_HOST}/browse/${key}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <CopyIcon size="medium" />
-          </a>
-        </Tooltip>
+        fixVersions[0]
+          ? (
+            <Tooltip content={fixVersions[0].name}>
+              <Lozenge appearance="default">{fixVersions[0].name}</Lozenge>
+            </Tooltip>
+          )
+          : ''
       ),
     },
+    // {
+    //   key: '',
+    //   content: (
+    //     <Tooltip content={`Copy to clipboard ${key}`}>
+    //       <Button iconBefore={CopyIcon()} onClick={() => copyLink(key)} />
+    //     </Tooltip>
+    //   ),
+    // },
   ],
 });
 

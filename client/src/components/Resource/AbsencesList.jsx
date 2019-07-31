@@ -2,7 +2,7 @@ import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
-import { Date, Color } from '@atlaskit/date';
+import { Date } from '@atlaskit/date';
 import EmptyState from '@atlaskit/empty-state';
 import { colors, borderRadius } from '@atlaskit/theme';
 import styled, { css } from 'styled-components';
@@ -56,9 +56,9 @@ function AbsencesList({ resourceId }) {
   return (
     <div>
       <h4>Absences</h4>
-      {data.absences.map(absence => (
-        <p key={absence.date}>
-          <SelectableDate value={absence.date} color="blue" />
+      {data.absences && data.absences.map(({ date }) => (
+        <p key={date}>
+          <SelectableDate value={date} color="blue" />
         </p>
       ))}
     </div>
