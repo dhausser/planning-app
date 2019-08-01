@@ -2,8 +2,14 @@ import React, { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
-// import { IntlProvider } from 'react-intl';
+import styled from 'styled-components';
+
+import { gridSize } from '@atlaskit/theme';
 import UserPicker from '@atlaskit/user-picker';
+
+const Wrapper = styled.div`
+  padding: ${gridSize() - 2}px ${gridSize() - 2}px;
+`;
 
 const GET_RESOURCES = gql`
   query resourceList {
@@ -56,7 +62,7 @@ function getResource(user) {
   };
 }
 
-function AssignUser({ id, user }) {
+function AssignUser({ id, user, type }) {
   const [assignee, setAssignee] = useState(user);
   const { data, loading, error } = useQuery(GET_RESOURCES, { fetchPolicy: 'cache-first' });
   // const { data, loading, error } = useQuery(GET_ASSIGNABLE_USERS, {
@@ -68,32 +74,38 @@ function AssignUser({ id, user }) {
   if (error) return <p>{error.message}</p>;
 
   return (
-    <UserPicker
-      fieldId="example"
-      isLoading={loading}
-      appearance="compact"
-      subtle
-      isClearable={false}
-      defaultValue={assignee && getAssignee(assignee)}
-      // maxOptions="100"
-      // options={options}
-      options={data.resources && data.resources.map(getResource)}
-      // options={data.assignableUsers && data.assignableUsers.map(getAssignee)}
-      onChange={(value) => {
-        setAssignee(value);
-        assignIssue({
-          variables: {
-            id,
-            key: value.id,
-          },
-        });
-      }}
-    />
+    <>
+      <h6>{type === 'assignee' ? 'ASSIGNEE' : 'REPORTER'}</h6>
+      <Wrapper>
+        <UserPicker
+          fieldId="example"
+          isLoading={loading}
+          appearance="compact"
+          subtle
+          isClearable={false}
+          defaultValue={assignee && getAssignee(assignee)}
+          // maxOptions="100"
+          // options={options}
+          options={data.resources && data.resources.map(getResource)}
+          // options={data.assignableUsers && data.assignableUsers.map(getAssignee)}
+          onChange={(value) => {
+            setAssignee(value);
+            assignIssue({
+              variables: {
+                id,
+                key: value.id,
+              },
+            });
+          }}
+        />
+      </Wrapper>
+    </>
   );
 }
 
 AssignUser.propTypes = {
   id: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
   // issueKey: PropTypes.string.isRequired,
   user: PropTypes.objectOf(PropTypes.objectOf).isRequired,
 };

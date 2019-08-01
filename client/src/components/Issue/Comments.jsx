@@ -11,6 +11,7 @@ import Comment, {
 function Comments({ comments }) {
   return (
     <>
+      <h5>Activity</h5>
       {comments.map(comment => (
         <Comment
           key={comment.id}

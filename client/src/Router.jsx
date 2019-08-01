@@ -15,7 +15,7 @@ import Resource from './components/Resource/Resource';
 import Resources from './components/Resources';
 import Roadmap from './components/Roadmap';
 import Issues from './components/Issues/Issues';
-import Issue from './components/Issue/Issue';
+import SingleIssue from './components/Issue/SingleIssue';
 import Projects from './components/Projects';
 import Backlog from './components/Backlog';
 import Releases from './components/Releases';
@@ -54,7 +54,7 @@ function Router({ navigationViewController }) {
             <Route path="/portfolio" component={Portfolio} />
             <Route path="/backlog" component={Backlog} />
             <Route path="/resource/:resourceId" component={Resource} />
-            <Route path="/issue/:issueId" component={Issue} />
+            <Route path="/issue/:issueId" component={SingleIssue} />
             <Route path="/issues/:filterId" component={Issues} />
           </Switch>
         ) : <Login />

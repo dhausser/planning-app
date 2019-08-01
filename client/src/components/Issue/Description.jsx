@@ -28,24 +28,27 @@ function Description({ id, description }) {
   const [editIssue] = useMutation(EDIT_ISSUE);
 
   return (
-    <InlineEdit
-      defaultValue={editValue}
-        // label="Description"
-      editView={(fieldProps, ref) => (
-        <TextArea {...fieldProps} ref={ref} />
-      )}
-      readView={() => (
-        <ReadViewContainer>
-          {editValue || 'Click to enter value'}
-        </ReadViewContainer>
-      )}
-      onConfirm={(value) => {
-        setEditValue(value);
-        editIssue({ variables: { id, value, type: 'description' } });
-      }}
-      keepEditViewOpenOnBlur
-      readViewFitContainerWidth
-    />
+    <>
+      <h5>Description</h5>
+      <InlineEdit
+        defaultValue={editValue}
+          // label="Description"
+        editView={(fieldProps, ref) => (
+          <TextArea {...fieldProps} ref={ref} />
+        )}
+        readView={() => (
+          <ReadViewContainer>
+            {editValue || 'Click to enter value'}
+          </ReadViewContainer>
+        )}
+        onConfirm={(value) => {
+          setEditValue(value);
+          editIssue({ variables: { id, value, type: 'description' } });
+        }}
+        keepEditViewOpenOnBlur
+        readViewFitContainerWidth
+      />
+    </>
   );
 }
 

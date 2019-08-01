@@ -4,20 +4,21 @@ import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 
 // Atlaskit
-import { withNavigationViewController } from '@atlaskit/navigation-next';
-import { Status } from '@atlaskit/status';
-import EmptyState from '@atlaskit/empty-state';
-import Lozenge from '@atlaskit/lozenge';
 import { Grid, GridColumn } from '@atlaskit/page';
+import { withNavigationViewController } from '@atlaskit/navigation-next';
+import EmptyState from '@atlaskit/empty-state';
 
 // Components
 import Header from './Header';
 import Description from './Description';
+import Status from './Status';
+import Priority from './Priority';
+import FixVersions from './FixVersions';
 import UserPicker from './UserPicker';
 import Comments from './Comments';
-import { statusCatecoryColorMap, priorityIconMap } from './Icon';
 import { ProductIssuesView, Loading } from '..';
 import { ISSUE_ROW_DATA } from '../Issues/Issues';
+
 
 const GET_ISSUE = gql`
   query GetIssueById($id: ID!) {
@@ -86,25 +87,15 @@ function Issue({ navigationViewController, match }) {
     <Grid layout="fluid">
       <GridColumn medium={10}>
         <Header id={key} summary={summary} issuetype={issuetype} />
-        <h5>Description</h5>
         <Description id={id} description={description} />
-        <h5>Activity</h5>
         <Comments comments={comments} />
       </GridColumn>
       <GridColumn medium={2}>
-        <h6>STATUS</h6>
-        <Status
-          text={status.name}
-          color={statusCatecoryColorMap[status.statusCategory.id]}
-        />
-        <h6>ASSIGNEE</h6>
-        <UserPicker id={id} user={assignee} />
-        <h6>REPORTER</h6>
-        <UserPicker id={id} user={reporter} />
-        <h6>Fix Versions</h6>
-        <Lozenge appearance="default">{fixVersions.length && fixVersions[0].name}</Lozenge>
-        <h6>Priority</h6>
-        {priorityIconMap[priority.id]}
+        <Status {...status} />
+        <UserPicker id={id} user={assignee} type="assignee" />
+        <UserPicker id={id} user={reporter} type="reporter" />
+        <FixVersions fixVersions={fixVersions} />
+        <Priority {...priority} />
       </GridColumn>
     </Grid>
   );
