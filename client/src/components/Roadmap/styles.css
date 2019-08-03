@@ -1,0 +1,7 @@
+.box {
+  border-radius: 3px;
+  width: 400px;
+  height: 24px;
+  background: #8777D9;
+  transform-origin: 50% 50%;
+}

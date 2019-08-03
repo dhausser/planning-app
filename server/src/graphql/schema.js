@@ -5,6 +5,7 @@ const typeDefs = gql`
     issues(projectId: String, versionId: String, teamId: String, resourceId: String, startAt: Int, maxResults: Int): IssueConnection!
     dashboardIssues(projectId: String, versionId: String, teamId: String, startAt: Int, maxResults: Int): DashboardIssueConnection!
     roadmapIssues(projectId: String, versionId: String): [Issue]!
+    epics(projectId: String, versionId: String): [Issue]!
     issue(id: ID!): Issue
     versions(id: ID!, startAt: Int, maxResults: Int): [Version]
     projects: [Project]!

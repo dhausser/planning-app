@@ -16,6 +16,9 @@ const resolvers = {
     roadmapIssues: (_, { projectId, versionId }, { dataSources }) => (
       dataSources.issueAPI.getRoadmapIssues(projectId, versionId)
     ),
+    epics: (_, { projectId, versionId }, { dataSources }) => (
+      dataSources.issueAPI.getEpics(projectId, versionId)
+    ),
     issue: (_, { id }, { dataSources }) => (
       dataSources.issueAPI.getIssueById(id)
     ),

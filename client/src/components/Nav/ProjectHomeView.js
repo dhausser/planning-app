@@ -1,6 +1,5 @@
 import GraphLineIcon from '@atlaskit/icon/glyph/graph-line';
 import IssuesIcon from '@atlaskit/icon/glyph/issues';
-import PortfolioIcon from '@atlaskit/icon/glyph/portfolio';
 import RoadmapIcon from '@atlaskit/icon/glyph/roadmap';
 import PeopleIcon from '@atlaskit/icon/glyph/people';
 import BacklogIcon from '@atlaskit/icon/glyph/backlog';
@@ -29,7 +28,6 @@ export default {
       id: 'project/home:menu',
       parentId: 'product/home:menu',
       items: [
-        // { type: 'Separator', id: 'separator' },
         {
           type: 'InlineComponent',
           component: LinkItem,
@@ -54,6 +52,14 @@ export default {
           to: '/releases',
           id: 'releases',
         },
+        // {
+        //   type: 'InlineComponent',
+        //   component: LinkItem,
+        //   before: IssuesIcon,
+        //   text: 'Issues and filters',
+        //   to: '/issues',
+        //   id: 'issues-and-filters',
+        // },
         {
           type: 'Item',
           id: 'issues-and-filters',
@@ -76,14 +82,6 @@ export default {
           text: 'People',
           to: '/resources',
           id: 'resources',
-        },
-        {
-          type: 'InlineComponent',
-          component: LinkItem,
-          before: PortfolioIcon,
-          text: 'Porfolio',
-          to: '/portfolio',
-          id: 'portfolio',
         },
       ],
     },

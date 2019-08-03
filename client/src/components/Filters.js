@@ -89,7 +89,7 @@ export function ProjectFilter() {
   const [toggleFilter] = useMutation(TOGGLE_FILTER);
 
   return (
-    <div style={{ flex: '0 0 200px', marginLeft: 8 }}>
+    <div style={{ flex: '0 0 150px', marginLeft: 0 }}>
       <Select
         spacing="compact"
         className="single-select"
@@ -129,7 +129,7 @@ export function VersionFilter() {
   const [toggleFilter] = useMutation(TOGGLE_FILTER);
 
   return (
-    <div style={{ flex: '0 0 200px', marginLeft: 8 }}>
+    <div style={{ flex: '0 0 150px', marginLeft: 8 }}>
       <Select
         spacing="compact"
         className="single-select"
@@ -159,7 +159,7 @@ export function TeamFilter() {
   const [toggleFilter] = useMutation(TOGGLE_FILTER);
 
   return (
-    <div style={{ flex: '0 0 200px', marginLeft: 8 }}>
+    <div style={{ flex: '0 0 150px', marginLeft: 8 }}>
       <Select
         spacing="compact"
         className="single-select"

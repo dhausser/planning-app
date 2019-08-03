@@ -10,7 +10,7 @@ import client from './apollo';
 import Router from './Router';
 
 const Padding = styled.div`
-  margin: ${gridSize() * 4}px ${gridSize() * 8}px;
+  margin: 0px 40px;
   padding-bottom: ${gridSize() * 3}px;
 `;
 

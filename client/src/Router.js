@@ -10,7 +10,6 @@ import ProductHomeView from './components/Nav/ProductHomeView';
 import ProductIssuesView from './components/Nav/ProductIssuesView';
 import ProjectHomeView from './components/Nav/ProjectHomeView';
 import Dashboard from './components/Dashboard/Dashboard';
-import Portfolio from './components/Portfolio';
 import Resource from './components/Resource/Resource';
 import Resources from './components/Resources';
 import Roadmap from './components/Roadmap/Roadmap';
@@ -51,7 +50,6 @@ function Router({ navigationViewController }) {
             <Route path="/releases" component={Releases} />
             <Route path="/resources" component={Resources} />
             <Route path="/roadmap" component={Roadmap} />
-            <Route path="/portfolio" component={Portfolio} />
             <Route path="/backlog" component={Backlog} />
             <Route path="/resource/:resourceId" component={Resource} />
             <Route path="/issue/:issueId" component={SingleIssue} />
