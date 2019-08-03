@@ -14,10 +14,6 @@ const Padding = styled.div`
   padding-bottom: ${gridSize() * 3}px;
 `;
 
-// const Wrapper = props => (
-//   <div style={{ padding: '4px', display: 'block' }} {...props} />
-// );
-
 export default function App() {
   return (
     <ApolloProvider client={client}>

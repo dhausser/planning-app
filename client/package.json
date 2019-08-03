@@ -60,6 +60,7 @@
     "react-apollo": "^2.5.8",
     "react-dom": "^16.8.6",
     "react-intl": "^2.9.0",
+    "react-pose": "^4.0.8",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1",
     "rxjs": "^5.5.0",

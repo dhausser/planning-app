@@ -13,7 +13,7 @@ import Dashboard from './components/Dashboard/Dashboard';
 import Portfolio from './components/Portfolio';
 import Resource from './components/Resource/Resource';
 import Resources from './components/Resources';
-import Roadmap from './components/Roadmap';
+import Roadmap from './components/Roadmap/Roadmap';
 import Issues from './components/Issues/Issues';
 import SingleIssue from './components/Issue/SingleIssue';
 import Projects from './components/Projects';

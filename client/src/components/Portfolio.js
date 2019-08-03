@@ -64,7 +64,7 @@ const GET_ISSUES = gql`
 `;
 
 
-function Roadmap({ navigationViewController }) {
+function Portfolio({ navigationViewController }) {
   const [isExpanded, setIsExpanded] = useState(true);
 
   useEffect(() => {
@@ -90,7 +90,7 @@ function Roadmap({ navigationViewController }) {
           </div>
         )}
       >
-        Roadmap
+        Portfolio
       </PageHeader>
       {error
         ? <EmptyState header={error.name} description={error.message} />
@@ -137,8 +137,8 @@ function Roadmap({ navigationViewController }) {
 }
 
 
-Roadmap.propTypes = {
+Portfolio.propTypes = {
   navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
 };
 
-export default withNavigationViewController(Roadmap);
+export default withNavigationViewController(Portfolio);
