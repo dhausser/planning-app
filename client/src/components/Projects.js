@@ -73,7 +73,10 @@ const row = project => ({
               name={project.name}
               size="small"
               appearance="square"
-              src={project.avatarUrls.small}
+              src={project.id === '10500'
+                ? 'https://solarsystem.atlassian.net/secure/projectavatar?pid=10000&avatarId=10011&size=xxlarge'
+                : project.avatarUrls.small
+              }
             />
           </AvatarWrapper>
           <Link to={`/resources/${project.key}`}>{project.name}</Link>

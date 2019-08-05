@@ -1,7 +1,105 @@
+.wrapper {
+  /* Use flexbox */
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+}
+
+.top-wrapper {
+  position: 'relative';
+  margin: 'top: 24px';
+  flex: '1 1 auto';
+}
+
 .box {
+  /* Use box-sizing so that element's outerwidth will match width property */
+  /* box-sizing: border-box; */
+
+  /* Allow box to grow and shrink, and ensure they are all equally sized */
+  /* flex: 1 1 auto; */
+  
   border-radius: 3px;
   width: 400px;
   height: 24px;
   background: #8777D9;
   transform-origin: 50% 50%;
 }
+
+.box:hover {
+  background: #6554C0;
+}
+
+.header {
+  width: 100%;
+  height: 56px;
+  box-sizing: border-box;
+  background-color: rgb(244, 245, 247);
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(193, 199, 208) rgb(193, 199, 208) rgb(223, 225, 230);
+  border-image: initial;
+  border-bottom: 1px solid rgb(223, 225, 230);
+  flex: 0 0 auto;
+  padding: 0px 16px 0px 24px;
+  border-radius: 3px 0px 0px;
+}
+
+/* .header-column-wrapper {
+  display: flex;
+  flex-direction: column;  
+} */
+
+.header-column {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  height: 100%;
+  width: 320px;
+  min-height: 0px;
+  flex: 0 0 auto;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 8px;
+
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(193, 199, 208) rgb(193, 199, 208) rgb(223, 225, 230);
+  /* border-image: initial; */
+  /* border-bottom: 1px solid rgb(223, 225, 230); */
+  /* flex: 0 0 auto; */
+  border-radius: 3px 0px 0px;
+}
+
+.row:hover {
+  background-color: #DFE1E6;
+}
+
+.epic-icon {
+  align-content: center
+}
+
+.epic-name {
+  margin-left: 10px;
+}
+
+.header-cell {
+  display: flex;
+  flex: 1 1 320px;
+
+}
+
+.content-cell {
+  flex: 1 1 auto;
+}
+

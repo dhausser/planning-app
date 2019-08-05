@@ -6,7 +6,7 @@ import gql from 'graphql-tag';
 import GlobalNavigation from '@atlaskit/global-navigation';
 import { GlobalItem } from '@atlaskit/navigation-next';
 import AppSwitcherIcon from '@atlaskit/icon/glyph/app-switcher';
-import { JiraSoftwareIcon } from '@atlaskit/logo';
+import EmojiAtlassianIcon from '@atlaskit/icon/glyph/emoji/atlassian';
 
 const GET_CURRENT_USER = gql`
   query GetCurrentUser {
@@ -32,7 +32,7 @@ export default () => {
 
   return (
     <GlobalNavigation
-      productIcon={JiraSoftwareIcon}
+      productIcon={EmojiAtlassianIcon}
       productHref="#"
       onProductClick={() => console.log('product clicked')}
       onCreateClick={() => console.log('create clicked')}

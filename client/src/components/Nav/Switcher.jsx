@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { useQuery, useMutation } from '@apollo/react-hooks';
+import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 import { colors } from '@atlaskit/theme';
 import ChevD from '@atlaskit/icon/glyph/chevron-down';
@@ -68,7 +68,17 @@ const target = ({
   id, subText, text, avatar,
 }) => (
   <ContainerHeader
-    before={s => <ItemAvatar appearance="square" itemState={s} src={avatar} />}
+    before={s => (
+      <ItemAvatar
+        appearance="square"
+        itemState={s}
+        size="large"
+        src={id === '10500'
+          ? 'https://solarsystem.atlassian.net/secure/projectavatar?pid=10000&avatarId=10011&size=xxlarge'
+          : avatar
+        }
+      />
+    )}
     after={ChevD}
     id={id}
     subText={subText}
