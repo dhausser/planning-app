@@ -89,9 +89,9 @@ min-height: 0px;
 overflow: hidden;
 `;
 
-const Box = posed.div({
-  draggable: 'x',
-});
+// const Box = posed.div({
+//   draggable: 'x',
+// });
 
 function EpicTable({ epics }) {
   const [issues, setIssues] = useState(epics);
@@ -121,9 +121,42 @@ function EpicTable({ epics }) {
     setIssues([...issues, issue]);
   };
 
+  const months = ['Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
   return (
-    <div className="wrapper">
-      <div className="header-column">
+    <div className="top-wrapper">
+      <div className="wrapper">
+
+        <div className="epic-panel">
+          <div className="epic-header">Epic</div>
+          <div className="box box1">1</div>
+          <div className="box box2">2</div>
+          <div className="box box3">3</div>
+          <div className="box box4">4</div>
+          <div className="box box5">5</div>
+        </div>
+        <div className="calendar">
+          <div className="calendar-header">
+            <div className="calendar-1">
+              <div className="calendar-2">
+                <div className="calendar-3">
+                  {months.map((month, i) => (
+                    <div className="calendar-4" style={{ left: `calc(${i} * 2.75%)`, right: `calc(100% - 2.75% * ${i + 1})` }}>
+                      <div className="calendar-5">{`${month} '19`}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="box box6">6</div>
+          <div className="box box7">7</div>
+          <div className="box box8">8</div>
+          <div className="box box9">9</div>
+          <div className="box box10">10</div>
+        </div>
+
+        {/* <div className="header-column">
         <div className="header">Epic</div>
       </div>
 
@@ -152,6 +185,8 @@ function EpicTable({ epics }) {
 
       <div>
         <Button appearance="subtle" iconBefore={AddIcon()} onClick={createEpic} />
+      </div> */}
+
       </div>
     </div>
   );
