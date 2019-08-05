@@ -4,7 +4,7 @@ import RoadmapIcon from '@atlaskit/icon/glyph/roadmap';
 import PeopleIcon from '@atlaskit/icon/glyph/people';
 import BacklogIcon from '@atlaskit/icon/glyph/backlog';
 import ShipIcon from '@atlaskit/icon/glyph/ship';
-import Switcher from './Switcher';
+import Switcher from './Switcher.js';
 import LinkItem from './LinkItem';
 
 export default {

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
-import { colors } from '@atlaskit/theme';
 import ChevD from '@atlaskit/icon/glyph/chevron-down';
 import {
   ContainerHeader,
@@ -11,6 +10,16 @@ import {
   NavigationProvider,
 } from '@atlaskit/navigation-next';
 import EmptyState from '@atlaskit/empty-state';
+import styled from 'styled-components';
+
+const Wrapper = styled.div`
+  position: relative;
+  padding: '16px';
+  box-sizing: 'border-box';
+  padding-left: '16px';
+  padding-right: '16px';
+`;
+
 
 const PROJECT_TILE_DATA = gql`
   fragment ProjectTile on Project {
@@ -83,17 +92,6 @@ const target = ({
     id={id}
     subText={subText}
     text={text}
-  />
-);
-
-const Wrapper = props => (
-  <div
-    css={{
-      backgroundColor: colors.N20,
-      boxSizing: 'border-box',
-      padding: '16px',
-    }}
-    {...props}
   />
 );
 
