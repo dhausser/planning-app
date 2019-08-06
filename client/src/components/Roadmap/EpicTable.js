@@ -1,13 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import posed from 'react-pose';
-
-import Button from '@atlaskit/button';
-import AddIcon from '@atlaskit/icon/glyph/add';
-import Epic16Icon from '@atlaskit/icon-object/glyph/epic/16';
-
+import EmojiCustomIcon from '@atlaskit/icon/glyph/emoji/custom';
 import './styles.css';
-import styled from 'styled-components';
 
 const months = [
   "Jan '18",
@@ -60,89 +55,9 @@ const months = [
   "Dec '21",
 ];
 
-const Wrapper = styled.div`
-display: flex;
-position: absolute;
-top: 0px;
-right: 0px;
-bottom: 0px;
-left: 0px;
-`;
-
-const LeftColumn = styled.div`
-display: flex;
-flex-direction: column;
-position: relative;
-height: 100%;
-width: 320px;
-min-height: 0px;
-flex: 0 0 auto;
-`;
-
-const LeftColumnHeader = styled.div`
-width: 100%;
-height: 56px;
-box-sizing: border-box;
-background-color: rgb(244, 245, 247);
-display: flex;
--webkit-box-align: center;
-align-items: center;
-border-width: 1px;
-border-style: solid;
-border-color: rgb(193, 199, 208) rgb(193, 199, 208) rgb(223, 225, 230);
-border-image: initial;
-border-bottom: 1px solid rgb(223, 225, 230);
-flex: 0 0 auto;
-padding: 0px 16px 0px 24px;
-border-radius: 3px 0px 0px;
-`;
-
-const LeftColumnContent = styled.div`
-position: relative;
-flex-direction: column;
-display: flex;
-margin-left: -10px;
-flex: 1 1 auto;
-/* overflow: hidden; */
-`;
-
-const LeftColumnContentTop1 = styled.div`
-display: flex;
-/* overflow: hidden; */
-`;
-
-const LeftColumnContentTop2 = styled.div`
-background-color: rgba(9, 30, 66, 0.25);
-margin-left: 10px;
-border-left: 1px solid rgb(193, 199, 208);
-border-right: 1px solid rgb(193, 199, 208);
-`;
-
-const LeftColumnContentBottom = styled.div`
-position: relative;
-display: flex;
--webkit-box-align: center;
-align-items: center;
-height: 40px;
-background-color: rgb(255, 255, 255);
--webkit-box-pack: center;
-justify-content: center;
-box-sizing: border-box;
-transition: background-color 100ms linear 0s;
-padding: 0px 8px;
-`;
-
-const RightPanel = styled.div`
-position: relative;
-height: 100%;
-width: 100%;
-min-height: 0px;
-overflow: hidden;
-`;
-
-// const Box = posed.div({
-//   draggable: 'x',
-// });
+const Box = posed.div({
+  draggable: 'x',
+});
 
 function EpicTable({ epics }) {
   const [issues, setIssues] = useState(epics);
@@ -181,19 +96,27 @@ function EpicTable({ epics }) {
           <div className="epic-content">
             <div className="epic-content-flex">
               <div className="epic-content-item">
-                <div className="epic-content-flex-item-style" style={{ width: '318px' }}>
-                  {epics.map(epic => (
-                    <div className="row">
-                      <div className="epic-icon">
-                        <Epic16Icon />
-                      </div>
-                      <div className="epic-name">
-                        {epic.fields.summary}
+                <div className="epic-content-flex-item-background" style={{ width: '318px' }}>
+                  {epics.map((epic, i) => (
+                    <div className="epic-list-item-base-container" draggable="true" style={{ backgroundColor: `${i % 2 ? 'rgb(244, 245, 247)' : 'rgb(255, 255, 255)'}` }}>
+                      <div className="epic-list-item-base-content">
+                        <div className="epic-list-item-base-content-row">
+                          <div className="epic-icon">
+                            <img
+                              className="epic-icon"
+                              src="https://solarsystem.atlassian.net/secure/viewavatar?size=medium&avatarId=10307&avatarType=issuetype"
+                              alt="Epic issue type"
+                            />
+                          </div>
+                          <p className="epic-text">{epic.fields.summary}</p>
+                        </div>
                       </div>
                     </div>
                   ))}
-                  <div className="epic-bottom-plus-box">
-                    <Button appearance="subtle" iconBefore={AddIcon()} onClick={createEpic} />
+                  <div className="epic-item-create">
+                    <div className="epic-item-create-button" role="button" onClick={createEpic} onKeyUp={createEpic} tabIndex="0">
+                      <EmojiCustomIcon />
+                    </div>
                   </div>
                   <div style={{ height: '1px', 'background-color': 'rgb(193, 199, 208)' }} />
                 </div>
@@ -222,51 +145,32 @@ function EpicTable({ epics }) {
           <div className="timeline-content">
             <div className="timeline-content-1">
               <div className="timeline-content-2" style={{ width: '9579.5px' }}>
-                <div className="timeline-content-row">
-                  {/* {months.map((month, i) => (
-                    <div className="timeline-content-cell">
-                      <div className="box box6">{`Month ${i}`}</div>
+                <div className="timeline-content-column-container">
+                  {months.map((_, i) => <div className="timeline-content-column-item" style={{ left: `calc(${i} * 2.75%)`, right: `calc(100% - 2.75% * ${i + 1})` }} />)}
+                </div>
+                <div className="timeline-column-overlay" />
+                <div className="timeline-row-container">
+                  {[...epics, {}].map((_, i) => (
+                    <div className={`timeline-row-background-${i % 2 ? 'dark' : 'light'}`}>
+                      <Box
+                        className="box"
+                        onDragStart={onStart}
+                        onDragEnd={onEnd}
+                        onValueChange={{ x: onDrag }}
+                      />
                     </div>
-                  ))} */}
+                  ))}
+                  <div className="timeline-bottomline" />
                 </div>
               </div>
             </div>
+            <div className="timeline-slider-box">
+              <div className="timeline-slider-cursor" style={{ transform: 'translateX(0px)' }} />
+            </div>
           </div>
 
         </div>
       </div>
-
-
-      {/* <div className="header-column">
-      <div className="header">Epic</div>
-    </div>
-
-    {issues.map(issue => (
-      <div className="row" key={issue.id}>
-        <div className="header-column">
-          <div className="header-cell">
-            <div className="epic-icon">
-              <Epic16Icon />
-            </div>
-            <div className="epic-name">
-              {issue.fields.summary}
-            </div>
-          </div>
-        </div>
-        <div className="content-cell">
-          <Box
-            className="box"
-            onDragStart={onStart}
-            onDragEnd={onEnd}
-            onValueChange={{ x: onDrag }}
-          />
-        </div>
-      </div>
-    ))}
-
-    <div>
-      <Button appearance="subtle" iconBefore={AddIcon()} onClick={createEpic} />
-    </div> */}
 
     </div>
   );

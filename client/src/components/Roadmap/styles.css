@@ -63,21 +63,74 @@
   overflow: hidden;
 }
 
-.epic-content-flex-item {
+.epic-content-item {
   width: 100%;
   overflow-y: auto;
   padding-right: 50px;
   flex: 0 0 auto;
 }
 
-.epic-content-flex-item-style {
-  /* background-color: rgba(9, 30, 66, 0.25); */
+.epic-content-flex-item-background {
+  background-color: rgba(9, 30, 66, 0.25);
   margin-left: 10px;
   border-left: 1px solid rgb(193, 199, 208);
   border-right: 1px solid rgb(193, 199, 208);
 }
 
-.epic-bottom-plus-box {
+.epic-list-item-base-container {
+  position: relative;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  height: 40px;
+  background-color: rgb(255, 255, 255);
+  cursor: pointer;
+  transition: background-color 100ms linear 0s;
+}
+
+.epic-list-item-base-content:hover {
+  background-color: #DFE1E6;
+}
+
+.epic-list-item-base-content {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-flex: 1;
+  flex-grow: 1;
+  height: 100%;
+  padding-left: 24px;
+  padding-right: 16px;
+  overflow: hidden;
+  outline: none;
+  transition: box-shadow 0.2s cubic-bezier(0.47, 0.03, 0.49, 1.38) 0s;
+}
+
+.epic-list-item-base-content-row {
+  display: flex;
+  flex-direction: row;
+  -webkit-box-align: center;
+  align-items: center;
+  text-overflow: ellipsis;
+  width: 100%;
+  overflow: hidden;
+}
+
+.epic-icon {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+  border-radius: 3px;
+}
+
+.epic-text {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin: 0px 0px 0px 8px;
+  overflow: hidden;
+}
+
+.epic-item-create {
   position: relative;
   display: flex;
   -webkit-box-align: center;
@@ -89,6 +142,22 @@
   box-sizing: border-box;
   transition: background-color 100ms linear 0s;
   padding: 0px 8px;
+}
+
+.epic-item-create-button {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  height: 24px;
+  width: 100%;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.epic-item-create-button:hover {
+  background-color: #DFE1E6;
 }
 
 .epic-bottom {
@@ -183,13 +252,22 @@
   min-height: 100%;
 }
 
-.timeline-content-row {
+.timeline-content-column-container {
   position: absolute;
   display: flex;
   width: 100%;
   height: 100%;
   z-index: 1;
   pointer-events: none;
+}
+
+.timeline-content-column-item {
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  box-sizing: border-box;
+  flex: 0 0 auto;
+  border-right: 1px solid rgb(223, 225, 230);
 }
 
 .timeline-content-cell {
@@ -202,85 +280,82 @@
   display: block;
 }
 
-/* .box {
-  border-radius: 3px;
-  width: 400px;
-  height: 24px;
-  background: #8777D9;
-  transform-origin: 50% 50%;
+.timeline-column-overlay {
+  position: absolute;
+  pointer-events: none;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
 }
 
-.box:hover {
-  background: #6554C0;
-} */
+.timeline-content-row-container {
+  background-color: rgba(9, 30, 66, 0.25);
+}
 
-.header {
-  width: 100%;
-  height: 56px;
-  box-sizing: border-box;
-  background-color: rgb(244, 245, 247);
+.timeline-row-background-light {
+  position: relative;
   display: flex;
   -webkit-box-align: center;
   align-items: center;
-  border-width: 1px;
-  border-style: solid;
-  border-color: rgb(193, 199, 208) rgb(193, 199, 208) rgb(223, 225, 230);
-  border-image: initial;
-  border-bottom: 1px solid rgb(223, 225, 230);
-  flex: 0 0 auto;
-  padding: 0px 16px 0px 24px;
-  border-radius: 3px 0px 0px;
+  height: 40px;
+  background-color: rgb(255, 255, 255);
+  transition: background-color 100ms linear 0s;
+  overflow: hidden;
 }
 
-/* .header-column-wrapper {
-  display: flex;
-  flex-direction: column;  
-} */
-
-.header-column {
-  display: flex;
-  flex-direction: row;
+.timeline-row-background-dark {
   position: relative;
-  height: 100%;
-  width: 320px;
-  min-height: 0px;
-  flex: 0 0 auto;
-}
-
-.row {
   display: flex;
-  flex-direction: row;
+  -webkit-box-align: center;
   align-items: center;
-  padding: 8px;
-
-  border-width: 1px;
-  border-style: solid;
-  border-color: rgb(193, 199, 208) rgb(193, 199, 208) rgb(223, 225, 230);
-  /* border-image: initial; */
-  /* border-bottom: 1px solid rgb(223, 225, 230); */
-  /* flex: 0 0 auto; */
-  border-radius: 3px 0px 0px;
+  height: 40px;
+  background-color: rgb(244, 245, 247);
+  transition: background-color 100ms linear 0s;
+  overflow: hidden;
 }
 
-.row:hover {
-  background-color: #DFE1E6;
+.timeline-slider-box {
+  position: absolute;
+  visibility: visible;
+  z-index: 9;
+  right: 7px;
+  left: 7px;
+  height: 10px;
+  bottom: 0px;
+  border-radius: 10px;
 }
 
-.epic-icon {
-  align-content: center
+.timeline-slider-cursor {
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.4);
+  height: 100%;
+  width: 38px;
+  border-radius: 10px;
 }
 
-.epic-name {
-  margin-left: 10px;
+.timeline-bottomline {
+  height: 1px;
+  background-color: rgb(193, 199, 208);
 }
 
-.header-cell {
+.box {
+  position: absolute;
   display: flex;
-  flex: 1 1 320px;
-
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: end;
+  justify-content: flex-end;
+  height: 24px;
+  width: 400px;
+  min-width: 3px;
+  z-index: 3;
+  visibility: visible;
+  cursor: pointer;
+  padding: 0px 5px;
+  transition: left 0.1s ease 0s, right 0.1s ease 0s;
+  border-radius: 3px;
+  background: rgb(135, 119, 217);
+  transform-origin: 50% 50%;
 }
-
-.content-cell {
-  flex: 1 1 auto;
-}
-
