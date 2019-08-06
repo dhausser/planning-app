@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 import { withNavigationViewController, LayoutManagerWithViewController } from '@atlaskit/navigation-next';
 import Page from '@atlaskit/page';
-import { gridSize } from '@atlaskit/theme';
 import styled from 'styled-components';
 
 import GlobalNavigation from './components/Nav/GlobalNavigation';
@@ -26,8 +25,12 @@ import Settings from './components/Settings';
 import Login from './components/Login/Login';
 
 const Padding = styled.div`
-  margin: 0px 40px;
-  padding-bottom: ${gridSize() * 3}px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding: 0px 0px 0px 40px;
+  height: 100vh;
+  overflow: hidden;
 `;
 
 const IS_LOGGED_IN = gql`

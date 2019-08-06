@@ -47,9 +47,11 @@ const breadcrumbs = (
 
 function Portfolio({ navigationViewController }) {
   const { data, loading, error } = useQuery(GET_ISSUES);
+
   useEffect(() => {
     navigationViewController.setView(ProjectHomeView.id);
   }, [navigationViewController]);
+
   return (
     <>
       <PageHeader breadcrumbs={breadcrumbs} bottomBar={barContent}>Roadmap</PageHeader>

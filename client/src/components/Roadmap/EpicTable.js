@@ -9,6 +9,57 @@ import Epic16Icon from '@atlaskit/icon-object/glyph/epic/16';
 import './styles.css';
 import styled from 'styled-components';
 
+const months = [
+  "Jan '18",
+  "Feb '18",
+  "Mar '18",
+  "Apr '18",
+  "May '18",
+  "Jun '18",
+  "Jul '18",
+  "Aug '18",
+  "Sep '18",
+  "Oct '18",
+  "Nov '18",
+  "Dec '18",
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
+  "Jan '20",
+  "Feb '20",
+  "Mar '20",
+  "Apr '20",
+  "May '20",
+  "Jun '20",
+  "Jul '20",
+  "Aug '20",
+  "Sep '20",
+  "Oct '20",
+  "Nov '20",
+  "Dec '20",
+  "Jan '21",
+  "Feb '21",
+  "Mar '21",
+  "Apr '21",
+  "May '21",
+  "Jun '21",
+  "Jul '21",
+  "Aug '21",
+  "Sep '21",
+  "Oct '21",
+  "Nov '21",
+  "Dec '21",
+];
+
 const Wrapper = styled.div`
 display: flex;
 position: absolute;
@@ -121,73 +172,102 @@ function EpicTable({ epics }) {
     setIssues([...issues, issue]);
   };
 
-  const months = ['Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
   return (
-    <div className="top-wrapper">
-      <div className="wrapper">
+    <div className="wrapper-1">
+      <div className="wrapper-2">
 
-        <div className="epic-panel">
+        <div className="container-epic" style={{ width: '320px' }}>
           <div className="epic-header">Epic</div>
-          <div className="box box1">1</div>
-          <div className="box box2">2</div>
-          <div className="box box3">3</div>
-          <div className="box box4">4</div>
-          <div className="box box5">5</div>
+          <div className="epic-content">
+            <div className="epic-content-flex">
+              <div className="epic-content-item">
+                <div className="epic-content-flex-item-style" style={{ width: '318px' }}>
+                  {epics.map(epic => (
+                    <div className="row">
+                      <div className="epic-icon">
+                        <Epic16Icon />
+                      </div>
+                      <div className="epic-name">
+                        {epic.fields.summary}
+                      </div>
+                    </div>
+                  ))}
+                  <div className="epic-bottom-plus-box">
+                    <Button appearance="subtle" iconBefore={AddIcon()} onClick={createEpic} />
+                  </div>
+                  <div style={{ height: '1px', 'background-color': 'rgb(193, 199, 208)' }} />
+                </div>
+              </div>
+            </div>
+            <div className="epic-bottom" />
+          </div>
         </div>
-        <div className="calendar">
-          <div className="calendar-header">
-            <div className="calendar-1">
-              <div className="calendar-2">
-                <div className="calendar-3">
+
+        <div className="container-timeline">
+
+          <div className="timeline-header">
+            <div className="timeline-header-1">
+              <div className="timeline-header-2">
+                <div className="timeline-header-3">
                   {months.map((month, i) => (
-                    <div className="calendar-4" style={{ left: `calc(${i} * 2.75%)`, right: `calc(100% - 2.75% * ${i + 1})` }}>
-                      <div className="calendar-5">{`${month} '19`}</div>
+                    <div className="timeline-header-cell" style={{ left: `calc(${i} * 2.75%)`, right: `calc(100% - 2.75% * ${i + 1})` }}>
+                      <div className="timeline-header-text">{month}</div>
                     </div>
                   ))}
                 </div>
               </div>
             </div>
           </div>
-          <div className="box box6">6</div>
-          <div className="box box7">7</div>
-          <div className="box box8">8</div>
-          <div className="box box9">9</div>
-          <div className="box box10">10</div>
-        </div>
 
-        {/* <div className="header-column">
-        <div className="header">Epic</div>
-      </div>
-
-      {issues.map(issue => (
-        <div className="row" key={issue.id}>
-          <div className="header-column">
-            <div className="header-cell">
-              <div className="epic-icon">
-                <Epic16Icon />
-              </div>
-              <div className="epic-name">
-                {issue.fields.summary}
+          <div className="timeline-content">
+            <div className="timeline-content-1">
+              <div className="timeline-content-2" style={{ width: '9579.5px' }}>
+                <div className="timeline-content-row">
+                  {/* {months.map((month, i) => (
+                    <div className="timeline-content-cell">
+                      <div className="box box6">{`Month ${i}`}</div>
+                    </div>
+                  ))} */}
+                </div>
               </div>
             </div>
           </div>
-          <div className="content-cell">
-            <Box
-              className="box"
-              onDragStart={onStart}
-              onDragEnd={onEnd}
-              onValueChange={{ x: onDrag }}
-            />
+
+        </div>
+      </div>
+
+
+      {/* <div className="header-column">
+      <div className="header">Epic</div>
+    </div>
+
+    {issues.map(issue => (
+      <div className="row" key={issue.id}>
+        <div className="header-column">
+          <div className="header-cell">
+            <div className="epic-icon">
+              <Epic16Icon />
+            </div>
+            <div className="epic-name">
+              {issue.fields.summary}
+            </div>
           </div>
         </div>
-      ))}
-
-      <div>
-        <Button appearance="subtle" iconBefore={AddIcon()} onClick={createEpic} />
-      </div> */}
-
+        <div className="content-cell">
+          <Box
+            className="box"
+            onDragStart={onStart}
+            onDragEnd={onEnd}
+            onValueChange={{ x: onDrag }}
+          />
+        </div>
       </div>
+    ))}
+
+    <div>
+      <Button appearance="subtle" iconBefore={AddIcon()} onClick={createEpic} />
+    </div> */}
+
     </div>
   );
 }
