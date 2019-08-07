@@ -71,7 +71,7 @@ function EpicTable({ epics }) {
   };
 
   const onDrag = (e) => {
-    console.log(e);
+    // console.log(e);
   };
 
   const createEpic = () => {
@@ -98,10 +98,10 @@ function EpicTable({ epics }) {
               <div className="epic-content-item">
                 <div className="epic-content-flex-item-background" style={{ width: '318px' }}>
                   {epics.map(epic => (
-                    <div className="epic-list-item-base-container" draggable="true">
-                      <div className="epic-list-item-base-content">
-                        <div className="epic-list-item-base-content-row">
-                          <div className="epic-icon">
+                    <div key={epic.key} className="epic-list-item-base-container" draggable="true">
+                      <div key={epic.key} className="epic-list-item-base-content">
+                        <div key={epic.key} className="epic-list-item-base-content-row">
+                          <div key={epic.key} className="epic-icon">
                             <img
                               className="epic-icon"
                               src="https://solarsystem.atlassian.net/secure/viewavatar?size=medium&avatarId=10307&avatarType=issuetype"
@@ -118,7 +118,7 @@ function EpicTable({ epics }) {
                       <EmojiCustomIcon />
                     </div>
                   </div>
-                  <div style={{ height: '1px', 'background-color': 'rgb(193, 199, 208)' }} />
+                  <div style={{ height: '1px', backgroundColor: 'rgb(193, 199, 208)' }} />
                 </div>
               </div>
             </div>
@@ -133,8 +133,8 @@ function EpicTable({ epics }) {
               <div className="timeline-header-2">
                 <div className="timeline-header-3">
                   {months.map((month, i) => (
-                    <div className="timeline-header-cell" style={{ left: `calc(${i} * 2.75%)`, right: `calc(100% - 2.75% * ${i + 1})` }}>
-                      <div className="timeline-header-text">{month}</div>
+                    <div key={month} className="timeline-header-cell" style={{ left: `calc(${i} * 2.75%)`, right: `calc(100% - 2.75% * ${i + 1})` }}>
+                      <div key={month} className="timeline-header-text">{month}</div>
                     </div>
                   ))}
                 </div>
@@ -146,11 +146,11 @@ function EpicTable({ epics }) {
             <div className="timeline-content-1">
               <div className="timeline-content-2" style={{ width: '9579.5px' }}>
                 <div className="timeline-content-column-container">
-                  {months.map((_, i) => <div className="timeline-content-column-item" style={{ left: `calc(${i} * 2.75%)`, right: `calc(100% - 2.75% * ${i + 1})` }} />)}
+                  {months.map((month, i) => <div key={month} className="timeline-content-column-item" style={{ left: `calc(${i} * 2.75%)`, right: `calc(100% - 2.75% * ${i + 1})` }} />)}
                 </div>
                 <div className="timeline-column-overlay" />
-                {epics.map(() => (
-                  <div className="timeline-row">
+                {epics.map(epic => (
+                  <div key={epic.key} className="timeline-row">
                     <Box
                       className="box"
                       onDragStart={onStart}

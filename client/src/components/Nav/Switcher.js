@@ -7,18 +7,18 @@ import {
   ContainerHeader,
   ItemAvatar,
   Switcher,
-  NavigationProvider,
 } from '@atlaskit/navigation-next';
 import EmptyState from '@atlaskit/empty-state';
-import styled from 'styled-components';
 
-const Wrapper = styled.div`
-  position: relative;
-  padding: '16px';
-  box-sizing: 'border-box';
-  padding-left: '16px';
-  padding-right: '16px';
-`;
+// import styled from 'styled-components';
+
+// const Wrapper = styled.div`
+//   position: relative;
+//   padding: '16px';
+//   box-sizing: 'border-box';
+//   padding-left: '16px';
+//   padding-right: '16px';
+// `;
 
 
 const PROJECT_TILE_DATA = gql`
@@ -135,26 +135,22 @@ function ProjectSwitcher() {
   if (error) return <EmptyState header={error.name} description={error.message} />;
 
   return (
-    <NavigationProvider>
-      <Wrapper>
-        <Switcher
-          create={create()}
-          onChange={(e) => {
-            toggleFilter({
-              variables: {
-                value: e.id,
-                label: e.text,
-                __typename: 'Project',
-              },
-            });
-            setSelected(e);
-          }}
-          options={options}
-          target={target(selected)}
-          value={selected}
-        />
-      </Wrapper>
-    </NavigationProvider>
+    <Switcher
+      create={create()}
+      onChange={(e) => {
+        toggleFilter({
+          variables: {
+            value: e.id,
+            label: e.text,
+            __typename: 'Project',
+          },
+        });
+        setSelected(e);
+      }}
+      options={options}
+      target={target(selected)}
+      value={selected}
+    />
   );
 }
 

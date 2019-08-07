@@ -1,11 +1,16 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { useQuery } from '@apollo/react-hooks';
+import { ApolloProvider, useQuery } from '@apollo/react-hooks';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
-import { withNavigationViewController, LayoutManagerWithViewController } from '@atlaskit/navigation-next';
-import Page from '@atlaskit/page';
 import styled from 'styled-components';
+
+import {
+  NavigationProvider,
+  withNavigationViewController,
+  LayoutManagerWithViewController,
+} from '@atlaskit/navigation-next';
+import Page from '@atlaskit/page';
 
 import GlobalNavigation from './components/Nav/GlobalNavigation';
 import ProductHomeView from './components/Nav/ProductHomeView';
@@ -24,6 +29,14 @@ import Reports from './components/Reports';
 import Settings from './components/Settings';
 import Login from './components/Login/Login';
 
+import client from './apollo';
+
+const IS_LOGGED_IN = gql`
+  query isUserLoggedIn {
+    isLoggedIn @client
+  }
+`;
+
 const Padding = styled.div`
   display: flex;
   flex-direction: column;
@@ -33,52 +46,65 @@ const Padding = styled.div`
   overflow: hidden;
 `;
 
-const IS_LOGGED_IN = gql`
-  query IsUserLoggedIn {
-    isLoggedIn @client
-  }
-`;
+const Layout = ({ children }) => (
+  <Page>
+    <Padding>{children}</Padding>
+  </Page>
+);
+
+const AppRouter = () => (
+  <LayoutManagerWithViewController globalNavigation={GlobalNavigation}>
+    <Switch>
+      <Layout>
+        <Route path="/" exact component={Projects} />
+        <Route path="/dashboards" component={Dashboard} />
+        <Route path="/reports" component={Reports} />
+        <Route path="/issues" component={Issues} />
+        <Route path="/settings" component={Settings} />
+        <Route path="/releases" component={Releases} />
+        <Route path="/resources" component={Resources} />
+        <Route path="/roadmap" component={Roadmap} />
+        <Route path="/backlog" component={Backlog} />
+        <Route path="/resource/:resourceId" component={Resource} />
+        <Route path="/issue/:issueId" component={SingleIssue} />
+        <Route path="/issues/:filterId" component={Issues} />
+      </Layout>
+    </Switch>
+  </LayoutManagerWithViewController>
+);
 
 function App({ navigationViewController }) {
+  const { data } = useQuery(IS_LOGGED_IN);
+
   useEffect(() => {
     navigationViewController.addView(ProductHomeView);
     navigationViewController.addView(ProductIssuesView);
     navigationViewController.addView(ProjectHomeView);
   }, [navigationViewController]);
 
-  const { data } = useQuery(IS_LOGGED_IN);
-
-  return (
-    <BrowserRouter>
-      <LayoutManagerWithViewController globalNavigation={GlobalNavigation}>
-        {data.isLoggedIn ? (
-          <Switch>
-            <Page>
-              <Padding>
-                <Route path="/" exact component={Projects} />
-                <Route path="/dashboards" component={Dashboard} />
-                <Route path="/reports" component={Reports} />
-                <Route path="/issues" component={Issues} />
-                <Route path="/settings" component={Settings} />
-                <Route path="/releases" component={Releases} />
-                <Route path="/resources" component={Resources} />
-                <Route path="/roadmap" component={Roadmap} />
-                <Route path="/backlog" component={Backlog} />
-                <Route path="/resource/:resourceId" component={Resource} />
-                <Route path="/issue/:issueId" component={SingleIssue} />
-                <Route path="/issues/:filterId" component={Issues} />
-              </Padding>
-            </Page>
-          </Switch>
-        ) : <Login />
-      }
-      </LayoutManagerWithViewController>
-    </BrowserRouter>
-  );
+  return data.isLoggedIn ? <AppRouter /> : <Login />;
 }
+
+Layout.defaultProps = {
+  children: null,
+};
+
+Layout.propTypes = {
+  children: PropTypes.node,
+};
 
 App.propTypes = {
   navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
 };
 
-export default withNavigationViewController(App);
+const AppWithNavigationViewController = withNavigationViewController(App);
+
+export default () => (
+  <ApolloProvider client={client}>
+    <BrowserRouter>
+      <NavigationProvider>
+        <AppWithNavigationViewController />
+      </NavigationProvider>
+    </BrowserRouter>
+  </ApolloProvider>
+);
