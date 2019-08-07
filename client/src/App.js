@@ -52,11 +52,18 @@ const Layout = ({ children }) => (
   </Page>
 );
 
+Layout.defaultProps = {
+  children: null,
+};
+
+Layout.propTypes = {
+  children: PropTypes.node,
+};
+
 const AppRouter = () => (
   <LayoutManagerWithViewController globalNavigation={GlobalNavigation}>
     <Switch>
       <Layout>
-        <Route path="/" exact component={Projects} />
         <Route path="/dashboards" component={Dashboard} />
         <Route path="/reports" component={Reports} />
         <Route path="/issues" component={Issues} />
@@ -68,6 +75,7 @@ const AppRouter = () => (
         <Route path="/resource/:resourceId" component={Resource} />
         <Route path="/issue/:issueId" component={SingleIssue} />
         <Route path="/issues/:filterId" component={Issues} />
+        <Route path="/" exact component={Projects} />
       </Layout>
     </Switch>
   </LayoutManagerWithViewController>
@@ -84,14 +92,6 @@ function App({ navigationViewController }) {
 
   return data.isLoggedIn ? <AppRouter /> : <Login />;
 }
-
-Layout.defaultProps = {
-  children: null,
-};
-
-Layout.propTypes = {
-  children: PropTypes.node,
-};
 
 App.propTypes = {
   navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,

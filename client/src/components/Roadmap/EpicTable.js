@@ -62,17 +62,11 @@ const Box = posed.div({
 function EpicTable({ epics }) {
   const [issues, setIssues] = useState(epics);
 
-  const onStart = (e) => {
-    console.log(e);
-  };
+  const onStart = () => {};
 
-  const onEnd = (e) => {
-    console.log(e);
-  };
+  const onEnd = () => {};
 
-  const onDrag = (e) => {
-    // console.log(e);
-  };
+  const onDrag = () => {};
 
   const createEpic = () => {
     const { length } = issues;
@@ -88,89 +82,123 @@ function EpicTable({ epics }) {
   };
 
   return (
-    <div className="wrapper-1">
-      <div className="wrapper-2">
-
-        <div className="container-epic" style={{ width: '320px' }}>
-          <div className="epic-header">Epic</div>
-          <div className="epic-content">
-            <div className="epic-content-flex">
-              <div className="epic-content-item">
-                <div className="epic-content-flex-item-background" style={{ width: '318px' }}>
-                  {epics.map(epic => (
-                    <div key={epic.key} className="epic-list-item-base-container" draggable="true">
-                      <div key={epic.key} className="epic-list-item-base-content">
-                        <div key={epic.key} className="epic-list-item-base-content-row">
-                          <div key={epic.key} className="epic-icon">
-                            <img
-                              className="epic-icon"
-                              src="https://solarsystem.atlassian.net/secure/viewavatar?size=medium&avatarId=10307&avatarType=issuetype"
-                              alt="Epic issue type"
-                            />
+    <div className="sc-jjgyjb jUAyze">
+      <div className="default">
+        <div className="sc-dfRKBO bVGEsC">
+          <div className="sc-eXfwOT hDgjOI" data-test-id="roadmap.common.components.table.components.list.container" width="320" style={{ width: '320px' }}>
+            <div className="sc-hBAMER LDeNe">
+              <p className="sc-bPzAnn rncm">Epic</p>
+              <div className="sc-inbiTh eqQJjt" />
+            </div>
+            <div className="sc-iipuKH cNqgUs">
+              <div style={{ display: 'flex', overflow: 'hidden' }}>
+                <div className="sc-nUItV fryQcz" data-test-id="roadmap.common.components.table.components.list.hidden-scrollbar">
+                  <div className="sc-gsxalj hoLpFJ" width="318" style={{ width: '318px' }}>
+                    {epics.map(epic => (
+                      <div key={epic}>
+                        <div className="row-10012 sc-cGCqpu fgAcZb" data-test-id="roadmap.common.components.table.components.list-item.base.container" draggable="true">
+                          <div className="sc-bpKEQf MYjxS" data-test-id="roadmap.common.components.table.components.list-item.base.content-container-0" tabIndex="0">
+                            <div className="sc-fYvWhK hHNvRV">
+                              <img
+                                className="sc-LAuEU ePowzo"
+                                src="https://solarsystem.atlassian.net/secure/viewavatar?size=medium&avatarId=10307&avatarType=issuetype"
+                                alt="Epic issue type"
+                              />
+                              <p className="sc-bcdylZ kzvagL">{epic.fields.summary}</p>
+                            </div>
                           </div>
-                          <p className="epic-text">{epic.fields.summary}</p>
                         </div>
                       </div>
+                    ))}
+                    <div className="sc-czDwQe fpLLUJ">
+                      <div className="sc-hfsWMF akHwS" data-test-id="roadmap.common.components.table.components.list.items.create-item.button" role="button" aria-label="Create issue last" onClick={createEpic} onKeyUp={createEpic} tabIndex="0">
+                        <EmojiCustomIcon className="dqqHMN" />
+                      </div>
                     </div>
-                  ))}
-                  <div className="epic-item-create">
-                    <div className="epic-item-create-button" role="button" onClick={createEpic} onKeyUp={createEpic} tabIndex="0">
-                      <EmojiCustomIcon />
-                    </div>
+                    <div className="sc-gOCRIc hfPzIv" />
                   </div>
-                  <div style={{ height: '1px', backgroundColor: 'rgb(193, 199, 208)' }} />
                 </div>
               </div>
-            </div>
-            <div className="epic-bottom" />
-          </div>
-        </div>
-
-        <div className="container-timeline">
-
-          <div className="timeline-header">
-            <div className="timeline-header-1">
-              <div className="timeline-header-2">
-                <div className="timeline-header-3">
-                  {months.map((month, i) => (
-                    <div key={month} className="timeline-header-cell" style={{ left: `calc(${i} * 2.75%)`, right: `calc(100% - 2.75% * ${i + 1})` }}>
-                      <div key={month} className="timeline-header-text">{month}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              <div className="sc-bstyWg fFEVEI" width="318" style={{ width: '318px' }} />
             </div>
           </div>
-
-          <div className="timeline-content">
-            <div className="timeline-content-1">
-              <div className="timeline-content-2" style={{ width: '9579.5px' }}>
-                <div className="timeline-content-column-container">
-                  {months.map((month, i) => <div key={month} className="timeline-content-column-item" style={{ left: `calc(${i} * 2.75%)`, right: `calc(100% - 2.75% * ${i + 1})` }} />)}
-                </div>
-                <div className="timeline-column-overlay" />
-                {epics.map(epic => (
-                  <div key={epic.key} className="timeline-row">
-                    <Box
-                      className="box"
-                      onDragStart={onStart}
-                      onDragEnd={onEnd}
-                      onValueChange={{ x: onDrag }}
-                    />
+          <div className="cPRRFk">
+            <div className="dkFNrj">
+              <div className="wWWya">
+                <div className="hTdzhs" width="9579.499999901622" style={{ width: '9579.5px' }}>
+                  <div className="cZzQw">
+                    {months.map((month, i) => (
+                      <div key={month} className="rWwYB" style={{ left: `calc(${i} * 2.75%)`, right: `calc(100% - 2.75% * ${i + 1})` }}>
+                        <small className="dRfJrE">{month}</small>
+                      </div>
+                    ))}
                   </div>
-                ))}
-                <div className="timeline-row" />
-                <div className="timeline-bottomline" />
+                </div>
               </div>
             </div>
-            <div className="timeline-slider-box">
-              <div className="timeline-slider-cursor" style={{ transform: 'translateX(0px)' }} />
+            <div className="sc-haEqAx fsrySA">
+              <div className="sc-tVThF rifCR" id="sr-timeline">
+                <div className="sc-dENsGg kdpnGG" width="9579.499999901622" style={{ width: '9579.5px' }}>
+                  <div className="sc-gbuiJB iMnhyT">
+                    {months.map((month, i) => (
+                      <div key={month} className="sc-liPmeQ inHpzx" style={{ left: `calc(${i} * 2.75%)`, right: `calc(100% - 2.75% * ${i + 1})` }} />
+                    ))}
+                  </div>
+                  <div className="sc-kBMPsl fWSXz" />
+                  <div className="sc-dgAbBl laChM">
+                    {epics.map(epic => (
+                      <div key={epic.key}>
+                        <div className="row-10012 sc-hqFvvW hQBlfE">
+                          {/* <div className="sc-buGlAa feIyeE" style={{ left: '0.01%', right: '0.0000000001%' }} draggable="true"> */}
+                          <Box
+                            className="sc-buGlAa feIyeE"
+                            style={{ width: '200px' }}
+                            onDragStart={onStart}
+                            onDragEnd={onEnd}
+                            onValueChange={{ x: onDrag }}
+                          >
+                            <div className="sc-fJwQoQ esCmBo" orientation="left">
+                              <div className="sc-flvzOl chhxgO" />
+                            </div>
+                            <div className="sc-fJwQoQ kiQuXo" orientation="right">
+                              <div className="sc-flvzOl chhxgO" />
+                            </div>
+                          </Box>
+                          {/* </div> */}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="sc-jhLVlY bIZLLn" />
+                  <div className="sc-gOCRIc hfPzIv" />
+                </div>
+              </div>
+              <div className="idQEUl">
+                <div className="hFbkGU" size="39" style={{ transform: 'translateX(0px)' }} />
+              </div>
+              <div className="gWouFt">
+                <div className="iXyYRM" size="99" style={{ transform: 'translateX(0px)' }} />
+              </div>
+            </div>
+            <div className="fDEAOq" />
+            <div className="cvTvEa" />
+          </div>
+          <div className="FjLAd" />
+          <div className="inline-drag-indicator inline-drag-indicator-top jMrzDz">
+            <div className="grZjms" />
+          </div>
+          <div className="inline-create-button eaYLQY">
+            <div className="hKwvKb">
+              <div className="kkkFIk" />
+              <div className="cpqXQZ">
+                <div className="bIeuYl">
+                  <EmojiCustomIcon className="bcqBjl" />
+                </div>
+              </div>
             </div>
           </div>
-
         </div>
       </div>
-
     </div>
   );
 }
