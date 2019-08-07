@@ -1,9 +1,10 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import { useApolloClient, useMutation } from '@apollo/react-hooks';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
-import { ApolloConsumer, Mutation } from 'react-apollo';
-import { Loading } from '..';
+
+import { Loading, Error } from '..';
 import LoginForm from './LoginForm';
 
 const LOGIN_USER = gql`
@@ -13,27 +14,19 @@ const LOGIN_USER = gql`
 `;
 
 function Login({ history }) {
-  return (
-    <ApolloConsumer>
-      {client => (
-        <Mutation
-          mutation={LOGIN_USER}
-          onCompleted={({ loginUser }) => {
-            localStorage.setItem('token', loginUser);
-            client.writeData({ data: { isLoggedIn: true } });
-            history.push('/');
-          }}
-        >
-          {(loginUser, { loading, error }) => {
-            if (loading) return <Loading />;
-            if (error) return <p>An error occurred</p>;
+  const client = useApolloClient();
+  const [loginUser, { loading, error, data }] = useMutation(LOGIN_USER, {
+    onCompleted: () => {
+      localStorage.setItem('token', loginUser);
+      client.writeData({ data: { isLoggedIn: true } });
+      history.push('/');
+    },
+  });
 
-            return <LoginForm login={loginUser} />;
-          }}
-        </Mutation>
-      )}
-    </ApolloConsumer>
-  );
+  if (error) return <Error />;
+  if (loading || !data) return <Loading />;
+
+  return <LoginForm login={loginUser} data={data} />;
 }
 
 Login.defaultProps = {

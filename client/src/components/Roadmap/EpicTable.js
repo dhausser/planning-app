@@ -97,8 +97,8 @@ function EpicTable({ epics }) {
             <div className="epic-content-flex">
               <div className="epic-content-item">
                 <div className="epic-content-flex-item-background" style={{ width: '318px' }}>
-                  {epics.map((epic, i) => (
-                    <div className="epic-list-item-base-container" draggable="true" style={{ backgroundColor: `${i % 2 ? 'rgb(244, 245, 247)' : 'rgb(255, 255, 255)'}` }}>
+                  {epics.map(epic => (
+                    <div className="epic-list-item-base-container" draggable="true">
                       <div className="epic-list-item-base-content">
                         <div className="epic-list-item-base-content-row">
                           <div className="epic-icon">
@@ -149,19 +149,18 @@ function EpicTable({ epics }) {
                   {months.map((_, i) => <div className="timeline-content-column-item" style={{ left: `calc(${i} * 2.75%)`, right: `calc(100% - 2.75% * ${i + 1})` }} />)}
                 </div>
                 <div className="timeline-column-overlay" />
-                <div className="timeline-row-container">
-                  {[...epics, {}].map((_, i) => (
-                    <div className={`timeline-row-background-${i % 2 ? 'dark' : 'light'}`}>
-                      <Box
-                        className="box"
-                        onDragStart={onStart}
-                        onDragEnd={onEnd}
-                        onValueChange={{ x: onDrag }}
-                      />
-                    </div>
-                  ))}
-                  <div className="timeline-bottomline" />
-                </div>
+                {epics.map(() => (
+                  <div className="timeline-row">
+                    <Box
+                      className="box"
+                      onDragStart={onStart}
+                      onDragEnd={onEnd}
+                      onValueChange={{ x: onDrag }}
+                    />
+                  </div>
+                ))}
+                <div className="timeline-row" />
+                <div className="timeline-bottomline" />
               </div>
             </div>
             <div className="timeline-slider-box">

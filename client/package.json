@@ -15,7 +15,7 @@
   "author": "Davy Hausser",
   "license": "ISC",
   "dependencies": {
-    "@apollo/react-hooks": "0.1.0-beta.11",
+    "@apollo/react-hooks": "^3.0.0",
     "@atlaskit/avatar": "^16.0.8",
     "@atlaskit/breadcrumbs": "^8.0.1",
     "@atlaskit/button": "^13.1.0",
@@ -57,13 +57,11 @@
     "graphql-tag": "^2.10.1",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
-    "react-apollo": "^2.5.8",
     "react-dom": "^16.8.6",
     "react-intl": "^2.9.0",
     "react-pose": "^4.0.8",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1",
-    "rxjs": "^5.5.0",
     "styled-components": "^3.2.6"
   },
   "devDependencies": {

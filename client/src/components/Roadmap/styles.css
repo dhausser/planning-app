@@ -83,13 +83,8 @@
   -webkit-box-align: center;
   align-items: center;
   height: 40px;
-  background-color: rgb(255, 255, 255);
   cursor: pointer;
   transition: background-color 100ms linear 0s;
-}
-
-.epic-list-item-base-content:hover {
-  background-color: #DFE1E6;
 }
 
 .epic-list-item-base-content {
@@ -154,10 +149,6 @@
   width: 100%;
   cursor: pointer;
   border-radius: 4px;
-}
-
-.epic-item-create-button:hover {
-  background-color: #DFE1E6;
 }
 
 .epic-bottom {
@@ -290,30 +281,14 @@
   z-index: 2;
 }
 
-.timeline-content-row-container {
-  background-color: rgba(9, 30, 66, 0.25);
-}
-
-.timeline-row-background-light {
+.timeline-row {
   position: relative;
   display: flex;
   -webkit-box-align: center;
   align-items: center;
   height: 40px;
-  background-color: rgb(255, 255, 255);
-  transition: background-color 100ms linear 0s;
   overflow: hidden;
-}
-
-.timeline-row-background-dark {
-  position: relative;
-  display: flex;
-  -webkit-box-align: center;
-  align-items: center;
-  height: 40px;
-  background-color: rgb(244, 245, 247);
   transition: background-color 100ms linear 0s;
-  overflow: hidden;
 }
 
 .timeline-slider-box {
@@ -358,4 +333,20 @@
   border-radius: 3px;
   background: rgb(135, 119, 217);
   transform-origin: 50% 50%;
+}
+
+.epic-list-item-base-container:nth-of-type(even),
+.timeline-row:nth-of-type(even) {
+  background-color: rgb(244, 245, 247);
+}
+
+.epic-list-item-base-container:nth-of-type(odd),
+.timeline-row:nth-of-type(odd) {
+  background-color: rgb(255, 255, 255);
+}
+
+.epic-list-item-base-content:hover,
+.epic-item-create-button:hover,
+.timeline-row:hover {
+  background-color: #DFE1E6;
 }
