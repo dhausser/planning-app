@@ -59,7 +59,7 @@ const Box = posed.div({
   draggable: 'x',
 });
 
-function EpicTable({ epics }) {
+export default function EpicTable({ epics }) {
   const [issues, setIssues] = useState(epics);
 
   const onStart = () => {};
@@ -94,18 +94,21 @@ function EpicTable({ epics }) {
               <div style={{ display: 'flex', overflow: 'hidden' }}>
                 <div className="sc-nUItV fryQcz" data-test-id="roadmap.common.components.table.components.list.hidden-scrollbar">
                   <div className="sc-gsxalj hoLpFJ" width="318" style={{ width: '318px' }}>
-                    {epics.map(epic => (
-                      <div key={epic}>
-                        <div className="row-10012 sc-cGCqpu fgAcZb" data-test-id="roadmap.common.components.table.components.list-item.base.container" draggable="true">
-                          <div className="sc-bpKEQf MYjxS" data-test-id="roadmap.common.components.table.components.list-item.base.content-container-0" tabIndex="0">
-                            <div className="sc-fYvWhK hHNvRV">
-                              <img
-                                className="sc-LAuEU ePowzo"
-                                src="https://solarsystem.atlassian.net/secure/viewavatar?size=medium&avatarId=10307&avatarType=issuetype"
-                                alt="Epic issue type"
-                              />
-                              <p className="sc-bcdylZ kzvagL">{epic.fields.summary}</p>
-                            </div>
+                    {epics.map((epic, i) => (
+                      <div key={epic.key} className="row-10012 sc-cGCqpu fgAcZb" data-test-id="roadmap.common.components.table.components.list-item.base.container" draggable="true">
+                        {i > 0 && (
+                          <div className="sc-fiBOuc gBlnCF" data-test-id={`roadmap.common.components.table.components.list-item.base.inline-create-button-${i}`} role="button" aria-label="Inline issue create" tabIndex="0">
+                            <div className="sc-fKPMAj bTwOsv" />
+                          </div>
+                        )}
+                        <div className="sc-bpKEQf MYjxS" data-test-id={`roadmap.common.components.table.components.list-item.base.content-container-${i}`} tabIndex="0">
+                          <div className="sc-fYvWhK hHNvRV">
+                            <img
+                              className="sc-LAuEU ePowzo"
+                              src="https://solarsystem.atlassian.net/secure/viewavatar?size=medium&avatarId=10307&avatarType=issuetype"
+                              alt="Epic issue type"
+                            />
+                            <p className="sc-bcdylZ kzvagL">{epic.fields.summary}</p>
                           </div>
                         </div>
                       </div>
@@ -147,25 +150,25 @@ function EpicTable({ epics }) {
                   <div className="sc-kBMPsl fWSXz" />
                   <div className="sc-dgAbBl laChM">
                     {epics.map(epic => (
-                      <div key={epic.key}>
-                        <div className="row-10012 sc-hqFvvW hQBlfE">
-                          {/* <div className="sc-buGlAa feIyeE" style={{ left: '0.01%', right: '0.0000000001%' }} draggable="true"> */}
-                          <Box
-                            className="sc-buGlAa feIyeE"
-                            style={{ width: '200px' }}
-                            onDragStart={onStart}
-                            onDragEnd={onEnd}
-                            onValueChange={{ x: onDrag }}
-                          >
-                            <div className="sc-fJwQoQ esCmBo" orientation="left">
-                              <div className="sc-flvzOl chhxgO" />
-                            </div>
-                            <div className="sc-fJwQoQ kiQuXo" orientation="right">
-                              <div className="sc-flvzOl chhxgO" />
-                            </div>
-                          </Box>
-                          {/* </div> */}
-                        </div>
+                      <div key={epic.key} className="row-10012 sc-hqFvvW hQBlfE">
+                        {/* <div className="sc-buGlAa feIyeE" style={{ left: '0.01%', right: '0.0000000001%' }} draggable="true"> */}
+                        <Box
+                          className="sc-buGlAa feIyeE"
+                          style={{ width: '200px' }}
+                          onDragStart={onStart}
+                          onDragEnd={onEnd}
+                          onValueChange={{ x: onDrag }}
+                          onMouseOver={() => {}}
+                          onFocus={() => {}}
+                        >
+                          <div className="sc-fJwQoQ esCmBo" orientation="left">
+                            <div className="sc-flvzOl chhxgO" />
+                          </div>
+                          <div className="sc-fJwQoQ kiQuXo" orientation="right">
+                            <div className="sc-flvzOl chhxgO" />
+                          </div>
+                        </Box>
+                        {/* </div> */}
                       </div>
                     ))}
                   </div>
@@ -206,6 +209,3 @@ function EpicTable({ epics }) {
 EpicTable.propTypes = {
   epics: PropTypes.arrayOf(PropTypes.objectOf).isRequired,
 };
-
-
-export default EpicTable;

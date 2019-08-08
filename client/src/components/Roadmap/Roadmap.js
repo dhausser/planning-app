@@ -8,7 +8,7 @@ import PageHeader from '@atlaskit/page-header';
 import EmptyState from '@atlaskit/empty-state';
 import { ProjectHomeView, Loading } from '..';
 import { ProjectFilter, VersionFilter } from '../Filters';
-import EpicTable from './EpicTable';
+import Timeline from './Timeline';
 
 const GET_ISSUES = gql`
   query issueList($projectId: String, $versionId: String) {
@@ -55,7 +55,7 @@ function Portfolio({ navigationViewController }) {
   return (
     <>
       <PageHeader breadcrumbs={breadcrumbs} bottomBar={barContent}>Roadmap</PageHeader>
-      {loading ? <Loading /> : <EpicTable {...data} />}
+      {loading ? <Loading /> : <Timeline {...data} />}
       {error && <EmptyState header={error.name} description={error.message} />}
     </>
   );

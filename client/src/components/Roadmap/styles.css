@@ -105,6 +105,27 @@
   transition: background-color 100ms linear 0s;
 }
 
+.gBlnCF {
+  position: absolute;
+  top: -5px;
+  left: -10px;
+  right: 0px;
+  height: 10px;
+  cursor: pointer;
+  z-index: 1;
+  outline: none;
+}
+
+.bTwOsv {
+  position: relative;
+  top: -5px;
+  left: 0px;
+  right: 0px;
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+}
+
 .MYjxS {
   display: flex;
   -webkit-box-align: center;
@@ -344,24 +365,6 @@ small {
   background: rgb(135, 119, 217)
 }
 
-.iwKhDW {
-  position: absolute;
-  display: flex;
-  -webkit-box-align: center;
-  align-items: center;
-  -webkit-box-pack: end;
-  justify-content: flex-end;
-  height: 24px;
-  min-width: 3px;
-  z-index: 3;
-  visibility: visible;
-  cursor: pointer;
-  padding: 0px 5px;
-  transition: left 0.1s ease 0s, right 0.1s ease 0s;
-  border-radius: 3px;
-  background: rgb(135, 119, 217);
-}
-
 /* .feIyeE::before {
 
 }
@@ -369,6 +372,14 @@ small {
 .iwKhDW::before {
 
 } */
+
+.feIyeE:hover .esCmBo {
+  visibility: visible;
+}
+
+.feIyeE:hover .kiQuXo {
+  visibility: visible;
+}
 
 .esCmBo {
   visibility: hidden;
@@ -562,8 +573,13 @@ small {
   line-height: 1;
 }
 
-.row-10012:nth-of-type(odd) {
+/* .row-10012 {
+  background-color: purple;
+} */
+
+.row-10012:nth-of-type(even) {
   background-color: rgb(244, 245, 247);
+  /* background-color:blue; */
 }
 
 .row-10012:hover,
