@@ -569,17 +569,3 @@ small {
   flex-shrink: 0;
   line-height: 1;
 }
-
-/* .row-10012 {
-  background-color: purple;
-} */
-
-.row-10012:nth-of-type(even) {
-  background-color: rgb(244, 245, 247);
-  /* background-color:blue; */
-}
-
-.row-10012:hover,
-.akHwS:hover {
-  background-color: #DFE1E6;
-}
