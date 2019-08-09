@@ -89,7 +89,7 @@ export function ProjectFilter() {
   const [toggleFilter] = useMutation(TOGGLE_FILTER);
 
   return (
-    <div style={{ flex: '0 0 160px', marginLeft: 0 }}>
+    <div style={{ flex: '0 0 160px', marginLeft: 8 }}>
       <Select
         spacing="compact"
         className="single-select"

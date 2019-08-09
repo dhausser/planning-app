@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import PageHeader from '@atlaskit/page-header';
 import TextField from '@atlaskit/textfield';
-import { ProductIssuesView } from '..';
+import { ProductIssuesView, Layout } from '..';
 import { ProjectFilter, VersionFilter, TeamFilter } from '../Filters';
 import IssueTable from './IssueTable';
 
@@ -90,10 +90,10 @@ function Issues({ navigationViewController }) {
   }, [navigationViewController]);
 
   return (
-    <>
+    <Layout>
       <PageHeader bottomBar={barContent}>Search Issues</PageHeader>
       <IssueTable {...useQuery(GET_ISSUES)} />
-    </>
+    </Layout>
   );
 }
 

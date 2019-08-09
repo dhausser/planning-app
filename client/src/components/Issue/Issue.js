@@ -16,7 +16,7 @@ import Description from './Description';
 import UserPicker from './UserPicker';
 import Comments from './Comments';
 import { statusCatecoryColorMap, priorityIconMap } from './Icon';
-import { ProductIssuesView, Loading } from '..';
+import { ProductIssuesView, Loading, Layout } from '..';
 import { ISSUE_ROW_DATA } from '../Issues/Issues';
 
 const GET_ISSUE = gql`
@@ -83,30 +83,32 @@ function Issue({ navigationViewController, match }) {
   } = issue;
 
   return (
-    <Grid layout="fluid">
-      <GridColumn medium={10}>
-        <Header id={key} summary={summary} issuetype={issuetype} />
-        <h5>Description</h5>
-        <Description id={id} description={description} />
-        <h5>Activity</h5>
-        <Comments comments={comments} />
-      </GridColumn>
-      <GridColumn medium={2}>
-        <h6>STATUS</h6>
-        <Status
-          text={status.name}
-          color={statusCatecoryColorMap[status.statusCategory.id]}
-        />
-        <h6>ASSIGNEE</h6>
-        <UserPicker id={id} user={assignee} />
-        <h6>REPORTER</h6>
-        <UserPicker id={id} user={reporter} />
-        <h6>Fix Versions</h6>
-        <Lozenge appearance="default">{fixVersions.length && fixVersions[0].name}</Lozenge>
-        <h6>Priority</h6>
-        {priorityIconMap[priority.id]}
-      </GridColumn>
-    </Grid>
+    <Layout>
+      <Grid layout="fluid">
+        <GridColumn medium={10}>
+          <Header id={key} summary={summary} issuetype={issuetype} />
+          <h5>Description</h5>
+          <Description id={id} description={description} />
+          <h5>Activity</h5>
+          <Comments comments={comments} />
+        </GridColumn>
+        <GridColumn medium={2}>
+          <h6>STATUS</h6>
+          <Status
+            text={status.name}
+            color={statusCatecoryColorMap[status.statusCategory.id]}
+          />
+          <h6>ASSIGNEE</h6>
+          <UserPicker id={id} user={assignee} />
+          <h6>REPORTER</h6>
+          <UserPicker id={id} user={reporter} />
+          <h6>Fix Versions</h6>
+          <Lozenge appearance="default">{fixVersions.length && fixVersions[0].name}</Lozenge>
+          <h6>Priority</h6>
+          {priorityIconMap[priority.id]}
+        </GridColumn>
+      </Grid>
+    </Layout>
   );
 }
 

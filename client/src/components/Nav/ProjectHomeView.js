@@ -1,7 +1,7 @@
 import GraphLineIcon from '@atlaskit/icon/glyph/graph-line';
 import IssuesIcon from '@atlaskit/icon/glyph/issues';
 import RoadmapIcon from '@atlaskit/icon/glyph/roadmap';
-import PeopleIcon from '@atlaskit/icon/glyph/people';
+import PersonCircleIcon from '@atlaskit/icon/glyph/person-circle';
 import BacklogIcon from '@atlaskit/icon/glyph/backlog';
 import ShipIcon from '@atlaskit/icon/glyph/ship';
 import Switcher from './Switcher';
@@ -78,8 +78,8 @@ export default {
         {
           type: 'InlineComponent',
           component: LinkItem,
-          before: PeopleIcon,
-          text: 'People',
+          before: PersonCircleIcon,
+          text: 'Teams',
           to: '/resources',
           id: 'resources',
         },

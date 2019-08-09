@@ -9,7 +9,7 @@ import Avatar from '@atlaskit/avatar';
 import DynamicTable from '@atlaskit/dynamic-table';
 import EmptyState from '@atlaskit/empty-state';
 import PageHeader from '@atlaskit/page-header';
-import { ProductHomeView } from '.';
+import { ProductHomeView, Layout } from '.';
 
 const PROJECT_TILE_DATA = gql`
   fragment ProjectTile on Project {
@@ -106,7 +106,7 @@ function Projects({ navigationViewController }) {
   if (error) return <EmptyState header={error.name} description={error.message} />;
 
   return (
-    <>
+    <Layout>
       <PageHeader>Projects</PageHeader>
       <DynamicTable
         caption={`Displaying ${(!loading && data.projects.length) || 0} projects`}
@@ -119,7 +119,7 @@ function Projects({ navigationViewController }) {
         defaultSortKey="name"
         defaultSortOrder="ASC"
       />
-    </>
+    </Layout>
   );
 }
 

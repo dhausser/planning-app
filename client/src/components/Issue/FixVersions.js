@@ -14,9 +14,11 @@ export default function FixVersions({ fixVersions }) {
   return (
     <>
       <h6>Fix Versions</h6>
-      <Wrapper>
-        <Lozenge appearance="default">{fixVersion.name || ''}</Lozenge>
-      </Wrapper>
+      {fixVersion && (
+        <Wrapper>
+          <Lozenge appearance="default">{fixVersion.name}</Lozenge>
+        </Wrapper>
+      )}
     </>
   );
 }

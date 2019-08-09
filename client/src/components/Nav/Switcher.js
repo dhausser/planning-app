@@ -10,17 +10,6 @@ import {
 } from '@atlaskit/navigation-next';
 import EmptyState from '@atlaskit/empty-state';
 
-// import styled from 'styled-components';
-
-// const Wrapper = styled.div`
-//   position: relative;
-//   padding: '16px';
-//   box-sizing: 'border-box';
-//   padding-left: '16px';
-//   padding-right: '16px';
-// `;
-
-
 const PROJECT_TILE_DATA = gql`
   fragment ProjectTile on Project {
     id

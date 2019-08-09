@@ -9,7 +9,7 @@ import Avatar from '@atlaskit/avatar';
 import EmptyState from '@atlaskit/empty-state';
 import PageHeader from '@atlaskit/page-header';
 import TextField from '@atlaskit/textfield';
-import { ProjectHomeView, Loading } from '..';
+import { ProjectHomeView, Loading, Layout } from '..';
 import { ProjectFilter, VersionFilter } from '../Filters';
 import IssueTable from '../Issues/IssueTable';
 import AbsencesList from './AbsencesList';
@@ -102,7 +102,7 @@ function Resource({ navigationViewController, match }) {
   if (error) return <EmptyState header={error.name} description={error.message} />;
 
   return (
-    <>
+    <Layout>
       <PageHeader bottomBar={barContent}>
         <NameWrapper>
           <AvatarWrapper>
@@ -128,7 +128,7 @@ function Resource({ navigationViewController, match }) {
       <IssueTable {...issues} />
       <AbsencesList resourceId={resourceId} />
       {/* <AbsencesTable resourceId={resourceId} /> */}
-    </>
+    </Layout>
   );
 }
 

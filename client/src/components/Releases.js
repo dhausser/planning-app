@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import Page from '@atlaskit/page';
 import PageHeader from '@atlaskit/page-header';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
-import { ProjectHomeView } from '.';
+import { ProjectHomeView, Layout } from '.';
 
 function Releases({ navigationViewController }) {
   useEffect(() => {
@@ -11,10 +10,10 @@ function Releases({ navigationViewController }) {
   }, [navigationViewController]);
 
   return (
-    <Page>
+    <Layout>
       <PageHeader>Releases</PageHeader>
       <p>This is the releases page.</p>
-    </Page>
+    </Layout>
   );
 }
 

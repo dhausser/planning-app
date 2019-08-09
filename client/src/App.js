@@ -3,14 +3,12 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { ApolloProvider, useQuery } from '@apollo/react-hooks';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
-import styled from 'styled-components';
 
 import {
   NavigationProvider,
   withNavigationViewController,
   LayoutManagerWithViewController,
 } from '@atlaskit/navigation-next';
-import Page from '@atlaskit/page';
 
 import GlobalNavigation from './components/Nav/GlobalNavigation';
 import ProductHomeView from './components/Nav/ProductHomeView';
@@ -37,46 +35,21 @@ const IS_LOGGED_IN = gql`
   }
 `;
 
-const Padding = styled.div`
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-  padding: 0px 0px 0px 40px;
-  height: 100vh;
-  overflow: hidden;
-`;
-
-const Layout = ({ children }) => (
-  <Page>
-    <Padding>{children}</Padding>
-  </Page>
-);
-
-Layout.defaultProps = {
-  children: null,
-};
-
-Layout.propTypes = {
-  children: PropTypes.node,
-};
-
 const AppRouter = () => (
   <LayoutManagerWithViewController globalNavigation={GlobalNavigation}>
     <Switch>
-      <Layout>
-        <Route path="/dashboards" component={Dashboard} />
-        <Route path="/reports" component={Reports} />
-        <Route path="/issues" component={Issues} />
-        <Route path="/settings" component={Settings} />
-        <Route path="/releases" component={Releases} />
-        <Route path="/resources" component={Resources} />
-        <Route path="/roadmap" component={Roadmap} />
-        <Route path="/backlog" component={Backlog} />
-        <Route path="/resource/:resourceId" component={Resource} />
-        <Route path="/issue/:issueId" component={SingleIssue} />
-        <Route path="/issues/:filterId" component={Issues} />
-        <Route path="/" exact component={Projects} />
-      </Layout>
+      <Route path="/dashboards" component={Dashboard} />
+      <Route path="/reports" component={Reports} />
+      <Route path="/issues" component={Issues} />
+      <Route path="/settings" component={Settings} />
+      <Route path="/releases" component={Releases} />
+      <Route path="/resources" component={Resources} />
+      <Route path="/roadmap" component={Roadmap} />
+      <Route path="/backlog" component={Backlog} />
+      <Route path="/resource/:resourceId" component={Resource} />
+      <Route path="/issue/:issueId" component={SingleIssue} />
+      <Route path="/issues/:filterId" component={Issues} />
+      <Route path="/" exact component={Projects} />
     </Switch>
   </LayoutManagerWithViewController>
 );

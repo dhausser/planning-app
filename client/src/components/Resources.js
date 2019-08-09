@@ -10,9 +10,8 @@ import Avatar from '@atlaskit/avatar';
 import EmptyState from '@atlaskit/empty-state';
 import PageHeader from '@atlaskit/page-header';
 import TextField from '@atlaskit/textfield';
-import { ProjectHomeView } from '.';
+import { ProjectHomeView, Layout } from '.';
 import { TeamFilter } from './Filters';
-
 
 const GET_FILTER = gql`
   query GetFilter {
@@ -119,8 +118,8 @@ function Resources({ navigationViewController }) {
   }
 
   return (
-    <>
-      <PageHeader bottomBar={barContent}>People</PageHeader>
+    <Layout>
+      <PageHeader bottomBar={barContent}>Teams</PageHeader>
       <DynamicTable
         caption={`${resources.length} people`}
         head={head}
@@ -132,7 +131,7 @@ function Resources({ navigationViewController }) {
         defaultSortKey="name"
         defaultSortOrder="ASC"
       />
-    </>
+    </Layout>
   );
 }
 

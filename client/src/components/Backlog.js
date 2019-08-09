@@ -16,7 +16,7 @@ import TableTree, {
   Row,
   Cell,
 } from '@atlaskit/table-tree';
-import { ProjectHomeView } from '.';
+import { ProjectHomeView, Layout } from '.';
 import { VersionFilter } from './Filters';
 import { statusCatecoryColorMap, issuetypeIconMap } from './Issue/Icon';
 
@@ -73,7 +73,7 @@ function Backlog({ navigationViewController }) {
   const { data, loading, error } = useQuery(GET_ISSUES);
 
   return (
-    <>
+    <Layout>
       <PageHeader
         bottomBar={(
           <div style={{ display: 'flex' }}>
@@ -131,7 +131,7 @@ function Backlog({ navigationViewController }) {
           </TableTree>
         )
       }
-    </>
+    </Layout>
   );
 }
 

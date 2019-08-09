@@ -39,7 +39,9 @@ const config = ({ labels, values }) => ({
 });
 
 function updateChart(chart, { labels, values }) {
+  // eslint-disable-next-line no-param-reassign
   chart.data.labels = labels;
+  // eslint-disable-next-line no-param-reassign
   chart.data.datasets[0].data = values;
   // chart.data.datasets[0].backgroundColor = values.map(
   //   (_entry, index) => colors[index % colors.length].value,
@@ -47,10 +49,11 @@ function updateChart(chart, { labels, values }) {
   chart.update();
 }
 
-function BarChart({
-  labels, values, maxResults, total,
-}) {
+export default function BarChart({ dashboardIssues }) {
   const [chart, setChart] = useState(null);
+  const {
+    labels, values, maxResults, total,
+  } = dashboardIssues;
 
   useEffect(() => {
     if (chart === null) {
@@ -63,45 +66,17 @@ function BarChart({
   const results = maxResults > total ? total : maxResults;
 
   return (
-    <div>
+    <>
       <h5>{`Displaying ${results} of ${total}`}</h5>
       <canvas id="BarChart" width="400" height="250" />
-    </div>
+    </>
   );
 }
 
 BarChart.defaultProps = {
-  // dataset: [],
-  maxResults: 0,
-  total: 0,
+  dashboardIssues: [],
 };
 
 BarChart.propTypes = {
-  labels: PropTypes.arrayOf(PropTypes.string).isRequired,
-  values: PropTypes.arrayOf(PropTypes.number).isRequired,
-  maxResults: PropTypes.number,
-  total: PropTypes.number,
+  dashboardIssues: PropTypes.objectOf(PropTypes.objectOf),
 };
-
-export default BarChart;
-
-// function aggregateByAssignee(issues) {
-//   return issues.reduce((resources, issue) => {
-//     if (issue.assignee && issue.assignee.name) {
-//       const name = issue.assignee.name.split(' ').shift();
-//       if (!resources[name]) {
-//         resources[name] = 0;
-//       }
-//       resources[name] += 1;
-//     }
-//     return resources;
-//   }, {});
-// }
-
-// function filterByTeam(issues, team) {
-//   return team
-//     ? aggregateByAssignee(
-//       issues.filter(({ assignee }) => assignee.team === team.name),
-//     )
-//     : aggregateByTeam(issues);
-// }

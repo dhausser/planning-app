@@ -6,7 +6,7 @@ import { withNavigationViewController } from '@atlaskit/navigation-next';
 import { BreadcrumbsStateless, BreadcrumbsItem } from '@atlaskit/breadcrumbs';
 import PageHeader from '@atlaskit/page-header';
 import EmptyState from '@atlaskit/empty-state';
-import { ProjectHomeView, Loading } from '..';
+import { ProjectHomeView, Loading, Layout } from '..';
 import { ProjectFilter, VersionFilter } from '../Filters';
 import Timeline from './Timeline';
 
@@ -53,11 +53,11 @@ function Portfolio({ navigationViewController }) {
   }, [navigationViewController]);
 
   return (
-    <>
+    <Layout>
       <PageHeader breadcrumbs={breadcrumbs} bottomBar={barContent}>Roadmap</PageHeader>
       {loading ? <Loading /> : <Timeline {...data} />}
       {error && <EmptyState header={error.name} description={error.message} />}
-    </>
+    </Layout>
   );
 }
 

@@ -2,15 +2,16 @@ import React, { useEffect } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
-import { Grid, GridColumn } from '@atlaskit/page';
+
+import { Grid } from '@atlaskit/page';
 import PageHeader from '@atlaskit/page-header';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import TextField from '@atlaskit/textfield';
 import EmptyState from '@atlaskit/empty-state';
-import BarChart from './BarChart';
-import { ProductHomeView, Loading } from '..';
-import { ProjectFilter, VersionFilter, TeamFilter } from '../Filters';
 
+import { ProductHomeView, Loading, Layout } from '..';
+import { ProjectFilter, VersionFilter, TeamFilter } from '../Filters';
+import BarChart from './BarChart';
 
 const GET_ISSUES = gql`
   query GetDashboardIssues($projectId: String, $versionId: String, $teamId: String, $startAt: Int, $maxResults: Int) {
@@ -45,7 +46,6 @@ const barContent = (
   </div>
 );
 
-
 function Dashboard({ navigationViewController }) {
   const { data, loading, error } = useQuery(GET_ISSUES);
 
@@ -54,18 +54,22 @@ function Dashboard({ navigationViewController }) {
   }, [navigationViewController]);
 
   return (
-    <>
+    <Layout>
       <PageHeader bottomBar={barContent}>Dashboard</PageHeader>
-      <Grid>
-        <GridColumn>
-          {error && <EmptyState header={error.name} description={error.message} />}
-          {loading
-            ? <Loading />
-            : <BarChart {...data.dashboardIssues} />
-          }
-        </GridColumn>
-      </Grid>
-    </>
+      {error
+        ? <EmptyState header={error.name} description={error.message} />
+        : (
+          <div style={{ display: 'block' }}>
+            <Grid>
+              {(loading || !data)
+                ? <Loading />
+                : <BarChart {...data} />
+              }
+            </Grid>
+          </div>
+        )
+      }
+    </Layout>
   );
 }
 
