@@ -274,7 +274,6 @@ const HeadlineRowContent = styled.div`
   overflow: hidden;
 `;
 
-
 const HeaderRowWrapper = styled.div`
   position: relative;
   flex-direction: column;
@@ -305,7 +304,6 @@ const HeaderRowBorder = styled.div`
   border-right: 1px solid rgb(193, 199, 208);
 `;
 
-
 const TimelineWrapper = styled.div`
   position: absolute;
   top: 56px;
@@ -334,6 +332,7 @@ const TimelineBox1 = styled.div`
   height: 100%;
   z-index: 2;
 `;
+
 const TimelineBox2 = styled.div`
   position: relative;
   display: flex;
@@ -479,6 +478,10 @@ const EpicDragLeft = styled.div`
   left: 0px;
   cursor: col-resize;
   padding: 4px;
+
+  ${RowContainer}:hover & {
+    visibility: visible;
+  } 
 `;
 
 const EpicDragRight = styled.div`
@@ -489,6 +492,10 @@ const EpicDragRight = styled.div`
   right: 0px;
   cursor: col-resize;
   padding: 4px;
+  
+  ${RowContainer}:hover & {
+    visibility: visible;
+  } 
 `;
 
 const EpicDrag = styled.div`
@@ -498,25 +505,25 @@ const EpicDrag = styled.div`
   border-radius: 3px;
 `;
 
-const FDEAOq = styled.div`
-  position: relative;
-  height: 100%;
-  width: 100%;
-  min-height: 0px;
-  overflow: hidden;
-`;
+// const FDEAOq = styled.div`
+//   position: relative;
+//   height: 100%;
+//   width: 100%;
+//   min-height: 0px;
+//   overflow: hidden;
+// `;
 
-const CvTvEa = styled.div`
-  position: absolute;
-  pointer-events: none;
-  left: 0px;
-  top: 0px;
-  bottom: 0px;
-  right: 0px;
-  z-index: 11;
-  clip: rect(0px, auto, auto, 0px);
-  clip-path: inset(0px);
-`;
+// const CvTvEa = styled.div`
+//   position: absolute;
+//   pointer-events: none;
+//   left: 0px;
+//   top: 0px;
+//   bottom: 0px;
+//   right: 0px;
+//   z-index: 11;
+//   clip: rect(0px, auto, auto, 0px);
+//   clip-path: inset(0px);
+// `;
 
 const FjLAd = styled.div`
   position: fixed;
