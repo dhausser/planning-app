@@ -99,7 +99,7 @@ class IssueAPI extends RESTDataSource {
   async getEpics(projectId, versionId) {
     const jql = `issuetype = Epic\
     ${projectId ? `AND project = ${projectId} ` : ''}\
-    ${versionId ? `AND fixVersion = ${versionId} ` : ''}`;
+    ${versionId ? `AND fixVersion = ${versionId} ` : ''} order by key`;
     const response = await this.post('/rest/api/2/search', { jql, fields: ['summary'] });
     return Array.isArray(response.issues) ? response.issues : [];
   }

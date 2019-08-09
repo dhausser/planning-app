@@ -85,7 +85,7 @@ function Header({ id, summary, issuetype }) {
   );
   const barContent = (
     <div style={{ display: 'flex' }}>
-      <div style={{ flex: '0 0 200px' }}>
+      <div style={{ flexBasis: 150, marginRight: 8 }}>
         <ButtonGroup>
           <Tooltip content="Add attachement">
             <Button iconBefore={AttachmentIcon()} />

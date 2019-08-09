@@ -69,7 +69,7 @@ const AvatarWrapper = styled.div`
 
 const barContent = (
   <div style={{ display: 'flex' }}>
-    <div style={{ flex: '0 0 200px' }}>
+    <div style={{ flexBasis: 150, marginRight: 8 }}>
       <TextField isCompact placeholder="Filter" aria-label="Filter" />
     </div>
     <ProjectFilter />

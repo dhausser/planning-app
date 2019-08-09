@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { ApolloProvider, useQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/react-hooks';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 
@@ -27,8 +27,6 @@ import Reports from './components/Reports';
 import Settings from './components/Settings';
 import Login from './components/Login/Login';
 
-import client from './apollo';
-
 const IS_LOGGED_IN = gql`
   query isUserLoggedIn {
     isLoggedIn @client
@@ -36,22 +34,25 @@ const IS_LOGGED_IN = gql`
 `;
 
 const AppRouter = () => (
-  <LayoutManagerWithViewController globalNavigation={GlobalNavigation}>
+  <BrowserRouter>
     <Switch>
-      <Route path="/dashboards" component={Dashboard} />
-      <Route path="/reports" component={Reports} />
-      <Route path="/issues" component={Issues} />
-      <Route path="/settings" component={Settings} />
-      <Route path="/releases" component={Releases} />
-      <Route path="/resources" component={Resources} />
-      <Route path="/roadmap" component={Roadmap} />
-      <Route path="/backlog" component={Backlog} />
-      <Route path="/resource/:resourceId" component={Resource} />
-      <Route path="/issue/:issueId" component={SingleIssue} />
-      <Route path="/issues/:filterId" component={Issues} />
-      <Route path="/" exact component={Projects} />
+      <LayoutManagerWithViewController globalNavigation={GlobalNavigation}>
+        <Route path="/dashboards" component={Dashboard} />
+        <Route path="/reports" component={Reports} />
+        <Route path="/issues" component={Issues} />
+        <Route path="/settings" component={Settings} />
+        <Route path="/releases" component={Releases} />
+        <Route path="/resources" component={Resources} />
+        <Route path="/roadmap" component={Roadmap} />
+        <Route path="/backlog" component={Backlog} />
+        <Route path="/resource/:resourceId" component={Resource} />
+        <Route path="/issue/:issueId" component={SingleIssue} />
+        <Route path="/issues/:filterId" component={Issues} />
+        <Route path="/" exact component={Projects} />
+      </LayoutManagerWithViewController>
     </Switch>
-  </LayoutManagerWithViewController>
+  </BrowserRouter>
+
 );
 
 function App({ navigationViewController }) {
@@ -73,11 +74,7 @@ App.propTypes = {
 const AppWithNavigationViewController = withNavigationViewController(App);
 
 export default () => (
-  <ApolloProvider client={client}>
-    <BrowserRouter>
-      <NavigationProvider>
-        <AppWithNavigationViewController />
-      </NavigationProvider>
-    </BrowserRouter>
-  </ApolloProvider>
+  <NavigationProvider>
+    <AppWithNavigationViewController />
+  </NavigationProvider>
 );

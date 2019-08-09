@@ -8,13 +8,24 @@ import EmojiCustomIcon from '@atlaskit/icon/glyph/emoji/custom';
 import months from './sample-data';
 
 const HeadlineRow = (epic, i) => (
-  <RowContainer key={epic.key} data-test-id="roadmap.common.components.table.components.list-item.base.container" draggable="true">
+  <RowContainer
+    key={epic.key}
+    data-test-id="roadmap.common.components.table.components.list-item.base.container"
+    draggable="true"
+  >
     {i > 0 && (
-    <InlineCreateWrapper data-test-id={`roadmap.common.components.table.components.list-item.base.inline-create-button-${i}`} role="button" aria-label="Inline issue create" tabIndex="0">
+    <InlineCreateWrapper
+      data-test-id={`roadmap.common.components.table.components.list-item.base.inline-create-button-${i}`}
+      role="button"
+      aria-label="Inline issue create"
+      tabIndex="0"
+    >
       <InlineCreateButton />
     </InlineCreateWrapper>
     )}
-    <HeadlineRowContentWrapper data-test-id={`roadmap.common.components.table.components.list-item.base.content-container-${i}`}>
+    <HeadlineRowContentWrapper
+      data-test-id={`roadmap.common.components.table.components.list-item.base.content-container-${i}`}
+    >
       <HeadlineRowContent>
         <EpicIcon
           src="https://solarsystem.atlassian.net/secure/viewavatar?size=medium&avatarId=10307&avatarType=issuetype"
@@ -119,7 +130,11 @@ export default function Timeline({ epics }) {
   return (
     <Wrapper>
       <Wrapper2>
-        <HeadlineContainer data-test-id="roadmap.common.components.table.components.list.container" width="320" style={{ width: '320px' }}>
+        <HeadlineContainer
+          data-test-id="roadmap.common.components.table.components.list.container"
+          width="320"
+          style={{ width: '320px' }}
+        >
           <EpicTitleWrapper>
             <EpicTitle>Epic</EpicTitle>
             <EpicTitleBottom />
@@ -131,7 +146,14 @@ export default function Timeline({ epics }) {
                 <HeaderRowScrollBarWidth width="318" style={{ width: '318px' }}>
                   {epics.map(HeadlineRow)}
                   <CreateButtonWrapper>
-                    <CreateButton data-test-id="roadmap.common.components.table.components.list.items.create-item.button" role="button" aria-label="Create issue last" onClick={createEpic} onKeyUp={createEpic} tabIndex="0">
+                    <CreateButton
+                      data-test-id="roadmap.common.components.table.components.list.items.create-item.button"
+                      role="button"
+                      aria-label="Create issue last"
+                      onClick={createEpic}
+                      onKeyUp={createEpic}
+                      tabIndex="0"
+                    >
                       <EmojiCustomIcon className="dqqHMN" />
                     </CreateButton>
                   </CreateButtonWrapper>
@@ -146,7 +168,14 @@ export default function Timeline({ epics }) {
           <TimelineHeader />
           <TimelineWrapper>
             <TimelineBox id="sr-timeline">
-              <div width="9579.499999901622" style={{ width: '9579.5px', position: 'relative', minHeight: '100%' }}>
+              <div
+                width="9579.499999901622"
+                style={{
+                  width: '9579.5px',
+                  position: 'relative',
+                  minHeight: '100%',
+                }}
+              >
                 <VerticalDivider>
                   {months.map(TimelineColumn)}
                 </VerticalDivider>
@@ -448,6 +477,7 @@ const CreateButton = styled.div`
   width: 100%;
   cursor: pointer;
   border-radius: 4px;
+
   &:hover {
     background-color: #DFE1E6;
   }
