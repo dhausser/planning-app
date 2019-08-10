@@ -169,7 +169,7 @@ const typeDefs = gql`
     assignIssue(id: ID!, key: String): String
 
     # Return Access Token
-    loginUser: String!
+    login: String!
   }
 `;
 

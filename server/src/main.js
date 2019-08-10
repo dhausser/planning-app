@@ -32,7 +32,6 @@ apollo.applyMiddleware({ app });
 
 const port = process.env.NODE_ENV === 'production' ? 8080 : 4000;
 
-// eslint-disable-next-line no-console
 app.listen(port, () => console.log(
   `🚀 Server ready at http://localhost:${port}${apollo.graphqlPath}`,
 ));

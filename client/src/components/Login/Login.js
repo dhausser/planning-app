@@ -8,25 +8,28 @@ import { Loading, Error } from '..';
 import LoginForm from './LoginForm';
 
 const LOGIN_USER = gql`
-  mutation loginUser {
-    loginUser
+  mutation login {
+    login
   }
 `;
 
 function Login({ history }) {
   const client = useApolloClient();
-  const [loginUser, { loading, error, data }] = useMutation(LOGIN_USER, {
-    onCompleted: () => {
-      localStorage.setItem('token', loginUser);
-      client.writeData({ data: { isLoggedIn: true } });
-      history.push('/');
+  const [login, { loading, error }] = useMutation(
+    LOGIN_USER,
+    {
+      onCompleted: () => {
+        localStorage.setItem('token', login);
+        client.writeData({ data: { isLoggedIn: true } });
+        history.push('/');
+      },
     },
-  });
+  );
 
+  if (loading) return <Loading />;
   if (error) return <Error />;
-  if (loading || !data) return <Loading />;
 
-  return <LoginForm login={loginUser} data={data} />;
+  return <LoginForm login={login} />;
 }
 
 Login.defaultProps = {
