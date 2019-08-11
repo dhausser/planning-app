@@ -9,7 +9,7 @@ import { withNavigationViewController } from '@atlaskit/navigation-next';
 import TextField from '@atlaskit/textfield';
 import EmptyState from '@atlaskit/empty-state';
 
-import { ProductHomeView, Loading, Layout } from '..';
+import { ProjectHomeView, Loading, Layout } from '..';
 import { ProjectFilter, VersionFilter, TeamFilter } from '../Filters';
 import BarChart from './BarChart';
 
@@ -47,11 +47,8 @@ const barContent = (
 );
 
 function Dashboard({ navigationViewController }) {
+  useEffect(() => navigationViewController.setView(ProjectHomeView.id), [navigationViewController]);
   const { data, loading, error } = useQuery(GET_ISSUES);
-
-  useEffect(() => {
-    navigationViewController.setView(ProductHomeView.id);
-  }, [navigationViewController]);
 
   return (
     <Layout>

@@ -52,6 +52,10 @@ function Portfolio({ navigationViewController }) {
     navigationViewController.setView(ProjectHomeView.id);
   }, [navigationViewController]);
 
+  /**
+   * TODO: Handle error when project is not defined or has no epics
+   */
+
   return (
     <Layout>
       <PageHeader breadcrumbs={breadcrumbs} bottomBar={barContent}>Roadmap</PageHeader>

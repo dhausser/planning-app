@@ -77,14 +77,18 @@ function Toggle({
 }) {
   const [toggleFilter] = useMutation(TOGGLE_FILTER);
   const key = type.toLowerCase();
-
-  const select = filter[key];
-  const defaultValue = select.id && { value: select.id, label: select.name };
-
+  const selection = filter[key];
   const items = data[`${key}s`];
-  const options = type === 'Team'
-    ? items && items.map(({ id }) => ({ value: id, label: id }))
-    : items && items.map(({ id, name }) => ({ value: id, label: name }));
+  let defaultValue;
+  let options;
+
+  if (type === 'Team') {
+    defaultValue = selection.id && { value: selection.id, label: selection.id };
+    options = items && items.map(({ id }) => ({ value: id, label: id }));
+  } else {
+    defaultValue = selection.id && { value: selection.id, label: selection.name };
+    options = items && items.map(({ id, name }) => ({ value: id, label: name }));
+  }
 
   if (error) return `Error! ${error.message}`;
 
@@ -142,7 +146,6 @@ export function TeamFilter() {
   const type = 'Team';
   const { data: { filter } } = useQuery(GET_TEAM);
   const results = useQuery(GET_TEAMS);
-  console.log(results);
   const options = { ...results, filter, type };
   return <Toggle {...options} />;
 }

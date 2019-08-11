@@ -17,7 +17,7 @@ export default {
         {
           type: 'BackItem',
           id: 'back-item',
-          goTo: 'product/home',
+          goTo: 'project/home',
         },
       ],
     },

@@ -43,7 +43,6 @@ export const resolvers = {
       filter[__typename.toLowerCase()] = { id: value || null, name: label || null, __typename };
       cache.writeData({ data: { filter, __typename: 'Filter' } });
       localStorage.setItem('filter', JSON.stringify(filter));
-      return null;
     },
   },
 };

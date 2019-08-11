@@ -58,13 +58,11 @@ const GET_ISSUE = gql`
 `;
 
 function Issue({ navigationViewController, match }) {
+  useEffect(() => navigationViewController.setView(ProductIssuesView.id),
+    [navigationViewController]);
   const { data: { issue }, loading, error } = useQuery(GET_ISSUE, {
     variables: { id: match.params.issueId },
   });
-
-  useEffect(() => {
-    navigationViewController.setView(ProductIssuesView.id);
-  }, [navigationViewController]);
 
   if (loading) return <Loading />;
   if (error) return <EmptyState header={error.name} description={error.message} />;

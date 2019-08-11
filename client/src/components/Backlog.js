@@ -64,11 +64,8 @@ const GET_ISSUES = gql`
 
 
 function Backlog({ navigationViewController }) {
+  useEffect(() => navigationViewController.setView(ProjectHomeView.id), [navigationViewController]);
   const [isExpanded, setIsExpanded] = useState(true);
-
-  useEffect(() => {
-    navigationViewController.setView(ProjectHomeView.id);
-  }, [navigationViewController]);
 
   const { data, loading, error } = useQuery(GET_ISSUES);
 

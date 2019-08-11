@@ -4,21 +4,19 @@ import { withNavigationViewController } from '@atlaskit/navigation-next';
 import PageHeader from '@atlaskit/page-header';
 import { ProjectHomeView, Layout } from '.';
 
-function Reports({ navigationViewController }) {
-  useEffect(() => {
-    navigationViewController.setView(ProjectHomeView.id);
-  }, [navigationViewController]);
+function Board({ navigationViewController }) {
+  useEffect(() => navigationViewController.setView(ProjectHomeView.id), [navigationViewController]);
 
   return (
     <Layout>
-      <PageHeader>Reports</PageHeader>
-      <p>This is the Reports page.</p>
+      <PageHeader>Board</PageHeader>
+      <p>This is the Board page.</p>
     </Layout>
   );
 }
 
-Reports.propTypes = {
+Board.propTypes = {
   navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
 };
 
-export default withNavigationViewController(Reports);
+export default withNavigationViewController(Board);

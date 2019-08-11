@@ -4,19 +4,19 @@ import { withNavigationViewController } from '@atlaskit/navigation-next';
 import PageHeader from '@atlaskit/page-header';
 import { ProjectHomeView, Layout } from '.';
 
-function Settings({ navigationViewController }) {
+function Pages({ navigationViewController }) {
   useEffect(() => navigationViewController.setView(ProjectHomeView.id), [navigationViewController]);
 
   return (
     <Layout>
-      <PageHeader>Settings</PageHeader>
-      <p>This is the Settings page.</p>
+      <PageHeader>Pages</PageHeader>
+      <p>This is the Pages page.</p>
     </Layout>
   );
 }
 
-Settings.propTypes = {
+Pages.propTypes = {
   navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
 };
 
-export default withNavigationViewController(Settings);
+export default withNavigationViewController(Pages);

@@ -32,7 +32,7 @@ export default () => {
   return (
     <GlobalNavigation
       productIcon={EmojiAtlassianIcon}
-      productHref="#"
+      productHref="/"
       onProductClick={() => console.log('product clicked')}
       onCreateClick={() => console.log('create clicked')}
       onSearchClick={() => console.log('search clicked')}

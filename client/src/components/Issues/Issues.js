@@ -85,9 +85,8 @@ const barContent = (
 );
 
 function Issues({ navigationViewController }) {
-  useEffect(() => {
-    navigationViewController.setView(ProductIssuesView.id);
-  }, [navigationViewController]);
+  useEffect(() => navigationViewController.setView(ProductIssuesView.id),
+    [navigationViewController]);
 
   return (
     <Layout>

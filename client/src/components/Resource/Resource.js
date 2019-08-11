@@ -78,25 +78,14 @@ const barContent = (
 );
 
 function Resource({ navigationViewController, match }) {
-  // Extract resource id from url parameters
+  useEffect(() => navigationViewController.setView(ProjectHomeView.id), [navigationViewController]);
   const { resourceId } = match.params;
   const issues = useQuery(GET_ISSUES, { variables: { resourceId } });
 
-  // Fetch resource from database
   const { data, loading, error } = useQuery(GET_RESOURCE_NAME, {
     variables: { id: resourceId },
     fetchPolicy: 'cache-first',
   });
-
-  // Fetch assignee from REST API
-  /**
-   * TODO
-   */
-  // const { data, loading, error } = useQuery(GET_USER, { variables: { id: resourceId } });
-
-  useEffect(() => {
-    navigationViewController.setView(ProjectHomeView.id);
-  }, [navigationViewController]);
 
   if (loading) return <Loading />;
   if (error) return <EmptyState header={error.name} description={error.message} />;

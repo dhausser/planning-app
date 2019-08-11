@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -32,6 +32,12 @@ const GET_PROJECTS = gql`
   ${PROJECT_TILE_DATA}
 `;
 
+const TOGGLE_FILTER = gql`
+  mutation toggleFilter($value: ID!, $label: String!, $__typename: String!) {
+    toggleFilter(value: $value, label: $label, __typename: $__typename) @client
+  }
+`;
+
 const NameWrapper = styled.span`
   display: flex;
   align-items: center;
@@ -61,7 +67,7 @@ const head = {
   ],
 };
 
-const row = project => ({
+const row = (project, toggleFilter) => ({
   key: project.id,
   cells: [
     {
@@ -79,7 +85,15 @@ const row = project => ({
               }
             />
           </AvatarWrapper>
-          <Link to={`/resources/${project.key}`}>{project.name}</Link>
+          <Link
+            to={`/roadmap/${project.key}`}
+            onClick={() => {
+              const { id, name, __typename } = project;
+              toggleFilter({ variables: { value: id, label: name, __typename } });
+            }}
+          >
+            {project.name}
+          </Link>
         </NameWrapper>
       ),
     },
@@ -95,13 +109,11 @@ const row = project => ({
 });
 
 function Projects({ navigationViewController }) {
+  useEffect(() => navigationViewController.setView(ProductHomeView.id), [navigationViewController]);
   const { data, loading, error } = useQuery(GET_PROJECTS, {
     fetchPolicy: 'cache-first',
   });
-
-  useEffect(() => {
-    navigationViewController.setView(ProductHomeView.id);
-  }, [navigationViewController]);
+  const [toggleFilter] = useMutation(TOGGLE_FILTER);
 
   if (error) return <EmptyState header={error.name} description={error.message} />;
 
@@ -111,7 +123,9 @@ function Projects({ navigationViewController }) {
       <DynamicTable
         caption={`Displaying ${(!loading && data.projects.length) || 0} projects`}
         head={head}
-        rows={!loading && data.projects.length && data.projects.map(row)}
+        rows={!loading
+          && data.projects.length
+          && data.projects.map(project => row(project, toggleFilter))}
         rowsPerPage={20}
         loadingSpinnerSize="large"
         isLoading={loading}

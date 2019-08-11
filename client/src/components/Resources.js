@@ -101,9 +101,7 @@ const rows = resources => resources.map(resource => ({
 }));
 
 function Resources({ navigationViewController }) {
-  useEffect(() => {
-    navigationViewController.setView(ProjectHomeView.id);
-  }, [navigationViewController]);
+  useEffect(() => navigationViewController.setView(ProjectHomeView.id), [navigationViewController]);
 
   const { data: { filter: { team } } } = useQuery(GET_FILTER);
 

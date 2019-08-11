@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useApolloClient, useMutation } from '@apollo/react-hooks';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 
-import { Loading, Error } from '..';
+import { withNavigationViewController } from '@atlaskit/navigation-next';
+import { ProductHomeView, Loading, Error } from '..';
 import LoginForm from './LoginForm';
 
 const LOGIN_USER = gql`
@@ -13,7 +14,11 @@ const LOGIN_USER = gql`
   }
 `;
 
-function Login({ history }) {
+function Login({ history, navigationViewController }) {
+  useEffect(() => {
+    navigationViewController.setView(ProductHomeView.id);
+  }, [navigationViewController]);
+
   const client = useApolloClient();
   const [login, { loading, error }] = useMutation(
     LOGIN_USER,
@@ -38,6 +43,7 @@ Login.defaultProps = {
 
 Login.propTypes = {
   history: PropTypes.objectOf,
+  navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
 };
 
-export default withRouter(Login);
+export default withNavigationViewController(withRouter(Login));
