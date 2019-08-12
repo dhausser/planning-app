@@ -10,6 +10,7 @@ import DynamicTable from '@atlaskit/dynamic-table';
 import EmptyState from '@atlaskit/empty-state';
 import PageHeader from '@atlaskit/page-header';
 import { ProductHomeView, Layout } from '.';
+import { TOGGLE_FILTER } from './Filters';
 
 const PROJECT_TILE_DATA = gql`
   fragment ProjectTile on Project {
@@ -30,12 +31,6 @@ const GET_PROJECTS = gql`
     }
   }
   ${PROJECT_TILE_DATA}
-`;
-
-const TOGGLE_FILTER = gql`
-  mutation toggleFilter($value: ID!, $label: String!, $__typename: String!) {
-    toggleFilter(value: $value, label: $label, __typename: $__typename) @client
-  }
 `;
 
 const NameWrapper = styled.span`
@@ -81,8 +76,7 @@ const row = (project, toggleFilter) => ({
               appearance="square"
               src={project.id === '10500'
                 ? 'https://solarsystem.atlassian.net/secure/projectavatar?pid=10000&avatarId=10011&size=xxlarge'
-                : project.avatarUrls.small
-              }
+                : project.avatarUrls.small}
             />
           </AvatarWrapper>
           <Link
@@ -125,7 +119,7 @@ function Projects({ navigationViewController }) {
         head={head}
         rows={!loading
           && data.projects.length
-          && data.projects.map(project => row(project, toggleFilter))}
+          && data.projects.map((project) => row(project, toggleFilter))}
         rowsPerPage={20}
         loadingSpinnerSize="large"
         isLoading={loading}

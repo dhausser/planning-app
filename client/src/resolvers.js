@@ -13,7 +13,7 @@ export const typeDefs = gql`
   }
 
   extend type Mutation {
-    toggleFilter(id: ID!, name: String!, type: String!): Int
+    toggleFilter(id: ID, name: String, type: String): Int
   }
 `;
 
@@ -38,9 +38,10 @@ const GET_FILTER = gql`
 
 export const resolvers = {
   Mutation: {
-    toggleFilter: (_root, { value, label, __typename }, { cache }) => {
+    toggleFilter: (_root, { id = null, name = null, type = null }, { cache }) => {
+      console.log(id, name, type);
       const { filter } = cache.readQuery({ query: GET_FILTER });
-      filter[__typename.toLowerCase()] = { id: value || null, name: label || null, __typename };
+      filter[type.toLowerCase()] = { id, name, __typename: type };
       cache.writeData({ data: { filter, __typename: 'Filter' } });
       localStorage.setItem('filter', JSON.stringify(filter));
     },

@@ -74,12 +74,12 @@ function Backlog({ navigationViewController }) {
       <PageHeader
         bottomBar={(
           <div style={{ display: 'flex' }}>
-            <div style={{ flex: '0 0 200px', marginLeft: 8 }}>
+            <div style={{ flex: '0 0 200px', marginRight: 8 }}>
 
               <TextField isCompact placeholder="Filter" aria-label="Filter" />
             </div>
             <VersionFilter />
-            <div style={{ flex: '0 0 200px', marginLeft: 8 }}>
+            <div style={{ flex: '0 0 200px', marginRight: 8 }}>
               <Button onClick={() => setIsExpanded(!isExpanded)}>
                 {isExpanded ? 'Collapse' : 'Expand'}
               </Button>

@@ -10,6 +10,8 @@ import {
 } from '@atlaskit/navigation-next';
 import EmptyState from '@atlaskit/empty-state';
 
+import { TOGGLE_FILTER } from '../Filters';
+
 const PROJECT_TILE_DATA = gql`
   fragment ProjectTile on Project {
     id
@@ -42,12 +44,6 @@ const GET_FILTER = gql`
   }
 `;
 
-const TOGGLE_FILTER = gql`
-  mutation toggleFilter($value: ID!, $label: String!, $__typename: String!) {
-    toggleFilter(value: $value, label: $label, __typename: $__typename) @client
-  }
-`;
-
 const create = () => ({
   onClick: () => {
     // eslint-disable-next-line
@@ -66,15 +62,14 @@ const target = ({
   id, subText, text, avatar,
 }) => (
   <ContainerHeader
-    before={s => (
+    before={(s) => (
       <ItemAvatar
         appearance="square"
         itemState={s}
         size="large"
         src={id === '10500'
           ? 'https://solarsystem.atlassian.net/secure/projectavatar?pid=10000&avatarId=10011&size=xxlarge'
-          : avatar
-        }
+          : avatar}
       />
     )}
     after={ChevD}

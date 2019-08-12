@@ -66,9 +66,9 @@ const GET_TEAM = gql`
   }
 `;
 
-const TOGGLE_FILTER = gql`
-  mutation toggleFilter($value: ID!, $label: String!, $__typename: String!) {
-    toggleFilter(value: $value, label: $label, __typename: $__typename) @client
+export const TOGGLE_FILTER = gql`
+  mutation toggleFilter($id: ID, $name: String, $type: String) {
+    toggleFilter(id: $id, name: $name, type: $type) @client
   }
 `;
 
@@ -101,7 +101,14 @@ function Toggle({
         isLoading={loading}
         options={options}
         placeholder={type}
-        onChange={e => toggleFilter({ variables: { ...e, __typename: type } })}
+        onChange={(e) => {
+          let id = null;
+          let name = null;
+          if (e) {
+            ({ value: id, label: name } = e);
+          }
+          toggleFilter({ variables: { id, name, type } });
+        }}
       />
     </div>
   );

@@ -8,11 +8,14 @@ import { withNavigationViewController } from '@atlaskit/navigation-next';
 import Avatar from '@atlaskit/avatar';
 import PageHeader from '@atlaskit/page-header';
 import TextField from '@atlaskit/textfield';
-import { ProjectHomeView, Loading, Layout, Error } from '..';
+import Button from '@atlaskit/button';
+
+import {
+  ProjectHomeView, Loading, Layout, Error,
+} from '..';
 import { ProjectFilter, VersionFilter } from '../Filters';
 import IssueTable from '../Issues/IssueTable';
 import AbsencesList from './AbsencesList';
-import Button from '@atlaskit/button';
 
 import { ISSUE_ROW_DATA, ISSUE_PAGINATION } from '../Issues/Issues';
 
@@ -84,8 +87,7 @@ function Resource({ navigationViewController, match }) {
   const [offset, setOffset] = useState(ROWS_PER_PAGE);
   const { resourceId } = match.params;
   const issues = useQuery(GET_ISSUES,
-    { variables: { resourceId, maxResults: ROWS_PER_PAGE } }
-  );
+    { variables: { resourceId, maxResults: ROWS_PER_PAGE } });
   const { data, fetchMore } = issues;
 
   const { loading, error, data: { resource } } = useQuery(GET_RESOURCE_NAME, {
