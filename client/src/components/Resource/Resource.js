@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
@@ -6,14 +6,14 @@ import styled from 'styled-components';
 
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import Avatar from '@atlaskit/avatar';
-import EmptyState from '@atlaskit/empty-state';
 import PageHeader from '@atlaskit/page-header';
 import TextField from '@atlaskit/textfield';
-import { ProjectHomeView, Loading, Layout } from '..';
+import { ProjectHomeView, Loading, Layout, Error } from '..';
 import { ProjectFilter, VersionFilter } from '../Filters';
 import IssueTable from '../Issues/IssueTable';
 import AbsencesList from './AbsencesList';
-// import AbsencesTable from './AbsencesTable';
+import Button from '@atlaskit/button';
+
 import { ISSUE_ROW_DATA, ISSUE_PAGINATION } from '../Issues/Issues';
 
 /**
@@ -28,6 +28,8 @@ import { ISSUE_ROW_DATA, ISSUE_PAGINATION } from '../Issues/Issues';
 //     }
 //   }
 // `;
+
+const ROWS_PER_PAGE = 10;
 
 const GET_ISSUES = gql`
   query GetIssues($projectId: String, $versionId: String, $resourceId: String, $startAt: Int, $maxResults: Int) {
@@ -79,16 +81,19 @@ const barContent = (
 
 function Resource({ navigationViewController, match }) {
   useEffect(() => navigationViewController.setView(ProjectHomeView.id), [navigationViewController]);
+  const [offset, setOffset] = useState(ROWS_PER_PAGE);
   const { resourceId } = match.params;
-  const issues = useQuery(GET_ISSUES, { variables: { resourceId } });
+  const issues = useQuery(GET_ISSUES,
+    { variables: { resourceId, maxResults: ROWS_PER_PAGE } }
+  );
+  const { data, fetchMore } = issues;
 
-  const { data, loading, error } = useQuery(GET_RESOURCE_NAME, {
+  const { loading, error, data: { resource } } = useQuery(GET_RESOURCE_NAME, {
     variables: { id: resourceId },
-    fetchPolicy: 'cache-first',
   });
 
   if (loading) return <Loading />;
-  if (error) return <EmptyState header={error.name} description={error.message} />;
+  if (error) return <Error {...error} />;
 
   return (
     <Layout>
@@ -96,12 +101,12 @@ function Resource({ navigationViewController, match }) {
         <NameWrapper>
           <AvatarWrapper>
             <Avatar
-              name={data.resource.name}
+              name={resource.name}
               size="large"
               src={`https://${process.env.REACT_APP_HOST}/secure/useravatar?ownerId=${resourceId}`}
             />
           </AvatarWrapper>
-          {data.resource.name}
+          {resource.name}
         </NameWrapper>
       </PageHeader>
       <p>
@@ -114,7 +119,34 @@ function Resource({ navigationViewController, match }) {
         View in Issue Navigator
         </a>
       </p>
-      <IssueTable {...issues} />
+      <IssueTable {...issues} rowsPerPage={ROWS_PER_PAGE + offset} offset={offset} />
+      {data.issues && data.issues.total > offset && (
+        <div style={{ display: 'flex', justifyContent: 'center', padding: 10 }}>
+          <Button
+            onClick={() => {
+              setOffset(offset + data.issues.maxResults);
+              return fetchMore({
+                variables: { startAt: offset },
+                updateQuery: (prev, { fetchMoreResult }) => {
+                  if (!fetchMoreResult) return prev;
+                  return {
+                    ...fetchMoreResult,
+                    issues: {
+                      ...fetchMoreResult.issues,
+                      issues: [
+                        ...prev.issues.issues,
+                        ...fetchMoreResult.issues.issues,
+                      ],
+                    },
+                  };
+                },
+              });
+            }}
+          >
+            Load More
+          </Button>
+        </div>
+      )}
       <AbsencesList resourceId={resourceId} />
       {/* <AbsencesTable resourceId={resourceId} /> */}
     </Layout>

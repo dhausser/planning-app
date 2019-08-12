@@ -5,19 +5,11 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "node",
-      "request": "launch",
-      "name": "Launch Node",
-      "program": "${workspaceFolder}/server/src/index.js",
-      "envFile": "${workspaceFolder}/server/.env",
-      "restart": true
-    },
-    {
       "type": "chrome",
       "request": "launch",
       "name": "Chrome",
       "url": "http://localhost:3000",
-      "webRoot": "${workspaceFolder}/client/src",
+      "webRoot": "${workspaceFolder}/src",
       "sourceMapPathOverrides": {
         "webpack:///src/*": "${webRoot}/*"
       }

@@ -26,5 +26,9 @@
     "start": "nodemon -r esm ./src/index.js",
     "dev": "node --experimental-modules index.js",
     "prod": "node -r esm main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dhausser/planning-app.git"
   }
 }

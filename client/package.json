@@ -2,7 +2,10 @@
   "name": "planning-app-client",
   "version": "1.0.0",
   "description": "Roadmap app client",
-  "repository": "https://github.com/dhausser/planning-app/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dhausser/planning-app.git"
+  },
   "homepage": "https://roadmap.cdprojektred.com",
   "main": "src/index.jsx",
   "scripts": {

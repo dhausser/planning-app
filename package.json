@@ -1,13 +1,10 @@
 {
   "name": "planning-app",
   "version": "1.0.0",
-  "description": "An app for roadmap planning on top of Jira Software",
-  "main": "./server/index.js",
-  "type": "module",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "cd ./server && npm start",
-    "client": "cd ./client && npm start"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -21,10 +18,11 @@
   },
   "homepage": "https://github.com/dhausser/planning-app#readme",
   "devDependencies": {
-    "eslint": "^5.16.0",
-    "eslint-config-airbnb": "^17.1.1",
+    "eslint": "^6.1.0",
+    "eslint-config-airbnb": "^18.0.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.14.3"
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-react-hooks": "^1.7.0"
   }
 }

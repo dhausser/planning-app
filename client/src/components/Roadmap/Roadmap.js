@@ -45,6 +45,7 @@ const barContent = (
   <div style={{ display: 'flex' }}>
     <ProjectFilter />
     <VersionFilter />
+    
   </div>
 );
 
