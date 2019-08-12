@@ -2,13 +2,24 @@ import React, { useEffect } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
+import styled from 'styled-components';
+
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import { BreadcrumbsStateless, BreadcrumbsItem } from '@atlaskit/breadcrumbs';
 import PageHeader from '@atlaskit/page-header';
-import EmptyState from '@atlaskit/empty-state';
-import { ProjectHomeView, Loading, Layout } from '..';
+import Page from '@atlaskit/page';
+
+import { ProjectHomeView, Loading, Error } from '..';
 import { ProjectFilter, VersionFilter } from '../Filters';
 import Timeline from './Timeline';
+
+const Padding = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0px 0px 0px 40px;
+  box-sizing: border-box; 
+  height: 100vh;
+`;
 
 const GET_ISSUES = gql`
   query issueList($projectId: String, $versionId: String) {
@@ -44,29 +55,24 @@ const breadcrumbs = (
   </BreadcrumbsStateless>
 );
 
-
-function Portfolio({ navigationViewController }) {
+function Roadmap({ navigationViewController }) {
+  useEffect(() => navigationViewController.setView(ProjectHomeView.id), [navigationViewController]);
   const { data, loading, error } = useQuery(GET_ISSUES);
 
-  useEffect(() => {
-    navigationViewController.setView(ProjectHomeView.id);
-  }, [navigationViewController]);
-
-  /**
-   * TODO: Handle error when project is not defined or has no epics
-   */
+  if (error) return <Error {...error} />;
 
   return (
-    <Layout>
-      <PageHeader breadcrumbs={breadcrumbs} bottomBar={barContent}>Roadmap</PageHeader>
-      {loading ? <Loading /> : <Timeline {...data} />}
-      {error && <EmptyState header={error.name} description={error.message} />}
-    </Layout>
+    <Page>
+      <Padding>
+        <PageHeader breadcrumbs={breadcrumbs} bottomBar={barContent}>Roadmap</PageHeader>
+        {loading ? <Loading /> : <Timeline {...data} />}
+      </Padding>
+    </Page>
   );
 }
 
-Portfolio.propTypes = {
+Roadmap.propTypes = {
   navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
 };
 
-export default withNavigationViewController(Portfolio);
+export default withNavigationViewController(Roadmap);

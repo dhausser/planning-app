@@ -144,7 +144,7 @@ export default function Timeline({ epics }) {
             <div style={{ display: 'flex', overflow: 'hidden' }}>
               <HeaderRowScrollBar data-test-id="roadmap.common.components.table.components.list.hidden-scrollbar">
                 <HeaderRowScrollBarWidth width="318" style={{ width: '318px' }}>
-                  {epics.map(HeadlineRow)}
+                  {issues.map(HeadlineRow)}
                   <CreateButtonWrapper>
                     <CreateButton
                       data-test-id="roadmap.common.components.table.components.list.items.create-item.button"
@@ -180,7 +180,7 @@ export default function Timeline({ epics }) {
                   {months.map(TimelineColumn)}
                 </VerticalDivider>
                 <TimelineBox1 />
-                {epics.map(TimelineRow)}
+                {issues.map(TimelineRow)}
                 <TimelineBox2 />
                 <div style={{ height: '1px', backgroundColor: 'rgb(193, 199, 208)' }} />
               </div>
@@ -207,8 +207,12 @@ export default function Timeline({ epics }) {
   );
 }
 
+Timeline.defaultProps = {
+  epics: [],
+};
+
 Timeline.propTypes = {
-  epics: PropTypes.arrayOf(PropTypes.objectOf).isRequired,
+  epics: PropTypes.arrayOf(PropTypes.objectOf),
 };
 
 /**

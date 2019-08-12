@@ -21,7 +21,7 @@ import { ProductIssuesView, Loading } from '..';
 import { ISSUE_ROW_DATA } from '../Issues/Issues';
 
 const Padding = styled.div`
-  padding: 0px 0px 0px 40px;
+  padding: 40px 0px 0px 40px;
 `;
 
 const GET_ISSUE = gql`
@@ -89,12 +89,12 @@ function Issue({ navigationViewController, match }) {
     <Page>
       <Padding>
         <Grid layout="fluid">
-          <GridColumn medium={10}>
+          <GridColumn medium={8}>
             <Header id={key} summary={summary} issuetype={issuetype} />
             <Description id={id} description={description} />
             <Comments comments={comments} />
           </GridColumn>
-          <GridColumn medium={2}>
+          <GridColumn medium={4}>
             <Status {...status} />
             <UserPicker id={id} user={assignee} type="assignee" />
             <UserPicker id={id} user={reporter} type="reporter" />

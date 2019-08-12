@@ -1,13 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
+
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import PageHeader from '@atlaskit/page-header';
 import TextField from '@atlaskit/textfield';
+import Button from '@atlaskit/button';
+
 import { ProductIssuesView, Layout } from '..';
 import { ProjectFilter, VersionFilter, TeamFilter } from '../Filters';
 import IssueTable from './IssueTable';
+
+const ROWS_PER_PAGE = 10;
 
 export const ISSUE_ROW_DATA = gql`
   fragment IssueRow on Issue {
@@ -85,13 +90,44 @@ const barContent = (
 );
 
 function Issues({ navigationViewController }) {
+  const [offset, setOffset] = useState(ROWS_PER_PAGE);
+  const issues = useQuery(GET_ISSUES, { variables: { maxResults: ROWS_PER_PAGE } });
+  const { data, fetchMore } = issues;
+
   useEffect(() => navigationViewController.setView(ProductIssuesView.id),
     [navigationViewController]);
 
   return (
     <Layout>
       <PageHeader bottomBar={barContent}>Search Issues</PageHeader>
-      <IssueTable {...useQuery(GET_ISSUES)} />
+      <IssueTable {...issues} rowsPerPage={ROWS_PER_PAGE + offset} offset={offset} />
+      {data.issues && data.issues.total > offset && (
+        <div style={{ display: 'flex', justifyContent: 'center', padding: 10 }}>
+          <Button
+            onClick={() => {
+              setOffset(offset + data.issues.maxResults);
+              return fetchMore({
+                variables: { startAt: offset },
+                updateQuery: (prev, { fetchMoreResult }) => {
+                  if (!fetchMoreResult) return prev;
+                  return {
+                    ...fetchMoreResult,
+                    issues: {
+                      ...fetchMoreResult.issues,
+                      issues: [
+                        ...prev.issues.issues,
+                        ...fetchMoreResult.issues.issues,
+                      ],
+                    },
+                  };
+                },
+              });
+            }}
+          >
+            Load More
+          </Button>
+        </div>
+      )}
     </Layout>
   );
 }

@@ -19,6 +19,10 @@ import Story16Icon from '@atlaskit/icon-object/glyph/story/16';
 import Task16Icon from '@atlaskit/icon-object/glyph/task/16';
 import Subtask16Icon from '@atlaskit/icon-object/glyph/subtask/16';
 import Bug16Icon from '@atlaskit/icon-object/glyph/bug/16';
+import Blog16Icon from '@atlaskit/icon-object/glyph/blog/16';
+import Code16Icon from '@atlaskit/icon-object/glyph/code/16';
+import Calendar16Icon from '@atlaskit/icon-object/glyph/calendar/16';
+import NewFeature16Icon from '@atlaskit/icon-object/glyph/new-feature/16';
 
 export const issuetypeIconMap = {
   1:
@@ -41,6 +45,9 @@ export const issuetypeIconMap = {
   <Tooltip content="Story">
     <Story16Icon />
   </Tooltip>,
+  /**
+   * Jira Cloud
+   */
   10005:
   <Tooltip content="Story">
     <Story16Icon />
@@ -56,6 +63,25 @@ export const issuetypeIconMap = {
   10008:
   <Tooltip content="Bug">
     <Bug16Icon />
+  </Tooltip>,
+  /**
+   * Custom Issuetypes
+   */
+  11700:
+  <Tooltip content="Feedback">
+    <Blog16Icon />
+  </Tooltip>,
+  12100:
+  <Tooltip content="Backend">
+    <Code16Icon />
+  </Tooltip>,
+  13600:
+  <Tooltip content="Live Event">
+    <Calendar16Icon />
+  </Tooltip>,
+  15100:
+  <Tooltip content="Product">
+    <NewFeature16Icon />
   </Tooltip>,
 };
 

@@ -1,21 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import DynamicTable from '@atlaskit/dynamic-table';
-import Button from '@atlaskit/button';
 import Tooltip from '@atlaskit/tooltip';
-// import CopyIcon from '@atlaskit/icon/glyph/copy';
 import EmptyState from '@atlaskit/empty-state';
 import Lozenge from '@atlaskit/lozenge';
 import { Status } from '@atlaskit/status';
 
 import { statusCatecoryColorMap, priorityIconMap, issuetypeIconMap } from '../Issue/Icon';
-// import { copyLink } from '../Issue/Summary';
 
-const ROWS_PER_PAGE = 10;
-const caption = ({ maxResults, total }) => (
-  `${(maxResults && (maxResults <= total ? maxResults : total)) || 0} of ${total || 0}`
-);
 const head = {
   cells: [
     {
@@ -60,11 +53,6 @@ const head = {
       isSortable: true,
       width: 6,
     },
-    // {
-    //   key: 'link',
-    //   content: 'Link',
-    //   width: 6,
-    // },
   ],
 };
 const row = ({
@@ -126,77 +114,26 @@ const row = ({
           : ''
       ),
     },
-    // {
-    //   key: '',
-    //   content: (
-    //     <Tooltip content={`Copy to clipboard ${key}`}>
-    //       <Button iconBefore={CopyIcon()} onClick={() => copyLink(key)} />
-    //     </Tooltip>
-    //   ),
-    // },
   ],
 });
 
-
-function IssueTable({
-  data, loading, error, fetchMore,
-}) {
-  const [offset, setOffset] = useState(ROWS_PER_PAGE);
-
-  return (
-    <>
-      <DynamicTable
-        caption={caption(data.issues || {})}
-        head={head}
-        rows={!loading && data.issues.issues.length && data.issues.issues.map(row)}
-        rowsPerPage={ROWS_PER_PAGE}
-        loadingSpinnerSize="large"
-        isLoading={loading}
-        isFixedSize
-        defaultSortKey="priority"
-        defaultSortOrder="ASC"
-        isRankable
-        emptyView={error && <EmptyState description={error.message} />}
-      />
-      {!loading && data.issues.total > offset && (
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            padding: '1em',
-          }}
-        >
-          <Button
-            onClick={() => {
-              setOffset(offset + data.issues.maxResults);
-              return fetchMore({
-                variables: {
-                  startAt: offset,
-                },
-                updateQuery: (prev, { fetchMoreResult }) => {
-                  if (!fetchMoreResult) return prev;
-                  return {
-                    ...fetchMoreResult,
-                    issues: {
-                      ...fetchMoreResult.issues,
-                      issues: [
-                        ...prev.issues.issues,
-                        ...fetchMoreResult.issues.issues,
-                      ],
-                    },
-                  };
-                },
-              });
-            }}
-          >
-            Load More
-          </Button>
-        </div>
-      )}
-    </>
-  );
-}
+const IssueTable = ({
+  loading, error, data, rowsPerPage, offset,
+}) => (
+  <DynamicTable
+    caption={data.issues && `${offset} of ${data.issues.total}`}
+    head={head}
+    rows={!loading && data.issues.issues.length && data.issues.issues.map(row)}
+    rowsPerPage={rowsPerPage}
+    loadingSpinnerSize="large"
+    isLoading={loading}
+    isFixedSize
+    defaultSortKey="priority"
+    defaultSortOrder="ASC"
+    isRankable
+    emptyView={error && <EmptyState description={error.message} />}
+  />
+);
 
 IssueTable.defaultProps = {
   data: {},
@@ -205,10 +142,11 @@ IssueTable.defaultProps = {
 };
 
 IssueTable.propTypes = {
-  data: PropTypes.objectOf(PropTypes.objectOf),
   loading: PropTypes.bool,
+  rowsPerPage: PropTypes.number.isRequired,
+  offset: PropTypes.number.isRequired,
   error: PropTypes.objectOf(PropTypes.objectOf),
-  fetchMore: PropTypes.func.isRequired,
+  data: PropTypes.objectOf(PropTypes.objectOf),
 };
 
 export default IssueTable;
