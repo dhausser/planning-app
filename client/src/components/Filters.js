@@ -4,6 +4,12 @@ import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 import Select from '@atlaskit/select';
 
+export const TOGGLE_FILTER = gql`
+  mutation toggleFilter($id: ID, $name: String, $type: String) {
+    toggleFilter(id: $id, name: $name, type: $type) @client
+  }
+`;
+
 const GET_PROJECTS = gql`
   query GetProjects {
     projects {
@@ -66,12 +72,6 @@ const GET_TEAM = gql`
   }
 `;
 
-export const TOGGLE_FILTER = gql`
-  mutation toggleFilter($id: ID, $name: String, $type: String) {
-    toggleFilter(id: $id, name: $name, type: $type) @client
-  }
-`;
-
 function Toggle({
   loading, error, data, filter, type,
 }) {
@@ -130,29 +130,26 @@ Toggle.propTypes = {
 export function ProjectFilter() {
   const type = 'Project';
   const { data: { filter } } = useQuery(GET_PROJECT);
-  const results = useQuery(GET_PROJECTS);
-  const options = { ...results, filter, type };
-  return <Toggle {...options} />;
+  const { loading, error, data } = useQuery(GET_PROJECTS);
+  return <Toggle loading={loading} error={error} data={data} filter={filter} type={type} />;
 }
 
 export function VersionFilter() {
   const type = 'Version';
   const { data: { filter } } = useQuery(GET_VERSION);
-  const results = useQuery(GET_VERSIONS, {
+  const { loading, error, data } = useQuery(GET_VERSIONS, {
     variables: {
       id: (filter.project && filter.project.id) || process.env.REACT_APP_PROJECT_ID,
       startAt: parseInt(process.env.REACT_APP_VERSION_START_AT, 10),
       maxResults: parseInt(process.env.REACT_APP_VERSION_MAX_RESULTS, 10),
     },
   });
-  const options = { ...results, filter, type };
-  return <Toggle {...options} />;
+  return <Toggle loading={loading} error={error} data={data} filter={filter} type={type} />;
 }
 
 export function TeamFilter() {
   const type = 'Team';
   const { data: { filter } } = useQuery(GET_TEAM);
-  const results = useQuery(GET_TEAMS);
-  const options = { ...results, filter, type };
-  return <Toggle {...options} />;
+  const { loading, error, data } = useQuery(GET_TEAMS);
+  return <Toggle loading={loading} error={error} data={data} filter={filter} type={type} />;
 }
