@@ -1,14 +1,16 @@
 import React, { useEffect } from 'react';
-import { useQuery, useMutation } from '@apollo/react-hooks';
-import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
+import styled from 'styled-components';
+
 import { withNavigationViewController } from '@atlaskit/navigation-next';
-import Avatar from '@atlaskit/avatar';
+import PageHeader from '@atlaskit/page-header';
 import DynamicTable from '@atlaskit/dynamic-table';
 import EmptyState from '@atlaskit/empty-state';
-import PageHeader from '@atlaskit/page-header';
+import Avatar from '@atlaskit/avatar';
+
 import { ProductHomeView, Layout } from '.';
 import { TOGGLE_FILTER } from './Filters';
 
@@ -83,7 +85,7 @@ const row = (project, toggleFilter) => ({
             to={`/roadmap/${project.key}`}
             onClick={() => {
               const { id, name, __typename } = project;
-              toggleFilter({ variables: { value: id, label: name, __typename } });
+              toggleFilter({ variables: { id, name, type: __typename } });
             }}
           >
             {project.name}

@@ -1,5 +1,6 @@
+/* eslint-disable no-param-reassign */
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { any } from 'prop-types';
 import Chart from 'chart.js';
 
 const transparency = '0.3';
@@ -39,9 +40,7 @@ const config = ({ labels, values }) => ({
 });
 
 function updateChart(chart, { labels, values }) {
-  // eslint-disable-next-line no-param-reassign
   chart.data.labels = labels;
-  // eslint-disable-next-line no-param-reassign
   chart.data.datasets[0].data = values;
   // chart.data.datasets[0].backgroundColor = values.map(
   //   (_entry, index) => colors[index % colors.length].value,
@@ -49,11 +48,11 @@ function updateChart(chart, { labels, values }) {
   chart.update();
 }
 
-export default function BarChart({ dashboardIssues }) {
+export default function BarChart({ issues }) {
   const [chart, setChart] = useState(null);
   const {
     labels, values, maxResults, total,
-  } = dashboardIssues;
+  } = issues;
 
   useEffect(() => {
     if (chart === null) {
@@ -74,9 +73,17 @@ export default function BarChart({ dashboardIssues }) {
 }
 
 BarChart.defaultProps = {
-  dashboardIssues: [],
+  issues: [],
+  // labels: [],
+  // values: [],
+  // maxResults: 0,
+  // total: 0,
 };
 
 BarChart.propTypes = {
-  dashboardIssues: PropTypes.objectOf(PropTypes.objectOf),
+  issues: PropTypes.objectOf(any),
+  // labels: PropTypes.arrayOf(PropTypes.string),
+  // values: PropTypes.arrayOf(PropTypes.number),
+  // maxResults: PropTypes.number,
+  // total: PropTypes.number,
 };

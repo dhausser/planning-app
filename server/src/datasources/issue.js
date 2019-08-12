@@ -31,7 +31,7 @@ class IssueAPI extends RESTDataSource {
 
   async getProjects() {
     const response = await this.get('/rest/api/2/project');
-    const projects = response.map(project => ({
+    const projects = response.map((project) => ({
       ...project,
       projectTypeKey: `${project.projectTypeKey
         .charAt(0)
@@ -75,19 +75,19 @@ class IssueAPI extends RESTDataSource {
     const resources = teamId
       ? await this.context.dataSources.resourceAPI.getResourcesByTeam({ teamId })
       : await this.context.dataSources.resourceAPI.getResources();
-    const assignee = resources.map(({ key }) => key);
+
+    const assignee = resources && resources.map(({ key }) => key);
 
     const dashboard = new Dashboard({
       projectId,
       versionId,
       teamId,
       assignee,
-      resourceMap: this.context.resourceMap,
     });
 
     const response = await this.post('/rest/api/2/search', dashboard.getParams());
 
-    return dashboard.getDataset(response);
+    return dashboard.getDataset(response, this.context.resourceMap);
   }
 
   async getRoadmapIssues(projectId, versionId) {

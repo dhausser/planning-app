@@ -48,7 +48,7 @@ class Issues {
     this.jql = `statusCategory in (new, indeterminate)\
       ${this.projectId ? `AND project=${this.projectId}` : ''}\
       ${this.versionId ? `AND fixVersion=${this.versionId}` : ''}\
-      ${this.assignee ? `AND assignee in (${this.assignee})` : ''} order by priority desc`;
+      ${this.assignee ? `AND assignee in (${this.assignee})` : ''} order by priority`;
   }
 }
 

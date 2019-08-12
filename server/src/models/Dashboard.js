@@ -16,16 +16,15 @@
 
 class Dashboard {
   constructor({
-    projectId, versionId, teamId, assignee, resourceMap,
+    projectId, versionId, teamId, assignee,
   }) {
     this.data = {};
     this.fields = ['assignee'];
-    this.maxResults = 500;
+    this.maxResults = 50;
     this.projectId = projectId;
     this.versionId = versionId;
     this.teamId = teamId;
     this.assignee = assignee;
-    this.resourceMap = resourceMap;
     this.jql = '';
   }
 
@@ -46,10 +45,8 @@ class Dashboard {
     };
   }
 
-  defineAggregationKey(issue) {
-    const { key } = issue.fields.assignee;
-    if (this.teamId) return key;
-    return this.resourceMap[key];
+  defineAggregationKey(key, resourceMap) {
+    return this.teamId ? key : resourceMap[key];
   }
 
   incrementDatasetElement(key) {
@@ -65,20 +62,23 @@ class Dashboard {
     });
   }
 
-  sumIssues(issues) {
+  sumIssues(issues, resourceMap) {
     for (let i = 0; i < issues.length; i += 1) {
-      const key = this.defineAggregationKey(issues[i]);
+      const key = this.defineAggregationKey(issues[i].fields.assignee.key, resourceMap);
 
-      if (Object.prototype.hasOwnProperty.call(this.data, key)) {
-        this.incrementDatasetElement(key);
-      } else {
-        this.inserElementToDataset(key);
+      if (key) {
+        if (Object.prototype.hasOwnProperty.call(this.data, key)) {
+          this.incrementDatasetElement(key);
+        } else {
+          this.inserElementToDataset(key);
+        }
       }
     }
   }
 
-  getDataset({ issues, total }) {
-    this.sumIssues(issues);
+  getDataset({ issues, total }, resourceMap) {
+    this.sumIssues(issues, resourceMap);
+
     return {
       labels: Object.keys(this.data),
       values: Object.values(this.data),

@@ -48,7 +48,7 @@ const barContent = (
 
 function Dashboard({ navigationViewController }) {
   useEffect(() => navigationViewController.setView(ProjectHomeView.id), [navigationViewController]);
-  const { data, loading, error } = useQuery(GET_ISSUES);
+  const { loading, error, data } = useQuery(GET_ISSUES);
 
   return (
     <Layout>
@@ -58,14 +58,14 @@ function Dashboard({ navigationViewController }) {
         : (
           <div style={{ display: 'block' }}>
             <Grid>
-              {(loading || !data)
+              {loading
                 ? <Loading />
-                : <BarChart {...data} />
-              }
+                : data.dashboardIssues
+                  && data.dashboardIssues.values
+                  && <BarChart issues={data.dashboardIssues} />}
             </Grid>
           </div>
-        )
-      }
+        )}
     </Layout>
   );
 }

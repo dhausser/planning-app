@@ -121,15 +121,9 @@ function ProjectSwitcher() {
   return (
     <Switcher
       create={create()}
-      onChange={(e) => {
-        toggleFilter({
-          variables: {
-            value: e.id,
-            label: e.text,
-            __typename: 'Project',
-          },
-        });
-        setSelected(e);
+      onChange={({ id, text }) => {
+        toggleFilter({ variables: { id, name: text, type: 'Project' } });
+        setSelected({ id, text });
       }}
       options={options}
       target={target(selected)}

@@ -39,7 +39,6 @@ const GET_FILTER = gql`
 export const resolvers = {
   Mutation: {
     toggleFilter: (_root, { id = null, name = null, type = null }, { cache }) => {
-      console.log(id, name, type);
       const { filter } = cache.readQuery({ query: GET_FILTER });
       filter[type.toLowerCase()] = { id, name, __typename: type };
       cache.writeData({ data: { filter, __typename: 'Filter' } });
