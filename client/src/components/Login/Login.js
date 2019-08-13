@@ -20,11 +20,11 @@ function Login({ history, navigationViewController }) {
   }, [navigationViewController]);
 
   const client = useApolloClient();
-  const [login, { loading, error }] = useMutation(
+  const [login, { loading, error, data }] = useMutation(
     LOGIN_USER,
     {
-      onCompleted: () => {
-        localStorage.setItem('token', login);
+      onCompleted: ({ login: token }) => {
+        localStorage.setItem('token', token);
         client.writeData({ data: { isLoggedIn: true } });
         history.push('/');
       },
@@ -34,7 +34,7 @@ function Login({ history, navigationViewController }) {
   if (loading) return <Loading />;
   if (error) return <Error />;
 
-  return <LoginForm login={login} />;
+  return <LoginForm login={login} data={data} />;
 }
 
 Login.defaultProps = {
@@ -42,7 +42,7 @@ Login.defaultProps = {
 };
 
 Login.propTypes = {
-  history: PropTypes.objectOf,
+  history: PropTypes.func,
   navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
 };
 

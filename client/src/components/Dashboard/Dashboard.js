@@ -9,7 +9,7 @@ import { withNavigationViewController } from '@atlaskit/navigation-next';
 import TextField from '@atlaskit/textfield';
 import EmptyState from '@atlaskit/empty-state';
 
-import { ProjectHomeView, Loading, Layout } from '..';
+import { ProjectHomeView, Layout } from '..';
 import { ProjectFilter, VersionFilter, TeamFilter } from '../Filters';
 import BarChart from './BarChart';
 
@@ -48,24 +48,20 @@ const barContent = (
 
 function Dashboard({ navigationViewController }) {
   useEffect(() => navigationViewController.setView(ProjectHomeView.id), [navigationViewController]);
-  const { loading, error, data } = useQuery(GET_ISSUES);
+  const { error, data } = useQuery(GET_ISSUES);
+
+  if (error) return <EmptyState header={error.name} description={error.message} />;
 
   return (
     <Layout>
       <PageHeader bottomBar={barContent}>Dashboard</PageHeader>
-      {error
-        ? <EmptyState header={error.name} description={error.message} />
-        : (
-          <div style={{ display: 'block' }}>
-            <Grid>
-              {loading
-                ? <Loading />
-                : data.dashboardIssues
-                  && data.dashboardIssues.values
-                  && <BarChart issues={data.dashboardIssues} />}
-            </Grid>
-          </div>
-        )}
+      <div style={{ display: 'block' }}>
+        <Grid>
+          {data.dashboardIssues
+            && data.dashboardIssues.values
+            && <BarChart issues={data.dashboardIssues} />}
+        </Grid>
+      </div>
     </Layout>
   );
 }

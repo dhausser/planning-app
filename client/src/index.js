@@ -20,7 +20,6 @@ const client = new ApolloClient({
     uri: '/graphql',
     headers: {
       authorization: localStorage.getItem('token'),
-      token: localStorage.getItem('token'), // TODO remove duplication
     },
   }),
   cache,

@@ -3,9 +3,10 @@ import Spinner from '@atlaskit/spinner';
 import Button from '@atlaskit/button';
 import styled from 'styled-components';
 
-const Center = styled.div`
-  padding: 200px 0;
-  text-align: center;
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const ButtonLoading = () => (
@@ -16,9 +17,11 @@ export const ButtonLoading = () => (
 
 function Loading() {
   return (
-    <Center>
-      <Spinner size="large" />
-    </Center>
+    <Wrapper>
+      <div style={{ flex: '0 0 auto' }}>
+        <Spinner size="large" />
+      </div>
+    </Wrapper>
   );
 }
 
