@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
+
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import { Status } from '@atlaskit/status';
 import EmptyState from '@atlaskit/empty-state';
@@ -16,9 +17,10 @@ import TableTree, {
   Row,
   Cell,
 } from '@atlaskit/table-tree';
-import { ProjectHomeView, Layout } from '.';
-import { VersionFilter } from './Filters';
-import { statusCatecoryColorMap, issuetypeIconMap } from './Issue/Icon';
+
+import {
+  ProjectHomeView, Layout, VersionFilter, statusCatecoryColorMap, issuetypeIconMap,
+} from '../components';
 
 const ROADMAP_ROW_DATA = gql`
   fragment RoadmapRow on Issue {

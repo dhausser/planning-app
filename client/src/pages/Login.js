@@ -5,8 +5,9 @@ import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 
 import { withNavigationViewController } from '@atlaskit/navigation-next';
-import { ProductHomeView, Loading, Error } from '..';
-import LoginForm from './LoginForm';
+import {
+  ProductHomeView, Loading, Error, LoginForm,
+} from '../components';
 
 const LOGIN_USER = gql`
   mutation login {

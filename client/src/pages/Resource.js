@@ -11,13 +11,10 @@ import TextField from '@atlaskit/textfield';
 import Button from '@atlaskit/button';
 
 import {
-  ProjectHomeView, Loading, Layout, Error,
-} from '..';
-import { ProjectFilter, VersionFilter } from '../Filters';
-import IssueTable from '../Issues/IssueTable';
-import AbsencesList from './AbsencesList';
+  ProjectHomeView, Loading, Layout, Error, ProjectFilter, VersionFilter, IssueTable, AbsencesList,
+} from '../components';
+import { ISSUE_ROW_DATA, ISSUE_PAGINATION } from './Issues';
 
-import { ISSUE_ROW_DATA, ISSUE_PAGINATION } from '../Issues/Issues';
 
 /**
  * TODO: Get User from REST API
@@ -94,8 +91,12 @@ function Resource({ navigationViewController, match }) {
     variables: { id: resourceId },
   });
 
+  /**
+   * TODO: Remove use of spread props
+   */
+
   if (loading) return <Loading />;
-  if (error) return <Error {...error} />;
+  if (error) return <Error name={error.name} message={error.message} />;
 
   return (
     <Layout>
@@ -121,7 +122,13 @@ function Resource({ navigationViewController, match }) {
         View in Issue Navigator
         </a>
       </p>
-      <IssueTable {...issues} rowsPerPage={ROWS_PER_PAGE + offset} offset={offset} />
+      <IssueTable
+        loading={loading}
+        error={error}
+        data={data}
+        rowsPerPage={ROWS_PER_PAGE + offset}
+        offset={offset}
+      />
       {data.issues && data.issues.total > offset && (
         <div style={{ display: 'flex', justifyContent: 'center', padding: 10 }}>
           <Button

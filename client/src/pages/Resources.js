@@ -1,17 +1,18 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useQuery } from '@apollo/react-hooks';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 import styled from 'styled-components';
-import { useQuery } from '@apollo/react-hooks';
-import { Link } from 'react-router-dom';
+
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import DynamicTable from '@atlaskit/dynamic-table';
 import Avatar from '@atlaskit/avatar';
 import EmptyState from '@atlaskit/empty-state';
 import PageHeader from '@atlaskit/page-header';
 import TextField from '@atlaskit/textfield';
-import { ProjectHomeView, Layout } from '.';
-import { TeamFilter } from './Filters';
+
+import { TeamFilter, ProjectHomeView, Layout } from '../components';
 
 const GET_FILTER = gql`
   query GetFilter {
@@ -74,7 +75,7 @@ const head = {
   ],
 };
 
-const rows = resources => resources.map(resource => ({
+const rows = (resources) => resources.map((resource) => ({
   key: resource.key,
   cells: [
     {
@@ -111,7 +112,7 @@ function Resources({ navigationViewController }) {
   if (error) return <EmptyState header={error.name} description={error.message} />;
   if (!loading) {
     resources = team.id
-      ? data.resources.filter(resource => resource.team === team.id)
+      ? data.resources.filter((resource) => resource.team === team.id)
       : data.resources;
   }
 

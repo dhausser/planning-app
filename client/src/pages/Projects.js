@@ -11,8 +11,7 @@ import DynamicTable from '@atlaskit/dynamic-table';
 import EmptyState from '@atlaskit/empty-state';
 import Avatar from '@atlaskit/avatar';
 
-import { ProductHomeView, Layout } from '.';
-import { TOGGLE_FILTER } from './Filters';
+import { ProductHomeView, Layout, TOGGLE_FILTER } from '../components';
 
 const PROJECT_TILE_DATA = gql`
   fragment ProjectTile on Project {

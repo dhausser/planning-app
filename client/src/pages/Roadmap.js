@@ -9,9 +9,9 @@ import { BreadcrumbsStateless, BreadcrumbsItem } from '@atlaskit/breadcrumbs';
 import PageHeader from '@atlaskit/page-header';
 import Page from '@atlaskit/page';
 
-import { ProjectHomeView, Loading, Error } from '..';
-import { ProjectFilter, VersionFilter } from '../Filters';
-import Timeline from './Timeline';
+import {
+  ProjectHomeView, Loading, Error, ProjectFilter, VersionFilter, Timeline,
+} from '../components';
 
 const Padding = styled.div`
   display: flex;
@@ -45,7 +45,7 @@ const barContent = (
   <div style={{ display: 'flex' }}>
     <ProjectFilter />
     <VersionFilter />
-    
+
   </div>
 );
 
@@ -58,15 +58,15 @@ const breadcrumbs = (
 
 function Roadmap({ navigationViewController }) {
   useEffect(() => navigationViewController.setView(ProjectHomeView.id), [navigationViewController]);
-  const { data, loading, error } = useQuery(GET_ISSUES);
+  const { loading, error, data } = useQuery(GET_ISSUES);
 
-  if (error) return <Error {...error} />;
+  if (error) return <Error error={error.name} message={error.message} />;
 
   return (
     <Page>
       <Padding>
         <PageHeader breadcrumbs={breadcrumbs} bottomBar={barContent}>Roadmap</PageHeader>
-        {loading ? <Loading /> : <Timeline {...data} />}
+        {loading ? <Loading /> : <Timeline epics={data.epics} />}
       </Padding>
     </Page>
   );

@@ -10,15 +10,17 @@ import { withNavigationViewController } from '@atlaskit/navigation-next';
 import EmptyState from '@atlaskit/empty-state';
 
 // Components
-import Header from './Header';
-import Description from './Description';
-import Status from './Status';
-import Priority from './Priority';
-import FixVersions from './FixVersions';
-import UserPicker from './UserPicker';
-import Comments from './Comments';
-import { ProductIssuesView, Loading } from '..';
-import { ISSUE_ROW_DATA } from '../Issues/Issues';
+import { ProductIssuesView, Loading } from '../components';
+import { ISSUE_ROW_DATA } from './Issues';
+import {
+  Header,
+  Description,
+  Status,
+  Priority,
+  FixVersions,
+  UserPicker,
+  Comments,
+} from '../components/Issue';
 
 const Padding = styled.div`
   padding: 40px 0px 0px 40px;
@@ -85,6 +87,9 @@ function Issue({ navigationViewController, match }) {
     },
   } = issue;
 
+  /**
+   * TODO: Remove use of spread props
+   */
   return (
     <Page>
       <Padding>
@@ -95,11 +100,11 @@ function Issue({ navigationViewController, match }) {
             <Comments comments={comments} />
           </GridColumn>
           <GridColumn medium={4}>
-            <Status {...status} />
+            <Status name={status} statusCategory={status.statusCategory} />
             <UserPicker id={id} user={assignee} type="assignee" />
             <UserPicker id={id} user={reporter} type="reporter" />
             <FixVersions fixVersions={fixVersions} />
-            <Priority {...priority} />
+            <Priority id={priority.id} />
           </GridColumn>
         </Grid>
       </Padding>

@@ -8,9 +8,9 @@ import PageHeader from '@atlaskit/page-header';
 import TextField from '@atlaskit/textfield';
 import Button from '@atlaskit/button';
 
-import { ProductIssuesView, Layout } from '..';
-import { ProjectFilter, VersionFilter, TeamFilter } from '../Filters';
-import IssueTable from './IssueTable';
+import {
+  ProductIssuesView, Layout, ProjectFilter, VersionFilter, TeamFilter, IssueTable,
+} from '../components';
 
 const ROWS_PER_PAGE = 10;
 
@@ -92,7 +92,9 @@ const barContent = (
 function Issues({ navigationViewController }) {
   const [offset, setOffset] = useState(ROWS_PER_PAGE);
   const issues = useQuery(GET_ISSUES, { variables: { maxResults: ROWS_PER_PAGE } });
-  const { data, fetchMore } = issues;
+  const {
+    loading, error, data, fetchMore,
+  } = issues;
 
   useEffect(() => navigationViewController.setView(ProductIssuesView.id),
     [navigationViewController]);
@@ -100,7 +102,13 @@ function Issues({ navigationViewController }) {
   return (
     <Layout>
       <PageHeader bottomBar={barContent}>Search Issues</PageHeader>
-      <IssueTable {...issues} rowsPerPage={ROWS_PER_PAGE + offset} offset={offset} />
+      <IssueTable
+        loading={loading}
+        error={error}
+        data={data}
+        rowsPerPage={ROWS_PER_PAGE + offset}
+        offset={offset}
+      />
       {data.issues && data.issues.total > offset && (
         <div style={{ display: 'flex', justifyContent: 'center', padding: 10 }}>
           <Button

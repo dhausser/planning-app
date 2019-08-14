@@ -1,0 +1,59 @@
+import React, { useEffect } from 'react';
+import { Route } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
+import { withNavigationViewController, LayoutManagerWithViewController } from '@atlaskit/navigation-next';
+
+import GlobalNavigation from '../components/Nav/GlobalNavigation';
+import productHomeView from '../components/Nav/ProductHomeView';
+import productIssuesView from '../components/Nav/ProductIssuesView';
+import projectHomeView from '../components/Nav/ProjectHomeView';
+
+import Dashboard from './Dashboard';
+import Resource from './Resource';
+import Resources from './Resources';
+import Roadmap from './Roadmap';
+import Issues from './Issues';
+import SingleIssue from './Issue';
+import Projects from './Projects';
+import Backlog from './Backlog';
+import Releases from './Releases';
+import Board from './Board';
+import Pages from './Pages';
+import AddItem from './AddItem';
+import Settings from './Settings';
+
+function Router({ navigationViewController }) {
+  useEffect(() => {
+    navigationViewController.addView(productHomeView);
+    navigationViewController.addView(productIssuesView);
+    navigationViewController.addView(projectHomeView);
+  }, [navigationViewController]);
+
+  return (
+    // <BrowserRouter>
+    <LayoutManagerWithViewController globalNavigation={GlobalNavigation}>
+      <Route path="/resource/:resourceId" component={Resource} />
+      <Route path="/issue/:issueId" component={SingleIssue} />
+      <Route path="/settings" component={Settings} />
+      <Route path="/reports" component={Dashboard} />
+      <Route path="/releases" component={Releases} />
+      <Route path="/backlog" component={Backlog} />
+      <Route path="/board" component={Board} />
+      <Route path="/roadmap" component={Roadmap} />
+      <Route path="/resources" component={Resources} />
+      <Route path="/issues" component={Issues} />
+      <Route path="/dashboards" component={Dashboard} />
+      <Route path="/pages" component={Pages} />
+      <Route path="/AddItem" component={AddItem} />
+      <Route path="/" exact component={Projects} />
+    </LayoutManagerWithViewController>
+    // </BrowserRouter>
+  );
+}
+
+Router.propTypes = {
+  navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
+};
+
+export default withNavigationViewController(Router);
