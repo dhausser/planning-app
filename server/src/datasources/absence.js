@@ -12,9 +12,8 @@ class AbsenceAPI extends RESTDataSource {
     return Array.isArray(response) ? response : [];
   }
 
-  async getAbsencesById({ userId, versionId }) {
-    const response = await this.get(`?user[]=${userId}`, { apiKey: this.apiKey });
-    return response;
+  async getAbsencesById({ userId }) {
+    return this.get(`?user[]=${userId}`, { apiKey: this.apiKey });
   }
 }
 

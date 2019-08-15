@@ -7,7 +7,7 @@ import EmptyState from '@atlaskit/empty-state';
 import Lozenge from '@atlaskit/lozenge';
 import { Status } from '@atlaskit/status';
 
-import { statusCatecoryColorMap, priorityIconMap, issuetypeIconMap } from '../Issue/Icon';
+import { statusCatecoryColorMap, priorityIconMap, issuetypeIconMap } from './Icon';
 
 const head = {
   cells: [
@@ -117,13 +117,13 @@ const row = ({
   ],
 });
 
-const IssueTable = ({
-  loading, error, data, rowsPerPage, offset,
-}) => (
+const IssueTable = ({ loading, error, issues, rowsPerPage, startAt }) => (
   <DynamicTable
-    caption={data.issues && `${offset} of ${data.issues.total}`}
+    caption={issues && `${issues.total < startAt ? issues.total : startAt} of ${issues.total}`}
     head={head}
-    rows={!loading && data.issues.issues.length && data.issues.issues.map(row)}
+    rows={issues
+      && issues.issues
+      && issues.issues.map(row)}
     rowsPerPage={rowsPerPage}
     loadingSpinnerSize="large"
     isLoading={loading}
@@ -136,7 +136,7 @@ const IssueTable = ({
 );
 
 IssueTable.defaultProps = {
-  data: {},
+  issues: {},
   loading: false,
   error: null,
 };
@@ -144,9 +144,9 @@ IssueTable.defaultProps = {
 IssueTable.propTypes = {
   loading: PropTypes.bool,
   rowsPerPage: PropTypes.number.isRequired,
-  offset: PropTypes.number.isRequired,
+  startAt: PropTypes.number.isRequired,
   error: PropTypes.objectOf(PropTypes.objectOf),
-  data: PropTypes.objectOf(PropTypes.objectOf),
+  issues: PropTypes.objectOf(PropTypes.objectOf),
 };
 
 export default IssueTable;

@@ -6,10 +6,9 @@ import gql from 'graphql-tag';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import PageHeader from '@atlaskit/page-header';
 import TextField from '@atlaskit/textfield';
-import Button from '@atlaskit/button';
 
 import {
-  ProductIssuesView, Layout, ProjectFilter, VersionFilter, TeamFilter, IssueTable,
+  ProductIssuesView, Layout, ProjectFilter, VersionFilter, TeamFilter, IssueTable, LoadButton,
 } from '../components';
 
 const ROWS_PER_PAGE = 10;
@@ -90,11 +89,10 @@ const barContent = (
 );
 
 function Issues({ navigationViewController }) {
-  const [offset, setOffset] = useState(ROWS_PER_PAGE);
-  const issues = useQuery(GET_ISSUES, { variables: { maxResults: ROWS_PER_PAGE } });
-  const {
-    loading, error, data, fetchMore,
-  } = issues;
+  const [startAt, setStartAt] = useState(ROWS_PER_PAGE);
+  const { loading, error, data: { issues }, fetchMore } = useQuery(GET_ISSUES, {
+    variables: { maxResults: ROWS_PER_PAGE },
+  });
 
   useEffect(() => navigationViewController.setView(ProductIssuesView.id),
     [navigationViewController]);
@@ -105,37 +103,20 @@ function Issues({ navigationViewController }) {
       <IssueTable
         loading={loading}
         error={error}
-        data={data}
-        rowsPerPage={ROWS_PER_PAGE + offset}
-        offset={offset}
+        issues={issues}
+        rowsPerPage={ROWS_PER_PAGE + startAt}
+        startAt={startAt}
       />
-      {data.issues && data.issues.total > offset && (
-        <div style={{ display: 'flex', justifyContent: 'center', padding: 10 }}>
-          <Button
-            onClick={() => {
-              setOffset(offset + data.issues.maxResults);
-              return fetchMore({
-                variables: { startAt: offset },
-                updateQuery: (prev, { fetchMoreResult }) => {
-                  if (!fetchMoreResult) return prev;
-                  return {
-                    ...fetchMoreResult,
-                    issues: {
-                      ...fetchMoreResult.issues,
-                      issues: [
-                        ...prev.issues.issues,
-                        ...fetchMoreResult.issues.issues,
-                      ],
-                    },
-                  };
-                },
-              });
-            }}
-          >
-            Load More
-          </Button>
-        </div>
-      )}
+      {issues
+        && issues.total > startAt
+        && (
+        <LoadButton
+          setStartAt={setStartAt}
+          fetchMore={fetchMore}
+          startAt={startAt}
+          maxResults={issues.maxResults}
+        />
+        )}
     </Layout>
   );
 }

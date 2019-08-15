@@ -1,89 +1,68 @@
-/* eslint-disable no-param-reassign */
 import React, { useState, useEffect } from 'react';
-import PropTypes, { any } from 'prop-types';
+import PropTypes from 'prop-types';
 import Chart from 'chart.js';
 
 const transparency = '0.3';
 const colors = [
+  { key: 'B200 - Coogee', value: `rgba(38, 132, 255, ${transparency})` },
   { key: 'G200 - Green tea', value: `rgba(87, 217, 163, ${transparency})` },
   { key: 'T200 - Mermaid net', value: `rgba(0, 199, 229, ${transparency})` },
-  { key: 'B200 - Coogee', value: `rgba(38, 132, 255, ${transparency})` },
   { key: 'P200 - Pastelli', value: `rgba(135, 119, 217, ${transparency})` },
 ];
 
-const config = ({ labels, values }) => ({
-  type: 'bar',
-  data: {
+function updateChartOptions(results, total) {
+  return {
+    title: {
+      display: true,
+      text: `Displaying ${results} of ${total} issues`,
+    },
+  };
+}
+
+function updateChartData(labels, values) {
+  return {
     labels,
     datasets: [
       {
-        label: '# of Issues',
+        label: 'Sum of issues',
         data: values,
-        backgroundColor: colors[2].value,
-        // values.map(
-        //   (_entry, index) => colors[index % colors.length].value,
-        // ),
+        backgroundColor: colors[0].value,
       },
     ],
-  },
-  options: {
-    scales: {
-      yAxes: [
-        {
-          ticks: {
-            beginAtZero: true,
-          },
-        },
-      ],
-    },
-  },
-});
-
-function updateChart(chart, { labels, values }) {
-  chart.data.labels = labels;
-  chart.data.datasets[0].data = values;
-  // chart.data.datasets[0].backgroundColor = values.map(
-  //   (_entry, index) => colors[index % colors.length].value,
-  // );
-  chart.update();
+  };
 }
 
-export default function BarChart({ issues }) {
+export default function BarChart({ labels, values, maxResults, total }) {
   const [chart, setChart] = useState(null);
-  const {
-    labels, values, maxResults, total,
-  } = issues;
+  const results = maxResults > total ? total : maxResults;
+  const ctx = 'myChart';
 
   useEffect(() => {
-    if (chart === null) {
-      setChart(new Chart('BarChart', config({ labels, values })));
+    if (chart) {
+      chart.data = updateChartData(labels, values);
+      chart.update();
     } else {
-      updateChart(chart, { labels, values });
+      setChart(new Chart(ctx, {
+        type: 'bar',
+        data: updateChartData(labels, values),
+        options: updateChartOptions(results, total),
+      }));
     }
-  }, [labels, values, chart]);
+  }, [chart, labels, values, results, total]);
 
-  const results = maxResults > total ? total : maxResults;
-
-  return (
-    <>
-      <h5>{`Displaying ${results} of ${total}`}</h5>
-      <canvas id="BarChart" width="400" height="250" />
-    </>
-  );
+  return <canvas id="myChart" />;
 }
 
 BarChart.defaultProps = {
-  issues: [],
-  // labels: [],
-  // values: [],
-  // maxResults: 0,
-  // total: 0,
+  labels: [],
+  values: [],
+  maxResults: 0,
+  total: 0,
 };
 
 BarChart.propTypes = {
-  issues: PropTypes.objectOf(any),
-  // labels: PropTypes.arrayOf(PropTypes.string),
-  // values: PropTypes.arrayOf(PropTypes.number),
-  // maxResults: PropTypes.number,
-  // total: PropTypes.number,
+  labels: PropTypes.arrayOf(PropTypes.string),
+  values: PropTypes.arrayOf(PropTypes.number),
+  maxResults: PropTypes.number,
+  total: PropTypes.number,
 };

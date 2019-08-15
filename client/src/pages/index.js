@@ -14,7 +14,7 @@ import Resource from './Resource';
 import Resources from './Resources';
 import Roadmap from './Roadmap';
 import Issues from './Issues';
-import SingleIssue from './Issue';
+import Issue from './Issue';
 import Projects from './Projects';
 import Backlog from './Backlog';
 import Releases from './Releases';
@@ -34,7 +34,7 @@ function Router({ navigationViewController }) {
     // <BrowserRouter>
     <LayoutManagerWithViewController globalNavigation={GlobalNavigation}>
       <Route path="/resource/:resourceId" component={Resource} />
-      <Route path="/issue/:issueId" component={SingleIssue} />
+      <Route path="/issue/:issueId" component={Issue} />
       <Route path="/settings" component={Settings} />
       <Route path="/reports" component={Dashboard} />
       <Route path="/releases" component={Releases} />

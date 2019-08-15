@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import Page from '@atlaskit/page';
 
-const Padding = styled.div`
+const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0px 0px 0px 40px;
@@ -15,7 +15,7 @@ const Padding = styled.div`
 export default function Layout({ children }) {
   return (
     <Page>
-      <Padding>{children}</Padding>
+      <Wrapper>{children}</Wrapper>
     </Page>
   );
 }

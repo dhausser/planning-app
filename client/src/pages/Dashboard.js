@@ -58,8 +58,15 @@ function Dashboard({ navigationViewController }) {
       <div style={{ display: 'block' }}>
         <Grid>
           {data.dashboardIssues
-            && data.dashboardIssues.values
-            && <BarChart issues={data.dashboardIssues} />}
+            && data.dashboardIssues
+            && (
+            <BarChart
+              labels={data.dashboardIssues.labels}
+              values={data.dashboardIssues.values}
+              maxResults={data.dashboardIssues.maxResults}
+              total={data.dashboardIssues.total}
+            />
+            )}
         </Grid>
       </div>
     </Layout>

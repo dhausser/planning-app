@@ -67,7 +67,7 @@ const GET_ISSUES = gql`
 
 function Backlog({ navigationViewController }) {
   useEffect(() => navigationViewController.setView(ProjectHomeView.id), [navigationViewController]);
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const { data, loading, error } = useQuery(GET_ISSUES);
 
@@ -77,7 +77,6 @@ function Backlog({ navigationViewController }) {
         bottomBar={(
           <div style={{ display: 'flex' }}>
             <div style={{ flex: '0 0 200px', marginRight: 8 }}>
-
               <TextField isCompact placeholder="Filter" aria-label="Filter" />
             </div>
             <VersionFilter />

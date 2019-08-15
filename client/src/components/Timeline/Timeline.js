@@ -168,14 +168,7 @@ export default function Timeline({ epics }) {
           <TimelineHeader />
           <TimelineWrapper>
             <TimelineBox id="sr-timeline">
-              <div
-                width="9579.499999901622"
-                style={{
-                  width: '9579.5px',
-                  position: 'relative',
-                  minHeight: '100%',
-                }}
-              >
+              <HorizontalCalendar>
                 <VerticalDivider>
                   {months.map(TimelineColumn)}
                 </VerticalDivider>
@@ -183,14 +176,14 @@ export default function Timeline({ epics }) {
                 {issues.map(TimelineRow)}
                 <TimelineBox2 />
                 <div style={{ height: '1px', backgroundColor: 'rgb(193, 199, 208)' }} />
-              </div>
+              </HorizontalCalendar>
             </TimelineBox>
-            <TimelineBottomWrapper1>
-              <TimelineBottom1 size="39" style={{ transform: 'translateX(0px)' }} />
-            </TimelineBottomWrapper1>
-            <TimelineBottomWrapper2>
-              <TimelineBottom2 size="99" style={{ transform: 'translateX(0px)' }} />
-            </TimelineBottomWrapper2>
+            <HorizontalScrollBar>
+              <HorizontalCursor size="39%" style={{ transform: 'translateX(0px)' }} />
+            </HorizontalScrollBar>
+            <VerticalScrollbar>
+              <VerticalCursor size="99%" style={{ transform: 'translateX(0px)' }} />
+            </VerticalScrollbar>
           </TimelineWrapper>
 
           {/* <FDEAOq />
@@ -216,7 +209,7 @@ Timeline.propTypes = {
 };
 
 /**
- * Styled Components
+ * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE
  */
 
 const Wrapper = styled.div`
@@ -337,6 +330,12 @@ const HeaderRowBorder = styled.div`
   border-right: 1px solid rgb(193, 199, 208);
 `;
 
+const HorizontalCalendar = styled.div`
+  width: 9579.5px;
+  position: relative;
+  min-height: 100%;
+`;
+
 const TimelineWrapper = styled.div`
   position: absolute;
   top: 56px;
@@ -352,7 +351,7 @@ const TimelineBox = styled.div`
   left: 0px;
   right: -17px;
   bottom: -17px;
-  overflow: auto;
+  overflow: scroll;
   border-left: 1px solid rgb(193, 199, 208);
 `;
 
@@ -376,7 +375,7 @@ const TimelineBox2 = styled.div`
   transition: background-color 100ms linear 0s;
 `;
 
-const TimelineBottomWrapper1 = styled.div`
+const HorizontalScrollBar = styled.div`
   position: absolute;
   visibility: visible;
   z-index: 9;
@@ -386,7 +385,8 @@ const TimelineBottomWrapper1 = styled.div`
   bottom: 0px;
   border-radius: 10px;
 `;
-const TimelineBottom1 = styled.div`
+
+const HorizontalCursor = styled.div`
   position: relative;
   background-color: rgba(0, 0, 0, 0.4);
   height: 100%;
@@ -394,7 +394,7 @@ const TimelineBottom1 = styled.div`
   border-radius: 10px;
 `;
 
-const TimelineBottomWrapper2 = styled.div`
+const VerticalScrollbar = styled.div`
   position: absolute;
   visibility: hidden;
   z-index: 9;
@@ -405,7 +405,7 @@ const TimelineBottomWrapper2 = styled.div`
   border-radius: 10px;
 `;
 
-const TimelineBottom2 = styled.div`
+const VerticalCursor = styled.div`
   position: relative;
   background-color: rgba(0, 0, 0, 0.4);
   width: 100%;
@@ -539,25 +539,25 @@ const EpicDrag = styled.div`
   border-radius: 3px;
 `;
 
-// const FDEAOq = styled.div`
-//   position: relative;
-//   height: 100%;
-//   width: 100%;
-//   min-height: 0px;
-//   overflow: hidden;
-// `;
+const FDEAOq = styled.div`
+  position: relative;
+  height: 100%;
+  width: 100%;
+  min-height: 0px;
+  overflow: hidden;
+`;
 
-// const CvTvEa = styled.div`
-//   position: absolute;
-//   pointer-events: none;
-//   left: 0px;
-//   top: 0px;
-//   bottom: 0px;
-//   right: 0px;
-//   z-index: 11;
-//   clip: rect(0px, auto, auto, 0px);
-//   clip-path: inset(0px);
-// `;
+const CvTvEa = styled.div`
+  position: absolute;
+  pointer-events: none;
+  left: 0px;
+  top: 0px;
+  bottom: 0px;
+  right: 0px;
+  z-index: 11;
+  clip: rect(0px, auto, auto, 0px);
+  clip-path: inset(0px);
+`;
 
 const FjLAd = styled.div`
   position: fixed;

@@ -5,8 +5,8 @@ import gql from 'graphql-tag';
 import styled from 'styled-components';
 
 // Atlaskit
-import Page, { Grid, GridColumn } from '@atlaskit/page';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
+import Page, { Grid, GridColumn } from '@atlaskit/page';
 import EmptyState from '@atlaskit/empty-state';
 
 // Components
@@ -87,9 +87,6 @@ function Issue({ navigationViewController, match }) {
     },
   } = issue;
 
-  /**
-   * TODO: Remove use of spread props
-   */
   return (
     <Page>
       <Padding>
@@ -100,7 +97,7 @@ function Issue({ navigationViewController, match }) {
             <Comments comments={comments} />
           </GridColumn>
           <GridColumn medium={4}>
-            <Status name={status} statusCategory={status.statusCategory} />
+            <Status name={status.name} statusCategory={status.statusCategory} />
             <UserPicker id={id} user={assignee} type="assignee" />
             <UserPicker id={id} user={reporter} type="reporter" />
             <FixVersions fixVersions={fixVersions} />

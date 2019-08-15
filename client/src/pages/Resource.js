@@ -5,16 +5,22 @@ import gql from 'graphql-tag';
 import styled from 'styled-components';
 
 import { withNavigationViewController } from '@atlaskit/navigation-next';
+import EmptyState from '@atlaskit/empty-state';
 import Avatar from '@atlaskit/avatar';
 import PageHeader from '@atlaskit/page-header';
 import TextField from '@atlaskit/textfield';
-import Button from '@atlaskit/button';
+import { Status } from '@atlaskit/status';
 
 import {
-  ProjectHomeView, Loading, Layout, Error, ProjectFilter, VersionFilter, IssueTable, AbsencesList,
+  ProjectHomeView,
+  Loading,
+  Layout,
+  ProjectFilter,
+  VersionFilter,
+  IssueTable,
+  LoadButton,
 } from '../components';
 import { ISSUE_ROW_DATA, ISSUE_PAGINATION } from './Issues';
-
 
 /**
  * TODO: Get User from REST API
@@ -28,6 +34,14 @@ import { ISSUE_ROW_DATA, ISSUE_PAGINATION } from './Issues';
 //     }
 //   }
 // `;
+
+const GET_RESOURCE_NAME = gql`
+  query getResourceById($id: ID!) {
+    resource(id: $id) {
+      name
+    }
+  }
+`;
 
 const ROWS_PER_PAGE = 10;
 
@@ -52,21 +66,13 @@ const GET_ISSUES = gql`
   ${ISSUE_ROW_DATA}
 `;
 
-const GET_RESOURCE_NAME = gql`
-  query getResourceById($id: ID!) {
-    resource(id: $id) {
-      name
+const GET_ABSENCES = gql`
+  query getAbsences($id: ID!) {
+    absences(id: $id) {
+      key
+      date
     }
   }
-`;
-
-const NameWrapper = styled.span`
-  display: flex;
-  align-items: center;
-`;
-
-const AvatarWrapper = styled.div`
-  margin-right: 8px;
 `;
 
 const barContent = (
@@ -81,36 +87,69 @@ const barContent = (
 
 function Resource({ navigationViewController, match }) {
   useEffect(() => navigationViewController.setView(ProjectHomeView.id), [navigationViewController]);
-  const [offset, setOffset] = useState(ROWS_PER_PAGE);
+  const [startAt, setStartAt] = useState(ROWS_PER_PAGE);
   const { resourceId } = match.params;
-  const issues = useQuery(GET_ISSUES,
-    { variables: { resourceId, maxResults: ROWS_PER_PAGE } });
-  const { data, fetchMore } = issues;
 
-  const { loading, error, data: { resource } } = useQuery(GET_RESOURCE_NAME, {
+  const {
+    loading: loadingResource,
+    error: errorResource,
+    data: { resource },
+  } = useQuery(GET_RESOURCE_NAME, {
     variables: { id: resourceId },
   });
 
-  /**
-   * TODO: Remove use of spread props
-   */
+  const {
+    loading: loadingIssues,
+    error: errorIssues,
+    data: { issues },
+    fetchMore,
+  } = useQuery(GET_ISSUES, {
+    variables: { resourceId, maxResults: ROWS_PER_PAGE },
+  });
 
-  if (loading) return <Loading />;
-  if (error) return <Error name={error.name} message={error.message} />;
+  const {
+    loading: loadingAbsences,
+    error: errorAbsences,
+    data: { absences },
+  } = useQuery(GET_ABSENCES, {
+    variables: { id: resourceId },
+  });
+
+  if (errorResource) {
+    return (
+      <EmptyState
+        name={errorResource.name}
+        message={errorResource.message}
+      />
+    );
+  }
+
+  if (errorAbsences) {
+    return (
+      <EmptyState
+        name={errorAbsences.name}
+        message={errorAbsences.message}
+      />
+    );
+  }
 
   return (
     <Layout>
       <PageHeader bottomBar={barContent}>
-        <NameWrapper>
-          <AvatarWrapper>
-            <Avatar
-              name={resource.name}
-              size="large"
-              src={`https://${process.env.REACT_APP_HOST}/secure/useravatar?ownerId=${resourceId}`}
-            />
-          </AvatarWrapper>
-          {resource.name}
-        </NameWrapper>
+        {loadingResource
+          ? <Loading />
+          : (
+            <NameWrapper>
+              <AvatarWrapper>
+                <Avatar
+                  name={resource.name}
+                  size="large"
+                  src={`https://${process.env.REACT_APP_HOST}/secure/useravatar?ownerId=${resourceId}`}
+                />
+              </AvatarWrapper>
+              {resource.name}
+            </NameWrapper>
+          )}
       </PageHeader>
       <p>
         <a
@@ -123,41 +162,25 @@ function Resource({ navigationViewController, match }) {
         </a>
       </p>
       <IssueTable
-        loading={loading}
-        error={error}
-        data={data}
-        rowsPerPage={ROWS_PER_PAGE + offset}
-        offset={offset}
+        loading={loadingIssues}
+        error={errorIssues}
+        issues={issues}
+        rowsPerPage={ROWS_PER_PAGE + startAt}
+        startAt={startAt}
       />
-      {data.issues && data.issues.total > offset && (
-        <div style={{ display: 'flex', justifyContent: 'center', padding: 10 }}>
-          <Button
-            onClick={() => {
-              setOffset(offset + data.issues.maxResults);
-              return fetchMore({
-                variables: { startAt: offset },
-                updateQuery: (prev, { fetchMoreResult }) => {
-                  if (!fetchMoreResult) return prev;
-                  return {
-                    ...fetchMoreResult,
-                    issues: {
-                      ...fetchMoreResult.issues,
-                      issues: [
-                        ...prev.issues.issues,
-                        ...fetchMoreResult.issues.issues,
-                      ],
-                    },
-                  };
-                },
-              });
-            }}
-          >
-            Load More
-          </Button>
-        </div>
-      )}
-      <AbsencesList resourceId={resourceId} />
-      {/* <AbsencesTable resourceId={resourceId} /> */}
+      {issues
+        && issues.total > startAt
+        && (
+        <LoadButton
+          setStartAt={setStartAt}
+          fetchMore={fetchMore}
+          startAt={startAt}
+          maxResults={issues.maxResults}
+        />
+        )}
+      {loadingAbsences
+        ? <Loading />
+        : absences && absences.map(({ date }) => <Status text={date} color="blue" />)}
     </Layout>
   );
 }
@@ -168,3 +191,16 @@ Resource.propTypes = {
 };
 
 export default withNavigationViewController(Resource);
+
+/**
+ * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE
+ */
+
+const NameWrapper = styled.span`
+  display: flex;
+  align-items: center;
+`;
+
+const AvatarWrapper = styled.div`
+  margin-right: 8px;
+`;
