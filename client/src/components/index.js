@@ -8,6 +8,7 @@ export { default as Error } from './Error';
 export { default as LoginForm } from './LoginForm';
 export { default as Timeline } from './Timeline/Timeline';
 export { default as BarChart } from './BarChart';
+// export { default as DraggableList } from './DraggableList';
 export { default as IssueTable } from './Issue/IssueTable';
 export { default as LoadButton } from './Issue/LoadButton';
 export { ProjectFilter } from './Filters';

@@ -81,7 +81,7 @@ const row = (project, toggleFilter) => ({
             />
           </AvatarWrapper>
           <Link
-            to={`/roadmap/${project.key}`}
+            to="/roadmap"
             onClick={() => {
               const { id, name, __typename } = project;
               toggleFilter({ variables: { id, name, type: __typename } });
@@ -105,9 +105,7 @@ const row = (project, toggleFilter) => ({
 
 function Projects({ navigationViewController }) {
   useEffect(() => navigationViewController.setView(ProductHomeView.id), [navigationViewController]);
-  const { data, loading, error } = useQuery(GET_PROJECTS, {
-    fetchPolicy: 'cache-first',
-  });
+  const { data, loading, error } = useQuery(GET_PROJECTS);
   const [toggleFilter] = useMutation(TOGGLE_FILTER);
 
   if (error) return <EmptyState header={error.name} description={error.message} />;
@@ -116,11 +114,9 @@ function Projects({ navigationViewController }) {
     <Layout>
       <PageHeader>Projects</PageHeader>
       <DynamicTable
-        caption={`Displaying ${(!loading && data.projects.length) || 0} projects`}
+        caption={`Displaying ${data.projects ? data.projects.length : 0} projects`}
         head={head}
-        rows={!loading
-          && data.projects.length
-          && data.projects.map((project) => row(project, toggleFilter))}
+        rows={data.projects && data.projects.map((project) => row(project, toggleFilter))}
         rowsPerPage={20}
         loadingSpinnerSize="large"
         isLoading={loading}

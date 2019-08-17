@@ -8,7 +8,14 @@ import PageHeader from '@atlaskit/page-header';
 import TextField from '@atlaskit/textfield';
 
 import {
-  ProductIssuesView, Layout, ProjectFilter, VersionFilter, TeamFilter, IssueTable, LoadButton,
+  ProductIssuesView,
+  Layout,
+  ProjectFilter,
+  VersionFilter,
+  TeamFilter,
+  IssueTable,
+  // DraggableList,
+  LoadButton,
 } from '../components';
 
 const ROWS_PER_PAGE = 10;
@@ -97,6 +104,9 @@ function Issues({ navigationViewController }) {
   useEffect(() => navigationViewController.setView(ProductIssuesView.id),
     [navigationViewController]);
 
+  /**
+   * FIXME: DraggableList implementation
+   */
   return (
     <Layout>
       <PageHeader bottomBar={barContent}>Search Issues</PageHeader>
@@ -107,6 +117,7 @@ function Issues({ navigationViewController }) {
         rowsPerPage={ROWS_PER_PAGE + startAt}
         startAt={startAt}
       />
+      {/* {issues && issues.issues && <DraggableList items={issues.issues} />} */}
       {issues
         && issues.total > startAt
         && (

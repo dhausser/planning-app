@@ -1,11 +1,4 @@
 export default [
-  "Jan '18",
-  "Feb '18",
-  "Mar '18",
-  "Apr '18",
-  "May '18",
-  "Jun '18",
-  "Jul '18",
   "Aug '18",
   "Sep '18",
   "Oct '18",
@@ -43,8 +36,4 @@ export default [
   "Jun '21",
   "Jul '21",
   "Aug '21",
-  "Sep '21",
-  "Oct '21",
-  "Nov '21",
-  "Dec '21",
 ];

@@ -2,114 +2,10 @@ import React, { useState } from 'react';
 import posed from 'react-pose';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import './styles.css';
 
 import EmojiCustomIcon from '@atlaskit/icon/glyph/emoji/custom';
 import months from './sample-data';
-
-const HeadlineRow = (epic, i) => (
-  <RowContainer
-    key={epic.key}
-    data-test-id="roadmap.common.components.table.components.list-item.base.container"
-    draggable="true"
-  >
-    {i > 0 && (
-    <InlineCreateWrapper
-      data-test-id={`roadmap.common.components.table.components.list-item.base.inline-create-button-${i}`}
-      role="button"
-      aria-label="Inline issue create"
-      tabIndex="0"
-    >
-      <InlineCreateButton />
-    </InlineCreateWrapper>
-    )}
-    <HeadlineRowContentWrapper
-      data-test-id={`roadmap.common.components.table.components.list-item.base.content-container-${i}`}
-    >
-      <HeadlineRowContent>
-        <EpicIcon
-          src="https://solarsystem.atlassian.net/secure/viewavatar?size=medium&avatarId=10307&avatarType=issuetype"
-          alt="Epic issue type"
-        />
-        <p className="sc-bcdylZ kzvagL">{epic.fields.summary}</p>
-      </HeadlineRowContent>
-    </HeadlineRowContentWrapper>
-  </RowContainer>
-);
-
-const TimelineColumnHeader = (month, i) => (
-  <div key={month} className="rWwYB" style={{ left: `calc(${i} * 2.75%)`, right: `calc(100% - 2.75% * ${i + 1})` }}>
-    <small className="dRfJrE">{month}</small>
-  </div>
-);
-
-const TimelineColumn = (month, i) => (
-  <div key={month} className="sc-liPmeQ inHpzx" style={{ left: `calc(${i} * 2.75%)`, right: `calc(100% - 2.75% * ${i + 1})` }} />
-);
-
-
-const TimelineHeader = () => (
-  <div className="dkFNrj">
-    <div className="wWWya">
-      <div className="hTdzhs" width="9579.499999901622" style={{ width: '9579.5px' }}>
-        <div className="cZzQw">
-          {months.map(TimelineColumnHeader)}
-        </div>
-      </div>
-    </div>
-  </div>
-);
-
-const Box = posed.div({
-  draggable: 'x',
-
-});
-
-const TimelineRow = (epic) => {
-  const onStart = () => {};
-  const onEnd = () => {};
-  const onDrag = () => {};
-
-  return (
-    <RowContainer key={epic.key}>
-      <Box
-        className="sc-buGlAa feIyeE"
-        style={{ width: '200px' }}
-        onDragStart={onStart}
-        onDragEnd={onEnd}
-        onValueChange={{ x: onDrag }}
-        onMouseOver={() => {}}
-        onFocus={() => {}}
-      >
-        <EpicDragLeft orientation="left">
-          <EpicDrag />
-        </EpicDragLeft>
-        <EpicDragRight orientation="right">
-          <EpicDrag />
-        </EpicDragRight>
-      </Box>
-    </RowContainer>
-  );
-};
-
-const InlineDragIndicator = () => (
-  <div className="inline-drag-indicator inline-drag-indicator-top jMrzDz">
-    <div className="grZjms" />
-  </div>
-);
-
-const InlineCreate = () => (
-  <div className="inline-create-button eaYLQY">
-    <div className="hKwvKb">
-      <div className="kkkFIk" />
-      <div className="cpqXQZ">
-        <div className="bIeuYl">
-          <EmojiCustomIcon className="bcqBjl" />
-        </div>
-      </div>
-    </div>
-  </div>
-);
+import './styles.css';
 
 export default function Timeline({ epics }) {
   const [issues, setIssues] = useState(epics);
@@ -139,12 +35,39 @@ export default function Timeline({ epics }) {
             <EpicTitle>Epic</EpicTitle>
             <EpicTitleBottom />
           </EpicTitleWrapper>
-
           <HeaderRowWrapper>
             <div style={{ display: 'flex', overflow: 'hidden' }}>
               <HeaderRowScrollBar data-test-id="roadmap.common.components.table.components.list.hidden-scrollbar">
                 <HeaderRowScrollBarWidth width="318" style={{ width: '318px' }}>
-                  {issues.map(HeadlineRow)}
+                  {issues.map((epic, i) => (
+                    <RowContainer
+                      key={epic.key}
+                      data-test-id="roadmap.common.components.table.components.list-item.base.container"
+                      draggable="true"
+                    >
+                      {i > 0 && (
+                        <InlineCreateWrapper
+                          data-test-id={`roadmap.common.components.table.components.list-item.base.inline-create-button-${i}`}
+                          role="button"
+                          aria-label="Inline issue create"
+                          tabIndex="0"
+                        >
+                          <InlineCreateButton />
+                        </InlineCreateWrapper>
+                      )}
+                      <HeadlineRowContentWrapper
+                        data-test-id={`roadmap.common.components.table.components.list-item.base.content-container-${i}`}
+                      >
+                        <HeadlineRowContent>
+                          <EpicIcon
+                            src="https://solarsystem.atlassian.net/secure/viewavatar?size=medium&avatarId=10307&avatarType=issuetype"
+                            alt="Epic issue type"
+                          />
+                          <StyledParagraph>{epic.fields.summary}</StyledParagraph>
+                        </HeadlineRowContent>
+                      </HeadlineRowContentWrapper>
+                    </RowContainer>
+                  ))}
                   <CreateButtonWrapper>
                     <CreateButton
                       data-test-id="roadmap.common.components.table.components.list.items.create-item.button"
@@ -165,38 +88,76 @@ export default function Timeline({ epics }) {
           </HeaderRowWrapper>
         </HeadlineContainer>
         <TimelineContainer>
-          <TimelineHeader />
+          <TimelineHeaderContainer>
+            <TimelineHeaderWrapper>
+              <TimelineHeaderHorizontal style={{ width: '9579.5px' }}>
+                <TimelineHeaderBox>
+                  {months.map((month, i) => (
+                    <StyledHeader key={month} style={{ left: `calc(${i} * 2.75%)`, right: `calc(100% - 2.75% * ${i + 1})` }}>
+                      <StyledSmall>{month}</StyledSmall>
+                    </StyledHeader>
+                  ))}
+                </TimelineHeaderBox>
+              </TimelineHeaderHorizontal>
+            </TimelineHeaderWrapper>
+          </TimelineHeaderContainer>
           <TimelineWrapper>
             <TimelineBox id="sr-timeline">
-              <HorizontalCalendar>
+              <HorizontalCalendar style={{ width: '9579.5px' }}>
                 <VerticalDivider>
-                  {months.map(TimelineColumn)}
+                  {months.map((month, i) => (
+                    <StyledColumn key={month} style={{ left: `calc(${i} * 2.75%)`, right: `calc(100% - 2.75% * ${i + 1})` }} />
+                  ))}
                 </VerticalDivider>
                 <TimelineBox1 />
-                {issues.map(TimelineRow)}
+                {issues.map((epic) => (
+                  <RowContainer key={epic.key}>
+                    <Box
+                      className="sc-buGlAa feIyeE"
+                      style={{ width: '200px' }}
+                      onDragStart={() => {}}
+                      onDragEnd={() => {}}
+                      onValueChange={{ x: () => {} }}
+                      onMouseOver={() => {}}
+                      onFocus={() => {}}
+                    >
+                      <EpicDragLeft orientation="left">
+                        <EpicDrag />
+                      </EpicDragLeft>
+                      <EpicDragRight orientation="right">
+                        <EpicDrag />
+                      </EpicDragRight>
+                    </Box>
+                  </RowContainer>
+                ))}
                 <TimelineBox2 />
                 <div style={{ height: '1px', backgroundColor: 'rgb(193, 199, 208)' }} />
               </HorizontalCalendar>
             </TimelineBox>
-            <HorizontalScrollBar>
-              <HorizontalCursor size="39%" style={{ transform: 'translateX(0px)' }} />
-            </HorizontalScrollBar>
-            <VerticalScrollbar>
-              <VerticalCursor size="99%" style={{ transform: 'translateX(0px)' }} />
-            </VerticalScrollbar>
           </TimelineWrapper>
 
-          {/* <FDEAOq />
-          <CvTvEa /> */}
-
+          {/* <TimelineBottom1 /> */}
+          <TimelineBottom2 />
         </TimelineContainer>
 
-        <FjLAd />
-        <InlineDragIndicator />
-        <InlineCreate />
+        <TimelineBottom3 />
+        <TimelineBottom4>
+          <TimelineBottom5 />
+        </TimelineBottom4>
+        <InlineCreate1>
+          <InlineCreate2>
+            <InlineCreate3 />
+            <InlineCreate4>
+              <InlineCreate5>
+                <EmojiCustomIcon className="bcqBjl" />
+              </InlineCreate5>
+            </InlineCreate4>
+          </InlineCreate2>
+        </InlineCreate1>
 
       </Wrapper2>
     </Wrapper>
+  // </Container>
   );
 }
 
@@ -212,9 +173,13 @@ Timeline.propTypes = {
  * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE
  */
 
+const Box = posed.div({
+  draggable: 'x',
+});
+
 const Wrapper = styled.div`
   position: relative;
-  margin-top: 24px;
+  margin-top: 8px;
   flex: 1 1 auto;
 `;
 
@@ -246,7 +211,7 @@ const RowContainer = styled.div`
   cursor: pointer;
   transition: background-color 100ms linear 0s;
 
-  &:nth-last-of-type(even) {
+  &:nth-of-type(even) {
     background-color: rgb(244, 245, 247);
   }
 
@@ -330,8 +295,59 @@ const HeaderRowBorder = styled.div`
   border-right: 1px solid rgb(193, 199, 208);
 `;
 
+const TimelineHeaderContainer = styled.div`
+  width: 100%;
+  height: 56px;
+  box-sizing: border-box;
+  background-color: rgb(244, 245, 247);
+  border-width: 1px 1px;
+  border-style: solid none solid solid;
+  border-color: rgb(193, 199, 208) rgb(193, 199, 208);
+  border-image: none;
+  border-image: initial;
+  border-bottom: 1px solid rgb(223, 225, 230);
+  border-right: none;
+  overflow: hidden;
+  `;
+
+const TimelineHeaderWrapper = styled.div`
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  /* padding-bottom: 50px; */
+
+  &::-webkit-scrollbar {
+    position: absolute;
+    visibility: visible;
+    z-index: 9;
+    right: 7px;
+    left: 7px;
+    height: 10px;
+    bottom: 0px;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.4);
+    height: 100%;
+    width: 39px;
+    border-radius: 10px;
+  }
+`;
+
+const TimelineHeaderHorizontal = styled.div`
+  display: flex;
+  height: 54px;
+  `;
+
+const TimelineHeaderBox = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+`;
+
 const HorizontalCalendar = styled.div`
-  width: 9579.5px;
   position: relative;
   min-height: 100%;
 `;
@@ -349,10 +365,36 @@ const TimelineBox = styled.div`
   position: absolute;
   top: 0px;
   left: 0px;
-  right: -17px;
-  bottom: -17px;
+  right: 0px;
+  bottom: 0px;
   overflow: scroll;
   border-left: 1px solid rgb(193, 199, 208);
+
+  &::-webkit-scrollbar {
+    position: absolute;
+    visibility: visible;
+    z-index: 9;
+    right: 7px;
+    left: 7px;
+    height: 10px;
+    bottom: 0px;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.4);
+    height: 100%;
+    width: 39px;
+    border-radius: 10px;
+  }
+
+  /**
+  * TODO: Synchronize scrollbars 
+  */
+  ${TimelineHeaderWrapper}:hover & {
+    /* translate: 1000px; */
+  }
 `;
 
 const TimelineBox1 = styled.div`
@@ -373,44 +415,6 @@ const TimelineBox2 = styled.div`
   height: 40px;
   background-color: rgb(255, 255, 255);
   transition: background-color 100ms linear 0s;
-`;
-
-const HorizontalScrollBar = styled.div`
-  position: absolute;
-  visibility: visible;
-  z-index: 9;
-  right: 7px;
-  left: 7px;
-  height: 10px;
-  bottom: 0px;
-  border-radius: 10px;
-`;
-
-const HorizontalCursor = styled.div`
-  position: relative;
-  background-color: rgba(0, 0, 0, 0.4);
-  height: 100%;
-  width: 39px;
-  border-radius: 10px;
-`;
-
-const VerticalScrollbar = styled.div`
-  position: absolute;
-  visibility: hidden;
-  z-index: 9;
-  top: 7px;
-  bottom: 7px;
-  width: 10px;
-  right: 0px;
-  border-radius: 10px;
-`;
-
-const VerticalCursor = styled.div`
-  position: relative;
-  background-color: rgba(0, 0, 0, 0.4);
-  width: 100%;
-  height: 99px;
-  border-radius: 10px;
 `;
 
 const EpicTitleWrapper = styled.div`
@@ -539,15 +543,15 @@ const EpicDrag = styled.div`
   border-radius: 3px;
 `;
 
-const FDEAOq = styled.div`
-  position: relative;
-  height: 100%;
-  width: 100%;
-  min-height: 0px;
-  overflow: hidden;
-`;
+// const TimelineBottom1 = styled.div`
+//   position: relative;
+//   height: 100%;
+//   width: 100%;
+//   min-height: 0px;
+//   overflow: hidden;
+// `;
 
-const CvTvEa = styled.div`
+const TimelineBottom2 = styled.div`
   position: absolute;
   pointer-events: none;
   left: 0px;
@@ -559,7 +563,7 @@ const CvTvEa = styled.div`
   clip-path: inset(0px);
 `;
 
-const FjLAd = styled.div`
+const TimelineBottom3 = styled.div`
   position: fixed;
   pointer-events: none;
   left: 0px;
@@ -567,4 +571,106 @@ const FjLAd = styled.div`
   width: 100%;
   height: 100%;
   z-index: 11;
+`;
+
+const TimelineBottom4 = styled.div`
+  display: none;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  z-index: 10;
+`;
+
+const TimelineBottom5 = styled.div`
+  width: 100%;
+  height: 2px;
+  background-color: rgb(0, 101, 255);
+`;
+
+const StyledParagraph = styled.p`
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin: 0px 0px 0px 8px;
+  overflow: hidden;
+`;
+
+const StyledHeader = styled.div`
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  display: flex;
+  flex-direction: column;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  box-sizing: border-box;
+  flex: 0 0 auto;
+  border-right: 1px solid rgb(223, 225, 230);
+`;
+
+const StyledSmall = styled.small`
+  margin-top: 0px;
+  text-transform: uppercase;
+`;
+
+const StyledColumn = styled.div`
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  box-sizing: border-box;
+  flex: 0 0 auto;
+  border-right: 1px solid rgb(223, 225, 230);
+  `;
+
+const InlineCreate1 = styled.div`
+  display: none;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  z-index: 10;
+`;
+const InlineCreate2 = styled.div`
+  position: relative;
+  top: -5px;
+  left: 0px;
+  height: 20px;
+  width: calc(100% + 10px);
+  cursor: pointer;
+`;
+const InlineCreate3 = styled.div`
+  position: relative;
+  top: 9px;
+  width: 100%;
+  height: 2px;
+  background-color: rgb(0, 101, 255);
+  opacity: 0;
+  animation-name: eMLfYp;
+  animation-duration: 0.2s;
+  animation-delay: 0.3s;
+  animation-fill-mode: forwards;
+`;
+const InlineCreate4 = styled.div`
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  top: 0px;
+  left: 0px;
+  background-color: rgb(0, 101, 255);
+  color: rgb(255, 255, 255);
+  opacity: 0;
+  animation-name: eMLfYp;
+  animation-duration: 0.2s;
+  animation-delay: 0.3s;
+  animation-fill-mode: forwards;
+  border-radius: 3px;
+`;
+const InlineCreate5 = styled.div`
+  height: 24px;
+  width: 24px;
+  position: relative;
+  margin-left: -2px;
+  margin-top: -2px;
 `;
