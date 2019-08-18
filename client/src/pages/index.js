@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
-import { Route } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
+import { useQuery } from '@apollo/react-hooks';
 import PropTypes from 'prop-types';
+import gql from 'graphql-tag';
 
 import { withNavigationViewController, LayoutManagerWithViewController } from '@atlaskit/navigation-next';
 
@@ -22,6 +24,13 @@ import Board from './Board';
 import Pages from './Pages';
 import AddItem from './AddItem';
 import Settings from './Settings';
+import Login from './Login';
+
+const IS_LOGGED_IN = gql`
+  query IsUserLoggedIn {
+    isLoggedIn @client
+  }
+`;
 
 function Router({ navigationViewController }) {
   useEffect(() => {
@@ -30,25 +39,31 @@ function Router({ navigationViewController }) {
     navigationViewController.addView(projectHomeView);
   }, [navigationViewController]);
 
+  const { data } = useQuery(IS_LOGGED_IN);
+
   return (
-    // <BrowserRouter>
-    <LayoutManagerWithViewController globalNavigation={GlobalNavigation}>
-      <Route path="/resource/:resourceId" component={Resource} />
-      <Route path="/issue/:issueId" component={Issue} />
-      <Route path="/settings" component={Settings} />
-      <Route path="/reports" component={Dashboard} />
-      <Route path="/releases" component={Releases} />
-      <Route path="/backlog" component={Backlog} />
-      <Route path="/board" component={Board} />
-      <Route path="/roadmap" component={Roadmap} />
-      <Route path="/resources" component={Resources} />
-      <Route path="/issues" component={Issues} />
-      <Route path="/dashboards" component={Dashboard} />
-      <Route path="/pages" component={Pages} />
-      <Route path="/AddItem" component={AddItem} />
-      <Route path="/" exact component={Projects} />
-    </LayoutManagerWithViewController>
-    // </BrowserRouter>
+    <BrowserRouter>
+      <LayoutManagerWithViewController globalNavigation={GlobalNavigation}>
+        {data.isLoggedIn ? (
+          <>
+            <Route path="/resource/:resourceId" component={Resource} />
+            <Route path="/issue/:issueId" component={Issue} />
+            <Route path="/settings" component={Settings} />
+            <Route path="/reports" component={Dashboard} />
+            <Route path="/releases" component={Releases} />
+            <Route path="/backlog" component={Backlog} />
+            <Route path="/board" component={Board} />
+            <Route path="/roadmap" component={Roadmap} />
+            <Route path="/resources" component={Resources} />
+            <Route path="/issues" component={Issues} />
+            <Route path="/dashboards" component={Dashboard} />
+            <Route path="/pages" component={Pages} />
+            <Route path="/AddItem" component={AddItem} />
+            <Route path="/" exact component={Projects} />
+          </>
+        ) : <Login />}
+      </LayoutManagerWithViewController>
+    </BrowserRouter>
   );
 }
 

@@ -1,19 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
-
 
 import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
-import { ApolloProvider, useQuery } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
+import { ApolloProvider } from '@apollo/react-hooks';
 
 import { NavigationProvider } from '@atlaskit/navigation-next';
 import '@atlaskit/css-reset';
 
 import Pages from './pages';
-import Login from './pages/Login';
 import { resolvers, typeDefs } from './resolvers';
 
 // Set up our apollo-client to point at the server we created
@@ -53,7 +49,7 @@ const filter = JSON.parse(localStorage.getItem('filter'))
 
 cache.writeData({
   data: {
-    isLoggedIn: !!localStorage.getItem('token'),
+    isLoggedIn: !!localStorage.getItem('token') || true,
     filter,
   },
 });
@@ -68,23 +64,10 @@ cache.writeData({
  *    ex: localhost:3000/login will render only the `Login` component
  */
 
-const IS_LOGGED_IN = gql`
-  query IsUserLoggedIn {
-    isLoggedIn @client
-  }
-`;
-
-function IsLoggedIn() {
-  const { data } = useQuery(IS_LOGGED_IN);
-  return data.isLoggedIn ? <Pages /> : <Login />;
-}
-
 ReactDOM.render(
   <ApolloProvider client={client}>
     <NavigationProvider>
-      <BrowserRouter>
-        <IsLoggedIn />
-      </BrowserRouter>
+      <Pages />
     </NavigationProvider>
   </ApolloProvider>,
   document.getElementById('root'),

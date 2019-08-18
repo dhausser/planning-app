@@ -5,6 +5,7 @@ export default async () => {
     poolSize: 50,
     wtimeout: 2500,
     useNewUrlParser: true,
+    useUnifiedTopology: true,
   }).catch((err) => {
     console.error(err.stack);
     process.exit(1);
