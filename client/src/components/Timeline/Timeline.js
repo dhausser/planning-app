@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import posed from 'react-pose';
+import { ScrollSync, ScrollSyncPane } from 'react-scroll-sync';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -25,137 +26,144 @@ export default function Timeline({ epics }) {
 
   return (
     <Wrapper>
-      <Wrapper2>
-        <HeadlineContainer
-          data-test-id="roadmap.common.components.table.components.list.container"
-          width="320"
-          style={{ width: '320px' }}
-        >
-          <EpicTitleWrapper>
-            <EpicTitle>Epic</EpicTitle>
-            <EpicTitleBottom />
-          </EpicTitleWrapper>
-          <HeaderRowWrapper>
-            <div style={{ display: 'flex', overflow: 'hidden' }}>
-              <HeaderRowScrollBar data-test-id="roadmap.common.components.table.components.list.hidden-scrollbar">
-                <HeaderRowScrollBarWidth width="318" style={{ width: '318px' }}>
-                  {issues.map((epic, i) => (
-                    <RowContainer
-                      key={epic.key}
-                      data-test-id="roadmap.common.components.table.components.list-item.base.container"
-                      draggable="true"
-                    >
-                      {i > 0 && (
-                        <InlineCreateWrapper
-                          data-test-id={`roadmap.common.components.table.components.list-item.base.inline-create-button-${i}`}
+      <ScrollSync>
+        <Wrapper2>
+          <HeadlineContainer
+            data-test-id="roadmap.common.components.table.components.list.container"
+            width="320"
+            style={{ width: '320px' }}
+          >
+            <EpicTitleWrapper>
+              <EpicTitle>Epic</EpicTitle>
+              <EpicTitleBottom />
+            </EpicTitleWrapper>
+            <HeaderRowWrapper>
+              <div style={{ display: 'flex', overflow: 'hidden' }}>
+                <ScrollSyncPane>
+                  <HeaderRowScrollBar data-test-id="roadmap.common.components.table.components.list.hidden-scrollbar">
+                    <HeaderRowScrollBarWidth width="318" style={{ width: '318px' }}>
+                      {issues.map((epic, i) => (
+                        <RowContainer
+                          key={epic.key}
+                          data-test-id="roadmap.common.components.table.components.list-item.base.container"
+                          draggable="true"
+                        >
+                          {i > 0 && (
+                            <InlineCreateWrapper
+                              data-test-id={`roadmap.common.components.table.components.list-item.base.inline-create-button-${i}`}
+                              role="button"
+                              aria-label="Inline issue create"
+                              tabIndex="0"
+                            >
+                              <InlineCreateButton />
+                            </InlineCreateWrapper>
+                          )}
+                          <HeadlineRowContentWrapper
+                            data-test-id={`roadmap.common.components.table.components.list-item.base.content-container-${i}`}
+                          >
+                            <HeadlineRowContent>
+                              <EpicIcon
+                                src="https://solarsystem.atlassian.net/secure/viewavatar?size=medium&avatarId=10307&avatarType=issuetype"
+                                alt="Epic issue type"
+                              />
+                              <StyledParagraph>{epic.fields.summary}</StyledParagraph>
+                            </HeadlineRowContent>
+                          </HeadlineRowContentWrapper>
+                        </RowContainer>
+                      ))}
+                      <CreateButtonWrapper>
+                        <CreateButton
+                          data-test-id="roadmap.common.components.table.components.list.items.create-item.button"
                           role="button"
-                          aria-label="Inline issue create"
+                          aria-label="Create issue last"
+                          onClick={createEpic}
+                          onKeyUp={createEpic}
                           tabIndex="0"
                         >
-                          <InlineCreateButton />
-                        </InlineCreateWrapper>
-                      )}
-                      <HeadlineRowContentWrapper
-                        data-test-id={`roadmap.common.components.table.components.list-item.base.content-container-${i}`}
-                      >
-                        <HeadlineRowContent>
-                          <EpicIcon
-                            src="https://solarsystem.atlassian.net/secure/viewavatar?size=medium&avatarId=10307&avatarType=issuetype"
-                            alt="Epic issue type"
-                          />
-                          <StyledParagraph>{epic.fields.summary}</StyledParagraph>
-                        </HeadlineRowContent>
-                      </HeadlineRowContentWrapper>
-                    </RowContainer>
-                  ))}
-                  <CreateButtonWrapper>
-                    <CreateButton
-                      data-test-id="roadmap.common.components.table.components.list.items.create-item.button"
-                      role="button"
-                      aria-label="Create issue last"
-                      onClick={createEpic}
-                      onKeyUp={createEpic}
-                      tabIndex="0"
-                    >
-                      <EmojiCustomIcon className="dqqHMN" />
-                    </CreateButton>
-                  </CreateButtonWrapper>
-                  <div style={{ height: '1px', backgroundColor: 'rgb(193, 199, 208)' }} />
-                </HeaderRowScrollBarWidth>
-              </HeaderRowScrollBar>
-            </div>
-            <HeaderRowBorder width="318" style={{ width: '318px' }} />
-          </HeaderRowWrapper>
-        </HeadlineContainer>
-        <TimelineContainer>
-          <TimelineHeaderContainer>
-            <TimelineHeaderWrapper>
-              <TimelineHeaderHorizontal style={{ width: '9579.5px' }}>
-                <TimelineHeaderBox>
-                  {months.map((month, i) => (
-                    <StyledHeader key={month} style={{ left: `calc(${i} * 2.75%)`, right: `calc(100% - 2.75% * ${i + 1})` }}>
-                      <StyledSmall>{month}</StyledSmall>
-                    </StyledHeader>
-                  ))}
-                </TimelineHeaderBox>
-              </TimelineHeaderHorizontal>
-            </TimelineHeaderWrapper>
-          </TimelineHeaderContainer>
-          <TimelineWrapper>
-            <TimelineBox id="sr-timeline">
-              <HorizontalCalendar style={{ width: '9579.5px' }}>
-                <VerticalDivider>
-                  {months.map((month, i) => (
-                    <StyledColumn key={month} style={{ left: `calc(${i} * 2.75%)`, right: `calc(100% - 2.75% * ${i + 1})` }} />
-                  ))}
-                </VerticalDivider>
-                <TimelineBox1 />
-                {issues.map((epic) => (
-                  <RowContainer key={epic.key}>
-                    <Box
-                      className="sc-buGlAa feIyeE"
-                      style={{ width: '200px' }}
-                      onDragStart={() => {}}
-                      onDragEnd={() => {}}
-                      onValueChange={{ x: () => {} }}
-                      onMouseOver={() => {}}
-                      onFocus={() => {}}
-                    >
-                      <EpicDragLeft orientation="left">
-                        <EpicDrag />
-                      </EpicDragLeft>
-                      <EpicDragRight orientation="right">
-                        <EpicDrag />
-                      </EpicDragRight>
-                    </Box>
-                  </RowContainer>
-                ))}
-                <TimelineBox2 />
-                <div style={{ height: '1px', backgroundColor: 'rgb(193, 199, 208)' }} />
-              </HorizontalCalendar>
-            </TimelineBox>
-          </TimelineWrapper>
-
-          {/* <TimelineBottom1 /> */}
-          <TimelineBottom2 />
-        </TimelineContainer>
-
-        <TimelineBottom3 />
-        <TimelineBottom4>
-          <TimelineBottom5 />
-        </TimelineBottom4>
-        <InlineCreate1>
-          <InlineCreate2>
-            <InlineCreate3 />
-            <InlineCreate4>
-              <InlineCreate5>
-                <EmojiCustomIcon className="bcqBjl" />
-              </InlineCreate5>
-            </InlineCreate4>
-          </InlineCreate2>
-        </InlineCreate1>
-
-      </Wrapper2>
+                          <EmojiCustomIcon className="dqqHMN" />
+                        </CreateButton>
+                      </CreateButtonWrapper>
+                      <div style={{ height: '1px', backgroundColor: 'rgb(193, 199, 208)' }} />
+                    </HeaderRowScrollBarWidth>
+                  </HeaderRowScrollBar>
+                </ScrollSyncPane>
+              </div>
+              <HeaderRowBorder width="318" style={{ width: '318px' }} />
+            </HeaderRowWrapper>
+          </HeadlineContainer>
+          <TimelineContainer>
+            <TimelineHeaderContainer>
+              <ScrollSyncPane>
+                <TimelineHeaderWrapper>
+                  <TimelineHeaderHorizontal style={{ width: '9579.5px' }}>
+                    <TimelineHeaderBox>
+                      {months.map((month, i) => (
+                        <StyledHeader key={month} style={{ left: `calc(${i} * 2.75%)`, right: `calc(100% - 2.75% * ${i + 1})` }}>
+                          <StyledSmall>{month}</StyledSmall>
+                        </StyledHeader>
+                      ))}
+                    </TimelineHeaderBox>
+                  </TimelineHeaderHorizontal>
+                </TimelineHeaderWrapper>
+              </ScrollSyncPane>
+            </TimelineHeaderContainer>
+            <TimelineWrapper>
+              <ScrollSyncPane>
+                <TimelineBox id="sr-timeline">
+                  <HorizontalCalendar style={{ width: '9579.5px' }}>
+                    <VerticalDivider>
+                      {months.map((month, i) => (
+                        <StyledColumn key={month} style={{ left: `calc(${i} * 2.75%)`, right: `calc(100% - 2.75% * ${i + 1})` }} />
+                      ))}
+                    </VerticalDivider>
+                    <TimelineBox1 />
+                    {issues.map((epic) => (
+                      <RowContainer key={epic.key}>
+                        {/* <BowWrapper> */}
+                        <Box
+                          className="sc-buGlAa feIyeE"
+                          style={{ width: '200px' }}
+                          onDragStart={() => {}}
+                          onDragEnd={() => {}}
+                          onValueChange={{ x: () => {} }}
+                          onMouseOver={() => {}}
+                          onFocus={() => {}}
+                        >
+                          <EpicDragLeft orientation="left">
+                            <EpicDrag />
+                          </EpicDragLeft>
+                          <EpicDragRight orientation="right">
+                            <EpicDrag />
+                          </EpicDragRight>
+                        </Box>
+                        {/* </BowWrapper> */}
+                      </RowContainer>
+                    ))}
+                    <TimelineBox2 />
+                    <div style={{ height: '1px', backgroundColor: 'rgb(193, 199, 208)' }} />
+                  </HorizontalCalendar>
+                </TimelineBox>
+              </ScrollSyncPane>
+            </TimelineWrapper>
+            {/* <TimelineBottom1 /> */}
+            <TimelineBottom2 />
+          </TimelineContainer>
+          <TimelineBottom3 />
+          <TimelineBottom4>
+            <TimelineBottom5 />
+          </TimelineBottom4>
+          <InlineCreate1>
+            <InlineCreate2>
+              <InlineCreate3 />
+              <InlineCreate4>
+                <InlineCreate5>
+                  <EmojiCustomIcon className="bcqBjl" />
+                </InlineCreate5>
+              </InlineCreate4>
+            </InlineCreate2>
+          </InlineCreate1>
+        </Wrapper2>
+      </ScrollSync>
     </Wrapper>
   // </Container>
   );
@@ -201,24 +209,32 @@ const HeadlineContainer = styled.div`
   flex: 0 0 auto;
 `;
 
-const RowContainer = styled.div`
-  position: relative;
-  display: flex;
-  -webkit-box-align: center;
-  align-items: center;
-  height: 40px;
-  background-color: rgb(255, 255, 255);
-  cursor: pointer;
-  transition: background-color 100ms linear 0s;
+// const RowContainer = styled.div`
+//   position: relative;
+//   display: flex;
+//   -webkit-box-align: center;
+//   align-items: center;
+//   height: 40px;
+//   background-color: rgb(255, 255, 255);
+//   cursor: pointer;
+//   transition: background-color 100ms linear 0s;
 
-  &:nth-of-type(even) {
-    background-color: rgb(244, 245, 247);
-  }
+//   &:nth-of-type(even) {
+//     background-color: rgb(244, 245, 247);
+//   }
 
-  &:hover {
-    background-color: #DFE1E6;
-  }
-`;
+//   /**
+//    * TODO: Highlight corresponding pair row on hover
+//    */
+//   &:hover {
+//     background-color: #DFE1E6;
+
+//     ${Wrapper2}:hover & {
+//       background-color: #DFE1E6;
+//       fill: rebeccapurple;
+//     }
+//   }
+// `;
 
 const InlineCreateWrapper = styled.div`
   position: absolute;
@@ -308,32 +324,11 @@ const TimelineHeaderContainer = styled.div`
   border-bottom: 1px solid rgb(223, 225, 230);
   border-right: none;
   overflow: hidden;
-  `;
+`;
 
 const TimelineHeaderWrapper = styled.div`
   height: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
-  /* padding-bottom: 50px; */
-
-  &::-webkit-scrollbar {
-    position: absolute;
-    visibility: visible;
-    z-index: 9;
-    right: 7px;
-    left: 7px;
-    height: 10px;
-    bottom: 0px;
-    border-radius: 10px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    position: relative;
-    background-color: rgba(0, 0, 0, 0.4);
-    height: 100%;
-    width: 39px;
-    border-radius: 10px;
-  }
+  overflow: hidden;
 `;
 
 const TimelineHeaderHorizontal = styled.div`
@@ -367,7 +362,7 @@ const TimelineBox = styled.div`
   left: 0px;
   right: 0px;
   bottom: 0px;
-  overflow: scroll;
+  overflow: auto;
   border-left: 1px solid rgb(193, 199, 208);
 
   &::-webkit-scrollbar {
@@ -377,6 +372,7 @@ const TimelineBox = styled.div`
     right: 7px;
     left: 7px;
     height: 10px;
+    width: 10px;
     bottom: 0px;
     border-radius: 10px;
   }
@@ -384,16 +380,9 @@ const TimelineBox = styled.div`
   &::-webkit-scrollbar-thumb {
     position: relative;
     background-color: rgba(0, 0, 0, 0.4);
-    height: 100%;
-    width: 39px;
+    /* height: 100%; */
+    /* width: 39px; */
     border-radius: 10px;
-  }
-
-  /**
-  * TODO: Synchronize scrollbars 
-  */
-  ${TimelineHeaderWrapper}:hover & {
-    /* translate: 1000px; */
   }
 `;
 
@@ -507,6 +496,42 @@ const VerticalDivider = styled.div`
   z-index: 1;
   pointer-events: none;
 `;
+
+/**
+ * TODO: Highlight corresponding pair row on hover
+ */
+const RowContainer = styled.div`
+  position: relative;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  height: 40px;
+  background-color: rgb(255, 255, 255);
+  cursor: pointer;
+  transition: background-color 100ms linear 0s;
+
+  &:nth-of-type(even) {
+    background-color: rgb(244, 245, 247);
+  }
+
+  &:hover {
+    background-color: #DFE1E6;
+  }
+
+  /* ${CreateButton}:hover & {
+    background-color: #DFE1E6;
+    fill: rebeccapurple;
+  } */
+
+  ${CreateButton} {
+    background-color: #DFE1E6;
+    fill: rebeccapurple;
+  }
+`;
+
+// const BowWrapper = styled.div`
+//   flex: '0 1 auto';
+// `;
 
 const EpicDragLeft = styled.div`
   visibility: hidden;
