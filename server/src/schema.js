@@ -2,7 +2,7 @@ import { gql } from 'apollo-server-express';
 
 const typeDefs = gql`
   type Query {
-    issues(projectId: String, versionId: String, teamId: String, resourceId: String, startAt: Int, maxResults: Int): IssueConnection!
+    issues(projectId: String, versionId: String, statusId: String, teamId: String, resourceId: String, startAt: Int, maxResults: Int): IssueConnection!
     dashboardIssues(projectId: String, versionId: String, teamId: String, startAt: Int, maxResults: Int): DashboardIssueConnection!
     roadmapIssues(projectId: String, versionId: String): [Issue]!
     epics(projectId: String, versionId: String): [Issue]!

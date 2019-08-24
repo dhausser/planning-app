@@ -72,23 +72,20 @@ const GET_TEAM = gql`
   }
 `;
 
+const GET_STATUS = gql`
+  query GetFilter {
+    filter @client {
+      status {
+        id
+      }
+    }
+  }
+`;
+
 function Toggle({
-  loading, error, data, filter, type,
+  loading, error, defaultValue, options, type,
 }) {
   const [toggleFilter] = useMutation(TOGGLE_FILTER);
-  const key = type.toLowerCase();
-  const selection = filter[key];
-  const items = data[`${key}s`];
-  let defaultValue;
-  let options;
-
-  if (type === 'Team') {
-    defaultValue = selection.id && { value: selection.id, label: selection.id };
-    options = items && items.map(({ id }) => ({ value: id, label: id }));
-  } else {
-    defaultValue = selection.id && { value: selection.id, label: selection.name };
-    options = items && items.map(({ id, name }) => ({ value: id, label: name }));
-  }
 
   if (error) return `Error! ${error.message}`;
 
@@ -121,35 +118,90 @@ Toggle.defaultProps = {
 Toggle.propTypes = {
   loading: PropTypes.bool.isRequired,
   error: PropTypes.objectOf(),
-  data: PropTypes.objectOf(PropTypes.objectOf).isRequired,
-  filter: PropTypes.objectOf(PropTypes.objectOf).isRequired,
+  defaultValue: PropTypes.objectOf(PropTypes.objectOf).isRequired,
+  options: PropTypes.objectOf(PropTypes.objectOf).isRequired,
   type: PropTypes.string.isRequired,
 };
 
-
 export function ProjectFilter() {
   const type = 'Project';
-  const { data: { filter } } = useQuery(GET_PROJECT);
+  const { data: { filter: { project } } } = useQuery(GET_PROJECT);
   const { loading, error, data } = useQuery(GET_PROJECTS);
-  return <Toggle loading={loading} error={error} data={data} filter={filter} type={type} />;
+
+  const defaultValue = project.id
+    && { value: project.id, label: project.name };
+  const options = data.projects
+    && data.projects.map(({ id, name }) => ({ value: id, label: name }));
+
+  return (
+    <Toggle
+      loading={loading}
+      error={error}
+      options={options}
+      defaultValue={defaultValue}
+      type={type}
+    />
+  );
 }
 
 export function VersionFilter() {
   const type = 'Version';
-  const { data: { filter } } = useQuery(GET_VERSION);
+  const { data: { filter: { project, version } } } = useQuery(GET_VERSION);
   const { loading, error, data } = useQuery(GET_VERSIONS, {
     variables: {
-      id: (filter.project && filter.project.id) || process.env.REACT_APP_PROJECT_ID,
+      id: project.id ? project.id : process.env.REACT_APP_PROJECT_ID,
       startAt: parseInt(process.env.REACT_APP_VERSION_START_AT, 10),
       maxResults: parseInt(process.env.REACT_APP_VERSION_MAX_RESULTS, 10),
     },
   });
-  return <Toggle loading={loading} error={error} data={data} filter={filter} type={type} />;
+
+  const defaultValue = version.id
+    && { value: version.id, label: version.name };
+  const options = data.versions
+    && data.versions.map(({ id, name }) => ({ value: id, label: name }));
+
+  return (
+    <Toggle
+      loading={loading}
+      error={error}
+      options={options}
+      defaultValue={defaultValue}
+      type={type}
+    />
+  );
+}
+
+export function StatusFilter() {
+  const type = 'Status';
+  const { data: { filter: { status } } } = useQuery(GET_STATUS);
+
+  const options = [
+    { value: '2', label: 'Open' },
+    { value: '4', label: 'In Progress' },
+    { value: '3', label: 'Closed' },
+  ];
+  const defaultValue = options.find(({ value }) => value === status.id);
+
+  return <Toggle options={options} defaultValue={defaultValue} type={type} />;
 }
 
 export function TeamFilter() {
   const type = 'Team';
-  const { data: { filter } } = useQuery(GET_TEAM);
+  const { data: { filter: { team } } } = useQuery(GET_TEAM);
   const { loading, error, data } = useQuery(GET_TEAMS);
-  return <Toggle loading={loading} error={error} data={data} filter={filter} type={type} />;
+
+  const defaultValue = team.id
+    && { value: team.id, label: team.id };
+  const options = data.teams
+    && data.teams.map(({ id }) => ({ value: id, label: id }));
+
+  return (
+    <Toggle
+      loading={loading}
+      error={error}
+      options={options}
+      defaultValue={defaultValue}
+      type={type}
+    />
+  );
 }

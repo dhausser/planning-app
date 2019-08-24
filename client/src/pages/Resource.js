@@ -17,6 +17,7 @@ import {
   Layout,
   ProjectFilter,
   VersionFilter,
+  StatusFilter,
   IssueTable,
   LoadButton,
 } from '../components';
@@ -46,7 +47,7 @@ const GET_RESOURCE_NAME = gql`
 const ROWS_PER_PAGE = 10;
 
 const GET_ISSUES = gql`
-  query GetIssues($projectId: String, $versionId: String, $resourceId: String, $startAt: Int, $maxResults: Int) {
+  query GetIssues($projectId: String, $versionId: String, $statusId: String, $resourceId: String, $startAt: Int, $maxResults: Int) {
     filter @client {
       project {
         id @export(as: "projectId")
@@ -54,8 +55,11 @@ const GET_ISSUES = gql`
       version {
         id @export(as: "versionId")
       }
+      status {
+        id @export(as: "statusId")
+      }
     }
-    issues(projectId: $projectId, versionId: $versionId, resourceId: $resourceId, startAt: $startAt, maxResults: $maxResults) {
+    issues(projectId: $projectId, versionId: $versionId, statusId: $statusId, resourceId: $resourceId, startAt: $startAt, maxResults: $maxResults) {
       ...IssuePagination
       issues {
         ...IssueRow
@@ -82,6 +86,7 @@ const barContent = (
     </div>
     <ProjectFilter />
     <VersionFilter />
+    <StatusFilter />
   </div>
 );
 

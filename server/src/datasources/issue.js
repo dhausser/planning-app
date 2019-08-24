@@ -50,7 +50,7 @@ class IssueAPI extends RESTDataSource {
     return Array.isArray(response.values) ? response.values : [];
   }
 
-  async getIssues(projectId, versionId, teamId, resourceId, startAt, maxResults) {
+  async getIssues({ projectId, statusId, versionId, teamId, resourceId, startAt, maxResults }) {
     let assignee = resourceId;
 
     if (teamId) {
@@ -60,6 +60,7 @@ class IssueAPI extends RESTDataSource {
 
     const issues = new Issues({
       projectId,
+      statusId,
       versionId,
       assignee,
       resourceMap: this.context.resourceMap,

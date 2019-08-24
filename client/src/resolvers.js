@@ -8,6 +8,7 @@ export const typeDefs = gql`
 
   type Filter {
     project: Project
+    status: Status
     version: Version
     team: Team
   }
@@ -29,6 +30,10 @@ const GET_FILTER = gql`
         name
       }
       team {
+        id
+        name
+      }
+      status {
         id
         name
       }

@@ -10,11 +10,12 @@
 
 class Issues {
   constructor({
-    context, projectId, versionId, assignee, resourceMap, startAt, maxResults,
+    context, projectId, statusId, versionId, assignee, resourceMap, startAt, maxResults,
   }) {
     this.context = context;
     this.projectId = projectId;
     this.versionId = versionId;
+    this.statusId = statusId;
     this.assignee = assignee;
     this.startAt = startAt;
     this.maxResults = maxResults;
@@ -45,7 +46,7 @@ class Issues {
   }
 
   getQuery() {
-    this.jql = `statusCategory in (new, indeterminate)\
+    this.jql = `statusCategory in (${this.statusId ? this.statusId : 'new, indeterminate'})\
       ${this.projectId ? `AND project=${this.projectId}` : ''}\
       ${this.versionId ? `AND fixVersion=${this.versionId}` : ''}\
       ${this.assignee ? `AND assignee in (${this.assignee})` : ''} order by priority`;

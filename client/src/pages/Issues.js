@@ -12,6 +12,7 @@ import {
   Layout,
   ProjectFilter,
   VersionFilter,
+  StatusFilter,
   TeamFilter,
   IssueTable,
   // DraggableList,
@@ -61,10 +62,13 @@ export const ISSUE_PAGINATION = gql`
 `;
 
 const GET_ISSUES = gql`
-  query GetIssues($projectId: String, $versionId: String, $teamId: String, $resourceId: String, $startAt: Int, $maxResults: Int) {
+  query GetIssues($projectId: String,$versionId: String, $statusId: String, $teamId: String, $resourceId: String, $startAt: Int, $maxResults: Int) {
     filter @client {
       project {
         id @export(as: "projectId")
+      }
+      status {
+        id @export(as: "statusId")
       }
       version {
         id @export(as: "versionId")
@@ -73,7 +77,7 @@ const GET_ISSUES = gql`
         id @export(as: "teamId")
       }
     }
-    issues(projectId: $projectId, versionId: $versionId, teamId: $teamId, resourceId: $resourceId, startAt: $startAt, maxResults: $maxResults) {
+    issues(projectId: $projectId, versionId: $versionId, statusId: $statusId, teamId: $teamId, resourceId: $resourceId, startAt: $startAt, maxResults: $maxResults) {
       ...IssuePagination
       issues {
         ...IssueRow
@@ -91,6 +95,7 @@ const barContent = (
     </div>
     <ProjectFilter />
     <VersionFilter />
+    <StatusFilter />
     <TeamFilter />
   </div>
 );

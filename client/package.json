@@ -41,6 +41,7 @@
     "@atlaskit/navigation-next": "^6.3.8",
     "@atlaskit/page": "^11.0.5",
     "@atlaskit/page-header": "^9.0.6",
+    "@atlaskit/refinement-bar": "^1.1.4",
     "@atlaskit/select": "^9.1.10",
     "@atlaskit/spinner": "^12.0.5",
     "@atlaskit/status": "^0.9.7",

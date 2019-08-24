@@ -44,6 +44,11 @@ const filter = JSON.parse(localStorage.getItem('filter'))
     name: null,
     __typename: 'Team',
   },
+  status: {
+    id: null,
+    name: null,
+    __typename: 'Status',
+  },
   __typename: 'Filter',
 };
 
