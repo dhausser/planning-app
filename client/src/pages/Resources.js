@@ -14,24 +14,15 @@ import TextField from '@atlaskit/textfield';
 
 import { TeamFilter, ProjectHomeView, Layout } from '../components';
 
-const GET_FILTER = gql`
-  query GetFilter {
-    filter @client {
-      team {
-        id
-        name
-      }
-    }
+const GET_TEAM_FILTER = gql`
+  {
+    teamId @client
   }
 `;
 
 const GET_RESOURCES = gql`
   query GetResources($teamId: String) {
-    filter @client {
-      team {
-        id @export(as: "teamId")
-      }
-    }
+    teamId @client @export(as: "teamId")
     resources(teamId: $teamId) {
       key
       name
@@ -104,15 +95,14 @@ const rows = (resources) => resources.map((resource) => ({
 function Resources({ navigationViewController }) {
   useEffect(() => navigationViewController.setView(ProjectHomeView.id), [navigationViewController]);
 
-  const { data: { filter: { team } } } = useQuery(GET_FILTER);
-
+  const { data: { teamId } } = useQuery(GET_TEAM_FILTER);
   const { data, loading, error } = useQuery(GET_RESOURCES);
 
   let resources = [];
   if (error) return <EmptyState header={error.name} description={error.message} />;
   if (!loading) {
-    resources = team.id
-      ? data.resources.filter((resource) => resource.team === team.id)
+    resources = teamId
+      ? data.resources.filter((resource) => resource.team === teamId)
       : data.resources;
   }
 

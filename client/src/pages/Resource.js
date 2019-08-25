@@ -48,17 +48,9 @@ const ROWS_PER_PAGE = 10;
 
 const GET_ISSUES = gql`
   query GetIssues($projectId: String, $versionId: String, $statusId: String, $resourceId: String, $startAt: Int, $maxResults: Int) {
-    filter @client {
-      project {
-        id @export(as: "projectId")
-      }
-      version {
-        id @export(as: "versionId")
-      }
-      status {
-        id @export(as: "statusId")
-      }
-    }
+    projectId @client @export(as: "projectId")
+    versionId @client @export(as: "versionId")
+    statusId @client @export(as: "statusId")
     issues(projectId: $projectId, versionId: $versionId, statusId: $statusId, resourceId: $resourceId, startAt: $startAt, maxResults: $maxResults) {
       ...IssuePagination
       issues {

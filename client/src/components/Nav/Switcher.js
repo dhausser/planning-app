@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import { useQuery, useApolloClient } from '@apollo/react-hooks';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 import ChevD from '@atlaskit/icon/glyph/chevron-down';
@@ -9,8 +9,6 @@ import {
   Switcher,
 } from '@atlaskit/navigation-next';
 import EmptyState from '@atlaskit/empty-state';
-
-import { TOGGLE_FILTER } from '../Filters';
 
 const PROJECT_TILE_DATA = gql`
   fragment ProjectTile on Project {
@@ -33,14 +31,9 @@ const GET_PROJECTS = gql`
   ${PROJECT_TILE_DATA}
 `;
 
-const GET_FILTER = gql`
-  query GetFilter {
-    filter @client {
-      project @client {
-        id
-        name
-      }
-    }
+const GET_PROJECT_FILTER = gql`
+  {
+    projectId @client
   }
 `;
 
@@ -80,14 +73,11 @@ const target = ({
 );
 
 function ProjectSwitcher() {
+  const client = useApolloClient();
+  const { data: { projectId } } = useQuery(GET_PROJECT_FILTER);
+  const { data, loading, error } = useQuery(GET_PROJECTS);
   const [selected, setSelected] = useState({});
   const [options, setOptions] = useState([]);
-  const [toggleFilter] = useMutation(TOGGLE_FILTER);
-  const { data: { filter: { project: filter } } } = useQuery(GET_FILTER);
-
-  const { data, loading, error } = useQuery(GET_PROJECTS, {
-    fetchPolicy: 'cache-first',
-  });
 
   useEffect(() => {
     if (!loading && !error) {
@@ -108,12 +98,12 @@ function ProjectSwitcher() {
         });
       });
 
-      const current = filter && projects[0].options.find(({ id }) => id === filter.id);
+      const current = projectId && projects[0].options.find(({ id }) => id === projectId);
 
       setOptions(projects);
       setSelected(current || projects[0].options[0]);
     }
-  }, [data.projects, error, filter, loading]);
+  }, [data.projects, error, projectId, loading]);
 
   if (loading) return <div />;
   if (error) return <EmptyState header={error.name} description={error.message} />;
@@ -122,7 +112,8 @@ function ProjectSwitcher() {
     <Switcher
       create={create()}
       onChange={({ id, text }) => {
-        toggleFilter({ variables: { id, name: text, type: 'Project' } });
+        client.writeData({ data: { projectId: id } });
+        localStorage.setItem('projectId', id);
         setSelected({ id, text });
       }}
       options={options}

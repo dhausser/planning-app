@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import { useQuery, useApolloClient } from '@apollo/react-hooks';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 import styled from 'styled-components';
@@ -11,7 +11,7 @@ import DynamicTable from '@atlaskit/dynamic-table';
 import EmptyState from '@atlaskit/empty-state';
 import Avatar from '@atlaskit/avatar';
 
-import { ProductHomeView, Layout, TOGGLE_FILTER } from '../components';
+import { ProductHomeView, Layout } from '../components';
 
 const PROJECT_TILE_DATA = gql`
   fragment ProjectTile on Project {
@@ -63,50 +63,65 @@ const head = {
   ],
 };
 
-const row = (project, toggleFilter) => ({
-  key: project.id,
-  cells: [
-    {
-      key: project.name,
-      content: (
-        <NameWrapper>
-          <AvatarWrapper>
-            <Avatar
-              name={project.name}
-              size="small"
-              appearance="square"
-              src={project.id === '10500'
-                ? 'https://solarsystem.atlassian.net/secure/projectavatar?pid=10000&avatarId=10011&size=xxlarge'
-                : project.avatarUrls.small}
-            />
-          </AvatarWrapper>
-          <Link
-            to="/roadmap"
-            onClick={() => {
-              const { id, name, __typename } = project;
-              toggleFilter({ variables: { id, name, type: __typename } });
-            }}
-          >
-            {project.name}
-          </Link>
-        </NameWrapper>
-      ),
-    },
-    {
-      key: project.key,
-      content: project.key,
-    },
-    {
-      key: project.projectTypeKey,
-      content: project.projectTypeKey,
-    },
-  ],
-});
+function FilterLink({ projectId, children }) {
+  const client = useApolloClient();
+  return (
+    <Link
+      to="/roadmap"
+      onClick={() => {
+        client.writeData({ data: { projectId } });
+        localStorage.setItem('projectId', projectId);
+      }}
+    >
+      {children}
+    </Link>
+  );
+}
+
+FilterLink.propTypes = {
+  projectId: PropTypes.string.isRequired,
+  children: PropTypes.string.isRequired,
+};
+
+function createRow(project) {
+  return ({
+    key: project.id,
+    cells: [
+      {
+        key: project.name,
+        content: (
+          <NameWrapper>
+            <AvatarWrapper>
+              <Avatar
+                name={project.name}
+                size="small"
+                appearance="square"
+                src={project.id === '10500'
+                  ? 'https://solarsystem.atlassian.net/secure/projectavatar?pid=10000&avatarId=10011&size=xxlarge'
+                  : project.avatarUrls.small}
+              />
+            </AvatarWrapper>
+            <FilterLink projectId={project.id}>
+              {project.name}
+            </FilterLink>
+          </NameWrapper>
+        ),
+      },
+      {
+        key: project.key,
+        content: project.key,
+      },
+      {
+        key: project.projectTypeKey,
+        content: project.projectTypeKey,
+      },
+    ],
+  });
+}
 
 function Projects({ navigationViewController }) {
   useEffect(() => navigationViewController.setView(ProductHomeView.id), [navigationViewController]);
   const { data, loading, error } = useQuery(GET_PROJECTS);
-  const [toggleFilter] = useMutation(TOGGLE_FILTER);
 
   if (error) return <EmptyState header={error.name} description={error.message} />;
 
@@ -116,7 +131,7 @@ function Projects({ navigationViewController }) {
       <DynamicTable
         caption={`Displaying ${data.projects ? data.projects.length : 0} projects`}
         head={head}
-        rows={data.projects && data.projects.map((project) => row(project, toggleFilter))}
+        rows={data.projects && data.projects.map(createRow)}
         rowsPerPage={20}
         loadingSpinnerSize="large"
         isLoading={loading}

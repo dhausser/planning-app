@@ -27,35 +27,13 @@ const client = new ApolloClient({
   typeDefs,
 });
 
-const filter = JSON.parse(localStorage.getItem('filter'))
-|| {
-  project: {
-    id: null,
-    name: null,
-    __typename: 'Project',
-  },
-  version: {
-    id: null,
-    name: null,
-    __typename: 'Version',
-  },
-  team: {
-    id: null,
-    name: null,
-    __typename: 'Team',
-  },
-  status: {
-    id: null,
-    name: null,
-    __typename: 'Status',
-  },
-  __typename: 'Filter',
-};
-
 cache.writeData({
   data: {
-    isLoggedIn: !!localStorage.getItem('token') || true,
-    filter,
+    isLoggedIn: !!localStorage.getItem('token'),
+    projectId: localStorage.getItem('projectId'),
+    versionId: localStorage.getItem('versionId'),
+    statusId: localStorage.getItem('statusId'),
+    teamId: localStorage.getItem('teamId'),
   },
 });
 

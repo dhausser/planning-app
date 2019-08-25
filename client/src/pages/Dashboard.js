@@ -15,17 +15,9 @@ import {
 
 const GET_ISSUES = gql`
   query GetDashboardIssues($projectId: String, $versionId: String, $teamId: String, $startAt: Int, $maxResults: Int) {
-    filter @client {
-      project {
-        id @export(as: "projectId")
-      }
-      version {
-        id @export(as: "versionId")
-      }
-      team {
-        id @export(as: "teamId")
-      }
-    }
+    projectId @client @export(as: "projectId")
+    versionId @client @export(as: "versionId")
+    teamId @client @export(as: "teamId")
     dashboardIssues(projectId: $projectId, versionId: $versionId, teamId: $teamId, startAt: $startAt, maxResults: $maxResults) {
       maxResults
       total

@@ -43,14 +43,8 @@ const ROADMAP_ROW_DATA = gql`
 
 const GET_ISSUES = gql`
   query issueList($projectId: String, $versionId: String) {
-    filter @client {
-      project {
-        id @export(as: "projectId")
-      }
-      version {
-        id @export(as: "versionId")
-      }
-    }
+    projectId @client @export(as: "projectId")
+    versionId @client @export(as: "versionId")
     roadmapIssues(projectId: $projectId, versionId: $versionId) {
       ...RoadmapRow
       children {
