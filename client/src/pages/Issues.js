@@ -15,7 +15,6 @@ import {
   StatusFilter,
   TeamFilter,
   IssueTable,
-  // DraggableList,
   LoadButton,
 } from '../components';
 
@@ -91,17 +90,18 @@ const barContent = (
 );
 
 function Issues({ navigationViewController }) {
-  const [startAt, setStartAt] = useState(ROWS_PER_PAGE);
+  const [length, setLength] = useState(0);
   const { loading, error, data: { issues }, fetchMore } = useQuery(GET_ISSUES, {
     variables: { maxResults: ROWS_PER_PAGE },
   });
 
-  useEffect(() => navigationViewController.setView(ProductIssuesView.id),
-    [navigationViewController]);
+  useEffect(() => {
+    navigationViewController.setView(ProductIssuesView.id);
+    if (issues && issues.issues.length) {
+      setLength(issues.issues.length);
+    }
+  }, [navigationViewController, issues]);
 
-  /**
-   * FIXME: DraggableList implementation
-   */
   return (
     <Layout>
       <PageHeader bottomBar={barContent}>Search Issues</PageHeader>
@@ -109,20 +109,12 @@ function Issues({ navigationViewController }) {
         loading={loading}
         error={error}
         issues={issues}
-        rowsPerPage={ROWS_PER_PAGE + startAt}
-        startAt={startAt}
+        rowsPerPage={ROWS_PER_PAGE + length}
+        startAt={length}
       />
-      {/* {issues && issues.issues && <DraggableList items={issues.issues} />} */}
       {issues
-        && issues.total > startAt
-        && (
-        <LoadButton
-          setStartAt={setStartAt}
-          fetchMore={fetchMore}
-          startAt={startAt}
-          maxResults={issues.maxResults}
-        />
-        )}
+        && issues.total > length
+        && <LoadButton fetchMore={fetchMore} startAt={length} />}
     </Layout>
   );
 }

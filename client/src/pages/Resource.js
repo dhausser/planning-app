@@ -83,8 +83,7 @@ const barContent = (
 );
 
 function Resource({ navigationViewController, match }) {
-  useEffect(() => navigationViewController.setView(ProjectHomeView.id), [navigationViewController]);
-  const [startAt, setStartAt] = useState(ROWS_PER_PAGE);
+  const [length, setLength] = useState(0);
   const { resourceId } = match.params;
 
   const {
@@ -111,6 +110,13 @@ function Resource({ navigationViewController, match }) {
   } = useQuery(GET_ABSENCES, {
     variables: { id: resourceId },
   });
+
+  useEffect(() => {
+    navigationViewController.setView(ProjectHomeView.id);
+    if (issues && issues.issues.length) {
+      setLength(issues.issues.length);
+    }
+  }, [navigationViewController, issues]);
 
   if (errorResource) {
     return (
@@ -162,19 +168,12 @@ function Resource({ navigationViewController, match }) {
         loading={loadingIssues}
         error={errorIssues}
         issues={issues}
-        rowsPerPage={ROWS_PER_PAGE + startAt}
-        startAt={startAt}
+        rowsPerPage={ROWS_PER_PAGE + length}
+        startAt={length}
       />
       {issues
-        && issues.total > startAt
-        && (
-        <LoadButton
-          setStartAt={setStartAt}
-          fetchMore={fetchMore}
-          startAt={startAt}
-          maxResults={issues.maxResults}
-        />
-        )}
+        && issues.total > length
+        && <LoadButton fetchMore={fetchMore} startAt={length} />}
       {loadingAbsences
         ? <Loading />
         : absences && absences.map(({ date }) => <Status text={date} color="blue" />)}

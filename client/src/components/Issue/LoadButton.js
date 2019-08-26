@@ -4,29 +4,26 @@ import styled from 'styled-components';
 
 import Button from '@atlaskit/button';
 
-export default function LoadButton({ setStartAt, fetchMore, startAt, maxResults }) {
+export default function LoadButton({ fetchMore, startAt }) {
   return (
     <Wrapper>
       <Button
-        onClick={() => {
-          setStartAt(startAt + maxResults);
-          return fetchMore({
-            variables: { startAt },
-            updateQuery: (prev, { fetchMoreResult }) => {
-              if (!fetchMoreResult) return prev;
-              return {
-                ...fetchMoreResult,
-                issues: {
-                  ...fetchMoreResult.issues,
-                  issues: [
-                    ...prev.issues.issues,
-                    ...fetchMoreResult.issues.issues,
-                  ],
-                },
-              };
-            },
-          });
-        }}
+        onClick={() => fetchMore({
+          variables: { startAt },
+          updateQuery: (prev, { fetchMoreResult }) => {
+            if (!fetchMoreResult) return prev;
+            return {
+              ...fetchMoreResult,
+              issues: {
+                ...fetchMoreResult.issues,
+                issues: [
+                  ...prev.issues.issues,
+                  ...fetchMoreResult.issues.issues,
+                ],
+              },
+            };
+          },
+        })}
       >
         Load More
       </Button>
@@ -35,10 +32,8 @@ export default function LoadButton({ setStartAt, fetchMore, startAt, maxResults 
 }
 
 LoadButton.propTypes = {
-  setStartAt: PropTypes.func.isRequired,
   fetchMore: PropTypes.func.isRequired,
   startAt: PropTypes.number.isRequired,
-  maxResults: PropTypes.number.isRequired,
 };
 
 /**
