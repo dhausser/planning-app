@@ -49,6 +49,7 @@ export default function BarChart({ labels, values, maxResults, total }) {
 
   useEffect(() => {
     if (chart) {
+      chart.options.title.text = `Displaying ${results} of ${total} issues`;
       chart.data = updateChartData(labels, values);
       chart.update();
     } else {
