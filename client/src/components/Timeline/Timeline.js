@@ -80,7 +80,7 @@ export default function Timeline({ epics }) {
                           onKeyUp={createEpic}
                           tabIndex="0"
                         >
-                          <EmojiCustomIcon className="dqqHMN" />
+                          <EmojiCustomIcon className="icon" />
                         </CreateButton>
                       </CreateButtonWrapper>
                       <div style={{ height: '1px', backgroundColor: 'rgb(193, 199, 208)' }} />
@@ -98,7 +98,7 @@ export default function Timeline({ epics }) {
                   <TimelineHeaderHorizontal style={{ width: '9579.5px' }}>
                     <TimelineHeaderBox>
                       {months.map((month, i) => (
-                        <StyledHeader key={month} style={{ left: `calc(${i} * 2.75%)`, right: `calc(100% - 2.75% * ${i + 1})` }}>
+                        <StyledHeader key={month} style={{ left: `calc(${i} * 2.702702702702703%)`, right: `calc(100% - 2.702702702702703% * ${i + 1})` }}>
                           <StyledSmall>{month}</StyledSmall>
                         </StyledHeader>
                       ))}
@@ -113,30 +113,30 @@ export default function Timeline({ epics }) {
                   <HorizontalCalendar style={{ width: '9579.5px' }}>
                     <VerticalDivider>
                       {months.map((month, i) => (
-                        <StyledColumn key={month} style={{ left: `calc(${i} * 2.75%)`, right: `calc(100% - 2.75% * ${i + 1})` }} />
+                        <StyledColumn key={month} style={{ left: `calc(${i} * 2.702702702702703%)`, right: `calc(100% - 2.702702702702703% * ${i + 1})` }} />
                       ))}
                     </VerticalDivider>
                     <TimelineBox1 />
                     {issues.map((epic) => (
                       <RowContainer key={epic.key}>
-                        {/* <BowWrapper> */}
-                        <Box
-                          className="sc-buGlAa feIyeE"
-                          style={{ width: '200px' }}
-                          onDragStart={() => {}}
-                          onDragEnd={() => {}}
-                          onValueChange={{ x: () => {} }}
-                          onMouseOver={() => {}}
-                          onFocus={() => {}}
-                        >
+                        <BoxWrapper style={{ left: '2%', right: '94%' }}>
+                          {/* <Box
+                            className="box"
+                            style={{ width: '200px' }}
+                            onDragStart={() => {}}
+                            onDragEnd={() => {}}
+                            onValueChange={{ x: () => {} }}
+                            onMouseOver={() => {}}
+                            onFocus={() => {}}
+                          > */}
                           <EpicDragLeft orientation="left">
                             <EpicDrag />
                           </EpicDragLeft>
                           <EpicDragRight orientation="right">
                             <EpicDrag />
                           </EpicDragRight>
-                        </Box>
-                        {/* </BowWrapper> */}
+                          {/* </Box> */}
+                        </BoxWrapper>
                       </RowContainer>
                     ))}
                     <TimelineBox2 />
@@ -157,7 +157,7 @@ export default function Timeline({ epics }) {
               <InlineCreate3 />
               <InlineCreate4>
                 <InlineCreate5>
-                  <EmojiCustomIcon className="bcqBjl" />
+                  <EmojiCustomIcon className="icon" />
                 </InlineCreate5>
               </InlineCreate4>
             </InlineCreate2>
@@ -180,10 +180,6 @@ Timeline.propTypes = {
 /**
  * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE
  */
-
-const Box = posed.div({
-  draggable: 'x',
-});
 
 const Wrapper = styled.div`
   position: relative;
@@ -208,33 +204,6 @@ const HeadlineContainer = styled.div`
   min-height: 0px;
   flex: 0 0 auto;
 `;
-
-// const RowContainer = styled.div`
-//   position: relative;
-//   display: flex;
-//   -webkit-box-align: center;
-//   align-items: center;
-//   height: 40px;
-//   background-color: rgb(255, 255, 255);
-//   cursor: pointer;
-//   transition: background-color 100ms linear 0s;
-
-//   &:nth-of-type(even) {
-//     background-color: rgb(244, 245, 247);
-//   }
-
-//   /**
-//    * TODO: Highlight corresponding pair row on hover
-//    */
-//   &:hover {
-//     background-color: #DFE1E6;
-
-//     ${Wrapper2}:hover & {
-//       background-color: #DFE1E6;
-//       fill: rebeccapurple;
-//     }
-//   }
-// `;
 
 const InlineCreateWrapper = styled.div`
   position: absolute;
@@ -529,9 +498,36 @@ const RowContainer = styled.div`
   }
 `;
 
-// const BowWrapper = styled.div`
-//   flex: '0 1 auto';
-// `;
+// const Box = posed.div({
+//   draggable: 'x',
+//   hoverable: true,
+//   init: {
+//     scale: 1,
+//     boxShadow: '0px 0px 0px rgba(0,0,0,0)',
+//   },
+//   hover: {
+//     scale: 1.2,
+//     boxShadow: '0px 5px 10px rgba(0,0,0,0.2)',
+//   },
+// });
+
+const BoxWrapper = styled.div`
+  position: absolute;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: end;
+  justify-content: flex-end;
+  height: 24px;
+  min-width: 3px;
+  z-index: 3;
+  visibility: visible;
+  cursor: pointer;
+  padding: 0px 5px;
+  transition: left 0.1s ease 0s, right 0.1s ease 0s;
+  border-radius: 3px;
+  background: rgb(135, 119, 217);
+`;
 
 const EpicDragLeft = styled.div`
   visibility: hidden;
@@ -542,7 +538,7 @@ const EpicDragLeft = styled.div`
   cursor: col-resize;
   padding: 4px;
 
-  ${RowContainer}:hover & {
+  ${BoxWrapper}:hover & {
     visibility: visible;
   } 
 `;
@@ -556,7 +552,7 @@ const EpicDragRight = styled.div`
   cursor: col-resize;
   padding: 4px;
   
-  ${RowContainer}:hover & {
+  ${BoxWrapper}:hover & {
     visibility: visible;
   } 
 `;

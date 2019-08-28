@@ -17,7 +17,7 @@ const GET_CURRENT_USER = gql`
   }
 `;
 
-const AppSwitcherComponent = props => (
+const AppSwitcherComponent = (props) => (
   <GlobalItem
     {...props}
     icon={AppSwitcherIcon}

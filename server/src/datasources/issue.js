@@ -21,12 +21,7 @@ class IssueAPI extends RESTDataSource {
   }
 
   willSendRequest(req) {
-    if (process.env.AUTH) {
-      req.headers.set('Authorization', `Basic ${process.env.AUTH}`);
-    } else {
-      const { authorization } = this.context;
-      req.headers.set('Authorization', this.oauth.sign(req, authorization));
-    }
+    req.headers.set('Authorization', this.oauth.sign(req, this.context.authorization));
   }
 
   async getProjects() {
