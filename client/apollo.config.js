@@ -1,8 +1,9 @@
 module.exports = {
   client: {
     service: {
-      name: 'planning-app',
+      name: 'my-graphql-app',
+      url: 'http://localhost:4000/graphql',
+      // localSchemaFile: './schema.graphql',
     },
-    includes: ['src/**/*.js'], // array of glob patterns
   },
 };

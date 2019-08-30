@@ -12,9 +12,6 @@ export default async () => {
   });
 
   try {
-    /**
-     * TODO: 'davyJSDB' to be added in .env under DBNAME
-     */
     const resources = client.db(process.env.DBNAME).collection('resources');
     return { resources };
   } catch (e) {

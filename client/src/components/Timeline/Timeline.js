@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import posed from 'react-pose';
+// import posed from 'react-pose';
 import { ScrollSync, ScrollSyncPane } from 'react-scroll-sync';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
