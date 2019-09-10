@@ -15,6 +15,9 @@ const LOGIN_USER = gql`
   }
 `;
 
+/**
+ * TODO: Fix the onComplete login sequence
+ */
 function Login({ history, navigationViewController }) {
   useEffect(() => {
     navigationViewController.setView(ProductHomeView.id);
@@ -28,6 +31,7 @@ function Login({ history, navigationViewController }) {
         localStorage.setItem('token', token);
         client.writeData({ data: { isLoggedIn: true } });
         history.push('/');
+        window.location.reload();
       },
     },
   );

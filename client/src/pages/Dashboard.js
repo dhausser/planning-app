@@ -10,7 +10,7 @@ import TextField from '@atlaskit/textfield';
 import EmptyState from '@atlaskit/empty-state';
 
 import {
-  ProjectHomeView, Layout, ProjectFilter, VersionFilter, TeamFilter, BarChart,
+  ProjectHomeView, Layout, ProjectFilter, VersionFilter, TeamFilter, BarChart, Loading,
 } from '../components';
 
 const GET_ISSUES = gql`
@@ -40,27 +40,31 @@ const barContent = (
 
 function Dashboard({ navigationViewController }) {
   useEffect(() => navigationViewController.setView(ProjectHomeView.id), [navigationViewController]);
-  const { error, data } = useQuery(GET_ISSUES);
+  const { error, loading, data } = useQuery(GET_ISSUES);
 
   if (error) return <EmptyState header={error.name} description={error.message} />;
 
   return (
     <Layout>
       <PageHeader bottomBar={barContent}>Dashboard</PageHeader>
-      <div style={{ display: 'block' }}>
-        <Grid>
-          {data.dashboardIssues
-            && data.dashboardIssues
-            && (
-            <BarChart
-              labels={data.dashboardIssues.labels}
-              values={data.dashboardIssues.values}
-              maxResults={data.dashboardIssues.maxResults}
-              total={data.dashboardIssues.total}
-            />
-            )}
-        </Grid>
-      </div>
+      {loading
+        ? <Loading />
+        : (
+          <div style={{ display: 'block' }}>
+            <Grid>
+              {data.dashboardIssues
+              && data.dashboardIssues
+              && (
+              <BarChart
+                labels={data.dashboardIssues.labels}
+                values={data.dashboardIssues.values}
+                maxResults={data.dashboardIssues.maxResults}
+                total={data.dashboardIssues.total}
+              />
+              )}
+            </Grid>
+          </div>
+        )}
     </Layout>
   );
 }

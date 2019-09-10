@@ -18,9 +18,7 @@ export const ButtonLoading = () => (
 function Loading() {
   return (
     <Wrapper>
-      <div style={{ flex: '0 0 auto' }}>
-        <Spinner size="large" />
-      </div>
+      <Spinner />
     </Wrapper>
   );
 }

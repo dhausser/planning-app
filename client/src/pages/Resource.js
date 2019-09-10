@@ -44,7 +44,7 @@ const GET_RESOURCE_NAME = gql`
   }
 `;
 
-const ROWS_PER_PAGE = 10;
+const ROWS_PER_PAGE = 50;
 
 const GET_ISSUES = gql`
   query GetIssues($projectId: String, $versionId: String, $statusId: String, $resourceId: String, $startAt: Int, $maxResults: Int) {
@@ -89,7 +89,7 @@ function Resource({ navigationViewController, match }) {
   const {
     loading: loadingResource,
     error: errorResource,
-    data: { resource },
+    data: dataResource,
   } = useQuery(GET_RESOURCE_NAME, {
     variables: { id: resourceId },
   });
@@ -97,7 +97,7 @@ function Resource({ navigationViewController, match }) {
   const {
     loading: loadingIssues,
     error: errorIssues,
-    data: { issues },
+    data: dataIssues,
     fetchMore,
   } = useQuery(GET_ISSUES, {
     variables: { resourceId, maxResults: ROWS_PER_PAGE },
@@ -106,17 +106,17 @@ function Resource({ navigationViewController, match }) {
   const {
     loading: loadingAbsences,
     error: errorAbsences,
-    data: { absences },
+    data: dataAbsences,
   } = useQuery(GET_ABSENCES, {
     variables: { id: resourceId },
   });
 
   useEffect(() => {
     navigationViewController.setView(ProjectHomeView.id);
-    if (issues && issues.issues.length) {
-      setLength(issues.issues.length);
+    if (dataIssues && dataIssues.issues && dataIssues.issues.issues.length) {
+      setLength(dataIssues.issues.issues.length);
     }
-  }, [navigationViewController, issues]);
+  }, [navigationViewController, dataIssues && dataIssues.issues]);
 
   if (errorResource) {
     return (
@@ -145,12 +145,12 @@ function Resource({ navigationViewController, match }) {
             <NameWrapper>
               <AvatarWrapper>
                 <Avatar
-                  name={resource.name}
+                  name={dataResource && dataResource.resource.name}
                   size="large"
                   src={`https://${process.env.REACT_APP_HOST}/secure/useravatar?ownerId=${resourceId}`}
                 />
               </AvatarWrapper>
-              {resource.name}
+              {dataResource && dataResource.resource.name}
             </NameWrapper>
           )}
       </PageHeader>
@@ -167,16 +167,16 @@ function Resource({ navigationViewController, match }) {
       <IssueTable
         loading={loadingIssues}
         error={errorIssues}
-        issues={issues}
+        issues={dataIssues && dataIssues.issues}
         rowsPerPage={ROWS_PER_PAGE + length}
         startAt={length}
       />
-      {issues
-        && issues.total > length
+      {dataIssues && dataIssues.issues
+        && dataIssues.issues.total > length
         && <LoadButton fetchMore={fetchMore} startAt={length} />}
       {loadingAbsences
         ? <Loading />
-        : absences && absences.map(({ date }) => <Status text={date} color="blue" />)}
+        : dataAbsences && dataAbsences.absences.map(({ date }) => <Status key={date} text={date} color="blue" />)}
     </Layout>
   );
 }

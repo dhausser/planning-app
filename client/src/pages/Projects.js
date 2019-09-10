@@ -129,11 +129,11 @@ function Projects({ navigationViewController }) {
     <Layout>
       <PageHeader>Projects</PageHeader>
       <DynamicTable
-        caption={`Displaying ${data.projects ? data.projects.length : 0} projects`}
+        caption={data && `Displaying ${data.projects && data.projects.length} projects`}
         head={head}
-        rows={data.projects && data.projects.map(createRow)}
+        rows={data && data.projects && data.projects.map(createRow)}
         rowsPerPage={20}
-        loadingSpinnerSize="large"
+        loadingSpinnerSize="medium"
         isLoading={loading}
         isFixedSize
         defaultSortKey="name"

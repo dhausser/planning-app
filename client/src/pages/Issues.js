@@ -18,7 +18,7 @@ import {
   LoadButton,
 } from '../components';
 
-const ROWS_PER_PAGE = 10;
+const ROWS_PER_PAGE = 50;
 
 export const ISSUE_ROW_DATA = gql`
   fragment IssueRow on Issue {
@@ -91,16 +91,16 @@ const barContent = (
 
 function Issues({ navigationViewController }) {
   const [length, setLength] = useState(0);
-  const { loading, error, data: { issues }, fetchMore } = useQuery(GET_ISSUES, {
+  const { loading, error, data, fetchMore } = useQuery(GET_ISSUES, {
     variables: { maxResults: ROWS_PER_PAGE },
   });
 
   useEffect(() => {
     navigationViewController.setView(ProductIssuesView.id);
-    if (issues && issues.issues.length) {
-      setLength(issues.issues.length);
+    if (data && data.issues && data.issues.issues.length) {
+      setLength(data.issues.issues.length);
     }
-  }, [navigationViewController, issues]);
+  }, [navigationViewController, data && data.issues]);
 
   return (
     <Layout>
@@ -108,12 +108,12 @@ function Issues({ navigationViewController }) {
       <IssueTable
         loading={loading}
         error={error}
-        issues={issues}
+        issues={data && data.issues}
         rowsPerPage={ROWS_PER_PAGE + length}
         startAt={length}
       />
-      {issues
-        && issues.total > length
+      {data && data.issues
+        && data.issues.total > length
         && <LoadButton fetchMore={fetchMore} startAt={length} />}
     </Layout>
   );

@@ -1,7 +1,6 @@
 module.exports = {
   service: {
     name: 'my-graphql-app',
-    // url: 'http://localhost:4000/graphql',
-    localSchemaFile: './schema.graphql',
+    url: 'http://localhost:4000/graphql',
   },
 };

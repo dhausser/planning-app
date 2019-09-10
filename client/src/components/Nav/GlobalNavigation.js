@@ -44,7 +44,10 @@ export default () => {
       appSwitcherTooltip="Switch to ..."
       onSettingsClick={() => console.log('settings clicked')}
       profileItems={() => <div />}
-      profileIconUrl={!loading && !error && data.myself.avatarUrls.small}
+      profileIconUrl={data
+        && data.myself
+        && data.myself.avatarUrls
+        && data.myself.avatarUrls.small}
     />
   );
 };

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-// import posed from 'react-pose';
+import posed from 'react-pose';
 import { ScrollSync, ScrollSyncPane } from 'react-scroll-sync';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -119,24 +119,24 @@ export default function Timeline({ epics }) {
                     <TimelineBox1 />
                     {issues.map((epic) => (
                       <RowContainer key={epic.key}>
-                        <BoxWrapper style={{ left: '2%', right: '94%' }}>
-                          {/* <Box
-                            className="box"
-                            style={{ width: '200px' }}
-                            onDragStart={() => {}}
-                            onDragEnd={() => {}}
-                            onValueChange={{ x: () => {} }}
-                            onMouseOver={() => {}}
-                            onFocus={() => {}}
-                          > */}
+                        {/* <BoxWrapper style={{ left: '2%', right: '94%' }}> */}
+                        <Box
+                          className="box"
+                          style={{ left: '2.7%', right: '94.6%' }}
+                          onDragStart={() => {}}
+                          onDragEnd={() => {}}
+                          onValueChange={{ x: () => {} }}
+                          onMouseOver={() => {}}
+                          onFocus={() => {}}
+                        >
                           <EpicDragLeft orientation="left">
                             <EpicDrag />
                           </EpicDragLeft>
                           <EpicDragRight orientation="right">
                             <EpicDrag />
                           </EpicDragRight>
-                          {/* </Box> */}
-                        </BoxWrapper>
+                        </Box>
+                        {/* </BoxWrapper> */}
                       </RowContainer>
                     ))}
                     <TimelineBox2 />
@@ -498,18 +498,18 @@ const RowContainer = styled.div`
   }
 `;
 
-// const Box = posed.div({
-//   draggable: 'x',
-//   hoverable: true,
-//   init: {
-//     scale: 1,
-//     boxShadow: '0px 0px 0px rgba(0,0,0,0)',
-//   },
-//   hover: {
-//     scale: 1.2,
-//     boxShadow: '0px 5px 10px rgba(0,0,0,0.2)',
-//   },
-// });
+const Box = posed.div({
+  draggable: 'x',
+  hoverable: true,
+  // init: {
+  //   scale: 1,
+  //   boxShadow: '0px 0px 0px rgba(0,0,0,0)',
+  // },
+  // hover: {
+  //   scale: 1.2,
+  //   boxShadow: '0px 5px 10px rgba(0,0,0,0.2)',
+  // },
+});
 
 const BoxWrapper = styled.div`
   position: absolute;
@@ -527,6 +527,12 @@ const BoxWrapper = styled.div`
   transition: left 0.1s ease 0s, right 0.1s ease 0s;
   border-radius: 3px;
   background: rgb(135, 119, 217);
+
+  :hover {
+    background-color: paleturquoise;
+    left: '0%';
+    right: '10%';
+  }
 `;
 
 const EpicDragLeft = styled.div`

@@ -20,7 +20,7 @@ class Dashboard {
   }) {
     this.data = {};
     this.fields = ['assignee'];
-    this.maxResults = 50;
+    this.maxResults = 1500;
     this.projectId = projectId;
     this.versionId = versionId;
     this.teamId = teamId;

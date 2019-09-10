@@ -86,7 +86,7 @@ function AssignUser({ id, user, type }) {
           defaultValue={assignee && getAssignee(assignee)}
           // maxOptions="100"
           // options={options}
-          options={data.resources && data.resources.map(getResource)}
+          options={data && data.resources && data.resources.map(getResource)}
           // options={data.assignableUsers && data.assignableUsers.map(getAssignee)}
           onChange={(value) => {
             setAssignee(value);
