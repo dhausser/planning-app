@@ -10,9 +10,6 @@ const colors = [
   { key: 'P200 - Pastelli', value: `rgba(135, 119, 217, ${transparency})` },
 ];
 
-/**
- * TODO: Chart options to start Y scale from 0
- */
 function updateChartOptions(results, total) {
   return {
     title: {

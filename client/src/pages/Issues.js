@@ -95,12 +95,13 @@ function Issues({ navigationViewController }) {
     variables: { maxResults: ROWS_PER_PAGE },
   });
 
+
   useEffect(() => {
-    navigationViewController.setView(ProductIssuesView.id);
     if (data && data.issues && data.issues.issues.length) {
       setLength(data.issues.issues.length);
     }
-  }, [navigationViewController, data && data.issues]);
+    navigationViewController.setView(ProductIssuesView.id);
+  }, [navigationViewController, data]);
 
   return (
     <Layout>

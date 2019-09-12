@@ -17,9 +17,8 @@ const GET_CURRENT_USER = gql`
   }
 `;
 
-const AppSwitcherComponent = (props) => (
+const AppSwitcherComponent = () => (
   <GlobalItem
-    {...props}
     icon={AppSwitcherIcon}
     id="test"
     onClick={() => console.log('AppSwitcher clicked')}
@@ -28,6 +27,9 @@ const AppSwitcherComponent = (props) => (
 
 export default () => {
   const { data, loading, error } = useQuery(GET_CURRENT_USER);
+
+  if (loading) return <p>Loading</p>;
+  if (error) return <p>{`Error: ${error.message}`}</p>;
 
   return (
     <GlobalNavigation

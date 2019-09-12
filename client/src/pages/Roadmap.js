@@ -10,7 +10,12 @@ import PageHeader from '@atlaskit/page-header';
 import Page from '@atlaskit/page';
 
 import {
-  ProjectHomeView, Loading, Error, ProjectFilter, VersionFilter, Timeline,
+  ProjectHomeView,
+  Loading,
+  Error,
+  ProjectFilter,
+  VersionFilter,
+  Timeline,
 } from '../components';
 
 const Padding = styled.div`

@@ -103,7 +103,7 @@ function ProjectSwitcher() {
       setOptions(projects);
       setSelected(current || projects[0].options[0]);
     }
-  }, [data && data.projects, error, projectId, loading]);
+  }, [data, error, projectId, loading]);
 
   if (loading) return <div />;
   if (error) return <EmptyState header={error.name} description={error.message} />;

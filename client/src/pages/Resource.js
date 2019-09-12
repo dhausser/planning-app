@@ -23,23 +23,13 @@ import {
 } from '../components';
 import { ISSUE_ROW_DATA, ISSUE_PAGINATION } from './Issues';
 
-/**
- * TODO: Get User from REST API
- */
-// const GET_USER = gql`
-//   query GetUser($id: ID!) {
-//     user(id: $id) {
-//       avatarUrls {
-//         small
-//       }
-//     }
-//   }
-// `;
-
-const GET_RESOURCE_NAME = gql`
-  query getResourceById($id: ID!) {
-    resource(id: $id) {
-      name
+const GET_ASSIGNEE = gql`
+  query GetAssignee($id: ID!) {
+    user(id: $id) {
+      displayName
+      avatarUrls {
+        small
+      }
     }
   }
 `;
@@ -87,10 +77,10 @@ function Resource({ navigationViewController, match }) {
   const { resourceId } = match.params;
 
   const {
-    loading: loadingResource,
-    error: errorResource,
-    data: dataResource,
-  } = useQuery(GET_RESOURCE_NAME, {
+    loading: loadingAssignee,
+    error: errorAssignee,
+    data: dataAssignee,
+  } = useQuery(GET_ASSIGNEE, {
     variables: { id: resourceId },
   });
 
@@ -116,13 +106,13 @@ function Resource({ navigationViewController, match }) {
     if (dataIssues && dataIssues.issues && dataIssues.issues.issues.length) {
       setLength(dataIssues.issues.issues.length);
     }
-  }, [navigationViewController, dataIssues && dataIssues.issues]);
+  }, [navigationViewController, dataIssues]);
 
-  if (errorResource) {
+  if (errorAssignee) {
     return (
       <EmptyState
-        name={errorResource.name}
-        message={errorResource.message}
+        name={errorAssignee.name}
+        message={errorAssignee.message}
       />
     );
   }
@@ -139,18 +129,18 @@ function Resource({ navigationViewController, match }) {
   return (
     <Layout>
       <PageHeader bottomBar={barContent}>
-        {loadingResource
+        {loadingAssignee
           ? <Loading />
           : (
             <NameWrapper>
               <AvatarWrapper>
                 <Avatar
-                  name={dataResource && dataResource.resource.name}
+                  name={dataAssignee && dataAssignee.user.displayName}
                   size="large"
                   src={`https://${process.env.REACT_APP_HOST}/secure/useravatar?ownerId=${resourceId}`}
                 />
               </AvatarWrapper>
-              {dataResource && dataResource.resource.name}
+              {dataAssignee && dataAssignee.user.displayName}
             </NameWrapper>
           )}
       </PageHeader>
