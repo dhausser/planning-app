@@ -28,8 +28,8 @@ const AppSwitcherComponent = () => (
 export default () => {
   const { data, loading, error } = useQuery(GET_CURRENT_USER);
 
-  if (loading) return <p>Loading</p>;
-  if (error) return <p>{`Error: ${error.message}`}</p>;
+  if (loading) return null;
+  if (error) return `Error! ${error}`;
 
   return (
     <GlobalNavigation

@@ -6,7 +6,10 @@ import gql from 'graphql-tag';
 
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import {
-  ProductHomeView, Loading, Error, LoginForm,
+  ProductHomeView,
+  Loading,
+  Error,
+  LoginForm,
 } from '../components';
 
 const LOGIN_USER = gql`

@@ -1,0 +1,57 @@
+import React from 'react';
+import { useQuery } from '@apollo/react-hooks';
+import { gql } from 'apollo-boost';
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
+
+import Avatar from '@atlaskit/avatar';
+
+const GET_ASSIGNEE = gql`
+  query Assignee($id: ID!){
+    user(id: $id) {
+      displayName
+      avatarUrls {
+        large
+      }
+    }
+  }
+`;
+
+export default function NamePlate({ id }) {
+  const { loading, error, data } = useQuery(GET_ASSIGNEE, { variables: { id } });
+
+  if (loading) return null;
+  if (error) return `Error! ${error}`;
+
+  console.log(data);
+
+  return (
+    <NameWrapper>
+      <AvatarWrapper>
+        <Avatar
+          name={data.user.displayName}
+          size="large"
+          src={data.user.avatarUrls.large}
+        />
+      </AvatarWrapper>
+      {data.user.displayName}
+    </NameWrapper>
+  );
+}
+
+NamePlate.propTypes = {
+  id: PropTypes.string.isRequired,
+};
+
+/**
+ * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE
+ */
+
+const NameWrapper = styled.span`
+  display: flex;
+  align-items: center;
+`;
+
+const AvatarWrapper = styled.div`
+  margin-right: 8px;
+`;

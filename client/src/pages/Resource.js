@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/react-hooks';
+import { gql } from 'apollo-boost';
 import PropTypes from 'prop-types';
-import gql from 'graphql-tag';
-import styled from 'styled-components';
 
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import EmptyState from '@atlaskit/empty-state';
-import Avatar from '@atlaskit/avatar';
 import PageHeader from '@atlaskit/page-header';
 import TextField from '@atlaskit/textfield';
 import { Status } from '@atlaskit/status';
@@ -20,19 +18,9 @@ import {
   StatusFilter,
   IssueTable,
   LoadButton,
+  NamePlate,
 } from '../components';
 import { ISSUE_ROW_DATA, ISSUE_PAGINATION } from './Issues';
-
-const GET_ASSIGNEE = gql`
-  query GetAssignee($id: ID!) {
-    user(id: $id) {
-      displayName
-      avatarUrls {
-        small
-      }
-    }
-  }
-`;
 
 const ROWS_PER_PAGE = 50;
 
@@ -77,14 +65,6 @@ function Resource({ navigationViewController, match }) {
   const { resourceId } = match.params;
 
   const {
-    loading: loadingAssignee,
-    error: errorAssignee,
-    data: dataAssignee,
-  } = useQuery(GET_ASSIGNEE, {
-    variables: { id: resourceId },
-  });
-
-  const {
     loading: loadingIssues,
     error: errorIssues,
     data: dataIssues,
@@ -108,15 +88,6 @@ function Resource({ navigationViewController, match }) {
     }
   }, [navigationViewController, dataIssues]);
 
-  if (errorAssignee) {
-    return (
-      <EmptyState
-        name={errorAssignee.name}
-        message={errorAssignee.message}
-      />
-    );
-  }
-
   if (errorAbsences) {
     return (
       <EmptyState
@@ -129,20 +100,7 @@ function Resource({ navigationViewController, match }) {
   return (
     <Layout>
       <PageHeader bottomBar={barContent}>
-        {loadingAssignee
-          ? <Loading />
-          : (
-            <NameWrapper>
-              <AvatarWrapper>
-                <Avatar
-                  name={dataAssignee && dataAssignee.user.displayName}
-                  size="large"
-                  src={`https://${process.env.REACT_APP_HOST}/secure/useravatar?ownerId=${resourceId}`}
-                />
-              </AvatarWrapper>
-              {dataAssignee && dataAssignee.user.displayName}
-            </NameWrapper>
-          )}
+        <NamePlate id={resourceId} />
       </PageHeader>
       <p>
         <a
@@ -177,16 +135,3 @@ Resource.propTypes = {
 };
 
 export default withNavigationViewController(Resource);
-
-/**
- * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE
- */
-
-const NameWrapper = styled.span`
-  display: flex;
-  align-items: center;
-`;
-
-const AvatarWrapper = styled.div`
-  margin-right: 8px;
-`;
