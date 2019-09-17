@@ -18,7 +18,7 @@ import {
   StatusFilter,
   IssueTable,
   LoadButton,
-  NamePlate,
+  Nameplate,
 } from '../components';
 import { ISSUE_ROW_DATA, ISSUE_PAGINATION } from './Issues';
 
@@ -100,9 +100,9 @@ function Resource({ navigationViewController, match }) {
   return (
     <Layout>
       <PageHeader bottomBar={barContent}>
-        <NamePlate id={resourceId} />
+        <Nameplate id={resourceId} />
       </PageHeader>
-      <p>
+      {/* <p>
         <a
           href={`https://${process.env.REACT_APP_HOST}/issues/?jql=assignee=${resourceId}\
           AND statusCategory != Done order by priority desc`}
@@ -111,7 +111,7 @@ function Resource({ navigationViewController, match }) {
         >
         View in Issue Navigator
         </a>
-      </p>
+      </p> */}
       <IssueTable
         loading={loadingIssues}
         error={errorIssues}

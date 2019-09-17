@@ -17,29 +17,31 @@ const GET_ASSIGNEE = gql`
   }
 `;
 
-export default function NamePlate({ id }) {
+export default function Nameplate({ id }) {
   const { loading, error, data } = useQuery(GET_ASSIGNEE, { variables: { id } });
 
   if (loading) return null;
   if (error) return `Error! ${error}`;
 
-  console.log(data);
+  if (data) {
+    return (
+      <NameWrapper>
+        <AvatarWrapper>
+          <Avatar
+            name={data.user.displayName}
+            size="large"
+            src={data.user.avatarUrls.large}
+          />
+        </AvatarWrapper>
+        {data.user.displayName}
+      </NameWrapper>
+    );
+  }
 
-  return (
-    <NameWrapper>
-      <AvatarWrapper>
-        <Avatar
-          name={data.user.displayName}
-          size="large"
-          src={data.user.avatarUrls.large}
-        />
-      </AvatarWrapper>
-      {data.user.displayName}
-    </NameWrapper>
-  );
+  return <NameWrapper>Assignee</NameWrapper>;
 }
 
-NamePlate.propTypes = {
+Nameplate.propTypes = {
   id: PropTypes.string.isRequired,
 };
 

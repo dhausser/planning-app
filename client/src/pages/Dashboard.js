@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import PropTypes from 'prop-types';
-import gql from 'graphql-tag';
+import { gql } from 'apollo-boost';
 
 import { Grid } from '@atlaskit/page';
 import PageHeader from '@atlaskit/page-header';

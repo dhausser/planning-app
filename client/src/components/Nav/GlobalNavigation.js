@@ -1,6 +1,6 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
+import { gql } from 'apollo-boost';
 
 import GlobalNavigation from '@atlaskit/global-navigation';
 import { GlobalItem } from '@atlaskit/navigation-next';
@@ -26,10 +26,7 @@ const AppSwitcherComponent = () => (
 );
 
 export default () => {
-  const { data, loading, error } = useQuery(GET_CURRENT_USER);
-
-  if (loading) return null;
-  if (error) return `Error! ${error}`;
+  const { data } = useQuery(GET_CURRENT_USER);
 
   return (
     <GlobalNavigation

@@ -119,7 +119,7 @@ const row = ({
 
 const IssueTable = ({ loading, error, issues, rowsPerPage, startAt }) => (
   <DynamicTable
-    caption={issues && `${issues.total < startAt ? issues.total : startAt} of ${issues.total}`}
+    // caption={issues && `${issues.total < startAt ? issues.total : startAt} of ${issues.total}`}
     head={head}
     rows={issues
       && issues.issues

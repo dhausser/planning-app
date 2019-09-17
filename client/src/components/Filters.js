@@ -1,6 +1,6 @@
 import React from 'react';
 import { useQuery, useApolloClient } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
+import { gql } from 'apollo-boost';
 import Select from '@atlaskit/select';
 
 export const TOGGLE_FILTER = gql`

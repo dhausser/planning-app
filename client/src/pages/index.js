@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 import PropTypes from 'prop-types';
-import gql from 'graphql-tag';
+import { gql } from 'apollo-boost';
 
 import { withNavigationViewController, LayoutManagerWithViewController } from '@atlaskit/navigation-next';
 
