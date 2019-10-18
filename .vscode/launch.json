@@ -7,21 +7,18 @@
     {
       "type": "chrome",
       "request": "launch",
-      "name": "Chrome",
-      "url": "http://localhost:3000",
-      "webRoot": "${workspaceFolder}/src",
-      "sourceMapPathOverrides": {
-        "webpack:///src/*": "${webRoot}/*"
-      }
-    },
-    {
-      "type": "chrome",
-      "request": "launch",
       "name": "Launch Chrome",
       "url": "http://localhost:3000",
-      "webRoot": "${workspaceFolder}",
-      // "runtimeExecutable": "C:/Users/davy.hausser/AppData/Local/Google/Chrome SxS/Application/chrome.exe",
+      "webRoot": "${workspaceFolder}/src",
       // "userDataDir": false
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Node",
+      "program": "${workspaceFolder}/server/src/index.js",
+      "envFile": "${workspaceFolder}/server/.env",
+      "restart": true
     }
   ]
 }

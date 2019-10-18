@@ -1,30 +1,36 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Modal, { ModalTransition } from '@atlaskit/modal-dialog';
+import Form from '@atlaskit/form';
+import Button from '@atlaskit/button';
 
 function LoginForm({ login }) {
+  const onSubmit = () => {
+    window.location.replace(`
+    ${process.env.NODE_ENV === 'production'
+    ? process.env.REACT_APP_URL
+    : 'http://localhost:4000'}/auth/provider`);
+  };
+
   useEffect(() => {
     if (window.location.pathname === '/login') {
       login();
     }
   }, [login]);
 
-  const actions = [
-    {
-      text: 'Login with Jira',
-      onClick: () => window.location.replace(
-        `${process.env.NODE_ENV === 'production'
-          ? process.env.REACT_APP_URL : 'http://localhost:4000'}/auth/provider`,
-      ),
-    },
-  ];
-
   return (
     <ModalTransition>
-      <Modal actions={actions} heading="Hi there 👋">
-        <p>
-          In order to proceed please authorise this app to access your Jira data
-        </p>
+      <Modal heading="Hi there 👋">
+        <Form onSubmit={onSubmit}>
+          {({ formProps }) => (
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            <form {...formProps}>
+              <Button type="submit" appearance="primary">
+                Jira Login
+              </Button>
+            </form>
+          )}
+        </Form>
       </Modal>
     </ModalTransition>
   );
@@ -33,6 +39,5 @@ function LoginForm({ login }) {
 LoginForm.propTypes = {
   login: PropTypes.func.isRequired,
 };
-
 
 export default LoginForm;

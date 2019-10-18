@@ -12,20 +12,13 @@ import {
   LoginForm,
 } from '../components';
 
-const LOGIN_USER = gql`
+export const LOGIN_USER = gql`
   mutation login {
     login
   }
 `;
 
-/**
- * TODO: Fix the onComplete login sequence
- */
 function Login({ history, navigationViewController }) {
-  useEffect(() => {
-    navigationViewController.setView(ProductHomeView.id);
-  }, [navigationViewController]);
-
   const client = useApolloClient();
   const [login, { loading, error, data }] = useMutation(
     LOGIN_USER,
@@ -33,11 +26,20 @@ function Login({ history, navigationViewController }) {
       onCompleted: ({ login: token }) => {
         localStorage.setItem('token', token);
         client.writeData({ data: { isLoggedIn: true } });
+
+        /**
+         * TODO: Fix the onComplete login sequence
+         */
+
         history.push('/');
         window.location.reload();
       },
     },
   );
+
+  useEffect(() => {
+    navigationViewController.setView(ProductHomeView.id);
+  }, [navigationViewController]);
 
   if (loading) return <Loading />;
   if (error) return <Error />;
