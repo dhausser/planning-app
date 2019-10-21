@@ -22,7 +22,11 @@
     "passport": "^0.4.0",
     "passport-oauth": "^1.0.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^6.5.1",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2"
+  },
   "scripts": {
     "start": "nodemon -r esm ./src/index.js",
     "dev": "node --experimental-modules index.js",
