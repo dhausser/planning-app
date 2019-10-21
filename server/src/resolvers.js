@@ -66,7 +66,14 @@ const resolvers = {
     /**
      * Jira REST API
      */
-    login: (_, __, { user }) => user.token,
+    login: (_, __, { user }) => {
+      if (user && user.token) {
+        console.log(`Loging in with token ${user.token}`);
+        return user.token || null;
+      }
+      console.log('Cannot find login token');
+      return 0;
+    },
     // Resources
     editIssue: (_, { id, value, type }, { dataSources }) => (
       dataSources.issueAPI.editIssue({ id, value, type })
