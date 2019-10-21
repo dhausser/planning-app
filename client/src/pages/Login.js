@@ -30,7 +30,6 @@ function Login({ history, navigationViewController }) {
         /**
          * TODO: Fix the onComplete login sequence
          */
-
         history.push('/');
         window.location.reload();
       },
