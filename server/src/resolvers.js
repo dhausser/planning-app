@@ -67,9 +67,9 @@ const resolvers = {
      * Jira REST API
      */
     login: (_, __, { user }) => {
-      if (user && user.token) {
+      if (user.token) {
         console.log(`Loging in with token ${user.token}`);
-        return user.token || null;
+        return user.token;
       }
       console.log('Cannot find login token');
       return 0;

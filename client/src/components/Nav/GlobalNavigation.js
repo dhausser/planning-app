@@ -7,6 +7,12 @@ import { GlobalItem } from '@atlaskit/navigation-next';
 import AppSwitcherIcon from '@atlaskit/icon/glyph/app-switcher';
 import EmojiAtlassianIcon from '@atlaskit/icon/glyph/emoji/atlassian';
 
+const IS_LOGGED_IN = gql`
+  query IsUserLoggedIn {
+    isLoggedIn @client
+  }
+`;
+
 const GET_CURRENT_USER = gql`
   query GetCurrentUser {
     myself {
@@ -25,9 +31,13 @@ const AppSwitcherComponent = () => (
   />
 );
 
-export default () => {
+function GetAvatarUrl() {
   const { data } = useQuery(GET_CURRENT_USER);
+  return data && data.myself && data.myself.avatarUrls && data.myself.avatarUrls.small;
+}
 
+export default () => {
+  const { data } = useQuery(IS_LOGGED_IN);
   return (
     <GlobalNavigation
       productIcon={EmojiAtlassianIcon}
@@ -43,10 +53,7 @@ export default () => {
       appSwitcherTooltip="Switch to ..."
       onSettingsClick={() => console.log('settings clicked')}
       profileItems={() => <div />}
-      profileIconUrl={data
-        && data.myself
-        && data.myself.avatarUrls
-        && data.myself.avatarUrls.small}
+      profileIconUrl={data.isLoggedIn ? GetAvatarUrl() : null}
     />
   );
 };

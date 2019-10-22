@@ -3,40 +3,36 @@ import PropTypes from 'prop-types';
 import Modal, { ModalTransition } from '@atlaskit/modal-dialog';
 
 
-let windowObjectReference;
-/**
- * TODO: https://developer.mozilla.org/en-US/docs/Web/API/Window/open
- */
-const strWindowFeatures = 'height=450,width=650,centerscreen=yes';
-
 const openRequestedPopup = () => {
-  const link = `
-    ${process.env.NODE_ENV === 'production'
+  const url = `${process.env.NODE_ENV === 'production'
     ? process.env.REACT_APP_URL
     : 'http://localhost:4000'}/auth/provider`;
-  windowObjectReference = window.open(link, '_blank', strWindowFeatures);
-};
 
-const onSubmit = () => {
-  openRequestedPopup();
-  console.log(windowObjectReference);
-  // window.location.replace(link);
-};
+  // eslint-disable-next-line no-restricted-globals
+  const { width, height } = screen;
 
+  const windowHeight = 450;
+  const windowWidth = 650;
+
+  const left = (width / 2) - (windowWidth / 2);
+  const top = (height / 2) - (windowHeight / 2);
+
+  return window.open(url, '_blank', `width=${windowWidth}, height=${windowHeight}, top=${top}, left=${left}`);
+};
 
 function LoginForm({ login }) {
   const actions = [
-    { text: 'Login', onClick: onSubmit },
+    { text: 'Login', onClick: openRequestedPopup },
   ];
 
   /**
    * TODO: This is not the best way to handle redirect callback
    */
-  useEffect(() => {
-    if (window.location.pathname === '/login') {
-      login();
-    }
-  }, [login]);
+  // useEffect(() => {
+  //   if (window.location.pathname === '/login') {
+  //     login();
+  //   }
+  // }, [login]);
 
 
   return (
