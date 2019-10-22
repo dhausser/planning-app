@@ -1,42 +1,42 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Modal, { ModalTransition } from '@atlaskit/modal-dialog';
 
 
-// let windowObjectReference;
+let windowObjectReference;
 /**
  * TODO: https://developer.mozilla.org/en-US/docs/Web/API/Window/open
  */
-// const strWindowFeatures = 'height=450,width=650,centerscreen=yes';
+const strWindowFeatures = 'height=450,width=650,centerscreen=yes';
 
-// const openRequestedPopup = () => {
-//   const link = `
-//     ${process.env.NODE_ENV === 'production'
-//     ? process.env.REACT_APP_URL
-//     : 'http://localhost:4000'}/auth/provider`;
-//   windowObjectReference = window.open(link, '_blank', strWindowFeatures);
-// };
+const openRequestedPopup = () => {
+  const link = `
+    ${process.env.NODE_ENV === 'production'
+    ? process.env.REACT_APP_URL
+    : 'http://localhost:4000'}/auth/provider`;
+  windowObjectReference = window.open(link, '_blank', strWindowFeatures);
+};
 
-// const onSubmit = () => {
-//   openRequestedPopup();
-//   console.log(windowObjectReference);
-//   // window.location.replace(link);
-// };
+const onSubmit = () => {
+  openRequestedPopup();
+  console.log(windowObjectReference);
+  // window.location.replace(link);
+};
 
 
 function LoginForm({ login }) {
   const actions = [
-    { text: 'Secondary Action', onClick: login },
+    { text: 'Login', onClick: onSubmit },
   ];
 
   /**
    * TODO: This is not the best way to handle redirect callback
    */
-  // useEffect(() => {
-  // if (window.location.pathname === '/login') {
-  //   login();
-  // }
-  // }, [login]);
+  useEffect(() => {
+    if (window.location.pathname === '/login') {
+      login();
+    }
+  }, [login]);
 
 
   return (

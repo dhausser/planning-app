@@ -1,8 +1,12 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Redirect,
+} from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
-import PropTypes from 'prop-types';
 import { gql } from 'apollo-boost';
+import PropTypes from 'prop-types';
 
 import { withNavigationViewController, LayoutManagerWithViewController } from '@atlaskit/navigation-next';
 
@@ -32,7 +36,7 @@ const IS_LOGGED_IN = gql`
   }
 `;
 
-function Router({ navigationViewController }) {
+function AppRouter({ navigationViewController }) {
   useEffect(() => {
     navigationViewController.addView(productHomeView);
     navigationViewController.addView(productIssuesView);
@@ -42,7 +46,7 @@ function Router({ navigationViewController }) {
   const { data } = useQuery(IS_LOGGED_IN);
 
   return (
-    <BrowserRouter>
+    <Router>
       <LayoutManagerWithViewController globalNavigation={GlobalNavigation}>
         {data.isLoggedIn ? (
           <>
@@ -63,12 +67,40 @@ function Router({ navigationViewController }) {
           </>
         ) : <Login />}
       </LayoutManagerWithViewController>
-    </BrowserRouter>
+    </Router>
   );
 }
 
-Router.propTypes = {
+// A wrapper for <Route> that redirects to the login
+// screen if you're not yet authenticated.
+function PrivateRoute({ children, ...rest }) {
+  const { data } = useQuery(IS_LOGGED_IN);
+
+  return (
+    <Route
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...rest}
+      render={({ location }) => (data.isLoggedIn ? (
+        children
+      ) : (
+        <Redirect
+          to={{
+            pathname: '/login',
+            state: { from: location },
+          }}
+        />
+      ))}
+    />
+  );
+}
+
+PrivateRoute.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+AppRouter.propTypes = {
   navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
 };
 
-export default withNavigationViewController(Router);
+
+export default withNavigationViewController(AppRouter);
