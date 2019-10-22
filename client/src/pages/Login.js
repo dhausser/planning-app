@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
-import { useRouteMatch } from 'react-router-dom';
 import { useApolloClient, useMutation } from '@apollo/react-hooks';
-import PropTypes from 'prop-types';
 import { gql } from 'apollo-boost';
+import PropTypes from 'prop-types';
 
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import {
@@ -19,8 +18,6 @@ export const LOGIN_USER = gql`
 `;
 
 function Login({ navigationViewController }) {
-  useRouteMatch('/login');
-
   useEffect(() => {
     navigationViewController.setView(ProductHomeView.id);
   }, [navigationViewController]);
@@ -33,7 +30,6 @@ function Login({ navigationViewController }) {
       onCompleted: ({ login: token }) => {
         localStorage.setItem('token', token);
         client.writeData({ data: { isLoggedIn: true } });
-        window.opener.location.reload();
         window.close();
       },
     },

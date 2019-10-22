@@ -48,29 +48,31 @@ function AppRouter({ navigationViewController }) {
 
   return (
     <Router>
-      {data.isLoggedIn ? (
-        <LayoutManagerWithViewController globalNavigation={GlobalNavigation}>
-          <Route path="/resource/:resourceId" component={Resource} />
-          <Route path="/issue/:issueId" component={Issue} />
-          <Route path="/settings" component={Settings} />
-          <Route path="/reports" component={Dashboard} />
-          <Route path="/releases" component={Releases} />
-          <Route path="/backlog" component={Backlog} />
-          <Route path="/board" component={Board} />
-          <Route path="/roadmap" component={Roadmap} />
-          <Route path="/resources" component={Resources} />
-          <Route path="/issues" component={Issues} />
-          <Route path="/dashboards" component={Dashboard} />
-          <Route path="/pages" component={Pages} />
-          <Route path="/AddItem" component={AddItem} />
-          <Route path="/" exact component={Projects} />
-        </LayoutManagerWithViewController>
-      ) : (
-        <>
-          <Route path="/login" exact component={Callback} />
-          <Route path="/" exact component={Login} />
-        </>
-      )}
+      <LayoutManagerWithViewController globalNavigation={GlobalNavigation}>
+        {data.isLoggedIn ? (
+          <>
+            <Route path="/resource/:resourceId" component={Resource} />
+            <Route path="/issue/:issueId" component={Issue} />
+            <Route path="/settings" component={Settings} />
+            <Route path="/reports" component={Dashboard} />
+            <Route path="/releases" component={Releases} />
+            <Route path="/backlog" component={Backlog} />
+            <Route path="/board" component={Board} />
+            <Route path="/roadmap" component={Roadmap} />
+            <Route path="/resources" component={Resources} />
+            <Route path="/issues" component={Issues} />
+            <Route path="/dashboards" component={Dashboard} />
+            <Route path="/pages" component={Pages} />
+            <Route path="/AddItem" component={AddItem} />
+            <Route path="/" exact component={Projects} />
+          </>
+        ) : (
+          <>
+            <Route path="/callback" exact component={Callback} />
+            <Login />
+          </>
+        )}
+      </LayoutManagerWithViewController>
     </Router>
   );
 }
