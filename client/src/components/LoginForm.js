@@ -1,14 +1,5 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { gql } from 'apollo-boost';
-
+import React from 'react';
 import Modal, { ModalTransition } from '@atlaskit/modal-dialog';
-
-const IS_LOGGED_IN = gql`
-  query IsUserLoggedIn {
-    isLoggedIn @client
-  }
-`;
 
 const openRequestedPopup = () => {
   const url = `${process.env.NODE_ENV === 'production'
@@ -27,12 +18,9 @@ const openRequestedPopup = () => {
   return window.open(url, '_blank', `width=${windowWidth}, height=${windowHeight}, top=${top}, left=${left}`);
 };
 
-function LoginForm({ login }) {
-  const [isOpen, setIsOpen] = useState(true);
-
+function LoginForm() {
   const actions = [
     { text: 'Login', onClick: openRequestedPopup },
-    // { text: 'Close', onClick: () => { setIsOpen(false); } },
   ];
 
   /**
@@ -42,27 +30,13 @@ function LoginForm({ login }) {
    * 3. onCompleted closes the login popup window and triggers a update to logged in state
    */
 
-  // useEffect(() => {
-  //   if (window.location === '/fallback' || user.isLoggedIn) {
-  //     console.log('Falling back!');
-  //     setIsOpen(false);
-  //   }
-  // }, [user, location]);
-
   return (
     <ModalTransition>
-      {isOpen
-        && (
-        <Modal actions={actions} heading="Login 👋">
-          <p>Please log in with your Atlassian user profile.</p>
-        </Modal>
-        )}
+      <Modal actions={actions} heading="Login 👋">
+        <p>Please log in with your Atlassian user profile.</p>
+      </Modal>
     </ModalTransition>
   );
 }
-
-LoginForm.propTypes = {
-  login: PropTypes.func.isRequired,
-};
 
 export default LoginForm;

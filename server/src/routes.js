@@ -19,7 +19,7 @@ router.get('/auth/provider', passport.authenticate('oauth'));
 router.get(
   '/auth/provider/callback',
   passport.authenticate('oauth', {
-    successRedirect: `${baseUrl}/callback`,
+    successRedirect: `${baseUrl}/login`,
     failureRedirect: `${baseUrl}`,
   }),
 );

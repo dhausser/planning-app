@@ -29,7 +29,7 @@ import Pages from './Pages';
 import AddItem from './AddItem';
 import Settings from './Settings';
 import Login from './Login';
-import Callback from './Callback';
+import { LoginForm } from '../components';
 
 export const IS_LOGGED_IN = gql`
   query IsUserLoggedIn {
@@ -68,8 +68,8 @@ function AppRouter({ navigationViewController }) {
           </>
         ) : (
           <>
-            <Route path="/callback" exact component={Callback} />
-            <Login />
+            <Route path="/login" exact component={Login} />
+            <LoginForm />
           </>
         )}
       </LayoutManagerWithViewController>

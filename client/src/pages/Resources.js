@@ -1,7 +1,9 @@
-import React, { useEffect } from 'react';
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/prop-types */
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
-import PropTypes from 'prop-types';
 import { gql } from 'apollo-boost';
 import styled from 'styled-components';
 
@@ -11,6 +13,11 @@ import Avatar from '@atlaskit/avatar';
 import EmptyState from '@atlaskit/empty-state';
 import PageHeader from '@atlaskit/page-header';
 import TextField from '@atlaskit/textfield';
+import Button, { ButtonGroup } from '@atlaskit/button';
+import ModalDialog, { ModalFooter, ModalTransition } from '@atlaskit/modal-dialog';
+import Form, { Field } from '@atlaskit/form';
+import Textfield from '@atlaskit/textfield';
+import Select from '@atlaskit/select';
 
 import { TeamFilter, ProjectHomeView, Layout } from '../components';
 
@@ -27,6 +34,14 @@ const GET_RESOURCES = gql`
       key
       name
       team
+    }
+  }
+`;
+
+const GET_TEAMS = gql`
+  query GetTeams {
+    teams {
+      id
     }
   }
 `;
@@ -63,10 +78,15 @@ const head = {
       isSortable: true,
       width: 15,
     },
+    {
+      key: 'actions',
+      content: 'Actions',
+      width: 15,
+    },
   ],
 };
 
-const rows = (resources) => resources.map((resource) => ({
+const rows = (resources, setIsEditOpen, setIsDeleteOpen) => resources.map((resource) => ({
   key: resource.key,
   cells: [
     {
@@ -89,14 +109,30 @@ const rows = (resources) => resources.map((resource) => ({
       key: createKey(resource.team),
       content: resource.team,
     },
+    {
+      key: 'actions',
+      content: (
+        <ButtonGroup>
+          <Button appearance="primary" onClick={() => setIsEditOpen(true)}>Edit</Button>
+          <Button appearance="subtle" onClick={() => setIsDeleteOpen(true)}>Delete</Button>
+        </ButtonGroup>
+      ),
+    },
   ],
 }));
 
+const onFormSubmit = (data) => console.log(JSON.stringify(data));
+
 function Resources({ navigationViewController }) {
+  const [isCreateOpen, setIsCreateOpen] = useState(false);
+  const [isEditOpen, setIsEditOpen] = useState(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+
   useEffect(() => navigationViewController.setView(ProjectHomeView.id), [navigationViewController]);
 
   const { data: { teamId } } = useQuery(GET_TEAM_FILTER);
   const { data, loading, error } = useQuery(GET_RESOURCES);
+  const { data: teamData } = useQuery(GET_TEAMS);
 
   let resources = [];
   if (error) return <EmptyState header={error.name} description={error.message} />;
@@ -106,13 +142,22 @@ function Resources({ navigationViewController }) {
       : data.resources;
   }
 
+  const options = teamData
+    && teamData.teams
+    && teamData.teams.map(({ id }) => ({ value: id, label: id }));
+
+  console.log({ options });
+
   return (
     <Layout>
       <PageHeader bottomBar={barContent}>Teams</PageHeader>
+      <ButtonGroup>
+        <Button appearance="primary" onClick={() => setIsCreateOpen(true)}>Create</Button>
+      </ButtonGroup>
       <DynamicTable
         caption={`${resources.length} people`}
         head={head}
-        rows={rows(resources)}
+        rows={rows(resources, setIsEditOpen, setIsDeleteOpen)}
         rowsPerPage={20}
         loadingSpinnerSize="large"
         isLoading={loading}
@@ -120,6 +165,61 @@ function Resources({ navigationViewController }) {
         defaultSortKey="name"
         defaultSortOrder="ASC"
       />
+      <ModalTransition>
+        {isCreateOpen
+          && (
+          <ModalDialog
+            heading="Create"
+            onClose={() => setIsCreateOpen(false)}
+            components={{
+              Container: ({ children, className }) => (
+                <Form onSubmit={onFormSubmit}>
+                  {({ formProps }) => (
+                    <form {...formProps} className={className}>
+                      {children}
+                    </form>
+                  )}
+                </Form>
+              ),
+              Footer: () => (
+                <ModalFooter>
+                  <span />
+                  <ButtonGroup>
+                    <Button appearance="primary" type="submit">Submit</Button>
+                    <Button appearance="default" type="close" onClick={() => setIsCreateOpen(false)}>Close</Button>
+                  </ButtonGroup>
+                </ModalFooter>
+              ),
+            }}
+          >
+            <Field label="Firstname" name="firstname" defaultValue="">
+              {({ fieldProps }) => (
+                <Textfield placeholder="Gerald" {...fieldProps} />
+              )}
+            </Field>
+            <Field label="Lastname" name="lastname" defaultValue="">
+              {({ fieldProps }) => (
+                <Textfield placeholder="Of Rivia" {...fieldProps} />
+              )}
+            </Field>
+            <Field label="Email" name="email" defaultValue="">
+              {({ fieldProps }) => (
+                <Textfield
+                  placeholder="gerald@cdprojektred.com"
+                  {...fieldProps}
+                />
+              )}
+            </Field>
+            <Field label="Team" name="team" defaultValue="">
+              {({ fieldProps }) => (
+                <Select options={options} placeholder="Team" {...fieldProps} />
+              )}
+            </Field>
+          </ModalDialog>
+          )}
+        {isEditOpen && <ModalDialog heading="Edit" onClose={() => setIsEditOpen(false)} />}
+        {isDeleteOpen && <ModalDialog heading="Delete" onClose={() => setIsDeleteOpen(false)} />}
+      </ModalTransition>
     </Layout>
   );
 }
