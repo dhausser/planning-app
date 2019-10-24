@@ -157,6 +157,50 @@ class ResourceAPI extends DataSource {
 
     return cursor.toArray();
   }
+
+  async createResource({
+    id, firstname, lastname, email, team,
+  }) {
+    let cursor;
+
+    try {
+      console.log(`Creating resource: ${id}`);
+      cursor = await this.store.resources.find();
+    } catch (e) {
+      console.error(`Unable to issye command, ${e}`);
+    }
+
+    const key = id;
+    return { key };
+  }
+
+  async updateResource({
+    id, firstname, lastname, email, team,
+  }) {
+    let cursor;
+
+    try {
+      console.log(`Updating resource ${id}`);
+      cursor = await this.store.resources.find();
+    } catch (e) {
+      console.error(`Unable to issye command, ${e}`);
+    }
+
+    return cursor.toArray();
+  }
+
+  async deleteResource({ id }) {
+    let cursor;
+
+    try {
+      console.log(`Deleting resource ${id}`);
+      cursor = await this.store.resources.find();
+    } catch (e) {
+      console.error(`Unable to issye command, ${e}`);
+    }
+
+    return cursor.toArray();
+  }
 }
 
 export default ResourceAPI;

@@ -170,6 +170,11 @@ const typeDefs = gql`
 
     # Return Access Token
     login: String!
+
+    # Resources
+    createResource(id: ID!, firstname: String!, lastname: String!, email: String!, team: String!): Resource
+    updateResource(id: ID!, firstname: String!, lastname: String!, email: String!, team: String!): Resource
+    deleteResource(id: ID!): Resource
   }
 `;
 

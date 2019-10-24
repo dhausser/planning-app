@@ -74,12 +74,31 @@ const resolvers = {
       console.log('Cannot find login token');
       return 0;
     },
-    // Resources
     editIssue: (_, { id, value, type }, { dataSources }) => (
       dataSources.issueAPI.editIssue({ id, value, type })
     ),
     assignIssue: (_, { id, key }, { dataSources }) => (
       dataSources.issueAPI.assignIssue({ id, key })
+    ),
+    /**
+     * Mongo DB
+     */
+    createResource: (_, {
+      id, firstname, lastname, email, team,
+    }, { dataSources }) => (
+      dataSources.resourceAPI.createResource({
+        id, firstname, lastname, email, team,
+      })
+    ),
+    updateResource: (_, {
+      id, firstname, lastname, email, team,
+    }, { dataSources }) => (
+      dataSources.resourceAPI.updateResource({
+        id, firstname, lastname, email, team,
+      })
+    ),
+    deleteResource: (_, { id }, { dataSources }) => (
+      dataSources.resourceAPI.deleteResource({ id })
     ),
   },
 };

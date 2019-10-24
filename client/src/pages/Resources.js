@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import styled from 'styled-components';
 
@@ -16,7 +16,6 @@ import TextField from '@atlaskit/textfield';
 import Button, { ButtonGroup } from '@atlaskit/button';
 import ModalDialog, { ModalFooter, ModalTransition } from '@atlaskit/modal-dialog';
 import Form, { Field } from '@atlaskit/form';
-import Textfield from '@atlaskit/textfield';
 import Select from '@atlaskit/select';
 
 import { TeamFilter, ProjectHomeView, Layout } from '../components';
@@ -42,6 +41,30 @@ const GET_TEAMS = gql`
   query GetTeams {
     teams {
       id
+    }
+  }
+`;
+
+const CREATE_RESOURCE = gql`
+  mutation CreateResource($id: ID!, $firstname: String!, $lastname: String!, $email: String!, $team: String!) {
+    createResource(id: $id, firstname: $firstname, lastname: $lastname, email: $email, team: $team) {
+      key
+    }
+  }
+`;
+
+const UPDATE_RESOURCE = gql`
+  mutation UpdateResource($id: ID!, $firstname: String!, $lastname: String!, $email: String!, $team: String!) {
+    updateResource(id: $id, firstname: $firstname, lastname: $lastname, email: $email, team: $team) {
+      key
+    }
+  }
+`;
+
+const DELETE_RESOURCE = gql`
+  mutation DeleteResource($id: ID!) {
+    deleteResource(id: $id) {
+      key
     }
   }
 `;
@@ -113,15 +136,151 @@ const rows = (resources, setIsEditOpen, setIsDeleteOpen) => resources.map((resou
       key: 'actions',
       content: (
         <ButtonGroup>
-          <Button appearance="primary" onClick={() => setIsEditOpen(true)}>Edit</Button>
-          <Button appearance="subtle" onClick={() => setIsDeleteOpen(true)}>Delete</Button>
+          <Button appearance="default" onClick={() => setIsEditOpen(true)}>Edit</Button>
+          <Button appearance="default" onClick={() => setIsDeleteOpen(true)}>Delete</Button>
         </ButtonGroup>
       ),
     },
   ],
 }));
 
-const onFormSubmit = (data) => console.log(JSON.stringify(data));
+const footer = (setIsOpen) => (
+  <ModalFooter>
+    <span />
+    <ButtonGroup>
+      <Button appearance="default" type="close" onClick={() => setIsOpen(false)}>Close</Button>
+      <Button appearance="primary" type="submit">Submit</Button>
+    </ButtonGroup>
+  </ModalFooter>
+);
+
+function CreateResourceModal({ setIsOpen }) {
+  const [createResource] = useMutation(CREATE_RESOURCE, {
+    onCompleted: ({ key }) => { console.log(`Successfully created resource: ${key}`); },
+  });
+  const { data } = useQuery(GET_TEAMS);
+  const options = data && data.teams && data.teams.map(({ id }) => ({ label: id, value: id }));
+
+  return (
+    <ModalDialog
+      heading="Create"
+      onClose={() => setIsOpen(false)}
+      components={{
+        Container: ({ children, className }) => (
+          <Form onSubmit={(formData) => {
+            console.log('form data', formData);
+            const {
+              firstname, lastname, email, team: { value },
+            } = formData;
+            const id = `${firstname.toLowerCase()}.${lastname.toLowerCase()}`;
+            createResource({
+              variables: {
+                id, firstname, lastname, email, team: value,
+              },
+            });
+            setIsOpen(false);
+          }}
+          >
+            {({ formProps }) => (
+              <form {...formProps} className={className}>
+                {children}
+              </form>
+            )}
+          </Form>
+        ),
+        Footer: () => footer(setIsOpen),
+      }}
+    >
+      <Field label="Firstname" name="firstname" defaultValue="" isRequired>
+        {({ fieldProps }) => <TextField placeholder="Gerald" {...fieldProps} />}
+      </Field>
+      <Field label="Lastname" name="lastname" defaultValue="" isRequired>
+        {({ fieldProps }) => <TextField placeholder="Of Rivia" {...fieldProps} />}
+      </Field>
+      <Field label="Email" name="email" defaultValue="" isRequired>
+        {({ fieldProps }) => <TextField placeholder="gerald@cdprojektred.com" {...fieldProps} />}
+      </Field>
+      <Field label="Team" name="team" defaultValue="" isRequired>
+        {({ fieldProps }) => <Select options={options} placeholder="Team" {...fieldProps} />}
+      </Field>
+    </ModalDialog>
+  );
+}
+
+function EditResourceModal({ setIsOpen }) {
+  const [updateResource] = useMutation(UPDATE_RESOURCE);
+  const { data } = useQuery(GET_TEAMS);
+  const options = data && data.teams && data.teams.map(({ id }) => ({ label: id, value: id }));
+
+  return (
+    <ModalDialog
+      heading="Edit"
+      onClose={() => setIsOpen(false)}
+      components={{
+        Container: ({ children, className }) => (
+          <Form onSubmit={(formData) => {
+            console.log('form data', formData);
+            updateResource({ variables: { ...formData } });
+            setIsOpen(false);
+          }}
+          >
+            {({ formProps }) => (
+              <form {...formProps} className={className}>
+                {children}
+              </form>
+            )}
+          </Form>
+        ),
+        Footer: () => footer(setIsOpen),
+      }}
+    >
+      <Field label="Firstname" name="firstname" defaultValue="" isRequired>
+        {({ fieldProps }) => <TextField placeholder="Gerald" {...fieldProps} />}
+      </Field>
+      <Field label="Lastname" name="lastname" defaultValue="" isRequired>
+        {({ fieldProps }) => <TextField placeholder="Of Rivia" {...fieldProps} />}
+      </Field>
+      <Field label="Email" name="email" defaultValue="" isRequired>
+        {({ fieldProps }) => <TextField placeholder="gerald@cdprojektred.com" {...fieldProps} />}
+      </Field>
+      <Field label="Team" name="team" defaultValue="" isRequired>
+        {({ fieldProps }) => <Select options={options} placeholder="Team" {...fieldProps} />}
+      </Field>
+    </ModalDialog>
+  );
+}
+
+function DeleteResourceModal({ setIsOpen }) {
+  const [deleteResource] = useMutation(DELETE_RESOURCE);
+  return (
+    <ModalDialog
+      heading="Delete"
+      onClose={() => setIsOpen(false)}
+      components={{
+        Container: ({ children, className }) => (
+          <Form onSubmit={(data) => {
+            console.log('form data', data);
+            deleteResource({ variables: { ...data } });
+            setIsOpen(false);
+          }}
+          >
+            {({ formProps }) => (
+              <form {...formProps} className={className}>
+                {children}
+              </form>
+            )}
+          </Form>
+        ),
+        Footer: () => footer(setIsOpen),
+      }}
+    >
+      <p>Are you sure want to delete this resource?</p>
+      <Field label="Email" name="email" defaultValue="" isRequired>
+        {({ fieldProps }) => <TextField placeholder="gerald@cdprojektred.com" {...fieldProps} />}
+      </Field>
+    </ModalDialog>
+  );
+}
 
 function Resources({ navigationViewController }) {
   const [isCreateOpen, setIsCreateOpen] = useState(false);
@@ -132,7 +291,6 @@ function Resources({ navigationViewController }) {
 
   const { data: { teamId } } = useQuery(GET_TEAM_FILTER);
   const { data, loading, error } = useQuery(GET_RESOURCES);
-  const { data: teamData } = useQuery(GET_TEAMS);
 
   let resources = [];
   if (error) return <EmptyState header={error.name} description={error.message} />;
@@ -141,12 +299,6 @@ function Resources({ navigationViewController }) {
       ? data.resources.filter((resource) => resource.team === teamId)
       : data.resources;
   }
-
-  const options = teamData
-    && teamData.teams
-    && teamData.teams.map(({ id }) => ({ value: id, label: id }));
-
-  console.log({ options });
 
   return (
     <Layout>
@@ -166,59 +318,9 @@ function Resources({ navigationViewController }) {
         defaultSortOrder="ASC"
       />
       <ModalTransition>
-        {isCreateOpen
-          && (
-          <ModalDialog
-            heading="Create"
-            onClose={() => setIsCreateOpen(false)}
-            components={{
-              Container: ({ children, className }) => (
-                <Form onSubmit={onFormSubmit}>
-                  {({ formProps }) => (
-                    <form {...formProps} className={className}>
-                      {children}
-                    </form>
-                  )}
-                </Form>
-              ),
-              Footer: () => (
-                <ModalFooter>
-                  <span />
-                  <ButtonGroup>
-                    <Button appearance="primary" type="submit">Submit</Button>
-                    <Button appearance="default" type="close" onClick={() => setIsCreateOpen(false)}>Close</Button>
-                  </ButtonGroup>
-                </ModalFooter>
-              ),
-            }}
-          >
-            <Field label="Firstname" name="firstname" defaultValue="">
-              {({ fieldProps }) => (
-                <Textfield placeholder="Gerald" {...fieldProps} />
-              )}
-            </Field>
-            <Field label="Lastname" name="lastname" defaultValue="">
-              {({ fieldProps }) => (
-                <Textfield placeholder="Of Rivia" {...fieldProps} />
-              )}
-            </Field>
-            <Field label="Email" name="email" defaultValue="">
-              {({ fieldProps }) => (
-                <Textfield
-                  placeholder="gerald@cdprojektred.com"
-                  {...fieldProps}
-                />
-              )}
-            </Field>
-            <Field label="Team" name="team" defaultValue="">
-              {({ fieldProps }) => (
-                <Select options={options} placeholder="Team" {...fieldProps} />
-              )}
-            </Field>
-          </ModalDialog>
-          )}
-        {isEditOpen && <ModalDialog heading="Edit" onClose={() => setIsEditOpen(false)} />}
-        {isDeleteOpen && <ModalDialog heading="Delete" onClose={() => setIsDeleteOpen(false)} />}
+        {isCreateOpen && <CreateResourceModal setIsOpen={setIsCreateOpen} />}
+        {isEditOpen && <EditResourceModal setIsOpen={setIsEditOpen} />}
+        {isDeleteOpen && <DeleteResourceModal setIsOpen={setIsDeleteOpen} />}
       </ModalTransition>
     </Layout>
   );
