@@ -16,7 +16,7 @@ const typeDefs = gql`
     absences(id: ID!, versionId: String): [Absence]!
     user(id: ID!): User!
     myself: User!
-    assignableUsers(id: ID!): [User]!
+    assignableUsers(project: String): [User]!
   }
 
   type User {
@@ -172,7 +172,7 @@ const typeDefs = gql`
     login: String!
 
     # Resources
-    createResource(id: ID!, firstname: String!, lastname: String!, email: String!, team: String!): Resource
+    insertResource(id: ID!, firstname: String!, lastname: String!, email: String!, team: String!): Resource
     updateResource(id: ID!, firstname: String!, lastname: String!, email: String!, team: String!): Resource
     deleteResource(id: ID!): Resource
   }

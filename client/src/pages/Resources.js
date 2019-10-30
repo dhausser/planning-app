@@ -17,8 +17,11 @@ import Button, { ButtonGroup } from '@atlaskit/button';
 import ModalDialog, { ModalFooter, ModalTransition } from '@atlaskit/modal-dialog';
 import Form, { Field } from '@atlaskit/form';
 import Select from '@atlaskit/select';
+import UserPicker from '@atlaskit/user-picker';
+import Spinner from '@atlaskit/spinner';
 
 import { TeamFilter, ProjectHomeView, Layout } from '../components';
+import { getResource } from '../components/Issue/UserPicker';
 
 const GET_TEAM_FILTER = gql`
   {
@@ -45,9 +48,9 @@ const GET_TEAMS = gql`
   }
 `;
 
-const CREATE_RESOURCE = gql`
-  mutation CreateResource($id: ID!, $firstname: String!, $lastname: String!, $email: String!, $team: String!) {
-    createResource(id: $id, firstname: $firstname, lastname: $lastname, email: $email, team: $team) {
+const INSERT_RESOURCE = gql`
+  mutation InsertResource($id: ID!, $firstname: String!, $lastname: String!, $email: String!, $team: String!) {
+    insertResource(id: $id, firstname: $firstname, lastname: $lastname, email: $email, team: $team) {
       key
     }
   }
@@ -65,6 +68,15 @@ const DELETE_RESOURCE = gql`
   mutation DeleteResource($id: ID!) {
     deleteResource(id: $id) {
       key
+    }
+  }
+`;
+
+const GET_ASSIGNABLE_USERS = gql`
+  query GetAssignableUsers($project: String) {
+    assignableUsers(project: $project) {
+      key
+      displayName
     }
   }
 `;
@@ -144,26 +156,69 @@ const rows = (resources, setIsEditOpen, setIsDeleteOpen) => resources.map((resou
   ],
 }));
 
-const footer = (setIsOpen) => (
+const Footer = ({ setIsOpen }) => (
   <ModalFooter>
     <span />
     <ButtonGroup>
-      <Button appearance="default" type="close" onClick={() => setIsOpen(false)}>Close</Button>
       <Button appearance="primary" type="submit">Submit</Button>
+      <Button appearance="default" type="close" onClick={() => setIsOpen(false)}>Close</Button>
     </ButtonGroup>
   </ModalFooter>
 );
 
+const footer = (setIsOpen) => (
+  <ModalFooter>
+    <span />
+    <ButtonGroup>
+      <Button appearance="primary" type="submit">Submit</Button>
+      <Button appearance="default" type="close" onClick={() => setIsOpen(false)}>Close</Button>
+    </ButtonGroup>
+  </ModalFooter>
+);
+
+function AssignableUserPicker() {
+  const { loading, error, data } = useQuery(GET_ASSIGNABLE_USERS, { variables: { project: '10500' } });
+
+  if (error) return <EmptyState name={error.name} message={error.message} />;
+  if (loading || !data) return <Spinner size="small" />;
+
+  return (
+    <UserPicker
+      fieldId="assignee"
+      isLoading={loading}
+      options={data && data.resources && data.resources.map(getResource)}
+      onChange={(value) => { console.log(value); }}
+      onInputChange={(value) => { console.log(value); }}
+    />
+  );
+}
+
+function TeamPicker({ fieldProps }) {
+  const { loading, error, data } = useQuery(GET_TEAMS);
+  const options = data && data.teams && data.teams.map(({ id }) => ({ label: id, value: id }));
+
+  if (error) return <EmptyState name={error.name} message={error.message} />;
+  if (loading || !data) return <Spinner size="small" />;
+
+  return (
+    <Select
+      {...fieldProps}
+      options={options}
+      placeholder="Choose a Team"
+      defaultValue={options[0]}
+    />
+  );
+}
+
 function CreateResourceModal({ setIsOpen }) {
-  const [createResource] = useMutation(CREATE_RESOURCE, {
+  const [insertResource] = useMutation(INSERT_RESOURCE, {
     onCompleted: ({ key }) => { console.log(`Successfully created resource: ${key}`); },
   });
-  const { data } = useQuery(GET_TEAMS);
-  const options = data && data.teams && data.teams.map(({ id }) => ({ label: id, value: id }));
 
   return (
     <ModalDialog
       heading="Create"
+      scrollBehavior="outside"
       onClose={() => setIsOpen(false)}
       components={{
         Container: ({ children, className }) => (
@@ -173,7 +228,7 @@ function CreateResourceModal({ setIsOpen }) {
               firstname, lastname, email, team: { value },
             } = formData;
             const id = `${firstname.toLowerCase()}.${lastname.toLowerCase()}`;
-            createResource({
+            insertResource({
               variables: {
                 id, firstname, lastname, email, team: value,
               },
@@ -191,18 +246,17 @@ function CreateResourceModal({ setIsOpen }) {
         Footer: () => footer(setIsOpen),
       }}
     >
-      <Field label="Firstname" name="firstname" defaultValue="" isRequired>
-        {({ fieldProps }) => <TextField placeholder="Gerald" {...fieldProps} />}
+      <Field label="Assignee" name="assignee" defaultValue="" placeholder="Assignee" isRequired>
+        {({ fieldProps }) => <AssignableUserPicker fieldProps={fieldProps} />}
       </Field>
-      <Field label="Lastname" name="lastname" defaultValue="" isRequired>
-        {({ fieldProps }) => <TextField placeholder="Of Rivia" {...fieldProps} />}
+      <Field label="Team" name="team" defaultValue="" placeholder="Team" isRequired>
+        {({ fieldProps }) => (
+          <>
+            <TeamPicker fieldProps={fieldProps} />
+          </>
+        )}
       </Field>
-      <Field label="Email" name="email" defaultValue="" isRequired>
-        {({ fieldProps }) => <TextField placeholder="gerald@cdprojektred.com" {...fieldProps} />}
-      </Field>
-      <Field label="Team" name="team" defaultValue="" isRequired>
-        {({ fieldProps }) => <Select options={options} placeholder="Team" {...fieldProps} />}
-      </Field>
+      <Footer setIsOpen={setIsOpen} />
     </ModalDialog>
   );
 }
@@ -215,12 +269,21 @@ function EditResourceModal({ setIsOpen }) {
   return (
     <ModalDialog
       heading="Edit"
+      scrollBehavior="outside"
       onClose={() => setIsOpen(false)}
       components={{
         Container: ({ children, className }) => (
           <Form onSubmit={(formData) => {
             console.log('form data', formData);
-            updateResource({ variables: { ...formData } });
+            const {
+              firstname, lastname, email, team: { value },
+            } = formData;
+            const id = `${firstname.toLowerCase()}.${lastname.toLowerCase()}`;
+            updateResource({
+              variables: {
+                id, firstname, lastname, email, team: value,
+              },
+            });
             setIsOpen(false);
           }}
           >
@@ -234,17 +297,17 @@ function EditResourceModal({ setIsOpen }) {
         Footer: () => footer(setIsOpen),
       }}
     >
-      <Field label="Firstname" name="firstname" defaultValue="" isRequired>
-        {({ fieldProps }) => <TextField placeholder="Gerald" {...fieldProps} />}
+      <Field label="Firstname" name="firstname" defaultValue="Gerald" placeholder="Gerald" isRequired>
+        {({ fieldProps }) => <TextField {...fieldProps} />}
       </Field>
-      <Field label="Lastname" name="lastname" defaultValue="" isRequired>
-        {({ fieldProps }) => <TextField placeholder="Of Rivia" {...fieldProps} />}
+      <Field label="Lastname" name="lastname" defaultValue="Of Rivia" placeholder="Of Rivia" isRequired>
+        {({ fieldProps }) => <TextField {...fieldProps} />}
       </Field>
-      <Field label="Email" name="email" defaultValue="" isRequired>
-        {({ fieldProps }) => <TextField placeholder="gerald@cdprojektred.com" {...fieldProps} />}
+      <Field label="Email" name="email" defaultValue="gerald@cdprojektred.com" placeholder="gerald@cdprojektred.com" isRequired>
+        {({ fieldProps }) => <TextField {...fieldProps} />}
       </Field>
-      <Field label="Team" name="team" defaultValue="" isRequired>
-        {({ fieldProps }) => <Select options={options} placeholder="Team" {...fieldProps} />}
+      <Field label="Team" name="team" defaultValue="Gameplay" placeholder="Team" isRequired>
+        {({ fieldProps }) => <Select options={options} {...fieldProps} />}
       </Field>
     </ModalDialog>
   );

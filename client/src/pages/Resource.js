@@ -8,7 +8,6 @@ import EmptyState from '@atlaskit/empty-state';
 import PageHeader from '@atlaskit/page-header';
 import TextField from '@atlaskit/textfield';
 import { Status } from '@atlaskit/status';
-
 import {
   ProjectHomeView,
   Loading,
@@ -60,74 +59,71 @@ const barContent = (
   </div>
 );
 
-function Resource({ navigationViewController, match }) {
+function Issues({ resourceId }) {
   const [length, setLength] = useState(0);
-  const { resourceId } = match.params;
-
   const {
-    loading: loadingIssues,
-    error: errorIssues,
-    data: dataIssues,
-    fetchMore,
+    loading, error, data, fetchMore,
   } = useQuery(GET_ISSUES, {
     variables: { resourceId, maxResults: ROWS_PER_PAGE },
   });
 
-  const {
-    loading: loadingAbsences,
-    error: errorAbsences,
-    data: dataAbsences,
-  } = useQuery(GET_ABSENCES, {
-    variables: { id: resourceId },
-  });
+  useEffect(() => {
+    if (data && data.issues && data.issues.issues.length) {
+      setLength(data.issues.issues.length);
+    }
+  }, [data]);
+
+  return (
+    <>
+      <IssueTable
+        loading={loading}
+        error={error}
+        issues={data && data.issues}
+        rowsPerPage={ROWS_PER_PAGE + length}
+        startAt={length}
+      />
+      {data
+        && data.issues
+        && data.issues.total > length
+        && <LoadButton fetchMore={fetchMore} startAt={length} />}
+    </>
+  );
+}
+
+function Absences({ id }) {
+  const { loading, error, data } = useQuery(GET_ABSENCES, { variables: { id } });
+
+  if (error) return <EmptyState name={error.name} message={error.message} />;
+  if (loading || !data) return <Loading />;
+
+  return <>{data.absences.map(({ date }) => <Status key={date} text={date} color="blue" />)}</>;
+}
+
+function Resource({ navigationViewController, match }) {
+  const { resourceId } = match.params;
 
   useEffect(() => {
     navigationViewController.setView(ProjectHomeView.id);
-    if (dataIssues && dataIssues.issues && dataIssues.issues.issues.length) {
-      setLength(dataIssues.issues.issues.length);
-    }
-  }, [navigationViewController, dataIssues]);
-
-  if (errorAbsences) {
-    return (
-      <EmptyState
-        name={errorAbsences.name}
-        message={errorAbsences.message}
-      />
-    );
-  }
+  }, [navigationViewController]);
 
   return (
     <Layout>
       <PageHeader bottomBar={barContent}>
         <Nameplate id={resourceId} />
       </PageHeader>
-      {/* <p>
-        <a
-          href={`https://${process.env.REACT_APP_HOST}/issues/?jql=assignee=${resourceId}\
-          AND statusCategory != Done order by priority desc`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-        View in Issue Navigator
-        </a>
-      </p> */}
-      <IssueTable
-        loading={loadingIssues}
-        error={errorIssues}
-        issues={dataIssues && dataIssues.issues}
-        rowsPerPage={ROWS_PER_PAGE + length}
-        startAt={length}
-      />
-      {dataIssues && dataIssues.issues
-        && dataIssues.issues.total > length
-        && <LoadButton fetchMore={fetchMore} startAt={length} />}
-      {loadingAbsences
-        ? <Loading />
-        : dataAbsences && dataAbsences.absences.map(({ date }) => <Status key={date} text={date} color="blue" />)}
+      <Issues resourceId={resourceId} />
+      <Absences id={resourceId} />
     </Layout>
   );
 }
+
+Issues.propTypes = {
+  resourceId: PropTypes.string.isRequired,
+};
+
+Absences.propTypes = {
+  id: PropTypes.string.isRequired,
+};
 
 Resource.propTypes = {
   navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,

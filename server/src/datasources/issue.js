@@ -134,8 +134,11 @@ class IssueAPI extends RESTDataSource {
     };
   }
 
-  async getAssignableUsers({ issueKey }) {
-    return this.get('rest/api/2/user/assignable/search', { issueKey, maxResults: 1000 });
+  async getAssignableUsers({ project }) {
+    console.log(project);
+    const response = await this.get('rest/api/2/user/assignable/search', { project });
+    console.log(response);
+    return Array.isArray(response.users) || [];
   }
 
   /* Mutations */

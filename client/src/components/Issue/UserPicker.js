@@ -51,7 +51,7 @@ function getAssignee({ key, displayName }) {
   };
 }
 
-function getResource(user) {
+export function getResource(user) {
   return {
     id: user.key,
     name: user.name,

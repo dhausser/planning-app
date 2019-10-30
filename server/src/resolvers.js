@@ -34,8 +34,8 @@ const resolvers = {
     user: (_, { id }, { dataSources }) => (
       dataSources.issueAPI.getUser(id)
     ),
-    assignableUsers: (_, { id }, { dataSources }) => (
-      dataSources.issueAPI.getAssignableUsers({ issueKey: id })
+    assignableUsers: (_, { project }, { dataSources }) => (
+      dataSources.issueAPI.getAssignableUsers({ project })
     ),
 
     /**
@@ -83,10 +83,10 @@ const resolvers = {
     /**
      * Mongo DB
      */
-    createResource: (_, {
+    insertResource: (_, {
       id, firstname, lastname, email, team,
     }, { dataSources }) => (
-      dataSources.resourceAPI.createResource({
+      dataSources.resourceAPI.insertResource({
         id, firstname, lastname, email, team,
       })
     ),

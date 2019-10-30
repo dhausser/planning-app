@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import { DataSource } from 'apollo-datasource';
+import assert from 'assert';
 
 class ResourceAPI extends DataSource {
   constructor({ store }) {
@@ -158,48 +159,66 @@ class ResourceAPI extends DataSource {
     return cursor.toArray();
   }
 
-  async createResource({
-    id, firstname, lastname, email, team,
+  async insertResource({
+    id, firstname, lastname, team,
   }) {
+    // eslint-disable-next-line no-unused-vars
     let cursor;
 
+    const data = {
+      key: id,
+      name: `${firstname} ${lastname}`,
+      team,
+    };
+
     try {
-      console.log(`Creating resource: ${id}`);
-      cursor = await this.store.resources.find();
+      console.log(data);
+      cursor = await this.store.resources.insertOne(data);
+      assert.equal(1, cursor.insertedCount);
     } catch (e) {
-      console.error(`Unable to issye command, ${e}`);
+      console.error(`Unable to issue command, ${e}`);
     }
 
-    const key = id;
-    return { key };
+    return data;
   }
 
   async updateResource({
-    id, firstname, lastname, email, team,
+    id, firstname, lastname, team,
   }) {
+    // eslint-disable-next-line no-unused-vars
     let cursor;
 
+    const data = {
+      key: id,
+      name: `${firstname} ${lastname}`,
+      team,
+    };
+
     try {
-      console.log(`Updating resource ${id}`);
-      cursor = await this.store.resources.find();
+      console.log(data);
+      cursor = await this.store.resources.updateOne(data);
+      assert.equal(1, cursor.matchedCount);
+      assert.equal(1, cursor.modifiedCount);
     } catch (e) {
-      console.error(`Unable to issye command, ${e}`);
+      console.error(`Unable to issue command, ${e}`);
     }
 
-    return cursor.toArray();
+    return data;
   }
 
   async deleteResource({ id }) {
+    // eslint-disable-next-line no-unused-vars
     let cursor;
 
     try {
-      console.log(`Deleting resource ${id}`);
-      cursor = await this.store.resources.find();
+      console.log(id);
+      cursor = await this.store.resources.deleteOne({ key: id });
+      assert.equal(1, cursor.deletedCount);
     } catch (e) {
-      console.error(`Unable to issye command, ${e}`);
+      console.error(`Unable to issue command, ${e}`);
     }
 
-    return cursor.toArray();
+    return id;
   }
 }
 
