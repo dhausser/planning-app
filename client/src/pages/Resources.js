@@ -177,7 +177,7 @@ const footer = (setIsOpen) => (
 );
 
 function AssignableUserPicker() {
-  const { loading, error, data } = useQuery(GET_ASSIGNABLE_USERS, { variables: { project: '10500' } });
+  const { loading, error, data } = useQuery(GET_ASSIGNABLE_USERS, { variables: { project: 'GWENT' } });
 
   if (error) return <EmptyState name={error.name} message={error.message} />;
   if (loading || !data) return <Spinner size="small" />;
