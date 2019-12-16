@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { useMutation } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
+import { useMutation, gql } from '@apollo/client';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -32,8 +31,9 @@ function Description({ id, description }) {
       <h5>Description</h5>
       <InlineEdit
         defaultValue={editValue}
-          // label="Description"
+        label="Description"
         editView={(fieldProps, ref) => (
+          // eslint-disable-next-line react/jsx-props-no-spreading
           <TextArea {...fieldProps} ref={ref} />
         )}
         readView={() => (

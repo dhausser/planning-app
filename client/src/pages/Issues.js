@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, gql } from '@apollo/client';
 import PropTypes from 'prop-types';
-import { gql } from 'apollo-boost';
 
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import PageHeader from '@atlaskit/page-header';
@@ -91,7 +90,9 @@ const barContent = (
 
 function Issues({ navigationViewController }) {
   const [length, setLength] = useState(0);
-  const { loading, error, data, fetchMore } = useQuery(GET_ISSUES, {
+  const {
+    loading, error, data, fetchMore,
+  } = useQuery(GET_ISSUES, {
     variables: { maxResults: ROWS_PER_PAGE },
   });
 

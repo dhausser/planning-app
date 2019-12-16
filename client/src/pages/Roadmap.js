@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, gql } from '@apollo/client';
 import PropTypes from 'prop-types';
-import { gql } from 'apollo-boost';
 import styled from 'styled-components';
 
 import { withNavigationViewController } from '@atlaskit/navigation-next';
