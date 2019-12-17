@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  // Redirect,
-} from 'react-router-dom';
-import { useQuery, gql } from '@apollo/client';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+
+import { useQuery } from '@apollo/react-hooks';
+import { gql } from 'apollo-boost';
+
 import PropTypes from 'prop-types';
 
 import { withNavigationViewController, LayoutManagerWithViewController } from '@atlaskit/navigation-next';
@@ -37,13 +36,12 @@ export const IS_LOGGED_IN = gql`
 `;
 
 function AppRouter({ navigationViewController }) {
+  const { data } = useQuery(IS_LOGGED_IN);
   useEffect(() => {
     navigationViewController.addView(productHomeView);
     navigationViewController.addView(productIssuesView);
     navigationViewController.addView(projectHomeView);
   }, [navigationViewController]);
-
-  const { data } = useQuery(IS_LOGGED_IN);
 
   return (
     <Router>
@@ -75,33 +73,6 @@ function AppRouter({ navigationViewController }) {
     </Router>
   );
 }
-
-// A wrapper for <Route> that redirects to the login
-// screen if you're not yet authenticated.
-// function PrivateRoute({ children, ...rest }) {
-//   const { data } = useQuery(IS_LOGGED_IN);
-
-//   return (
-//     <Route
-//       // eslint-disable-next-line react/jsx-props-no-spreading
-//       {...rest}
-//       render={({ location }) => (data.isLoggedIn ? (
-//         children
-//       ) : (
-//         <Redirect
-//           to={{
-//             pathname: '/login',
-//             state: { from: location },
-//           }}
-//         />
-//       ))}
-//     />
-//   );
-// }
-
-// PrivateRoute.propTypes = {
-//   children: PropTypes.node.isRequired,
-// };
 
 AppRouter.propTypes = {
   navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,

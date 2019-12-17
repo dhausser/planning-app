@@ -1,5 +1,8 @@
 import React, { useEffect } from 'react';
-import { useQuery, gql } from '@apollo/client';
+
+import { useQuery } from '@apollo/react-hooks';
+import { gql } from 'apollo-boost';
+
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 

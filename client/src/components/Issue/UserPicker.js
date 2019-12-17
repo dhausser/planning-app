@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import { useQuery, useMutation, gql } from '@apollo/client';
+
+import { useQuery, useMutation } from '@apollo/react-hooks';
+import { gql } from 'apollo-boost';
+
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -20,6 +23,9 @@ const GET_RESOURCES = gql`
   }
 `;
 
+/**
+ * TODO: Get assignable users - currently blocked by oauth authentication failure
+ */
 // const GET_ASSIGNABLE_USERS = gql`
 //   query GetAssignableUsers($id: ID!) {
 //     assignableUsers(id: $id) {

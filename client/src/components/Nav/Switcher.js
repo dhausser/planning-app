@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useQuery, useApolloClient, gql } from '@apollo/client';
+
+import { useApolloClient, useQuery } from '@apollo/react-hooks';
+import { gql } from 'apollo-boost';
+
 import PropTypes from 'prop-types';
 import ChevD from '@atlaskit/icon/glyph/chevron-down';
 import {

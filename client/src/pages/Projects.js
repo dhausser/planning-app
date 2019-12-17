@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useQuery, useApolloClient, gql } from '@apollo/client';
+
+import { useApolloClient, useQuery } from '@apollo/react-hooks';
+import { gql } from 'apollo-boost';
+
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 

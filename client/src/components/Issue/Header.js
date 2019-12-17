@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import { useMutation, gql } from '@apollo/client';
+
+import { useMutation } from '@apollo/react-hooks';
+import { gql } from 'apollo-boost';
+
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 

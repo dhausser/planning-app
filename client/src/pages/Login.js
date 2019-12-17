@@ -1,5 +1,7 @@
 import { useRouteMatch } from 'react-router-dom';
-import { useApolloClient, useMutation, gql } from '@apollo/client';
+
+import { useApolloClient, useMutation } from '@apollo/react-hooks';
+import { gql } from 'apollo-boost';
 
 const LOGIN_USER = gql`
   mutation login {

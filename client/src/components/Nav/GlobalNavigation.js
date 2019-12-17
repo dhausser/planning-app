@@ -1,5 +1,7 @@
 import React from 'react';
-import { useQuery, gql } from '@apollo/client';
+
+import { useQuery } from '@apollo/react-hooks';
+import { gql } from 'apollo-boost';
 
 import GlobalNavigation from '@atlaskit/global-navigation';
 import { GlobalItem } from '@atlaskit/navigation-next';

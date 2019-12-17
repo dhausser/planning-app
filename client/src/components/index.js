@@ -11,7 +11,6 @@ export { default as BarChart } from './BarChart';
 export { default as IssueTable } from './Issue/IssueTable';
 export { default as LoadButton } from './Issue/LoadButton';
 export { default as Nameplate } from './Resource/Nameplate';
-export { default as RefinementBar } from './RefinementBar';
 export { ProjectFilter } from './Filters';
 export { VersionFilter } from './Filters';
 export { TeamFilter } from './Filters';

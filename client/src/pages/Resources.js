@@ -3,7 +3,10 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { useQuery, useMutation, gql } from '@apollo/client';
+
+import { useQuery, useMutation } from '@apollo/react-hooks';
+import { gql } from 'apollo-boost';
+
 import styled from 'styled-components';
 
 import { withNavigationViewController } from '@atlaskit/navigation-next';

@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import {
-  ApolloClient, InMemoryCache, HttpLink, ApolloProvider,
-} from '@apollo/client';
+import { ApolloProvider } from '@apollo/react-hooks';
+import { ApolloClient, InMemoryCache, HttpLink } from 'apollo-boost';
 
 import { NavigationProvider } from '@atlaskit/navigation-next';
 import '@atlaskit/css-reset';
