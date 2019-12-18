@@ -16,7 +16,6 @@ import CopyIcon from '@atlaskit/icon/glyph/copy';
 import MoreIcon from '@atlaskit/icon/glyph/more';
 import InlineEdit from '@atlaskit/inline-edit';
 import { colors } from '@atlaskit/theme';
-
 import PageHeader from '@atlaskit/page-header';
 import { issuetypeIconMap } from './Icon';
 
@@ -68,7 +67,6 @@ function Title({ id, summary }) {
   return (
     <InlineEdit
       readView={() => <ReadView>{editValue}</ReadView>}
-      // eslint-disable-next-line react/jsx-props-no-spreading
       editView={(props, ref) => <EditView {...props} innerRef={ref} />}
       defaultValue={editValue}
       onConfirm={(value) => {

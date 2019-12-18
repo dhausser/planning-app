@@ -4,13 +4,9 @@ import Tooltip from '@atlaskit/tooltip';
 // Import Priority Icons
 import PriorityBlockerIcon from '@atlaskit/icon-priority/glyph/priority-blocker';
 import PriorityCriticalIcon from '@atlaskit/icon-priority/glyph/priority-critical';
-// import PriorityMajorIcon from '@atlaskit/icon-priority/glyph/priority-major';
 import PriorityHighestIcon from '@atlaskit/icon-priority/glyph/priority-highest';
-// import PriorityHighIcon from '@atlaskit/icon-priority/glyph/priority-high';
 import PriorityMediumIcon from '@atlaskit/icon-priority/glyph/priority-medium';
 import PriorityLowIcon from '@atlaskit/icon-priority/glyph/priority-low';
-// import PriorityLowestIcon from '@atlaskit/icon-priority/glyph/priority-lowest';
-// import PriorityMinorIcon from '@atlaskit/icon-priority/glyph/priority-minor';
 import PriorityTrivialIcon from '@atlaskit/icon-priority/glyph/priority-trivial';
 
 // Import Status Icons

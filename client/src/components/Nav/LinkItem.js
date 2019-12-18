@@ -13,7 +13,6 @@ function LinkItem({ components: { Item }, to, ...props }) {
             </Link>
           )}
           isSelected={pathname === to}
-          // eslint-disable-next-line react/jsx-props-no-spreading
           {...props}
         />
       )}

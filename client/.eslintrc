@@ -23,6 +23,7 @@
   ],
   "rules": {
     "no-console": "off",
+    "react/jsx-props-no-spreading": "off",
     "react/jsx-filename-extension": [
       1,
       {

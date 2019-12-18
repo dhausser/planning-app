@@ -36,7 +36,6 @@ function Description({ id, description }) {
         defaultValue={editValue}
         label="Description"
         editView={(fieldProps, ref) => (
-          // eslint-disable-next-line react/jsx-props-no-spreading
           <TextArea {...fieldProps} ref={ref} />
         )}
         readView={() => (

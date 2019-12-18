@@ -41,12 +41,10 @@ const GET_PROJECT_FILTER = gql`
 
 const create = () => ({
   onClick: () => {
-    // eslint-disable-next-line
     const boardName = window.prompt(
       'What would you like to call your new board?',
     );
     if (boardName && boardName.length) {
-      // eslint-disable-next-line
       console.log(`You created the board "${boardName}"`);
     }
   },
