@@ -40,7 +40,7 @@ class IssueAPI extends RESTDataSource {
     const response = await this.get(`/rest/api/2/project/${projectId}/version`, {
       startAt,
       maxResults,
-      orderBy: 'name',
+      orderBy: 'releaseDate',
     });
     return Array.isArray(response.values) ? response.values : [];
   }
