@@ -8,11 +8,15 @@ import Comment, {
   CommentTime,
 } from '@atlaskit/comment';
 
-function Comments({ comments }) {
+interface CommentsProps {
+  comments: Comment[];
+}
+
+function Comments({ comments }: CommentsProps) {
   return (
     <>
       <h5>Activity</h5>
-      {comments.map((comment) => (
+      {comments.map((comment: Comment) => (
         <Comment
           key={comment.id}
           avatar={(

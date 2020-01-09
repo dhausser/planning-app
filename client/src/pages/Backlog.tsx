@@ -59,7 +59,6 @@ const GET_ISSUES = gql`
   ${ROADMAP_ROW_DATA}
 `;
 
-
 function Backlog({ navigationViewController }) {
   useEffect(() => navigationViewController.setView(ProjectHomeView.id), [navigationViewController]);
   const [isExpanded, setIsExpanded] = useState(false);
