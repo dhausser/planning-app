@@ -1,18 +1,13 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-
+import PropTypes from 'prop-types';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
-
-import PropTypes from 'prop-types';
-
 import { withNavigationViewController, LayoutManagerWithViewController } from '@atlaskit/navigation-next';
-
 import GlobalNavigation from '../components/Nav/GlobalNavigation';
 import productHomeView from '../components/Nav/ProductHomeView';
 import productIssuesView from '../components/Nav/ProductIssuesView';
 import projectHomeView from '../components/Nav/ProjectHomeView';
-
 import Dashboard from './Dashboard';
 import Resource from './Resource';
 import Resources from './Resources';

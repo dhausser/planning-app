@@ -36,13 +36,10 @@ class IssueAPI extends RESTDataSource {
     return projects;
   }
 
-  async getVersions(projectId, startAt, maxResults) {
-    const response = await this.get(`/rest/api/2/project/${projectId}/version`, {
-      startAt,
-      maxResults,
-      orderBy: 'releaseDate',
-    });
-    return Array.isArray(response.values) ? response.values : [];
+  async getVersions(projectId) {
+    const response = await this.get(`/rest/api/2/project/${projectId}/versions`);
+    const unreleased = response.filter((value) => value.released === false);
+    return Array.isArray(response) ? unreleased : [];
   }
 
   async getIssues({
