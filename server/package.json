@@ -29,9 +29,10 @@
     "eslint-plugin-import": "^2.19.1"
   },
   "scripts": {
-    "start": "nodemon -e js,graphql -x node src/index.js",
-    "dev": "nodemon -e js,graphql -x node --inspect src/index.js",
-    "prod": "node -r esm ./src/index.js"
+    "start": "node ./src/index.js",
+    "stop": "nodemon -r 'dotenv/config' -r esm ./src/index.js -e js,graphql -x node --inspect src/index.js",
+    "dev": "nodemon NODE_ENV=development node -r esm",
+    "prod": "NODE_ENV=production node -r 'dotenv/config' -r esm ./src/main.js"
   },
   "keywords": [],
   "author": "Davy Hausser <davy.hausser@cdprojektred.com>",

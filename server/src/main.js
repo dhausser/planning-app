@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from 'express';
 import session from 'express-session';
 import { ApolloServer } from 'apollo-server-express';
@@ -11,10 +12,10 @@ import IssueAPI from './datasources/issue';
 import AbsenceAPI from './datasources/absence';
 import ResourceAPI from './datasources/resource';
 
-
 /**
  * Apollo Server
  */
+// dotenv.config();
 const store = createStore();
 
 const apollo = new ApolloServer({
