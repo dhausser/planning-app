@@ -1,8 +1,8 @@
 import { sign } from 'oauth-sign';
-import os from 'os';
+import path from 'path';
 import fs from 'fs';
 
-const filepath = `${os.homedir()}/oauth/jira_privatekey.pem`;
+const filepath = path.join(__dirname, '../../oauth/jira_privatekey.pem');
 const consumerSecret = fs.existsSync(filepath) ? fs.readFileSync(filepath, 'utf8') : '';
 const consumerKey = process.env.CONSUMER_KEY;
 
@@ -12,10 +12,10 @@ class Oauth {
   }
 
   sign(req, oauthToken) {
-    const { method, path, params } = req;
+    const { method, path: addressPath, params } = req;
     const oauthVersion = '1.0';
     const signatureMethod = 'RSA-SHA1';
-    const baseURI = `${this.baseURL}${path}`;
+    const baseURI = `${this.baseURL}${addressPath}`;
     const timestamp = Math.floor(Date.now() / 1000);
     const nonce = Math.random().toString(36).substring(2, 15);
     const requestParams = Object.fromEntries(params.entries());
