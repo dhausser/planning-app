@@ -1,12 +1,17 @@
 {
   "name": "planning-app-server",
-  "version": "1.0.0",
-  "private": true,
   "description": "Server for roadmap planning app",
-  "main": "./src/index.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/dhausser/planning-app.git"
+  "private": true,
+  "version": "1.0.0",
+  "author": "Davy Hausser <davy.hausser@cdprojektred.com>",
+  "engines": {
+    "node": ">=8.4.0"
+  },
+  "main": "src",
+  "scripts": {
+    "start": "npm run dev",
+    "dev": "nodemon -r esm",
+    "prod": "NODE_ENV=production node -r esm src"
   },
   "dependencies": {
     "apollo-datasource": "^0.5.0",
@@ -28,13 +33,10 @@
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.19.1"
   },
-  "scripts": {
-    "start": "node ./src/index.js",
-    "stop": "nodemon -r 'dotenv/config' -r esm ./src/index.js -e js,graphql -x node --inspect src/index.js",
-    "dev": "nodemon NODE_ENV=development node -r esm",
-    "prod": "NODE_ENV=production node -r 'dotenv/config' -r esm ./src/main.js"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dhausser/planning-app.git"
   },
   "keywords": [],
-  "author": "Davy Hausser <davy.hausser@cdprojektred.com>",
   "license": "ISC"
 }
