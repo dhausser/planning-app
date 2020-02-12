@@ -21,7 +21,7 @@ import {
   LoadButton,
   Nameplate,
 } from '../components';
-import { ISSUE_ROW_DATA, ISSUE_PAGINATION } from './Issues';
+import { ISSUE_ROW_DATA, ISSUE_PAGINATION } from './issues';
 
 const ROWS_PER_PAGE = 50;
 

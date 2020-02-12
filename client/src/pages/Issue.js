@@ -13,7 +13,7 @@ import EmptyState from '@atlaskit/empty-state';
 
 // Components
 import { ProductIssuesView, Loading } from '../components';
-import { ISSUE_ROW_DATA } from './Issues';
+import { ISSUE_ROW_DATA } from './issues';
 import {
   Header,
   Description,
