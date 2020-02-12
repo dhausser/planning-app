@@ -42,7 +42,7 @@ const ASSIGN_ISSUE = gql`
 `
 
 function getAvatarUrl(key) {
-  return `https://${process.env.REACT_APP_HOST}/secure/useravatar?ownerId=${key}`
+  return `https://${process.env.GATSBY_HOST}/secure/useravatar?ownerId=${key}`
 }
 
 function getAssignee({ key, displayName }) {

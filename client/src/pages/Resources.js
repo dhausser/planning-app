@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
-import { Link } from "react-router-dom"
+import { Link } from "gatsby"
 
 import { useQuery, useMutation } from "@apollo/react-hooks"
 import { gql } from "apollo-boost"
@@ -160,7 +160,7 @@ const rows = (resources, setIsEditOpen, setIsDeleteOpen) =>
             <Avatar
               name={resource.name}
               size="medium"
-              src={`https://${process.env.REACT_APP_HOST}/secure/useravatar?ownerId=${resource.key}`}
+              src={`https://${process.env.GATSBY_HOST}/secure/useravatar?ownerId=${resource.key}`}
             />
             <Link to={`/resource/${resource.key}`}>{resource.name}</Link>
           </NameWrapper>

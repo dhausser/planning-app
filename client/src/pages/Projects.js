@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import { Link } from "react-router-dom"
+import { Link } from "gatsby"
 
 import { useApolloClient, useQuery } from "@apollo/react-hooks"
 import { gql } from "apollo-boost"

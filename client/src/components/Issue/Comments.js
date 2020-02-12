@@ -17,7 +17,7 @@ function Comments({ comments }) {
           key={comment.id}
           avatar={
             <Avatar
-              src={`https://${process.env.REACT_APP_HOST}/secure/useravatar?ownerId=${comment.author.key}`}
+              src={`https://${process.env.GATSBY_HOST}/secure/useravatar?ownerId=${comment.author.key}`}
               label="Atlaskit avatar"
               size="medium"
             />

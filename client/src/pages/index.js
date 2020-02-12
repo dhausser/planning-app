@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import { BrowserRouter as Router, Route } from "react-router-dom"
+import { BrowserRouter as Router, Route } from "@reach/router"
 import PropTypes from "prop-types"
 import { useQuery } from "@apollo/react-hooks"
 import { gql } from "apollo-boost"

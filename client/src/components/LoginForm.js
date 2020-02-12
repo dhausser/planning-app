@@ -4,7 +4,7 @@ import Modal, { ModalTransition } from "@atlaskit/modal-dialog"
 const openRequestedPopup = () => {
   const url = `${
     process.env.NODE_ENV === "production"
-      ? process.env.REACT_APP_URL
+      ? process.env.GATSBY_URL
       : "http://localhost:4000"
   }/auth/provider`
 

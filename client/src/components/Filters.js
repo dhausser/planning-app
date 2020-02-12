@@ -112,9 +112,9 @@ export function VersionFilter() {
   } = useQuery(GET_VERSION_FILTER)
   const { loading, error, data } = useQuery(GET_VERSIONS, {
     variables: {
-      id: projectId || process.env.REACT_APP_PROJECT_ID,
-      startAt: parseInt(process.env.REACT_APP_VERSION_START_AT, 10),
-      maxResults: parseInt(process.env.REACT_APP_VERSION_MAX_RESULTS, 10),
+      id: projectId || process.env.GATSBY_PROJECT_ID,
+      startAt: parseInt(process.env.GATSBY_VERSION_START_AT, 10),
+      maxResults: parseInt(process.env.GATSBY_VERSION_MAX_RESULTS, 10),
     },
   })
 
