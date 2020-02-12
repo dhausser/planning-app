@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Link, Route } from 'react-router-dom';
+import React from "react"
+import PropTypes from "prop-types"
+import { Link, Route } from "react-router-dom"
 
 function LinkItem({ components: { Item }, to, ...props }) {
   return (
@@ -8,7 +8,7 @@ function LinkItem({ components: { Item }, to, ...props }) {
       render={({ location: { pathname } }) => (
         <Item
           component={({ children, className }) => (
-            <Link css={{ color: '#DEEBFF' }} className={className} to={to}>
+            <Link css={{ color: "#DEEBFF" }} className={className} to={to}>
               {children}
             </Link>
           )}
@@ -17,12 +17,12 @@ function LinkItem({ components: { Item }, to, ...props }) {
         />
       )}
     />
-  );
+  )
 }
 
 LinkItem.propTypes = {
   components: PropTypes.objectOf(PropTypes.func).isRequired,
   to: PropTypes.string.isRequired,
-};
+}
 
-export default LinkItem;
+export default LinkItem

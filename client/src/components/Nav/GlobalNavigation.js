@@ -1,18 +1,18 @@
-import React from 'react';
+import React from "react"
 
-import { useQuery } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
+import { useQuery } from "@apollo/react-hooks"
+import { gql } from "apollo-boost"
 
-import GlobalNavigation from '@atlaskit/global-navigation';
-import { GlobalItem } from '@atlaskit/navigation-next';
-import AppSwitcherIcon from '@atlaskit/icon/glyph/app-switcher';
-import EmojiAtlassianIcon from '@atlaskit/icon/glyph/emoji/atlassian';
+import GlobalNavigation from "@atlaskit/global-navigation"
+import { GlobalItem } from "@atlaskit/navigation-next"
+import AppSwitcherIcon from "@atlaskit/icon/glyph/app-switcher"
+import EmojiAtlassianIcon from "@atlaskit/icon/glyph/emoji/atlassian"
 
 const IS_LOGGED_IN = gql`
   query IsUserLoggedIn {
     isLoggedIn @client
   }
-`;
+`
 
 const GET_CURRENT_USER = gql`
   query GetCurrentUser {
@@ -22,39 +22,44 @@ const GET_CURRENT_USER = gql`
       }
     }
   }
-`;
+`
 
 const AppSwitcherComponent = () => (
   <GlobalItem
     icon={AppSwitcherIcon}
     id="test"
-    onClick={() => console.log('AppSwitcher clicked')}
+    onClick={() => console.log("AppSwitcher clicked")}
   />
-);
+)
 
 function GetAvatarUrl() {
-  const { data } = useQuery(GET_CURRENT_USER);
-  return data && data.myself && data.myself.avatarUrls && data.myself.avatarUrls.small;
+  const { data } = useQuery(GET_CURRENT_USER)
+  return (
+    data &&
+    data.myself &&
+    data.myself.avatarUrls &&
+    data.myself.avatarUrls.small
+  )
 }
 
 export default () => {
-  const { data } = useQuery(IS_LOGGED_IN);
+  const { data } = useQuery(IS_LOGGED_IN)
   return (
     <GlobalNavigation
       productIcon={EmojiAtlassianIcon}
       productHref="/"
-      onProductClick={() => console.log('product clicked')}
-      onCreateClick={() => console.log('create clicked')}
-      onSearchClick={() => console.log('search clicked')}
-      onStarredClick={() => console.log('starred clicked')}
-      onHelpClick={() => console.log('help clicked')}
+      onProductClick={() => console.log("product clicked")}
+      onCreateClick={() => console.log("create clicked")}
+      onSearchClick={() => console.log("search clicked")}
+      onStarredClick={() => console.log("starred clicked")}
+      onHelpClick={() => console.log("help clicked")}
       helpItems={() => <div />}
-      onNotificationClick={() => console.log('notification clicked')}
+      onNotificationClick={() => console.log("notification clicked")}
       appSwitcherComponent={AppSwitcherComponent}
       appSwitcherTooltip="Switch to ..."
-      onSettingsClick={() => console.log('settings clicked')}
+      onSettingsClick={() => console.log("settings clicked")}
       profileItems={() => <div />}
       profileIconUrl={data.isLoggedIn ? GetAvatarUrl() : null}
     />
-  );
-};
+  )
+}

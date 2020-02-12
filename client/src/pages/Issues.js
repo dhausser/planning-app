@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react"
 
-import { useQuery } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
+import { useQuery } from "@apollo/react-hooks"
+import { gql } from "apollo-boost"
 
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types"
 
-import { withNavigationViewController } from '@atlaskit/navigation-next';
-import PageHeader from '@atlaskit/page-header';
-import TextField from '@atlaskit/textfield';
+import { withNavigationViewController } from "@atlaskit/navigation-next"
+import PageHeader from "@atlaskit/page-header"
+import TextField from "@atlaskit/textfield"
 
 import {
   ProductIssuesView,
@@ -18,9 +18,9 @@ import {
   TeamFilter,
   IssueTable,
   LoadButton,
-} from '../components';
+} from "../components"
 
-const ROWS_PER_PAGE = 50;
+const ROWS_PER_PAGE = 50
 
 export const ISSUE_ROW_DATA = gql`
   fragment IssueRow on Issue {
@@ -52,7 +52,7 @@ export const ISSUE_ROW_DATA = gql`
       }
     }
   }
-`;
+`
 
 export const ISSUE_PAGINATION = gql`
   fragment IssuePagination on IssueConnection {
@@ -60,15 +60,31 @@ export const ISSUE_PAGINATION = gql`
     maxResults
     total
   }
-`;
+`
 
 const GET_ISSUES = gql`
-  query GetIssues($projectId: String,$versionId: String, $statusId: String, $teamId: String, $resourceId: String, $startAt: Int, $maxResults: Int) {
+  query GetIssues(
+    $projectId: String
+    $versionId: String
+    $statusId: String
+    $teamId: String
+    $resourceId: String
+    $startAt: Int
+    $maxResults: Int
+  ) {
     projectId @client @export(as: "projectId")
     versionId @client @export(as: "versionId")
     statusId @client @export(as: "statusId")
     teamId @client @export(as: "teamId")
-    issues(projectId: $projectId, versionId: $versionId, statusId: $statusId, teamId: $teamId, resourceId: $resourceId, startAt: $startAt, maxResults: $maxResults) {
+    issues(
+      projectId: $projectId
+      versionId: $versionId
+      statusId: $statusId
+      teamId: $teamId
+      resourceId: $resourceId
+      startAt: $startAt
+      maxResults: $maxResults
+    ) {
       ...IssuePagination
       issues {
         ...IssueRow
@@ -77,10 +93,10 @@ const GET_ISSUES = gql`
   }
   ${ISSUE_PAGINATION}
   ${ISSUE_ROW_DATA}
-`;
+`
 
 const barContent = (
-  <div style={{ display: 'flex' }}>
+  <div style={{ display: "flex" }}>
     <div style={{ flexBasis: 150, marginRight: 8 }}>
       <TextField isCompact placeholder="Filter" aria-label="Filter" />
     </div>
@@ -89,23 +105,20 @@ const barContent = (
     <StatusFilter />
     <TeamFilter />
   </div>
-);
+)
 
 function Issues({ navigationViewController }) {
-  const [length, setLength] = useState(0);
-  const {
-    loading, error, data, fetchMore,
-  } = useQuery(GET_ISSUES, {
+  const [length, setLength] = useState(0)
+  const { loading, error, data, fetchMore } = useQuery(GET_ISSUES, {
     variables: { maxResults: ROWS_PER_PAGE },
-  });
-
+  })
 
   useEffect(() => {
     if (data && data.issues && data.issues.issues.length) {
-      setLength(data.issues.issues.length);
+      setLength(data.issues.issues.length)
     }
-    navigationViewController.setView(ProductIssuesView.id);
-  }, [navigationViewController, data]);
+    navigationViewController.setView(ProductIssuesView.id)
+  }, [navigationViewController, data])
 
   return (
     <Layout>
@@ -117,15 +130,15 @@ function Issues({ navigationViewController }) {
         rowsPerPage={ROWS_PER_PAGE + length}
         startAt={length}
       />
-      {data && data.issues
-        && data.issues.total > length
-        && <LoadButton fetchMore={fetchMore} startAt={length} />}
+      {data && data.issues && data.issues.total > length && (
+        <LoadButton fetchMore={fetchMore} startAt={length} />
+      )}
     </Layout>
-  );
+  )
 }
 
 Issues.propTypes = {
   navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
-};
+}
 
-export default withNavigationViewController(Issues);
+export default withNavigationViewController(Issues)

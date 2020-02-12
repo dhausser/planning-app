@@ -1,19 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react"
 
-import { useQuery } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
+import { useQuery } from "@apollo/react-hooks"
+import { gql } from "apollo-boost"
 
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import PropTypes from "prop-types"
+import styled from "styled-components"
 
 // Atlaskit
-import { withNavigationViewController } from '@atlaskit/navigation-next';
-import Page, { Grid, GridColumn } from '@atlaskit/page';
-import EmptyState from '@atlaskit/empty-state';
+import { withNavigationViewController } from "@atlaskit/navigation-next"
+import Page, { Grid, GridColumn } from "@atlaskit/page"
+import EmptyState from "@atlaskit/empty-state"
 
 // Components
-import { ProductIssuesView, Loading } from '../components';
-import { ISSUE_ROW_DATA } from './issues';
+import { ProductIssuesView, Loading } from "../components"
+import { ISSUE_ROW_DATA } from "./issues"
 import {
   Header,
   Description,
@@ -22,11 +22,11 @@ import {
   FixVersions,
   UserPicker,
   Comments,
-} from '../components/Issue';
+} from "../components/Issue"
 
 const Padding = styled.div`
   padding: 40px 0px 0px 40px;
-`;
+`
 
 const GET_ISSUE = gql`
   query GetIssueById($id: ID!) {
@@ -59,17 +59,19 @@ const GET_ISSUE = gql`
     }
   }
   ${ISSUE_ROW_DATA}
-`;
+`
 
 function Issue({ navigationViewController, match }) {
-  useEffect(() => navigationViewController.setView(ProductIssuesView.id),
-    [navigationViewController]);
+  useEffect(() => navigationViewController.setView(ProductIssuesView.id), [
+    navigationViewController,
+  ])
   const { data, loading, error } = useQuery(GET_ISSUE, {
     variables: { id: match.params.issueId },
-  });
+  })
 
-  if (loading) return <Loading />;
-  if (error) return <EmptyState header={error.name} description={error.message} />;
+  if (loading) return <Loading />
+  if (error)
+    return <EmptyState header={error.name} description={error.message} />
 
   const {
     id,
@@ -83,11 +85,9 @@ function Issue({ navigationViewController, match }) {
       status,
       priority,
       fixVersions,
-      comment: {
-        comments,
-      },
+      comment: { comments },
     },
-  } = data.issue;
+  } = data.issue
 
   return (
     <Page>
@@ -108,12 +108,12 @@ function Issue({ navigationViewController, match }) {
         </Grid>
       </Padding>
     </Page>
-  );
+  )
 }
 
 Issue.propTypes = {
   navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
   match: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
-};
+}
 
-export default withNavigationViewController(Issue);
+export default withNavigationViewController(Issue)

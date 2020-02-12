@@ -1,19 +1,19 @@
-import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from "react"
+import { Link } from "react-router-dom"
 
-import { useApolloClient, useQuery } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
+import { useApolloClient, useQuery } from "@apollo/react-hooks"
+import { gql } from "apollo-boost"
 
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import PropTypes from "prop-types"
+import styled from "styled-components"
 
-import { withNavigationViewController } from '@atlaskit/navigation-next';
-import PageHeader from '@atlaskit/page-header';
-import DynamicTable from '@atlaskit/dynamic-table';
-import EmptyState from '@atlaskit/empty-state';
-import Avatar from '@atlaskit/avatar';
+import { withNavigationViewController } from "@atlaskit/navigation-next"
+import PageHeader from "@atlaskit/page-header"
+import DynamicTable from "@atlaskit/dynamic-table"
+import EmptyState from "@atlaskit/empty-state"
+import Avatar from "@atlaskit/avatar"
 
-import { ProductHomeView, Layout } from '../components';
+import { ProductHomeView, Layout } from "../components"
 
 const PROJECT_TILE_DATA = gql`
   fragment ProjectTile on Project {
@@ -22,7 +22,7 @@ const PROJECT_TILE_DATA = gql`
     name
     projectTypeKey
   }
-`;
+`
 
 const GET_PROJECTS = gql`
   query GetProjects {
@@ -34,59 +34,59 @@ const GET_PROJECTS = gql`
     }
   }
   ${PROJECT_TILE_DATA}
-`;
+`
 
 const NameWrapper = styled.span`
   display: flex;
   align-items: center;
-`;
+`
 
 const AvatarWrapper = styled.div`
   margin-right: 8px;
-`;
+`
 
 const head = {
   cells: [
     {
-      key: 'name',
-      content: 'Name',
+      key: "name",
+      content: "Name",
       isSortable: true,
       width: 30,
     },
     {
-      key: 'key',
-      content: 'Key',
+      key: "key",
+      content: "Key",
       isSortable: true,
     },
     {
-      key: 'type',
-      content: 'Type',
+      key: "type",
+      content: "Type",
     },
   ],
-};
+}
 
 function FilterLink({ projectId, children }) {
-  const client = useApolloClient();
+  const client = useApolloClient()
   return (
     <Link
       to="/roadmap"
       onClick={() => {
-        client.writeData({ data: { projectId } });
-        localStorage.setItem('projectId', projectId);
+        client.writeData({ data: { projectId } })
+        localStorage.setItem("projectId", projectId)
       }}
     >
       {children}
     </Link>
-  );
+  )
 }
 
 FilterLink.propTypes = {
   projectId: PropTypes.string.isRequired,
   children: PropTypes.string.isRequired,
-};
+}
 
 function createRow(project) {
-  return ({
+  return {
     key: project.id,
     cells: [
       {
@@ -98,14 +98,14 @@ function createRow(project) {
                 name={project.name}
                 size="small"
                 appearance="square"
-                src={project.id === '10500'
-                  ? 'https://solarsystem.atlassian.net/secure/projectavatar?pid=10000&avatarId=10011&size=xxlarge'
-                  : project.avatarUrls.small}
+                src={
+                  project.id === "10500"
+                    ? "https://solarsystem.atlassian.net/secure/projectavatar?pid=10000&avatarId=10011&size=xxlarge"
+                    : project.avatarUrls.small
+                }
               />
             </AvatarWrapper>
-            <FilterLink projectId={project.id}>
-              {project.name}
-            </FilterLink>
+            <FilterLink projectId={project.id}>{project.name}</FilterLink>
           </NameWrapper>
         ),
       },
@@ -118,20 +118,25 @@ function createRow(project) {
         content: project.projectTypeKey,
       },
     ],
-  });
+  }
 }
 
 function Projects({ navigationViewController }) {
-  useEffect(() => navigationViewController.setView(ProductHomeView.id), [navigationViewController]);
-  const { data, loading, error } = useQuery(GET_PROJECTS);
+  useEffect(() => navigationViewController.setView(ProductHomeView.id), [
+    navigationViewController,
+  ])
+  const { data, loading, error } = useQuery(GET_PROJECTS)
 
-  if (error) return <EmptyState header={error.name} description={error.message} />;
+  if (error)
+    return <EmptyState header={error.name} description={error.message} />
 
   return (
     <Layout>
       <PageHeader>Projects</PageHeader>
       <DynamicTable
-        caption={data && `Displaying ${data.projects && data.projects.length} projects`}
+        caption={
+          data && `Displaying ${data.projects && data.projects.length} projects`
+        }
         head={head}
         rows={data && data.projects && data.projects.map(createRow)}
         rowsPerPage={20}
@@ -142,11 +147,11 @@ function Projects({ navigationViewController }) {
         defaultSortOrder="ASC"
       />
     </Layout>
-  );
+  )
 }
 
 Projects.propTypes = {
   navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
-};
+}
 
-export default withNavigationViewController(Projects);
+export default withNavigationViewController(Projects)

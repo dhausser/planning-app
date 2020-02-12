@@ -1,34 +1,34 @@
-import React from 'react';
-import { ApolloProvider } from '@apollo/react-hooks';
-import { ApolloClient, InMemoryCache, HttpLink } from 'apollo-boost';
-import { NavigationProvider } from '@atlaskit/navigation-next';
-import '@atlaskit/css-reset';
-import Pages from './pages';
-import { resolvers, typeDefs } from './resolvers';
+import React from "react"
+import { ApolloProvider } from "@apollo/react-hooks"
+import { ApolloClient, InMemoryCache, HttpLink } from "apollo-boost"
+import { NavigationProvider } from "@atlaskit/navigation-next"
+import "@atlaskit/css-reset"
+import Pages from "./pages"
+import { resolvers, typeDefs } from "./resolvers"
 
-const cache = new InMemoryCache();
+const cache = new InMemoryCache()
 const client = new ApolloClient({
   link: new HttpLink({
-    uri: '/graphql',
-    credentials: 'same-origin',
+    uri: "/graphql",
+    credentials: "same-origin",
     headers: {
-      authorization: localStorage.getItem('token'),
+      authorization: localStorage.getItem("token"),
     },
   }),
   cache,
   resolvers,
   typeDefs,
-});
+})
 
 cache.writeData({
   data: {
-    isLoggedIn: !!localStorage.getItem('token'),
-    projectId: localStorage.getItem('projectId'),
-    versionId: localStorage.getItem('versionId'),
-    statusId: localStorage.getItem('statusId'),
-    teamId: localStorage.getItem('teamId'),
+    isLoggedIn: !!localStorage.getItem("token"),
+    projectId: localStorage.getItem("projectId"),
+    versionId: localStorage.getItem("versionId"),
+    statusId: localStorage.getItem("statusId"),
+    teamId: localStorage.getItem("teamId"),
   },
-});
+})
 
 /**
  * Render our app
@@ -45,6 +45,6 @@ const App = () => (
       <Pages />
     </NavigationProvider>
   </ApolloProvider>
-);
+)
 
-export default App;
+export default App
