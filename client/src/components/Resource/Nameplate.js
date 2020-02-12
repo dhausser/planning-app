@@ -1,11 +1,8 @@
 import React from "react"
-
 import { useQuery } from "@apollo/react-hooks"
 import { gql } from "apollo-boost"
-
 import styled from "styled-components"
 import PropTypes from "prop-types"
-
 import Avatar from "@atlaskit/avatar"
 
 const GET_ASSIGNEE = gql`

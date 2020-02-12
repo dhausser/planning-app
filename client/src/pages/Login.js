@@ -1,8 +1,7 @@
-/** TODO: Does this actually exist? */
-import { useRouteMatch } from "@reach/router"
-
+import React from "react"
 import { useApolloClient, useMutation } from "@apollo/react-hooks"
 import { gql } from "apollo-boost"
+import Login from "./login"
 
 const LOGIN_USER = gql`
   mutation login {
@@ -10,8 +9,8 @@ const LOGIN_USER = gql`
   }
 `
 
-function Login() {
-  useRouteMatch("/login")
+/** TODO: Check that this is actually working */
+export default () => {
   const client = useApolloClient()
   const [login] = useMutation(LOGIN_USER, {
     onCompleted: ({ login: token }) => {
@@ -22,7 +21,5 @@ function Login() {
     },
   })
   login()
-  return null
+  return <Login path="/login" />
 }
-
-export default Login

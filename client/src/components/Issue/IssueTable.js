@@ -12,7 +12,7 @@ import {
   statusCatecoryColorMap,
   priorityIconMap,
   issuetypeIconMap,
-} from "./Icon"
+} from "./icon"
 
 const head = {
   cells: [

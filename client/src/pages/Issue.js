@@ -22,7 +22,7 @@ import {
   FixVersions,
   UserPicker,
   Comments,
-} from "../components/Issue"
+} from "../components/issue"
 
 const Padding = styled.div`
   padding: 40px 0px 0px 40px;

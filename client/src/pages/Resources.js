@@ -25,7 +25,7 @@ import UserPicker from "@atlaskit/user-picker"
 import Spinner from "@atlaskit/spinner"
 
 import { TeamFilter, ProjectHomeView, Layout } from "../components"
-import { getResource } from "../components/Issue/UserPicker"
+import { getResource } from "../components/issue/userPicker"
 
 const GET_TEAM_FILTER = gql`
   {

@@ -17,7 +17,7 @@ import MoreIcon from "@atlaskit/icon/glyph/more"
 import InlineEdit from "@atlaskit/inline-edit"
 import { colors } from "@atlaskit/theme"
 import PageHeader from "@atlaskit/page-header"
-import { issuetypeIconMap } from "./Icon"
+import { issuetypeIconMap } from "./icon"
 
 export function copyLink(key) {
   const el = document.createElement("textarea")

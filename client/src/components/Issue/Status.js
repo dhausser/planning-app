@@ -4,7 +4,7 @@ import styled from "styled-components"
 
 import { gridSize } from "@atlaskit/theme"
 import { Status } from "@atlaskit/status/element"
-import { statusCatecoryColorMap } from "./Icon"
+import { statusCatecoryColorMap } from "./icon"
 
 const Wrapper = styled.div`
   padding: ${gridSize() - 2}px ${gridSize() - 2}px;

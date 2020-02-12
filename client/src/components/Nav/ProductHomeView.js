@@ -3,7 +3,7 @@ import FolderIcon from "@atlaskit/icon/glyph/folder"
 import DashboardIcon from "@atlaskit/icon/glyph/dashboard"
 import IssuesIcon from "@atlaskit/icon/glyph/issues"
 import SettingsIcon from "@atlaskit/icon/glyph/settings"
-import LinkItem from "./LinkItem"
+import LinkItem from "./linkItem"
 
 export default {
   id: "product/home",
