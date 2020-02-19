@@ -1,3 +1,5 @@
+import "@atlaskit/css-reset"
+
 import React, { useEffect } from "react"
 import PropTypes from "prop-types"
 import { useQuery } from "@apollo/react-hooks"
@@ -30,9 +32,6 @@ import Settings from "./settings"
 import Login from "./login"
 import { LoginForm } from "../components"
 
-// Post CSS
-import "@atlaskit/css-reset"
-
 export const IS_LOGGED_IN = gql`
   query IsUserLoggedIn {
     isLoggedIn @client
@@ -41,13 +40,13 @@ export const IS_LOGGED_IN = gql`
 
 function App({ navigationViewController }) {
   const { data } = useQuery(IS_LOGGED_IN)
+  console.log(data)
+  
   useEffect(() => {
     navigationViewController.addView(productHomeView)
     navigationViewController.addView(productIssuesView)
     navigationViewController.addView(projectHomeView)
   }, [navigationViewController])
-
-  console.log(data)
 
   return (
     <LayoutManagerWithViewController globalNavigation={GlobalNavigation}>
