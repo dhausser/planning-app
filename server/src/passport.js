@@ -2,12 +2,12 @@ import passport from 'passport';
 import { OAuthStrategy } from 'passport-oauth';
 import path from 'path';
 import fs from 'fs';
-
+import os from 'os';
 
 /**
  * Passport
  */
-const filepath = path.join(__dirname, '../oauth/jira_privatekey.pem');
+const filepath = path.join(os.homedir(), '/oauth/jira_privatekey.pem');
 export const consumerSecret = fs.existsSync(filepath) ? fs.readFileSync(filepath, 'utf8') : '';
 export const consumerKey = process.env.CONSUMER_KEY;
 
