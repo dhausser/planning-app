@@ -1,5 +1,5 @@
 import React from "react"
-import { ApolloProvider } from "@apollo/react-hooks"
+import { ApolloProvider } from "@apollo/client"
 import { NavigationProvider } from "@atlaskit/navigation-next"
 import client from "./client"
 

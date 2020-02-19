@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-"@apollo/client@^3.0.0-beta.34":
+"@apollo/client@^3.0.0-beta.36":
   version "3.0.0-beta.36"
   resolved "https://registry.yarnpkg.com/@apollo/client/-/client-3.0.0-beta.36.tgz#e62f2cc8075363c9a9058bd6916b4c081c01ec86"
   integrity sha512-CvX/KzL/DXfZu9dydwpQwoRHIaAMkZcUDJfbjXuWLk0mtv49eXQO20FDaiRGeQozAyByYU3C9MmGQLgfLTmzmw==

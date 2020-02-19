@@ -2,8 +2,7 @@ import "@atlaskit/css-reset"
 
 import React, { useEffect } from "react"
 import PropTypes from "prop-types"
-import { useQuery } from "@apollo/react-hooks"
-import { gql } from "apollo-boost"
+import { gql, useQuery } from "@apollo/client"
 import {
   withNavigationViewController,
   LayoutManagerWithViewController,
@@ -33,14 +32,14 @@ import Login from "./login"
 import { LoginForm } from "../components"
 
 export const IS_LOGGED_IN = gql`
-  query IsUserLoggedIn {
+  {
     isLoggedIn @client
   }
 `
 
 function App({ navigationViewController }) {
   const { data } = useQuery(IS_LOGGED_IN)
-  console.log(data)
+  console.log(data.isLoggedIn)
   
   useEffect(() => {
     navigationViewController.addView(productHomeView)
@@ -69,8 +68,10 @@ function App({ navigationViewController }) {
         </>
       ) : (
         <>
-          <Login path="/login" />
           <LoginForm />
+          {/** TO FIX: No Apollo Client instance can be found.
+           * Please ensure that you have called `ApolloProvider` higher up in your tree. */}
+          {/* <Login path="/login" /> */}
         </>
       )}
     </LayoutManagerWithViewController>

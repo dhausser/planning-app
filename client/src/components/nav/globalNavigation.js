@@ -1,7 +1,6 @@
 import React from "react"
 
-import { useQuery } from "@apollo/react-hooks"
-import { gql } from "apollo-boost"
+import { gql, useQuery } from "@apollo/client"
 
 import GlobalNavigation from "@atlaskit/global-navigation"
 import { GlobalItem } from "@atlaskit/navigation-next"
@@ -9,7 +8,7 @@ import AppSwitcherIcon from "@atlaskit/icon/glyph/app-switcher"
 import EmojiAtlassianIcon from "@atlaskit/icon/glyph/emoji/atlassian"
 
 const IS_LOGGED_IN = gql`
-  query IsUserLoggedIn {
+  {
     isLoggedIn @client
   }
 `
@@ -43,7 +42,7 @@ function GetAvatarUrl() {
 }
 
 export default () => {
-  const { data } = useQuery(IS_LOGGED_IN)
+  const { data: { isLoggedIn} } = useQuery(IS_LOGGED_IN)
   return (
     <GlobalNavigation
       productIcon={EmojiAtlassianIcon}
@@ -59,7 +58,7 @@ export default () => {
       appSwitcherTooltip="Switch to ..."
       onSettingsClick={() => console.log("settings clicked")}
       profileItems={() => <div />}
-      profileIconUrl={data.isLoggedIn ? GetAvatarUrl() : null}
+      profileIconUrl={isLoggedIn ? GetAvatarUrl() : null}
     />
   )
 }

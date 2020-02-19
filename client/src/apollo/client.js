@@ -1,32 +1,36 @@
-import ApolloClient, { InMemoryCache, HttpLink } from "apollo-boost"
-import { resolvers, typeDefs } from "./resolvers"
+import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
 import fetch from "isomorphic-fetch"
+import { resolvers, typeDefs } from "./resolvers"
 
-/** TODO: Check that this actually works */
-let client = null
+let token;
+if (typeof localStorage !== `undefined`) {
+  token = localStorage.getItem("token");
+}
+
+const cache = new InMemoryCache();
+const client = new ApolloClient({
+  cache,
+  link: new HttpLink({
+    uri: "http://localhost:4000/graphql",
+    credentials: "same-origin",
+    headers: {
+      authorization: token,
+    },
+  }),
+  resolvers,
+  typeDefs,
+  fetch,
+});
 
 if (typeof localStorage !== `undefined`) {
-  client = new ApolloClient({
-    link: new HttpLink({
-      uri: "/graphql",
-      credentials: "same-origin",
-      headers: {
-        authorization: localStorage.getItem("token"),
-      },
-      fetch,
-    }),
-    cache: new InMemoryCache({
-      data: {
-        isLoggedIn: !!localStorage.getItem("token"),
-        projectId: localStorage.getItem("projectId"),
-        versionId: localStorage.getItem("versionId"),
-        statusId: localStorage.getItem("statusId"),
-        teamId: localStorage.getItem("teamId"),
-      },
-    }),
-    resolvers,
-    typeDefs,
-  })
+  const data = {
+    isLoggedIn: !!token,
+    projectId: localStorage.getItem("projectId"),
+    versionId: localStorage.getItem("versionId"),
+    statusId: localStorage.getItem("statusId"),
+    teamId: localStorage.getItem("teamId"),
+  }
+  cache.writeData({ data })
 }
 
 export default client

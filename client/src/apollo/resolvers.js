@@ -42,6 +42,12 @@ const GET_FILTER = gql`
 `
 
 export const resolvers = {
+  // Query: {
+  //   isLoggedIn: (_root, args, { cache }, info) => {
+  //     console.log(cache);
+  //     return !!localStorage.getItem("token");
+  //   }
+  // },
   Mutation: {
     toggleFilter: (
       _root,
