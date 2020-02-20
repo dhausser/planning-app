@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react"
 
-import { useQuery } from "@apollo/react-hooks"
-import { gql } from "apollo-boost"
+import { gql, useQuery } from "@apollo/client"
 
 import PropTypes from "prop-types"
 
@@ -10,7 +9,7 @@ import PageHeader from "@atlaskit/page-header"
 import TextField from "@atlaskit/textfield"
 
 import {
-  ProductIssuesView,
+  productIssuesView,
   Layout,
   ProjectFilter,
   VersionFilter,
@@ -117,7 +116,7 @@ function Issues({ navigationViewController }) {
     if (data && data.issues && data.issues.issues.length) {
       setLength(data.issues.issues.length)
     }
-    navigationViewController.setView(ProductIssuesView.id)
+    navigationViewController.setView(productIssuesView.id)
   }, [navigationViewController, data])
 
   return (

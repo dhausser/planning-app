@@ -4,8 +4,7 @@ import path from 'path';
 
 const router = express.Router();
 const baseUrl = process.env.NODE_ENV === 'production'
-  ? 'https://roadmap.cdprojektred.com'
-  : 'http://localhost:3000';
+  ? process.env.CLIENT_PROD_URL : process.env.CLIENT_DEV_URL;
 
 // Redirect the user to the OAuth provider for authentication.  When
 // complete, the provider will redirect the user back to the application at

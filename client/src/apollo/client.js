@@ -24,7 +24,7 @@ const client = new ApolloClient({
 
 if (typeof localStorage !== `undefined`) {
   const data = {
-    isLoggedIn: !!token,
+    isAuthenticated: !!token,
     projectId: localStorage.getItem("projectId"),
     versionId: localStorage.getItem("versionId"),
     statusId: localStorage.getItem("statusId"),

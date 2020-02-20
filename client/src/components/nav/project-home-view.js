@@ -9,7 +9,7 @@ import IssuesIcon from "@atlaskit/icon/glyph/issues"
 import ShipIcon from "@atlaskit/icon/glyph/ship"
 import SettingsIcon from "@atlaskit/icon/glyph/settings"
 import Switcher from "./switcher"
-import LinkItem from "./linkItem"
+import LinkItem from "./link-item"
 
 export default {
   id: "project/home",

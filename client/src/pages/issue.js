@@ -1,7 +1,6 @@
 import React, { useEffect } from "react"
 
-import { useQuery } from "@apollo/react-hooks"
-import { gql } from "apollo-boost"
+import { gql, useQuery } from "@apollo/client"
 
 import PropTypes from "prop-types"
 import styled from "styled-components"
@@ -12,7 +11,7 @@ import Page, { Grid, GridColumn } from "@atlaskit/page"
 import EmptyState from "@atlaskit/empty-state"
 
 // Components
-import { ProductIssuesView, Loading } from "../components"
+import { productIssuesView, Loading } from "../components"
 import { ISSUE_ROW_DATA } from "./issues"
 import {
   Header,
@@ -62,7 +61,7 @@ const GET_ISSUE = gql`
 `
 
 function Issue({ navigationViewController, match }) {
-  useEffect(() => navigationViewController.setView(ProductIssuesView.id), [
+  useEffect(() => navigationViewController.setView(productIssuesView.id), [
     navigationViewController,
   ])
   const { data, loading, error } = useQuery(GET_ISSUE, {

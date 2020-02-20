@@ -1,5 +1,4 @@
 import React, { useState } from "react"
-import posed from "react-pose"
 import { ScrollSync, ScrollSyncPane } from "react-scroll-sync"
 import PropTypes from "prop-types"
 import styled from "styled-components"
@@ -145,11 +144,11 @@ export default function Timeline({ epics }) {
                         <Box
                           className="box"
                           style={{ left: "2.7%", right: "94.6%" }}
-                          onDragStart={() => {}}
-                          onDragEnd={() => {}}
-                          onValueChange={{ x: () => {} }}
-                          onMouseOver={() => {}}
-                          onFocus={() => {}}
+                          onDragStart={() => { }}
+                          onDragEnd={() => { }}
+                          onValueChange={{ x: () => { } }}
+                          onMouseOver={() => { }}
+                          onFocus={() => { }}
                         >
                           <EpicDragLeft orientation="left">
                             <EpicDrag />
@@ -525,18 +524,7 @@ const RowContainer = styled.div`
   }
 `
 
-const Box = posed.div({
-  draggable: "x",
-  hoverable: true,
-  // init: {
-  //   scale: 1,
-  //   boxShadow: '0px 0px 0px rgba(0,0,0,0)',
-  // },
-  // hover: {
-  //   scale: 1.2,
-  //   boxShadow: '0px 5px 10px rgba(0,0,0,0.2)',
-  // },
-})
+const Box = styled.div({})
 
 const BoxWrapper = styled.div`
   position: absolute;

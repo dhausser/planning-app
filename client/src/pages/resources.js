@@ -3,8 +3,7 @@ import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import { Link } from "gatsby"
 
-import { useQuery, useMutation } from "@apollo/react-hooks"
-import { gql } from "apollo-boost"
+import { gql, useQuery, useMutation } from "@apollo/client"
 
 import styled from "styled-components"
 
@@ -24,8 +23,8 @@ import Select from "@atlaskit/select"
 import UserPicker from "@atlaskit/user-picker"
 import Spinner from "@atlaskit/spinner"
 
-import { TeamFilter, ProjectHomeView, Layout } from "../components"
-import { getResource } from "../components/issue/userPicker"
+import { TeamFilter, projectHomeView, Layout } from "../components"
+import { getResource } from "../components/issue/user-picker"
 
 const GET_TEAM_FILTER = gql`
   {
@@ -461,7 +460,7 @@ function Resources({ navigationViewController }) {
   const [isEditOpen, setIsEditOpen] = useState(false)
   const [isDeleteOpen, setIsDeleteOpen] = useState(false)
 
-  useEffect(() => navigationViewController.setView(ProjectHomeView.id), [
+  useEffect(() => navigationViewController.setView(projectHomeView.id), [
     navigationViewController,
   ])
 

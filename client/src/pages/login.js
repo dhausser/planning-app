@@ -1,6 +1,5 @@
 import React from "react"
-import { useApolloClient, useMutation } from "@apollo/react-hooks"
-import { gql } from "apollo-boost"
+import { gql, useApolloClient, useMutation } from "@apollo/client"
 import Login from "./login"
 
 const LOGIN_USER = gql`
@@ -15,11 +14,12 @@ export default () => {
   const [login] = useMutation(LOGIN_USER, {
     onCompleted: ({ login: token }) => {
       localStorage.setItem("token", token)
-      client.writeData({ data: { isLoggedIn: true } })
+      client.writeData({ data: { isAuthenticated: true } })
       window.opener.location.reload()
       window.close()
     },
   })
-  login()
-  return <Login path="/login" />
+  // login()
+  // return <Login path="/login" />
+  return <p>This is the login page</p>
 }

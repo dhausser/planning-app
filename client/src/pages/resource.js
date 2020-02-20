@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react"
 
-import { useQuery } from "@apollo/react-hooks"
-import { gql } from "apollo-boost"
+import { gql, useQuery } from "@apollo/client"
 
 import PropTypes from "prop-types"
 
@@ -11,7 +10,7 @@ import PageHeader from "@atlaskit/page-header"
 import TextField from "@atlaskit/textfield"
 import { Status } from "@atlaskit/status"
 import {
-  ProjectHomeView,
+  projectHomeView,
   Loading,
   Layout,
   ProjectFilter,
@@ -122,7 +121,7 @@ function Resource({ navigationViewController, match }) {
   const { resourceId } = match.params
 
   useEffect(() => {
-    navigationViewController.setView(ProjectHomeView.id)
+    navigationViewController.setView(projectHomeView.id)
   }, [navigationViewController])
 
   return (

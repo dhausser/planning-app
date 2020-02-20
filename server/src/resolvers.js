@@ -3,13 +3,27 @@ const resolvers = {
     /**
      * Jira REST API
      */
-    issues: (_, {
-      projectId, statusId, versionId, teamId, resourceId, startAt, maxResults,
-    }, { dataSources }) => (
-      dataSources.issueAPI.getIssues({
-        projectId, statusId, versionId, teamId, resourceId, startAt, maxResults,
-      })
-    ),
+    issues: (
+      _,
+      {
+        projectId,
+        statusId,
+        versionId,
+        teamId,
+        resourceId,
+        startAt,
+        maxResults,
+      },
+      { dataSources },
+    ) => dataSources.issueAPI.getIssues({
+      projectId,
+      statusId,
+      versionId,
+      teamId,
+      resourceId,
+      startAt,
+      maxResults,
+    }),
     dashboardIssues: (_, { projectId, versionId, teamId }, { dataSources }) => (
       dataSources.issueAPI.getDashboardIssues({ projectId, versionId, teamId })
     ),
@@ -28,12 +42,8 @@ const resolvers = {
     projects: (_, __, { dataSources }) => (
       dataSources.issueAPI.getProjects()
     ),
-    myself: (_, __, { dataSources }) => (
-      dataSources.issueAPI.getCurrentUser()
-    ),
-    user: (_, { id }, { dataSources }) => (
-      dataSources.issueAPI.getUser(id)
-    ),
+    myself: (_, __, { dataSources }) => dataSources.issueAPI.getCurrentUser(),
+    user: (_, { id }, { dataSources }) => dataSources.issueAPI.getUser(id),
     assignableUsers: (_, { project }, { dataSources }) => (
       dataSources.issueAPI.getAssignableUsers({ project })
     ),
@@ -48,15 +58,11 @@ const resolvers = {
     /**
      * MongoDB
      */
-    resources: (_, __, { dataSources }) => (
-      dataSources.resourceAPI.getResources()
-    ),
+    resources: (_, __, { dataSources }) => dataSources.resourceAPI.getResources(),
     resource: (_, { id }, { dataSources }) => (
       dataSources.resourceAPI.getResourceById({ resourceId: id })
     ),
-    teams: (_, __, { dataSources }) => (
-      dataSources.resourceAPI.getTeams()
-    ),
+    teams: (_, __, { dataSources }) => dataSources.resourceAPI.getTeams(),
     team: (_, { id }, { dataSources }) => (
       dataSources.resourceAPI.getResourcesByTeam({ teamId: id })
     ),
@@ -66,40 +72,47 @@ const resolvers = {
     /**
      * Jira REST API
      */
-    login: (_, __, { user }) => {
-      if (user.token) {
-        console.log(`Loging in with token ${user.token}`);
-        return user.token;
+    login: async (_, __, { user }) => {
+      if (user) {
+        const { token } = user;
+        return token;
       }
-      console.log('Cannot find login token');
-      return 0;
+      return null;
     },
     editIssue: (_, { id, value, type }, { dataSources }) => (
       dataSources.issueAPI.editIssue({ id, value, type })
     ),
-    assignIssue: (_, { id, key }, { dataSources }) => (
-      dataSources.issueAPI.assignIssue({ id, key })
-    ),
+    assignIssue: (_, { id, key }, { dataSources }) => dataSources.issueAPI.assignIssue({ id, key }),
     /**
      * Mongo DB
      */
-    insertResource: (_, {
-      id, firstname, lastname, email, team,
-    }, { dataSources }) => (
-      dataSources.resourceAPI.insertResource({
+    insertResource: (
+      _,
+      {
         id, firstname, lastname, email, team,
-      })
-    ),
-    updateResource: (_, {
-      id, firstname, lastname, email, team,
-    }, { dataSources }) => (
-      dataSources.resourceAPI.updateResource({
+      },
+      { dataSources },
+    ) => dataSources.resourceAPI.insertResource({
+      id,
+      firstname,
+      lastname,
+      email,
+      team,
+    }),
+    updateResource: (
+      _,
+      {
         id, firstname, lastname, email, team,
-      })
-    ),
-    deleteResource: (_, { id }, { dataSources }) => (
-      dataSources.resourceAPI.deleteResource({ id })
-    ),
+      },
+      { dataSources },
+    ) => dataSources.resourceAPI.updateResource({
+      id,
+      firstname,
+      lastname,
+      email,
+      team,
+    }),
+    deleteResource: (_, { id }, { dataSources }) => dataSources.resourceAPI.deleteResource({ id }),
   },
 };
 

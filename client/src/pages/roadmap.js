@@ -1,7 +1,6 @@
 import React, { useEffect } from "react"
 
-import { useQuery } from "@apollo/react-hooks"
-import { gql } from "apollo-boost"
+import { gql, useQuery } from "@apollo/client"
 
 import PropTypes from "prop-types"
 import styled from "styled-components"
@@ -12,7 +11,7 @@ import PageHeader from "@atlaskit/page-header"
 import Page from "@atlaskit/page"
 
 import {
-  ProjectHomeView,
+  projectHomeView,
   Loading,
   Error,
   ProjectFilter,
@@ -50,14 +49,14 @@ const barContent = (
 )
 
 const breadcrumbs = (
-  <BreadcrumbsStateless onExpand={() => {}}>
+  <BreadcrumbsStateless onExpand={() => { }}>
     <BreadcrumbsItem text="Projects" key="Projects" />
     <BreadcrumbsItem text="Gwent" key="Gwent" />
   </BreadcrumbsStateless>
 )
 
 function Roadmap({ navigationViewController }) {
-  useEffect(() => navigationViewController.setView(ProjectHomeView.id), [
+  useEffect(() => navigationViewController.setView(projectHomeView.id), [
     navigationViewController,
   ])
   const { loading, error, data } = useQuery(GET_ISSUES)

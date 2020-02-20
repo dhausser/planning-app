@@ -1,7 +1,6 @@
 import React, { useEffect } from "react"
 
-import { useQuery } from "@apollo/react-hooks"
-import { gql } from "apollo-boost"
+import { gql, useQuery } from "@apollo/client"
 
 import PropTypes from "prop-types"
 
@@ -12,7 +11,7 @@ import TextField from "@atlaskit/textfield"
 import EmptyState from "@atlaskit/empty-state"
 
 import {
-  ProjectHomeView,
+  projectHomeView,
   Layout,
   ProjectFilter,
   VersionFilter,
@@ -59,7 +58,7 @@ const barContent = (
 )
 
 function Dashboard({ navigationViewController }) {
-  useEffect(() => navigationViewController.setView(ProjectHomeView.id), [
+  useEffect(() => navigationViewController.setView(projectHomeView.id), [
     navigationViewController,
   ])
   const { error, loading, data } = useQuery(GET_ISSUES)
@@ -73,19 +72,19 @@ function Dashboard({ navigationViewController }) {
       {loading ? (
         <Loading />
       ) : (
-        <div style={{ display: "block" }}>
-          <Grid>
-            {data.dashboardIssues && data.dashboardIssues && (
-              <BarChart
-                labels={data.dashboardIssues.labels}
-                values={data.dashboardIssues.values}
-                maxResults={data.dashboardIssues.maxResults}
-                total={data.dashboardIssues.total}
-              />
-            )}
-          </Grid>
-        </div>
-      )}
+          <div style={{ display: "block" }}>
+            <Grid>
+              {data.dashboardIssues && data.dashboardIssues && (
+                <BarChart
+                  labels={data.dashboardIssues.labels}
+                  values={data.dashboardIssues.values}
+                  maxResults={data.dashboardIssues.maxResults}
+                  total={data.dashboardIssues.total}
+                />
+              )}
+            </Grid>
+          </div>
+        )}
     </Layout>
   )
 }

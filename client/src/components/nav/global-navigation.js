@@ -9,7 +9,7 @@ import EmojiAtlassianIcon from "@atlaskit/icon/glyph/emoji/atlassian"
 
 const IS_LOGGED_IN = gql`
   {
-    isLoggedIn @client
+    isAuthenticated @client
   }
 `
 
@@ -42,7 +42,7 @@ function GetAvatarUrl() {
 }
 
 export default () => {
-  const { data: { isLoggedIn} } = useQuery(IS_LOGGED_IN)
+  const { data: { isAuthenticated } } = useQuery(IS_LOGGED_IN)
   return (
     <GlobalNavigation
       productIcon={EmojiAtlassianIcon}
@@ -58,7 +58,7 @@ export default () => {
       appSwitcherTooltip="Switch to ..."
       onSettingsClick={() => console.log("settings clicked")}
       profileItems={() => <div />}
-      profileIconUrl={isLoggedIn ? GetAvatarUrl() : null}
+      profileIconUrl={isAuthenticated ? GetAvatarUrl() : null}
     />
   )
 }

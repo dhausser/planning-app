@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react"
 import { Link } from "gatsby"
 import PropTypes from "prop-types"
 
-import { useQuery } from "@apollo/react-hooks"
-import { gql } from "apollo-boost"
+import { gql, useQuery } from "@apollo/client"
 
 import { withNavigationViewController } from "@atlaskit/navigation-next"
 import { Status } from "@atlaskit/status"
@@ -20,7 +19,7 @@ import TableTree, {
 } from "@atlaskit/table-tree"
 
 import {
-  ProjectHomeView,
+  projectHomeView,
   Layout,
   VersionFilter,
   statusCatecoryColorMap,
@@ -64,7 +63,7 @@ const GET_ISSUES = gql`
 `
 
 function Backlog({ navigationViewController }) {
-  useEffect(() => navigationViewController.setView(ProjectHomeView.id), [
+  useEffect(() => navigationViewController.setView(projectHomeView.id), [
     navigationViewController,
   ])
   const [isExpanded, setIsExpanded] = useState(false)
@@ -93,39 +92,39 @@ function Backlog({ navigationViewController }) {
       {error ? (
         <EmptyState header={error.name} description={error.message} />
       ) : (
-        <TableTree>
-          <Headers>
-            <Header width={120}>Type</Header>
-            <Header width={700}>Summary</Header>
-            <Header width={150}>Status</Header>
-          </Headers>
-          <Rows
-            items={loading ? null : data.roadmapIssues}
-            render={({ key, fields, children }) => (
-              <Row
-                key
-                itemId={key}
-                items={children}
-                hasChildren={children && children.length > 0}
-                isDefaultExpanded={isExpanded}
-              >
-                <Cell singleLine>{issuetypeIconMap[fields.issuetype.id]}</Cell>
-                <Cell singleLine>
-                  <Link to={`/issue/${key}`}>{fields.summary}</Link>
-                </Cell>
-                <Cell singleLine>
-                  <Status
-                    text={fields.status.name}
-                    color={
-                      statusCatecoryColorMap[fields.status.statusCategory.id]
-                    }
-                  />
-                </Cell>
-              </Row>
-            )}
-          />
-        </TableTree>
-      )}
+          <TableTree>
+            <Headers>
+              <Header width={120}>Type</Header>
+              <Header width={700}>Summary</Header>
+              <Header width={150}>Status</Header>
+            </Headers>
+            <Rows
+              items={loading ? null : data.roadmapIssues}
+              render={({ key, fields, children }) => (
+                <Row
+                  key
+                  itemId={key}
+                  items={children}
+                  hasChildren={children && children.length > 0}
+                  isDefaultExpanded={isExpanded}
+                >
+                  <Cell singleLine>{issuetypeIconMap[fields.issuetype.id]}</Cell>
+                  <Cell singleLine>
+                    <Link to={`/issue/${key}`}>{fields.summary}</Link>
+                  </Cell>
+                  <Cell singleLine>
+                    <Status
+                      text={fields.status.name}
+                      color={
+                        statusCatecoryColorMap[fields.status.statusCategory.id]
+                      }
+                    />
+                  </Cell>
+                </Row>
+              )}
+            />
+          </TableTree>
+        )}
     </Layout>
   )
 }

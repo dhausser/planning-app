@@ -1,5 +1,5 @@
 import { JiraWordmark } from "@atlaskit/logo"
-import LinkItem from "./linkItem"
+import LinkItem from "./link-item"
 
 export default {
   id: "product/issues",

@@ -1,8 +1,8 @@
 import React, { useEffect } from "react"
 import { Link } from "gatsby"
 
-import { useApolloClient, useQuery } from "@apollo/react-hooks"
-import { gql } from "apollo-boost"
+import { useApolloClient, useQuery } from "@apollo/client"
+import { gql } from "@apollo/client"
 
 import PropTypes from "prop-types"
 import styled from "styled-components"
@@ -13,7 +13,7 @@ import DynamicTable from "@atlaskit/dynamic-table"
 import EmptyState from "@atlaskit/empty-state"
 import Avatar from "@atlaskit/avatar"
 
-import { ProductHomeView, Layout } from "../components"
+import { productHomeView, Layout } from "../components"
 
 const PROJECT_TILE_DATA = gql`
   fragment ProjectTile on Project {
@@ -122,7 +122,7 @@ function createRow(project) {
 }
 
 function Projects({ navigationViewController }) {
-  useEffect(() => navigationViewController.setView(ProductHomeView.id), [
+  useEffect(() => navigationViewController.setView(productHomeView.id), [
     navigationViewController,
   ])
   const { data, loading, error } = useQuery(GET_PROJECTS)

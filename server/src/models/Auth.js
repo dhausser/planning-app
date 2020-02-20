@@ -7,8 +7,6 @@ const filepath = path.join(os.homedir(), '../../oauth/jira_privatekey.pem');
 const consumerSecret = fs.existsSync(filepath) ? fs.readFileSync(filepath, 'utf8') : '';
 const consumerKey = process.env.CONSUMER_KEY;
 
-console
-
 class Oauth {
   constructor(baseURL) {
     this.baseURL = baseURL;

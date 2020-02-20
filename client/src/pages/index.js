@@ -8,12 +8,6 @@ import {
   LayoutManagerWithViewController,
 } from "@atlaskit/navigation-next"
 
-// Components
-import GlobalNavigation from "../components/nav/globalNavigation"
-import productHomeView from "../components/nav/productHomeView"
-import productIssuesView from "../components/nav/productIssuesView"
-import projectHomeView from "../components/nav/projectHomeView"
-
 // Pages
 import Dashboard from "./dashboard"
 import Resource from "./resource"
@@ -29,18 +23,41 @@ import Pages from "./pages"
 import AddItem from "./addItem"
 import Settings from "./settings"
 import Login from "./login"
-import { LoginForm } from "../components"
+import { LoginForm,
+  GlobalNavigation,
+  productHomeView,
+  productIssuesView,
+  projectHomeView,
+} from "../components"
 
 export const IS_LOGGED_IN = gql`
   {
-    isLoggedIn @client
+    isAuthenticated @client
   }
 `
 
+const PrivateRoutes = () => (
+  <>
+    <Projects path="/" />
+    <Dashboard path="/dashboards" />
+    <Roadmap path="/roadmap" />
+    <Backlog path="/backlog" />
+    <Board path="/board" />
+    <Dashboard path="/reports" />
+    <Releases path="/releases" />
+    <Issues path="/issues" />
+    <Pages path="/pages" />
+    <Resources path="/resources" />
+    <Settings path="/settings" />
+    <AddItem path="/AddItem" />
+    <Issue path="/issue/:issueId" />
+    <Resource path="/resource/:resourceId" />
+  </>
+)
+
 function App({ navigationViewController }) {
-  const { data } = useQuery(IS_LOGGED_IN)
-  console.log(data.isLoggedIn)
-  
+  const { data: { isAuthenticated } } = useQuery(IS_LOGGED_IN)
+
   useEffect(() => {
     navigationViewController.addView(productHomeView)
     navigationViewController.addView(productIssuesView)
@@ -49,31 +66,14 @@ function App({ navigationViewController }) {
 
   return (
     <LayoutManagerWithViewController globalNavigation={GlobalNavigation}>
-      {data.isLoggedIn ? (
-        <>
-          <Projects path="/" />
-          <Dashboard path="/dashboards" />
-          <Roadmap path="/roadmap" />
-          <Backlog path="/backlog" />
-          <Board path="/board" />
-          <Dashboard path="/reports" />
-          <Releases path="/releases" />
-          <Issues path="/issues" />
-          <Pages path="/pages" />
-          <Resources path="/resources" />
-          <Settings path="/settings" />
-          <AddItem path="/AddItem" />
-          <Issue path="/issue/:issueId" />
-          <Resource path="/resource/:resourceId" />
-        </>
+      {isAuthenticated ? (
+        <PrivateRoutes />
       ) : (
-        <>
-          <LoginForm />
-          {/** TO FIX: No Apollo Client instance can be found.
-           * Please ensure that you have called `ApolloProvider` higher up in your tree. */}
-          {/* <Login path="/login" /> */}
-        </>
-      )}
+          <>
+            <LoginForm />
+            <Login path="/login" />
+          </>
+        )}
     </LayoutManagerWithViewController>
   )
 }

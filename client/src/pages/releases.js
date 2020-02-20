@@ -2,10 +2,10 @@ import React, { useEffect } from "react"
 import PropTypes from "prop-types"
 import PageHeader from "@atlaskit/page-header"
 import { withNavigationViewController } from "@atlaskit/navigation-next"
-import { ProjectHomeView, Layout } from "../components"
+import { projectHomeView, Layout } from "../components"
 
 function Releases({ navigationViewController }) {
-  useEffect(() => navigationViewController.setView(ProjectHomeView.id), [
+  useEffect(() => navigationViewController.setView(projectHomeView.id), [
     navigationViewController,
   ])
 
