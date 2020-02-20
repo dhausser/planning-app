@@ -72,13 +72,7 @@ const resolvers = {
     /**
      * Jira REST API
      */
-    login: async (_, __, { user }) => {
-      if (user) {
-        const { token } = user;
-        return token;
-      }
-      return null;
-    },
+    login: (_, __, { user }) => user.token,
     editIssue: (_, { id, value, type }, { dataSources }) => (
       dataSources.issueAPI.editIssue({ id, value, type })
     ),

@@ -1,19 +1,17 @@
 import React from "react"
 import Modal, { ModalTransition } from "@atlaskit/modal-dialog"
 
-const openRequestedPopup = () => {
+const openOAuthWindow = () => {
   const url = `${
     process.env.NODE_ENV === "production"
       ? process.env.GATSBY_URL
       : "http://localhost:4000"
-  }/auth/provider`
+    }/auth/provider`
 
   // eslint-disable-next-line no-restricted-globals
   const { width, height } = screen
-
   const windowWidth = 1080
   const windowHeight = 720
-
   const left = width / 2 - windowWidth / 2
   const top = height / 12
 
@@ -25,7 +23,7 @@ const openRequestedPopup = () => {
 }
 
 function LoginForm() {
-  const actions = [{ text: "Login", onClick: openRequestedPopup }]
+  const actions = [{ text: "Login", onClick: openOAuthWindow }]
 
   /**
    * TODO:

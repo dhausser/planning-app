@@ -7,8 +7,8 @@ import os from 'os';
 /**
  * Passport
  */
-const filepath = path.join(os.homedir(), process.env.PRIVATE_KEY_PATH);
-export const consumerSecret = fs.existsSync(filepath) ? fs.readFileSync(filepath, 'utf8') : '';
+const filePath = path.join(os.homedir(), process.env.PRIVATE_KEY_PATH);
+export const consumerSecret = fs.existsSync(filePath) ? fs.readFileSync(filePath, 'utf8') : '';
 export const consumerKey = process.env.CONSUMER_KEY;
 
 passport.use(
@@ -28,6 +28,6 @@ passport.use(
   ),
 );
 passport.serializeUser(async (user, done) => done(null, user));
-passport.deserializeUser((id, done) => done(null, id));
+passport.deserializeUser((token, done) => done(null, token));
 
 export default passport;

@@ -23,7 +23,7 @@ import Pages from "./pages"
 import AddItem from "./addItem"
 import Settings from "./settings"
 import Login from "./login"
-import { LoginForm,
+import {
   GlobalNavigation,
   productHomeView,
   productIssuesView,
@@ -70,8 +70,7 @@ function App({ navigationViewController }) {
         <PrivateRoutes />
       ) : (
           <>
-            <LoginForm />
-            <Login path="/login" />
+            <Login />
           </>
         )}
     </LayoutManagerWithViewController>
