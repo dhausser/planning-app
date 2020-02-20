@@ -9,7 +9,7 @@
   },
   "main": "src",
   "scripts": {
-    "start": "npm run dev",
+    "start": "yarn dev",
     "dev": "nodemon -r esm",
     "prod": "NODE_ENV=production node -r esm src"
   },
