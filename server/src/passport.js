@@ -24,17 +24,17 @@ passport.use(
     },
     ((token, _tokenSecret, _profile, done) => {
       console.log('Passport uses this token:', token);
-      done(null, { token });
+      return done(null, { token });
     }),
   ),
 );
 passport.serializeUser(async (user, done) => {
   console.log('Serializing...', user);
-  done(null, user);
+  return done(null, user);
 });
 passport.deserializeUser((id, done) => {
   console.log('Deserializing...', id);
-  done(null, id);
+  return done(null, id);
 });
 
 export default passport;

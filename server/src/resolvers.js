@@ -3,26 +3,10 @@ const resolvers = {
     /**
      * Jira REST API
      */
-    issues: (
-      _,
-      {
-        projectId,
-        statusId,
-        versionId,
-        teamId,
-        resourceId,
-        startAt,
-        maxResults,
-      },
-      { dataSources },
-    ) => dataSources.issueAPI.getIssues({
-      projectId,
-      statusId,
-      versionId,
-      teamId,
-      resourceId,
-      startAt,
-      maxResults,
+    issues: (_, {
+      projectId, statusId, versionId, teamId, resourceId, startAt, maxResults,
+    }, { dataSources }) => dataSources.issueAPI.getIssues({
+      projectId, statusId, versionId, teamId, resourceId, startAt, maxResults,
     }),
     dashboardIssues: (_, { projectId, versionId, teamId }, { dataSources }) => (
       dataSources.issueAPI.getDashboardIssues({ projectId, versionId, teamId })
@@ -91,11 +75,7 @@ const resolvers = {
       },
       { dataSources },
     ) => dataSources.resourceAPI.insertResource({
-      id,
-      firstname,
-      lastname,
-      email,
-      team,
+      id, firstname, lastname, email, team,
     }),
     updateResource: (
       _,
@@ -104,11 +84,7 @@ const resolvers = {
       },
       { dataSources },
     ) => dataSources.resourceAPI.updateResource({
-      id,
-      firstname,
-      lastname,
-      email,
-      team,
+      id, firstname, lastname, email, team,
     }),
     deleteResource: (_, { id }, { dataSources }) => dataSources.resourceAPI.deleteResource({ id }),
   },
