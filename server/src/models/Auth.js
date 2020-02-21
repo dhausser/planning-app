@@ -1,11 +1,5 @@
 import { sign } from 'oauth-sign';
-import path from 'path';
-import fs from 'fs';
-import os from 'os';
-
-const filepath = path.join(os.homedir(), '../../oauth/jira_privatekey.pem');
-const consumerSecret = fs.existsSync(filepath) ? fs.readFileSync(filepath, 'utf8') : '';
-const consumerKey = process.env.CONSUMER_KEY;
+import { consumerKey, consumerSecret } from '../passport';
 
 class Oauth {
   constructor(baseURL) {

@@ -72,7 +72,11 @@ const resolvers = {
     /**
      * Jira REST API
      */
-    login: (_, __, { user }) => user.token,
+    login: (_, __, { user }) => {
+      console.log(user);
+      const { token } = user;
+      return token;
+    },
     editIssue: (_, { id, value, type }, { dataSources }) => (
       dataSources.issueAPI.editIssue({ id, value, type })
     ),
