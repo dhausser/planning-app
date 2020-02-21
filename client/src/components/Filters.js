@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { useApolloClient, useQuery } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
+import { useApolloClient, useQuery } from '@apollo/client';
+import { gql } from '@apollo/client';
 
 import Select from '@atlaskit/select';
 

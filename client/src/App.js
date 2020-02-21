@@ -1,6 +1,5 @@
 import React from 'react';
-import { ApolloProvider } from '@apollo/react-hooks';
-import { ApolloClient, InMemoryCache, HttpLink } from 'apollo-boost';
+import { ApolloClient, HttpLink, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { NavigationProvider } from '@atlaskit/navigation-next';
 import '@atlaskit/css-reset';
 import Pages from './pages';
