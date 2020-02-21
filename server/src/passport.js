@@ -23,11 +23,18 @@ passport.use(
       signatureMethod: 'RSA-SHA1',
     },
     ((token, _tokenSecret, _profile, done) => {
+      console.log('Passport uses this token:', token);
       done(null, { token });
     }),
   ),
 );
-passport.serializeUser(async (user, done) => done(null, user));
-passport.deserializeUser((token, done) => done(null, token));
+passport.serializeUser(async (user, done) => {
+  console.log('Serializing...', user);
+  done(null, user);
+});
+passport.deserializeUser((id, done) => {
+  console.log('Deserializing...', id);
+  done(null, id.token);
+});
 
 export default passport;
