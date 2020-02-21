@@ -1,5 +1,7 @@
 import 'dotenv/config';
 import express from 'express';
+import cookieParser from 'cookie-parser';
+import bodyParser from 'body-parser';
 import session from 'express-session';
 import { ApolloServer } from 'apollo-server-express';
 
@@ -37,11 +39,16 @@ const apollo = new ApolloServer({
 
 const app = express();
 
+// app.use(cookieParser('abcdefg'));
+app.use(cookieParser());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({
   secret: 'keyboard cat',
-  resave: false,
-  saveUninitialized: true,
-  cookie: {},
+  // resave: false,
+  // saveUninitialized: true,
+  // cookie: { secure: true },
+  // cookie: {},
 }));
 app.use(passport.initialize());
 app.use(passport.session());

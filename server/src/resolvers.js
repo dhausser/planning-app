@@ -73,7 +73,7 @@ const resolvers = {
      * Jira REST API
      */
     login: (_, __, { user }) => {
-      console.log(user);
+      console.log('User is:', user);
       const { token } = user;
       return token;
     },

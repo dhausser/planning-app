@@ -22,7 +22,8 @@ import Projects from "./projects"
 // import Pages from "./pages"
 // import AddItem from "./addItem"
 // import Settings from "./settings"
-import Login from "./login"
+// import Login from "./login"
+import { LoginForm } from '../components';
 import {
   GlobalNavigation,
   productHomeView,
@@ -70,7 +71,7 @@ function App({ navigationViewController }) {
         <Projects />
       ) : (
           <>
-            <Login />
+            <LoginForm />
           </>
         )}
     </LayoutManagerWithViewController>

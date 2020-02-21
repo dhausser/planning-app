@@ -34,7 +34,7 @@ passport.serializeUser(async (user, done) => {
 });
 passport.deserializeUser((id, done) => {
   console.log('Deserializing...', id);
-  done(null, id.token);
+  done(null, id);
 });
 
 export default passport;
