@@ -1,9 +1,23 @@
-import { gql } from 'apollo-server-express';
+import { gql } from "apollo-server-express"
 
 const typeDefs = gql`
   type Query {
-    issues(projectId: String, versionId: String, statusId: String, teamId: String, resourceId: String, startAt: Int, maxResults: Int): IssueConnection!
-    dashboardIssues(projectId: String, versionId: String, teamId: String, startAt: Int, maxResults: Int): DashboardIssueConnection!
+    issues(
+      projectId: String
+      versionId: String
+      statusId: String
+      teamId: String
+      resourceId: String
+      startAt: Int
+      maxResults: Int
+    ): IssueConnection!
+    dashboardIssues(
+      projectId: String
+      versionId: String
+      teamId: String
+      startAt: Int
+      maxResults: Int
+    ): DashboardIssueConnection!
     roadmapIssues(projectId: String, versionId: String): [Issue]!
     epics(projectId: String, versionId: String): [Issue]!
     issue(id: ID!): Issue
@@ -130,7 +144,7 @@ const typeDefs = gql`
     team: String
     avatarUrls: AvatarUrls
   }
-  
+
   type Project {
     id: ID!
     key: String!
@@ -172,10 +186,22 @@ const typeDefs = gql`
     login: String!
 
     # Resources
-    insertResource(id: ID!, firstname: String!, lastname: String!, email: String!, team: String!): Resource
-    updateResource(id: ID!, firstname: String!, lastname: String!, email: String!, team: String!): Resource
+    insertResource(
+      id: ID!
+      firstname: String!
+      lastname: String!
+      email: String!
+      team: String!
+    ): Resource
+    updateResource(
+      id: ID!
+      firstname: String!
+      lastname: String!
+      email: String!
+      team: String!
+    ): Resource
     deleteResource(id: ID!): Resource
   }
-`;
+`
 
-export default typeDefs;
+export default typeDefs

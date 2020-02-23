@@ -1,7 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { Link } from "gatsby"
-
 import DynamicTable from "@atlaskit/dynamic-table"
 import Tooltip from "@atlaskit/tooltip"
 import EmptyState from "@atlaskit/empty-state"

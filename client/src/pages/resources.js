@@ -2,11 +2,8 @@
 import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import { Link } from "gatsby"
-
 import { gql, useQuery, useMutation } from "@apollo/client"
-
 import styled from "styled-components"
-
 import { withNavigationViewController } from "@atlaskit/navigation-next"
 import DynamicTable from "@atlaskit/dynamic-table"
 import Avatar from "@atlaskit/avatar"
@@ -22,7 +19,6 @@ import Form, { Field } from "@atlaskit/form"
 import Select from "@atlaskit/select"
 import UserPicker from "@atlaskit/user-picker"
 import Spinner from "@atlaskit/spinner"
-
 import { TeamFilter, projectHomeView, Layout } from "../components"
 import { getResource } from "../components/issue/user-picker"
 

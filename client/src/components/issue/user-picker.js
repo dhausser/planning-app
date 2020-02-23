@@ -1,10 +1,7 @@
 import React, { useState } from "react"
-
 import { gql, useQuery, useMutation } from "@apollo/client"
-
 import PropTypes from "prop-types"
 import styled from "styled-components"
-
 import { gridSize } from "@atlaskit/theme"
 import UserPicker from "@atlaskit/user-picker"
 

@@ -1,11 +1,11 @@
 /* eslint-disable no-console */
-import { DataSource } from 'apollo-datasource';
-import assert from 'assert';
+import { DataSource } from "apollo-datasource"
+import assert from "assert"
 
 class ResourceAPI extends DataSource {
   constructor({ store }) {
-    super();
-    this.store = store;
+    super()
+    this.store = store
   }
 
   /**
@@ -15,9 +15,9 @@ class ResourceAPI extends DataSource {
    * here, so we can know about the user making requests
    */
   async initialize(config) {
-    this.context = config.context;
-    this.store = await this.store;
-    this.context.resourceMap = await this.getResourceMap();
+    this.context = config.context
+    this.store = await this.store
+    this.context.resourceMap = await this.getResourceMap()
   }
 
   /**
@@ -26,20 +26,21 @@ class ResourceAPI extends DataSource {
    * @returns {Promise<ResourcesResult>} A promise that will resolve to a list of ResourcesResult.
    */
   async getResources() {
-    let cursor;
+    let cursor
 
     try {
-      cursor = await this.store.resources
-        .find()
-        .project({
-          _id: 0, key: 1, name: 1, team: 1,
-        });
+      cursor = await this.store.resources.find().project({
+        _id: 0,
+        key: 1,
+        name: 1,
+        team: 1,
+      })
     } catch (e) {
-      console.error(`Unable to issue find command, ${e}`);
-      return [];
+      console.error(`Unable to issue find command, ${e}`)
+      return []
     }
 
-    return cursor.toArray();
+    return cursor.toArray()
   }
 
   /**
@@ -48,25 +49,26 @@ class ResourceAPI extends DataSource {
    * @returns {Promise<ResourcesMap>} A promise that will resolve to a list of ResourcesResult.
    */
   async getResourceMap() {
-    let cursor;
+    let cursor
 
     try {
-      cursor = await this.store.resources
-        .find()
-        .project({
-          _id: 0, key: 1, name: 1, team: 1,
-        });
+      cursor = await this.store.resources.find().project({
+        _id: 0,
+        key: 1,
+        name: 1,
+        team: 1,
+      })
     } catch (e) {
-      console.error(`Unable to issue find command, ${e}`);
-      return [];
+      console.error(`Unable to issue find command, ${e}`)
+      return []
     }
 
-    const array = await cursor.toArray();
+    const array = await cursor.toArray()
 
     return array.reduce((acc, resource) => {
-      acc[resource.key] = resource.team;
-      return acc;
-    }, {});
+      acc[resource.key] = resource.team
+      return acc
+    }, {})
   }
 
   /**
@@ -76,23 +78,26 @@ class ResourceAPI extends DataSource {
    * @returns {Promise<ResourcesResult>} A promise that will resolve to a list of ResourcesResult.
    */
   async getResourceById({ resourceId }) {
-    let cursor;
+    let cursor
 
     try {
       cursor = await this.store.resources.findOne(
         { key: resourceId },
         {
           projection: {
-            _id: 0, key: 1, name: 1, team: 1,
+            _id: 0,
+            key: 1,
+            name: 1,
+            team: 1,
           },
-        },
-      );
+        }
+      )
     } catch (e) {
-      console.error(`Unable to issue find command, ${e}`);
-      return [];
+      console.error(`Unable to issue find command, ${e}`)
+      return []
     }
 
-    return cursor;
+    return cursor
   }
 
   /**
@@ -102,37 +107,36 @@ class ResourceAPI extends DataSource {
    * @returns {Promise<TeamsResult>} A promise that will resolve to a list of TeamResults.
    */
   async getTeams() {
-    let cursor;
+    let cursor
     try {
-      cursor = await this.store.resources
-        .aggregate([
-          {
-            $group: {
-              _id: '$team',
-              members: { $push: '$$ROOT' },
-            },
+      cursor = await this.store.resources.aggregate([
+        {
+          $group: {
+            _id: "$team",
+            members: { $push: "$$ROOT" },
           },
-          {
-            $project: {
-              _id: 0,
-              id: '$_id',
-              name: '$_id',
-              members: 1,
-            },
+        },
+        {
+          $project: {
+            _id: 0,
+            id: "$_id",
+            name: "$_id",
+            members: 1,
           },
-          {
-            $addFields: { count: 0 },
-          },
-          {
-            $sort: { id: 1 },
-          },
-        ]);
+        },
+        {
+          $addFields: { count: 0 },
+        },
+        {
+          $sort: { id: 1 },
+        },
+      ])
     } catch (e) {
-      console.error(`Unable to issue find command, ${e}`);
-      return [];
+      console.error(`Unable to issue find command, ${e}`)
+      return []
     }
 
-    return cursor.toArray();
+    return cursor.toArray()
   }
 
   /**
@@ -143,83 +147,78 @@ class ResourceAPI extends DataSource {
    * a list of ResourcesByTeamResult.
    */
   async getResourcesByTeam({ teamId }) {
-    let cursor;
+    let cursor
 
     try {
-      cursor = await this.store.resources
-        .find({ team: teamId })
-        .project({
-          _id: 0, key: 1,
-        });
+      cursor = await this.store.resources.find({ team: teamId }).project({
+        _id: 0,
+        key: 1,
+      })
     } catch (e) {
-      console.error(`Unable to issue find command, ${e}`);
-      return [];
+      console.error(`Unable to issue find command, ${e}`)
+      return []
     }
 
-    return cursor.toArray();
+    return cursor.toArray()
   }
 
-  async insertResource({
-    id, firstname, lastname, team,
-  }) {
+  async insertResource({ id, firstname, lastname, team }) {
     // eslint-disable-next-line no-unused-vars
-    let cursor;
+    let cursor
 
     const data = {
       key: id,
       name: `${firstname} ${lastname}`,
       team,
-    };
-
-    try {
-      console.log(data);
-      cursor = await this.store.resources.insertOne(data);
-      assert.equal(1, cursor.insertedCount);
-    } catch (e) {
-      console.error(`Unable to issue command, ${e}`);
     }
 
-    return data;
+    try {
+      console.log(data)
+      cursor = await this.store.resources.insertOne(data)
+      assert.equal(1, cursor.insertedCount)
+    } catch (e) {
+      console.error(`Unable to issue command, ${e}`)
+    }
+
+    return data
   }
 
-  async updateResource({
-    id, firstname, lastname, team,
-  }) {
+  async updateResource({ id, firstname, lastname, team }) {
     // eslint-disable-next-line no-unused-vars
-    let cursor;
+    let cursor
 
     const data = {
       key: id,
       name: `${firstname} ${lastname}`,
       team,
-    };
-
-    try {
-      console.log(data);
-      cursor = await this.store.resources.updateOne(data);
-      assert.equal(1, cursor.matchedCount);
-      assert.equal(1, cursor.modifiedCount);
-    } catch (e) {
-      console.error(`Unable to issue command, ${e}`);
     }
 
-    return data;
+    try {
+      console.log(data)
+      cursor = await this.store.resources.updateOne(data)
+      assert.equal(1, cursor.matchedCount)
+      assert.equal(1, cursor.modifiedCount)
+    } catch (e) {
+      console.error(`Unable to issue command, ${e}`)
+    }
+
+    return data
   }
 
   async deleteResource({ id }) {
     // eslint-disable-next-line no-unused-vars
-    let cursor;
+    let cursor
 
     try {
-      console.log(id);
-      cursor = await this.store.resources.deleteOne({ key: id });
-      assert.equal(1, cursor.deletedCount);
+      console.log(id)
+      cursor = await this.store.resources.deleteOne({ key: id })
+      assert.equal(1, cursor.deletedCount)
     } catch (e) {
-      console.error(`Unable to issue command, ${e}`);
+      console.error(`Unable to issue command, ${e}`)
     }
 
-    return id;
+    return id
   }
 }
 
-export default ResourceAPI;
+export default ResourceAPI

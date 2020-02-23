@@ -10,47 +10,58 @@
 
 class Issues {
   constructor({
-    context, projectId, statusId, versionId, assignee, resourceMap, startAt, maxResults,
+    context,
+    projectId,
+    statusId,
+    versionId,
+    assignee,
+    resourceMap,
+    startAt,
+    maxResults,
   }) {
-    this.context = context;
-    this.projectId = projectId;
-    this.versionId = versionId;
-    this.statusId = statusId;
-    this.assignee = assignee;
-    this.startAt = startAt;
-    this.maxResults = maxResults;
-    this.assignee = assignee;
-    this.resourceMap = resourceMap;
+    this.context = context
+    this.projectId = projectId
+    this.versionId = versionId
+    this.statusId = statusId
+    this.assignee = assignee
+    this.startAt = startAt
+    this.maxResults = maxResults
+    this.assignee = assignee
+    this.resourceMap = resourceMap
     this.fields = [
-      'summary',
-      'description',
-      'status',
-      'assignee',
-      'reporter',
-      'issuetype',
-      'priority',
-      'fixVersions',
-      'comment',
-    ];
-    this.jql = '';
+      "summary",
+      "description",
+      "status",
+      "assignee",
+      "reporter",
+      "issuetype",
+      "priority",
+      "fixVersions",
+      "comment",
+    ]
+    this.jql = ""
   }
 
   getParams() {
-    this.getQuery();
+    this.getQuery()
     return {
       jql: this.jql,
       fields: this.fields,
       startAt: this.startAt,
       maxResults: this.maxResults,
-    };
+    }
   }
 
   getQuery() {
-    this.jql = `statusCategory in (${this.statusId ? this.statusId : 'new, indeterminate'})\
-      ${this.projectId ? `AND project=${this.projectId}` : ''}\
-      ${this.versionId ? `AND fixVersion=${this.versionId}` : ''}\
-      ${this.assignee ? `AND assignee in (${this.assignee})` : ''} order by priority`;
+    this.jql = `statusCategory in (${
+      this.statusId ? this.statusId : "new, indeterminate"
+    })\
+      ${this.projectId ? `AND project=${this.projectId}` : ""}\
+      ${this.versionId ? `AND fixVersion=${this.versionId}` : ""}\
+      ${
+        this.assignee ? `AND assignee in (${this.assignee})` : ""
+      } order by priority`
   }
 }
 
-export default Issues;
+export default Issues

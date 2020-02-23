@@ -1,9 +1,6 @@
 import React, { useEffect } from "react"
-
 import { gql, useQuery } from "@apollo/client"
-
 import PropTypes from "prop-types"
-
 import { Grid } from "@atlaskit/page"
 import PageHeader from "@atlaskit/page-header"
 import { withNavigationViewController } from "@atlaskit/navigation-next"
@@ -72,19 +69,19 @@ function Dashboard({ navigationViewController }) {
       {loading ? (
         <Loading />
       ) : (
-          <div style={{ display: "block" }}>
-            <Grid>
-              {data.dashboardIssues && data.dashboardIssues && (
-                <BarChart
-                  labels={data.dashboardIssues.labels}
-                  values={data.dashboardIssues.values}
-                  maxResults={data.dashboardIssues.maxResults}
-                  total={data.dashboardIssues.total}
-                />
-              )}
-            </Grid>
-          </div>
-        )}
+        <div style={{ display: "block" }}>
+          <Grid>
+            {data.dashboardIssues && data.dashboardIssues && (
+              <BarChart
+                labels={data.dashboardIssues.labels}
+                values={data.dashboardIssues.values}
+                maxResults={data.dashboardIssues.maxResults}
+                total={data.dashboardIssues.total}
+              />
+            )}
+          </Grid>
+        </div>
+      )}
     </Layout>
   )
 }

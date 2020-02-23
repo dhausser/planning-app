@@ -1,19 +1,21 @@
-import { sign } from 'oauth-sign';
-import { consumerKey, consumerSecret } from '../passport';
+import { sign } from "oauth-sign"
+import { consumerKey, consumerSecret } from "../passport"
 
 class Oauth {
   constructor(baseURL) {
-    this.baseURL = baseURL;
+    this.baseURL = baseURL
   }
 
   sign(req, oauthToken) {
-    const { method, path: addressPath, params } = req;
-    const oauthVersion = '1.0';
-    const signatureMethod = 'RSA-SHA1';
-    const baseURI = `${this.baseURL}${addressPath}`;
-    const timestamp = Math.floor(Date.now() / 1000);
-    const nonce = Math.random().toString(36).substring(2, 15);
-    const requestParams = Object.fromEntries(params.entries());
+    const { method, path: addressPath, params } = req
+    const oauthVersion = "1.0"
+    const signatureMethod = "RSA-SHA1"
+    const baseURI = `${this.baseURL}${addressPath}`
+    const timestamp = Math.floor(Date.now() / 1000)
+    const nonce = Math.random()
+      .toString(36)
+      .substring(2, 15)
+    const requestParams = Object.fromEntries(params.entries())
 
     // Assemble Oauth parameters
     const oauthParams = {
@@ -24,16 +26,12 @@ class Oauth {
       oauth_timestamp: timestamp,
       oauth_token: oauthToken,
       oauth_version: oauthVersion,
-    };
+    }
 
     // Generate Oauth signature
-    const oauthSignature = encodeURIComponent(sign(
-      signatureMethod,
-      method,
-      baseURI,
-      oauthParams,
-      consumerSecret,
-    ));
+    const oauthSignature = encodeURIComponent(
+      sign(signatureMethod, method, baseURI, oauthParams, consumerSecret)
+    )
 
     // Compose Oauth authorization header
     return `OAuth\
@@ -43,8 +41,8 @@ class Oauth {
       oauth_signature_method="${signatureMethod}",\
       oauth_timestamp="${timestamp}",\
       oauth_token="${oauthToken}",\
-      oauth_version="${oauthVersion}"`;
+      oauth_version="${oauthVersion}"`
   }
 }
 
-export default Oauth;
+export default Oauth

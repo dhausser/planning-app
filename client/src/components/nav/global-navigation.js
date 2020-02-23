@@ -1,17 +1,10 @@
 import React from "react"
-
 import { gql, useQuery } from "@apollo/client"
-
 import GlobalNavigation from "@atlaskit/global-navigation"
 import { GlobalItem } from "@atlaskit/navigation-next"
 import AppSwitcherIcon from "@atlaskit/icon/glyph/app-switcher"
 import EmojiAtlassianIcon from "@atlaskit/icon/glyph/emoji/atlassian"
-
-const IS_LOGGED_IN = gql`
-  {
-    isAuthenticated @client
-  }
-`
+import { IS_LOGGED_IN } from "../pages"
 
 const GET_CURRENT_USER = gql`
   query GetCurrentUser {
@@ -42,7 +35,9 @@ function GetAvatarUrl() {
 }
 
 export default () => {
-  const { data: { isAuthenticated } } = useQuery(IS_LOGGED_IN)
+  const {
+    data: { isAuthenticated },
+  } = useQuery(IS_LOGGED_IN)
   return (
     <GlobalNavigation
       productIcon={EmojiAtlassianIcon}

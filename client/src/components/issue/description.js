@@ -1,10 +1,7 @@
 import React, { useState } from "react"
-
 import { gql, useMutation } from "@apollo/client"
-
 import PropTypes from "prop-types"
 import styled from "styled-components"
-
 import { gridSize, fontSize } from "@atlaskit/theme"
 import TextArea from "@atlaskit/textarea"
 import InlineEdit from "@atlaskit/inline-edit"

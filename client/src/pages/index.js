@@ -1,35 +1,7 @@
-import "@atlaskit/css-reset"
-
-import React, { useEffect } from "react"
-import PropTypes from "prop-types"
-import { gql, useQuery } from "@apollo/client"
-import {
-  withNavigationViewController,
-  LayoutManagerWithViewController,
-} from "@atlaskit/navigation-next"
-
-// Pages
-import Projects from "./projects"
-// import Dashboard from "./dashboard"
-// import Resource from "./resource"
-// import Resources from "./resources"
-// import Roadmap from "./roadmap"
-// import Issues from "./issues"
-// import Issue from "./issue"
-// import Backlog from "./backlog"
-// import Releases from "./releases"
-// import Board from "./board"
-// import Pages from "./pages"
-// import AddItem from "./addItem"
-// import Settings from "./settings"
-// import Login from "./login"
-import { LoginForm } from '../components';
-import {
-  GlobalNavigation,
-  productHomeView,
-  productIssuesView,
-  projectHomeView,
-} from "../components"
+import React from "react"
+import { useQuery, gql } from "@apollo/client"
+import { getUser, isLoggedIn } from "../services/auth"
+import { Layout, LoginForm } from "../components"
 
 export const IS_LOGGED_IN = gql`
   {
@@ -37,49 +9,27 @@ export const IS_LOGGED_IN = gql`
   }
 `
 
-// const PrivateRoutes = () => (
-//   <>
-//     <Projects path="/" />
-//     <Dashboard path="/dashboards" />
-//     <Roadmap path="/roadmap" />
-//     <Backlog path="/backlog" />
-//     <Board path="/board" />
-//     <Dashboard path="/reports" />
-//     <Releases path="/releases" />
-//     <Issues path="/issues" />
-//     <Pages path="/pages" />
-//     <Resources path="/resources" />
-//     <Settings path="/settings" />
-//     <AddItem path="/AddItem" />
-//     <Issue path="/issue/:issueId" />
-//     <Resource path="/resource/:resourceId" />
-//   </>
-// )
-
-function App({ navigationViewController }) {
-  const { data: { isAuthenticated } } = useQuery(IS_LOGGED_IN)
-
-  useEffect(() => {
-    navigationViewController.addView(productHomeView)
-    navigationViewController.addView(productIssuesView)
-    navigationViewController.addView(projectHomeView)
-  }, [navigationViewController])
-
+export default () => {
+  const { data } = useQuery(IS_LOGGED_IN)
+  console.log(data)
   return (
-    <LayoutManagerWithViewController globalNavigation={GlobalNavigation}>
-      {isAuthenticated ? (
-        <Projects />
-      ) : (
+    <Layout>
+      <h1>Hello {isLoggedIn() ? getUser().name : "world"}!</h1>
+      <p>
+        {/* {data.isAuthenticated ? ( */}
+        {isLoggedIn() ? (
           <>
-            <LoginForm />
+            You are logged in, so check your{" "}
+            <Link to="/app/profile">profile</Link>
+          </>
+        ) : (
+          <>
+            You should <Link to="/app/login">log in</Link> to see restricted
+            content
+            {/* <LoginForm /> */}
           </>
         )}
-    </LayoutManagerWithViewController>
+      </p>
+    </Layout>
   )
 }
-
-App.propTypes = {
-  navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
-}
-
-export default withNavigationViewController(App)

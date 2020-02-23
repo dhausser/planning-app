@@ -1,7 +1,5 @@
 import React from "react"
-
 import { gql, useApolloClient, useQuery } from "@apollo/client"
-
 import Select from "@atlaskit/select"
 
 export const TOGGLE_FILTER = gql`

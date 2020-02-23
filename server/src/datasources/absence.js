@@ -1,20 +1,20 @@
-import { RESTDataSource } from 'apollo-datasource-rest';
+import { RESTDataSource } from "apollo-datasource-rest"
 
 class AbsenceAPI extends RESTDataSource {
   constructor() {
-    super();
-    this.baseURL = process.env.PORTAL_URL;
-    this.apiKey = process.env.PORTAL_API_KEY;
+    super()
+    this.baseURL = process.env.PORTAL_URL
+    this.apiKey = process.env.PORTAL_API_KEY
   }
 
   async getAllAbsences() {
-    const response = await this.get('', { apiKey: this.apiKey });
-    return Array.isArray(response) ? response : [];
+    const response = await this.get("", { apiKey: this.apiKey })
+    return Array.isArray(response) ? response : []
   }
 
   async getAbsencesById({ userId }) {
-    return this.get(`?user[]=${userId}`, { apiKey: this.apiKey });
+    return this.get(`?user[]=${userId}`, { apiKey: this.apiKey })
   }
 }
 
-export default AbsenceAPI;
+export default AbsenceAPI

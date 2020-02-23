@@ -1,15 +1,11 @@
 import React, { useEffect } from "react"
-
 import { gql, useQuery } from "@apollo/client"
-
 import PropTypes from "prop-types"
 import styled from "styled-components"
-
 import { withNavigationViewController } from "@atlaskit/navigation-next"
 import { BreadcrumbsStateless, BreadcrumbsItem } from "@atlaskit/breadcrumbs"
 import PageHeader from "@atlaskit/page-header"
 import Page from "@atlaskit/page"
-
 import {
   projectHomeView,
   Loading,
@@ -49,7 +45,7 @@ const barContent = (
 )
 
 const breadcrumbs = (
-  <BreadcrumbsStateless onExpand={() => { }}>
+  <BreadcrumbsStateless onExpand={() => {}}>
     <BreadcrumbsItem text="Projects" key="Projects" />
     <BreadcrumbsItem text="Gwent" key="Gwent" />
   </BreadcrumbsStateless>

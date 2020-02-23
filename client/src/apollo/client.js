@@ -1,25 +1,31 @@
-import { ApolloClient, InMemoryCache, HttpLink, ApolloLink, concat } from '@apollo/client';
+import {
+  ApolloClient,
+  InMemoryCache,
+  HttpLink,
+  ApolloLink,
+  concat,
+} from "@apollo/client"
 import fetch from "isomorphic-fetch"
-import { resolvers, typeDefs } from "./resolvers"
+import { resolvers, typeDefs } from "./schema"
 
 let token = null
 if (typeof localStorage !== `undefined`) {
-  token = localStorage.getItem('token')
+  token = localStorage.getItem("token")
 }
 
-const cache = new InMemoryCache();
+const cache = new InMemoryCache()
 
-const httpLink = new HttpLink({ uri: '/graphql' });
+const httpLink = new HttpLink({ uri: "/graphql" })
 
 const authMiddleware = new ApolloLink((operation, forward) => {
   // add the authorization to the headers
   operation.setContext({
     headers: {
       authorization: token || null,
-    }
-  });
+    },
+  })
 
-  return forward(operation);
+  return forward(operation)
 })
 
 const client = new ApolloClient({
@@ -28,7 +34,7 @@ const client = new ApolloClient({
   resolvers,
   typeDefs,
   fetch,
-});
+})
 
 if (typeof localStorage !== `undefined`) {
   const data = {

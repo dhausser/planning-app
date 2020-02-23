@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react"
-
 import { gql, useQuery } from "@apollo/client"
-
 import PropTypes from "prop-types"
-
 import { withNavigationViewController } from "@atlaskit/navigation-next"
 import EmptyState from "@atlaskit/empty-state"
 import PageHeader from "@atlaskit/page-header"

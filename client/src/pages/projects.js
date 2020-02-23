@@ -1,12 +1,9 @@
 import React, { useEffect } from "react"
 import { Link } from "gatsby"
-
 import { useApolloClient, useQuery } from "@apollo/client"
 import { gql } from "@apollo/client"
-
 import PropTypes from "prop-types"
 import styled from "styled-components"
-
 import { withNavigationViewController } from "@atlaskit/navigation-next"
 import PageHeader from "@atlaskit/page-header"
 import DynamicTable from "@atlaskit/dynamic-table"

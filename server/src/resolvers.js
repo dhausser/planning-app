@@ -3,53 +3,60 @@ const resolvers = {
     /**
      * Jira REST API
      */
-    issues: (_, {
-      projectId, statusId, versionId, teamId, resourceId, startAt, maxResults,
-    }, { dataSources }) => dataSources.issueAPI.getIssues({
-      projectId, statusId, versionId, teamId, resourceId, startAt, maxResults,
-    }),
-    dashboardIssues: (_, { projectId, versionId, teamId }, { dataSources }) => (
-      dataSources.issueAPI.getDashboardIssues({ projectId, versionId, teamId })
-    ),
-    roadmapIssues: (_, { projectId, versionId }, { dataSources }) => (
-      dataSources.issueAPI.getRoadmapIssues(projectId, versionId)
-    ),
-    epics: (_, { projectId, versionId }, { dataSources }) => (
-      dataSources.issueAPI.getEpics(projectId, versionId)
-    ),
-    issue: (_, { id }, { dataSources }) => (
-      dataSources.issueAPI.getIssueById(id)
-    ),
-    versions: (_, { id, startAt, maxResults }, { dataSources }) => (
-      dataSources.issueAPI.getVersions(id, startAt, maxResults)
-    ),
-    projects: (_, __, { dataSources }) => (
-      dataSources.issueAPI.getProjects()
-    ),
+    issues: (
+      _,
+      {
+        projectId,
+        statusId,
+        versionId,
+        teamId,
+        resourceId,
+        startAt,
+        maxResults,
+      },
+      { dataSources }
+    ) =>
+      dataSources.issueAPI.getIssues({
+        projectId,
+        statusId,
+        versionId,
+        teamId,
+        resourceId,
+        startAt,
+        maxResults,
+      }),
+    dashboardIssues: (_, { projectId, versionId, teamId }, { dataSources }) =>
+      dataSources.issueAPI.getDashboardIssues({ projectId, versionId, teamId }),
+    roadmapIssues: (_, { projectId, versionId }, { dataSources }) =>
+      dataSources.issueAPI.getRoadmapIssues(projectId, versionId),
+    epics: (_, { projectId, versionId }, { dataSources }) =>
+      dataSources.issueAPI.getEpics(projectId, versionId),
+    issue: (_, { id }, { dataSources }) =>
+      dataSources.issueAPI.getIssueById(id),
+    versions: (_, { id, startAt, maxResults }, { dataSources }) =>
+      dataSources.issueAPI.getVersions(id, startAt, maxResults),
+    projects: (_, __, { dataSources }) => dataSources.issueAPI.getProjects(),
     myself: (_, __, { dataSources }) => dataSources.issueAPI.getCurrentUser(),
     user: (_, { id }, { dataSources }) => dataSources.issueAPI.getUser(id),
-    assignableUsers: (_, { project }, { dataSources }) => (
-      dataSources.issueAPI.getAssignableUsers({ project })
-    ),
+    assignableUsers: (_, { project }, { dataSources }) =>
+      dataSources.issueAPI.getAssignableUsers({ project }),
 
     /**
      * CDPR Portal REST API
      */
-    absences: (_, { id }, { dataSources }) => (
-      dataSources.absenceAPI.getAbsencesById({ userId: id })
-    ),
+    absences: (_, { id }, { dataSources }) =>
+      dataSources.absenceAPI.getAbsencesById({ userId: id }),
 
     /**
      * MongoDB
      */
-    resources: (_, __, { dataSources }) => dataSources.resourceAPI.getResources(),
-    resource: (_, { id }, { dataSources }) => (
-      dataSources.resourceAPI.getResourceById({ resourceId: id })
-    ),
+    resources: (_, __, { dataSources }) =>
+      dataSources.resourceAPI.getResources(),
+    resource: (_, { id }, { dataSources }) =>
+      dataSources.resourceAPI.getResourceById({ resourceId: id }),
     teams: (_, __, { dataSources }) => dataSources.resourceAPI.getTeams(),
-    team: (_, { id }, { dataSources }) => (
-      dataSources.resourceAPI.getResourcesByTeam({ teamId: id })
-    ),
+    team: (_, { id }, { dataSources }) =>
+      dataSources.resourceAPI.getResourcesByTeam({ teamId: id }),
   },
 
   Mutation: {
@@ -57,37 +64,44 @@ const resolvers = {
      * Jira REST API
      */
     login: (_, __, { user }) => {
-      console.log('User is:', user);
-      const { token } = user;
-      return token;
+      console.log("User is:", user)
+      const { token } = user
+      return token
     },
-    editIssue: (_, { id, value, type }, { dataSources }) => (
-      dataSources.issueAPI.editIssue({ id, value, type })
-    ),
-    assignIssue: (_, { id, key }, { dataSources }) => dataSources.issueAPI.assignIssue({ id, key }),
+    editIssue: (_, { id, value, type }, { dataSources }) =>
+      dataSources.issueAPI.editIssue({ id, value, type }),
+    assignIssue: (_, { id, key }, { dataSources }) =>
+      dataSources.issueAPI.assignIssue({ id, key }),
     /**
      * Mongo DB
      */
     insertResource: (
       _,
-      {
-        id, firstname, lastname, email, team,
-      },
-      { dataSources },
-    ) => dataSources.resourceAPI.insertResource({
-      id, firstname, lastname, email, team,
-    }),
+      { id, firstname, lastname, email, team },
+      { dataSources }
+    ) =>
+      dataSources.resourceAPI.insertResource({
+        id,
+        firstname,
+        lastname,
+        email,
+        team,
+      }),
     updateResource: (
       _,
-      {
-        id, firstname, lastname, email, team,
-      },
-      { dataSources },
-    ) => dataSources.resourceAPI.updateResource({
-      id, firstname, lastname, email, team,
-    }),
-    deleteResource: (_, { id }, { dataSources }) => dataSources.resourceAPI.deleteResource({ id }),
+      { id, firstname, lastname, email, team },
+      { dataSources }
+    ) =>
+      dataSources.resourceAPI.updateResource({
+        id,
+        firstname,
+        lastname,
+        email,
+        team,
+      }),
+    deleteResource: (_, { id }, { dataSources }) =>
+      dataSources.resourceAPI.deleteResource({ id }),
   },
-};
+}
 
-export default resolvers;
+export default resolvers

@@ -2,7 +2,6 @@ import React, { useState } from "react"
 import { ScrollSync, ScrollSyncPane } from "react-scroll-sync"
 import PropTypes from "prop-types"
 import styled from "styled-components"
-
 import EmojiCustomIcon from "@atlaskit/icon/glyph/emoji/custom"
 import months from "./sample-data"
 import "./styles.css"
@@ -144,11 +143,11 @@ export default function Timeline({ epics }) {
                         <Box
                           className="box"
                           style={{ left: "2.7%", right: "94.6%" }}
-                          onDragStart={() => { }}
-                          onDragEnd={() => { }}
-                          onValueChange={{ x: () => { } }}
-                          onMouseOver={() => { }}
-                          onFocus={() => { }}
+                          onDragStart={() => {}}
+                          onDragEnd={() => {}}
+                          onValueChange={{ x: () => {} }}
+                          onMouseOver={() => {}}
+                          onFocus={() => {}}
                         >
                           <EpicDragLeft orientation="left">
                             <EpicDrag />
