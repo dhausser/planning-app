@@ -42,7 +42,9 @@ const server = new ApolloServer({
   dataSources: () => ({
     issueAPI: new IssueAPI(),
     absenceAPI: new AbsenceAPI(),
-    resourceAPI: new ResourceAPI({ store: createStore() }),
+    resourceAPI: new ResourceAPI({
+      store: createStore(),
+    }),
   }),
 })
 
@@ -50,5 +52,5 @@ app.use("/", routes)
 server.applyMiddleware({ app, path: "/graphql", cors: false })
 
 app.listen(port, () =>
-  console.log(`Server ready at http://localhost:${port}${apollo.graphqlPath}`)
+  console.log(`Server ready at http://localhost:${port}${server.graphqlPath}`)
 )
