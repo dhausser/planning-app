@@ -4,7 +4,12 @@ import GlobalNavigation from "@atlaskit/global-navigation"
 import { GlobalItem } from "@atlaskit/navigation-next"
 import AppSwitcherIcon from "@atlaskit/icon/glyph/app-switcher"
 import EmojiAtlassianIcon from "@atlaskit/icon/glyph/emoji/atlassian"
-import { IS_LOGGED_IN } from "../pages"
+
+const IS_LOGGED_IN = gql`
+  {
+    isAuthenticated @client
+  }
+`
 
 const GET_CURRENT_USER = gql`
   query GetCurrentUser {

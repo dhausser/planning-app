@@ -1,9 +1,10 @@
 import React from "react"
+import { Link } from "gatsby"
 import { useQuery, gql } from "@apollo/client"
 import { getUser, isLoggedIn } from "../services/auth"
 import { Layout, LoginForm } from "../components"
 
-export const IS_LOGGED_IN = gql`
+const IS_LOGGED_IN = gql`
   {
     isAuthenticated @client
   }
@@ -26,7 +27,7 @@ export default () => {
           <>
             You should <Link to="/app/login">log in</Link> to see restricted
             content
-            {/* <LoginForm /> */}
+            <LoginForm />
           </>
         )}
       </p>

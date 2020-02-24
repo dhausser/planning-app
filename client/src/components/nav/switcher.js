@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "./node_modules/react"
-import { gql, useApolloClient, useQuery } from "./node_modules/@apollo/client"
-import PropTypes from "./node_modules/prop-types"
-import ChevD from "./node_modules/@atlaskit/icon/glyph/chevron-down"
+import React, { useState, useEffect } from "react"
+import { gql, useApolloClient, useQuery } from "@apollo/client"
+import PropTypes from "prop-types"
 import {
   ContainerHeader,
   ItemAvatar,
   Switcher,
-} from "./node_modules/@atlaskit/navigation-next"
-import EmptyState from "./node_modules/@atlaskit/empty-state"
+} from "@atlaskit/navigation-next"
+import EmptyState from "@atlaskit/empty-state"
+import ChevD from "@atlaskit/icon/glyph/chevron-down"
 
 const PROJECT_TILE_DATA = gql`
   fragment ProjectTile on Project {

@@ -15,26 +15,43 @@ if (typeof localStorage !== `undefined`) {
 
 const cache = new InMemoryCache()
 
-const httpLink = new HttpLink({ uri: "/graphql" })
-
-const authMiddleware = new ApolloLink((operation, forward) => {
-  // add the authorization to the headers
-  operation.setContext({
+const client = new ApolloClient({
+  link: new HttpLink({
+    uri: "/graphql",
+    credentials: "same-origin",
     headers: {
       authorization: token || null,
     },
-  })
-
-  return forward(operation)
-})
-
-const client = new ApolloClient({
+    fetch,
+  }),
   cache,
-  link: concat(authMiddleware, httpLink),
   resolvers,
   typeDefs,
-  fetch,
 })
+
+// const httpLink = new HttpLink({ uri: "/graphql" })
+
+// const authMiddleware = new ApolloLink((operation, forward) => {
+//   // add the authorization to the headers
+//   operation.setContext({
+//     headers: {
+//       authorization: token || null,
+//     },
+//   })
+
+//   return forward(operation)
+// })
+
+// const client = new ApolloClient({
+//   cache,
+//   link: new HttpLink({
+//     uri: "/graphql",
+//     // fetch,
+//   }),
+//   // link: concat(authMiddleware, httpLink),
+//   resolvers,
+//   typeDefs,
+// })
 
 if (typeof localStorage !== `undefined`) {
   const data = {

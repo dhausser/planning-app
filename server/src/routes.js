@@ -27,7 +27,7 @@ router.get(
 
 router.get("/graphql", (req, res, next) => {
   console.log({
-    url: req.protocol + "://" + req.get("host") + req.originalUrl,
+    url: `${req.protocol}://${req.get("host")}${req.originalUrl}`,
     user: req.user,
     sessionID: req.sessionID,
     session: req.session,

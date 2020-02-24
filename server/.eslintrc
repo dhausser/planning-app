@@ -3,7 +3,7 @@
     "es6": true,
     "node": true
   },
-  "extends": ["airbnb-base"],
+  "extends": ["airbnb-base", "prettier"],
   "globals": {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"
@@ -13,12 +13,6 @@
     "sourceType": "module"
   },
   "rules": {
-    "no-console": "off",
-    "quotes": ["error", "double"],
-    "semi": "off",
-    "arrow-parens": ["error", "as-needed"],
-    "comma-dangle": ["error", "only-multiline"],
-    "implicit-arrow-linebreak": "off",
-    "function-paren-newline": "off"
+    "no-console": "off"
   }
 }
