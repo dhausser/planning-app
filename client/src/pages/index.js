@@ -12,13 +12,12 @@ const IS_LOGGED_IN = gql`
 
 export default () => {
   const { data } = useQuery(IS_LOGGED_IN)
-  console.log(data)
   return (
     <Layout>
       <h1>Hello {isLoggedIn() ? getUser().name : "world"}!</h1>
       <p>
         {/* {data.isAuthenticated ? ( */}
-        {isLoggedIn() ? (
+        {data.isAuthenticated ? (
           <>
             You are logged in, so check your{" "}
             <Link to="/app/profile">profile</Link>

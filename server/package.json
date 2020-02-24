@@ -20,6 +20,7 @@
     "assert": "^2.0.0",
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.4",
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "esm": "^3.2.22",
     "express": "^4.16.4",

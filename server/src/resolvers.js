@@ -1,4 +1,4 @@
-const resolvers = {
+export default {
   Query: {
     /**
      * Jira REST API
@@ -57,6 +57,12 @@ const resolvers = {
     teams: (_, __, { dataSources }) => dataSources.resourceAPI.getTeams(),
     team: (_, { id }, { dataSources }) =>
       dataSources.resourceAPI.getResourcesByTeam({ teamId: id }),
+    test: () => ({ data: "testData" }),
+    login: (_, __, { user }) => {
+      // console.log("User is:", user)
+      // const { token } = user
+      return user.token
+    },
   },
 
   Mutation: {
@@ -103,5 +109,3 @@ const resolvers = {
       dataSources.resourceAPI.deleteResource({ id }),
   },
 }
-
-export default resolvers

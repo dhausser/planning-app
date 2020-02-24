@@ -1,29 +1,34 @@
-import "dotenv/config"
 import express from "express"
 import session from "express-session"
+import cors from "cors"
 import { ApolloServer } from "apollo-server-express"
-
+import "dotenv/config"
+import typeDefs from "./schema"
+import resolvers from "./resolvers"
 import passport from "./passport"
 import routes from "./routes"
 import createStore from "./db"
-import typeDefs from "./schema"
-import resolvers from "./resolvers"
 import IssueAPI from "./datasources/issue"
 import AbsenceAPI from "./datasources/absence"
 import ResourceAPI from "./datasources/resource"
 
-/**
- * TO TEST: Solution proposed here: https://github.com/apollographql/apollo-server/issues/3178
- */
-
 const app = express()
 const port = process.env.NODE_ENV === "production" ? 8080 : 4000
+/**
+ * TODO: Implement CORS options as described in https://www.npmjs.com/package/cors
+ */
+app.use(
+  cors({
+    origin: [process.env.CLIENT_PROD_URL, process.env.CLIENT_DEV_URL],
+    credentials: true,
+  })
+)
 app.use(
   session({
     secret: "keyboard cat",
-    // resave: false,
-    // saveUninitialized: true,
-    // cookie: {},
+    resave: false,
+    saveUninitialized: true,
+    cookie: {},
   })
 )
 app.use(passport.initialize())
@@ -49,6 +54,11 @@ const server = new ApolloServer({
 })
 
 app.use("/", routes)
+
+/**
+ * SOLUTION: Solution proposed here: https://github.com/apollographql/apollo-server/issues/3178
+ */
+// server.applyMiddleware({ app })
 server.applyMiddleware({ app, path: "/graphql", cors: false })
 
 app.listen(port, () =>

@@ -1,15 +1,16 @@
-import {
-  ApolloClient,
-  InMemoryCache,
-  HttpLink,
-  ApolloLink,
-  concat,
-} from "@apollo/client"
-import fetch from "isomorphic-fetch"
+import { ApolloClient, InMemoryCache, HttpLink } from "@apollo/client"
+import fetch from "node-fetch"
+// import fetch from "isomorphic-fetch"
 import { resolvers, typeDefs } from "./schema"
 
+/**
+ * TODO: Replace with environment variable GATSBY_API_URL
+ */
+const API_URL = "http://localhost:4000/graphql"
+export const isBrowser = typeof localStorage !== "undefined"
+
 let token = null
-if (typeof localStorage !== `undefined`) {
+if (isBrowser) {
   token = localStorage.getItem("token")
 }
 
@@ -17,43 +18,19 @@ const cache = new InMemoryCache()
 
 const client = new ApolloClient({
   link: new HttpLink({
-    uri: "/graphql",
-    credentials: "same-origin",
+    uri: API_URL,
+    fetch,
+    credentials: "include",
     headers: {
       authorization: token || null,
     },
-    fetch,
   }),
   cache,
   resolvers,
   typeDefs,
 })
 
-// const httpLink = new HttpLink({ uri: "/graphql" })
-
-// const authMiddleware = new ApolloLink((operation, forward) => {
-//   // add the authorization to the headers
-//   operation.setContext({
-//     headers: {
-//       authorization: token || null,
-//     },
-//   })
-
-//   return forward(operation)
-// })
-
-// const client = new ApolloClient({
-//   cache,
-//   link: new HttpLink({
-//     uri: "/graphql",
-//     // fetch,
-//   }),
-//   // link: concat(authMiddleware, httpLink),
-//   resolvers,
-//   typeDefs,
-// })
-
-if (typeof localStorage !== `undefined`) {
+if (isBrowser) {
   const data = {
     isAuthenticated: !!token,
     projectId: localStorage.getItem("projectId"),

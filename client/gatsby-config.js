@@ -18,8 +18,4 @@ module.exports = {
       },
     },
   ],
-  proxy: {
-    prefix: "/graphql",
-    url: "http://localhost:4000",
-  },
 }

@@ -1,6 +1,6 @@
 import { gql } from "apollo-server-express"
 
-const typeDefs = gql`
+export default gql`
   type Query {
     issues(
       projectId: String
@@ -31,6 +31,12 @@ const typeDefs = gql`
     user(id: ID!): User!
     myself: User!
     assignableUsers(project: String): [User]!
+    test: TestObject!
+    login: String
+  }
+
+  type TestObject {
+    data: String!
   }
 
   type User {
@@ -203,5 +209,3 @@ const typeDefs = gql`
     deleteResource(id: ID!): Resource
   }
 `
-
-export default typeDefs
