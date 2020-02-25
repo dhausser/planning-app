@@ -6,8 +6,8 @@ export default () => {
   const actions = [
     {
       text: "Login",
-      onClick: () =>
-        window.open(`http://localhost:${port}/auth/provider`, "_blank"),
+      onClick: () => window.open(`http://localhost:${port}/auth/provider`),
+      // (window.location.href = `http://localhost:${port}/auth/provider`)
     },
   ]
 

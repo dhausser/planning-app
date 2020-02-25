@@ -1,4 +1,5 @@
 import React, { useEffect } from "react"
+import { navigate } from "gatsby"
 import { gql, useApolloClient, useMutation } from "@apollo/client"
 import { Loading, Error } from "../components"
 
@@ -14,12 +15,13 @@ export default () => {
     onError: error => {
       console.log("Mutation error occured while trying to log in:\n", error)
     },
-    onCompleted: ({ login: token }) => {
-      console.log("Login mutation completed with token value:", token)
-      localStorage.setItem("token", token)
+    onCompleted: ({ login }) => {
+      localStorage.setItem("token", login)
       client.writeData({ data: { isLoggedIn: true } })
       window.opener.location.reload()
       window.close()
+      // navigate("/")
+      return null
     },
   })
   useEffect(() => {

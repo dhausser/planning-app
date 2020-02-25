@@ -37,10 +37,10 @@ export default {
         {
           type: "InlineComponent",
           component: LinkItem,
-          id: "dashboards",
+          id: "dashboard",
           before: DashboardIcon,
-          text: "Dashboards",
-          to: "/dashboards",
+          text: "Dashboard",
+          to: "/dashboard",
         },
         {
           type: "Item",

@@ -10,7 +10,9 @@ export const IS_LOGGED_IN = gql`
 `
 
 export default () => {
-  const { data } = useQuery(IS_LOGGED_IN)
+  const { data } = useQuery(IS_LOGGED_IN, {
+    fetchPolicy: "network-and-cache",
+  })
   return (
     <Layout>
       {data && data.isAuthenticated ? <Projects /> : <LoginForm />}

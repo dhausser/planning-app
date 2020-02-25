@@ -2,9 +2,8 @@ import fetch from "isomorphic-fetch"
 import { ApolloClient, InMemoryCache, HttpLink } from "@apollo/client"
 import { resolvers, typeDefs } from "./schema"
 
-export const isBrowser = typeof localStorage !== "undefined"
 export const port = process.env.NODE_ENV === "production" ? 8080 : 4000
-const API_URL = `http://localhost:${port}/graphql`
+export const isBrowser = typeof localStorage !== "undefined"
 
 let token = null
 if (isBrowser) {
@@ -12,10 +11,9 @@ if (isBrowser) {
 }
 
 const cache = new InMemoryCache()
-
 const client = new ApolloClient({
   link: new HttpLink({
-    uri: API_URL,
+    uri: `http://localhost:${port}/graphql`,
     fetch,
     credentials: "include",
     headers: {
