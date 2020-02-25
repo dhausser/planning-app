@@ -5,7 +5,7 @@ import styled from "styled-components"
 import { withNavigationViewController } from "@atlaskit/navigation-next"
 import { BreadcrumbsStateless, BreadcrumbsItem } from "@atlaskit/breadcrumbs"
 import PageHeader from "@atlaskit/page-header"
-import Page from "@atlaskit/page"
+import { Layout } from "../components"
 import {
   projectHomeView,
   Loading,
@@ -60,14 +60,14 @@ function Roadmap({ navigationViewController }) {
   if (error) return <Error error={error.name} message={error.message} />
 
   return (
-    <Page>
+    <Layout>
       <Padding>
         <PageHeader breadcrumbs={breadcrumbs} bottomBar={barContent}>
           Roadmap
         </PageHeader>
         {loading ? <Loading /> : <Timeline epics={data.epics} />}
       </Padding>
-    </Page>
+    </Layout>
   )
 }
 

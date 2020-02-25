@@ -1,13 +1,10 @@
+import fetch from "isomorphic-fetch"
 import { ApolloClient, InMemoryCache, HttpLink } from "@apollo/client"
-import fetch from "node-fetch"
-// import fetch from "isomorphic-fetch"
 import { resolvers, typeDefs } from "./schema"
 
-/**
- * TODO: Replace with environment variable GATSBY_API_URL
- */
-const API_URL = "http://localhost:4000/graphql"
 export const isBrowser = typeof localStorage !== "undefined"
+export const port = process.env.NODE_ENV === "production" ? 8080 : 4000
+const API_URL = `http://localhost:${port}/graphql`
 
 let token = null
 if (isBrowser) {

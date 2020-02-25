@@ -460,17 +460,15 @@ function Resources({ navigationViewController }) {
     navigationViewController,
   ])
 
-  const {
-    data: { teamId },
-  } = useQuery(GET_TEAM_FILTER)
+  const { data: teamData } = useQuery(GET_TEAM_FILTER)
   const { data, loading, error } = useQuery(GET_RESOURCES)
 
   let resources = []
   if (error)
     return <EmptyState header={error.name} description={error.message} />
-  if (!loading) {
-    resources = teamId
-      ? data.resources.filter(resource => resource.team === teamId)
+  if (!loading && teamData) {
+    resources = teamData.teamId
+      ? data.resources.filter(resource => resource.team === teamData.teamId)
       : data.resources
   }
 

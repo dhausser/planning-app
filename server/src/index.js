@@ -1,8 +1,9 @@
+import "dotenv/config"
 import express from "express"
 import session from "express-session"
+import connectMongo from "connect-mongo"
 import cors from "cors"
 import { ApolloServer } from "apollo-server-express"
-import "dotenv/config"
 import typeDefs from "./schema"
 import resolvers from "./resolvers"
 import passport from "./passport"
@@ -14,6 +15,8 @@ import ResourceAPI from "./datasources/resource"
 
 const app = express()
 const port = process.env.NODE_ENV === "production" ? 8080 : 4000
+const MongoStore = connectMongo(session)
+const store = createStore()
 /**
  * TODO: Implement CORS options as described in https://www.npmjs.com/package/cors
  */
@@ -29,6 +32,7 @@ app.use(
     resave: false,
     saveUninitialized: true,
     cookie: {},
+    store: new MongoStore({ url: process.env.DATABASE }),
   })
 )
 app.use(passport.initialize())
@@ -47,9 +51,7 @@ const server = new ApolloServer({
   dataSources: () => ({
     issueAPI: new IssueAPI(),
     absenceAPI: new AbsenceAPI(),
-    resourceAPI: new ResourceAPI({
-      store: createStore(),
-    }),
+    resourceAPI: new ResourceAPI({ store }),
   }),
 })
 

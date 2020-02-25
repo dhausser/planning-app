@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import { gql, useQuery } from "@apollo/client"
+import { useQuery, gql } from "@apollo/client"
 import PropTypes from "prop-types"
 import styled from "styled-components"
 import { withNavigationViewController } from "@atlaskit/navigation-next"
@@ -54,12 +54,12 @@ const GET_ISSUE = gql`
   ${ISSUE_ROW_DATA}
 `
 
-function Issue({ navigationViewController, match }) {
+function Issue({ navigationViewController, issueId }) {
   useEffect(() => navigationViewController.setView(productIssuesView.id), [
     navigationViewController,
   ])
   const { data, loading, error } = useQuery(GET_ISSUE, {
-    variables: { id: match.params.issueId },
+    variables: { id: issueId },
   })
 
   if (loading) return <Loading />

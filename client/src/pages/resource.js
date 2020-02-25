@@ -114,9 +114,7 @@ function Absences({ id }) {
   )
 }
 
-function Resource({ navigationViewController, match }) {
-  const { resourceId } = match.params
-
+function Resource({ navigationViewController, resourceId }) {
   useEffect(() => {
     navigationViewController.setView(projectHomeView.id)
   }, [navigationViewController])

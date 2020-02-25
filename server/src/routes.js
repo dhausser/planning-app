@@ -21,7 +21,7 @@ router.get(
   "/auth/provider/callback",
   passport.authenticate("oauth", {
     successRedirect: `${baseUrl}/login`,
-    failureRedirect: `${baseUrl}/login`,
+    failureRedirect: `${baseUrl}/`,
   })
 )
 
@@ -38,9 +38,10 @@ router.get("/graphql", (req, res, next) => {
 })
 
 if (process.env.NODE_ENV === "production") {
-  router.use(express.static(path.join(__dirname, "../build")))
+  const clientPath = "../../client/public"
+  router.use(express.static(path.join(__dirname, clientPath)))
   router.get("/*", (_req, res) => {
-    res.sendFile(path.join(__dirname, "../build", "index.html"))
+    res.sendFile(path.join(__dirname, clientPath, "index.html"))
   })
 }
 

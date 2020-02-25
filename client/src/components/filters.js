@@ -60,9 +60,7 @@ const GET_TEAM_FILTER = gql`
 
 export function ProjectFilter() {
   const client = useApolloClient()
-  const {
-    data: { projectId },
-  } = useQuery(GET_PROJECT_FILTER)
+  const { data: projectData } = useQuery(GET_PROJECT_FILTER)
   const { loading, error, data } = useQuery(GET_PROJECTS)
 
   if (loading) return <Select spacing="compact" isLoading />
@@ -73,7 +71,7 @@ export function ProjectFilter() {
     data.projects &&
     data.projects.map(({ id, name }) => {
       const option = { value: id, label: name }
-      if (id === projectId) defaultValue = option
+      if (id === projectData && projectData.projectId) defaultValue = option
       return option
     })
 
@@ -101,18 +99,10 @@ export function ProjectFilter() {
 
 export function VersionFilter() {
   const client = useApolloClient()
-  const {
-    data: { projectId },
-  } = useQuery(GET_PROJECT_FILTER)
-  const {
-    data: { versionId },
-  } = useQuery(GET_VERSION_FILTER)
+  const { data: projectData } = useQuery(GET_PROJECT_FILTER)
+  const { data: versionData } = useQuery(GET_VERSION_FILTER)
   const { loading, error, data } = useQuery(GET_VERSIONS, {
-    variables: {
-      id: projectId || process.env.GATSBY_PROJECT_ID,
-      startAt: parseInt(process.env.GATSBY_VERSION_START_AT, 10),
-      maxResults: parseInt(process.env.GATSBY_VERSION_MAX_RESULTS, 10),
-    },
+    variables: { id: projectData && projectData.projectId },
   })
 
   if (loading) return <Select spacing="compact" isLoading />
@@ -123,7 +113,7 @@ export function VersionFilter() {
     data.versions &&
     data.versions.map(({ id, name }) => {
       const option = { value: id, label: name }
-      if (id === versionId) defaultValue = option
+      if (id === versionData && versionData.versionId) defaultValue = option
       return option
     })
 
@@ -152,16 +142,16 @@ export function VersionFilter() {
 
 export function StatusFilter() {
   const client = useApolloClient()
-  const {
-    data: { statusId },
-  } = useQuery(GET_STATUS_FILTER)
+  const { data: statusData } = useQuery(GET_STATUS_FILTER)
 
   const options = [
     { value: "2", label: "Open" },
     { value: "4", label: "In Progress" },
     { value: "3", label: "Closed" },
   ]
-  const defaultValue = options.find(({ value }) => value === statusId)
+  const defaultValue = options.find(
+    ({ value }) => value === statusData && statusData.statusId
+  )
 
   return (
     <div style={{ flexBasis: 130, marginRight: 8 }}>
@@ -187,9 +177,7 @@ export function StatusFilter() {
 
 export function TeamFilter() {
   const client = useApolloClient()
-  const {
-    data: { teamId },
-  } = useQuery(GET_TEAM_FILTER)
+  const { data: teamData } = useQuery(GET_TEAM_FILTER)
   const { loading, error, data } = useQuery(GET_TEAMS)
 
   if (loading) return <div />
@@ -200,7 +188,7 @@ export function TeamFilter() {
     data.teams &&
     data.teams.map(({ id }) => {
       const option = { value: id, label: id }
-      if (id === teamId) defaultValue = option
+      if (id === teamData && teamData.teamId) defaultValue = option
       return option
     })
 

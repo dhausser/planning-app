@@ -40,9 +40,7 @@ function GetAvatarUrl() {
 }
 
 export default () => {
-  const {
-    data: { isAuthenticated },
-  } = useQuery(IS_LOGGED_IN)
+  const { data } = useQuery(IS_LOGGED_IN)
   return (
     <GlobalNavigation
       productIcon={EmojiAtlassianIcon}
@@ -58,7 +56,7 @@ export default () => {
       appSwitcherTooltip="Switch to ..."
       onSettingsClick={() => console.log("settings clicked")}
       profileItems={() => <div />}
-      profileIconUrl={isAuthenticated ? GetAvatarUrl() : null}
+      profileIconUrl={data && data.isAuthenticated ? GetAvatarUrl() : null}
     />
   )
 }
