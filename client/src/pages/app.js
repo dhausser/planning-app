@@ -22,7 +22,7 @@ const App = () => (
   <Layout>
     <Router>
       <PrivateRoute Projects path="/app/" component={Projects} />
-      <PrivateRoute Dashboard path="/app/dashboards" component={Dashboard} />
+      <PrivateRoute Dashboard path="/app/dashboard" component={Dashboard} />
       <PrivateRoute Roadmap path="/app/roadmap" component={Roadmap} />
       <PrivateRoute Backlog path="/app/backlog" component={Backlog} />
       <PrivateRoute Board path="/app/board" component={Board} />

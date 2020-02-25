@@ -1,8 +1,6 @@
 export default {
   Query: {
-    /**
-     * Jira REST API
-     */
+    // Jira REST API
     issues: (
       _,
       {
@@ -40,16 +38,10 @@ export default {
     user: (_, { id }, { dataSources }) => dataSources.issueAPI.getUser(id),
     assignableUsers: (_, { project }, { dataSources }) =>
       dataSources.issueAPI.getAssignableUsers({ project }),
-
-    /**
-     * CDPR Portal REST API
-     */
+    // CDPR Portal REST API
     absences: (_, { id }, { dataSources }) =>
       dataSources.absenceAPI.getAbsencesById({ userId: id }),
-
-    /**
-     * MongoDB
-     */
+    // MongoDB
     resources: (_, __, { dataSources }) =>
       dataSources.resourceAPI.getResources(),
     resource: (_, { id }, { dataSources }) =>
@@ -58,29 +50,17 @@ export default {
     team: (_, { id }, { dataSources }) =>
       dataSources.resourceAPI.getResourcesByTeam({ teamId: id }),
     test: () => ({ data: "testData" }),
-    login: (_, __, { user }) => {
-      // console.log("User is:", user)
-      // const { token } = user
-      return user.token
-    },
+    login: (_, __, { user }) => user.token,
   },
 
   Mutation: {
-    /**
-     * Jira REST API
-     */
-    login: (_, __, { user }) => {
-      console.log("User is:", user)
-      const { token } = user
-      return token
-    },
+    // Jira REST API
+    login: (_, __, { user }) => user.token,
     editIssue: (_, { id, value, type }, { dataSources }) =>
       dataSources.issueAPI.editIssue({ id, value, type }),
     assignIssue: (_, { id, key }, { dataSources }) =>
       dataSources.issueAPI.assignIssue({ id, key }),
-    /**
-     * Mongo DB
-     */
+    // Mongo DB
     insertResource: (
       _,
       { id, firstname, lastname, email, team },

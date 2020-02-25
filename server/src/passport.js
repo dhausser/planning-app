@@ -24,19 +24,10 @@ passport.use(
       callbackURL: "/auth/provider/callback",
       signatureMethod: "RSA-SHA1",
     },
-    (token, _tokenSecret, _profile, done) => {
-      console.log("Passport uses this token:", token)
-      return done(null, { token })
-    }
+    (token, _tokenSecret, _profile, done) => done(null, { token })
   )
 )
-passport.serializeUser(async (user, done) => {
-  console.log("Serializing...", user)
-  return done(null, user)
-})
-passport.deserializeUser((id, done) => {
-  console.log("Deserializing...", id)
-  return done(null, id)
-})
+passport.serializeUser(async (user, done) => done(null, user))
+passport.deserializeUser((id, done) => done(null, id))
 
 export default passport

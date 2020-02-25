@@ -58,7 +58,6 @@ app.use("/", routes)
 /**
  * SOLUTION: Solution proposed here: https://github.com/apollographql/apollo-server/issues/3178
  */
-// server.applyMiddleware({ app })
 server.applyMiddleware({ app, path: "/graphql", cors: false })
 
 app.listen(port, () =>
