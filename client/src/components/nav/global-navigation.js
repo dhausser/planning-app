@@ -4,12 +4,7 @@ import GlobalNavigation from "@atlaskit/global-navigation"
 import { GlobalItem } from "@atlaskit/navigation-next"
 import AppSwitcherIcon from "@atlaskit/icon/glyph/app-switcher"
 import EmojiAtlassianIcon from "@atlaskit/icon/glyph/emoji/atlassian"
-
-const IS_LOGGED_IN = gql`
-  {
-    isAuthenticated @client
-  }
-`
+import { IS_AUTHENTICATED } from "../privateRoute"
 
 const GET_CURRENT_USER = gql`
   query GetCurrentUser {
@@ -40,7 +35,7 @@ function GetAvatarUrl() {
 }
 
 export default () => {
-  const { data } = useQuery(IS_LOGGED_IN)
+  const { data } = useQuery(IS_AUTHENTICATED)
   return (
     <GlobalNavigation
       productIcon={EmojiAtlassianIcon}

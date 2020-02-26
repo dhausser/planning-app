@@ -3,7 +3,7 @@ import { RESTDataSource } from "apollo-datasource-rest"
 class AbsenceAPI extends RESTDataSource {
   constructor() {
     super()
-    this.baseURL = process.env.PORTAL_URL
+    this.baseURL = "https://portal.cdprojektred.com/api/user_absences"
     this.apiKey = process.env.PORTAL_API_KEY
   }
 

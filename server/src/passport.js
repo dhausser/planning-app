@@ -7,18 +7,24 @@ import os from "os"
 /**
  * Passport
  */
-const filePath = path.join(os.homedir(), process.env.PRIVATE_KEY_PATH)
+const filePath = path.join(os.homedir(), "/oauth/jira_privatekey.pem")
 export const consumerSecret = fs.existsSync(filePath)
   ? fs.readFileSync(filePath, "utf8")
   : ""
-export const consumerKey = process.env.CONSUMER_KEY
+export const consumerKey = "RDM"
+const requestTokenURL =
+  "https://jira.cdprojektred.com/plugins/servlet/oauth/request-token"
+const accessTokenURL =
+  "https://jira.cdprojektred.com/plugins/servlet/oauth/access-token"
+const userAuthorizationURL =
+  "https://jira.cdprojektred.com/plugins/servlet/oauth/authorize"
 
 passport.use(
   new OAuthStrategy(
     {
-      requestTokenURL: process.env.REQUEST_TOKEN_URL,
-      accessTokenURL: process.env.ACCESS_TOKEN_URL,
-      userAuthorizationURL: process.env.USER_AUTHORIZATION_URL,
+      requestTokenURL,
+      accessTokenURL,
+      userAuthorizationURL,
       consumerKey,
       consumerSecret,
       callbackURL: "/auth/provider/callback",

@@ -145,25 +145,25 @@ const head = {
 }
 
 const rows = (resources, setIsEditOpen, setIsDeleteOpen) =>
-  resources.map(resource => ({
-    key: resource.key,
+  resources.map(({ key, name, team }) => ({
+    key: key,
     cells: [
       {
-        key: createKey(resource.name),
+        key: createKey(name),
         content: (
           <NameWrapper>
             <Avatar
-              name={resource.name}
+              name={name}
               size="medium"
-              src={`https://${process.env.GATSBY_HOST}/secure/useravatar?ownerId=${resource.key}`}
+              src={`https://jira.cdprojektred.com//secure/useravatar?ownerId=${key}`}
             />
-            <Link to={`/resource/${resource.key}`}>{resource.name}</Link>
+            <Link to={`/resource/${key}`}>{name}</Link>
           </NameWrapper>
         ),
       },
       {
-        key: createKey(resource.team),
-        content: resource.team,
+        key: createKey(team),
+        content: team,
       },
       {
         key: "actions",

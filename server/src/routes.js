@@ -3,10 +3,9 @@ import passport from "passport"
 import path from "path"
 
 const router = express.Router()
-const baseUrl =
-  process.env.NODE_ENV === "production"
-    ? process.env.CLIENT_PROD_URL
-    : process.env.CLIENT_DEV_URL
+const baseUrl = `http://localhost:80${
+  process.env.NODE_ENV === "production" ? "80" : "00"
+}`
 
 // Redirect the user to the OAuth provider for authentication.  When
 // complete, the provider will redirect the user back to the application at
@@ -20,8 +19,8 @@ router.get("/auth/provider", passport.authenticate("oauth"))
 router.get(
   "/auth/provider/callback",
   passport.authenticate("oauth", {
-    successRedirect: `${baseUrl}/login`,
-    failureRedirect: `${baseUrl}/`,
+    successRedirect: `${baseUrl}/login-mutation`,
+    failureRedirect: `${baseUrl}/login`,
   })
 )
 

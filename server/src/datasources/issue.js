@@ -16,7 +16,7 @@ function parseAvatarUrls(avatarUrls) {
 class IssueAPI extends RESTDataSource {
   constructor() {
     super()
-    this.baseURL = `https://${process.env.HOST}`
+    this.baseURL = `https://jira.cdprojektred.com`
     this.oauth = new Oauth(this.baseURL)
   }
 

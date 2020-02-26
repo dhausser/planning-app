@@ -22,7 +22,7 @@ const store = createStore()
  */
 app.use(
   cors({
-    origin: [process.env.CLIENT_PROD_URL, process.env.CLIENT_DEV_URL],
+    origin: ["http://localhost:8000", "http://localhost:8080"],
     credentials: true,
   })
 )

@@ -3,9 +3,9 @@ import { useQuery, gql } from "@apollo/client"
 import PropTypes from "prop-types"
 import styled from "styled-components"
 import { withNavigationViewController } from "@atlaskit/navigation-next"
-import Page, { Grid, GridColumn } from "@atlaskit/page"
+import { Grid, GridColumn } from "@atlaskit/page"
 import EmptyState from "@atlaskit/empty-state"
-import { productIssuesView, Loading } from "../components"
+import { productIssuesView, Loading, Layout } from "../components"
 import { ISSUE_ROW_DATA } from "./issues"
 import {
   Header,
@@ -83,7 +83,7 @@ function Issue({ navigationViewController, issueId }) {
   } = data.issue
 
   return (
-    <Page>
+    <Layout>
       <Padding>
         <Grid layout="fluid">
           <GridColumn medium={8}>
@@ -100,7 +100,7 @@ function Issue({ navigationViewController, issueId }) {
           </GridColumn>
         </Grid>
       </Padding>
-    </Page>
+    </Layout>
   )
 }
 

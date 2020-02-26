@@ -29,10 +29,10 @@ export default {
         {
           type: "InlineComponent",
           component: LinkItem,
-          id: "project",
+          id: "projects",
           before: FolderIcon,
           text: "Projects",
-          to: "/",
+          to: "/projects",
         },
         {
           type: "InlineComponent",
