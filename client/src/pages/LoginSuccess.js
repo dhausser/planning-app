@@ -1,4 +1,3 @@
-import { useRouteMatch } from '../components/Nav/node_modules/react-router-dom'
 import { useApolloClient, useMutation, gql } from '@apollo/client'
 
 const LOGIN_USER = gql`
@@ -7,8 +6,7 @@ const LOGIN_USER = gql`
   }
 `
 
-function Login() {
-  useRouteMatch('/login')
+export default function() {
   const client = useApolloClient()
   const [login] = useMutation(
     LOGIN_USER,
