@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 
-import { useQuery } from '@apollo/client';
-import { gql } from '@apollo/client';
+import { useQuery, gql } from '@apollo/client'
 
-import PropTypes from 'prop-types';
 
-import { withNavigationViewController } from '@atlaskit/navigation-next';
-import EmptyState from '@atlaskit/empty-state';
-import PageHeader from '@atlaskit/page-header';
-import TextField from '@atlaskit/textfield';
-import { Status } from '@atlaskit/status';
+import PropTypes from 'prop-types'
+
+import { withNavigationViewController } from '@atlaskit/navigation-next'
+import EmptyState from '@atlaskit/empty-state'
+import PageHeader from '@atlaskit/page-header'
+import TextField from '@atlaskit/textfield'
+import { Status } from '@atlaskit/status'
 import {
   ProjectHomeView,
   Loading,
@@ -20,10 +20,10 @@ import {
   IssueTable,
   LoadButton,
   Nameplate,
-} from '../components';
-import { ISSUE_ROW_DATA, ISSUE_PAGINATION } from './Issues';
+} from '../components'
+import { ISSUE_ROW_DATA, ISSUE_PAGINATION } from './Issues'
 
-const ROWS_PER_PAGE = 50;
+const ROWS_PER_PAGE = 50
 
 const GET_ISSUES = gql`
   query GetIssues($projectId: String, $versionId: String, $statusId: String, $resourceId: String, $startAt: Int, $maxResults: Int) {
@@ -39,7 +39,7 @@ const GET_ISSUES = gql`
   }
   ${ISSUE_PAGINATION}
   ${ISSUE_ROW_DATA}
-`;
+`
 
 const GET_ABSENCES = gql`
   query getAbsences($id: ID!) {
@@ -48,7 +48,7 @@ const GET_ABSENCES = gql`
       date
     }
   }
-`;
+`
 
 const barContent = (
   <div style={{ display: 'flex' }}>
@@ -59,21 +59,21 @@ const barContent = (
     <VersionFilter />
     <StatusFilter />
   </div>
-);
+)
 
 function Issues({ resourceId }) {
-  const [length, setLength] = useState(0);
+  const [length, setLength] = useState(0)
   const {
     loading, error, data, fetchMore,
   } = useQuery(GET_ISSUES, {
     variables: { resourceId, maxResults: ROWS_PER_PAGE },
-  });
+  })
 
   useEffect(() => {
     if (data && data.issues && data.issues.issues.length) {
-      setLength(data.issues.issues.length);
+      setLength(data.issues.issues.length)
     }
-  }, [data]);
+  }, [data])
 
   return (
     <>
@@ -89,24 +89,24 @@ function Issues({ resourceId }) {
         && data.issues.total > length
         && <LoadButton fetchMore={fetchMore} startAt={length} />}
     </>
-  );
+  )
 }
 
 function Absences({ id }) {
-  const { loading, error, data } = useQuery(GET_ABSENCES, { variables: { id } });
+  const { loading, error, data } = useQuery(GET_ABSENCES, { variables: { id } })
 
-  if (error) return <EmptyState name={error.name} message={error.message} />;
-  if (loading || !data) return <Loading />;
+  if (error) return <EmptyState name={error.name} message={error.message} />
+  if (loading || !data) return <Loading />
 
-  return <>{data.absences.map(({ date }) => <Status key={date} text={date} color="blue" />)}</>;
+  return <>{data.absences.map(({ date }) => <Status key={date} text={date} color="blue" />)}</>
 }
 
 function Resource({ navigationViewController, match }) {
-  const { resourceId } = match.params;
+  const { resourceId } = match.params
 
   useEffect(() => {
-    navigationViewController.setView(ProjectHomeView.id);
-  }, [navigationViewController]);
+    navigationViewController.setView(ProjectHomeView.id)
+  }, [navigationViewController])
 
   return (
     <Layout>
@@ -116,20 +116,20 @@ function Resource({ navigationViewController, match }) {
       <Issues resourceId={resourceId} />
       <Absences id={resourceId} />
     </Layout>
-  );
+  )
 }
 
 Issues.propTypes = {
   resourceId: PropTypes.string.isRequired,
-};
+}
 
 Absences.propTypes = {
   id: PropTypes.string.isRequired,
-};
+}
 
 Resource.propTypes = {
   navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
   match: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
-};
+}
 
-export default withNavigationViewController(Resource);
+export default withNavigationViewController(Resource)

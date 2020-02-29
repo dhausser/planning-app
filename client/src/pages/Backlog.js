@@ -1,27 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect } from 'react'
+import { Link } from '@reach/router'
+import PropTypes from 'prop-types'
 
-import { useQuery } from '@apollo/client';
-import { gql } from '@apollo/client';
+import { useQuery, gql } from '@apollo/client'
 
-import { withNavigationViewController } from '@atlaskit/navigation-next';
-import { Status } from '@atlaskit/status';
-import EmptyState from '@atlaskit/empty-state';
-import PageHeader from '@atlaskit/page-header';
-import TextField from '@atlaskit/textfield';
-import Button from '@atlaskit/button';
+
+import { withNavigationViewController } from '@atlaskit/navigation-next'
+import { Status } from '@atlaskit/status'
+import EmptyState from '@atlaskit/empty-state'
+import PageHeader from '@atlaskit/page-header'
+import TextField from '@atlaskit/textfield'
+import Button from '@atlaskit/button'
 import TableTree, {
   Headers,
   Header,
   Rows,
   Row,
   Cell,
-} from '@atlaskit/table-tree';
+} from '@atlaskit/table-tree'
 
 import {
   ProjectHomeView, Layout, VersionFilter, statusCatecoryColorMap, issuetypeIconMap,
-} from '../components';
+} from '../components'
 
 const ROADMAP_ROW_DATA = gql`
   fragment RoadmapRow on Issue {
@@ -40,7 +40,7 @@ const ROADMAP_ROW_DATA = gql`
       }
     }
   }
-`;
+`
 
 const GET_ISSUES = gql`
   query issueList($projectId: String, $versionId: String) {
@@ -57,13 +57,13 @@ const GET_ISSUES = gql`
     }
   }
   ${ROADMAP_ROW_DATA}
-`;
+`
 
 function Backlog({ navigationViewController }) {
-  useEffect(() => navigationViewController.setView(ProjectHomeView.id), [navigationViewController]);
-  const [isExpanded, setIsExpanded] = useState(false);
+  useEffect(() => navigationViewController.setView(ProjectHomeView.id), [navigationViewController])
+  const [isExpanded, setIsExpanded] = useState(false)
 
-  const { data, loading, error } = useQuery(GET_ISSUES);
+  const { data, loading, error } = useQuery(GET_ISSUES)
 
   return (
     <Layout>
@@ -124,12 +124,12 @@ function Backlog({ navigationViewController }) {
           </TableTree>
         )}
     </Layout>
-  );
+  )
 }
 
 
 Backlog.propTypes = {
   navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
-};
+}
 
-export default withNavigationViewController(Backlog);
+export default withNavigationViewController(Backlog)

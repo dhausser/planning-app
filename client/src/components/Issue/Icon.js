@@ -1,24 +1,24 @@
-import React from 'react';
-import Tooltip from '@atlaskit/tooltip';
+import React from 'react'
+import Tooltip from '@atlaskit/tooltip'
 
 // Import Priority Icons
-import PriorityBlockerIcon from '@atlaskit/icon-priority/glyph/priority-blocker';
-import PriorityCriticalIcon from '@atlaskit/icon-priority/glyph/priority-critical';
-import PriorityHighestIcon from '@atlaskit/icon-priority/glyph/priority-highest';
-import PriorityMediumIcon from '@atlaskit/icon-priority/glyph/priority-medium';
-import PriorityLowIcon from '@atlaskit/icon-priority/glyph/priority-low';
-import PriorityTrivialIcon from '@atlaskit/icon-priority/glyph/priority-trivial';
+import PriorityBlockerIcon from '@atlaskit/icon-priority/glyph/priority-blocker'
+import PriorityCriticalIcon from '@atlaskit/icon-priority/glyph/priority-critical'
+import PriorityHighestIcon from '@atlaskit/icon-priority/glyph/priority-highest'
+import PriorityMediumIcon from '@atlaskit/icon-priority/glyph/priority-medium'
+import PriorityLowIcon from '@atlaskit/icon-priority/glyph/priority-low'
+import PriorityTrivialIcon from '@atlaskit/icon-priority/glyph/priority-trivial'
 
 // Import Status Icons
-import Epic16Icon from '@atlaskit/icon-object/glyph/epic/16';
-import Story16Icon from '@atlaskit/icon-object/glyph/story/16';
-import Task16Icon from '@atlaskit/icon-object/glyph/task/16';
-import Subtask16Icon from '@atlaskit/icon-object/glyph/subtask/16';
-import Bug16Icon from '@atlaskit/icon-object/glyph/bug/16';
-import Blog16Icon from '@atlaskit/icon-object/glyph/blog/16';
-import Code16Icon from '@atlaskit/icon-object/glyph/code/16';
-import Calendar16Icon from '@atlaskit/icon-object/glyph/calendar/16';
-import NewFeature16Icon from '@atlaskit/icon-object/glyph/new-feature/16';
+import Epic16Icon from '@atlaskit/icon-object/glyph/epic/16'
+import Story16Icon from '@atlaskit/icon-object/glyph/story/16'
+import Task16Icon from '@atlaskit/icon-object/glyph/task/16'
+import Subtask16Icon from '@atlaskit/icon-object/glyph/subtask/16'
+import Bug16Icon from '@atlaskit/icon-object/glyph/bug/16'
+import Blog16Icon from '@atlaskit/icon-object/glyph/blog/16'
+import Code16Icon from '@atlaskit/icon-object/glyph/code/16'
+import Calendar16Icon from '@atlaskit/icon-object/glyph/calendar/16'
+import NewFeature16Icon from '@atlaskit/icon-object/glyph/new-feature/16'
 
 export const issuetypeIconMap = {
   1:
@@ -79,7 +79,7 @@ export const issuetypeIconMap = {
   <Tooltip content="Product">
     <NewFeature16Icon />
   </Tooltip>,
-};
+}
 
 export const priorityIconMap = {
   10400:
@@ -106,13 +106,13 @@ export const priorityIconMap = {
   <Tooltip content="Won't">
     <PriorityTrivialIcon size="small" label="label" />
   </Tooltip>,
-};
+}
 
 export const statusCatecoryColorMap = {
   2: 'grey',
   3: 'green',
   4: 'blue',
-};
+}
 
 export default {
   // Status colors
@@ -146,7 +146,7 @@ export default {
       <PriorityLowIcon size="small" />
     </Tooltip>
   ),
-  "Won't": (
+  'Won\'t': (
     <Tooltip content="Won't">
       <PriorityTrivialIcon size="small" />
     </Tooltip>
@@ -205,4 +205,4 @@ export default {
       <Task16Icon />
     </Tooltip>
   ),
-};
+}

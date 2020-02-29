@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from '@apollo/client'
 
 export const typeDefs = gql`
   extend type Query {
@@ -16,7 +16,7 @@ export const typeDefs = gql`
   extend type Mutation {
     toggleFilter(id: ID, name: String, type: String): Int
   }
-`;
+`
 
 const GET_FILTER = gql`
   query GetFilter {
@@ -39,15 +39,15 @@ const GET_FILTER = gql`
       }
     }
   }
-`;
+`
 
 export const resolvers = {
   Mutation: {
     toggleFilter: (_root, { id = null, name = null, type = null }, { cache }) => {
-      const { filter } = cache.readQuery({ query: GET_FILTER });
-      filter[type.toLowerCase()] = { id, name, __typename: type };
-      cache.writeData({ data: { filter, __typename: 'Filter' } });
-      localStorage.setItem('filter', JSON.stringify(filter));
+      const { filter } = cache.readQuery({ query: GET_FILTER })
+      filter[type.toLowerCase()] = { id, name, __typename: type }
+      cache.writeData({ data: { filter, __typename: 'Filter' } })
+      localStorage.setItem('filter', JSON.stringify(filter))
     },
   },
-};
+}

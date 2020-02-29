@@ -1,46 +1,46 @@
 {
-  "name": "client",
-  "version": "1.0.0",
+  "name": "planning-app-client",
+  "version": "0.1.0",
   "private": true,
-  "description": "Client for roadmap planning app",
-  "main": "./src/index.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/dhausser/planning-app.git"
-  },
+  "author": "Davy Hausser <davy.hausser@cdprojektred.com>",
   "dependencies": {
-    "@apollo/client": "^3.0.0-beta.37",
-    "@atlaskit/avatar": "^16.1.0",
-    "@atlaskit/breadcrumbs": "^8.0.1",
+    "@apollo/client": "^3.0.0-beta.38",
+    "@atlaskit/avatar": "^17.1.7",
+    "@atlaskit/breadcrumbs": "^9.2.6",
     "@atlaskit/button": "^13.3.4",
-    "@atlaskit/checkbox": "^8.0.5",
-    "@atlaskit/comment": "^8.0.15",
-    "@atlaskit/css-reset": "^4.0.1",
+    "@atlaskit/checkbox": "^10.1.8",
+    "@atlaskit/comment": "^9.3.0",
+    "@atlaskit/css-reset": "^5.0.10",
     "@atlaskit/dynamic-table": "^13.6.0",
-    "@atlaskit/editor-core": "^112.44.8",
-    "@atlaskit/empty-state": "^5.0.3",
-    "@atlaskit/form": "^6.3.2",
-    "@atlaskit/global-navigation": "^7.7.1",
-    "@atlaskit/icon": "^17.1.2",
-    "@atlaskit/icon-object": "^4.0.10",
-    "@atlaskit/icon-priority": "^4.0.9",
+    "@atlaskit/editor-core": "^118.0.0",
+    "@atlaskit/empty-state": "^6.0.7",
+    "@atlaskit/form": "^7.1.3",
+    "@atlaskit/global-navigation": "^9.0.0",
+    "@atlaskit/icon": "^20.0.2",
+    "@atlaskit/icon-object": "^5.0.2",
+    "@atlaskit/icon-priority": "^5.0.2",
     "@atlaskit/inline-edit": "^10.0.25",
     "@atlaskit/logo": "^12.3.0",
     "@atlaskit/lozenge": "^9.1.2",
-    "@atlaskit/media-core": "^30.0.16",
+    "@atlaskit/media-core": "^31.0.4",
     "@atlaskit/modal-dialog": "^10.5.0",
-    "@atlaskit/navigation-next": "^6.8.3",
+    "@atlaskit/navigation-next": "^8.0.0",
     "@atlaskit/page": "^11.0.9",
     "@atlaskit/page-header": "^9.0.16",
-    "@atlaskit/select": "^9.1.10",
+    "@atlaskit/select": "^11.0.7",
     "@atlaskit/spinner": "^12.1.2",
     "@atlaskit/status": "^0.9.18",
-    "@atlaskit/table-tree": "^7.1.3",
+    "@atlaskit/table-tree": "^8.0.1",
     "@atlaskit/textarea": "^2.2.3",
-    "@atlaskit/textfield": "^2.0.4",
+    "@atlaskit/textfield": "^3.1.7",
     "@atlaskit/theme": "^9.4.0",
-    "@atlaskit/tooltip": "^14.0.3",
+    "@atlaskit/tooltip": "^15.2.3",
     "@atlaskit/user-picker": "^4.2.0",
+    "@reach/router": "^1.3.3",
+    "@types/node": "^13.7.7",
+    "@types/reach__router": "^1.3.0",
+    "@types/react": "^16.9.23",
+    "@types/react-dom": "^16.9.5",
     "chart.js": "^2.9.3",
     "graphql": "^14.5.8",
     "prop-types": "^15.7.2",
@@ -48,18 +48,8 @@
     "react-dom": "^16.12.0",
     "react-intl": "^3.11.0",
     "react-pose": "^4.0.10",
-    "react-router": "^5.1.2",
-    "react-router-dom": "^5.1.2",
     "react-scroll-sync": "^0.7.0",
-    "styled-components": "^3.4.10"
-  },
-  "devDependencies": {
-    "eslint-config-airbnb": "^18.0.1",
-    "eslint-plugin-import": "^2.19.1",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.17.0",
-    "eslint-plugin-react-hooks": "^1.7.0",
-    "react-scripts": "^3.3.0"
+    "styled-components": "^5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -67,20 +57,20 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "keywords": [],
-  "author": "Davy Hausser <davy.hausser@cdprojektred.com>",
-  "license": "ISC",
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.18.3",
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "react-scripts": "^3.3.0"
   },
   "proxy": "http://localhost:4000/"
 }

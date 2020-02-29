@@ -1,5 +1,5 @@
-import { JiraWordmark } from '@atlaskit/logo';
-import LinkItem from './LinkItem';
+import { JiraWordmark } from '@atlaskit/logo'
+import LinkItem from './LinkItem'
 
 export default {
   id: 'product/issues',
@@ -115,4 +115,4 @@ export default {
       ],
     },
   ],
-};
+}
