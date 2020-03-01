@@ -1,22 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Avatar from '@atlaskit/avatar';
+import React from 'react'
+import PropTypes from 'prop-types'
+import Avatar from '@atlaskit/avatar'
 import Comment, {
   CommentAction,
   CommentAuthor,
   CommentEdited,
   CommentTime,
-} from '@atlaskit/comment';
+} from '@atlaskit/comment'
 
-interface CommentsProps {
-  comments: Comment[];
-}
-
-function Comments({ comments }: CommentsProps) {
+function Comments({ comments }) {
   return (
     <>
       <h5>Activity</h5>
-      {comments.map((comment: Comment) => (
+      {comments.map((comment) => (
         <Comment
           key={comment.id}
           avatar={(
@@ -42,15 +38,15 @@ function Comments({ comments }: CommentsProps) {
         />
       ))}
     </>
-  );
+  )
 }
 
 Comments.defaultProps = {
   comments: null,
-};
+}
 
 Comments.propTypes = {
   comments: PropTypes.arrayOf(PropTypes.objectOf),
-};
+}
 
-export default Comments;
+export default Comments

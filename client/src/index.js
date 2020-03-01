@@ -1,20 +1,30 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ReactDOM from 'react-dom'
+import PropTypes from 'prop-types'
 
 import {
-  ApolloClient, HttpLink, InMemoryCache, ApolloProvider, gql,
+  ApolloClient,
+  ApolloProvider,
+  HttpLink,
+  InMemoryCache,
+  useQuery,
+  gql,
 } from '@apollo/client'
-import { NavigationProvider, withNavigationViewController, LayoutManagerWithViewController } from '@atlaskit/navigation-next'
+import {
+  NavigationProvider,
+  withNavigationViewController,
+  LayoutManagerWithViewController,
+} from '@atlaskit/navigation-next'
 
 import Pages from './pages'
 import Login from './pages/Login'
 import { resolvers, typeDefs } from './resolvers'
 import '@atlaskit/css-reset'
 
-import GlobalNavigation from '../components/Nav/GlobalNavigation'
-import productHomeView from '../components/Nav/ProductHomeView'
-import productIssuesView from '../components/Nav/ProductIssuesView'
-import projectHomeView from '../components/Nav/ProjectHomeView'
+import GlobalNavigation from './components/Nav/GlobalNavigation'
+import productHomeView from './components/Nav/ProductHomeView'
+import productIssuesView from './components/Nav/ProductIssuesView'
+import projectHomeView from './components/Nav/ProjectHomeView'
 
 // Set up our apollo-client to point at the server we created
 // this can be local or a remote endpoint
@@ -66,9 +76,10 @@ function IsLoggedIn({ navigationViewController }) {
     navigationViewController.addView(projectHomeView)
   }, [navigationViewController])
   return (
-    <LayoutManagerWithViewController globalNavigation={GlobalNavigation}>
+    <LayoutManagerWithViewController
+      globalNavigation={GlobalNavigation}
+    >
       {data.isLoggedIn ? <Pages /> : <Login />}
-      ;
     </LayoutManagerWithViewController>
   )
 }
@@ -77,13 +88,13 @@ IsLoggedIn.propTypes = {
   navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
 }
 
-const LoginController = withNavigationViewController(IsLoggedIn)
+const NavigationViewController = withNavigationViewController(IsLoggedIn)
 
 ReactDOM.render(
 
   <ApolloProvider client={client}>
     <NavigationProvider>
-      <LoginController />
+      <NavigationViewController />
     </NavigationProvider>
   </ApolloProvider>,
   document.getElementById('root'),

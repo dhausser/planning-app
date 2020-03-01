@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Link, Route } from 'react-router-dom'
+import { Location, Link } from '@reach/router'
 
 function LinkItem({ components: { Item }, to, ...props }) {
   return (
-    <Route
-      render={({ location: { pathname } }) => (
+    <Location>
+      { ({ location: { pathname } }) => (
         <Item
           component={({ children, className }) => (
             <Link css={{ color: '#DEEBFF' }} className={className} to={to}>
@@ -16,7 +16,7 @@ function LinkItem({ components: { Item }, to, ...props }) {
           {...props}
         />
       )}
-    />
+    </Location>
   )
 }
 

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react'
 import { useQuery, gql } from '@apollo/client'
 import GlobalNavigation from '@atlaskit/global-navigation'

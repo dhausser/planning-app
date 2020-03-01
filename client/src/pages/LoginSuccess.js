@@ -6,7 +6,7 @@ const LOGIN_USER = gql`
   }
 `
 
-export default function() {
+export default function LoginMutation() {
   const client = useApolloClient()
   const [login] = useMutation(
     LOGIN_USER,
@@ -22,5 +22,3 @@ export default function() {
   login()
   return null
 }
-
-export default Login

@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
-import Router from "@reach/router";
+import { Router } from '@reach/router'
 import LoginSuccess from './LoginSuccess'
-import LoginForm from "../components/LoginForm";
+import LoginForm from '../components/LoginForm'
 
 export default () => (
   <Router primary={false} component={Fragment}>
