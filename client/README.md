@@ -1,3 +1,0 @@
-# Apollo Planning App
-
-## Client
