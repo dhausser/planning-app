@@ -5,17 +5,16 @@ import { ApolloServer } from 'apollo-server-express';
 
 import passport from './passport';
 import routes from './routes';
-import createStore from './db';
+import initializeStore from './db';
 import typeDefs from './schema';
 import resolvers from './resolvers';
 import IssueAPI from './datasources/issue';
 import AbsenceAPI from './datasources/absence';
-import ResourceAPI from './datasources/resource';
+import ResourcesDAO from './dao/resourcesDAO';
 
-/**
- * Apollo Server
- */
-const store = createStore();
+// import createStore from './db';
+// const store = createStore();
+// import ResourceAPI from './datasources/resource';
 
 const apollo = new ApolloServer({
   typeDefs,
@@ -31,11 +30,13 @@ const apollo = new ApolloServer({
   dataSources: () => ({
     issueAPI: new IssueAPI(),
     absenceAPI: new AbsenceAPI(),
-    resourceAPI: new ResourceAPI({ store }),
+    ResourcesDAO
+    // resourceAPI: new ResourceAPI({ store }),
   }),
 });
 
 const app = express();
+initializeStore();
 
 app.use(session({
   secret: 'keyboard cat',
