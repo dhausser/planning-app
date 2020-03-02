@@ -1,0 +1,45 @@
+{
+  "devFiles": [
+    "static/development/dll/dll_88bfe47d29bf84228398.js",
+    "static/development/dll/dll_88bfe47d29bf84228398.js.map"
+  ],
+  "pages": {
+    "/": [
+      "static/runtime/webpack.js",
+      "static/runtime/main.js"
+    ],
+    "/_app": [
+      "static/runtime/webpack.js",
+      "static/runtime/main.js",
+      "static/development/_buildManifest.js"
+    ],
+    "/_error": [
+      "static/runtime/webpack.js",
+      "static/runtime/main.js"
+    ],
+    "/_polyfills": [
+      "static/runtime/polyfills.js",
+      "static/runtime/polyfills.js.map"
+    ],
+    "/absences": [
+      "static/runtime/webpack.js",
+      "static/runtime/main.js"
+    ],
+    "/index": [
+      "static/runtime/webpack.js",
+      "static/runtime/main.js"
+    ],
+    "/issues": [
+      "static/runtime/webpack.js",
+      "static/runtime/main.js"
+    ],
+    "/projects": [
+      "static/runtime/webpack.js",
+      "static/runtime/main.js"
+    ],
+    "/resources": [
+      "static/runtime/webpack.js",
+      "static/runtime/main.js"
+    ]
+  }
+}
