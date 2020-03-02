@@ -7,9 +7,9 @@ import os from 'os';
 /**
  * Passport
  */
-const filePath = path.join(os.homedir(), process.env.PRIVATE_KEY_PATH);
+const filePath = path.join(os.homedir(), '/oauth/jira_privatekey.pem');
 export const consumerSecret = fs.existsSync(filePath) ? fs.readFileSync(filePath, 'utf8') : '';
-export const consumerKey = process.env.CONSUMER_KEY;
+export const consumerKey = 'RDM';
 
 passport.use(
   new OAuthStrategy(

@@ -10,8 +10,8 @@ export default class ResourcesDAO {
       return
     }
     try {
-      database = await conn.db(process.env.DATABASE)
-      resources = await conn.db(process.env.DATABASE).collection("resources")
+      database = await conn.db(process.env.ROADMAP_NS)
+      resources = await conn.db(process.env.ROADMAP_NS).collection("resources")
       this.resources = resources // this is only for testing
     } catch (e) {
       console.error(
@@ -29,7 +29,8 @@ export default class ResourcesDAO {
     let cursor;
 
     try {
-      cursor = await this.store.resources
+      // cursor = await resources
+      cursor = await resources
         .find()
         .project({
           _id: 0, key: 1, name: 1, team: 1,
@@ -51,7 +52,7 @@ export default class ResourcesDAO {
     let cursor;
 
     try {
-      cursor = await this.store.resources
+      cursor = await resources
         .find()
         .project({
           _id: 0, key: 1, name: 1, team: 1,
@@ -79,7 +80,7 @@ export default class ResourcesDAO {
     let cursor;
 
     try {
-      cursor = await this.store.resources.findOne(
+      cursor = await resources.findOne(
         { key: resourceId },
         {
           projection: {
@@ -104,7 +105,7 @@ export default class ResourcesDAO {
   static async getTeams() {
     let cursor;
     try {
-      cursor = await this.store.resources
+      cursor = await resources
         .aggregate([
           {
             $group: {
@@ -146,7 +147,7 @@ export default class ResourcesDAO {
     let cursor;
 
     try {
-      cursor = await this.store.resources
+      cursor = await resources
         .find({ team: teamId })
         .project({
           _id: 0, key: 1,
@@ -173,7 +174,7 @@ export default class ResourcesDAO {
 
     try {
       console.log(data);
-      cursor = await this.store.resources.insertOne(data);
+      cursor = await resources.insertOne(data);
       assert.equal(1, cursor.insertedCount);
     } catch (e) {
       console.error(`Unable to issue command, ${e}`);
@@ -196,7 +197,7 @@ export default class ResourcesDAO {
 
     try {
       console.log(data);
-      cursor = await this.store.resources.updateOne(data);
+      cursor = await resources.updateOne(data);
       assert.equal(1, cursor.matchedCount);
       assert.equal(1, cursor.modifiedCount);
     } catch (e) {
@@ -212,7 +213,7 @@ export default class ResourcesDAO {
 
     try {
       console.log(id);
-      cursor = await this.store.resources.deleteOne({ key: id });
+      cursor = await resources.deleteOne({ key: id });
       assert.equal(1, cursor.deletedCount);
     } catch (e) {
       console.error(`Unable to issue command, ${e}`);

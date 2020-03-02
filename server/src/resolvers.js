@@ -49,16 +49,16 @@ const resolvers = {
      * MongoDB
      */
     resources: (_, __, { dataSources }) => (
-      dataSources.resourceAPI.getResources()
+      dataSources.ResourcesDAO.getResources()
     ),
     resource: (_, { id }, { dataSources }) => (
-      dataSources.resourceAPI.getResourceById({ resourceId: id })
+      dataSources.ResourcesDAO.getResourceById({ resourceId: id })
     ),
     teams: (_, __, { dataSources }) => (
-      dataSources.resourceAPI.getTeams()
+      dataSources.ResourcesDAO.getTeams()
     ),
     team: (_, { id }, { dataSources }) => (
-      dataSources.resourceAPI.getResourcesByTeam({ teamId: id })
+      dataSources.ResourcesDAO.getResourcesByTeam({ teamId: id })
     ),
   },
 
