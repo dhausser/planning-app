@@ -48,7 +48,7 @@ class IssueAPI extends RESTDataSource {
     let assignee = resourceId;
 
     if (teamId) {
-      const resources = await this.context.dataSources.resourceAPI.getResourcesByTeam({ teamId });
+      const resources = await this.context.dataSources.ResourceDAO.getResourcesByTeam({ teamId });
       assignee = resources.map(({ key }) => key);
     }
 
@@ -57,7 +57,7 @@ class IssueAPI extends RESTDataSource {
       statusId,
       versionId,
       assignee,
-      resourceMap: this.context.resourceMap,
+      resourceMap: this.context.resourceMap, // undefined
       startAt,
       maxResults,
     });
@@ -68,10 +68,10 @@ class IssueAPI extends RESTDataSource {
 
   async getDashboardIssues({ projectId, versionId, teamId }) {
     const resources = teamId
-      ? await this.context.dataSources.resourceAPI.getResourcesByTeam({ teamId })
-      : await this.context.dataSources.resourceAPI.getResources();
+      ? await this.context.dataSources.ResourcesDAO.getResourcesByTeam({ teamId })
+      : await this.context.dataSources.ResourcesDAO.getResources();
 
-    const assignee = resources && resources.map(({ key }) => key);
+    const assignee = resources.map(({ key }) => key) || [];
 
     const dashboard = new Dashboard({
       projectId,
@@ -81,8 +81,9 @@ class IssueAPI extends RESTDataSource {
     });
 
     const response = await this.post('/rest/api/2/search', dashboard.getParams());
+    const resourceMap = await this.context.dataSources.ResourcesDAO.getResourceMap();
 
-    return dashboard.getDataset(response, this.context.resourceMap);
+    return dashboard.getDataset(response, resourceMap);
   }
 
   async getRoadmapIssues(projectId, versionId) {

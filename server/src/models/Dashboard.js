@@ -78,7 +78,6 @@ class Dashboard {
 
   getDataset({ issues, total }, resourceMap) {
     this.sumIssues(issues, resourceMap);
-
     return {
       labels: Object.keys(this.data),
       values: Object.values(this.data),

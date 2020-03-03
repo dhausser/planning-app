@@ -25,6 +25,7 @@ import GlobalNavigation from './components/Nav/GlobalNavigation'
 import productHomeView from './components/Nav/ProductHomeView'
 import productIssuesView from './components/Nav/ProductIssuesView'
 import projectHomeView from './components/Nav/ProjectHomeView'
+import { defaultProjectId } from './config'
 
 // Set up our apollo-client to point at the server we created
 // this can be local or a remote endpoint
@@ -33,7 +34,7 @@ const client = new ApolloClient({
   cache,
   link: new HttpLink({
     uri: '/graphql',
-    credentials: 'same-origin',
+    credentials: 'include',
     headers: {
       authorization: localStorage.getItem('token'),
     },
@@ -45,7 +46,7 @@ const client = new ApolloClient({
 cache.writeData({
   data: {
     isLoggedIn: !!localStorage.getItem('token'),
-    projectId: localStorage.getItem('projectId'),
+    projectId: localStorage.getItem('projectId') || defaultProjectId,
     versionId: localStorage.getItem('versionId'),
     statusId: localStorage.getItem('statusId'),
     teamId: localStorage.getItem('teamId'),
@@ -62,7 +63,7 @@ cache.writeData({
  *    ex: localhost:3000/login will render only the `Login` component
  */
 
-const IS_LOGGED_IN = gql`
+export const IS_LOGGED_IN = gql`
   query IsUserLoggedIn {
     isLoggedIn @client
   }

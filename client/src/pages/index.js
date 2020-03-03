@@ -17,7 +17,7 @@ import Settings from './Settings'
 
 export default () => (
   <Router primary={false} component={Fragment}>
-    <Projects path="/" />
+    <Projects default />
     <Resource path="/resource/:resourceId" />
     <Issue path="/issue/:issueId" />
     <Settings path="/settings" />
