@@ -1,6 +1,6 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Location, Link } from '@reach/router'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Location, Link } from '@reach/router';
 
 function LinkItem({ components: { Item }, to, ...props }) {
   return (
@@ -17,12 +17,12 @@ function LinkItem({ components: { Item }, to, ...props }) {
         />
       )}
     </Location>
-  )
+  );
 }
 
 LinkItem.propTypes = {
   components: PropTypes.objectOf(PropTypes.func).isRequired,
   to: PropTypes.string.isRequired,
-}
+};
 
-export default LinkItem
+export default LinkItem;

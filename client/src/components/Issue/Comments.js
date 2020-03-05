@@ -1,12 +1,12 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import Avatar from '@atlaskit/avatar'
+import React from 'react';
+import PropTypes from 'prop-types';
+import Avatar from '@atlaskit/avatar';
 import Comment, {
   CommentAction,
   CommentAuthor,
   CommentEdited,
   CommentTime,
-} from '@atlaskit/comment'
+} from '@atlaskit/comment';
 
 function Comments({ comments }) {
   return (
@@ -38,15 +38,15 @@ function Comments({ comments }) {
         />
       ))}
     </>
-  )
+  );
 }
 
 Comments.defaultProps = {
   comments: null,
-}
+};
 
 Comments.propTypes = {
   comments: PropTypes.arrayOf(PropTypes.objectOf),
-}
+};
 
-export default Comments
+export default Comments;

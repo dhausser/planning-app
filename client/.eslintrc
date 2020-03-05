@@ -23,8 +23,6 @@
   ],
   "rules": {
     "react/jsx-filename-extension": "off",
-    "react/jsx-props-no-spreading": "off",
-    "semi": ["error", "never"],
-    "quotes": ["error", "single"]
+    "react/jsx-props-no-spreading": "off"
   }
 }

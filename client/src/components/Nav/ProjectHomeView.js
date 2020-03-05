@@ -1,15 +1,15 @@
-import RoadmapIcon from '@atlaskit/icon/glyph/roadmap'
-import BacklogIcon from '@atlaskit/icon/glyph/backlog'
-import BoardIcon from '@atlaskit/icon/glyph/board'
-import GraphLineIcon from '@atlaskit/icon/glyph/graph-line'
-import PageIcon from '@atlaskit/icon/glyph/page'
-import AddItemIcon from '@atlaskit/icon/glyph/add-item'
-import PersonCircleIcon from '@atlaskit/icon/glyph/person-circle'
-import IssuesIcon from '@atlaskit/icon/glyph/issues'
-import ShipIcon from '@atlaskit/icon/glyph/ship'
-import SettingsIcon from '@atlaskit/icon/glyph/settings'
-import Switcher from './Switcher'
-import LinkItem from './LinkItem'
+import RoadmapIcon from '@atlaskit/icon/glyph/roadmap';
+import BacklogIcon from '@atlaskit/icon/glyph/backlog';
+import BoardIcon from '@atlaskit/icon/glyph/board';
+import GraphLineIcon from '@atlaskit/icon/glyph/graph-line';
+import PageIcon from '@atlaskit/icon/glyph/page';
+import AddItemIcon from '@atlaskit/icon/glyph/add-item';
+import PersonCircleIcon from '@atlaskit/icon/glyph/person-circle';
+import IssuesIcon from '@atlaskit/icon/glyph/issues';
+import ShipIcon from '@atlaskit/icon/glyph/ship';
+import SettingsIcon from '@atlaskit/icon/glyph/settings';
+import Switcher from './Switcher';
+import LinkItem from './LinkItem';
 
 export default {
   id: 'project/home',
@@ -114,4 +114,4 @@ export default {
       ],
     },
   ],
-}
+};

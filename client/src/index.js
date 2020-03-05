@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
-import ReactDOM from 'react-dom'
-import PropTypes from 'prop-types'
+import React, { useEffect } from 'react';
+import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 
 import {
   ApolloClient,
@@ -9,27 +9,27 @@ import {
   InMemoryCache,
   useQuery,
   gql,
-} from '@apollo/client'
+} from '@apollo/client';
 import {
   NavigationProvider,
   withNavigationViewController,
   LayoutManagerWithViewController,
-} from '@atlaskit/navigation-next'
+} from '@atlaskit/navigation-next';
 
-import Pages from './pages'
-import Login from './pages/Login'
-import { resolvers, typeDefs } from './resolvers'
-import '@atlaskit/css-reset'
+import Pages from './pages';
+import Login from './pages/Login';
+import { resolvers, typeDefs } from './resolvers';
+import '@atlaskit/css-reset';
 
-import GlobalNavigation from './components/Nav/GlobalNavigation'
-import productHomeView from './components/Nav/ProductHomeView'
-import productIssuesView from './components/Nav/ProductIssuesView'
-import projectHomeView from './components/Nav/ProjectHomeView'
-import { defaultProjectId } from './config'
+import GlobalNavigation from './components/Nav/GlobalNavigation';
+import productHomeView from './components/Nav/ProductHomeView';
+import productIssuesView from './components/Nav/ProductIssuesView';
+import projectHomeView from './components/Nav/ProjectHomeView';
+import { defaultProjectId } from './config';
 
 // Set up our apollo-client to point at the server we created
 // this can be local or a remote endpoint
-const cache = new InMemoryCache()
+const cache = new InMemoryCache();
 const client = new ApolloClient({
   cache,
   link: new HttpLink({
@@ -41,7 +41,7 @@ const client = new ApolloClient({
   }),
   resolvers,
   typeDefs,
-})
+});
 
 cache.writeData({
   data: {
@@ -51,7 +51,7 @@ cache.writeData({
     statusId: localStorage.getItem('statusId'),
     teamId: localStorage.getItem('teamId'),
   },
-})
+});
 
 /**
  * Render our app
@@ -63,33 +63,33 @@ cache.writeData({
  *    ex: localhost:3000/login will render only the `Login` component
  */
 
-export const IS_LOGGED_IN = gql`
+const IS_LOGGED_IN = gql`
   query IsUserLoggedIn {
     isLoggedIn @client
   }
-`
+`;
 
 function IsLoggedIn({ navigationViewController }) {
-  const { data } = useQuery(IS_LOGGED_IN)
+  const { data } = useQuery(IS_LOGGED_IN);
   useEffect(() => {
-    navigationViewController.addView(productHomeView)
-    navigationViewController.addView(productIssuesView)
-    navigationViewController.addView(projectHomeView)
-  }, [navigationViewController])
+    navigationViewController.addView(productHomeView);
+    navigationViewController.addView(productIssuesView);
+    navigationViewController.addView(projectHomeView);
+  }, [navigationViewController]);
   return (
     <LayoutManagerWithViewController
       globalNavigation={GlobalNavigation}
     >
       {data.isLoggedIn ? <Pages /> : <Login />}
     </LayoutManagerWithViewController>
-  )
+  );
 }
 
 IsLoggedIn.propTypes = {
   navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
-}
+};
 
-const NavigationViewController = withNavigationViewController(IsLoggedIn)
+const NavigationViewController = withNavigationViewController(IsLoggedIn);
 
 ReactDOM.render(
 
@@ -99,4 +99,4 @@ ReactDOM.render(
     </NavigationProvider>
   </ApolloProvider>,
   document.getElementById('root'),
-)
+);

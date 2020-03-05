@@ -1,24 +1,24 @@
-import { useApolloClient, useMutation, gql } from '@apollo/client'
+import { useApolloClient, useMutation, gql } from '@apollo/client';
 
 const LOGIN_USER = gql`
   mutation login {
     login
   }
-`
+`;
 
 export default function LoginMutation() {
-  const client = useApolloClient()
+  const client = useApolloClient();
   const [login] = useMutation(
     LOGIN_USER,
     {
       onCompleted: ({ login: token }) => {
-        localStorage.setItem('token', token)
-        client.writeData({ data: { isLoggedIn: true } })
-        window.opener.location.reload()
-        window.close()
+        localStorage.setItem('token', token);
+        client.writeData({ data: { isLoggedIn: true } });
+        window.opener.location.reload();
+        window.close();
       },
     },
-  )
-  login()
-  return null
+  );
+  login();
+  return null;
 }

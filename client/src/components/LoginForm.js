@@ -1,27 +1,27 @@
-import React from 'react'
-import Modal, { ModalTransition } from '@atlaskit/modal-dialog'
+import React from 'react';
+import Modal, { ModalTransition } from '@atlaskit/modal-dialog';
 
 const openRequestedPopup = () => {
   const url = `${process.env.NODE_ENV === 'production'
     ? process.env.REACT_APP_URL
-    : 'http://localhost:4000'}/auth/provider`
+    : 'http://localhost:4000'}/auth/provider`;
 
   // eslint-disable-next-line no-restricted-globals
-  const { width, height } = screen
+  const { width, height } = screen;
 
-  const windowWidth = 1080
-  const windowHeight = 720
+  const windowWidth = 1080;
+  const windowHeight = 720;
 
-  const left = (width / 2) - (windowWidth / 2)
-  const top = (height / 12)
+  const left = (width / 2) - (windowWidth / 2);
+  const top = (height / 12);
 
-  return window.open(url, '_blank', `width=${windowWidth}, height=${windowHeight}, top=${top}, left=${left}`)
-}
+  return window.open(url, '_blank', `width=${windowWidth}, height=${windowHeight}, top=${top}, left=${left}`);
+};
 
 function LoginForm() {
   const actions = [
     { text: 'Login', onClick: openRequestedPopup },
-  ]
+  ];
 
   /**
    * TODO:
@@ -36,7 +36,7 @@ function LoginForm() {
         <p>Please log in with your Atlassian user profile.</p>
       </Modal>
     </ModalTransition>
-  )
+  );
 }
 
-export default LoginForm
+export default LoginForm;

@@ -1,12 +1,8 @@
-import React from 'react'
-
-import { useQuery, gql } from '@apollo/client'
-
-
-import styled from 'styled-components'
-import PropTypes from 'prop-types'
-
-import Avatar from '@atlaskit/avatar'
+import React from 'react';
+import { useQuery, gql } from '@apollo/client';
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
+import Avatar from '@atlaskit/avatar';
 
 const GET_ASSIGNEE = gql`
   query Assignee($id: ID!){
@@ -17,13 +13,13 @@ const GET_ASSIGNEE = gql`
       }
     }
   }
-`
+`;
 
 export default function Nameplate({ id }) {
-  const { loading, error, data } = useQuery(GET_ASSIGNEE, { variables: { id } })
+  const { loading, error, data } = useQuery(GET_ASSIGNEE, { variables: { id } });
 
-  if (loading) return null
-  if (error) return `Error! ${error}`
+  if (loading) return null;
+  if (error) return `Error! ${error}`;
 
   if (data) {
     return (
@@ -37,15 +33,15 @@ export default function Nameplate({ id }) {
         </AvatarWrapper>
         {data.user.displayName}
       </NameWrapper>
-    )
+    );
   }
 
-  return <NameWrapper>Assignee</NameWrapper>
+  return <NameWrapper>Assignee</NameWrapper>;
 }
 
 Nameplate.propTypes = {
   id: PropTypes.string.isRequired,
-}
+};
 
 /**
  * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE
@@ -54,8 +50,8 @@ Nameplate.propTypes = {
 const NameWrapper = styled.span`
   display: flex;
   align-items: center;
-`
+`;
 
 const AvatarWrapper = styled.div`
   margin-right: 8px;
-`
+`;

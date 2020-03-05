@@ -1,1 +1,1 @@
-export const defaultProjectId = 10500
+export const defaultProjectId = 10500;

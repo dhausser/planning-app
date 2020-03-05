@@ -1,14 +1,14 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Link } from '@reach/router'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Link } from '@reach/router';
 
-import DynamicTable from '@atlaskit/dynamic-table'
-import Tooltip from '@atlaskit/tooltip'
-import EmptyState from '@atlaskit/empty-state'
-import Lozenge from '@atlaskit/lozenge'
-import { Status } from '@atlaskit/status'
+import DynamicTable from '@atlaskit/dynamic-table';
+import Tooltip from '@atlaskit/tooltip';
+import EmptyState from '@atlaskit/empty-state';
+import Lozenge from '@atlaskit/lozenge';
+import { Status } from '@atlaskit/status';
 
-import { statusCatecoryColorMap, priorityIconMap, issuetypeIconMap } from './Icon'
+import { statusCatecoryColorMap, priorityIconMap, issuetypeIconMap } from './Icon';
 
 const head = {
   cells: [
@@ -55,7 +55,7 @@ const head = {
       width: 6,
     },
   ],
-}
+};
 const row = ({
   key, fields: {
     summary,
@@ -116,7 +116,7 @@ const row = ({
       ),
     },
   ],
-})
+});
 
 const IssueTable = ({
   loading, error, issues, rowsPerPage, startAt,
@@ -136,13 +136,13 @@ const IssueTable = ({
     isRankable
     emptyView={error && <EmptyState description={error.message} />}
   />
-)
+);
 
 IssueTable.defaultProps = {
   issues: {},
   loading: false,
   error: null,
-}
+};
 
 IssueTable.propTypes = {
   loading: PropTypes.bool,
@@ -150,6 +150,6 @@ IssueTable.propTypes = {
   startAt: PropTypes.number.isRequired,
   error: PropTypes.objectOf(PropTypes.objectOf),
   issues: PropTypes.objectOf(PropTypes.objectOf),
-}
+};
 
-export default IssueTable
+export default IssueTable;

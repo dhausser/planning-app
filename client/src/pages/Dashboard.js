@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react'
-import { useQuery, gql } from '@apollo/client'
-import PropTypes from 'prop-types'
-import { Grid } from '@atlaskit/page'
-import PageHeader from '@atlaskit/page-header'
-import { withNavigationViewController } from '@atlaskit/navigation-next'
-import TextField from '@atlaskit/textfield'
-import EmptyState from '@atlaskit/empty-state'
+import React, { useEffect } from 'react';
+import { useQuery, gql } from '@apollo/client';
+import PropTypes from 'prop-types';
+import { Grid } from '@atlaskit/page';
+import PageHeader from '@atlaskit/page-header';
+import { withNavigationViewController } from '@atlaskit/navigation-next';
+import TextField from '@atlaskit/textfield';
+import EmptyState from '@atlaskit/empty-state';
 import {
   ProjectHomeView, Layout, ProjectFilter, VersionFilter, TeamFilter, BarChart, Loading,
-} from '../components'
+} from '../components';
 
 const GET_ISSUES = gql`
   query GetDashboardIssues($projectId: String, $versionId: String, $teamId: String, $startAt: Int, $maxResults: Int) {
@@ -22,7 +22,7 @@ const GET_ISSUES = gql`
       values
     }
   }
-`
+`;
 
 const barContent = (
   <div style={{ display: 'flex' }}>
@@ -33,15 +33,15 @@ const barContent = (
     <VersionFilter />
     <TeamFilter />
   </div>
-)
+);
 
 function Dashboard({ navigationViewController }) {
-  useEffect(() => navigationViewController.setView(ProjectHomeView.id), [navigationViewController])
-  const { error, loading, data } = useQuery(GET_ISSUES)
+  useEffect(() => navigationViewController.setView(ProjectHomeView.id), [navigationViewController]);
+  const { error, loading, data } = useQuery(GET_ISSUES);
 
   if (error) {
-    console.log(error)
-    return <EmptyState header={error.name} description={error.message} />
+    console.log(error);
+    return <EmptyState header={error.name} description={error.message} />;
   }
 
   return (
@@ -66,11 +66,11 @@ function Dashboard({ navigationViewController }) {
           </div>
         )}
     </Layout>
-  )
+  );
 }
 
 Dashboard.propTypes = {
   navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
-}
+};
 
-export default withNavigationViewController(Dashboard)
+export default withNavigationViewController(Dashboard);

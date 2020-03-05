@@ -36,4 +36,4 @@ export default [
   'Jun \'21',
   'Jul \'21',
   'Aug \'21',
-]
+];

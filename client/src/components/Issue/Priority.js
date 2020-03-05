@@ -1,13 +1,13 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import styled from 'styled-components'
+import React from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
-import { gridSize } from '@atlaskit/theme'
-import { priorityIconMap } from './Icon'
+import { gridSize } from '@atlaskit/theme';
+import { priorityIconMap } from './Icon';
 
 const Wrapper = styled.div`
   padding: ${gridSize() - 2}px ${gridSize() - 2}px;
-`
+`;
 
 export default function Priority({ id }) {
   return (
@@ -17,9 +17,9 @@ export default function Priority({ id }) {
         {priorityIconMap[id]}
       </Wrapper>
     </>
-  )
+  );
 }
 
 Priority.propTypes = {
   id: PropTypes.string.isRequired,
-}
+};
