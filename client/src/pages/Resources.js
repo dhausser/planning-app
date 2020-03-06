@@ -63,7 +63,6 @@ const head = {
 };
 
 function Resources({ navigationViewController }) {
-  const [isOpen, setIsOpen] = useState(false);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
@@ -98,9 +97,9 @@ function Resources({ navigationViewController }) {
         defaultSortOrder="ASC"
       />
       <ModalTransition>
-        {isCreateOpen && <CreateResourceModal setIsOpen={setIsOpen} />}
-        {isEditOpen && <EditResourceModal setIsOpen={setIsOpen} />}
-        {isDeleteOpen && <DeleteResourceModal setIsOpen={setIsOpen} />}
+        {isCreateOpen && <CreateResourceModal setIsOpen={setIsCreateOpen} />}
+        {isEditOpen && <EditResourceModal setIsOpen={setIsEditOpen} />}
+        {isDeleteOpen && <DeleteResourceModal setIsOpen={setIsDeleteOpen} />}
       </ModalTransition>
     </Layout>
   );

@@ -1,11 +1,7 @@
 import React, { useEffect } from 'react';
-
 import { useQuery, gql } from '@apollo/client';
-
-
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import { BreadcrumbsStateless, BreadcrumbsItem } from '@atlaskit/breadcrumbs';
 import PageHeader from '@atlaskit/page-header';
@@ -28,7 +24,7 @@ const Padding = styled.div`
   height: 100vh;
 `;
 
-const GET_ISSUES = gql`
+const GET_EPICS = gql`
   query issueList($projectId: String, $versionId: String) {
     projectId @client @export(as: "projectId")
     versionId @client @export(as: "versionId")
@@ -58,9 +54,12 @@ const breadcrumbs = (
 
 function Roadmap({ navigationViewController }) {
   useEffect(() => navigationViewController.setView(ProjectHomeView.id), [navigationViewController]);
-  const { loading, error, data } = useQuery(GET_ISSUES);
+  const { loading, error, data } = useQuery(GET_EPICS);
 
+  if (loading || !data) return <p>Loading...</p>;
   if (error) return <Error error={error.name} message={error.message} />;
+
+  console.log(data);
 
   return (
     <Page>

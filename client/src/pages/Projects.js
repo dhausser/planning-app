@@ -69,6 +69,7 @@ function FilterLink({ projectId, children }) {
       onClick={() => {
         client.writeData({ data: { projectId } });
         localStorage.setItem('projectId', projectId);
+        console.log('Selected project: ', projectId);
       }}
     >
       {children}
