@@ -119,7 +119,7 @@ const row = ({
 });
 
 const IssueTable = ({
-  loading, error, issues, rowsPerPage, startAt,
+  loading, error, issues, rowsPerPage,
 }) => (
   <DynamicTable
     // caption={issues && `${issues.total < startAt ? issues.total : startAt} of ${issues.total}`}
@@ -147,7 +147,6 @@ IssueTable.defaultProps = {
 IssueTable.propTypes = {
   loading: PropTypes.bool,
   rowsPerPage: PropTypes.number.isRequired,
-  startAt: PropTypes.number.isRequired,
   error: PropTypes.objectOf(PropTypes.objectOf),
   issues: PropTypes.objectOf(PropTypes.objectOf),
 };

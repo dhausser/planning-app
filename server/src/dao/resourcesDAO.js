@@ -1,22 +1,22 @@
 /* eslint-disable no-console */
 import assert from 'assert';
 
-let resources
-let database
+let database;
+let resources;
 
 export default class ResourcesDAO {
   static async injectDB(conn) {
     if (resources) {
-      return
+      return;
     }
     try {
-      database = await conn.db(process.env.ROADMAP_NS)
-      resources = await conn.db(process.env.ROADMAP_NS).collection("resources")
-      this.resources = resources // this is only for testing
+      database = await conn.db(process.env.ROADMAP_NS);
+      resources = await conn.db(process.env.ROADMAP_NS).collection('resources');
+      this.resources = resources; // this is only for testing
     } catch (e) {
       console.error(
         `Unable to establish a collection handle in resourcesDAO: ${e}`,
-      )
+      );
     }
   }
 

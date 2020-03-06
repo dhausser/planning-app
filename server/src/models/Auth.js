@@ -1,5 +1,5 @@
 import { sign } from 'oauth-sign';
-import { consumerKey, consumerSecret } from "../passport";
+import { consumerKey, consumerSecret } from '../passport';
 
 class Oauth {
   constructor(baseURL) {

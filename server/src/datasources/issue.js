@@ -91,9 +91,10 @@ class IssueAPI extends RESTDataSource {
     const response = await this.post('/rest/api/2/search', roadmap.getParams());
     return roadmap.getDataset(response.issues);
   }
-  
+
   async getEpics(projectId, versionId) {
-    const jql = `project = ${projectId} and issuetype = epic`;
+    const jql = `project = ${projectId} ${versionId ? `and fixversion = ${versionId} ` : ''}and issuetype = epic`;
+    console.log(jql);
     const response = await this.post('/rest/api/2/search', { jql, fields: ['summary'] });
     return Array.isArray(response.issues) ? response.issues : [];
   }

@@ -14,10 +14,10 @@
     "prod": "NODE_ENV=production node -r esm src"
   },
   "dependencies": {
+    "apollo-datasource": "^0.7.0",
     "apollo-datasource-rest": "^0.7.0",
     "apollo-server-express": "^2.10.1",
     "assert": "^2.0.0",
-    "asset": "^0.4.13",
     "dotenv": "^8.2.0",
     "esm": "^3.2.25",
     "express": "^4.17.1",
@@ -33,5 +33,10 @@
     "url": "git+https://github.com/dhausser/planning-app.git"
   },
   "keywords": [],
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.20.1"
+  }
 }

@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import posed from 'react-pose';
 import { ScrollSync, ScrollSyncPane } from 'react-scroll-sync';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
 import EmojiCustomIcon from '@atlaskit/icon/glyph/emoji/custom';
-import months from './sample-data';
-import './styles.css';
+import Frame from './Frame';
+
+const months = ['Aug \'18', 'Sep \'18', 'Oct \'18', 'Nov \'18', 'Dec \'18', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan \'20', 'Feb \'20', 'Mar \'20', 'Apr \'20', 'May \'20', 'Jun \'20', 'Jul \'20', 'Aug \'20',
+  'Sep \'20', 'Oct \'20', 'Nov \'20', 'Dec \'20', 'Jan \'21', 'Feb \'21', 'Mar \'21', 'Apr \'21', 'May \'21', 'Jun \'21', 'Jul \'21', 'Aug \'21',
+];
 
 export default function Timeline({ epics }) {
   const [issues, setIssues] = useState(epics);
@@ -117,28 +118,7 @@ export default function Timeline({ epics }) {
                       ))}
                     </VerticalDivider>
                     <TimelineBox1 />
-                    {issues.map((epic) => (
-                      <RowContainer key={epic.key}>
-                        {/* <BoxWrapper style={{ left: '2%', right: '94%' }}> */}
-                        <Box
-                          className="box"
-                          style={{ left: '2.7%', right: '94.6%' }}
-                          onDragStart={() => {}}
-                          onDragEnd={() => {}}
-                          onValueChange={{ x: () => {} }}
-                          onMouseOver={() => {}}
-                          onFocus={() => {}}
-                        >
-                          <EpicDragLeft orientation="left">
-                            <EpicDrag />
-                          </EpicDragLeft>
-                          <EpicDragRight orientation="right">
-                            <EpicDrag />
-                          </EpicDragRight>
-                        </Box>
-                        {/* </BoxWrapper> */}
-                      </RowContainer>
-                    ))}
+                    {issues.map((epic) => <Frame epic={epic} />)}
                     <TimelineBox2 />
                     <div style={{ height: '1px', backgroundColor: 'rgb(193, 199, 208)' }} />
                   </HorizontalCalendar>
@@ -165,7 +145,7 @@ export default function Timeline({ epics }) {
         </Wrapper2>
       </ScrollSync>
     </Wrapper>
-  // </Container>
+    // </Container>
   );
 }
 
@@ -176,6 +156,7 @@ Timeline.defaultProps = {
 Timeline.propTypes = {
   epics: PropTypes.arrayOf(PropTypes.objectOf),
 };
+
 
 /**
  * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE
@@ -466,9 +447,6 @@ const VerticalDivider = styled.div`
   pointer-events: none;
 `;
 
-/**
- * TODO: Highlight corresponding pair row on hover
- */
 const RowContainer = styled.div`
   position: relative;
   display: flex;
@@ -487,96 +465,11 @@ const RowContainer = styled.div`
     background-color: #DFE1E6;
   }
 
-  /* ${CreateButton}:hover & {
-    background-color: #DFE1E6;
-    fill: rebeccapurple;
-  } */
-
   ${CreateButton} {
     background-color: #DFE1E6;
     fill: rebeccapurple;
   }
 `;
-
-const Box = posed.div({
-  draggable: 'x',
-  hoverable: true,
-  // init: {
-  //   scale: 1,
-  //   boxShadow: '0px 0px 0px rgba(0,0,0,0)',
-  // },
-  // hover: {
-  //   scale: 1.2,
-  //   boxShadow: '0px 5px 10px rgba(0,0,0,0.2)',
-  // },
-});
-
-const BoxWrapper = styled.div`
-  position: absolute;
-  display: flex;
-  -webkit-box-align: center;
-  align-items: center;
-  -webkit-box-pack: end;
-  justify-content: flex-end;
-  height: 24px;
-  min-width: 3px;
-  z-index: 3;
-  visibility: visible;
-  cursor: pointer;
-  padding: 0px 5px;
-  transition: left 0.1s ease 0s, right 0.1s ease 0s;
-  border-radius: 3px;
-  background: rgb(135, 119, 217);
-
-  :hover {
-    background-color: paleturquoise;
-    left: '0%';
-    right: '10%';
-  }
-`;
-
-const EpicDragLeft = styled.div`
-  visibility: hidden;
-  position: absolute;
-  top: 0px;
-  bottom: 0px;
-  left: 0px;
-  cursor: col-resize;
-  padding: 4px;
-
-  ${BoxWrapper}:hover & {
-    visibility: visible;
-  } 
-`;
-
-const EpicDragRight = styled.div`
-  visibility: hidden;
-  position: absolute;
-  top: 0px;
-  bottom: 0px;
-  right: 0px;
-  cursor: col-resize;
-  padding: 4px;
-  
-  ${BoxWrapper}:hover & {
-    visibility: visible;
-  } 
-`;
-
-const EpicDrag = styled.div`
-  width: 6px;
-  height: 16px;
-  background-color: rgb(64, 50, 148);
-  border-radius: 3px;
-`;
-
-// const TimelineBottom1 = styled.div`
-//   position: relative;
-//   height: 100%;
-//   width: 100%;
-//   min-height: 0px;
-//   overflow: hidden;
-// `;
 
 const TimelineBottom2 = styled.div`
   position: absolute;
@@ -701,3 +594,33 @@ const InlineCreate5 = styled.div`
   margin-left: -2px;
   margin-top: -2px;
 `;
+
+// const BoxStyle = styled.div`
+//   position: absolute;
+//   display: flex;
+//   -webkit-box-align: center;
+//   align-items: center;
+//   -webkit-box-pack: end;
+//   justify-content: flex-end;
+//   height: 24px;
+//   min-width: 3px;
+//   z-index: 3;
+//   visibility: visible;
+//   cursor: pointer;
+//   padding: 0px 5px;
+//   transition: left 0.1s ease 0s, right 0.1s ease 0s;
+//   border-radius: 3px;
+//   background: rgb(135, 119, 217)
+// `;
+
+// const IconStyle = styled.div`
+//   height: 16px;
+//   width: 16px;
+//   color: currentColor;
+//   display: inline-block;
+//   fill: #FFFFFF;
+//   -webkit-flex-shrink: 0;
+//   -ms-flex-negative: 0;
+//   flex-shrink: 0;
+//   line-height: 1;
+// `;

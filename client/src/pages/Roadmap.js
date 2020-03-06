@@ -54,12 +54,11 @@ const breadcrumbs = (
 
 function Roadmap({ navigationViewController }) {
   useEffect(() => navigationViewController.setView(ProjectHomeView.id), [navigationViewController]);
-  const { loading, error, data } = useQuery(GET_EPICS);
+  const { loading, error, data } = useQuery(GET_EPICS, {
+    fetchPolicy: 'no-cache',
+  });
 
-  if (loading || !data) return <p>Loading...</p>;
   if (error) return <Error error={error.name} message={error.message} />;
-
-  console.log(data);
 
   return (
     <Page>

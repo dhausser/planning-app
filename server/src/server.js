@@ -25,7 +25,7 @@ export const server = new ApolloServer({
   dataSources: () => ({
     issueAPI: new IssueAPI(),
     absenceAPI: new AbsenceAPI(),
-    ResourcesDAO
+    ResourcesDAO,
     // resourceAPI: new ResourceAPI({ store }),
   }),
 });

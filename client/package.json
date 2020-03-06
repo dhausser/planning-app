@@ -48,14 +48,15 @@
     "@types/react": "^16.9.23",
     "@types/react-dom": "^16.9.5",
     "chart.js": "^2.9.3",
+    "framer": "^1.1.7",
     "graphql": "^14.5.8",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-intl": "^3.11.0",
-    "react-pose": "^4.0.10",
+    "react-intl": "^2.6.0",
     "react-scroll-sync": "^0.7.0",
-    "styled-components": "^3.2.6"
+    "styled-components": "^3.2.6",
+    "typescript": "^3.8.3"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
@@ -72,5 +73,8 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "proxy": "http://localhost:4000/"
+  "proxy": "http://localhost:4000/",
+  "peerDependencies": {
+    "rxjs": "^5.5.0"
+  }
 }

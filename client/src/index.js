@@ -25,7 +25,7 @@ import GlobalNavigation from './components/Nav/GlobalNavigation';
 import productHomeView from './components/Nav/ProductHomeView';
 import productIssuesView from './components/Nav/ProductIssuesView';
 import projectHomeView from './components/Nav/ProjectHomeView';
-import { defaultProjectId } from './config';
+import projectId from './config';
 
 // Set up our apollo-client to point at the server we created
 // this can be local or a remote endpoint
@@ -46,7 +46,7 @@ const client = new ApolloClient({
 cache.writeData({
   data: {
     isLoggedIn: !!localStorage.getItem('token'),
-    projectId: localStorage.getItem('projectId') || defaultProjectId,
+    projectId: localStorage.getItem('projectId') || projectId,
     versionId: localStorage.getItem('versionId'),
     statusId: localStorage.getItem('statusId'),
     teamId: localStorage.getItem('teamId'),
