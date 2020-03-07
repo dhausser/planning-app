@@ -16,5 +16,6 @@ export default new Promise((resolve, reject) => MongoClient.connect(
   })
   .then(async (client) => {
     await ResourcesDAO.injectDB(client);
-    resolve('MongoDB connection established');
+    console.log('MongoDB connection established');
+    resolve();
   }));

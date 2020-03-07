@@ -14,6 +14,7 @@ import ResourcesDAO from './dao/resourcesDAO';
 
 (async () => {
   const app = express();
+  const port = process.env.PORT || process.env.NODE_ENV === 'production' ? 8080 : 4000;
 
   app.use(session({
     secret: 'keyboard cat',
@@ -46,18 +47,9 @@ import ResourcesDAO from './dao/resourcesDAO';
 
   apolloServer.applyMiddleware({ app });
 
-  async function connectDatabase() {
-    const databaseConnection = await databaseConnectionPromise;
-    console.log(databaseConnection);
-  }
-
-  await connectDatabase();
-
-  const port = process.env.PORT || process.env.NODE_ENV === 'production' ? 8080 : 4000;
+  await (async () => databaseConnectionPromise)();
 
   app.listen(port, () => console.log(
     `Server ready at http://localhost:${port}${apolloServer.graphqlPath}`,
   ));
-
-  return null;
 })();
