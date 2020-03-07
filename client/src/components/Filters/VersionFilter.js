@@ -3,23 +3,22 @@ import { useApolloClient, useQuery, gql } from '@apollo/client';
 import Select from '@atlaskit/select';
 import { Wrapper } from './ProjectFilter';
 
-const GET_VERSIONS = gql`
-  query GetVersions($id: ID!, $startAt: Int, $maxResults: Int) {
-    projectId @client @export(as: "id")
-    versionId @client
-    versions(id: $id, startAt: $startAt, maxResults: $maxResults) {
-      id
-      name
-    }
-  }
-`;
-
 export default () => {
   const client = useApolloClient();
-  const { loading, error, data } = useQuery(GET_VERSIONS);
+  const { loading, error, data } = useQuery(gql`
+    query ($id: ID!, $startAt: Int, $maxResults: Int) {
+      projectId @client @export(as: "id")
+      versionId @client
+      versions(id: $id, startAt: $startAt, maxResults: $maxResults) {
+        id
+        name
+      }
+    }
+  `);
   let options;
   let defaultValue;
 
+  if (loading || !data) return <Wrapper><Select isLoading /></Wrapper>;
   if (error) return <p>{error.message}</p>;
   if (data && data.versions) {
     options = data.versions.map(({ id, name }) => {
@@ -36,7 +35,7 @@ export default () => {
         classNamePrefix="react-select"
         spacing="compact"
         isClearable
-        defaultValue={defaultValue}
+        value={defaultValue}
         isLoading={loading}
         options={options}
         placeholder="Choose a Version"

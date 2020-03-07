@@ -21,7 +21,7 @@ export default () => {
         classNamePrefix="react-select"
         spacing="compact"
         isClearable
-        defaultValue={defaultValue}
+        value={defaultValue}
         options={options}
         placeholder="Choose a Status"
         onChange={(e) => client.writeQuery({

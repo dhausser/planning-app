@@ -15,10 +15,11 @@ export const GET_TEAMS = gql`
 export default () => {
   const client = useApolloClient();
   const { loading, error, data } = useQuery(GET_TEAMS);
+  let defaultValue;
 
+  if (loading || !data) return <Wrapper><Select isLoading /></Wrapper>;
   if (error) return <p>{error.message}</p>;
 
-  let defaultValue;
   const options = data.teams && data.teams.map(({ id }) => {
     const option = { value: id, label: id };
     if (id === data.teamId) defaultValue = option;
@@ -32,7 +33,7 @@ export default () => {
         classNamePrefix="react-select"
         spacing="compact"
         isClearable
-        defaultValue={defaultValue}
+        value={defaultValue}
         isLoading={loading}
         options={options}
         placeholder="Choose a Team"

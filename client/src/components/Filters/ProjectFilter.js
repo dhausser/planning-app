@@ -15,6 +15,7 @@ export default () => {
   let defaultValue;
   let options = [];
 
+  if (loading || !data) return <Wrapper><Select isLoading /></Wrapper>;
   if (error) return <p>{error.message}</p>;
   if (data && data.projects) {
     options = data.projects.map(({ id, name }) => {
@@ -30,7 +31,7 @@ export default () => {
         className="single-select"
         classNamePrefix="react-select"
         spacing="compact"
-        defaultValue={defaultValue}
+        value={defaultValue}
         isLoading={loading}
         options={options}
         placeholder="Choose a Project"
