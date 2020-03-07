@@ -10,9 +10,7 @@ import Button, { ButtonGroup } from '@atlaskit/button';
 import { ModalTransition } from '@atlaskit/modal-dialog';
 import EmptyState from '@atlaskit/empty-state';
 import { TeamFilter, ProjectHomeView, Layout } from '../components';
-import {
-  CreateResourceModal, EditResourceModal, DeleteResourceModal, TableRow,
-} from '../components/Resource';
+import { CreateResourceModal, EditResourceModal, DeleteResourceModal, TableRow } from '../components/Resource';
 
 const GET_TEAM_FILTER = gql`
   {

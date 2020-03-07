@@ -6,3 +6,5 @@ export { default as FixVersions } from './FixVersions';
 export { default as UserPicker } from './UserPicker';
 export { default as Comments } from './Comments';
 export { default as LoadButton } from './LoadButton';
+export { default as IssueTable } from './IssueTable';
+export { default as priorityIconMap, issuetypeIconMap, statusCatecoryColorMap } from './Icon';

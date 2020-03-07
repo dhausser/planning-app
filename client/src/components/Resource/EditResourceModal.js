@@ -6,7 +6,7 @@ import TextField from '@atlaskit/textfield';
 import Select from '@atlaskit/select';
 import ModalDialog from '@atlaskit/modal-dialog';
 import Footer from './Footer';
-import { GET_TEAMS } from '../Filters';
+import { GET_TEAMS } from '../Filters/TeamFilter';
 
 const UPDATE_RESOURCE = gql`
   mutation UpdateResource($id: ID!, $firstname: String!, $lastname: String!, $email: String!, $team: String!) {

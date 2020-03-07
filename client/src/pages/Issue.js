@@ -1,17 +1,10 @@
 import React, { useEffect } from 'react';
-
 import { useQuery, gql } from '@apollo/client';
-
-
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
-// Atlaskit
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import Page, { Grid, GridColumn } from '@atlaskit/page';
 import EmptyState from '@atlaskit/empty-state';
-
-// Components
 import { ProductIssuesView, Loading } from '../components';
 import { ISSUE_ROW_DATA } from './Issues';
 import {

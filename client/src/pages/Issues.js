@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from 'react';
-
 import { useQuery, gql } from '@apollo/client';
-
-
 import PropTypes from 'prop-types';
-
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import PageHeader from '@atlaskit/page-header';
 import TextField from '@atlaskit/textfield';
-
 import {
   ProductIssuesView,
   Layout,

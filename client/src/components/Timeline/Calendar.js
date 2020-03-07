@@ -19,7 +19,7 @@ export default function Calendar({ issues }) {
                 ))}
               </VerticalDivider>
               <TimelineBox1 />
-              {issues.map((issue) => <Frame issue={issue} />)}
+              {issues.map((issue) => <Frame key={issue.key} issue={issue} />)}
               <TimelineBox2 />
               <div style={{ height: '1px', backgroundColor: 'rgb(193, 199, 208)' }} />
             </HorizontalCalendar>
