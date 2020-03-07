@@ -7,6 +7,11 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
 `;
 
 export const ButtonLoading = () => (
@@ -18,7 +23,7 @@ export const ButtonLoading = () => (
 function Loading() {
   return (
     <Wrapper>
-      <Spinner />
+      <Spinner size="large" />
     </Wrapper>
   );
 }

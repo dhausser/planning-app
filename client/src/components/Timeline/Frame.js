@@ -3,10 +3,10 @@ import { Frame, useMotionValue } from 'framer';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-export default function FrameBox({ epic }) {
+export default function FrameBox({ issue }) {
   const x = useMotionValue(0);
   return (
-    <RowContainer key={epic.key}>
+    <RowContainer key={issue.key}>
       <BoxWrapper style={{ left: '2%', right: '94%' }}>
         <Frame
           drag="x"
@@ -28,7 +28,7 @@ export default function FrameBox({ epic }) {
 }
 
 FrameBox.propTypes = {
-  epic: PropTypes.shape({
+  issue: PropTypes.shape({
     key: PropTypes.string.isRequired,
   }).isRequired,
 };
@@ -37,7 +37,7 @@ FrameBox.propTypes = {
  * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE
  */
 
-const CreateButton = styled.div`
+export const CreateButton = styled.div`
   display: flex;
   -webkit-box-align: center;
   align-items: center;
@@ -45,7 +45,7 @@ const CreateButton = styled.div`
   justify-content: center;
   height: 24px;
   width: 100%;
-  cursor: pointer;
+  /* cursor: pointer; */
   border-radius: 4px;
 
   &:hover {
@@ -53,23 +53,23 @@ const CreateButton = styled.div`
   }
 `;
 
-const RowContainer = styled.div`
+export const RowContainer = styled.div`
   position: relative;
   display: flex;
   -webkit-box-align: center;
   align-items: center;
   height: 40px;
   background-color: rgb(255, 255, 255);
-  cursor: pointer;
+  /* cursor: pointer; */
   transition: background-color 100ms linear 0s;
 
   &:nth-of-type(even) {
     background-color: rgb(244, 245, 247);
   }
 
-  &:hover {
+  /* &:hover {
     background-color: #DFE1E6;
-  }
+  } */
 
   ${CreateButton} {
     background-color: #DFE1E6;
@@ -88,7 +88,7 @@ const BoxWrapper = styled.div`
   min-width: 3px;
   z-index: 3;
   visibility: visible;
-  cursor: pointer;
+  /* cursor: pointer; */
   padding: 0px 5px;
   transition: left 0.1s ease 0s, right 0.1s ease 0s;
   border-radius: 3px;
@@ -107,7 +107,7 @@ const EpicDragLeft = styled.div`
   top: 0px;
   bottom: 0px;
   left: 0px;
-  cursor: col-resize;
+  /* cursor: col-resize; */
   padding: 4px;
 
   ${BoxWrapper}:hover & {
@@ -121,7 +121,7 @@ const EpicDragRight = styled.div`
   top: 0px;
   bottom: 0px;
   right: 0px;
-  cursor: col-resize;
+  /* cursor: col-resize; */
   padding: 4px;
   
   ${BoxWrapper}:hover & {

@@ -7,7 +7,7 @@
   "engines": {
     "node": ">=8.4.0"
   },
-  "main": "src",
+  "main": "./src/app.js",
   "scripts": {
     "start": "yarn dev",
     "dev": "nodemon -r esm",

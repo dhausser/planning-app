@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import assert from 'assert';
 
+// eslint-disable-next-line no-unused-vars
 let database;
 let resources;
 

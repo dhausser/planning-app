@@ -1,67 +1,17 @@
 import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-
-import {
-  ApolloClient,
-  ApolloProvider,
-  HttpLink,
-  InMemoryCache,
-  useQuery,
-  gql,
-} from '@apollo/client';
-import {
-  NavigationProvider,
-  withNavigationViewController,
-  LayoutManagerWithViewController,
-} from '@atlaskit/navigation-next';
-
-import Pages from './pages';
-import Login from './pages/Login';
-import { resolvers, typeDefs } from './resolvers';
+import { ApolloProvider, useQuery, gql } from '@apollo/client';
+import { NavigationProvider, withNavigationViewController, LayoutManagerWithViewController } from '@atlaskit/navigation-next';
 import '@atlaskit/css-reset';
 
+import client from './apolloClient';
+import Pages from './pages';
+import Login from './pages/Login';
 import GlobalNavigation from './components/Nav/GlobalNavigation';
 import productHomeView from './components/Nav/ProductHomeView';
 import productIssuesView from './components/Nav/ProductIssuesView';
 import projectHomeView from './components/Nav/ProjectHomeView';
-import projectId from './config';
-
-// Set up our apollo-client to point at the server we created
-// this can be local or a remote endpoint
-const cache = new InMemoryCache();
-const client = new ApolloClient({
-  cache,
-  link: new HttpLink({
-    uri: '/graphql',
-    credentials: 'include',
-    headers: {
-      authorization: localStorage.getItem('token'),
-    },
-  }),
-  resolvers,
-  typeDefs,
-});
-
-cache.writeData({
-  data: {
-    isLoggedIn: !!localStorage.getItem('token'),
-    projectId: localStorage.getItem('projectId') || projectId,
-    versionId: localStorage.getItem('versionId'),
-    statusId: localStorage.getItem('statusId'),
-    teamId: localStorage.getItem('teamId'),
-  },
-});
-
-/**
- * Render our app
- * - We wrap the whole app with ApolloProvider, so any component in the app can
- *    make GraphqL requests. Our provider needs the client we created above,
- *    so we pass it as a prop
- * - We need a router, so we can navigate the app. We're using Reach router for this.
- *    The router chooses between which component to render, depending on the url path.
- *    ex: localhost:3000/login will render only the `Login` component
- */
 
 const IS_LOGGED_IN = gql`
   query IsUserLoggedIn {
@@ -69,7 +19,7 @@ const IS_LOGGED_IN = gql`
   }
 `;
 
-function IsLoggedIn({ navigationViewController }) {
+function App({ navigationViewController }) {
   const { data } = useQuery(IS_LOGGED_IN);
   useEffect(() => {
     navigationViewController.addView(productHomeView);
@@ -85,17 +35,17 @@ function IsLoggedIn({ navigationViewController }) {
   );
 }
 
-IsLoggedIn.propTypes = {
+App.propTypes = {
   navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
 };
 
-const NavigationViewController = withNavigationViewController(IsLoggedIn);
+const AppWithNavigationViewController = withNavigationViewController(App);
 
 ReactDOM.render(
 
   <ApolloProvider client={client}>
     <NavigationProvider>
-      <NavigationViewController />
+      <AppWithNavigationViewController />
     </NavigationProvider>
   </ApolloProvider>,
   document.getElementById('root'),

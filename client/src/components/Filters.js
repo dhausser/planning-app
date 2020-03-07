@@ -1,9 +1,8 @@
 import React from 'react';
-
 import { useApolloClient, useQuery, gql } from '@apollo/client';
-
-
 import Select from '@atlaskit/select';
+
+let client;
 
 export const TOGGLE_FILTER = gql`
   mutation toggleFilter($id: ID, $name: String, $type: String) {
@@ -62,11 +61,11 @@ const GET_TEAM_FILTER = gql`
 `;
 
 export function ProjectFilter() {
-  const client = useApolloClient();
+  client = useApolloClient();
   const { data: { projectId } } = useQuery(GET_PROJECT_FILTER);
   const { loading, error, data } = useQuery(GET_PROJECTS);
 
-  if (loading) return <Select spacing="compact" isLoading />;
+  if (loading || !data) return <Select spacing="compact" isLoading />;
   if (error) return <p>{error.message}</p>;
 
   let defaultValue;
@@ -84,22 +83,17 @@ export function ProjectFilter() {
         isLoading={loading}
         options={options}
         placeholder="Project"
-        onChange={(e) => {
-          if (e) {
-            client.writeData({ data: { projectId: e.value } });
-            localStorage.setItem('projectId', e.value);
-          } else {
-            client.writeData({ data: { projectId: null } });
-            localStorage.removeItem('projectId');
-          }
-        }}
+        onChange={(e) => client.writeQuery({
+          query: gql`{ projectId }`,
+          data: { projectId: e && e.value },
+        })}
       />
     </div>
   );
 }
 
 export function VersionFilter() {
-  const client = useApolloClient();
+  client = useApolloClient();
   const { data: { projectId } } = useQuery(GET_PROJECT_FILTER);
   const { data: { versionId } } = useQuery(GET_VERSION_FILTER);
   const { loading, error, data } = useQuery(GET_VERSIONS, {
@@ -129,22 +123,17 @@ export function VersionFilter() {
         isLoading={loading}
         options={options}
         placeholder="Version"
-        onChange={(e) => {
-          if (e) {
-            client.writeData({ data: { versionId: e.value } });
-            localStorage.setItem('versionId', e.value);
-          } else {
-            client.writeData({ data: { versionId: null } });
-            localStorage.removeItem('versionId');
-          }
-        }}
+        onChange={(e) => client.writeQuery({
+          query: gql`{ versionId }`,
+          data: { versionId: e && e.value },
+        })}
       />
     </div>
   );
 }
 
 export function StatusFilter() {
-  const client = useApolloClient();
+  client = useApolloClient();
   const { data: { statusId } } = useQuery(GET_STATUS_FILTER);
 
   const options = [
@@ -162,22 +151,17 @@ export function StatusFilter() {
         defaultValue={defaultValue}
         options={options}
         placeholder="Status"
-        onChange={(e) => {
-          if (e) {
-            client.writeData({ data: { statusId: e.value } });
-            localStorage.setItem('statusId', e.value);
-          } else {
-            client.writeData({ data: { statusId: null } });
-            localStorage.removeItem('statusId');
-          }
-        }}
+        onChange={(e) => client.writeQuery({
+          query: gql`{ statusId }`,
+          data: { statusId: e && e.value },
+        })}
       />
     </div>
   );
 }
 
 export function TeamFilter() {
-  const client = useApolloClient();
+  client = useApolloClient();
   const { data: { teamId } } = useQuery(GET_TEAM_FILTER);
   const { loading, error, data } = useQuery(GET_TEAMS);
 
@@ -200,15 +184,10 @@ export function TeamFilter() {
         isLoading={loading}
         options={options}
         placeholder="Team"
-        onChange={(e) => {
-          if (e) {
-            client.writeData({ data: { teamId: e.value } });
-            localStorage.setItem('teamId', e.value);
-          } else {
-            client.writeData({ data: { teamId: null } });
-            localStorage.removeItem('teamId');
-          }
-        }}
+        onChange={(e) => client.writeQuery({
+          query: gql`{ teamId }`,
+          data: { teamId: e && e.value },
+        })}
       />
     </div>
   );

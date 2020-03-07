@@ -23,6 +23,16 @@
   ],
   "rules": {
     "react/jsx-filename-extension": "off",
-    "react/jsx-props-no-spreading": "off"
+    "react/jsx-props-no-spreading": "off",
+    "object-curly-newline": [
+      "error",
+      {
+        "ImportDeclaration": {
+          "multiline": true,
+          "minProperties": 5
+        }
+      }
+    ],
+    "no-console": "off"
   }
 }

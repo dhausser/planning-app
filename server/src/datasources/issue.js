@@ -94,7 +94,6 @@ class IssueAPI extends RESTDataSource {
 
   async getEpics(projectId, versionId) {
     const jql = `project = ${projectId} ${versionId ? `and fixversion = ${versionId} ` : ''}and issuetype = epic`;
-    console.log(jql);
     const response = await this.post('/rest/api/2/search', { jql, fields: ['summary'] });
     return Array.isArray(response.issues) ? response.issues : [];
   }
