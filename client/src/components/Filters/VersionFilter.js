@@ -1,6 +1,7 @@
 import React from 'react';
 import { useApolloClient, useQuery, gql } from '@apollo/client';
 import Select from '@atlaskit/select';
+import EmptyState from '@atlaskit/empty-state';
 import { Wrapper } from './ProjectFilter';
 
 export default () => {
@@ -15,11 +16,10 @@ export default () => {
       }
     }
   `);
-  let options;
+  let options = [];
   let defaultValue;
 
-  if (loading || !data) return <Wrapper><Select isLoading /></Wrapper>;
-  if (error) return <p>{error.message}</p>;
+  if (error) return <EmptyState header={error.name} description={error.message} />;
   if (data && data.versions) {
     options = data.versions.map(({ id, name }) => {
       const option = { value: id, label: name };

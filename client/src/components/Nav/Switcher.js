@@ -38,9 +38,7 @@ const GET_PROJECT_FILTER = gql`
 
 const create = () => ({
   onClick: () => {
-    const boardName = window.prompt(
-      'What would you like to call your new board?',
-    );
+    const boardName = window.prompt('What would you like to call your new board?');
     if (boardName && boardName.length) {
       console.log(`You created the board "${boardName}"`);
     }

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from '@reach/router';
-
 import DynamicTable from '@atlaskit/dynamic-table';
 import Tooltip from '@atlaskit/tooltip';
 import EmptyState from '@atlaskit/empty-state';
@@ -134,7 +133,7 @@ const IssueTable = ({
     defaultSortKey="priority"
     defaultSortOrder="ASC"
     isRankable
-    emptyView={error && <EmptyState description={error.message} />}
+    emptyView={error && <EmptyState header={error.name} description={error.message} />}
   />
 );
 

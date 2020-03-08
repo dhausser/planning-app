@@ -1,6 +1,7 @@
 import React from 'react';
 import { useApolloClient, useQuery, gql } from '@apollo/client';
 import Select from '@atlaskit/select';
+import EmptyState from '@atlaskit/empty-state';
 import { Wrapper } from './ProjectFilter';
 
 export const GET_TEAMS = gql`
@@ -17,8 +18,7 @@ export default () => {
   const { loading, error, data } = useQuery(GET_TEAMS);
   let defaultValue;
 
-  if (loading || !data) return <Wrapper><Select isLoading /></Wrapper>;
-  if (error) return <p>{error.message}</p>;
+  if (error) return <EmptyState header={error.name} description={error.message} />;
 
   const options = data.teams && data.teams.map(({ id }) => {
     const option = { value: id, label: id };

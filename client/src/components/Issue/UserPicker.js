@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
-
 import { useQuery, useMutation, gql } from '@apollo/client';
-
-
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
 import { gridSize } from '@atlaskit/theme';
 import UserPicker from '@atlaskit/user-picker';
+import EmptyState from '@atlaskit/empty-state';
 
 const Wrapper = styled.div`
   padding: ${gridSize() - 2}px ${gridSize() - 2}px;
@@ -76,7 +73,7 @@ function AssignUser({ id, user, type }) {
   // });
   const [assignIssue] = useMutation(ASSIGN_ISSUE);
 
-  if (error) return <p>{error.message}</p>;
+  if (error) return <EmptyState header={error.name} description={error.message} />;
 
   return (
     <>

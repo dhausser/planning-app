@@ -18,7 +18,7 @@ export default function AssignableUserPicker() {
   const { loading, error, data } = useQuery(GET_ASSIGNABLE_USERS, { variables: { project: 'GWENT' } });
 
   if (loading || !data) return <Spinner size="small" />;
-  if (error) return <EmptyState name={error.name} message={error.message} />;
+  if (error) return <EmptyState header={error.name} description={error.message} />;
 
   return (
     <UserPicker

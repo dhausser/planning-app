@@ -3,7 +3,6 @@ export { ProjectFilter, VersionFilter, StatusFilter, TeamFilter } from './Filter
 export { priorityIconMap, issuetypeIconMap, statusCatecoryColorMap } from './Issue';
 export { default as Layout } from './Layout';
 export { default as Loading } from './Loading';
-export { default as Error } from './Error';
 export { default as LoginForm } from './LoginForm';
 export { default as BarChart } from './BarChart';
 export { default as Nameplate } from './Resource/Nameplate';

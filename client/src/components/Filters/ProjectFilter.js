@@ -2,6 +2,7 @@ import React from 'react';
 import { useApolloClient, useQuery, gql } from '@apollo/client';
 import styled from 'styled-components';
 import Select from '@atlaskit/select';
+import EmptyState from '@atlaskit/empty-state';
 
 export default () => {
   const client = useApolloClient();
@@ -12,11 +13,10 @@ export default () => {
       name
     }
   }`);
-  let defaultValue;
   let options = [];
+  let defaultValue;
 
-  if (loading || !data) return <Wrapper><Select isLoading /></Wrapper>;
-  if (error) return <p>{error.message}</p>;
+  if (error) return <EmptyState header={error.name} description={error.message} />;
   if (data && data.projects) {
     options = data.projects.map(({ id, name }) => {
       const option = { value: id, label: name };

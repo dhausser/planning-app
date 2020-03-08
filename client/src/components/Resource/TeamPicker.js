@@ -11,7 +11,7 @@ export default function TeamPicker({ fieldProps }) {
   const options = data && data.teams && data.teams.map(({ id }) => ({ label: id, value: id }));
 
   if (loading || !data) return <Spinner size="small" />;
-  if (error) return <EmptyState name={error.name} message={error.message} />;
+  if (error) return <EmptyState header={error.name} description={error.message} />;
 
   return (
     <Select

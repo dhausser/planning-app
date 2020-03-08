@@ -91,8 +91,8 @@ function Issues({ resourceId }) {
 function Absences({ id }) {
   const { loading, error, data } = useQuery(GET_ABSENCES, { variables: { id } });
 
-  if (error) return <EmptyState name={error.name} message={error.message} />;
   if (loading || !data) return <Loading />;
+  if (error) return <EmptyState header={error.name} description={error.message} />;
 
   return <>{data.absences.map(({ date }) => <Status key={date} text={date} color="blue" />)}</>;
 }
