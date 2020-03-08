@@ -1,6 +1,5 @@
 import React from 'react';
-import { gql } from '@apollo/client';
-import PropTypes from 'prop-types';
+import { useApolloClient, gql } from '@apollo/client';
 import Filter from './Filter';
 
 const GET_STATUSES = gql`
@@ -14,7 +13,8 @@ const GET_STATUSES = gql`
   }
 `;
 
-export default function StatusFilter({ client }) {
+export default function StatusFilter() {
+  const client = useApolloClient();
   const handleChange = (e) => client.writeQuery({
     query: gql`{ statusId }`,
     data: { statusId: e && e.value },
@@ -29,7 +29,3 @@ export default function StatusFilter({ client }) {
     />
   );
 }
-
-StatusFilter.propTypes = {
-  client: PropTypes.func.isRequired,
-};

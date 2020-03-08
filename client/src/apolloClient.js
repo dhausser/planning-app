@@ -1,12 +1,8 @@
-import {
-  ApolloClient,
-  InMemoryCache,
-  HttpLink,
-  gql,
-} from '@apollo/client';
-
+import { ApolloClient, InMemoryCache, HttpLink, gql } from '@apollo/client';
 import { resolvers, typeDefs } from './resolvers';
-import projectId from './config';
+
+// TODO: Handle default project selection
+const DEFAULT_PROJECT_ID = 10500;
 
 // Set up our apollo-client to point at the server we created
 // this can be local or a remote endpoint
@@ -40,14 +36,10 @@ function writeInitialData() {
     `,
     data: {
       isLoggedIn: !!localStorage.getItem('token'),
-      projectId: localStorage.getItem('projectId') || projectId,
-      versionId: localStorage.getItem('versionId') || null,
-      statusId: localStorage.getItem('statusId') || null,
-      teamId: localStorage.getItem('teamId') || null,
-      networkStatus: {
-        __typename: 'NetworkStatus',
-        isConnected: false,
-      },
+      projectId: localStorage.getItem('projectId') || DEFAULT_PROJECT_ID,
+      versionId: localStorage.getItem('versionId'),
+      statusId: localStorage.getItem('statusId'),
+      teamId: localStorage.getItem('teamId'),
     },
   });
 }

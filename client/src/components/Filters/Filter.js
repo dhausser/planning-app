@@ -22,29 +22,25 @@ function Filter({ query, handleChange, items, itemId }) {
   return (
     <Wrapper>
       <Select
-        className="single-select"
-        classNamePrefix="react-select"
         spacing="compact"
         value={value}
         isLoading={loading}
         options={options}
-        placeholder="Choose a Project"
         onChange={handleChange}
       />
     </Wrapper>
   );
 }
 
-Filter.defaultProps = {
-  items: [],
-  itemId: '',
-};
-
 Filter.propTypes = {
   handleChange: PropTypes.func.isRequired,
-  query: PropTypes.string.isRequired,
-  items: PropTypes.arrayOf(),
-  itemId: PropTypes.string,
+  query: PropTypes.exact({
+    kind: PropTypes.string,
+    definitions: PropTypes.arrayOf(PropTypes.object),
+    loc: PropTypes.object,
+  }).isRequired,
+  items: PropTypes.string.isRequired,
+  itemId: PropTypes.string.isRequired,
 };
 
 export default Filter;

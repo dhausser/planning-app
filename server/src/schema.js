@@ -18,6 +18,7 @@ const typeDefs = gql`
     user(id: ID!): User!
     myself: User!
     assignableUsers(project: String): [User]!
+    loginToken: String
   }
 
   type User {

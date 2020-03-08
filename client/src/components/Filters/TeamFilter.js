@@ -1,6 +1,5 @@
 import React from 'react';
-import { gql } from '@apollo/client';
-import PropTypes from 'prop-types';
+import { useApolloClient, gql } from '@apollo/client';
 import Filter from './Filter';
 
 export const GET_TEAMS = gql`
@@ -12,7 +11,8 @@ export const GET_TEAMS = gql`
   }
 `;
 
-export default function TeamFilter({ client }) {
+export default function TeamFilter() {
+  const client = useApolloClient();
   const handleChange = (e) => client.writeQuery({
     query: gql`{ teamId }`,
     data: { teamId: e && e.value },
@@ -27,7 +27,3 @@ export default function TeamFilter({ client }) {
     />
   );
 }
-
-TeamFilter.propTypes = {
-  client: PropTypes.func.isRequired,
-};

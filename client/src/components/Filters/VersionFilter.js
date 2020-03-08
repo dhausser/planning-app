@@ -1,6 +1,5 @@
 import React from 'react';
-import { gql } from '@apollo/client';
-import PropTypes from 'prop-types';
+import { useApolloClient, gql } from '@apollo/client';
 import Filter from './Filter';
 
 const GET_VERSIONS = gql`
@@ -14,7 +13,8 @@ const GET_VERSIONS = gql`
   }
 `;
 
-export default function VersionFilter({ client }) {
+export default function VersionFilter() {
+  const client = useApolloClient();
   const handleChange = (e) => client.writeQuery({
     query: gql`{
       versionId
@@ -35,7 +35,3 @@ export default function VersionFilter({ client }) {
     />
   );
 }
-
-VersionFilter.propTypes = {
-  client: PropTypes.func.isRequired,
-};

@@ -1,6 +1,5 @@
 import React from 'react';
-import { gql } from '@apollo/client';
-import PropTypes from 'prop-types';
+import { useApolloClient, gql } from '@apollo/client';
 import Filter from './Filter';
 
 const GET_PROJECTS = gql`{
@@ -12,7 +11,8 @@ const GET_PROJECTS = gql`{
 }
 `;
 
-export default function ProjectFilter({ client }) {
+export default function ProjectFilter() {
+  const client = useApolloClient();
   const handleChange = (e) => client.writeQuery({
     query: gql`{
       projectId
@@ -33,7 +33,3 @@ export default function ProjectFilter({ client }) {
     />
   );
 }
-
-ProjectFilter.propTypes = {
-  client: PropTypes.func.isRequired,
-};

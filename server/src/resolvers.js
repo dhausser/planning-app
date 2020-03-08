@@ -40,6 +40,7 @@ const resolvers = {
     assignableUsers: (_, { project }, { dataSources }) => (
       dataSources.issueAPI.getAssignableUsers({ project })
     ),
+    loginToken: (_, __, { user }) => user.token,
 
     /**
      * CDPR Portal REST API
