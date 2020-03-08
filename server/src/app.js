@@ -3,7 +3,7 @@ import express from 'express';
 import session from 'express-session';
 import { ApolloServer } from 'apollo-server-express';
 
-// import databaseConnectionPromise from './db';
+import databaseConnectionPromise from './db';
 import passport from './passport';
 import routes from './routes';
 import typeDefs from './schema';
@@ -47,7 +47,7 @@ import ResourcesDAO from './dao/resourcesDAO';
 
   apolloServer.applyMiddleware({ app });
 
-  // await (async () => databaseConnectionPromise)();
+  await (async () => databaseConnectionPromise)();
 
   app.listen(port, () => console.log(
     `Server ready at http://localhost:${port}${apolloServer.graphqlPath}`,

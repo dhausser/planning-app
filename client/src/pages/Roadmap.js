@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useApolloClient } from '@apollo/client';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
@@ -15,10 +16,10 @@ const Padding = styled.div`
   height: 100vh;
 `;
 
-const barContent = (
+const barContent = (client) => (
   <div style={{ display: 'flex' }}>
-    <ProjectFilter />
-    <VersionFilter />
+    <ProjectFilter client={client} />
+    <VersionFilter client={client} />
   </div>
 );
 
@@ -30,12 +31,14 @@ const breadcrumbs = (
 );
 
 function Roadmap({ navigationViewController }) {
+  const client = useApolloClient();
+
   useEffect(() => navigationViewController.setView(ProjectHomeView.id), [navigationViewController]);
 
   return (
     <Page>
       <Padding>
-        <PageHeader breadcrumbs={breadcrumbs} bottomBar={barContent}>Roadmap</PageHeader>
+        <PageHeader breadcrumbs={breadcrumbs} bottomBar={barContent(client)}>Roadmap</PageHeader>
         <Timeline />
       </Padding>
     </Page>

@@ -1,34 +1,35 @@
 import React from 'react';
-import { useApolloClient, useQuery, gql } from '@apollo/client';
-import Select from '@atlaskit/select';
-import { Wrapper } from './ProjectFilter';
+import { gql } from '@apollo/client';
+import PropTypes from 'prop-types';
+import Filter from './Filter';
 
-export default () => {
-  const client = useApolloClient();
-  const { data: { statusId } } = useQuery(gql`{ statusId @client }`);
+const GET_STATUSES = gql`
+  query ($id: ID!) {
+    projectId @client @export(as: "id")
+    statusId @client
+    statuses(id: $id) {
+      id
+      name
+    }
+  }
+`;
 
-  const options = [
-    { value: '2', label: 'Open' },
-    { value: '4', label: 'In Progress' },
-    { value: '3', label: 'Closed' },
-  ];
-  const defaultValue = options.find(({ value }) => value === statusId);
+export default function StatusFilter({ client }) {
+  const handleChange = (e) => client.writeQuery({
+    query: gql`{ statusId }`,
+    data: { statusId: e && e.value },
+  });
 
   return (
-    <Wrapper>
-      <Select
-        className="single-select"
-        classNamePrefix="react-select"
-        spacing="compact"
-        isClearable
-        value={defaultValue}
-        options={options}
-        placeholder="Choose a Status"
-        onChange={(e) => client.writeQuery({
-          query: gql`{ statusId }`,
-          data: { statusId: e && e.value },
-        })}
-      />
-    </Wrapper>
+    <Filter
+      handleChange={handleChange}
+      query={GET_STATUSES}
+      items="statuses"
+      itemId="statusId"
+    />
   );
+}
+
+StatusFilter.propTypes = {
+  client: PropTypes.func.isRequired,
 };

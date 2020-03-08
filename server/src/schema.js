@@ -7,8 +7,9 @@ const typeDefs = gql`
     roadmapIssues(projectId: String, versionId: String): [Issue]!
     epics(projectId: String, versionId: String): [Issue]!
     issue(id: ID!): Issue
-    versions(id: ID!, startAt: Int, maxResults: Int): [Version]
     projects: [Project]!
+    versions(id: ID!): [Version]
+    statuses(id: ID!): [Status]
     resources(teamId: String): [Resource]!
     resource(id: ID!): Resource
     teams: [Team]!

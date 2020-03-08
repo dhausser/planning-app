@@ -22,11 +22,14 @@ const resolvers = {
     issue: (_, { id }, { dataSources }) => (
       dataSources.issueAPI.getIssueById(id)
     ),
-    versions: (_, { id, startAt, maxResults }, { dataSources }) => (
-      dataSources.issueAPI.getVersions(id, startAt, maxResults)
-    ),
     projects: (_, __, { dataSources }) => (
       dataSources.issueAPI.getProjects()
+    ),
+    versions: (_, { id }, { dataSources }) => (
+      dataSources.issueAPI.getVersions(id)
+    ),
+    statuses: (_, { id }, { dataSources }) => (
+      dataSources.issueAPI.getStatuses(id)
     ),
     myself: (_, __, { dataSources }) => (
       dataSources.issueAPI.getCurrentUser()
