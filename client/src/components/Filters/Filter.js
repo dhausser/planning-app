@@ -13,7 +13,7 @@ function Filter({ query, handleChange, items, itemId }) {
   if (error) return <EmptyState header={error.name} description={error.message} />;
   if (data && data[items]) {
     options = data[items].map(({ id, name }) => {
-      const option = { value: id, label: name };
+      const option = { value: id, label: (name || id) };
       if (id === data[itemId]) value = option;
       return option;
     });
@@ -23,6 +23,7 @@ function Filter({ query, handleChange, items, itemId }) {
     <Wrapper>
       <Select
         spacing="compact"
+        isClearable={items !== 'projects'}
         value={value}
         isLoading={loading}
         options={options}

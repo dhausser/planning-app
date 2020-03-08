@@ -12,12 +12,6 @@ import EmptyState from '@atlaskit/empty-state';
 import { TeamFilter, ProjectHomeView, Layout } from '../components';
 import { CreateResourceModal, EditResourceModal, DeleteResourceModal, TableRow } from '../components/Resource';
 
-const GET_TEAM_FILTER = gql`
-  {
-    teamId @client
-  }
-`;
-
 const GET_RESOURCES = gql`
   query GetResources($teamId: String) {
     teamId @client @export(as: "teamId")
@@ -64,15 +58,14 @@ function Resources({ navigationViewController }) {
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-  const { data: { teamId } } = useQuery(GET_TEAM_FILTER);
   const { data, loading, error } = useQuery(GET_RESOURCES);
 
   useEffect(() => navigationViewController.setView(ProjectHomeView.id), [navigationViewController]);
 
   let resources = [];
   if (!loading) {
-    resources = teamId
-      ? data.resources.filter((resource) => resource.team === teamId)
+    resources = data.teamId
+      ? data.resources.filter((resource) => resource.team === data.teamId)
       : data.resources;
   }
   if (error) return <EmptyState header={error.name} description={error.message} />;
