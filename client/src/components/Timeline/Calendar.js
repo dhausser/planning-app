@@ -43,7 +43,6 @@ Calendar.propTypes = {
   ),
 };
 
-
 /**
  * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE
  */
@@ -129,17 +128,17 @@ const VerticalDivider = styled.div`
   pointer-events: none;
 `;
 
-const TimelineBottom2 = styled.div`
-  position: absolute;
-  pointer-events: none;
-  left: 0px;
-  top: 0px;
-  bottom: 0px;
-  right: 0px;
-  z-index: 11;
-  clip: rect(0px, auto, auto, 0px);
-  clip-path: inset(0px);
-`;
+// const TimelineBottom2 = styled.div`
+//   position: absolute;
+//   pointer-events: none;
+//   left: 0px;
+//   top: 0px;
+//   bottom: 0px;
+//   right: 0px;
+//   z-index: 11;
+//   clip: rect(0px, auto, auto, 0px);
+//   clip-path: inset(0px);
+// `;
 
 const StyledColumn = styled.div`
   position: absolute;

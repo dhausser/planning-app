@@ -7,8 +7,8 @@ import EmptyState from '@atlaskit/empty-state';
 
 function Filter({ query, handleChange, items, itemId }) {
   const { loading, error, data } = useQuery(query);
-  let value = { value: '', label: '' };
-  let options = [value];
+  let value = null;
+  let options = [];
 
   if (error) return <EmptyState header={error.name} description={error.message} />;
   if (data && data[items]) {
@@ -17,6 +17,10 @@ function Filter({ query, handleChange, items, itemId }) {
       if (id === data[itemId]) value = option;
       return option;
     });
+  }
+
+  if (items === 'statuses') {
+    console.log(data && data.statuses);
   }
 
   return (
@@ -28,6 +32,7 @@ function Filter({ query, handleChange, items, itemId }) {
         isLoading={loading}
         options={options}
         onChange={handleChange}
+        placeholder={itemId}
       />
     </Wrapper>
   );

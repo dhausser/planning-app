@@ -27,9 +27,7 @@ function App({ navigationViewController }) {
     navigationViewController.addView(projectHomeView);
   }, [navigationViewController]);
   return (
-    <LayoutManagerWithViewController
-      globalNavigation={GlobalNavigation}
-    >
+    <LayoutManagerWithViewController globalNavigation={GlobalNavigation}>
       {data.isLoggedIn ? <Pages /> : <Login />}
     </LayoutManagerWithViewController>
   );

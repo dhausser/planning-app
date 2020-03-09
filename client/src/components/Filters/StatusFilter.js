@@ -9,6 +9,12 @@ const GET_STATUSES = gql`
     statuses(id: $id) {
       id
       name
+      statusCategory {
+        id
+        key
+        colorName
+        name
+      }
     }
   }
 `;
