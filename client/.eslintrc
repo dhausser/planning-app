@@ -11,6 +11,7 @@
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"
   },
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -19,9 +20,13 @@
     "sourceType": "module"
   },
   "plugins": [
-    "react"
+    "react",
+    "@typescript-eslint"
   ],
+  "ignorePatterns": ["temp.js", "node_modules/"],
   "rules": {
+    "import/extensions": "off",
+    "import/no-unresolved": "off",
     "react/jsx-filename-extension": "off",
     "react/jsx-props-no-spreading": "off",
     "object-curly-newline": [
@@ -33,6 +38,14 @@
         }
       }
     ],
-    "no-console": "off"
+    "no-console": "off",
+    "no-unused-vars": "off",
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
   }
 }
