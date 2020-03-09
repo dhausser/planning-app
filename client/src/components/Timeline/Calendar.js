@@ -5,6 +5,8 @@ import { ScrollSyncPane } from 'react-scroll-sync';
 import Frame from './Frame';
 import TimelineHeader, { months, CALENDAR_WIDTH, MONTH_WIDTH } from './TimelineHeader';
 
+const CALENDAR_WIDTH_PX = '2500px';
+
 export default function Calendar({ issues }) {
   return (
     <TimelineContainer>
@@ -21,12 +23,12 @@ export default function Calendar({ issues }) {
               <TimelineBox1 />
               {issues.map((issue) => <Frame key={issue.key} issue={issue} />)}
               <TimelineBox2 />
-              <div style={{ height: '1px', backgroundColor: 'rgb(193, 199, 208)' }} />
+              <div style={{ height: '1px', width: CALENDAR_WIDTH_PX, backgroundColor: 'rgb(193, 199, 208)' }} />
             </HorizontalCalendar>
           </TimelineBox>
         </ScrollSyncPane>
       </TimelineWrapper>
-      <TimelineBottom2 />
+      {/* <TimelineBottom2 /> */}
     </TimelineContainer>
   );
 }

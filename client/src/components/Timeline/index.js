@@ -7,7 +7,7 @@ import EmptyState from '@atlaskit/empty-state';
 import { Loading } from '..';
 import Calendar from './Calendar';
 import Headline from './Headline';
-import TimelineFooter from './TimelineFooter';
+// import TimelineFooter from './TimelineFooter';
 
 const GET_EPICS = gql`
   query issueList($projectId: String, $versionId: String) {
@@ -29,15 +29,13 @@ export default function Timeline() {
   if (loading || !data) return <Loading />;
   if (error) return <EmptyState header={error.name} description={error.message} />;
 
-  // return <p>{JSON.stringify(data.epics, null, 2)}</p>;
-
   return (
     <Wrapper>
       <ScrollSync>
         <ScrollWrapper>
           <Headline issues={data.epics} />
           <Calendar issues={data.epics} />
-          <TimelineFooter />
+          {/* <TimelineFooter /> */}
         </ScrollWrapper>
       </ScrollSync>
     </Wrapper>

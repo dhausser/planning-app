@@ -13,10 +13,17 @@ export const GET_TEAMS = gql`
 
 export default function TeamFilter() {
   const client = useApolloClient();
-  const handleChange = (e) => client.writeQuery({
-    query: gql`{ teamId }`,
-    data: { teamId: e && e.value },
-  });
+  const handleChange = (e) => {
+    client.writeQuery({
+      query: gql`{ teamId }`,
+      data: { teamId: e && e.value },
+    });
+    if (e && e.value) {
+      localStorage.setItem('teamId', e.value);
+    } else {
+      localStorage.removeItem('teamId');
+    }
+  };
 
   return (
     <Filter

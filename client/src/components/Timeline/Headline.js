@@ -4,7 +4,8 @@ import styled from 'styled-components';
 import EmojiCustomIcon from '@atlaskit/icon/glyph/emoji/custom';
 import { ScrollSyncPane } from 'react-scroll-sync';
 import { RowContainer, CreateButton } from './Frame';
-import { CALENDAR_WIDTH } from './TimelineHeader';
+
+const HEADLINE_WIDTH = 320;
 
 export default function Headline({ issues }) {
   function createEpic() {
@@ -21,11 +22,7 @@ export default function Headline({ issues }) {
   }
 
   return (
-    <HeadlineContainer
-      data-test-id="roadmap.common.components.table.components.list.container"
-      width="320"
-      style={{ width: '320px' }}
-    >
+    <HeadlineContainer width={HEADLINE_WIDTH} style={{ width: HEADLINE_WIDTH }}>
       <EpicTitleWrapper>
         <EpicTitle>Epic</EpicTitle>
         <EpicTitleBottom />
@@ -33,7 +30,7 @@ export default function Headline({ issues }) {
       <HeaderRowWrapper>
         <div style={{ display: 'flex', overflow: 'hidden' }}>
           <ScrollSyncPane>
-            <HeaderRowScrollBar data-test-id="roadmap.common.components.table.components.list.hidden-scrollbar">
+            <HeaderRowScrollBar>
               <HeaderRowScrollBarWidth width="318" style={{ width: '318px' }}>
                 {issues.map((epic) => (
                   <RowContainer
@@ -75,7 +72,8 @@ export default function Headline({ issues }) {
             </HeaderRowScrollBar>
           </ScrollSyncPane>
         </div>
-        <HeaderRowBorder width={CALENDAR_WIDTH} style={{ width: CALENDAR_WIDTH }} />
+        <HeaderRowBorder />
+        {/* <HeaderRowBorder width={HEADLINE_WIDTH} style={{ width: HEADLINE_WIDTH }} /> */}
       </HeaderRowWrapper>
     </HeadlineContainer>
   );

@@ -7,12 +7,14 @@ export default function FrameBox({ issue }) {
   const x = useMotionValue(0);
   return (
     <RowContainer key={issue.key}>
-      {/* <BoxWrapper style={{ left: '2%', right: '94%' }}> */}
       <Frame
         name="Epic"
         x={x}
         size={24}
         radius={3}
+        width={300}
+        left={0}
+        // right={300}
         background="#8777d9"
         drag="x"
         dragConstraints={{ left: 0, right: 1300 }}
@@ -26,7 +28,6 @@ export default function FrameBox({ issue }) {
           <EpicDrag />
         </EpicDragRight>
       </Frame>
-      {/* </BoxWrapper> */}
     </RowContainer>
   );
 }

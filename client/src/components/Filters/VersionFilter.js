@@ -15,16 +15,23 @@ const GET_VERSIONS = gql`
 
 export default function VersionFilter() {
   const client = useApolloClient();
-  const handleChange = (e) => client.writeQuery({
-    query: gql`{
-      versionId
-      statusId
-    }`,
-    data: {
-      versionId: e && e.value,
-      statusId: null,
-    },
-  });
+  const handleChange = (e) => {
+    client.writeQuery({
+      query: gql`{
+        versionId
+        statusId
+      }`,
+      data: {
+        versionId: e && e.value,
+        statusId: null,
+      },
+    });
+    if (e && e.value) {
+      localStorage.setItem('versionId', e.value);
+    } else {
+      localStorage.removeItem('versionId');
+    }
+  };
 
   return (
     <Filter

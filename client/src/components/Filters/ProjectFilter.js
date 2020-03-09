@@ -13,16 +13,19 @@ const GET_PROJECTS = gql`{
 
 export default function ProjectFilter() {
   const client = useApolloClient();
-  const handleChange = (e) => client.writeQuery({
-    query: gql`{
-      projectId
-      versionId
-    }`,
-    data: {
-      projectId: e && e.value,
-      versionId: null,
-    },
-  });
+  const handleChange = (e) => {
+    client.writeQuery({
+      query: gql`{
+        projectId
+        versionId
+      }`,
+      data: {
+        projectId: e && e.value,
+        versionId: null,
+      },
+    });
+    localStorage.setItem('projectId', e.value);
+  };
 
   return (
     <Filter
