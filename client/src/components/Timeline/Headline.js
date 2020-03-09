@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import EmojiCustomIcon from '@atlaskit/icon/glyph/emoji/custom';
 import { ScrollSyncPane } from 'react-scroll-sync';
 import { RowContainer, CreateButton } from './Frame';
+import { CALENDAR_WIDTH } from './TimelineHeader';
 
 export default function Headline({ issues }) {
   function createEpic() {
@@ -34,24 +35,20 @@ export default function Headline({ issues }) {
           <ScrollSyncPane>
             <HeaderRowScrollBar data-test-id="roadmap.common.components.table.components.list.hidden-scrollbar">
               <HeaderRowScrollBarWidth width="318" style={{ width: '318px' }}>
-                {issues.map((epic, i) => (
+                {issues.map((epic) => (
                   <RowContainer
                     key={epic.key}
-                    data-test-id="roadmap.common.components.table.components.list-item.base.container"
                   >
-                    {i > 0 && (
+                    {/* {i > 0 && (
                       <InlineCreateWrapper
-                        data-test-id={`roadmap.common.components.table.components.list-item.base.inline-create-button-${i}`}
                         role="button"
                         aria-label="Inline issue create"
                         tabIndex="0"
                       >
                         <InlineCreateButton />
                       </InlineCreateWrapper>
-                    )}
-                    <HeadlineRowContentWrapper
-                      data-test-id={`roadmap.common.components.table.components.list-item.base.content-container-${i}`}
-                    >
+                    )} */}
+                    <HeadlineRowContentWrapper>
                       <HeadlineRowContent>
                         <EpicIcon
                           src="https://solarsystem.atlassian.net/secure/viewavatar?size=medium&avatarId=10307&avatarType=issuetype"
@@ -64,7 +61,6 @@ export default function Headline({ issues }) {
                 ))}
                 <CreateButtonWrapper>
                   <CreateButton
-                    data-test-id="roadmap.common.components.table.components.list.items.create-item.button"
                     role="button"
                     aria-label="Create issue last"
                     onClick={createEpic}
@@ -79,7 +75,7 @@ export default function Headline({ issues }) {
             </HeaderRowScrollBar>
           </ScrollSyncPane>
         </div>
-        <HeaderRowBorder width="318" style={{ width: '318px' }} />
+        <HeaderRowBorder width={CALENDAR_WIDTH} style={{ width: CALENDAR_WIDTH }} />
       </HeaderRowWrapper>
     </HeadlineContainer>
   );
@@ -108,26 +104,26 @@ const HeadlineContainer = styled.div`
   flex: 0 0 auto;
 `;
 
-const InlineCreateWrapper = styled.div`
-  position: absolute;
-  top: -5px;
-  left: -10px;
-  right: 0px;
-  height: 10px;
-  /* cursor: pointer; */
-  z-index: 1;
-  outline: none;
-`;
+// const InlineCreateWrapper = styled.div`
+//   position: absolute;
+//   top: -5px;
+//   left: -10px;
+//   right: 0px;
+//   height: 10px;
+//   /* cursor: pointer; */
+//   z-index: 1;
+//   outline: none;
+// `;
 
-const InlineCreateButton = styled.div`
-  position: relative;
-  top: -5px;
-  left: 0px;
-  right: 0px;
-  height: 20px;
-  width: 20px;
-  /* cursor: pointer; */
-`;
+// const InlineCreateButton = styled.div`
+//   position: relative;
+//   top: -5px;
+//   left: 0px;
+//   right: 0px;
+//   height: 20px;
+//   width: 20px;
+//   /* cursor: pointer; */
+// `;
 
 const HeadlineRowContentWrapper = styled.div`
   display: flex;

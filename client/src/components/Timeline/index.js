@@ -2,7 +2,9 @@ import React from 'react';
 import { useQuery, gql } from '@apollo/client';
 import { ScrollSync } from 'react-scroll-sync';
 import styled from 'styled-components';
-// import { Loading, Error } from '..';
+
+import EmptyState from '@atlaskit/empty-state';
+import { Loading } from '..';
 import Calendar from './Calendar';
 import Headline from './Headline';
 import TimelineFooter from './TimelineFooter';
@@ -24,8 +26,10 @@ const GET_EPICS = gql`
 export default function Timeline() {
   const { loading, error, data } = useQuery(GET_EPICS);
 
-  if (loading || !data) return <div />; // <Loading />;
-  if (error) return <div />; // <Error error={error.name} message={error.message} />;
+  if (loading || !data) return <Loading />;
+  if (error) return <EmptyState header={error.name} description={error.message} />;
+
+  // return <p>{JSON.stringify(data.epics, null, 2)}</p>;
 
   return (
     <Wrapper>

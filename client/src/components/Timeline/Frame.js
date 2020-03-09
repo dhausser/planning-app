@@ -7,22 +7,26 @@ export default function FrameBox({ issue }) {
   const x = useMotionValue(0);
   return (
     <RowContainer key={issue.key}>
-      <BoxWrapper style={{ left: '2%', right: '94%' }}>
-        <Frame
-          drag="x"
-          x={x}
-          size={30}
-          radius={3}
-          background="#8777d9"
-        >
-          <EpicDragLeft orientation="left">
-            <EpicDrag />
-          </EpicDragLeft>
-          <EpicDragRight orientation="right">
-            <EpicDrag />
-          </EpicDragRight>
-        </Frame>
-      </BoxWrapper>
+      {/* <BoxWrapper style={{ left: '2%', right: '94%' }}> */}
+      <Frame
+        name="Epic"
+        x={x}
+        size={24}
+        radius={3}
+        background="#8777d9"
+        drag="x"
+        dragConstraints={{ left: 0, right: 1300 }}
+        dragElastic={0}
+        dragMomentum={false}
+      >
+        <EpicDragLeft orientation="left">
+          <EpicDrag />
+        </EpicDragLeft>
+        <EpicDragRight orientation="right">
+          <EpicDrag />
+        </EpicDragRight>
+      </Frame>
+      {/* </BoxWrapper> */}
     </RowContainer>
   );
 }
@@ -45,7 +49,7 @@ export const CreateButton = styled.div`
   justify-content: center;
   height: 24px;
   width: 100%;
-  /* cursor: pointer; */
+  cursor: pointer;
   border-radius: 4px;
 
   &:hover {
@@ -60,16 +64,16 @@ export const RowContainer = styled.div`
   align-items: center;
   height: 40px;
   background-color: rgb(255, 255, 255);
-  /* cursor: pointer; */
+  cursor: pointer;
   transition: background-color 100ms linear 0s;
 
   &:nth-of-type(even) {
     background-color: rgb(244, 245, 247);
   }
 
-  /* &:hover {
+  &:hover {
     background-color: #DFE1E6;
-  } */
+  }
 
   ${CreateButton} {
     background-color: #DFE1E6;
@@ -88,7 +92,7 @@ const BoxWrapper = styled.div`
   min-width: 3px;
   z-index: 3;
   visibility: visible;
-  /* cursor: pointer; */
+  cursor: pointer;
   padding: 0px 5px;
   transition: left 0.1s ease 0s, right 0.1s ease 0s;
   border-radius: 3px;
@@ -107,7 +111,7 @@ const EpicDragLeft = styled.div`
   top: 0px;
   bottom: 0px;
   left: 0px;
-  /* cursor: col-resize; */
+  cursor: col-resize;
   padding: 4px;
 
   ${BoxWrapper}:hover & {
@@ -121,7 +125,7 @@ const EpicDragRight = styled.div`
   top: 0px;
   bottom: 0px;
   right: 0px;
-  /* cursor: col-resize; */
+  cursor: col-resize;
   padding: 4px;
   
   ${BoxWrapper}:hover & {

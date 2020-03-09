@@ -6,15 +6,19 @@ export const months = [
   'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
 ];
 
+export const CALENDAR_WIDTH = 500; // 9579.5px
+
+export const MONTH_WIDTH = CALENDAR_WIDTH / months.length;
+
 export default function TimelineHeader() {
   return (
     <TimelineHeaderContainer>
       <ScrollSyncPane>
         <TimelineHeaderWrapper>
-          <TimelineHeaderHorizontal style={{ width: '9579.5px' }}>
+          <TimelineHeaderHorizontal style={{ width: CALENDAR_WIDTH }}>
             <TimelineHeaderBox>
               {months.map((month, i) => (
-                <StyledHeader key={month} style={{ left: `calc(${i} * 2.702702702702703%)`, right: `calc(100% - 2.702702702702703% * ${i + 1})` }}>
+                <StyledHeader key={month} style={{ left: `calc(${i} * ${MONTH_WIDTH}%)`, right: `calc(100% - ${MONTH_WIDTH}% * ${i + 1})` }}>
                   <StyledSmall>{month}</StyledSmall>
                 </StyledHeader>
               ))}
@@ -31,34 +35,34 @@ export default function TimelineHeader() {
  */
 
 const TimelineHeaderContainer = styled.div`
-width: 100%;
-height: 56px;
-box-sizing: border-box;
-background-color: rgb(244, 245, 247);
-border-width: 1px 1px;
-border-style: solid none solid solid;
-border-color: rgb(193, 199, 208) rgb(193, 199, 208);
-border-image: none;
-border-image: initial;
-border-bottom: 1px solid rgb(223, 225, 230);
-border-right: none;
-overflow: hidden;
+  width: 100%;
+  height: 56px;
+  box-sizing: border-box;
+  background-color: rgb(244, 245, 247);
+  border-width: 1px 1px;
+  border-style: solid none solid solid;
+  border-color: rgb(193, 199, 208) rgb(193, 199, 208);
+  border-image: none;
+  border-image: initial;
+  border-bottom: 1px solid rgb(223, 225, 230);
+  border-right: none;
+  overflow: hidden;
 `;
 
 const TimelineHeaderWrapper = styled.div`
-height: 100%;
-overflow: hidden;
+  height: 100%;
+  overflow: hidden;
 `;
 
 const TimelineHeaderHorizontal = styled.div`
-display: flex;
-height: 54px;
+  display: flex;
+  height: 54px;
 `;
 
 const TimelineHeaderBox = styled.div`
-position: relative;
-width: 100%;
-height: 100%;
+  position: relative;
+  width: 100%;
+  height: 100%;
 `;
 
 const StyledHeader = styled.div`

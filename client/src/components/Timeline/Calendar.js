@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { ScrollSyncPane } from 'react-scroll-sync';
 import Frame from './Frame';
-import TimelineHeader, { months } from './TimelineHeader';
+import TimelineHeader, { months, CALENDAR_WIDTH, MONTH_WIDTH } from './TimelineHeader';
 
 export default function Calendar({ issues }) {
   return (
@@ -12,10 +12,10 @@ export default function Calendar({ issues }) {
       <TimelineWrapper>
         <ScrollSyncPane>
           <TimelineBox id="sr-timeline">
-            <HorizontalCalendar style={{ width: '9579.5px' }}>
+            <HorizontalCalendar style={{ width: CALENDAR_WIDTH }}>
               <VerticalDivider>
                 {months.map((month, i) => (
-                  <StyledColumn key={month} style={{ left: `calc(${i} * 2.702702702702703%)`, right: `calc(100% - 2.702702702702703% * ${i + 1})` }} />
+                  <StyledColumn key={month} style={{ left: `calc(${i} * ${MONTH_WIDTH}%)`, right: `calc(100% - ${MONTH_WIDTH}% * ${i + 1})` }} />
                 ))}
               </VerticalDivider>
               <TimelineBox1 />
@@ -26,7 +26,6 @@ export default function Calendar({ issues }) {
           </TimelineBox>
         </ScrollSyncPane>
       </TimelineWrapper>
-      {/* <TimelineBottom1 /> */}
       <TimelineBottom2 />
     </TimelineContainer>
   );
@@ -48,27 +47,27 @@ Calendar.propTypes = {
  */
 
 const HorizontalCalendar = styled.div`
-position: relative;
-min-height: 100%;
+  position: relative;
+  min-height: 100%;
 `;
 
 const TimelineWrapper = styled.div`
-position: absolute;
-top: 56px;
-right: 0px;
-bottom: 0px;
-left: 0px;
-overflow: hidden;
+  position: absolute;
+  top: 56px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  overflow: hidden;
 `;
 
 const TimelineBox = styled.div`
-position: absolute;
-top: 0px;
-left: 0px;
-right: 0px;
-bottom: 0px;
-overflow: auto;
-border-left: 1px solid rgb(193, 199, 208);
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  overflow: auto;
+  border-left: 1px solid rgb(193, 199, 208);
 
 &::-webkit-scrollbar {
   position: absolute;
@@ -92,59 +91,59 @@ border-left: 1px solid rgb(193, 199, 208);
 `;
 
 const TimelineBox1 = styled.div`
-position: absolute;
-pointer-events: none;
-top: 0px;
-left: 0px;
-width: 100%;
-height: 100%;
-z-index: 2;
+  position: absolute;
+  pointer-events: none;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
 `;
 
 const TimelineBox2 = styled.div`
-position: relative;
-display: flex;
--webkit-box-align: center;
-align-items: center;
-height: 40px;
-background-color: rgb(255, 255, 255);
-transition: background-color 100ms linear 0s;
+  position: relative;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  height: 40px;
+  background-color: rgb(255, 255, 255);
+  transition: background-color 100ms linear 0s;
 `;
 
 const TimelineContainer = styled.div`
-position: relative;
-height: 100%;
-width: 100%;
-min-height: 0px;
-overflow: hidden;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  min-height: 0px;
+  overflow: hidden;
 `;
 
 const VerticalDivider = styled.div`
-position: absolute;
-display: flex;
-width: 100%;
-height: 100%;
-z-index: 1;
-pointer-events: none;
+  position: absolute;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
 `;
 
 const TimelineBottom2 = styled.div`
-position: absolute;
-pointer-events: none;
-left: 0px;
-top: 0px;
-bottom: 0px;
-right: 0px;
-z-index: 11;
-clip: rect(0px, auto, auto, 0px);
-clip-path: inset(0px);
+  position: absolute;
+  pointer-events: none;
+  left: 0px;
+  top: 0px;
+  bottom: 0px;
+  right: 0px;
+  z-index: 11;
+  clip: rect(0px, auto, auto, 0px);
+  clip-path: inset(0px);
 `;
 
 const StyledColumn = styled.div`
-position: absolute;
-top: 0px;
-bottom: 0px;
-box-sizing: border-box;
-flex: 0 0 auto;
-border-right: 1px solid rgb(223, 225, 230);
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  box-sizing: border-box;
+  flex: 0 0 auto;
+  border-right: 1px solid rgb(223, 225, 230);
 `;
