@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ApolloClient, useApolloClient, useQuery, DocumentNode } from '@apollo/client';
 import Select, { OptionType, OptionsType, ValueType } from '@atlaskit/select';
-import PropTypes, { number } from 'prop-types';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import EmptyState from '@atlaskit/empty-state';
 

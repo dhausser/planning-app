@@ -54,11 +54,11 @@ const GET_ISSUE = gql`
   ${ISSUE_ROW_DATA}
 `;
 
-function Issue({ navigationViewController, match }) {
+function Issue({ navigationViewController, issueId }) {
   useEffect(() => navigationViewController.setView(productIssuesView.id),
     [navigationViewController]);
   const { data, loading, error } = useQuery(GET_ISSUE, {
-    variables: { id: match.params.issueId },
+    variables: { id: issueId },
   });
 
   if (loading) return <Loading />;
