@@ -1,6 +1,6 @@
-import { RESTDataSource } from 'apollo-datasource-rest';
+const { RESTDataSource } = require('apollo-datasource-rest');
 
-class AbsenceAPI extends RESTDataSource {
+module.exports = class AbsenceAPI extends RESTDataSource {
   constructor() {
     super();
     this.baseURL = process.env.PORTAL_URL;
@@ -15,6 +15,4 @@ class AbsenceAPI extends RESTDataSource {
   async getAbsencesById({ userId }) {
     return this.get(`?user[]=${userId}`, { apiKey: this.apiKey });
   }
-}
-
-export default AbsenceAPI;
+};

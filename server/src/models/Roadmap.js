@@ -4,7 +4,7 @@
  * @param {String} versionId Version identifier
  */
 
-class Roadmap {
+module.exports = class Roadmap {
   constructor({ projectId, versionId }) {
     this.data = {};
     this.fields = ['summary', 'status', 'issuetype', 'subtasks', 'customfield_10006'];
@@ -66,6 +66,4 @@ class Roadmap {
     this.buildDataset(issues);
     return Object.values(this.data);
   }
-}
-
-export default Roadmap;
+};

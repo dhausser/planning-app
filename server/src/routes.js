@@ -1,6 +1,6 @@
-import express from 'express';
-import passport from 'passport';
-import path from 'path';
+const express = require('express');
+const passport = require('passport');
+const path = require('path');
 
 const router = express.Router();
 const baseUrl = process.env.NODE_ENV === 'production'
@@ -31,4 +31,4 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-export default router;
+module.exports = router;

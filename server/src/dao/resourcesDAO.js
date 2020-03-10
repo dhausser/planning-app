@@ -1,11 +1,10 @@
-/* eslint-disable no-console */
-import assert from 'assert';
+const assert = require('assert');
 
 // eslint-disable-next-line no-unused-vars
 let database;
 let resources;
 
-export default class ResourcesDAO {
+module.exports = class ResourcesDAO {
   static async injectDB(conn) {
     if (resources) {
       return;
@@ -222,4 +221,4 @@ export default class ResourcesDAO {
 
     return id;
   }
-}
+};

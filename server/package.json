@@ -10,7 +10,7 @@
   "main": "./src/app.js",
   "scripts": {
     "start": "yarn dev",
-    "dev": "nodemon -r esm",
+    "dev": "nodemon",
     "prod": "NODE_ENV=production node -r esm src"
   },
   "dependencies": {
@@ -19,7 +19,6 @@
     "apollo-server-express": "^2.10.1",
     "assert": "^2.0.0",
     "dotenv": "^8.2.0",
-    "esm": "^3.2.25",
     "express": "^4.17.1",
     "express-session": "^1.17.0",
     "graphql": "^14.6.0",

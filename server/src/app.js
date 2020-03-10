@@ -1,16 +1,16 @@
-import 'dotenv/config';
-import express from 'express';
-import session from 'express-session';
-import { ApolloServer } from 'apollo-server-express';
+require('dotenv/config');
+const express = require('express');
+const session = require('express-session');
+const { ApolloServer } = require('apollo-server-express');
 
-import databaseConnectionPromise from './db';
-import passport from './passport';
-import routes from './routes';
-import typeDefs from './schema';
-import resolvers from './resolvers';
-import IssueAPI from './datasources/issue';
-import AbsenceAPI from './datasources/absence';
-import ResourcesDAO from './dao/resourcesDAO';
+const databaseConnectionPromise = require('./db');
+const { passport } = require('./passport');
+const routes = require('./routes');
+const typeDefs = require('./schema');
+const resolvers = require('./resolvers');
+const IssueAPI = require('./datasources/issue');
+const AbsenceAPI = require('./datasources/absence');
+const ResourcesDAO = require('./dao/resourcesDAO');
 
 (async () => {
   const app = express();

@@ -1,8 +1,8 @@
-import { RESTDataSource } from 'apollo-datasource-rest';
-import Issues from '../models/Issues';
-import Dashboard from '../models/Dashboard';
-import Roadmap from '../models/Roadmap';
-import Oauth from '../models/Auth';
+const { RESTDataSource } = require('apollo-datasource-rest');
+const Issues = require('../models/Issues');
+const Dashboard = require('../models/Dashboard');
+const Roadmap = require('../models/Roadmap');
+const Oauth = require('../models/Auth');
 
 function parseAvatarUrls(avatarUrls) {
   return {
@@ -13,7 +13,7 @@ function parseAvatarUrls(avatarUrls) {
   };
 }
 
-class IssueAPI extends RESTDataSource {
+module.exports = class IssueAPI extends RESTDataSource {
   constructor() {
     super();
     this.baseURL = `https://${process.env.HOST}`;
@@ -149,6 +149,4 @@ class IssueAPI extends RESTDataSource {
   async assignIssue({ id, key }) {
     return this.put(`/rest/api/2/issue/${id}/assignee`, { name: key });
   }
-}
-
-export default IssueAPI;
+};

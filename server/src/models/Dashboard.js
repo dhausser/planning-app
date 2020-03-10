@@ -14,7 +14,7 @@
  * extensions: { code: 'INTERNAL_SERVER_ERROR', exception: { stacktrace: [Array] } }
  */
 
-class Dashboard {
+module.exports = class Dashboard {
   constructor({
     projectId, versionId, teamId, assignee,
   }) {
@@ -85,6 +85,4 @@ class Dashboard {
       total,
     };
   }
-}
-
-export default Dashboard;
+};

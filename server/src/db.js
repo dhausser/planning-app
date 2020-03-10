@@ -1,7 +1,7 @@
-import { MongoClient } from 'mongodb';
-import ResourcesDAO from './dao/resourcesDAO';
+const { MongoClient } = require('mongodb');
+const ResourcesDAO = require('./dao/resourcesDAO');
 
-export default new Promise((resolve, reject) => MongoClient.connect(
+module.exports = new Promise((resolve, reject) => MongoClient.connect(
   process.env.ROADMAP_DB_URI,
   {
     poolSize: 50,

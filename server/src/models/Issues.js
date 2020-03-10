@@ -8,7 +8,7 @@
  * @param {String} startAt Starting index number of issues to be fetched
  */
 
-class Issues {
+module.exports = class Issues {
   constructor({
     context, projectId, statusId, versionId, assignee, resourceMap, startAt, maxResults,
   }) {
@@ -51,6 +51,4 @@ class Issues {
       ${this.versionId ? `AND fixVersion=${this.versionId}` : ''}\
       ${this.assignee ? `AND assignee in (${this.assignee})` : ''} order by priority`;
   }
-}
-
-export default Issues;
+};

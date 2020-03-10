@@ -1,4 +1,4 @@
-const resolvers = {
+module.exports = {
   Query: {
     /**
      * Jira REST API
@@ -106,5 +106,3 @@ const resolvers = {
     ),
   },
 };
-
-export default resolvers;

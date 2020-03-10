@@ -1,6 +1,6 @@
-import { gql } from 'apollo-server-express';
+const { gql } = require('apollo-server-express');
 
-const typeDefs = gql`
+module.exports = gql`
   type Query {
     issues(projectId: String, versionId: String, statusId: String, teamId: String, resourceId: String, startAt: Int, maxResults: Int): IssueConnection!
     dashboardIssues(projectId: String, versionId: String, teamId: String, startAt: Int, maxResults: Int): DashboardIssueConnection!
@@ -179,5 +179,3 @@ const typeDefs = gql`
     deleteResource(id: ID!): Resource
   }
 `;
-
-export default typeDefs;

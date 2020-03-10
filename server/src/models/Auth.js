@@ -1,7 +1,7 @@
-import { sign } from 'oauth-sign';
-import { consumerKey, consumerSecret } from '../passport';
+const { sign } = require('oauth-sign');
+const { consumerKey, consumerSecret } = require('../passport');
 
-class Oauth {
+module.exports = class Oauth {
   constructor(baseURL) {
     this.baseURL = baseURL;
   }
@@ -45,6 +45,4 @@ class Oauth {
       oauth_token="${oauthToken}",\
       oauth_version="${oauthVersion}"`;
   }
-}
-
-export default Oauth;
+};

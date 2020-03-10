@@ -1,8 +1,7 @@
-/* eslint-disable no-console */
-import { DataSource } from 'apollo-datasource';
-import assert from 'assert';
+const { DataSource } = require('apollo-datasource');
+const assert = require('assert');
 
-class ResourceAPI extends DataSource {
+module.exports = class ResourceAPI extends DataSource {
   constructor({ store }) {
     super();
     this.store = store;
@@ -220,6 +219,4 @@ class ResourceAPI extends DataSource {
 
     return id;
   }
-}
-
-export default ResourceAPI;
+};

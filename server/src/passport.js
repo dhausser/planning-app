@@ -1,15 +1,15 @@
-import passport from 'passport';
-import { OAuthStrategy } from 'passport-oauth';
-import path from 'path';
-import fs from 'fs';
-import os from 'os';
+const passport = require('passport');
+const { OAuthStrategy } = require('passport-oauth');
+const path = require('path');
+const fs = require('fs');
+const os = require('os');
 
 /**
  * Passport
  */
 const filePath = path.join(os.homedir(), '/oauth/jira_privatekey.pem');
-export const consumerSecret = fs.existsSync(filePath) ? fs.readFileSync(filePath, 'utf8') : '';
-export const consumerKey = 'RDM';
+const consumerSecret = fs.existsSync(filePath) ? fs.readFileSync(filePath, 'utf8') : '';
+const consumerKey = 'RDM';
 
 passport.use(
   new OAuthStrategy(
@@ -31,4 +31,4 @@ passport.use(
 passport.serializeUser(async (user, done) => done(null, user));
 passport.deserializeUser((id, done) => done(null, id));
 
-export default passport;
+module.exports = { passport, consumerKey, consumerSecret };
