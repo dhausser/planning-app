@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { ApolloClient, gql } from '@apollo/client';
+import React from 'react';
+import { gql } from '@apollo/client';
 import Filter from './filter';
 
 const GET_VERSIONS = gql`
@@ -13,25 +13,11 @@ const GET_VERSIONS = gql`
   }
 `;
 
-function updateCache(client: ApolloClient<object >, value: string | null) {
-  client.writeQuery({
-    query: gql`{
-      versionId
-      statusId
-    }`,
-    data: {
-      versionId: value,
-      statusId: null,
-    },
-  });
-}
-
 export default () => (
   <Filter
-    updateCache={updateCache}
     query={GET_VERSIONS}
-    items="versions"
-    itemId="versionId"
+    itemName="versions"
+    itemValues={['versionId', 'statusId']}
     isClearable
   />
 );

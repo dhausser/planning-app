@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import ChevD from '@atlaskit/icon/glyph/chevron-down';
 import { ContainerHeader, ItemAvatar, Switcher } from '@atlaskit/navigation-next';
 import EmptyState from '@atlaskit/empty-state';
+import { updateCache } from '../filters/project-filter';
+import { updateLocalStorage } from '../filters/filter';
 
 const PROJECT_TILE_DATA = gql`
   fragment ProjectTile on Project {
@@ -103,8 +105,8 @@ function ProjectSwitcher() {
     <Switcher
       create={create()}
       onChange={({ id, text }) => {
-        client.writeData({ data: { projectId: id } });
-        localStorage.setItem('projectId', id);
+        updateCache(client, id);
+        updateLocalStorage('projectId', id);
         setSelected({ id, text });
       }}
       options={options}

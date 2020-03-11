@@ -10,27 +10,27 @@ const Wrapper = styled.div`
   padding: ${gridSize() - 2}px ${gridSize() - 2}px;
 `;
 
-const GET_RESOURCES = gql`
-  query resourceList {
-    resources {
-      key
-      name
-      team
-    }
-  }
-`;
+// const GET_RESOURCES = gql`
+//   query resourceList {
+//     resources {
+//       key
+//       name
+//       team
+//     }
+//   }
+// `;
 
 /**
  * TODO: Get assignable users - currently blocked by oauth authentication failure
  */
-// const GET_ASSIGNABLE_USERS = gql`
-//   query GetAssignableUsers($id: ID!) {
-//     assignableUsers(id: $id) {
-//       key
-//       displayName
-//     }
-//   }
-// `;
+const GET_ASSIGNABLE_USERS = gql`
+  query GetAssignableUsers($id: ID!) {
+    assignableUsers(id: $id) {
+      key
+      displayName
+    }
+  }
+`;
 
 const ASSIGN_ISSUE = gql`
   mutation AssignIssue($id: ID!, $key: String) {
@@ -39,7 +39,7 @@ const ASSIGN_ISSUE = gql`
 `;
 
 function getAvatarUrl(key) {
-  return `https://${process.env.REACT_APP_HOST}/secure/useravatar?ownerId=${key}`;
+  return `https://jira.cdprojektred.com/secure/useravatar?ownerId=${key}`;
 }
 
 function getAssignee({ key, displayName }) {
@@ -66,11 +66,11 @@ export function getResource(user) {
 
 function AssignUser({ id, user, type }) {
   const [assignee, setAssignee] = useState(user);
-  const { data, loading, error } = useQuery(GET_RESOURCES, { fetchPolicy: 'cache-first' });
-  // const { data, loading, error } = useQuery(GET_ASSIGNABLE_USERS, {
-  //   variables: { id: issueKey },
-  //   fetchPolicy: 'cache-first',
-  // });
+  // const { data, loading, error } = useQuery(GET_RESOURCES, { fetchPolicy: 'cache-first' });
+  const { data, loading, error } = useQuery(GET_ASSIGNABLE_USERS, {
+    variables: { id },
+    fetchPolicy: 'cache-first',
+  });
   const [assignIssue] = useMutation(ASSIGN_ISSUE);
 
   if (error) return <EmptyState header={error.name} description={error.message} />;
@@ -88,8 +88,8 @@ function AssignUser({ id, user, type }) {
           defaultValue={assignee && getAssignee(assignee)}
           // maxOptions="100"
           // options={options}
-          options={data && data.resources && data.resources.map(getResource)}
-          // options={data.assignableUsers && data.assignableUsers.map(getAssignee)}
+          // options={data && data.resources && data.resources.map(getResource)}
+          options={data.assignableUsers && data.assignableUsers.map(getAssignee)}
           onChange={(value) => {
             setAssignee(value);
             assignIssue({

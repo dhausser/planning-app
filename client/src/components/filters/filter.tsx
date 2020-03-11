@@ -1,5 +1,11 @@
-import * as React from 'react';
-import { ApolloClient, useApolloClient, useQuery, DocumentNode } from '@apollo/client';
+import React from 'react';
+import {
+  ApolloClient,
+  useApolloClient,
+  useQuery,
+  DocumentNode,
+  gql,
+} from '@apollo/client';
 import Select, { OptionType, OptionsType, ValueType } from '@atlaskit/select';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -14,15 +20,14 @@ interface FilterOptionData {
   items: FilterOption[];
 }
 
-type FilterProps = {
+interface FilterProps {
   query: DocumentNode,
-  items: string,
-  itemId: string,
+  itemName: string,
+  itemValues: Array<string>,
   isClearable: boolean,
-  updateCache: (client: ApolloClient<object>, value: string | null) => void,
 }
 
-type ItemProps = {
+interface ItemProps {
   id: string,
   name: string,
 }
@@ -31,29 +36,61 @@ interface IIndexable {
   [key: string]: any;
 }
 
-function Filter({ query, items, itemId, isClearable, updateCache }: FilterProps) {
+function gqlFromArray(items: Array<string>) {
+  return gql`{${items.map((item) => 'item\n')}}`;
+}
+
+export const updateCache = (
+  client: ApolloClient<object>,
+  value: string | number | null,
+  itemValues: Array<string>,
+) => {
+  const [itemId1, itemId2, ...rest] = itemValues;
+
+  client.writeQuery({
+    query: gqlFromArray(itemValues),
+    data: {
+      [itemId1]: value,
+      [itemId2]: null,
+    },
+  });
+};
+
+export const updateLocalStorage = (itemId: string, value: string | number | null) => {
+  if (value) {
+    localStorage.setItem(itemId, value as string);
+  } else {
+    localStorage.removeItem(itemId);
+  }
+};
+
+function Filter({ query, itemName, itemValues, isClearable }: FilterProps) {
   const client = useApolloClient();
   const { loading, error, data } = useQuery<FilterOptionData>(query);
-  let value: OptionType | null = null;
+  let selected: OptionType | null = null;
   let options: OptionsType<OptionType> = [];
 
+  const [itemId, ...rest] = itemValues;
+
+  const updateFilter = (e: OptionType | null) => {
+    const value = e ? e.value : null;
+    updateCache(client, value, itemValues);
+    updateLocalStorage(itemId, value);
+  };
+
   const handleChange = (e: ValueType<OptionType>) => {
-    // TODO: Handle type safe e.value and pass it to updateCache
-    updateCache(client, null);
-    if (value) {
-      // TODO: Handle type safe e.value and pass it to updateCache
-      localStorage.setItem(itemId, 'e.value' as string);
-    } else {
-      localStorage.removeItem(itemId);
+    if ((Array.isArray(e))) {
+      throw new Error('Unexpected type passed to ReactSelect onChange handler');
     }
+    updateFilter(e as OptionType);
   };
 
   if (error) return <EmptyState header={error.name} description={error.message} />;
 
-  if (data && (data as IIndexable)[items]) {
-    options = (data as IIndexable)[items].map(({ id, name }: ItemProps) => {
+  if (data && (data as IIndexable)[itemName]) {
+    options = (data as IIndexable)[itemName].map(({ id, name }: ItemProps) => {
       const option = { value: id, label: (name || id) };
-      if (id === (data as IIndexable)[itemId]) value = option;
+      if (id === (data as IIndexable)[itemId]) selected = option;
       return option;
     });
   }
@@ -63,7 +100,7 @@ function Filter({ query, items, itemId, isClearable, updateCache }: FilterProps)
       <Select
         spacing="compact"
         isClearable={isClearable}
-        value={value}
+        value={selected}
         isLoading={loading}
         options={options}
         onChange={handleChange}
@@ -79,10 +116,9 @@ Filter.propTypes = {
     definitions: PropTypes.arrayOf(PropTypes.object),
     loc: PropTypes.object,
   }).isRequired,
-  items: PropTypes.string.isRequired,
-  itemId: PropTypes.string.isRequired,
+  itemName: PropTypes.string.isRequired,
+  itemValues: PropTypes.arrayOf(PropTypes.string).isRequired,
   isClearable: PropTypes.bool.isRequired,
-  updateCache: PropTypes.func.isRequired,
 };
 
 export default Filter;

@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { ApolloClient, gql } from '@apollo/client';
+import React from 'react';
+import { gql } from '@apollo/client';
 import Filter from './filter';
 
 const GET_PROJECTS = gql`{
@@ -11,25 +11,11 @@ const GET_PROJECTS = gql`{
 }
 `;
 
-function updateCache(client: ApolloClient<object >, value: string | null) {
-  client.writeQuery({
-    query: gql`{
-      projectId
-      versionId
-    }`,
-    data: {
-      projectId: value,
-      versionId: null,
-    },
-  });
-}
-
 export default () => (
   <Filter
-    updateCache={updateCache}
     query={GET_PROJECTS}
-    items="projects"
-    itemId="projectId"
+    itemName="projects"
+    itemValues={['projectId', 'versionId']}
     isClearable={false}
   />
 );

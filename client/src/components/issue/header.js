@@ -17,7 +17,7 @@ import { issuetypeIconMap } from './icon';
 
 export function copyLink(key) {
   const el = document.createElement('textarea');
-  el.value = `https://${process.env.REACT_APP_HOST}/browse/${key}`;
+  el.value = `https://jira.cdprojektred.com/browse/${key}`;
   el.setAttribute('readonly', '');
   el.style = { position: 'absolute', left: '-9999px' };
   document.body.appendChild(el);
