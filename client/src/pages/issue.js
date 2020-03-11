@@ -106,7 +106,7 @@ function Issue({ navigationViewController, issueId }) {
 
 Issue.propTypes = {
   navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
-  match: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
+  issueId: PropTypes.string.isRequired,
 };
 
 export default withNavigationViewController(Issue);

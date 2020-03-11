@@ -37,8 +37,22 @@ module.exports = {
     user: (_, { id }, { dataSources }) => (
       dataSources.issueAPI.getUser(id)
     ),
-    assignableUsers: (_, { project }, { dataSources }) => (
-      dataSources.issueAPI.getAssignableUsers({ project })
+    assignableUsers: (_, {
+      username,
+      project,
+      issueKey,
+      startAt,
+      maxResults,
+      actionDescriptorId,
+    }, { dataSources }) => (
+      dataSources.issueAPI.getAssignableUsers({
+        username,
+        project,
+        issueKey,
+        startAt,
+        maxResults,
+        actionDescriptorId,
+      })
     ),
     loginToken: (_, __, { user }) => user.token,
 

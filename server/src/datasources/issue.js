@@ -136,7 +136,37 @@ module.exports = class IssueAPI extends RESTDataSource {
     };
   }
 
-  async getAssignableUsers({ project }) {
+  /**
+   * Find assignable users
+   * Returns a list of users that match the search string.
+   * This resource cannot be accessed anonymously.
+   * Please note that this resource should be called with an issue key when
+   * a list of assignable users is retrieved for editing.
+   * For create only a project key should be supplied.
+   * The list of assignable users may be incorrect if it's called with the project key for editing.
+   * @param {string} username
+   * @param {string} project
+   * @param {string} issueKey
+   * @param {int} [startAt]
+   * @param {int} [maxResults]
+   * @param {int} [actionDescriptorId]
+   */
+  async getAssignableUsers({
+    username,
+    project,
+    issueKey,
+    startAt,
+    maxResults,
+    actionDescriptorId,
+  }) {
+    console.log({
+      username,
+      project,
+      issueKey,
+      startAt,
+      maxResults,
+      actionDescriptorId,
+    });
     const response = await this.get('rest/api/2/user/assignable/search', { project });
     return Array.isArray(response.users) || [];
   }
