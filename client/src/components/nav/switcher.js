@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 import ChevD from '@atlaskit/icon/glyph/chevron-down';
 import { ContainerHeader, ItemAvatar, Switcher } from '@atlaskit/navigation-next';
 import EmptyState from '@atlaskit/empty-state';
-import { updateCache } from '../filters/project-filter';
-import { updateLocalStorage } from '../filters/filter';
+import { updateCache, updateLocalStorage } from '../filters/filter';
 
 const PROJECT_TILE_DATA = gql`
   fragment ProjectTile on Project {

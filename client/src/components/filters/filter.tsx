@@ -37,7 +37,8 @@ interface IIndexable {
 }
 
 function gqlFromArray(items: Array<string>) {
-  return gql`{${items.map((item) => 'item\n')}}`;
+  const string = items.join(' ');
+  return gql`{ ${string} }`;
 }
 
 export const updateCache = (
@@ -45,15 +46,16 @@ export const updateCache = (
   value: string | number | null,
   itemValues: Array<string>,
 ) => {
-  const [itemId1, itemId2, ...rest] = itemValues;
-
-  client.writeQuery({
-    query: gqlFromArray(itemValues),
-    data: {
-      [itemId1]: value,
-      [itemId2]: null,
-    },
-  });
+  const query = gqlFromArray(itemValues);
+  const data = itemValues.reduce((accumulator: object, currentValue: string, i: number) => {
+    if (i === 0) {
+      accumulator[currentValue] = value;
+    } else {
+      accumulator[currentValue] = null;
+    }
+    return accumulator;
+  }, {});
+  client.writeQuery({ query, data });
 };
 
 export const updateLocalStorage = (itemId: string, value: string | number | null) => {
@@ -70,7 +72,7 @@ function Filter({ query, itemName, itemValues, isClearable }: FilterProps) {
   let selected: OptionType | null = null;
   let options: OptionsType<OptionType> = [];
 
-  const [itemId, ...rest] = itemValues;
+  const [itemId] = itemValues;
 
   const updateFilter = (e: OptionType | null) => {
     const value = e ? e.value : null;
