@@ -15,7 +15,8 @@ export default () => (
   <Filter
     query={GET_PROJECTS}
     itemName="projects"
-    itemValues={['projectId', 'versionId']}
+    setValue="projectId"
+    resetValue="versionId"
     isClearable={false}
   />
 );

@@ -15,7 +15,8 @@ export default () => (
   <Filter
     query={GET_TEAMS}
     itemName="teams"
-    itemValues={['teamId']}
+    setValue="teamId"
+    resetValue=""
     isClearable
   />
 );

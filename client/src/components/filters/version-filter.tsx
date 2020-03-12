@@ -17,7 +17,8 @@ export default () => (
   <Filter
     query={GET_VERSIONS}
     itemName="versions"
-    itemValues={['versionId', 'statusId']}
+    setValue="versionId"
+    resetValue="statusId"
     isClearable
   />
 );

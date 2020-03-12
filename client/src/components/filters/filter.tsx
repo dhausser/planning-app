@@ -7,7 +7,7 @@ import {
   gql,
 } from '@apollo/client';
 import Select, { OptionType, OptionsType, ValueType } from '@atlaskit/select';
-import PropTypes from 'prop-types';
+import PropTypes, { object } from 'prop-types';
 import styled from 'styled-components';
 import EmptyState from '@atlaskit/empty-state';
 
@@ -23,7 +23,8 @@ interface FilterOptionData {
 interface FilterProps {
   query: DocumentNode,
   itemName: string,
-  itemValues: Array<string>,
+  setValue: string,
+  resetValue: string,
   isClearable: boolean,
 }
 
@@ -44,17 +45,17 @@ function gqlFromArray(items: Array<string>) {
 export const updateCache = (
   client: ApolloClient<object>,
   value: string | number | null,
-  itemValues: Array<string>,
+  setValue: string,
+  resetValue: string,
 ) => {
-  const query = gqlFromArray(itemValues);
-  const data = itemValues.reduce((accumulator: object, currentValue: string, i: number) => {
-    if (i === 0) {
-      accumulator[currentValue] = value;
-    } else {
-      accumulator[currentValue] = null;
-    }
-    return accumulator;
-  }, {});
+  const query = gql`{
+    ${setValue}
+    ${resetValue}
+  }`;
+  const data = {
+    [setValue]: value,
+    [resetValue]: null,
+  };
   client.writeQuery({ query, data });
 };
 
@@ -66,18 +67,16 @@ export const updateLocalStorage = (itemId: string, value: string | number | null
   }
 };
 
-function Filter({ query, itemName, itemValues, isClearable }: FilterProps) {
+function Filter({ query, itemName, setValue, resetValue, isClearable }: FilterProps) {
   const client = useApolloClient();
   const { loading, error, data } = useQuery<FilterOptionData>(query);
   let selected: OptionType | null = null;
   let options: OptionsType<OptionType> = [];
 
-  const [itemId] = itemValues;
-
   const updateFilter = (e: OptionType | null) => {
     const value = e ? e.value : null;
-    updateCache(client, value, itemValues);
-    updateLocalStorage(itemId, value);
+    updateCache(client, value, setValue, resetValue);
+    updateLocalStorage(setValue, value);
   };
 
   const handleChange = (e: ValueType<OptionType>) => {
@@ -92,7 +91,7 @@ function Filter({ query, itemName, itemValues, isClearable }: FilterProps) {
   if (data && (data as IIndexable)[itemName]) {
     options = (data as IIndexable)[itemName].map(({ id, name }: ItemProps) => {
       const option = { value: id, label: (name || id) };
-      if (id === (data as IIndexable)[itemId]) selected = option;
+      if (id === (data as IIndexable)[setValue]) selected = option;
       return option;
     });
   }
@@ -106,7 +105,7 @@ function Filter({ query, itemName, itemValues, isClearable }: FilterProps) {
         isLoading={loading}
         options={options}
         onChange={handleChange}
-        placeholder={itemId}
+        placeholder={`Select ${setValue}`}
       />
     </Wrapper>
   );
@@ -119,7 +118,8 @@ Filter.propTypes = {
     loc: PropTypes.object,
   }).isRequired,
   itemName: PropTypes.string.isRequired,
-  itemValues: PropTypes.arrayOf(PropTypes.string).isRequired,
+  setValue: PropTypes.string.isRequired,
+  resetValue: PropTypes.string.isRequired,
   isClearable: PropTypes.bool.isRequired,
 };
 

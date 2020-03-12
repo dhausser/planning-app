@@ -23,7 +23,8 @@ export default () => (
   <Filter
     query={GET_STATUSES}
     itemName="statuses"
-    itemValues={['statusId']}
+    setValue="statusId"
+    resetValue=""
     isClearable
   />
 );

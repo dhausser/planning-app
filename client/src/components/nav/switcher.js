@@ -104,7 +104,7 @@ function ProjectSwitcher() {
     <Switcher
       create={create()}
       onChange={({ id, text }) => {
-        updateCache(client, id);
+        updateCache(client, id, ['projectId', 'versionId']);
         updateLocalStorage('projectId', id);
         setSelected({ id, text });
       }}
