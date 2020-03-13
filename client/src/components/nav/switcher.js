@@ -28,6 +28,12 @@ const GET_PROJECTS = gql`
   ${PROJECT_TILE_DATA}
 `;
 
+const GET_PROJECT_FILTER = gql`
+   {
+    projectId @client
+   }
+`;
+
 const create = () => ({
   onClick: () => {
     // eslint-disable-next-line no-alert
@@ -61,8 +67,11 @@ const target = ({
 function ProjectSwitcher() {
   const client = useApolloClient();
   const { data, loading, error } = useQuery(GET_PROJECTS);
+  const { data: { projectId } } = useQuery(GET_PROJECT_FILTER);
   const [selected, setSelected] = useState({});
   const [options, setOptions] = useState([]);
+
+  console.log(data);
 
   useEffect(() => {
     if (!loading && !error) {
@@ -83,12 +92,12 @@ function ProjectSwitcher() {
         });
       });
 
-      const current = data.projectId && projects[0].options.find(({ id }) => id === data.projectId);
+      const current = projectId && projects[0].options.find(({ id }) => id === projectId);
 
       setOptions(projects);
       setSelected(current || projects[0].options[0]);
     }
-  }, [data, error, data.projectId, loading]);
+  }, [data, error, projectId, loading]);
 
   if (loading) return <div />;
   if (error) return <EmptyState header={error.name} description={error.message} />;
