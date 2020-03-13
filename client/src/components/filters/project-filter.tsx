@@ -11,12 +11,17 @@ const GET_PROJECTS = gql`{
 }
 `;
 
-export default () => (
-  <Filter
-    query={GET_PROJECTS}
-    itemName="projects"
-    setValue="projectId"
-    resetValue="versionId"
-    isClearable={false}
-  />
-);
+export default () => {
+  const params = {
+    optionName: 'projects',
+    setValue: 'projectId',
+    resetValue: 'versionId',
+  };
+  return (
+    <Filter
+      query={GET_PROJECTS}
+      params={params}
+      isClearable={false}
+    />
+  );
+};

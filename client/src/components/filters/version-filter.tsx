@@ -13,12 +13,17 @@ const GET_VERSIONS = gql`
   }
 `;
 
-export default () => (
-  <Filter
-    query={GET_VERSIONS}
-    itemName="versions"
-    setValue="versionId"
-    resetValue="statusId"
-    isClearable
-  />
-);
+export default () => {
+  const params = {
+    optionName: 'versions',
+    setValue: 'versionId',
+    resetValue: 'statusId',
+  };
+  return (
+    <Filter
+      query={GET_VERSIONS}
+      params={params}
+      isClearable
+    />
+  );
+};

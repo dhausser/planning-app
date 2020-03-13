@@ -35,6 +35,7 @@ const GET_PROJECT_FILTER = gql`
 
 const create = () => ({
   onClick: () => {
+    // eslint-disable-next-line no-alert
     const boardName = window.prompt('What would you like to call your new board?');
     if (boardName && boardName.length) {
       console.log(`You created the board "${boardName}"`);
@@ -52,9 +53,7 @@ const target = ({
         appearance="square"
         itemState={s}
         size="large"
-        src={id === '10500'
-          ? 'https://solarsystem.atlassian.net/secure/projectavatar?pid=10000&avatarId=10011&size=xxlarge'
-          : avatar}
+        src={avatar}
       />
     )}
     after={ChevD}
@@ -104,7 +103,12 @@ function ProjectSwitcher() {
     <Switcher
       create={create()}
       onChange={({ id, text }) => {
-        updateCache(client, id, ['projectId', 'versionId']);
+        updateCache({
+          client,
+          value: id,
+          setValue: 'projectId',
+          resetValue: 'versionId',
+        });
         updateLocalStorage('projectId', id);
         setSelected({ id, text });
       }}

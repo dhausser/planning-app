@@ -1,13 +1,13 @@
 import React from 'react';
 import {
   ApolloClient,
+  DocumentNode,
   useApolloClient,
   useQuery,
-  DocumentNode,
   gql,
 } from '@apollo/client';
 import Select, { OptionType, OptionsType, ValueType } from '@atlaskit/select';
-import PropTypes, { object } from 'prop-types';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import EmptyState from '@atlaskit/empty-state';
 
@@ -20,11 +20,15 @@ interface FilterOptionData {
   items: FilterOption[];
 }
 
-interface FilterProps {
-  query: DocumentNode,
-  itemName: string,
+interface FilterParams {
+  optionName: string,
   setValue: string,
   resetValue: string,
+}
+
+interface FilterProps {
+  query: DocumentNode,
+  params: FilterParams,
   isClearable: boolean,
 }
 
@@ -37,17 +41,14 @@ interface IIndexable {
   [key: string]: any;
 }
 
-function gqlFromArray(items: Array<string>) {
-  const string = items.join(' ');
-  return gql`{ ${string} }`;
-}
-
-export const updateCache = (
-  client: ApolloClient<object>,
+interface CacheProps {
+  client: ApolloClient<object>
   value: string | number | null,
   setValue: string,
   resetValue: string,
-) => {
+}
+
+export const updateCache = ({ client, value, setValue, resetValue }: CacheProps) => {
   const query = gql`{
     ${setValue}
     ${resetValue}
@@ -67,15 +68,17 @@ export const updateLocalStorage = (itemId: string, value: string | number | null
   }
 };
 
-function Filter({ query, itemName, setValue, resetValue, isClearable }: FilterProps) {
+function Filter({ query, params, isClearable }: FilterProps) {
   const client = useApolloClient();
   const { loading, error, data } = useQuery<FilterOptionData>(query);
+  const { optionName, setValue, resetValue } = params;
+
   let selected: OptionType | null = null;
   let options: OptionsType<OptionType> = [];
 
   const updateFilter = (e: OptionType | null) => {
     const value = e ? e.value : null;
-    updateCache(client, value, setValue, resetValue);
+    updateCache({ client, value, setValue, resetValue });
     updateLocalStorage(setValue, value);
   };
 
@@ -88,8 +91,8 @@ function Filter({ query, itemName, setValue, resetValue, isClearable }: FilterPr
 
   if (error) return <EmptyState header={error.name} description={error.message} />;
 
-  if (data && (data as IIndexable)[itemName]) {
-    options = (data as IIndexable)[itemName].map(({ id, name }: ItemProps) => {
+  if (data && (data as IIndexable)[optionName]) {
+    options = (data as IIndexable)[optionName].map(({ id, name }: ItemProps) => {
       const option = { value: id, label: (name || id) };
       if (id === (data as IIndexable)[setValue]) selected = option;
       return option;
@@ -111,16 +114,22 @@ function Filter({ query, itemName, setValue, resetValue, isClearable }: FilterPr
   );
 }
 
+Filter.defaultProps = {
+  isClearable: false,
+};
+
 Filter.propTypes = {
   query: PropTypes.exact({
     kind: PropTypes.string,
     definitions: PropTypes.arrayOf(PropTypes.object),
     loc: PropTypes.object,
   }).isRequired,
-  itemName: PropTypes.string.isRequired,
-  setValue: PropTypes.string.isRequired,
-  resetValue: PropTypes.string.isRequired,
-  isClearable: PropTypes.bool.isRequired,
+  params: PropTypes.exact({
+    optionName: PropTypes.string,
+    setValue: PropTypes.string,
+    resetValue: PropTypes.string,
+  }).isRequired,
+  isClearable: PropTypes.bool,
 };
 
 export default Filter;

@@ -11,12 +11,17 @@ export const GET_TEAMS = gql`
   }
 `;
 
-export default () => (
-  <Filter
-    query={GET_TEAMS}
-    itemName="teams"
-    setValue="teamId"
-    resetValue=""
-    isClearable
-  />
-);
+export default () => {
+  const params = {
+    optionName: 'teams',
+    setValue: 'teamId',
+    resetValue: '',
+  };
+  return (
+    <Filter
+      query={GET_TEAMS}
+      params={params}
+      isClearable
+    />
+  );
+};

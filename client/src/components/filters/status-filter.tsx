@@ -19,12 +19,17 @@ const GET_STATUSES = gql`
   }
 `;
 
-export default () => (
-  <Filter
-    query={GET_STATUSES}
-    itemName="statuses"
-    setValue="statusId"
-    resetValue=""
-    isClearable
-  />
-);
+export default () => {
+  const params = {
+    optionName: 'statuses',
+    setValue: 'statusId',
+    resetValue: '',
+  };
+  return (
+    <Filter
+      query={GET_STATUSES}
+      params={params}
+      isClearable
+    />
+  );
+};
