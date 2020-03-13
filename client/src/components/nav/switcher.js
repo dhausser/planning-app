@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import ChevD from '@atlaskit/icon/glyph/chevron-down';
 import { ContainerHeader, ItemAvatar, Switcher } from '@atlaskit/navigation-next';
 import EmptyState from '@atlaskit/empty-state';
-import { updateCache, updateLocalStorage } from '../filters/filter';
+import { updateFilter } from '../filters/project-filter';
 
 const PROJECT_TILE_DATA = gql`
   fragment ProjectTile on Project {
@@ -17,6 +17,7 @@ const PROJECT_TILE_DATA = gql`
 
 const GET_PROJECTS = gql`
   query GetProjects {
+    projectId @client
     projects {
       ...ProjectTile
       avatarUrls {
@@ -25,12 +26,6 @@ const GET_PROJECTS = gql`
     }
   }
   ${PROJECT_TILE_DATA}
-`;
-
-const GET_PROJECT_FILTER = gql`
-  {
-    projectId @client
-  }
 `;
 
 const create = () => ({
@@ -65,7 +60,6 @@ const target = ({
 
 function ProjectSwitcher() {
   const client = useApolloClient();
-  const { data: { projectId } } = useQuery(GET_PROJECT_FILTER);
   const { data, loading, error } = useQuery(GET_PROJECTS);
   const [selected, setSelected] = useState({});
   const [options, setOptions] = useState([]);
@@ -89,12 +83,12 @@ function ProjectSwitcher() {
         });
       });
 
-      const current = projectId && projects[0].options.find(({ id }) => id === projectId);
+      const current = data.projectId && projects[0].options.find(({ id }) => id === data.projectId);
 
       setOptions(projects);
       setSelected(current || projects[0].options[0]);
     }
-  }, [data, error, projectId, loading]);
+  }, [data, error, data.projectId, loading]);
 
   if (loading) return <div />;
   if (error) return <EmptyState header={error.name} description={error.message} />;
@@ -103,13 +97,7 @@ function ProjectSwitcher() {
     <Switcher
       create={create()}
       onChange={({ id, text }) => {
-        updateCache({
-          client,
-          value: id,
-          setValue: 'projectId',
-          resetValue: 'versionId',
-        });
-        updateLocalStorage('projectId', id);
+        updateFilter(client, id);
         setSelected({ id, text });
       }}
       options={options}

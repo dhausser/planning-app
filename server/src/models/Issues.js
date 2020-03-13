@@ -40,15 +40,12 @@ module.exports = class Issues {
     return {
       jql: this.jql,
       fields: this.fields,
-      startAt: this.startAt,
-      maxResults: this.maxResults,
+      startAt: this.startAt || 0,
+      maxResults: this.maxResults || 50,
     };
   }
 
   getQuery() {
-    this.jql = `statusCategory in (${this.statusId ? this.statusId : 'new, indeterminate'})\
-      ${this.projectId ? `AND project=${this.projectId}` : ''}\
-      ${this.versionId ? `AND fixVersion=${this.versionId}` : ''}\
-      ${this.assignee ? `AND assignee in (${this.assignee})` : ''} order by priority`;
+    this.jql = `${this.projectId ? `project=${this.projectId}` : ''}${this.versionId ? ` AND fixVersion=${this.versionId}` : ''}${this.statusId ? ` AND status=${this.statusId}` : ''}${this.assignee ? ` AND assignee in (${this.assignee})` : ''}`;
   }
 };

@@ -1,5 +1,6 @@
 import React from 'react';
-import { gql } from '@apollo/client';
+import { ApolloClient, gql } from '@apollo/client';
+import { OptionType } from '@atlaskit/select';
 import Filter from './filter';
 
 const GET_STATUSES = gql`
@@ -19,17 +20,33 @@ const GET_STATUSES = gql`
   }
 `;
 
-export default () => {
-  const params = {
-    optionName: 'statuses',
-    setValue: 'statusId',
-    resetValue: '',
-  };
-  return (
-    <Filter
-      query={GET_STATUSES}
-      params={params}
-      isClearable
-    />
-  );
+const updateFilter = (
+  client: ApolloClient<object>,
+  e: OptionType,
+) => {
+  const value = e ? e.value : null;
+  client.writeQuery({
+    query: gql`{
+      statusId
+    }`,
+    data: {
+      statusId: value,
+    },
+  });
+  if (value) {
+    localStorage.setItem('statusId', value as string);
+  } else {
+    localStorage.removeItem('statusId');
+  }
 };
+
+export default () => (
+  <Filter
+    query={GET_STATUSES}
+    updateFilter={updateFilter}
+    valueName="statusId"
+    valuesName="statuses"
+    placeholder="Select status"
+    isClearable={false}
+  />
+);

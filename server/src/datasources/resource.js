@@ -74,7 +74,7 @@ module.exports = class ResourceAPI extends DataSource {
    * @param {string[]} resourceId - The list of teams.
    * @returns {Promise<ResourcesResult>} A promise that will resolve to a list of ResourcesResult.
    */
-  async getResourceById({ resourceId }) {
+  async getResourceById(resourceId) {
     let cursor;
 
     try {
