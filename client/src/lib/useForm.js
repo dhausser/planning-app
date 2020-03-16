@@ -1,19 +1,20 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 export default function useForm(initial = {}) {
   const [inputs, setInputs] = useState(initial);
 
   function handleChange(e) {
-    let { value, name, type } = e.target;
-    if (type === "number") {
-      value = parseInt(value);
+    const { name, type } = e.target;
+    let { value } = e.target;
+    if (type === 'number') {
+      value = parseInt(value, 10);
     }
-    if (type === "file") {
+    if (type === 'file') {
       [value] = e.target.files;
     }
     setInputs({
       ...inputs,
-      [name]: value
+      [name]: value,
     });
   }
 
@@ -23,7 +24,7 @@ export default function useForm(initial = {}) {
 
   function clearForm() {
     const blankState = Object.fromEntries(
-      Object.entries(inputs).map(([key]) => [key, ""])
+      Object.entries(inputs).map(([key]) => [key, '']),
     );
     setInputs(blankState);
   }
@@ -32,6 +33,6 @@ export default function useForm(initial = {}) {
     inputs,
     handleChange,
     resetForm,
-    clearForm
+    clearForm,
   };
 }

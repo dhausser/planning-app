@@ -84,14 +84,7 @@ module.exports = {
     /**
      * Jira REST API
      */
-    login: (_, __, { user }) => {
-      if (user.token) {
-        console.log(`Loging in with token ${user.token}`);
-        return user.token;
-      }
-      console.log('Cannot find login token');
-      return 0;
-    },
+    login: (_, __, { user }) => user.token,
     editIssue: (_, { id, value, type }, { dataSources }) => (
       dataSources.issueAPI.editIssue({ id, value, type })
     ),

@@ -94,9 +94,7 @@ function createRow(project) {
                 name={project.name}
                 size="small"
                 appearance="square"
-                src={project.id === '10500'
-                  ? 'https://solarsystem.atlassian.net/secure/projectavatar?pid=10000&avatarId=10011&size=xxlarge'
-                  : project.avatarUrls.small}
+                src={project.avatarUrls.small}
               />
             </AvatarWrapper>
             <FilterLink projectId={project.id}>

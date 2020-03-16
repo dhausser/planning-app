@@ -13,7 +13,10 @@ export default function LoginMutation() {
     {
       onCompleted: ({ login: token }) => {
         localStorage.setItem('token', token);
-        client.writeData({ data: { isLoggedIn: true } });
+        client.writeQuery({
+          query: gql`{ isLoggedIn }`,
+          data: { isLoggedIn: true },
+        });
         window.opener.location.reload();
         window.close();
       },

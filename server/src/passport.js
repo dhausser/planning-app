@@ -4,9 +4,6 @@ const path = require('path');
 const fs = require('fs');
 const os = require('os');
 
-/**
- * Passport
- */
 const filePath = path.join(os.homedir(), '/oauth/jira_privatekey.pem');
 const consumerSecret = fs.existsSync(filePath) ? fs.readFileSync(filePath, 'utf8') : '';
 const consumerKey = 'RDM';
@@ -14,10 +11,10 @@ const consumerKey = 'RDM';
 passport.use(
   new OAuthStrategy(
     {
-      requestTokenURL: 'https://jira.cdprojektred.com/plugins/servlet/oauth/request-token',
-      accessTokenURL: 'https://jira.cdprojektred.com/plugins/servlet/oauth/access-token',
+      requestTokenURL: `https://${process.env.HOST}/plugins/servlet/oauth/request-token`,
+      accessTokenURL: `https://${process.env.HOST}/plugins/servlet/oauth/access-token`,
       userAuthorizationURL:
-        'https://jira.cdprojektred.com/plugins/servlet/oauth/authorize',
+        `https://${process.env.HOST}/plugins/servlet/oauth/authorize`,
       consumerKey,
       consumerSecret,
       callbackURL: '/auth/provider/callback',

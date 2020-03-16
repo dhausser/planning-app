@@ -71,8 +71,6 @@ function ProjectSwitcher() {
   const [selected, setSelected] = useState({});
   const [options, setOptions] = useState([]);
 
-  console.log(data);
-
   useEffect(() => {
     if (!loading && !error) {
       const projects = [

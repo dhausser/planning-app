@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import EmojiCustomIcon from '@atlaskit/icon/glyph/emoji/custom';
 import { ScrollSyncPane } from 'react-scroll-sync';
+import Epic16Icon from '@atlaskit/icon-object/glyph/epic/16';
 import { RowContainer, CreateButton } from './frame';
 
 const HEADLINE_WIDTH = 320;
@@ -47,10 +48,7 @@ export default function Headline({ issues }) {
                     )} */}
                     <HeadlineRowContentWrapper>
                       <HeadlineRowContent>
-                        <EpicIcon
-                          src="https://solarsystem.atlassian.net/secure/viewavatar?size=medium&avatarId=10307&avatarType=issuetype"
-                          alt="Epic issue type"
-                        />
+                        <Epic16Icon />
                         <StyledParagraph>{epic.fields.summary}</StyledParagraph>
                       </HeadlineRowContent>
                     </HeadlineRowContentWrapper>
@@ -212,13 +210,6 @@ const EpicTitleBottom = styled.div`
   z-index: 2;
   opacity: 0;
   transition: opacity 0.1s ease 0s;
-`;
-
-const EpicIcon = styled.img`
-  width: 16px;
-  height: 16px;
-  flex: 0 0 auto;
-  border-radius: 3px;
 `;
 
 const CreateButtonWrapper = styled.div`
