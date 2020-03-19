@@ -1,31 +1,33 @@
 import React from 'react';
-import { useQuery, gql } from '@apollo/client';
+// import { useQuery, gql } from '@apollo/client';
 import { ScrollSync } from 'react-scroll-sync';
 import styled from 'styled-components';
-import EmptyState from '@atlaskit/empty-state';
-import { Loading } from '..';
+// import EmptyState from '@atlaskit/empty-state';
+// import { Loading } from '..';
 import Calendar from './calendar';
 import Headline from './headline';
 
-const GET_EPICS = gql`
-  query issueList($projectId: String, $versionId: String) {
-    projectId @client @export(as: "projectId")
-    versionId @client @export(as: "versionId")
-    epics(projectId: $projectId, versionId: $versionId) {
-      id
-      key
-      fields {
-        summary
-      }
-    }
-  }
-`;
+import data from './sample.json';
+
+// const GET_EPICS = gql`
+//   query issueList($projectId: String, $versionId: String) {
+//     projectId @client @export(as: "projectId")
+//     versionId @client @export(as: "versionId")
+//     epics(projectId: $projectId, versionId: $versionId) {
+//       id
+//       key
+//       fields {
+//         summary
+//       }
+//     }
+//   }
+// `;
 
 export default function Timeline() {
-  const { loading, error, data } = useQuery(GET_EPICS);
+  // const { loading, error, data } = useQuery(GET_EPICS);
 
-  if (loading || !data) return <Loading />;
-  if (error) return <EmptyState header={error.name} description={error.message} />;
+  // if (loading || !data) return <Loading />;
+  // if (error) return <EmptyState header={error.name} description={error.message} />;
 
   return (
     <Wrapper>

@@ -8,3 +8,4 @@ export { default as BarChart } from './bar-chart';
 export { default as Nameplate } from './resource/nameplate';
 export { default as IssueTable } from './issue/issue-table';
 export { default as LoadButton } from './issue/load-button';
+export { default as Timeline } from './timeline';

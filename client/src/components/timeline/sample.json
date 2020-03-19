@@ -1,0 +1,39 @@
+{
+  "epics": [
+    {
+      "id": "0",
+      "key": "ZX-0",
+      "fields": {
+        "summary": "Epic 0"
+      }
+    },
+    {
+      "id": "1",
+      "key": "ZX-1",
+      "fields": {
+        "summary": "Epic 1"
+      }
+    },
+    {
+      "id": "2",
+      "key": "ZX-2",
+      "fields": {
+        "summary": "Epic 2"
+      }
+    },
+    {
+      "id": "3",
+      "key": "ZX-3",
+      "fields": {
+        "summary": "Epic 4"
+      }
+    },
+    {
+      "id": "5",
+      "key": "ZX-5",
+      "fields": {
+        "summary": "Epic 5"
+      }
+    }
+  ]
+}
