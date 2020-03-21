@@ -4,24 +4,10 @@ import styled from 'styled-components';
 import EmojiCustomIcon from '@atlaskit/icon/glyph/emoji/custom';
 import { ScrollSyncPane } from 'react-scroll-sync';
 import Epic16Icon from '@atlaskit/icon-object/glyph/epic/16';
-import { RowContainer, CreateButton } from './calendar';
 
 const HEADLINE_WIDTH = 320;
 
 export default function Headline({ issues }) {
-  function createEpic() {
-    // const { length } = issues;
-    // const num = length + 1;
-    // const issue = {
-    //   id: `${num}`,
-    //   key: `ST-${num}`,
-    //   fields: {
-    //     summary: `Epic Number ${num}`,
-    //   },
-    // };
-    // setIssues([...issues, issue]);
-  }
-
   return (
     <HeadlineContainer width={HEADLINE_WIDTH} style={{ width: HEADLINE_WIDTH }}>
       <EpicTitleWrapper>
@@ -30,48 +16,44 @@ export default function Headline({ issues }) {
       </EpicTitleWrapper>
       <HeaderRowWrapper>
         <div style={{ display: 'flex', overflow: 'hidden' }}>
-          <ScrollSyncPane>
-            <HeaderRowScrollBar>
-              <HeaderRowScrollBarWidth width="318" style={{ width: '318px' }}>
-                {issues.map((epic) => (
-                  <RowContainer
-                    key={epic.key}
-                  >
-                    {/* {i > 0 && (
-                      <InlineCreateWrapper
-                        role="button"
-                        aria-label="Inline issue create"
-                        tabIndex="0"
-                      >
-                        <InlineCreateButton />
-                      </InlineCreateWrapper>
-                    )} */}
-                    <HeadlineRowContentWrapper>
-                      <HeadlineRowContent>
-                        <Epic16Icon />
-                        <StyledParagraph>{epic.fields.summary}</StyledParagraph>
-                      </HeadlineRowContent>
-                    </HeadlineRowContentWrapper>
-                  </RowContainer>
-                ))}
-                <CreateButtonWrapper>
-                  <CreateButton
-                    role="button"
-                    aria-label="Create issue last"
-                    onClick={createEpic}
-                    onKeyUp={createEpic}
-                    tabIndex="0"
-                  >
-                    <EmojiCustomIcon className="icon" />
-                  </CreateButton>
-                </CreateButtonWrapper>
-                <div style={{ height: '1px', backgroundColor: 'rgb(193, 199, 208)' }} />
-              </HeaderRowScrollBarWidth>
-            </HeaderRowScrollBar>
-          </ScrollSyncPane>
+          <HeaderRowScrollBar>
+            <HeaderRowScrollBarWidth
+              width={HEADLINE_WIDTH - 2}
+              style={{ width: HEADLINE_WIDTH - 2 }}
+            >
+              {issues.map(epic => (
+                <Row key={epic.key}>
+                  <HeadlineRowContentWrapper>
+                    <HeadlineRowContent>
+                      <Epic16Icon />
+                      <StyledParagraph>{epic.fields.summary}</StyledParagraph>
+                    </HeadlineRowContent>
+                  </HeadlineRowContentWrapper>
+                </Row>
+              ))}
+              <CreateButtonWrapper>
+                <CreateButton
+                  role="button"
+                  aria-label="Create issue last"
+                  tabIndex="0"
+                >
+                  <EmojiCustomIcon className="icon" />
+                </CreateButton>
+              </CreateButtonWrapper>
+              <div
+                style={{
+                  height: '1px',
+                  backgroundColor: 'rgb(193, 199, 208)',
+                }}
+              />
+            </HeaderRowScrollBarWidth>
+          </HeaderRowScrollBar>
         </div>
         <HeaderRowBorder />
-        {/* <HeaderRowBorder width={HEADLINE_WIDTH} style={{ width: HEADLINE_WIDTH }} /> */}
+        <HeaderRowBorder
+          width={HEADLINE_WIDTH}
+          style={{ width: HEADLINE_WIDTH }}
+        />
       </HeaderRowWrapper>
     </HeadlineContainer>
   );
@@ -83,7 +65,7 @@ Headline.defaultProps = {
 
 Headline.propTypes = {
   issues: PropTypes.arrayOf(
-    PropTypes.shape({ key: PropTypes.string.isRequired }),
+    PropTypes.shape({ key: PropTypes.string.isRequired })
   ),
 };
 
@@ -217,7 +199,7 @@ const CreateButtonWrapper = styled.div`
   display: flex;
   -webkit-box-align: center;
   align-items: center;
-  height: 40px;
+  height: 44px;
   background-color: rgb(255, 255, 255);
   -webkit-box-pack: center;
   justify-content: center;
@@ -231,4 +213,39 @@ const StyledParagraph = styled.p`
   white-space: nowrap;
   margin: 0px 0px 0px 8px;
   overflow: hidden;
+`;
+
+const CreateButton = styled.div`
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  height: 24px;
+  width: 100%;
+  cursor: pointer;
+  border-radius: 4px;
+
+  &:hover {
+    background-color: #dfe1e6;
+  }
+`;
+
+const Row = styled.div`
+  position: relative;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  height: 44px;
+  background-color: rgb(255, 255, 255);
+  /* transition: background-color 100ms linear 0s; */
+  overflow: hidden;
+
+  &:nth-of-type(even) {
+    background-color: rgb(244, 245, 247);
+  }
+
+  &:hover {
+    background-color: #dfe1e6;
+  }
 `;

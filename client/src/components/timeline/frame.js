@@ -2,12 +2,12 @@ import React from 'react';
 import { Frame, useMotionValue } from 'framer';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { RowContainer } from './calendar';
+import { Row } from './calendar';
 
 export default function FrameBox({ key, issue, width }) {
   const x = useMotionValue(0);
   return (
-    <RowContainer key={issue.key}>
+    <Row key={issue.key}>
       <Frame
         name="Epic"
         x={x}
@@ -29,7 +29,7 @@ export default function FrameBox({ key, issue, width }) {
           <EpicDrag />
         </EpicDragRight> */}
       </Frame>
-    </RowContainer>
+    </Row>
   );
 }
 
