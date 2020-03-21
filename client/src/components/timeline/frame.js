@@ -2,8 +2,9 @@ import React from 'react';
 import { Frame, useMotionValue } from 'framer';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { RowContainer } from './calendar';
 
-export default function FrameBox({ issue }) {
+export default function FrameBox({ key, issue, width }) {
   const x = useMotionValue(0);
   return (
     <RowContainer key={issue.key}>
@@ -17,7 +18,7 @@ export default function FrameBox({ issue }) {
         // right={300}
         background="#8777d9"
         drag="x"
-        dragConstraints={{ left: 0, right: 1300 }}
+        dragConstraints={{ left: 0, right: width * 10 }}
         dragElastic={0}
         dragMomentum={false}
       >
@@ -33,51 +34,16 @@ export default function FrameBox({ issue }) {
 }
 
 FrameBox.propTypes = {
+  key: PropTypes.string.isRequired,
   issue: PropTypes.shape({
     key: PropTypes.string.isRequired,
   }).isRequired,
+  width: PropTypes.number.isRequired,
 };
 
 /**
  * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE
  */
-
-export const CreateButton = styled.div`
-display: flex;
--webkit-box-align: center;
-align-items: center;
--webkit-box-pack: center;
-justify-content: center;
-height: 24px;
-width: 100%;
-cursor: pointer;
-border-radius: 4px;
-&:hover {
-  background-color: #DFE1E6;
-}
-`;
-
-
-export const RowContainer = styled.div`
-  position: relative;
-  display: flex;
-  -webkit-box-align: center;
-  align-items: center;
-  height: 40px;
-  background-color: rgb(255, 255, 255);
-  cursor: pointer;
-  transition: background-color 100ms linear 0s;
-  &:nth-of-type(even) {
-    background-color: rgb(244, 245, 247);
-  }
-  &:hover {
-    background-color: #DFE1E6;
-  }
-  ${CreateButton} {
-    background-color: #DFE1E6;
-    fill: rebeccapurple;
-  }
-`;
 
 // const BoxWrapper = styled.div`
 //   position: absolute;

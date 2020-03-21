@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import EmojiCustomIcon from '@atlaskit/icon/glyph/emoji/custom';
 import { ScrollSyncPane } from 'react-scroll-sync';
 import Epic16Icon from '@atlaskit/icon-object/glyph/epic/16';
-import { RowContainer, CreateButton } from './frame';
+import { RowContainer, CreateButton } from './calendar';
 
 const HEADLINE_WIDTH = 320;
 
