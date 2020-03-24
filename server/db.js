@@ -2,7 +2,7 @@ const { MongoClient } = require('mongodb');
 const ResourcesDAO = require('./dao/resourcesDAO');
 
 module.exports = new Promise((resolve, reject) => MongoClient.connect(
-  process.env.ROADMAP_DB_URI,
+  process.env.DATABASE,
   {
     poolSize: 50,
     wtimeout: 2500,

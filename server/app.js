@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 const { ApolloServer } = require('apollo-server-express');
 
 const databaseConnectionPromise = require('./db');
@@ -14,13 +15,14 @@ const ResourcesDAO = require('./dao/resourcesDAO');
 
 (async () => {
   const app = express();
-  const port = process.env.PORT || process.env.NODE_ENV === 'production' ? 8080 : 4000;
+  const port = process.env.PORT;
 
   app.use(session({
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: true,
     cookie: {},
+    store: new MongoStore({ url: process.env.DATABASE }),
   }));
   app.use(passport.initialize());
   app.use(passport.session());

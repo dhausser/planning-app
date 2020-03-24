@@ -24,10 +24,12 @@ router.get(
   }),
 );
 
+console.log(process.env.NODE_ENV);
+
 if (process.env.NODE_ENV === 'production') {
-  router.use(express.static(path.join(__dirname, '../build')));
+  router.use(express.static(path.join(__dirname, 'build')));
   router.get('/*', (_req, res) => {
-    res.sendFile(path.join(__dirname, '../build', 'index.html'));
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
   });
 }
 

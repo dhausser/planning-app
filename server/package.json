@@ -7,17 +7,18 @@
   "engines": {
     "node": ">=8.4.0"
   },
-  "main": "./src/app.js",
+  "main": "app.js",
   "scripts": {
-    "start": "yarn dev",
     "dev": "nodemon",
-    "prod": "NODE_ENV=production node -r esm src"
+    "start": "node app.js",
+    "prod": "NODE_ENV=production node app.js"
   },
   "dependencies": {
     "apollo-datasource": "^0.7.0",
     "apollo-datasource-rest": "^0.7.0",
     "apollo-server-express": "^2.10.1",
     "assert": "^2.0.0",
+    "connect-mongo": "^3.2.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-session": "^1.17.0",

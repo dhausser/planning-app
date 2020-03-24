@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import EmojiCustomIcon from '@atlaskit/icon/glyph/emoji/custom';
-import { ScrollSyncPane } from 'react-scroll-sync';
+// import { ScrollSyncPane } from 'react-scroll-sync';
 import Epic16Icon from '@atlaskit/icon-object/glyph/epic/16';
 
 const HEADLINE_WIDTH = 320;
@@ -21,12 +21,12 @@ export default function Headline({ issues }) {
               width={HEADLINE_WIDTH - 2}
               style={{ width: HEADLINE_WIDTH - 2 }}
             >
-              {issues.map(epic => (
-                <Row key={epic.key}>
+              {issues.map(issue => (
+                <Row key={issue.key}>
                   <HeadlineRowContentWrapper>
                     <HeadlineRowContent>
                       <Epic16Icon />
-                      <StyledParagraph>{epic.fields.summary}</StyledParagraph>
+                      <StyledParagraph>{issue.fields.summary}</StyledParagraph>
                     </HeadlineRowContent>
                   </HeadlineRowContentWrapper>
                 </Row>

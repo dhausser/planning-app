@@ -1,20 +1,23 @@
 import React from 'react';
+import styled from 'styled-components';
 // import { useQuery, gql } from '@apollo/client';
 // import { ScrollSync } from 'react-scroll-sync';
-import styled from 'styled-components';
-import EmojiCustomIcon from '@atlaskit/icon/glyph/emoji/custom';
-import Epic16Icon from '@atlaskit/icon-object/glyph/epic/16';
+// import EmojiCustomIcon from '@atlaskit/icon/glyph/emoji/custom';
+// import Epic16Icon from '@atlaskit/icon-object/glyph/epic/16';
 // import EmptyState from '@atlaskit/empty-state';
+
 // import { Loading } from '..';
 // import Calendar from './calendar';
 import Headline from './headline';
-
 import data from './sample.json';
 
 const { issues, months } = data;
 const WIDTH = 9579.5;
 const MONTH_WIDTH = WIDTH / months.length / 100;
 const daylineOffset = 320;
+
+const left = 3;
+const right = 95;
 
 // const GET_EPICS = gql`
 //   query issueList($projectId: String, $versionId: String) {
@@ -30,7 +33,7 @@ const daylineOffset = 320;
 //   }
 // `;
 
-function createEpic() {
+// function createEpic() {
   // const { length } = issues;
   // const num = length + 1;
   // const issue = {
@@ -41,7 +44,7 @@ function createEpic() {
   //   },
   // };
   // setIssues([...issues, issue]);
-}
+// }
 
 export default function Timeline() {
   // const { loading, error, data } = useQuery(GET_EPICS);
@@ -60,6 +63,7 @@ export default function Timeline() {
                 <Div22>
                   {months.map((month, i) => (
                     <Div23
+                      key={month}
                       style={{
                         left: `calc(${i} * ${MONTH_WIDTH}%)`,
                         right: `calc(100% - ${MONTH_WIDTH}% * ${i + 1})`,
@@ -78,6 +82,7 @@ export default function Timeline() {
                 <Div320>
                   {months.map((month, i) => (
                     <Divider
+                      key={month}
                       style={{
                         left: `calc(${i} * ${MONTH_WIDTH}%)`,
                         right: `calc(100% - ${MONTH_WIDTH}% * ${i + 1})`,
@@ -90,10 +95,10 @@ export default function Timeline() {
                 </Div321>
                 <Div322>
                   {issues.map(issue => (
-                    <Row>
+                    <Row key={issue.key}>
                       <Draggable
                         draggable="true"
-                        style={{ left: '32.74%;', right: '64.51%;' }}
+                        style={{ left: `${left}%`, right: `${right}%` }}
                       />
                     </Row>
                   ))}
@@ -234,9 +239,6 @@ const Draggable = styled.div`
     rgb(135, 119, 217) 70%,
     rgb(192, 182, 242) 100%
   );
-
-  left: 1.5%;
-  right: 95%;
 `;
 
 const BottomLine = styled.div`
