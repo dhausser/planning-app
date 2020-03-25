@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from "styled-components";
 // import { useQuery, gql } from '@apollo/client';
 // import { ScrollSync } from 'react-scroll-sync';
 // import EmojiCustomIcon from '@atlaskit/icon/glyph/emoji/custom';
@@ -34,16 +34,16 @@ const right = 95;
 // `;
 
 // function createEpic() {
-  // const { length } = issues;
-  // const num = length + 1;
-  // const issue = {
-  //   id: `${num}`,
-  //   key: `ST-${num}`,
-  //   fields: {
-  //     summary: `Epic Number ${num}`,
-  //   },
-  // };
-  // setIssues([...issues, issue]);
+// const { length } = issues;
+// const num = length + 1;
+// const issue = {
+//   id: `${num}`,
+//   key: `ST-${num}`,
+//   fields: {
+//     summary: `Epic Number ${num}`,
+//   },
+// };
+// setIssues([...issues, issue]);
 // }
 
 export default function Timeline() {
@@ -94,7 +94,7 @@ export default function Timeline() {
                   <StyledSvg />
                 </Div321>
                 <Div322>
-                  {issues.map(issue => (
+                  {issues.map((issue) => (
                     <Row key={issue.key}>
                       <Draggable
                         draggable="true"

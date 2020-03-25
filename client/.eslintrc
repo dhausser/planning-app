@@ -5,8 +5,7 @@
   },
   "extends": [
     "plugin:react/recommended",
-    "airbnb",
-    "prettier"
+    "airbnb"
   ],
   "globals": {
     "Atomics": "readonly",
@@ -40,7 +39,7 @@
       }
     ],
     "no-console": "off",
-    "no-unused-vars": "off",
+    "no-unused-vars": "off"
   },
   "settings": {
     "import/resolver": {
