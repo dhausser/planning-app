@@ -4,8 +4,7 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const { ApolloServer } = require('apollo-server-express');
 
-const { createStore } = require('./utils');
-const { passport } = require('./passport');
+const { passport, createStore } = require('./utils');
 const routes = require('./routes');
 const typeDefs = require('./schema');
 const resolvers = require('./resolvers');
@@ -51,4 +50,3 @@ apolloServer.applyMiddleware({ app });
 app.listen(port, () => console.log(
   `Server ready at http://localhost:${port}${apolloServer.graphqlPath}`,
 ));
-

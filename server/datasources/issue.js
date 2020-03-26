@@ -85,18 +85,10 @@ module.exports = class IssueAPI extends RESTDataSource {
     startAt,
     maxResults,
   }) {
-    console.log({
-      projectId,
-      versionId,
-      statusId,
-      teamId,
-      resourceId,
-    });
-
     let assignee = resourceId;
 
     if (teamId) {
-      const resources = await this.context.dataSources.ResourceDAO.getResourcesByTeam(teamId);
+      const resources = await this.context.dataSources.resourceAPI.getResourcesByTeam(teamId);
       assignee = resources.map(({ key }) => key);
     }
 
@@ -112,8 +104,6 @@ module.exports = class IssueAPI extends RESTDataSource {
 
     const params = issues.getParams();
 
-    console.log({ params });
-
     const response = await this.post('/rest/api/2/search', params);
 
     return { ...response };
@@ -127,8 +117,8 @@ module.exports = class IssueAPI extends RESTDataSource {
    */
   async getDashboardIssues({ projectId, versionId, teamId }) {
     const resources = teamId
-      ? await this.context.dataSources.ResourcesDAO.getResourcesByTeam(teamId)
-      : await this.context.dataSources.ResourcesDAO.getResources();
+      ? await this.context.dataSources.resourceAPI.getResourcesByTeam(teamId)
+      : await this.context.dataSources.resourceAPI.getResources();
 
     const assignee = resources.map(({ key }) => key) || [];
 
@@ -140,7 +130,7 @@ module.exports = class IssueAPI extends RESTDataSource {
     });
 
     const response = await this.post('/rest/api/2/search', dashboard.getParams());
-    const resourceMap = await this.context.dataSources.ResourcesDAO.getResourceMap();
+    const resourceMap = await this.context.dataSources.resourceAPI.getResourceMap();
 
     return dashboard.getDataset(response, resourceMap);
   }

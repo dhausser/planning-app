@@ -67,16 +67,16 @@ module.exports = {
      * MongoDB
      */
     resources: (_, __, { dataSources }) => (
-      dataSources.ResourcesDAO.getResources()
+      dataSources.resourceAPI.getResources()
     ),
     resource: (_, { id }, { dataSources }) => (
-      dataSources.ResourcesDAO.getResourceById({ resourceId: id })
+      dataSources.resourceAPI.getResourceById({ resourceId: id })
     ),
     teams: (_, __, { dataSources }) => (
-      dataSources.ResourcesDAO.getTeams()
+      dataSources.resourceAPI.getTeams()
     ),
     team: (_, { id }, { dataSources }) => (
-      dataSources.ResourcesDAO.getResourcesByTeam({ teamId: id })
+      dataSources.resourceAPI.getResourcesByTeam({ teamId: id })
     ),
   },
 

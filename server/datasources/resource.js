@@ -171,7 +171,6 @@ module.exports = class ResourceAPI extends DataSource {
     };
 
     try {
-      console.log(data);
       cursor = await this.store.resources.insertOne(data);
       assert.equal(1, cursor.insertedCount);
     } catch (e) {
@@ -194,7 +193,6 @@ module.exports = class ResourceAPI extends DataSource {
     };
 
     try {
-      console.log(data);
       cursor = await this.store.resources.updateOne(data);
       assert.equal(1, cursor.matchedCount);
       assert.equal(1, cursor.modifiedCount);
@@ -210,7 +208,6 @@ module.exports = class ResourceAPI extends DataSource {
     let cursor;
 
     try {
-      console.log(id);
       cursor = await this.store.resources.deleteOne({ key: id });
       assert.equal(1, cursor.deletedCount);
     } catch (e) {

@@ -173,7 +173,6 @@ module.exports = class ResourcesDAO {
     };
 
     try {
-      console.log(data);
       cursor = await resources.insertOne(data);
       assert.equal(1, cursor.insertedCount);
     } catch (e) {
@@ -196,7 +195,6 @@ module.exports = class ResourcesDAO {
     };
 
     try {
-      console.log(data);
       cursor = await resources.updateOne(data);
       assert.equal(1, cursor.matchedCount);
       assert.equal(1, cursor.modifiedCount);
@@ -212,7 +210,6 @@ module.exports = class ResourcesDAO {
     let cursor;
 
     try {
-      console.log(id);
       cursor = await resources.deleteOne({ key: id });
       assert.equal(1, cursor.deletedCount);
     } catch (e) {

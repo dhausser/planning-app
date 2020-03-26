@@ -1,5 +1,5 @@
 const { sign } = require('oauth-sign');
-const { consumerKey, consumerSecret } = require('../passport');
+const { consumerKey, consumerSecret } = require('../utils');
 
 module.exports = class Oauth {
   constructor(baseURL) {
