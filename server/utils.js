@@ -5,7 +5,7 @@ const path = require('path');
 const fs = require('fs');
 const os = require('os');
 
-const filePath = path.join(os.homedir(), '/oauth/jira_privatekey.pem');
+const filePath = path.join(os.homedir(), '/.oauth/jira_privatekey.pem');
 const consumerSecret = fs.existsSync(filePath) ? fs.readFileSync(filePath, 'utf8') : '';
 const consumerKey = 'RDM';
 
