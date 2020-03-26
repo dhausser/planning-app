@@ -2,10 +2,12 @@ import React from 'react';
 import Modal, { ModalTransition } from '@atlaskit/modal-dialog';
 
 const openRequestedPopup = () => {
-  /**
-   * TODO: Verify production URL is handled
-   */
-  const url = 'http://localhost:4000/auth/provider';
+  const devEndpoint = 'http://localhost:4000/auth/provider';
+  const prodEndpoint = 'https://roadmap.cdprojektred.com/auth/provider';
+
+  const url = process.env.NODE_ENV === 'production'
+    ? prodEndpoint
+    : devEndpoint;
 
   // eslint-disable-next-line no-restricted-globals
   const { width, height } = screen;
