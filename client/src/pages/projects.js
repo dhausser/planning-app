@@ -9,6 +9,7 @@ import DynamicTable from '@atlaskit/dynamic-table';
 import EmptyState from '@atlaskit/empty-state';
 import Avatar from '@atlaskit/avatar';
 import { productHomeView, Layout } from '../components';
+import { updateFilter } from '../components/filters/project-filter';
 
 const PROJECT_TILE_DATA = gql`
   fragment ProjectTile on Project {
@@ -65,11 +66,7 @@ function FilterLink({ projectId, children }) {
   return (
     <Link
       to="/roadmap"
-      onClick={() => {
-        client.writeData({ data: { projectId } });
-        localStorage.setItem('projectId', projectId);
-        console.log('Selected project: ', projectId);
-      }}
+      onClick={() => updateFilter(client, { value: projectId })}
     >
       {children}
     </Link>
