@@ -120,6 +120,10 @@ module.exports = class IssueAPI extends RESTDataSource {
       ? await this.context.dataSources.resourceAPI.getResourcesByTeam(teamId)
       : await this.context.dataSources.resourceAPI.getResources();
 
+    /**
+     * TOFIX: Cannot read property key of null when teamId is provided
+     */
+
     const assignee = resources.map(({ key }) => key) || [];
 
     const dashboard = new Dashboard({
