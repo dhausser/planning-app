@@ -46,12 +46,12 @@ export const ISSUE_PAGINATION = gql`
 
 export const GET_ISSUES = gql`
   query GetIssues(
-    $projectId: String,
-    $versionId: String,
-    $statusId: String,
-    $teamId: String,
-    $resourceId: String,
-    $startAt: Int,
+    $projectId: String
+    $versionId: String
+    $statusId: String
+    $teamId: String
+    $resourceId: String
+    $startAt: Int
     $maxResults: Int
   ) {
     projectId @client @export(as: "projectId")
@@ -59,12 +59,12 @@ export const GET_ISSUES = gql`
     statusId @client @export(as: "statusId")
     teamId @client @export(as: "teamId")
     issues(
-      projectId: $projectId,
-      versionId: $versionId,
-      statusId: $statusId,
-      teamId: $teamId,
-      resourceId: $resourceId,
-      startAt: $startAt,
+      projectId: $projectId
+      versionId: $versionId
+      statusId: $statusId
+      teamId: $teamId
+      resourceId: $resourceId
+      startAt: $startAt
       maxResults: $maxResults
     ) {
       ...IssuePagination
@@ -84,20 +84,10 @@ const useIssues = () => {
 
   if (loading) return <p>Loading...</p>;
   if (error) {
-    return (
-      <p>
-        Error:
-        {' '}
-        {error.message}
-      </p>
-    );
+    return <p>Error: {error.message}</p>;
   }
 
-  return (
-    <div>
-      {JSON.stringify(data.issues)}
-    </div>
-  );
+  return <div>{JSON.stringify(data.issues)}</div>;
 };
 
 // useIssues.propTypes = {

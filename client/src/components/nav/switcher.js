@@ -2,7 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useApolloClient, useQuery, gql } from '@apollo/client';
 import PropTypes from 'prop-types';
 import ChevD from '@atlaskit/icon/glyph/chevron-down';
-import { ContainerHeader, ItemAvatar, Switcher } from '@atlaskit/navigation-next';
+import {
+  ContainerHeader,
+  ItemAvatar,
+  Switcher,
+} from '@atlaskit/navigation-next';
 import EmptyState from '@atlaskit/empty-state';
 import { updateFilter } from '../filters/project-filter';
 
@@ -29,15 +33,17 @@ const GET_PROJECTS = gql`
 `;
 
 const GET_PROJECT_FILTER = gql`
-   {
+  {
     projectId @client
-   }
+  }
 `;
 
 const create = () => ({
   onClick: () => {
     // eslint-disable-next-line no-alert
-    const boardName = window.prompt('What would you like to call your new board?');
+    const boardName = window.prompt(
+      'What would you like to call your new board?',
+    );
     if (boardName && boardName.length) {
       console.log(`You created the board "${boardName}"`);
     }
@@ -45,17 +51,10 @@ const create = () => ({
   text: 'Create board',
 });
 
-const target = ({
-  id, subText, text, avatar,
-}) => (
+const target = ({ id, subText, text, avatar }) => (
   <ContainerHeader
     before={(s) => (
-      <ItemAvatar
-        appearance="square"
-        itemState={s}
-        size="large"
-        src={avatar}
-      />
+      <ItemAvatar appearance="square" itemState={s} size="large" src={avatar} />
     )}
     after={ChevD}
     id={id}
@@ -67,7 +66,9 @@ const target = ({
 function ProjectSwitcher() {
   const client = useApolloClient();
   const { data, loading, error } = useQuery(GET_PROJECTS);
-  const { data: { projectId } } = useQuery(GET_PROJECT_FILTER);
+  const {
+    data: { projectId },
+  } = useQuery(GET_PROJECT_FILTER);
   const [selected, setSelected] = useState({});
   const [options, setOptions] = useState([]);
 
@@ -90,7 +91,8 @@ function ProjectSwitcher() {
         });
       });
 
-      const current = projectId && projects[0].options.find(({ id }) => id === projectId);
+      const current =
+        projectId && projects[0].options.find(({ id }) => id === projectId);
 
       setOptions(projects);
       setSelected(current || projects[0].options[0]);
@@ -98,7 +100,8 @@ function ProjectSwitcher() {
   }, [data, error, projectId, loading]);
 
   if (loading) return <div />;
-  if (error) return <EmptyState header={error.name} description={error.message} />;
+  if (error)
+    return <EmptyState header={error.name} description={error.message} />;
 
   return (
     <Switcher

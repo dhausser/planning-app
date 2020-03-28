@@ -5,7 +5,9 @@ import { withNavigationViewController } from '@atlaskit/navigation-next';
 import { projectHomeView, Layout } from '../components';
 
 function Releases({ navigationViewController }) {
-  useEffect(() => navigationViewController.setView(projectHomeView.id), [navigationViewController]);
+  useEffect(() => navigationViewController.setView(projectHomeView.id), [
+    navigationViewController,
+  ]);
 
   return (
     <Layout>

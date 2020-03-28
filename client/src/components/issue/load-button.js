@@ -7,22 +7,24 @@ export default function LoadButton({ fetchMore, startAt }) {
   return (
     <Wrapper>
       <Button
-        onClick={() => fetchMore({
-          variables: { startAt },
-          updateQuery: (prev, { fetchMoreResult }) => {
-            if (!fetchMoreResult) return prev;
-            return {
-              ...fetchMoreResult,
-              issues: {
-                ...fetchMoreResult.issues,
-                issues: [
-                  ...prev.issues.issues,
-                  ...fetchMoreResult.issues.issues,
-                ],
-              },
-            };
-          },
-        })}
+        onClick={() =>
+          fetchMore({
+            variables: { startAt },
+            updateQuery: (prev, { fetchMoreResult }) => {
+              if (!fetchMoreResult) return prev;
+              return {
+                ...fetchMoreResult,
+                issues: {
+                  ...fetchMoreResult.issues,
+                  issues: [
+                    ...prev.issues.issues,
+                    ...fetchMoreResult.issues.issues,
+                  ],
+                },
+              };
+            },
+          })
+        }
       >
         Load More
       </Button>

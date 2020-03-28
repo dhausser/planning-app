@@ -75,9 +75,13 @@ function Title({ id, summary }) {
 
 function Header({ id, summary, issuetype }) {
   const breadcrumbs = (
-    <BreadcrumbsStateless onExpand={() => { }}>
+    <BreadcrumbsStateless onExpand={() => {}}>
       <BreadcrumbsItem text="Some project" key="Some project" />
-      <BreadcrumbsItem text={id} key={id} iconBefore={issuetypeIconMap[issuetype.id]} />
+      <BreadcrumbsItem
+        text={id}
+        key={id}
+        iconBefore={issuetypeIconMap[issuetype.id]}
+      />
     </BreadcrumbsStateless>
   );
   const barContent = (

@@ -7,4 +7,8 @@ export { default as UserPicker } from './user-picker';
 export { default as Comments } from './comments';
 export { default as LoadButton } from './load-button';
 export { default as IssueTable } from './issue-table';
-export { default as priorityIconMap, issuetypeIconMap, statusCatecoryColorMap } from './icon';
+export {
+  default as priorityIconMap,
+  issuetypeIconMap,
+  statusCatecoryColorMap,
+} from './icon';

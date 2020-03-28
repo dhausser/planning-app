@@ -21,7 +21,7 @@ export default function Headline({ issues }) {
               width={HEADLINE_WIDTH - 2}
               style={{ width: HEADLINE_WIDTH - 2 }}
             >
-              {issues.map(issue => (
+              {issues.map((issue) => (
                 <Row key={issue.key}>
                   <HeadlineRowContentWrapper>
                     <HeadlineRowContent>
@@ -65,7 +65,7 @@ Headline.defaultProps = {
 
 Headline.propTypes = {
   issues: PropTypes.arrayOf(
-    PropTypes.shape({ key: PropTypes.string.isRequired })
+    PropTypes.shape({ key: PropTypes.string.isRequired }),
   ),
 };
 

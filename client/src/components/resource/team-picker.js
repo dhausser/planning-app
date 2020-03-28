@@ -8,10 +8,14 @@ import { GET_TEAMS } from '../filters/team-filter';
 
 export default function TeamPicker({ fieldProps }) {
   const { loading, error, data } = useQuery(GET_TEAMS);
-  const options = data && data.teams && data.teams.map(({ id }) => ({ label: id, value: id }));
+  const options =
+    data &&
+    data.teams &&
+    data.teams.map(({ id }) => ({ label: id, value: id }));
 
   if (loading || !data) return <Spinner size="small" />;
-  if (error) return <EmptyState header={error.name} description={error.message} />;
+  if (error)
+    return <EmptyState header={error.name} description={error.message} />;
 
   return (
     <Select

@@ -6,6 +6,8 @@ import PageHeader from '@atlaskit/page-header';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import TextField from '@atlaskit/textfield';
 import EmptyState from '@atlaskit/empty-state';
+import styled from 'styled-components';
+
 import {
   projectHomeView,
   Layout,
@@ -17,11 +19,23 @@ import {
 } from '../components';
 
 const GET_ISSUES = gql`
-  query GetDashboardIssues($projectId: String, $versionId: String, $teamId: String, $startAt: Int, $maxResults: Int) {
+  query GetDashboardIssues(
+    $projectId: String
+    $versionId: String
+    $teamId: String
+    $startAt: Int
+    $maxResults: Int
+  ) {
     projectId @client @export(as: "projectId")
     versionId @client @export(as: "versionId")
     teamId @client @export(as: "teamId")
-    dashboardIssues(projectId: $projectId, versionId: $versionId, teamId: $teamId, startAt: $startAt, maxResults: $maxResults) {
+    dashboardIssues(
+      projectId: $projectId
+      versionId: $versionId
+      teamId: $teamId
+      startAt: $startAt
+      maxResults: $maxResults
+    ) {
       maxResults
       total
       labels
@@ -41,42 +55,62 @@ const barContent = (
   </div>
 );
 
+const Wrapper = ({ children }) => (
+  <Layout>
+    <PageHeader bottomBar={barContent}>Dashboard</PageHeader>
+    {children}
+  </Layout>
+);
+
+const Block = styled.div`
+  display: block;
+`;
+
 function Dashboard({ navigationViewController }) {
   const { error, loading, data } = useQuery(GET_ISSUES, {
     fetchPolicy: 'network-only',
   });
 
-  useEffect(() => navigationViewController.setView(projectHomeView.id), [navigationViewController]);
+  useEffect(() => navigationViewController.setView(projectHomeView.id), [
+    navigationViewController,
+  ]);
 
-  // if (error) return <EmptyState header={error.name} description={error.message} />;
+  if (loading) {
+    return (
+      <Wrapper>
+        <Loading />
+      </Wrapper>
+    );
+  }
+  if (error) {
+    return (
+      <Wrapper>
+        <EmptyState header={error.name} description={error.message} />
+      </Wrapper>
+    );
+  }
 
   return (
-    <Layout>
-      <PageHeader bottomBar={barContent}>Dashboard</PageHeader>
-      {loading
-        ? <Loading />
-        : error
-          ? <EmptyState header={error.name} description={error.message} />
-          : (
-            <div style={{ display: 'block' }}>
-              <Grid>
-                {data.dashboardIssues
-                && data.dashboardIssues
-                && (
-                  <BarChart
-                    labels={data.dashboardIssues.labels}
-                    values={data.dashboardIssues.values}
-                    maxResults={data.dashboardIssues.maxResults}
-                    total={data.dashboardIssues.total}
-                  />
-                )}
-              </Grid>
-            </div>
+    <Wrapper>
+      <Block>
+        <Grid>
+          {data.dashboardIssues && data.dashboardIssues && (
+            <BarChart
+              labels={data.dashboardIssues.labels}
+              values={data.dashboardIssues.values}
+              maxResults={data.dashboardIssues.maxResults}
+              total={data.dashboardIssues.total}
+            />
           )}
-    </Layout>
+        </Grid>
+      </Block>
+    </Wrapper>
   );
 }
 
+Wrapper.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 Dashboard.propTypes = {
   navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
 };

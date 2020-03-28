@@ -55,14 +55,16 @@ const GET_ISSUE = gql`
 `;
 
 function Issue({ navigationViewController, issueId }) {
-  useEffect(() => navigationViewController.setView(productIssuesView.id),
-    [navigationViewController]);
+  useEffect(() => navigationViewController.setView(productIssuesView.id), [
+    navigationViewController,
+  ]);
   const { data, loading, error } = useQuery(GET_ISSUE, {
     variables: { id: issueId },
   });
 
   if (loading) return <Loading />;
-  if (error) return <EmptyState header={error.name} description={error.message} />;
+  if (error)
+    return <EmptyState header={error.name} description={error.message} />;
 
   const {
     id,
@@ -76,9 +78,7 @@ function Issue({ navigationViewController, issueId }) {
       status,
       priority,
       fixVersions,
-      comment: {
-        comments,
-      },
+      comment: { comments },
     },
   } = data.issue;
 

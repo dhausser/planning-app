@@ -10,7 +10,12 @@ import Button, { ButtonGroup } from '@atlaskit/button';
 import { ModalTransition } from '@atlaskit/modal-dialog';
 import EmptyState from '@atlaskit/empty-state';
 import { TeamFilter, projectHomeView, Layout } from '../components';
-import { CreateResourceModal, EditResourceModal, DeleteResourceModal, TableRow } from '../components/resource';
+import {
+  CreateResourceModal,
+  EditResourceModal,
+  DeleteResourceModal,
+  TableRow,
+} from '../components/resource';
 
 const GET_RESOURCES = gql`
   query GetResources($teamId: String) {
@@ -31,7 +36,6 @@ const barContent = (
     <TeamFilter />
   </div>
 );
-
 
 const head = {
   cells: [
@@ -60,7 +64,9 @@ function Resources({ navigationViewController }) {
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const { data, loading, error } = useQuery(GET_RESOURCES);
 
-  useEffect(() => navigationViewController.setView(projectHomeView.id), [navigationViewController]);
+  useEffect(() => navigationViewController.setView(projectHomeView.id), [
+    navigationViewController,
+  ]);
 
   let resources = [];
   if (!loading) {
@@ -68,13 +74,16 @@ function Resources({ navigationViewController }) {
       ? data.resources.filter((resource) => resource.team === data.teamId)
       : data.resources;
   }
-  if (error) return <EmptyState header={error.name} description={error.message} />;
+  if (error)
+    return <EmptyState header={error.name} description={error.message} />;
 
   return (
     <Layout>
       <PageHeader bottomBar={barContent}>Teams</PageHeader>
       <ButtonGroup>
-        <Button appearance="primary" onClick={() => setIsCreateOpen(true)}>Create</Button>
+        <Button appearance="primary" onClick={() => setIsCreateOpen(true)}>
+          Create
+        </Button>
       </ButtonGroup>
       <DynamicTable
         caption={`${resources.length} people`}

@@ -10,10 +10,9 @@ module.exports = {
         projectId, statusId, versionId, teamId, resourceId, startAt, maxResults,
       })
     ),
-    dashboardIssues: (_, { projectId, versionId, teamId }, { dataSources }) => {
-      console.log('Getting issues...');
-      return dataSources.issueAPI.getDashboardIssues({ projectId, versionId, teamId });
-    },
+    dashboardIssues: (_, { projectId, versionId, teamId }, { dataSources }) => (
+      dataSources.issueAPI.getDashboardIssues({ projectId, versionId, teamId })
+    ),
     roadmapIssues: (_, { projectId, versionId }, { dataSources }) => (
       dataSources.issueAPI.getRoadmapIssues(projectId, versionId)
     ),

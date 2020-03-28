@@ -3,8 +3,30 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const months = [
-  'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
-  'Jan 21', 'Feb 21', 'Mar 21', 'Apr 21', 'May 21', 'Jun 21', 'Jul 21', 'Aug 21', 'Sep 21', 'Oct 21', 'Nov 21', 'Dec 21',
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
+  'Jan 21',
+  'Feb 21',
+  'Mar 21',
+  'Apr 21',
+  'May 21',
+  'Jun 21',
+  'Jul 21',
+  'Aug 21',
+  'Sep 21',
+  'Oct 21',
+  'Nov 21',
+  'Dec 21',
 ];
 
 const MONTH_WIDTH = 20;
@@ -17,7 +39,13 @@ export default function Calendar({ issues }) {
         {issues.map((issue) => <RowContainer key={issue.key} />)}
       </TimelineWrapper> */}
       {months.map((month, i) => (
-        <Divider key={month} style={{ left: `calc(${i} * ${MONTH_WIDTH}%)`, right: `calc(100% - ${MONTH_WIDTH}% * ${i + 1})` }}>
+        <Divider
+          key={month}
+          style={{
+            left: `calc(${i} * ${MONTH_WIDTH}%)`,
+            right: `calc(100% - ${MONTH_WIDTH}% * ${i + 1})`,
+          }}
+        >
           <Header>
             <small style={{ marginTop: 'inherit' }}>{month}</small>
           </Header>
@@ -51,9 +79,9 @@ export const CreateButton = styled.div`
   width: 100%;
   cursor: pointer;
   border-radius: 4px;
-  
+
   &:hover {
-    background-color: #DFE1E6;
+    background-color: #dfe1e6;
   }
 `;
 
@@ -74,11 +102,11 @@ export const RowContainer = styled.div`
   }
 
   &:hover {
-    background-color: #DFE1E6;
+    background-color: #dfe1e6;
   }
 
   ${CreateButton} {
-    background-color: #DFE1E6;
+    background-color: #dfe1e6;
     fill: rebeccapurple;
   }
 `;

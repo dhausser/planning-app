@@ -5,7 +5,9 @@ import PageHeader from '@atlaskit/page-header';
 import { projectHomeView, Layout } from '../components';
 
 function Board({ navigationViewController }) {
-  useEffect(() => navigationViewController.setView(projectHomeView.id), [navigationViewController]);
+  useEffect(() => navigationViewController.setView(projectHomeView.id), [
+    navigationViewController,
+  ]);
 
   return (
     <Layout>

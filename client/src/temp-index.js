@@ -9,7 +9,7 @@ const Padding = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0px 0px 0px 40px;
-  box-sizing: border-box; 
+  box-sizing: border-box;
   height: 100vh;
 `;
 

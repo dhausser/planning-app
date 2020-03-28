@@ -12,9 +12,7 @@ export default function Priority({ id }) {
   return (
     <>
       <h6>Priority</h6>
-      <Wrapper>
-        {priorityIconMap[id]}
-      </Wrapper>
+      <Wrapper>{priorityIconMap[id]}</Wrapper>
     </>
   );
 }

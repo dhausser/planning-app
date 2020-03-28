@@ -67,14 +67,22 @@ const barContent = (
   </div>
 );
 
-
 function Absences({ id }) {
-  const { loading, error, data } = useQuery(GET_ABSENCES, { variables: { id } });
+  const { loading, error, data } = useQuery(GET_ABSENCES, {
+    variables: { id },
+  });
 
   if (loading || !data) return <Loading />;
-  if (error) return <EmptyState header={error.name} description={error.message} />;
+  if (error)
+    return <EmptyState header={error.name} description={error.message} />;
 
-  return <>{data.absences.map(({ date }) => <Status key={date} text={date} color="blue" />)}</>;
+  return (
+    <>
+      {data.absences.map(({ date }) => (
+        <Status key={date} text={date} color="blue" />
+      ))}
+    </>
+  );
 }
 
 function Resource({ navigationViewController, resourceId }) {

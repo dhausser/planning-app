@@ -144,8 +144,6 @@ module.exports = class ResourceAPI extends DataSource {
   async getResourcesByTeam(teamId) {
     let cursor;
 
-    console.log(teamId);
-
     try {
       cursor = await this.store.resources
         .find({ team: teamId })

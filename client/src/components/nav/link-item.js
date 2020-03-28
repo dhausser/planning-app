@@ -5,7 +5,7 @@ import { Location, Link } from '@reach/router';
 function LinkItem({ components: { Item }, to, ...props }) {
   return (
     <Location>
-      { ({ location: { pathname } }) => (
+      {({ location: { pathname } }) => (
         <Item
           component={({ children, className }) => (
             <Link css={{ color: '#DEEBFF' }} className={className} to={to}>

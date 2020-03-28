@@ -21,91 +21,110 @@ import Calendar16Icon from '@atlaskit/icon-object/glyph/calendar/16';
 import NewFeature16Icon from '@atlaskit/icon-object/glyph/new-feature/16';
 
 export const issuetypeIconMap = {
-  1:
-  <Tooltip content="Bug">
-    <Bug16Icon />
-  </Tooltip>,
-  3:
-  <Tooltip content="Task">
-    <Task16Icon />
-  </Tooltip>,
-  5:
-  <Tooltip content="Sub-task">
-    <Subtask16Icon />
-  </Tooltip>,
-  10000:
-  <Tooltip content="Epic">
-    <Epic16Icon />
-  </Tooltip>,
-  10001:
-  <Tooltip content="Story">
-    <Story16Icon />
-  </Tooltip>,
+  1: (
+    <Tooltip content="Bug">
+      <Bug16Icon />
+    </Tooltip>
+  ),
+  3: (
+    <Tooltip content="Task">
+      <Task16Icon />
+    </Tooltip>
+  ),
+  5: (
+    <Tooltip content="Sub-task">
+      <Subtask16Icon />
+    </Tooltip>
+  ),
+  10000: (
+    <Tooltip content="Epic">
+      <Epic16Icon />
+    </Tooltip>
+  ),
+  10001: (
+    <Tooltip content="Story">
+      <Story16Icon />
+    </Tooltip>
+  ),
   /**
    * Jira Cloud
    */
-  10005:
-  <Tooltip content="Story">
-    <Story16Icon />
-  </Tooltip>,
-  10006:
-  <Tooltip content="Task">
-    <Task16Icon />
-  </Tooltip>,
-  10007:
-  <Tooltip content="Sub-task">
-    <Subtask16Icon />
-  </Tooltip>,
-  10008:
-  <Tooltip content="Bug">
-    <Bug16Icon />
-  </Tooltip>,
+  10005: (
+    <Tooltip content="Story">
+      <Story16Icon />
+    </Tooltip>
+  ),
+  10006: (
+    <Tooltip content="Task">
+      <Task16Icon />
+    </Tooltip>
+  ),
+  10007: (
+    <Tooltip content="Sub-task">
+      <Subtask16Icon />
+    </Tooltip>
+  ),
+  10008: (
+    <Tooltip content="Bug">
+      <Bug16Icon />
+    </Tooltip>
+  ),
   /**
    * Custom Issuetypes
    */
-  11700:
-  <Tooltip content="Feedback">
-    <Blog16Icon />
-  </Tooltip>,
-  12100:
-  <Tooltip content="Backend">
-    <Code16Icon />
-  </Tooltip>,
-  13600:
-  <Tooltip content="Live Event">
-    <Calendar16Icon />
-  </Tooltip>,
-  15100:
-  <Tooltip content="Product">
-    <NewFeature16Icon />
-  </Tooltip>,
+  11700: (
+    <Tooltip content="Feedback">
+      <Blog16Icon />
+    </Tooltip>
+  ),
+  12100: (
+    <Tooltip content="Backend">
+      <Code16Icon />
+    </Tooltip>
+  ),
+  13600: (
+    <Tooltip content="Live Event">
+      <Calendar16Icon />
+    </Tooltip>
+  ),
+  15100: (
+    <Tooltip content="Product">
+      <NewFeature16Icon />
+    </Tooltip>
+  ),
 };
 
 export const priorityIconMap = {
-  10400:
-  <Tooltip content="Outage">
-    <PriorityBlockerIcon size="small" label="label" />
-  </Tooltip>,
-  10401:
-  <Tooltip content="Problem">
-    <PriorityCriticalIcon size="small" label="label" />
-  </Tooltip>,
-  10402:
-  <Tooltip content="Must">
-    <PriorityHighestIcon size="small" label="label" />
-  </Tooltip>,
-  10403:
-  <Tooltip content="Should">
-    <PriorityMediumIcon size="small" label="label" />
-  </Tooltip>,
-  10404:
-  <Tooltip content="Could">
-    <PriorityLowIcon size="small" label="label" />
-  </Tooltip>,
-  10405:
-  <Tooltip content="Won't">
-    <PriorityTrivialIcon size="small" label="label" />
-  </Tooltip>,
+  10400: (
+    <Tooltip content="Outage">
+      <PriorityBlockerIcon size="small" label="label" />
+    </Tooltip>
+  ),
+  10401: (
+    <Tooltip content="Problem">
+      <PriorityCriticalIcon size="small" label="label" />
+    </Tooltip>
+  ),
+  10402: (
+    <Tooltip content="Must">
+      <PriorityHighestIcon size="small" label="label" />
+    </Tooltip>
+  ),
+  10403: (
+    <Tooltip content="Should">
+      <PriorityMediumIcon size="small" label="label" />
+    </Tooltip>
+  ),
+  10404: (
+    <Tooltip content="Could">
+      <PriorityLowIcon size="small" label="label" />
+    </Tooltip>
+  ),
+  10405: (
+    <Tooltip content="Won't">
+      <PriorityTrivialIcon size="small" label="label" />
+    </Tooltip>
+  ),
 };
 
 export const statusCatecoryColorMap = {
@@ -146,7 +165,7 @@ export default {
       <PriorityLowIcon size="small" />
     </Tooltip>
   ),
-  'Won\'t': (
+  "Won't": (
     <Tooltip content="Won't">
       <PriorityTrivialIcon size="small" />
     </Tooltip>

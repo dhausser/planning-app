@@ -32,7 +32,7 @@ body {
   padding: 0px 5px;
   transition: left 0.1s ease 0s, right 0.1s ease 0s;
   border-radius: 3px;
-  background: rgb(135, 119, 217)
+  background: rgb(135, 119, 217);
 }
 
 .icon {
@@ -40,7 +40,7 @@ body {
   width: 16px;
   color: currentColor;
   display: inline-block;
-  fill: #FFFFFF;
+  fill: #ffffff;
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;

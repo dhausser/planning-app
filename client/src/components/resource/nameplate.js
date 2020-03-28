@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import Avatar from '@atlaskit/avatar';
 
 const GET_ASSIGNEE = gql`
-  query Assignee($id: ID!){
+  query Assignee($id: ID!) {
     user(id: $id) {
       displayName
       avatarUrls {
@@ -16,7 +16,9 @@ const GET_ASSIGNEE = gql`
 `;
 
 export default function Nameplate({ id }) {
-  const { loading, error, data } = useQuery(GET_ASSIGNEE, { variables: { id } });
+  const { loading, error, data } = useQuery(GET_ASSIGNEE, {
+    variables: { id },
+  });
 
   if (loading) return null;
   if (error) return `Error! ${error}`;

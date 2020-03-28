@@ -4,7 +4,7 @@ import { OptionType } from '@atlaskit/select';
 import Filter from './filter';
 
 const GET_STATUSES = gql`
-  query ($id: ID!) {
+  query($id: ID!) {
     projectId @client @export(as: "id")
     statusId @client
     statuses(id: $id) {
@@ -20,15 +20,14 @@ const GET_STATUSES = gql`
   }
 `;
 
-const updateFilter = (
-  client: ApolloClient<object>,
-  e: OptionType,
-) => {
+const updateFilter = (client: ApolloClient<object>, e: OptionType) => {
   const value = e ? e.value : null;
   client.writeQuery({
-    query: gql`{
-      statusId
-    }`,
+    query: gql`
+      {
+        statusId
+      }
+    `,
     data: {
       statusId: value,
     },

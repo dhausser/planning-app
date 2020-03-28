@@ -30,7 +30,6 @@ StatusInParagraph.propTypes = {
   color: PropTypes.string.isRequired,
 };
 
-
 StatusComponent.propTypes = {
   name: PropTypes.string.isRequired,
   statusCategory: PropTypes.objectOf(PropTypes.objectOf).isRequired,

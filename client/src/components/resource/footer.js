@@ -7,8 +7,16 @@ const Footer = ({ setIsOpen }) => (
   <ModalFooter>
     <span />
     <ButtonGroup>
-      <Button appearance="primary" type="submit">Submit</Button>
-      <Button appearance="default" type="close" onClick={() => setIsOpen(false)}>Close</Button>
+      <Button appearance="primary" type="submit">
+        Submit
+      </Button>
+      <Button
+        appearance="default"
+        type="close"
+        onClick={() => setIsOpen(false)}
+      >
+        Close
+      </Button>
     </ButtonGroup>
   </ModalFooter>
 );

@@ -2,16 +2,25 @@ import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { ApolloProvider, useQuery, gql } from '@apollo/client';
-import { NavigationProvider, withNavigationViewController, LayoutManagerWithViewController } from '@atlaskit/navigation-next';
+import {
+  NavigationProvider,
+  withNavigationViewController,
+  LayoutManagerWithViewController,
+} from '@atlaskit/navigation-next';
 import '@atlaskit/css-reset';
 
 import client from './apollo-client';
 import Pages from './pages';
 import Login from './pages/login';
-import { GlobalNavigation, productHomeView, productIssuesView, projectHomeView } from './components/nav';
+import {
+  GlobalNavigation,
+  productHomeView,
+  productIssuesView,
+  projectHomeView,
+} from './components/nav';
 
 interface NavigationViewController {
-  navigationViewController: any,
+  navigationViewController: any;
 }
 
 const IS_LOGGED_IN = gql`
@@ -41,7 +50,6 @@ App.propTypes = {
 const AppWithNavigationViewController = withNavigationViewController(App);
 
 ReactDOM.render(
-
   <ApolloProvider client={client}>
     <NavigationProvider>
       <AppWithNavigationViewController />

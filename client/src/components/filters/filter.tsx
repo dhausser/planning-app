@@ -1,5 +1,10 @@
 import React from 'react';
-import { ApolloClient, DocumentNode, useApolloClient, useQuery } from '@apollo/client';
+import {
+  ApolloClient,
+  DocumentNode,
+  useApolloClient,
+  useQuery,
+} from '@apollo/client';
 import Select, { OptionType, OptionsType, ValueType } from '@atlaskit/select';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -15,17 +20,17 @@ interface FilterOptionData {
 }
 
 interface FilterProps {
-  query: DocumentNode,
-  updateFilter: (client: ApolloClient<object>, e: OptionType) => void,
-  isClearable: boolean,
-  valuesName: string,
-  valueName: string,
-  placeholder: string,
+  query: DocumentNode;
+  updateFilter: (client: ApolloClient<object>, e: OptionType) => void;
+  isClearable: boolean;
+  valuesName: string;
+  valueName: string;
+  placeholder: string;
 }
 
 interface ItemProps {
-  id: string,
-  name: string,
+  id: string;
+  name: string;
 }
 
 interface IIndexable {
@@ -47,20 +52,24 @@ function Filter({
   let options: OptionsType<OptionType> = [];
 
   const handleChange = (e: ValueType<OptionType>) => {
-    if ((Array.isArray(e))) {
+    if (Array.isArray(e)) {
       throw new Error('Unexpected type passed to ReactSelect onChange handler');
     }
     updateFilter(client, e as OptionType);
   };
 
-  if (error) return <EmptyState header={error.name} description={error.message} />;
+  if (error) {
+    return <EmptyState header={error.name} description={error.message} />;
+  }
 
   if (data && (data as IIndexable)[valuesName]) {
-    options = (data as IIndexable)[valuesName].map(({ id, name }: ItemProps) => {
-      const option = { value: id, label: (name || id) };
-      if (id === (data as IIndexable)[valueName]) selected = option;
-      return option;
-    });
+    options = (data as IIndexable)[valuesName].map(
+      ({ id, name }: ItemProps) => {
+        const option = { value: id, label: name || id };
+        if (id === (data as IIndexable)[valueName]) selected = option;
+        return option;
+      },
+    );
   }
 
   return (
@@ -104,4 +113,4 @@ export default Filter;
 export const Wrapper = styled.div`
   flex-basis: 180px;
   margin-right: 10px;
- `;
+`;

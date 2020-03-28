@@ -4,8 +4,9 @@
     "es6": true
   },
   "extends": [
+    "airbnb",
     "plugin:react/recommended",
-    "airbnb"
+    "plugin:prettier/react"
   ],
   "globals": {
     "Atomics": "readonly",
@@ -25,7 +26,6 @@
   ],
   "ignorePatterns": ["temp.js", "node_modules/"],
   "rules": {
-    "no-nested-ternary": "off",
     "import/extensions": "off",
     "import/no-unresolved": "off",
     "react/jsx-filename-extension": "off",

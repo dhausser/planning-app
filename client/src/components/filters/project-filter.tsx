@@ -3,27 +3,27 @@ import { ApolloClient, gql } from '@apollo/client';
 import { OptionType } from '@atlaskit/select';
 import Filter from './filter';
 
-const GET_PROJECTS = gql`{
-  projectId @client
-  projects {
-    id
-    name
+const GET_PROJECTS = gql`
+  {
+    projectId @client
+    projects {
+      id
+      name
+    }
   }
-}
 `;
 
-export const updateFilter = (
-  client: ApolloClient<object>,
-  e: OptionType,
-) => {
+export const updateFilter = (client: ApolloClient<object>, e: OptionType) => {
   const value = e ? e.value : null;
   client.writeQuery({
-    query: gql`{
-      projectId
-      versionId
-      statusId
-      teamId
-    }`,
+    query: gql`
+      {
+        projectId
+        versionId
+        statusId
+        teamId
+      }
+    `,
     data: {
       projectId: value,
       versionId: null,

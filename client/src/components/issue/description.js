@@ -31,9 +31,7 @@ function Description({ id, description }) {
       <InlineEdit
         defaultValue={editValue}
         label="Description"
-        editView={(fieldProps, ref) => (
-          <TextArea {...fieldProps} ref={ref} />
-        )}
+        editView={(fieldProps, ref) => <TextArea {...fieldProps} ref={ref} />}
         readView={() => (
           <ReadViewContainer>
             {editValue || 'Click to enter value'}

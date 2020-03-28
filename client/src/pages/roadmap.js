@@ -12,7 +12,7 @@ const Padding = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0px 0px 0px 40px;
-  box-sizing: border-box; 
+  box-sizing: border-box;
   height: 100vh;
 `;
 
@@ -24,19 +24,23 @@ const barContent = (
 );
 
 const breadcrumbs = (
-  <BreadcrumbsStateless onExpand={() => { }}>
+  <BreadcrumbsStateless onExpand={() => {}}>
     <BreadcrumbsItem text="Projects" key="Projects" />
     <BreadcrumbsItem text="Gwent" key="Gwent" />
   </BreadcrumbsStateless>
 );
 
 function Roadmap({ navigationViewController }) {
-  useEffect(() => navigationViewController.setView(projectHomeView.id), [navigationViewController]);
+  useEffect(() => navigationViewController.setView(projectHomeView.id), [
+    navigationViewController,
+  ]);
 
   return (
     <Page>
       <Padding>
-        <PageHeader breadcrumbs={breadcrumbs} bottomBar={barContent}>Roadmap</PageHeader>
+        <PageHeader breadcrumbs={breadcrumbs} bottomBar={barContent}>
+          Roadmap
+        </PageHeader>
         <Timeline />
       </Padding>
     </Page>

@@ -73,7 +73,8 @@ function AssignUser({ id, user, type }) {
   });
   const [assignIssue] = useMutation(ASSIGN_ISSUE);
 
-  if (error) return <EmptyState header={error.name} description={error.message} />;
+  if (error)
+    return <EmptyState header={error.name} description={error.message} />;
 
   return (
     <>
@@ -89,7 +90,9 @@ function AssignUser({ id, user, type }) {
           // maxOptions="100"
           // options={options}
           // options={data && data.resources && data.resources.map(getResource)}
-          options={data.assignableUsers && data.assignableUsers.map(getAssignee)}
+          options={
+            data.assignableUsers && data.assignableUsers.map(getAssignee)
+          }
           onChange={(value) => {
             setAssignee(value);
             assignIssue({

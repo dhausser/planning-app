@@ -60,7 +60,9 @@ const GET_ISSUES = gql`
 `;
 
 function Backlog({ navigationViewController }) {
-  useEffect(() => navigationViewController.setView(projectHomeView.id), [navigationViewController]);
+  useEffect(() => navigationViewController.setView(projectHomeView.id), [
+    navigationViewController,
+  ]);
   const [isExpanded, setIsExpanded] = useState(false);
 
   const { data, loading, error } = useQuery(GET_ISSUES);
@@ -68,7 +70,7 @@ function Backlog({ navigationViewController }) {
   return (
     <Layout>
       <PageHeader
-        bottomBar={(
+        bottomBar={
           <div style={{ display: 'flex' }}>
             <div style={{ flex: '0 0 200px', marginRight: 8 }}>
               <TextField isCompact placeholder="Filter" aria-label="Filter" />
@@ -80,53 +82,49 @@ function Backlog({ navigationViewController }) {
               </Button>
             </div>
           </div>
-        )}
+        }
       >
         Backlog
       </PageHeader>
-      {error
-        ? <EmptyState header={error.name} description={error.message} />
-        : (
-          <TableTree>
-            <Headers>
-              <Header width={120}>Type</Header>
-              <Header width={700}>Summary</Header>
-              <Header width={150}>Status</Header>
-            </Headers>
-            <Rows
-              items={loading ? null : data.roadmapIssues}
-              render={({
-                key,
-                fields,
-                children,
-              }) => (
-                <Row
-                  key
-                  itemId={key}
-                  items={children}
-                  hasChildren={children && children.length > 0}
-                  isDefaultExpanded={isExpanded}
-                >
-                  <Cell singleLine>{issuetypeIconMap[fields.issuetype.id]}</Cell>
-                  <Cell singleLine>
-                    <Link to={`/issue/${key}`}>{fields.summary}</Link>
-                  </Cell>
-                  <Cell singleLine>
-                    <Status
-                      text={fields.status.name}
-                      color={statusCatecoryColorMap[fields.status.statusCategory.id]}
-                    />
-                  </Cell>
-
-                </Row>
-              )}
-            />
-          </TableTree>
-        )}
+      {error ? (
+        <EmptyState header={error.name} description={error.message} />
+      ) : (
+        <TableTree>
+          <Headers>
+            <Header width={120}>Type</Header>
+            <Header width={700}>Summary</Header>
+            <Header width={150}>Status</Header>
+          </Headers>
+          <Rows
+            items={loading ? null : data.roadmapIssues}
+            render={({ key, fields, children }) => (
+              <Row
+                key
+                itemId={key}
+                items={children}
+                hasChildren={children && children.length > 0}
+                isDefaultExpanded={isExpanded}
+              >
+                <Cell singleLine>{issuetypeIconMap[fields.issuetype.id]}</Cell>
+                <Cell singleLine>
+                  <Link to={`/issue/${key}`}>{fields.summary}</Link>
+                </Cell>
+                <Cell singleLine>
+                  <Status
+                    text={fields.status.name}
+                    color={
+                      statusCatecoryColorMap[fields.status.statusCategory.id]
+                    }
+                  />
+                </Cell>
+              </Row>
+            )}
+          />
+        </TableTree>
+      )}
     </Layout>
   );
 }
-
 
 Backlog.propTypes = {
   navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,

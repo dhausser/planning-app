@@ -31,10 +31,12 @@ const AppSwitcherComponent = () => (
 
 function GetAvatarUrl() {
   const { data } = useQuery(GET_CURRENT_USER);
-  return data
-    && data.myself
-    && data.myself.avatarUrls
-    && data.myself.avatarUrls.small;
+  return (
+    data &&
+    data.myself &&
+    data.myself.avatarUrls &&
+    data.myself.avatarUrls.small
+  );
 }
 
 export default () => {

@@ -5,9 +5,8 @@ const openRequestedPopup = () => {
   const devEndpoint = 'http://localhost:4000/auth/provider';
   const prodEndpoint = 'https://roadmap.cdprojektred.com/auth/provider';
 
-  const url = process.env.NODE_ENV === 'production'
-    ? prodEndpoint
-    : devEndpoint;
+  const url =
+    process.env.NODE_ENV === 'production' ? prodEndpoint : devEndpoint;
 
   // eslint-disable-next-line no-restricted-globals
   const { width, height } = screen;
@@ -15,16 +14,18 @@ const openRequestedPopup = () => {
   const windowWidth = 1080;
   const windowHeight = 720;
 
-  const left = (width / 2) - (windowWidth / 2);
-  const top = (height / 12);
+  const left = width / 2 - windowWidth / 2;
+  const top = height / 12;
 
-  return window.open(url, '_blank', `width=${windowWidth}, height=${windowHeight}, top=${top}, left=${left}`);
+  return window.open(
+    url,
+    '_blank',
+    `width=${windowWidth}, height=${windowHeight}, top=${top}, left=${left}`,
+  );
 };
 
 function LoginForm() {
-  const actions = [
-    { text: 'Login', onClick: openRequestedPopup },
-  ];
+  const actions = [{ text: 'Login', onClick: openRequestedPopup }];
 
   /**
    * TODO:

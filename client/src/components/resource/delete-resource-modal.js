@@ -22,12 +22,13 @@ export default function DeleteResourceModal({ setIsOpen }) {
       onClose={() => setIsOpen(false)}
       components={{
         Container: ({ children, className }) => (
-          <Form onSubmit={(data) => {
-            deleteResource({
-              variables: { ...data },
-              onComplete: () => setIsOpen(false),
-            });
-          }}
+          <Form
+            onSubmit={(data) => {
+              deleteResource({
+                variables: { ...data },
+                onComplete: () => setIsOpen(false),
+              });
+            }}
           >
             {({ formProps }) => (
               <form {...formProps} className={className}>
@@ -41,7 +42,9 @@ export default function DeleteResourceModal({ setIsOpen }) {
     >
       <p>Are you sure want to delete this resource?</p>
       <Field label="Email" name="email" defaultValue="" isRequired>
-        {({ fieldProps }) => <TextField placeholder="gerald@cdprojektred.com" {...fieldProps} />}
+        {({ fieldProps }) => (
+          <TextField placeholder="gerald@cdprojektred.com" {...fieldProps} />
+        )}
       </Field>
     </ModalDialog>
   );

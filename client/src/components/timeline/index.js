@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from "styled-components";
+import styled from 'styled-components';
 // import { useQuery, gql } from '@apollo/client';
 // import { ScrollSync } from 'react-scroll-sync';
 // import EmojiCustomIcon from '@atlaskit/icon/glyph/emoji/custom';

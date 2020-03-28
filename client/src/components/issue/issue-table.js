@@ -22,10 +22,12 @@ const IssueTable = () => {
     <>
       <DynamicTable
         head={head}
-        rows={data
-          && data.issues
-          && data.issues.issues
-          && data.issues.issues.map(row)}
+        rows={
+          data &&
+          data.issues &&
+          data.issues.issues &&
+          data.issues.issues.map(row)
+        }
         rowsPerPage={ROWS_PER_PAGE}
         loadingSpinnerSize="large"
         isLoading={loading}
@@ -33,11 +35,15 @@ const IssueTable = () => {
         defaultSortKey="priority"
         defaultSortOrder="ASC"
         isRankable
-        emptyView={error && <EmptyState header={error.name} description={error.message} />}
+        emptyView={
+          error && (
+            <EmptyState header={error.name} description={error.message} />
+          )
+        }
       />
-      {data && data.issues
-        && data.issues.total > length
-        && <LoadButton fetchMore={fetchMore} startAt={length} />}
+      {data && data.issues && data.issues.total > length && (
+        <LoadButton fetchMore={fetchMore} startAt={length} />
+      )}
     </>
   );
 };

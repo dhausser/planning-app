@@ -1,6 +1,21 @@
-export { GlobalNavigation, productHomeView, productIssuesView, projectHomeView } from './nav';
-export { ProjectFilter, VersionFilter, StatusFilter, TeamFilter } from './filters';
-export { IssueTable, priorityIconMap, issuetypeIconMap, statusCatecoryColorMap } from './issue';
+export {
+  GlobalNavigation,
+  productHomeView,
+  productIssuesView,
+  projectHomeView,
+} from './nav';
+export {
+  ProjectFilter,
+  VersionFilter,
+  StatusFilter,
+  TeamFilter,
+} from './filters';
+export {
+  IssueTable,
+  priorityIconMap,
+  issuetypeIconMap,
+  statusCatecoryColorMap,
+} from './issue';
 export { default as Layout } from './layout';
 export { default as Loading } from './loading';
 export { default as LoginForm } from './login-form';

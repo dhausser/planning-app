@@ -12,15 +12,14 @@ export const GET_TEAMS = gql`
   }
 `;
 
-const updateFilter = (
-  client: ApolloClient<object>,
-  e: OptionType,
-) => {
+const updateFilter = (client: ApolloClient<object>, e: OptionType) => {
   const value = e ? e.value : null;
   client.writeQuery({
-    query: gql`{
-      teamId
-    }`,
+    query: gql`
+      {
+        teamId
+      }
+    `,
     data: {
       teamId: value,
     },

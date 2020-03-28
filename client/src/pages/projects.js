@@ -79,7 +79,7 @@ FilterLink.propTypes = {
 };
 
 function createRow(project) {
-  return ({
+  return {
     key: project.id,
     cells: [
       {
@@ -94,9 +94,7 @@ function createRow(project) {
                 src={project.avatarUrls.small}
               />
             </AvatarWrapper>
-            <FilterLink projectId={project.id}>
-              {project.name}
-            </FilterLink>
+            <FilterLink projectId={project.id}>{project.name}</FilterLink>
           </NameWrapper>
         ),
       },
@@ -109,20 +107,25 @@ function createRow(project) {
         content: project.projectTypeKey,
       },
     ],
-  });
+  };
 }
 
 function Projects({ navigationViewController }) {
-  useEffect(() => navigationViewController.setView(productHomeView.id), [navigationViewController]);
+  useEffect(() => navigationViewController.setView(productHomeView.id), [
+    navigationViewController,
+  ]);
   const { data, loading, error } = useQuery(GET_PROJECTS);
 
-  if (error) return <EmptyState header={error.name} description={error.message} />;
+  if (error)
+    return <EmptyState header={error.name} description={error.message} />;
 
   return (
     <Layout>
       <PageHeader>Projects</PageHeader>
       <DynamicTable
-        caption={data && `Displaying ${data.projects && data.projects.length} projects`}
+        caption={
+          data && `Displaying ${data.projects && data.projects.length} projects`
+        }
         head={head}
         rows={data && data.projects && data.projects.map(createRow)}
         rowsPerPage={20}

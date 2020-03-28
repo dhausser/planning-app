@@ -4,7 +4,11 @@ import { Link } from '@reach/router';
 import Tooltip from '@atlaskit/tooltip';
 import Lozenge from '@atlaskit/lozenge';
 import { Status } from '@atlaskit/status';
-import { statusCatecoryColorMap, priorityIconMap, issuetypeIconMap } from './icon';
+import {
+  statusCatecoryColorMap,
+  priorityIconMap,
+  issuetypeIconMap,
+} from './icon';
 // import { GET_ISSUES, ISSUE_ROW_DATA, ISSUE_PAGINATION, ROWS_PER_PAGE } from './useIssues';
 
 export const head = {
@@ -55,22 +59,14 @@ export const head = {
 };
 
 export const row = ({
-  key, fields: {
-    summary,
-    issuetype,
-    status,
-    priority,
-    fixVersions,
-    assignee,
-  },
+  key,
+  fields: { summary, issuetype, status, priority, fixVersions, assignee },
 }) => ({
   key,
   cells: [
     {
       key,
-      content: (
-        <Link to={`/issue/${key}`}>{key}</Link>
-      ),
+      content: <Link to={`/issue/${key}`}>{key}</Link>,
     },
     {
       key: summary,
@@ -103,14 +99,12 @@ export const row = ({
     },
     {
       key: fixVersions[0] ? fixVersions[0].id : null,
-      content: (
-        fixVersions[0]
-          ? (
-            <Tooltip content={fixVersions[0].name}>
-              <Lozenge appearance="default">{fixVersions[0].name}</Lozenge>
-            </Tooltip>
-          )
-          : ''
+      content: fixVersions[0] ? (
+        <Tooltip content={fixVersions[0].name}>
+          <Lozenge appearance="default">{fixVersions[0].name}</Lozenge>
+        </Tooltip>
+      ) : (
+        ''
       ),
     },
   ],
