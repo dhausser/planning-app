@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useApolloClient, useQuery, gql } from '@apollo/client';
-import PropTypes from 'prop-types';
 import ChevD from '@atlaskit/icon/glyph/chevron-down';
 import {
   ContainerHeader,
@@ -9,6 +8,7 @@ import {
 } from '@atlaskit/navigation-next';
 import EmptyState from '@atlaskit/empty-state';
 import { updateFilter } from '../filters/project-filter';
+import { Project, ProjectListItem } from '../../types';
 
 const PROJECT_TILE_DATA = gql`
   fragment ProjectTile on Project {
@@ -32,12 +32,6 @@ const GET_PROJECTS = gql`
   ${PROJECT_TILE_DATA}
 `;
 
-const GET_PROJECT_FILTER = gql`
-  {
-    projectId @client
-  }
-`;
-
 const create = () => ({
   onClick: () => {
     // eslint-disable-next-line no-alert
@@ -51,11 +45,9 @@ const create = () => ({
   text: 'Create board',
 });
 
-const target = ({ id, subText, text, avatar }) => (
+const target = ({ id, subText, text, avatar }: ProjectListItem) => (
   <ContainerHeader
-    before={(s) => (
-      <ItemAvatar appearance="square" itemState={s} size="large" src={avatar} />
-    )}
+    before={() => <ItemAvatar appearance="square" size="large" src={avatar} />}
     after={ChevD}
     id={id}
     subText={subText}
@@ -64,40 +56,37 @@ const target = ({ id, subText, text, avatar }) => (
 );
 
 function ProjectSwitcher() {
+  const [selected, setSelected] = useState<ProjectListItem>();
+  const [options, setOptions] = useState<ProjectListItem[]>();
   const client = useApolloClient();
-  const { data, loading, error } = useQuery(GET_PROJECTS);
-  const {
-    data: { projectId },
-  } = useQuery(GET_PROJECT_FILTER);
-  const [selected, setSelected] = useState({});
-  const [options, setOptions] = useState([]);
+  const { data, loading, error } = useQuery<{
+    projects: Project[];
+    projectId: string;
+  }>(GET_PROJECTS);
 
   useEffect(() => {
     if (!loading && !error) {
-      const projects = [
-        {
-          label: 'Recent Projects',
-          options: [],
-        },
-      ];
+      const options: ProjectListItem[] = [];
 
-      data.projects.forEach((project) => {
-        projects[0].options.push({
-          avatar: project.avatarUrls.large,
-          id: project.id,
-          pathname: `/projects/${project.key}`,
-          text: project.name,
-          subText: `${project.projectTypeKey} project`,
+      if (data) {
+        data.projects.forEach((project) => {
+          const item: ProjectListItem = {
+            avatar: project.avatarUrls.large,
+            id: project.id,
+            pathname: `/projects/${project.key}`,
+            text: project.name,
+            subText: `${project.projectTypeKey} project`,
+          };
+          options.push(item);
         });
-      });
 
-      const current =
-        projectId && projects[0].options.find(({ id }) => id === projectId);
-
-      setOptions(projects);
-      setSelected(current || projects[0].options[0]);
+        const current =
+          data.projectId && options.find(({ id }) => id === data.projectId);
+        setSelected(current || options[0]);
+        setOptions(options);
+      }
     }
-  }, [data, error, projectId, loading]);
+  }, [data, error, data?.projectId, loading]);
 
   if (loading) return <div />;
   if (error)
@@ -106,22 +95,15 @@ function ProjectSwitcher() {
   return (
     <Switcher
       create={create()}
-      onChange={({ id, text }) => {
-        updateFilter(client, id);
-        setSelected({ id, text });
+      onChange={(option: ProjectListItem) => {
+        updateFilter(client, { value: option.id, label: option.text });
+        setSelected(option);
       }}
       options={options}
-      target={target(selected)}
+      target={selected && target(selected)}
       value={selected}
     />
   );
 }
-
-target.propTypes = {
-  id: PropTypes.string.isRequired,
-  subText: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
-  avatar: PropTypes.string.isRequired,
-};
 
 export default ProjectSwitcher;

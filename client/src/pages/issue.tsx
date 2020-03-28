@@ -15,7 +15,7 @@ import {
   UserPicker,
   Comments,
 } from '../components/issue';
-import { Props } from './types';
+import { Props } from '../types';
 
 const Padding = styled.div`
   padding: 40px 0px 0px 40px;

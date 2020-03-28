@@ -10,7 +10,7 @@ import EmptyState from '@atlaskit/empty-state';
 import Avatar from '@atlaskit/avatar';
 import { productHomeView, Layout } from '../components';
 import { updateFilter } from '../components/filters/project-filter';
-import { Props, FilterLinkProps, Project } from './types';
+import { Props, FilterLinkProps, Project } from '../types';
 
 const PROJECT_TILE_DATA = gql`
   fragment ProjectTile on Project {

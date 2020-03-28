@@ -14,7 +14,7 @@ import {
   DeleteResourceModal,
   TableRow,
 } from '../components/resource';
-import { Props, Resource } from './types';
+import { Props, Resource } from '../types';
 
 const GET_RESOURCES = gql`
   query GetResources($teamId: String) {

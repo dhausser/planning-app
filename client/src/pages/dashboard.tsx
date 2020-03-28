@@ -2,12 +2,15 @@ import React, { useEffect, FunctionComponent, ReactNode } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import { Grid } from '@atlaskit/page';
 import PageHeader from '@atlaskit/page-header';
-import { withNavigationViewController, NavigationViewController } from '@atlaskit/navigation-next';
+import {
+  withNavigationViewController,
+  NavigationViewController,
+} from '@atlaskit/navigation-next';
 import TextField from '@atlaskit/textfield';
 import EmptyState from '@atlaskit/empty-state';
 import styled from 'styled-components';
 
-import { Props } from './types';
+import { Props } from '../types';
 
 import {
   projectHomeView,
@@ -107,6 +110,6 @@ const Dashboard: FunctionComponent<Props> = ({ navigationViewController }) => {
       </Block>
     </Wrapper>
   );
-}
+};
 
 export default withNavigationViewController(Dashboard);

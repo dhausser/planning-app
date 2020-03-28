@@ -1,5 +1,4 @@
-import React, { ElementType, ReactNode } from 'react';
-// import Tooltip from '@atlaskit/tooltip';
+import React, { ReactNode } from 'react';
 
 // Import Priority Icons
 import PriorityBlockerIcon from '@atlaskit/icon-priority/glyph/priority-blocker';

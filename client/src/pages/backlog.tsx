@@ -21,7 +21,7 @@ import {
   statusCatecoryColorMap,
   issuetypeIconMap,
 } from '../components';
-import { Props, RowProps } from './types';
+import { Props, RowProps } from '../types';
 
 const ROADMAP_ROW_DATA = gql`
   fragment RoadmapRow on Issue {

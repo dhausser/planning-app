@@ -12,7 +12,7 @@ import {
   TeamFilter,
   IssueTable,
 } from '../components';
-import { Props } from './types';
+import { Props } from '../types';
 
 const barContent = (
   <div style={{ display: 'flex' }}>

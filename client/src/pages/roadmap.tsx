@@ -6,7 +6,7 @@ import PageHeader from '@atlaskit/page-header';
 import Page from '@atlaskit/page';
 import { projectHomeView, ProjectFilter, VersionFilter } from '../components';
 import Timeline from '../components/timeline';
-import { Props } from './types';
+import { Props } from '../types';
 
 const Padding = styled.div`
   display: flex;

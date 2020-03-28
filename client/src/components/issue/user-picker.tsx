@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, gql } from '@apollo/client';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { gridSize } from '@atlaskit/theme';
 import UserPicker from '@atlaskit/user-picker';
 import EmptyState from '@atlaskit/empty-state';
+import { Resource } from '../../types';
 
 const Wrapper = styled.div`
   padding: ${gridSize() - 2}px ${gridSize() - 2}px;
@@ -38,11 +38,11 @@ const ASSIGN_ISSUE = gql`
   }
 `;
 
-function getAvatarUrl(key) {
+function getAvatarUrl(key: string) {
   return `https://jira.cdprojektred.com/secure/useravatar?ownerId=${key}`;
 }
 
-function getAssignee({ key, displayName }) {
+function getAssignee({ key, displayName }: Resource) {
   if (key == null) return {};
   return {
     id: key,
@@ -53,7 +53,7 @@ function getAssignee({ key, displayName }) {
   };
 }
 
-export function getResource(user) {
+export function getResource(user: Resource) {
   return {
     id: user.key,
     name: user.name,
@@ -64,9 +64,15 @@ export function getResource(user) {
   };
 }
 
-function AssignUser({ id, user, type }) {
-  const [assignee, setAssignee] = useState(user);
-  // const { data, loading, error } = useQuery(GET_RESOURCES, { fetchPolicy: 'cache-first' });
+function AssignUser({
+  id,
+  user,
+  type,
+}: {
+  id: string;
+  user: Resource;
+  type: string;
+}) {
   const { data, loading, error } = useQuery(GET_ASSIGNABLE_USERS, {
     variables: { id },
     fetchPolicy: 'cache-first',
@@ -86,20 +92,13 @@ function AssignUser({ id, user, type }) {
           appearance="compact"
           subtle
           isClearable={false}
-          defaultValue={assignee && getAssignee(assignee)}
-          // maxOptions="100"
-          // options={options}
-          // options={data && data.resources && data.resources.map(getResource)}
           options={
             data.assignableUsers && data.assignableUsers.map(getAssignee)
           }
           onChange={(value) => {
-            setAssignee(value);
+            console.log(value);
             assignIssue({
-              variables: {
-                id,
-                key: value.id,
-              },
+              variables: { id: value },
             });
           }}
         />
@@ -107,12 +106,5 @@ function AssignUser({ id, user, type }) {
     </>
   );
 }
-
-AssignUser.propTypes = {
-  id: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  // issueKey: PropTypes.string.isRequired,
-  user: PropTypes.objectOf(PropTypes.objectOf).isRequired,
-};
 
 export default AssignUser;

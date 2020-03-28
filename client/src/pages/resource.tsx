@@ -15,7 +15,7 @@ import {
   IssueTable,
   Nameplate,
 } from '../components';
-import { ResourceProps, Absence } from './types';
+import { ResourceProps, Absence } from '../types';
 
 // const GET_ISSUES = gql`
 //   query GetIssues(

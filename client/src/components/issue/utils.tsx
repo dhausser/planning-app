@@ -1,5 +1,4 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
 import { Link } from '@reach/router';
 import Tooltip from '@atlaskit/tooltip';
 import Lozenge from '@atlaskit/lozenge';
@@ -9,7 +8,7 @@ import {
   priorityIconMap,
   issuetypeIconMap,
 } from './icon';
-// import { GET_ISSUES, ISSUE_ROW_DATA, ISSUE_PAGINATION, ROWS_PER_PAGE } from './useIssues';
+import { Issue } from '../../types';
 
 export const head = {
   cells: [
@@ -61,7 +60,7 @@ export const head = {
 export const row = ({
   key,
   fields: { summary, issuetype, status, priority, fixVersions, assignee },
-}) => ({
+}: Issue) => ({
   key,
   cells: [
     {

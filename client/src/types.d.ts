@@ -18,21 +18,38 @@ export interface FilterLinkProps {
   name: string;
 }
 
-export interface IssueType {
+export interface Issue {
   id: string;
   key: string;
   name: string;
+  fields: IssueFields;
 }
 
 export interface IssuesStatus {
   name: string;
+  category: string;
   statusCategory: IssueType;
+}
+
+interface Priority {
+  id: string;
+  key: string;
+  name: string
+}
+
+interface FixVersion {
+  id: string;
+  key: string;
+  name: string
 }
 
 export interface IssueFields {
   summary: string;
   status: IssuesStatus;
   issuetype: IssueType;
+  priority: Priority;
+  fixVersions: FixVersion[]
+  assignee: 
 }
 
 export interface RowProps {
@@ -42,14 +59,29 @@ export interface RowProps {
 }
 
 export interface Project extends IssueType {
+  id: string;
+  key: string;
+  name: string;
   projectTypeKey: string;
-  avatarUrls: { small: string };
+  avatarUrls: { 
+    small: string
+    large: string;
+  };
+}
+
+export interface ProjectListItem  {
+  id: string;
+  avatar: string;
+  pathname: string;
+  text: string;
+  subText: string;
 }
 
 export interface Resource {
   key: string;
   name: string;
   team: string;
+  displayName: string;
 }
 
 export interface Absence {
