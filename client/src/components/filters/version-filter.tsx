@@ -41,6 +41,6 @@ export default () => (
     valueName="versionId"
     valuesName="versions"
     placeholder="Select version"
-    isClearable={false}
+    isClearable
   />
 );

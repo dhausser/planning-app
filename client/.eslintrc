@@ -25,6 +25,7 @@
   ],
   "ignorePatterns": ["temp.js", "node_modules/"],
   "rules": {
+    "no-nested-ternary": "off",
     "import/extensions": "off",
     "import/no-unresolved": "off",
     "react/jsx-filename-extension": "off",

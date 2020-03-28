@@ -39,6 +39,6 @@ export default () => (
     valueName="teamId"
     valuesName="teams"
     placeholder="Select team"
-    isClearable={false}
+    isClearable
   />
 );

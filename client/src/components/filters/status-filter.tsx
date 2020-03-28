@@ -47,6 +47,6 @@ export default () => (
     valueName="statusId"
     valuesName="statuses"
     placeholder="Select status"
-    isClearable={false}
+    isClearable
   />
 );

@@ -7,7 +7,13 @@ import { withNavigationViewController } from '@atlaskit/navigation-next';
 import TextField from '@atlaskit/textfield';
 import EmptyState from '@atlaskit/empty-state';
 import {
-  projectHomeView, Layout, ProjectFilter, VersionFilter, TeamFilter, BarChart, Loading,
+  projectHomeView,
+  Layout,
+  Loading,
+  ProjectFilter,
+  VersionFilter,
+  TeamFilter,
+  BarChart,
 } from '../components';
 
 const GET_ISSUES = gql`
@@ -36,23 +42,25 @@ const barContent = (
 );
 
 function Dashboard({ navigationViewController }) {
-  useEffect(() => navigationViewController.setView(projectHomeView.id), [navigationViewController]);
-  const { error, loading, data } = useQuery(GET_ISSUES);
+  const { error, loading, data } = useQuery(GET_ISSUES, {
+    fetchPolicy: 'network-only',
+  });
 
-  if (error) {
-    console.log(error);
-    return <EmptyState header={error.name} description={error.message} />;
-  }
+  useEffect(() => navigationViewController.setView(projectHomeView.id), [navigationViewController]);
+
+  // if (error) return <EmptyState header={error.name} description={error.message} />;
 
   return (
     <Layout>
       <PageHeader bottomBar={barContent}>Dashboard</PageHeader>
       {loading
         ? <Loading />
-        : (
-          <div style={{ display: 'block' }}>
-            <Grid>
-              {data.dashboardIssues
+        : error
+          ? <EmptyState header={error.name} description={error.message} />
+          : (
+            <div style={{ display: 'block' }}>
+              <Grid>
+                {data.dashboardIssues
                 && data.dashboardIssues
                 && (
                   <BarChart
@@ -62,9 +70,9 @@ function Dashboard({ navigationViewController }) {
                     total={data.dashboardIssues.total}
                   />
                 )}
-            </Grid>
-          </div>
-        )}
+              </Grid>
+            </div>
+          )}
     </Layout>
   );
 }

@@ -21,6 +21,8 @@ module.exports = class IssueAPI extends RESTDataSource {
     super();
     this.baseURL = `https://${process.env.HOST}`;
     this.oauth = new Oauth(this.baseURL);
+    this.resources = [];
+    this.resourceMap = {};
   }
 
   /**
@@ -120,17 +122,10 @@ module.exports = class IssueAPI extends RESTDataSource {
       ? await this.context.dataSources.resourceAPI.getResourcesByTeam(teamId)
       : await this.context.dataSources.resourceAPI.getResources();
 
-    /**
-     * TOFIX: Cannot read property key of null when teamId is provided
-     */
-
-    const assignee = resources.map(({ key }) => key) || [];
+    const assignee = resources.map((resource) => resource.key) || [];
 
     const dashboard = new Dashboard({
-      projectId,
-      versionId,
-      teamId,
-      assignee,
+      projectId, versionId, teamId, assignee,
     });
 
     const response = await this.post('/rest/api/2/search', dashboard.getParams());

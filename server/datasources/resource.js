@@ -141,8 +141,10 @@ module.exports = class ResourceAPI extends DataSource {
    * @returns {Promise<ResourcesByTeamResult>} A promise that will resolve to
    * a list of ResourcesByTeamResult.
    */
-  async getResourcesByTeam({ teamId }) {
+  async getResourcesByTeam(teamId) {
     let cursor;
+
+    console.log(teamId);
 
     try {
       cursor = await this.store.resources
