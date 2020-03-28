@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import Spinner from '@atlaskit/spinner';
 import EmptyState from '@atlaskit/empty-state';
@@ -14,7 +14,7 @@ const GET_ASSIGNABLE_USERS = gql`
   }
 `;
 
-export default function AssignableUserPicker() {
+const AssignableUserPicker: FunctionComponent = () => {
   const { loading, error, data } = useQuery(GET_ASSIGNABLE_USERS, {
     variables: { project: 'GWENT' },
   });
@@ -30,4 +30,6 @@ export default function AssignableUserPicker() {
       options={data && data.resources && data.resources.map(getResource)}
     />
   );
-}
+};
+
+export default AssignableUserPicker;

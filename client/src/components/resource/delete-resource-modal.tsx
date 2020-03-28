@@ -1,10 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useMutation, gql } from '@apollo/client';
 import ModalDialog from '@atlaskit/modal-dialog';
 import Form, { Field } from '@atlaskit/form';
 import TextField from '@atlaskit/textfield';
 import Footer from './footer';
+import { ModalInterfaceProps, Team, Resource } from './types';
 
 const DELETE_RESOURCE = gql`
   mutation DeleteResource($id: ID!) {
@@ -14,8 +14,11 @@ const DELETE_RESOURCE = gql`
   }
 `;
 
-export default function DeleteResourceModal({ setIsOpen }) {
+export default function DeleteResourceModal({
+  setIsOpen,
+}: ModalInterfaceProps) {
   const [deleteResource] = useMutation(DELETE_RESOURCE);
+
   return (
     <ModalDialog
       heading="Delete"
@@ -24,10 +27,8 @@ export default function DeleteResourceModal({ setIsOpen }) {
         Container: ({ children, className }) => (
           <Form
             onSubmit={(data) => {
-              deleteResource({
-                variables: { ...data },
-                onComplete: () => setIsOpen(false),
-              });
+              deleteResource({ variables: { ...data } });
+              setIsOpen(false);
             }}
           >
             {({ formProps }) => (
@@ -49,9 +50,3 @@ export default function DeleteResourceModal({ setIsOpen }) {
     </ModalDialog>
   );
 }
-
-DeleteResourceModal.propTypes = {
-  setIsOpen: PropTypes.bool.isRequired,
-  children: PropTypes.element.isRequired,
-  className: PropTypes.string.isRequired,
-};

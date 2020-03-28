@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, FunctionComponent } from 'react';
 import { Link } from '@reach/router';
 import { useApolloClient, useQuery, gql } from '@apollo/client';
 import PropTypes from 'prop-types';
@@ -10,6 +10,7 @@ import EmptyState from '@atlaskit/empty-state';
 import Avatar from '@atlaskit/avatar';
 import { productHomeView, Layout } from '../components';
 import { updateFilter } from '../components/filters/project-filter';
+import { Props, FilterLinkProps, Project } from './types';
 
 const PROJECT_TILE_DATA = gql`
   fragment ProjectTile on Project {
@@ -61,24 +62,18 @@ const head = {
   ],
 };
 
-function FilterLink({ projectId, children }) {
+function FilterLink({ children, id, name }: FilterLinkProps) {
   const client = useApolloClient();
+  const value = id;
+  const label = name;
   return (
-    <Link
-      to="/roadmap"
-      onClick={() => updateFilter(client, { value: projectId })}
-    >
+    <Link to="/roadmap" onClick={() => updateFilter(client, { value, label })}>
       {children}
     </Link>
   );
 }
 
-FilterLink.propTypes = {
-  projectId: PropTypes.string.isRequired,
-  children: PropTypes.string.isRequired,
-};
-
-function createRow(project) {
+function createRow(project: Project) {
   return {
     key: project.id,
     cells: [
@@ -94,7 +89,9 @@ function createRow(project) {
                 src={project.avatarUrls.small}
               />
             </AvatarWrapper>
-            <FilterLink projectId={project.id}>{project.name}</FilterLink>
+            <FilterLink id={project.id} name={project.name}>
+              {project.name}
+            </FilterLink>
           </NameWrapper>
         ),
       },
@@ -110,7 +107,7 @@ function createRow(project) {
   };
 }
 
-function Projects({ navigationViewController }) {
+const Projects: FunctionComponent<Props> = ({ navigationViewController }) => {
   useEffect(() => navigationViewController.setView(productHomeView.id), [
     navigationViewController,
   ]);
@@ -129,7 +126,7 @@ function Projects({ navigationViewController }) {
         head={head}
         rows={data && data.projects && data.projects.map(createRow)}
         rowsPerPage={20}
-        loadingSpinnerSize="medium"
+        loadingSpinnerSize="small"
         isLoading={loading}
         isFixedSize
         defaultSortKey="name"
@@ -137,10 +134,6 @@ function Projects({ navigationViewController }) {
       />
     </Layout>
   );
-}
-
-Projects.propTypes = {
-  navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
 };
 
 export default withNavigationViewController(Projects);

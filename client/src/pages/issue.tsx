@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, FunctionComponent } from 'react';
 import { useQuery, gql } from '@apollo/client';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import Page, { Grid, GridColumn } from '@atlaskit/page';
@@ -16,6 +15,7 @@ import {
   UserPicker,
   Comments,
 } from '../components/issue';
+import { Props } from './types';
 
 const Padding = styled.div`
   padding: 40px 0px 0px 40px;
@@ -54,7 +54,10 @@ const GET_ISSUE = gql`
   ${ISSUE_ROW_DATA}
 `;
 
-function Issue({ navigationViewController, issueId }) {
+const Issue: FunctionComponent<Props> = ({
+  navigationViewController,
+  issueId,
+}) => {
   useEffect(() => navigationViewController.setView(productIssuesView.id), [
     navigationViewController,
   ]);
@@ -102,11 +105,6 @@ function Issue({ navigationViewController, issueId }) {
       </Padding>
     </Page>
   );
-}
-
-Issue.propTypes = {
-  navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
-  issueId: PropTypes.string.isRequired,
 };
 
 export default withNavigationViewController(Issue);

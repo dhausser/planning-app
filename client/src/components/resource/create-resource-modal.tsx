@@ -1,11 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useMutation, gql } from '@apollo/client';
 import ModalDialog from '@atlaskit/modal-dialog';
 import Form, { Field } from '@atlaskit/form';
 import AssignableUserPicker from './assignable-user-picker';
 import TeamPicker from './team-picker';
 import Footer from './footer';
+import { ModalInterfaceProps, ResourceForm } from './types';
 
 const INSERT_RESOURCE = gql`
   mutation InsertResource(
@@ -27,9 +27,10 @@ const INSERT_RESOURCE = gql`
   }
 `;
 
-export default function CreateResourceModal({ setIsOpen }) {
+export default function CreateResourceModal({
+  setIsOpen,
+}: ModalInterfaceProps) {
   const [insertResource] = useMutation(INSERT_RESOURCE, {
-    // eslint-disable-next-line no-console
     onCompleted: ({ key }) => {
       console.log(`Successfully created resource: ${key}`);
     },
@@ -41,16 +42,9 @@ export default function CreateResourceModal({ setIsOpen }) {
       scrollBehavior="outside"
       onClose={() => setIsOpen(false)}
       components={{
-        // eslint-disable-next-line react/prop-types
         Container: ({ children, className }) => (
-          <Form
-            onSubmit={(formData) => {
-              const {
-                firstname,
-                lastname,
-                email,
-                team: { value },
-              } = formData;
+          <Form<ResourceForm>
+            onSubmit={({ firstname, lastname, email, team }) => {
               const id = `${firstname.toLowerCase()}.${lastname.toLowerCase()}`;
               insertResource({
                 variables: {
@@ -58,10 +52,10 @@ export default function CreateResourceModal({ setIsOpen }) {
                   firstname,
                   lastname,
                   email,
-                  team: value,
+                  team: team.value,
                 },
-                onComplete: () => setIsOpen(false),
               });
+              setIsOpen(false);
             }}
           >
             {({ formProps }) => (
@@ -74,35 +68,12 @@ export default function CreateResourceModal({ setIsOpen }) {
         Footer: () => <Footer setIsOpen={setIsOpen} />,
       }}
     >
-      <Field
-        label="Assignee"
-        name="assignee"
-        defaultValue=""
-        placeholder="Assignee"
-        isRequired
-      >
-        {({ fieldProps }) => <AssignableUserPicker fieldProps={fieldProps} />}
+      <Field label="Assignee" name="assignee" defaultValue="" isRequired>
+        {() => <AssignableUserPicker />}
       </Field>
-      <Field
-        label="Team"
-        name="team"
-        defaultValue=""
-        placeholder="Team"
-        isRequired
-      >
-        {({ fieldProps }) => (
-          <>
-            <TeamPicker fieldProps={fieldProps} />
-          </>
-        )}
+      <Field label="Team" name="team" defaultValue="" isRequired>
+        {() => <TeamPicker />}
       </Field>
-      {/* <Footer setIsOpen={setIsOpen} /> */}
     </ModalDialog>
   );
 }
-
-CreateResourceModal.propTypes = {
-  setIsOpen: PropTypes.bool.isRequired,
-  // children: PropTypes.element.isRequired,
-  // className: PropTypes.string.isRequired,
-};

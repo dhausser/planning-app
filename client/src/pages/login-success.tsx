@@ -1,4 +1,6 @@
+import { RouteComponentProps } from '@reach/router';
 import { useApolloClient, useMutation, gql } from '@apollo/client';
+import { FunctionComponent } from 'react';
 
 const LOGIN_USER = gql`
   mutation login {
@@ -6,7 +8,7 @@ const LOGIN_USER = gql`
   }
 `;
 
-export default function LoginMutation() {
+const LoginMutation: FunctionComponent<RouteComponentProps> = () => {
   const client = useApolloClient();
   const [login] = useMutation(LOGIN_USER, {
     onCompleted: ({ login: token }) => {
@@ -25,4 +27,6 @@ export default function LoginMutation() {
   });
   login();
   return null;
-}
+};
+
+export default LoginMutation;

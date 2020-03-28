@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, FunctionComponent } from 'react';
 import styled from 'styled-components';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import { BreadcrumbsStateless, BreadcrumbsItem } from '@atlaskit/breadcrumbs';
@@ -7,6 +6,7 @@ import PageHeader from '@atlaskit/page-header';
 import Page from '@atlaskit/page';
 import { projectHomeView, ProjectFilter, VersionFilter } from '../components';
 import Timeline from '../components/timeline';
+import { Props } from './types';
 
 const Padding = styled.div`
   display: flex;
@@ -30,7 +30,7 @@ const breadcrumbs = (
   </BreadcrumbsStateless>
 );
 
-function Roadmap({ navigationViewController }) {
+const Roadmap: FunctionComponent<Props> = ({ navigationViewController }) => {
   useEffect(() => navigationViewController.setView(projectHomeView.id), [
     navigationViewController,
   ]);
@@ -45,10 +45,6 @@ function Roadmap({ navigationViewController }) {
       </Padding>
     </Page>
   );
-}
-
-Roadmap.propTypes = {
-  navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
 };
 
 export default withNavigationViewController(Roadmap);

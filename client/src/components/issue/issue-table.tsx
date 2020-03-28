@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FunctionComponent } from 'react';
 import { useQuery } from '@apollo/client';
 import DynamicTable from '@atlaskit/dynamic-table';
 import EmptyState from '@atlaskit/empty-state';
@@ -6,10 +6,15 @@ import { LoadButton } from '..';
 import { GET_ISSUES, ROWS_PER_PAGE } from './useIssues';
 import { head, row } from './utils';
 
-const IssueTable = () => {
+const IssueTable: FunctionComponent<{ resourceId?: string }> = ({
+  resourceId,
+}) => {
   const [length, setLength] = useState(0);
   const { loading, error, data, fetchMore } = useQuery(GET_ISSUES, {
-    variables: { maxResults: ROWS_PER_PAGE },
+    variables: {
+      resourceId,
+      maxResults: ROWS_PER_PAGE,
+    },
   });
 
   useEffect(() => {

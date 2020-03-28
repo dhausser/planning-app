@@ -1,12 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, FunctionComponent, ReactNode } from 'react';
 import { useQuery, gql } from '@apollo/client';
-import PropTypes from 'prop-types';
 import { Grid } from '@atlaskit/page';
 import PageHeader from '@atlaskit/page-header';
-import { withNavigationViewController } from '@atlaskit/navigation-next';
+import { withNavigationViewController, NavigationViewController } from '@atlaskit/navigation-next';
 import TextField from '@atlaskit/textfield';
 import EmptyState from '@atlaskit/empty-state';
 import styled from 'styled-components';
+
+import { Props } from './types';
 
 import {
   projectHomeView,
@@ -55,7 +56,7 @@ const barContent = (
   </div>
 );
 
-const Wrapper = ({ children }) => (
+const Wrapper: FunctionComponent = ({ children }) => (
   <Layout>
     <PageHeader bottomBar={barContent}>Dashboard</PageHeader>
     {children}
@@ -66,7 +67,7 @@ const Block = styled.div`
   display: block;
 `;
 
-function Dashboard({ navigationViewController }) {
+const Dashboard: FunctionComponent<Props> = ({ navigationViewController }) => {
   const { error, loading, data } = useQuery(GET_ISSUES, {
     fetchPolicy: 'network-only',
   });
@@ -107,12 +108,5 @@ function Dashboard({ navigationViewController }) {
     </Wrapper>
   );
 }
-
-Wrapper.propTypes = {
-  children: PropTypes.node.isRequired,
-};
-Dashboard.propTypes = {
-  navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
-};
 
 export default withNavigationViewController(Dashboard);

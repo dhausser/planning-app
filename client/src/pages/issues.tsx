@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, FunctionComponent } from 'react';
 import PropTypes from 'prop-types';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import PageHeader from '@atlaskit/page-header';
@@ -12,6 +12,7 @@ import {
   TeamFilter,
   IssueTable,
 } from '../components';
+import { Props } from './types';
 
 const barContent = (
   <div style={{ display: 'flex' }}>
@@ -25,7 +26,7 @@ const barContent = (
   </div>
 );
 
-function Issues({ navigationViewController }) {
+const Issues: FunctionComponent<Props> = ({ navigationViewController }) => {
   useEffect(() => {
     navigationViewController.setView(productIssuesView.id);
   }, [navigationViewController]);
@@ -36,10 +37,6 @@ function Issues({ navigationViewController }) {
       <IssueTable />
     </Layout>
   );
-}
-
-Issues.propTypes = {
-  navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
 };
 
 export default withNavigationViewController(Issues);

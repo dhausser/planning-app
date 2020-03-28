@@ -1,21 +1,22 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
+import { RouteComponentProps } from '@reach/router';
 import Modal, { ModalTransition } from '@atlaskit/modal-dialog';
 
 const openRequestedPopup = () => {
-  const devEndpoint = 'http://localhost:4000/auth/provider';
-  const prodEndpoint = 'https://roadmap.cdprojektred.com/auth/provider';
+  const devEndpoint: string = 'http://localhost:4000/auth/provider';
+  const prodEndpoint: string = 'https://roadmap.cdprojektred.com/auth/provider';
 
-  const url =
+  const url: string =
     process.env.NODE_ENV === 'production' ? prodEndpoint : devEndpoint;
 
   // eslint-disable-next-line no-restricted-globals
   const { width, height } = screen;
 
-  const windowWidth = 1080;
-  const windowHeight = 720;
+  const windowWidth: number = 1080;
+  const windowHeight: number = 720;
 
-  const left = width / 2 - windowWidth / 2;
-  const top = height / 12;
+  const left: number = width / 2 - windowWidth / 2;
+  const top: number = height / 12;
 
   return window.open(
     url,
@@ -24,7 +25,8 @@ const openRequestedPopup = () => {
   );
 };
 
-function LoginForm() {
+// function LoginForm() {
+const LoginForm: FunctionComponent<RouteComponentProps> = () => {
   const actions = [{ text: 'Login', onClick: openRequestedPopup }];
 
   /**
@@ -41,6 +43,6 @@ function LoginForm() {
       </Modal>
     </ModalTransition>
   );
-}
+};
 
 export default LoginForm;

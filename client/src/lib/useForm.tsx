@@ -1,16 +1,24 @@
-import { useState } from 'react';
+import { useState, SyntheticEvent } from 'react';
 
 export default function useForm(initial = {}) {
   const [inputs, setInputs] = useState(initial);
 
-  function handleChange(e) {
-    const { name, type } = e.target;
-    let { value } = e.target;
+  function handleChange(e: SyntheticEvent) {
+    const target = e.target as typeof e.target & {
+      name: string;
+      type: string;
+      value: any;
+      files: string[];
+    };
+
+    const { name, type } = target;
+    let { value } = target;
+
     if (type === 'number') {
       value = parseInt(value, 10);
     }
     if (type === 'file') {
-      [value] = e.target.files;
+      [value] = target.files;
     }
     setInputs({
       ...inputs,

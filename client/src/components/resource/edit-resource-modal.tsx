@@ -1,12 +1,12 @@
 import React from 'react';
 import { useQuery, useMutation, gql } from '@apollo/client';
-import PropTypes from 'prop-types';
 import Form, { Field } from '@atlaskit/form';
 import TextField from '@atlaskit/textfield';
 import Select from '@atlaskit/select';
 import ModalDialog from '@atlaskit/modal-dialog';
 import Footer from './footer';
 import { GET_TEAMS } from '../filters/team-filter';
+import { ModalInterfaceProps, Team, ResourceForm } from './types';
 
 const UPDATE_RESOURCE = gql`
   mutation UpdateResource(
@@ -28,13 +28,13 @@ const UPDATE_RESOURCE = gql`
   }
 `;
 
-export default function EditResourceModal({ setIsOpen }) {
+export default function EditResourceModal({ setIsOpen }: ModalInterfaceProps) {
   const [updateResource] = useMutation(UPDATE_RESOURCE);
   const { data } = useQuery(GET_TEAMS);
   const options =
     data &&
     data.teams &&
-    data.teams.map(({ id }) => ({ label: id, value: id }));
+    data.teams.map(({ id }: Team) => ({ label: id, value: id }));
 
   return (
     <ModalDialog
@@ -43,14 +43,8 @@ export default function EditResourceModal({ setIsOpen }) {
       onClose={() => setIsOpen(false)}
       components={{
         Container: ({ children, className }) => (
-          <Form
-            onSubmit={(formData) => {
-              const {
-                firstname,
-                lastname,
-                email,
-                team: { value },
-              } = formData;
+          <Form<ResourceForm>
+            onSubmit={({ firstname, lastname, email, team }) => {
               const id = `${firstname.toLowerCase()}.${lastname.toLowerCase()}`;
               updateResource({
                 variables: {
@@ -58,10 +52,10 @@ export default function EditResourceModal({ setIsOpen }) {
                   firstname,
                   lastname,
                   email,
-                  team: value,
+                  team: team.value,
                 },
-                onComplete: () => setIsOpen(false),
               });
+              setIsOpen(false);
             }}
           >
             {({ formProps }) => (
@@ -78,7 +72,6 @@ export default function EditResourceModal({ setIsOpen }) {
         label="Firstname"
         name="firstname"
         defaultValue="Gerald"
-        placeholder="Gerald"
         isRequired
       >
         {({ fieldProps }) => <TextField {...fieldProps} />}
@@ -87,7 +80,6 @@ export default function EditResourceModal({ setIsOpen }) {
         label="Lastname"
         name="lastname"
         defaultValue="Of Rivia"
-        placeholder="Of Rivia"
         isRequired
       >
         {({ fieldProps }) => <TextField {...fieldProps} />}
@@ -96,26 +88,13 @@ export default function EditResourceModal({ setIsOpen }) {
         label="Email"
         name="email"
         defaultValue="gerald@cdprojektred.com"
-        placeholder="gerald@cdprojektred.com"
         isRequired
       >
         {({ fieldProps }) => <TextField {...fieldProps} />}
       </Field>
-      <Field
-        label="Team"
-        name="team"
-        defaultValue="Gameplay"
-        placeholder="Team"
-        isRequired
-      >
-        {({ fieldProps }) => <Select options={options} {...fieldProps} />}
+      <Field label="Team" name="team" defaultValue="Gameplay" isRequired>
+        {() => <Select options={options} />}
       </Field>
     </ModalDialog>
   );
 }
-
-EditResourceModal.propTypes = {
-  setIsOpen: PropTypes.bool.isRequired,
-  children: PropTypes.element.isRequired,
-  className: PropTypes.string.isRequired,
-};

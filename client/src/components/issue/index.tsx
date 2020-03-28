@@ -8,7 +8,7 @@ export { default as Comments } from './comments';
 export { default as LoadButton } from './load-button';
 export { default as IssueTable } from './issue-table';
 export {
-  default as priorityIconMap,
+  priorityIconMap,
   issuetypeIconMap,
   statusCatecoryColorMap,
 } from './icon';

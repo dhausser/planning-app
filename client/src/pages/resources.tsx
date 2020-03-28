@@ -1,6 +1,4 @@
-/* eslint-disable react/prop-types */
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect, FunctionComponent } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import DynamicTable from '@atlaskit/dynamic-table';
@@ -16,6 +14,7 @@ import {
   DeleteResourceModal,
   TableRow,
 } from '../components/resource';
+import { Props, Resource } from './types';
 
 const GET_RESOURCES = gql`
   query GetResources($teamId: String) {
@@ -58,7 +57,7 @@ const head = {
   ],
 };
 
-function Resources({ navigationViewController }) {
+const Resources: FunctionComponent<Props> = ({ navigationViewController }) => {
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
@@ -68,10 +67,10 @@ function Resources({ navigationViewController }) {
     navigationViewController,
   ]);
 
-  let resources = [];
+  let resources: Array<Resource> = [];
   if (!loading) {
     resources = data.teamId
-      ? data.resources.filter((resource) => resource.team === data.teamId)
+      ? data.resources.filter(({ team }: Resource) => team === data.teamId)
       : data.resources;
   }
   if (error)
@@ -103,10 +102,6 @@ function Resources({ navigationViewController }) {
       </ModalTransition>
     </Layout>
   );
-}
-
-Resources.propTypes = {
-  navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
 };
 
 export default withNavigationViewController(Resources);

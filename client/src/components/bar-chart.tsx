@@ -1,6 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import Chart from 'chart.js';
+import React, { useState, useEffect, FunctionComponent } from 'react';
+import { Chart } from 'chart.js';
+
+interface ChartData {
+  labels: string[];
+  values: number[];
+  maxResults: number;
+  total: number;
+}
 
 const transparency = '0.3';
 const colors = [
@@ -10,23 +16,25 @@ const colors = [
   { key: 'P200 - Pastelli', value: `rgba(135, 119, 217, ${transparency})` },
 ];
 
-function updateChartOptions(results, total) {
+function updateChartOptions(results: number, total: number) {
   return {
     title: {
       display: true,
       text: `Displaying ${results} of ${total} issues`,
     },
     scales: {
-      yAxes: [{
-        ticks: {
-          beginAtZero: true,
+      yAxes: [
+        {
+          ticks: {
+            beginAtZero: true,
+          },
         },
-      }],
+      ],
     },
   };
 }
 
-function updateChartData(labels, values) {
+function updateChartData(labels: string[], values: number[]) {
   return {
     labels,
     datasets: [
@@ -39,40 +47,33 @@ function updateChartData(labels, values) {
   };
 }
 
-export default function BarChart({
-  labels, values, maxResults, total,
-}) {
-  const [chart, setChart] = useState(null);
+const BarChart: FunctionComponent<ChartData> = ({
+  labels,
+  values,
+  maxResults,
+  total,
+}) => {
+  const [chart, setChart] = useState<Chart | null>(null);
   const results = maxResults > total ? total : maxResults;
   const ctx = 'myChart';
 
   useEffect(() => {
     if (chart) {
-      chart.options.title.text = `Displaying ${results} of ${total} issues`;
+      chart.options.title!.text = `Displaying ${results} of ${total} issues`;
       chart.data = updateChartData(labels, values);
       chart.update();
     } else {
-      setChart(new Chart(ctx, {
-        type: 'bar',
-        data: updateChartData(labels, values),
-        options: updateChartOptions(results, total),
-      }));
+      setChart(
+        new Chart(ctx, {
+          type: 'bar',
+          data: updateChartData(labels, values),
+          options: updateChartOptions(results, total),
+        }),
+      );
     }
   }, [chart, labels, values, results, total]);
 
   return <canvas id="myChart" />;
-}
-
-BarChart.defaultProps = {
-  labels: [],
-  values: [],
-  maxResults: 0,
-  total: 0,
 };
 
-BarChart.propTypes = {
-  labels: PropTypes.arrayOf(PropTypes.string),
-  values: PropTypes.arrayOf(PropTypes.number),
-  maxResults: PropTypes.number,
-  total: PropTypes.number,
-};
+export default BarChart;

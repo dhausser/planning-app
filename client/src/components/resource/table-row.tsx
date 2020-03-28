@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { Link } from '@reach/router';
 import Avatar from '@atlaskit/avatar';
 import Button, { ButtonGroup } from '@atlaskit/button';
 import styled from 'styled-components';
+import { Resource } from './types';
 
 const NameWrapper = styled.span`
   display: flex;
@@ -10,11 +11,15 @@ const NameWrapper = styled.span`
   margin-right: 8px;
 `;
 
-function createKey(input) {
+function createKey(input: string) {
   return input ? input.replace(/^(the|a|an)/, '').replace(/\s/g, '') : input;
 }
 
-export default (resources, setIsEditOpen, setIsDeleteOpen) =>
+const TableRow = (
+  resources: Resource[],
+  setIsEditOpen: Dispatch<SetStateAction<boolean>>,
+  setIsDeleteOpen: Dispatch<SetStateAction<boolean>>,
+) =>
   resources.map((resource) => ({
     key: resource.key,
     cells: [
@@ -50,3 +55,5 @@ export default (resources, setIsEditOpen, setIsDeleteOpen) =>
       },
     ],
   }));
+
+export default TableRow;

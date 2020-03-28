@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, FunctionComponent } from 'react';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import PageHeader from '@atlaskit/page-header';
 import { projectHomeView, Layout } from '../components';
+import { Props } from './types';
 
-function Settings({ navigationViewController }) {
+const Settings: FunctionComponent<Props> = ({ navigationViewController }) => {
   useEffect(() => navigationViewController.setView(projectHomeView.id), [
     navigationViewController,
   ]);
@@ -15,10 +15,6 @@ function Settings({ navigationViewController }) {
       <p>This is the Settings page.</p>
     </Layout>
   );
-}
-
-Settings.propTypes = {
-  navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
 };
 
 export default withNavigationViewController(Settings);

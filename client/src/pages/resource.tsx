@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, FunctionComponent } from 'react';
 import { useQuery, gql } from '@apollo/client';
-import PropTypes from 'prop-types';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import EmptyState from '@atlaskit/empty-state';
 import PageHeader from '@atlaskit/page-header';
@@ -16,6 +15,7 @@ import {
   IssueTable,
   Nameplate,
 } from '../components';
+import { ResourceProps, Absence } from './types';
 
 // const GET_ISSUES = gql`
 //   query GetIssues(
@@ -67,7 +67,7 @@ const barContent = (
   </div>
 );
 
-function Absences({ id }) {
+const Absences: FunctionComponent<{ id: string }> = ({ id }) => {
   const { loading, error, data } = useQuery(GET_ABSENCES, {
     variables: { id },
   });
@@ -78,14 +78,17 @@ function Absences({ id }) {
 
   return (
     <>
-      {data.absences.map(({ date }) => (
+      {data.absences.map(({ date }: Absence) => (
         <Status key={date} text={date} color="blue" />
       ))}
     </>
   );
-}
+};
 
-function Resource({ navigationViewController, resourceId }) {
+const Resource: FunctionComponent<ResourceProps> = ({
+  navigationViewController,
+  resourceId,
+}) => {
   useEffect(() => {
     navigationViewController.setView(projectHomeView.id);
   }, [navigationViewController]);
@@ -99,15 +102,6 @@ function Resource({ navigationViewController, resourceId }) {
       <Absences id={resourceId} />
     </Layout>
   );
-}
-
-Absences.propTypes = {
-  id: PropTypes.string.isRequired,
-};
-
-Resource.propTypes = {
-  navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
-  resourceId: PropTypes.string.isRequired,
 };
 
 export default withNavigationViewController(Resource);

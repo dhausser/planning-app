@@ -1,9 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { ModalFooter } from '@atlaskit/modal-dialog';
 import Button, { ButtonGroup } from '@atlaskit/button';
+import { ModalInterfaceProps } from './types';
 
-const Footer = ({ setIsOpen }) => (
+const Footer = ({ setIsOpen }: ModalInterfaceProps) => (
   <ModalFooter>
     <span />
     <ButtonGroup>
@@ -20,9 +20,5 @@ const Footer = ({ setIsOpen }) => (
     </ButtonGroup>
   </ModalFooter>
 );
-
-Footer.propTypes = {
-  setIsOpen: PropTypes.bool.isRequired,
-};
 
 export default Footer;

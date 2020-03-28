@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import Spinner from '@atlaskit/spinner';
 import Button from '@atlaskit/button';
 import styled from 'styled-components';
@@ -20,12 +20,12 @@ export const ButtonLoading = () => (
   </Button>
 );
 
-function Loading() {
+const Loading: FunctionComponent = () => {
   return (
     <Wrapper>
       <Spinner size="large" />
     </Wrapper>
   );
-}
+};
 
 export default Loading;

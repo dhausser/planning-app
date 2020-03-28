@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FunctionComponent } from 'react';
 import { Link } from '@reach/router';
-import PropTypes from 'prop-types';
 import { useQuery, gql } from '@apollo/client';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import { Status } from '@atlaskit/status';
@@ -22,6 +21,7 @@ import {
   statusCatecoryColorMap,
   issuetypeIconMap,
 } from '../components';
+import { Props, RowProps } from './types';
 
 const ROADMAP_ROW_DATA = gql`
   fragment RoadmapRow on Issue {
@@ -59,7 +59,7 @@ const GET_ISSUES = gql`
   ${ROADMAP_ROW_DATA}
 `;
 
-function Backlog({ navigationViewController }) {
+const Backlog: FunctionComponent<Props> = ({ navigationViewController }) => {
   useEffect(() => navigationViewController.setView(projectHomeView.id), [
     navigationViewController,
   ]);
@@ -97,7 +97,7 @@ function Backlog({ navigationViewController }) {
           </Headers>
           <Rows
             items={loading ? null : data.roadmapIssues}
-            render={({ key, fields, children }) => (
+            render={({ key, fields, children }: RowProps) => (
               <Row
                 key
                 itemId={key}
@@ -105,7 +105,9 @@ function Backlog({ navigationViewController }) {
                 hasChildren={children && children.length > 0}
                 isDefaultExpanded={isExpanded}
               >
-                <Cell singleLine>{issuetypeIconMap[fields.issuetype.id]}</Cell>
+                <Cell singleLine>
+                  <img>{issuetypeIconMap[fields.issuetype.id]}</img>
+                </Cell>
                 <Cell singleLine>
                   <Link to={`/issue/${key}`}>{fields.summary}</Link>
                 </Cell>
@@ -124,10 +126,6 @@ function Backlog({ navigationViewController }) {
       )}
     </Layout>
   );
-}
-
-Backlog.propTypes = {
-  navigationViewController: PropTypes.objectOf(PropTypes.arrayOf).isRequired,
 };
 
 export default withNavigationViewController(Backlog);
