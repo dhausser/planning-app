@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import EmojiCustomIcon from '@atlaskit/icon/glyph/emoji/custom';
 // import { ScrollSyncPane } from 'react-scroll-sync';
 import Epic16Icon from '@atlaskit/icon-object/glyph/epic/16';
+import { MockIssue } from './../../types';
 
-const HEADLINE_WIDTH = 320;
+const HEADLINE_WIDTH: number = 320;
 
-export default function Headline({ issues }) {
+const Headline: React.FC<{ issues: MockIssue[] }> = ({ issues }) => {
   return (
-    <HeadlineContainer width={HEADLINE_WIDTH} style={{ width: HEADLINE_WIDTH }}>
+    <HeadlineContainer style={{ width: HEADLINE_WIDTH }}>
       <EpicTitleWrapper>
         <EpicTitle>Epic</EpicTitle>
         <EpicTitleBottom />
@@ -17,27 +18,20 @@ export default function Headline({ issues }) {
       <HeaderRowWrapper>
         <div style={{ display: 'flex', overflow: 'hidden' }}>
           <HeaderRowScrollBar>
-            <HeaderRowScrollBarWidth
-              width={HEADLINE_WIDTH - 2}
-              style={{ width: HEADLINE_WIDTH - 2 }}
-            >
+            <HeaderRowScrollBarWidth style={{ width: HEADLINE_WIDTH - 2 }}>
               {issues.map((issue) => (
                 <Row key={issue.key}>
                   <HeadlineRowContentWrapper>
                     <HeadlineRowContent>
-                      <Epic16Icon />
+                      <Epic16Icon label="Epic" />
                       <StyledParagraph>{issue.fields.summary}</StyledParagraph>
                     </HeadlineRowContent>
                   </HeadlineRowContentWrapper>
                 </Row>
               ))}
               <CreateButtonWrapper>
-                <CreateButton
-                  role="button"
-                  aria-label="Create issue last"
-                  tabIndex="0"
-                >
-                  <EmojiCustomIcon className="icon" />
+                <CreateButton role="button" aria-label="Create issue last">
+                  <EmojiCustomIcon label="icon" />
                 </CreateButton>
               </CreateButtonWrapper>
               <div
@@ -50,24 +44,13 @@ export default function Headline({ issues }) {
           </HeaderRowScrollBar>
         </div>
         <HeaderRowBorder />
-        <HeaderRowBorder
-          width={HEADLINE_WIDTH}
-          style={{ width: HEADLINE_WIDTH }}
-        />
+        <HeaderRowBorder style={{ width: HEADLINE_WIDTH }} />
       </HeaderRowWrapper>
     </HeadlineContainer>
   );
-}
-
-Headline.defaultProps = {
-  issues: [],
 };
 
-Headline.propTypes = {
-  issues: PropTypes.arrayOf(
-    PropTypes.shape({ key: PropTypes.string.isRequired }),
-  ),
-};
+export default Headline;
 
 /**
  * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE

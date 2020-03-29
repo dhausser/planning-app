@@ -5,19 +5,19 @@ import styled from 'styled-components';
 // import EmojiCustomIcon from '@atlaskit/icon/glyph/emoji/custom';
 // import Epic16Icon from '@atlaskit/icon-object/glyph/epic/16';
 // import EmptyState from '@atlaskit/empty-state';
-
 // import { Loading } from '..';
-// import Calendar from './calendar';
+
 import Headline from './headline';
 import data from './sample.json';
+import { MockIssue } from './../../types';
 
-const { issues, months } = data;
-const WIDTH = 9579.5;
-const MONTH_WIDTH = WIDTH / months.length / 100;
-const daylineOffset = 320;
+const { issues, months }: { issues: MockIssue[]; months: Array<string> } = data;
+const WIDTH: number = 9579.5;
+const MONTH_WIDTH: number = WIDTH / months.length / 100;
+const daylineOffset: number = 320;
 
-const left = 3;
-const right = 95;
+const left: number = 3;
+const right: number = 95;
 
 // const GET_EPICS = gql`
 //   query issueList($projectId: String, $versionId: String) {
@@ -46,7 +46,7 @@ const right = 95;
 // setIssues([...issues, issue]);
 // }
 
-export default function Timeline() {
+const Timeline: React.FC = () => {
   // const { loading, error, data } = useQuery(GET_EPICS);
 
   // if (loading || !data) return <Loading />;
@@ -78,7 +78,7 @@ export default function Timeline() {
           </Div2>
           <Div3>
             <Div30 id="sr-timeline">
-              <Div31 width="9579px" style={{ width: '9579.5px' }}>
+              <Div31 style={{ width: '9579.5px' }}>
                 <Div320>
                   {months.map((month, i) => (
                     <Divider
@@ -115,7 +115,9 @@ export default function Timeline() {
       </Wrapper>
     </Container>
   );
-}
+};
+
+export default Timeline;
 
 /**
  * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE

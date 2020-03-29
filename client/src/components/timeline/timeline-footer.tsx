@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import EmojiCustomIcon from '@atlaskit/icon/glyph/emoji/custom';
 
-export default function TimelineFooter() {
+const TimelineFooter: React.FC = () => {
   return (
     <>
       <TimelineBottom3 />
@@ -14,14 +14,16 @@ export default function TimelineFooter() {
           <InlineCreate3 />
           <InlineCreate4>
             <InlineCreate5>
-              <EmojiCustomIcon className="icon" />
+              <EmojiCustomIcon label="icon" />
             </InlineCreate5>
           </InlineCreate4>
         </InlineCreate2>
       </InlineCreate1>
     </>
   );
-}
+};
+
+export default TimelineFooter;
 
 /**
  * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE

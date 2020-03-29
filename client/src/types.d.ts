@@ -34,13 +34,13 @@ export interface IssuesStatus {
 interface Priority {
   id: string;
   key: string;
-  name: string
+  name: string;
 }
 
 interface FixVersion {
   id: string;
   key: string;
-  name: string
+  name: string;
 }
 
 export interface IssueFields {
@@ -48,8 +48,14 @@ export interface IssueFields {
   status: IssuesStatus;
   issuetype: IssueType;
   priority: Priority;
-  fixVersions: FixVersion[]
-  assignee: 
+  fixVersions: FixVersion[];
+  assignee: Assignee;
+}
+
+export interface Assignee {
+  id: string;
+  key: string;
+  displayName: string;
 }
 
 export interface RowProps {
@@ -63,13 +69,13 @@ export interface Project extends IssueType {
   key: string;
   name: string;
   projectTypeKey: string;
-  avatarUrls: { 
-    small: string
+  avatarUrls: {
+    small: string;
     large: string;
   };
 }
 
-export interface ProjectListItem  {
+export interface ProjectListItem {
   id: string;
   avatar: string;
   pathname: string;
@@ -87,4 +93,10 @@ export interface Resource {
 export interface Absence {
   id: string;
   date: string;
+}
+
+export interface MockIssue {
+  id: string;
+  key: string;
+  fields: { summary: string };
 }
