@@ -1,28 +1,32 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Location, Link } from '@reach/router';
+import { Location, Link, RouteComponentProps } from '@reach/router';
 
-function LinkItem({ components: { Item }, to, ...props }) {
-  return (
-    <Location>
-      {({ location: { pathname } }) => (
-        <Item
-          component={({ children, className }) => (
-            <Link css={{ color: '#DEEBFF' }} className={className} to={to}>
-              {children}
-            </Link>
-          )}
-          isSelected={pathname === to}
-          {...props}
-        />
-      )}
-    </Location>
-  );
+interface ItemProps extends React.FunctionComponent {
+  children?: React.ReactNode;
+  component: React.ReactNode;
+  className: string;
 }
 
-LinkItem.propTypes = {
-  components: PropTypes.objectOf(PropTypes.func).isRequired,
-  to: PropTypes.string.isRequired,
-};
+interface Props extends RouteComponentProps {
+  components: { Item: ItemProps; }
+  to: string;
+}
+
+const LinkItem: React.FC<Props> = ({ components: { Item }, to, ...props }) => (
+  <Location>
+    {({ location: { pathname } }) => (
+      // @ts-ignore
+      <Item component={({ children, className }: ItemProps) => (
+        <Link css={{ color: '#DEEBFF' }} className={className} to={to}>
+          {children}
+        </Link>
+      )}
+        isSelected={pathname === to}
+        {...props}
+      />
+    )}
+  </Location>
+);
+
 
 export default LinkItem;

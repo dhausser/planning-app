@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useMutation, gql } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import styled from 'styled-components';
 
 import { BreadcrumbsStateless, BreadcrumbsItem } from '@atlaskit/breadcrumbs';
@@ -56,7 +56,7 @@ export function copyLink(key: string) {
 
 const Header: React.FC<HeaderProps> = ({ id, summary, issuetype }) => {
   const breadcrumbs = (
-    <BreadcrumbsStateless onExpand={() => {}}>
+    <BreadcrumbsStateless onExpand={() => { }}>
       <BreadcrumbsItem text="Some project" key="Some project" />
       <BreadcrumbsItem
         text={id}
