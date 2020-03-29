@@ -1,14 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
+
 import { gridSize } from '@atlaskit/theme';
 import Lozenge from '@atlaskit/lozenge';
+import { FixVersion } from './../../types';
 
-const Wrapper = styled.div`
-  padding: ${gridSize() - 2}px ${gridSize() - 2}px;
-`;
+interface Props {
+  fixVersions: FixVersion[];
+}
 
-export default function FixVersions({ fixVersions }) {
+const FixVersions: React.FC<Props> = ({ fixVersions }) => {
   const [fixVersion] = fixVersions;
   return (
     <>
@@ -20,8 +21,14 @@ export default function FixVersions({ fixVersions }) {
       )}
     </>
   );
-}
-
-FixVersions.propTypes = {
-  fixVersions: PropTypes.arrayOf(PropTypes.objectOf).isRequired,
 };
+
+export default FixVersions;
+
+/**
+ * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE
+ */
+
+const Wrapper = styled.div`
+  padding: ${gridSize() - 2}px ${gridSize() - 2}px;
+`;

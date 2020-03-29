@@ -1,4 +1,5 @@
-import React, { ReactNode } from 'react';
+import React, { ReactElement } from 'react';
+import { Color } from '@atlaskit/status/element';
 
 // Import Priority Icons
 import PriorityBlockerIcon from '@atlaskit/icon-priority/glyph/priority-blocker';
@@ -20,15 +21,15 @@ import Calendar16Icon from '@atlaskit/icon-object/glyph/calendar/16';
 import NewFeature16Icon from '@atlaskit/icon-object/glyph/new-feature/16';
 
 interface IssueTypeIconMap {
-  [name: string]: ReactNode;
+  [name: string]: ReactElement;
 }
 
 interface PriorityIconMap {
-  [name: string]: ReactNode;
+  [name: string]: ReactElement;
 }
 
 interface StatusCatecoryColorMap {
-  [name: string]: string;
+  [name: string]: Color;
 }
 
 export const issuetypeIconMap: IssueTypeIconMap = {
@@ -57,7 +58,7 @@ export const priorityIconMap: PriorityIconMap = {
 };
 
 export const statusCatecoryColorMap: StatusCatecoryColorMap = {
-  2: 'grey',
+  2: 'neutral',
   3: 'green',
   4: 'blue',
 };

@@ -1,5 +1,4 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
 import { useQuery, gql } from '@apollo/client';
 
 export const ROWS_PER_PAGE = 50;

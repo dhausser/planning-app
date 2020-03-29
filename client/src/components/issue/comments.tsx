@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Avatar from '@atlaskit/avatar';
 import Comment, {
   CommentAction,
@@ -8,27 +7,37 @@ import Comment, {
   CommentTime,
 } from '@atlaskit/comment';
 
-function Comments({ comments }) {
+interface CommentsProps extends Comment {
+  comments: Array<{
+    id: string;
+    author: { key: string; name: string };
+    body: string;
+    created: string;
+    updated: string;
+  }>;
+}
+
+const Comments: React.FC<CommentsProps> = ({ comments }) => {
   return (
     <>
       <h5>Activity</h5>
       {comments.map((comment) => (
         <Comment
           key={comment.id}
-          avatar={(
+          avatar={
             <Avatar
               src={`https://jira.cdprojektred.com/secure/useravatar?ownerId=${comment.author.key}`}
               label="Atlaskit avatar"
               size="medium"
             />
-          )}
+          }
           author={<CommentAuthor>{comment.author.name}</CommentAuthor>}
           edited={comment.updated && <CommentEdited>Edited</CommentEdited>}
-          time={(
+          time={
             <CommentTime>
               {new Date(comment.created).toLocaleDateString()}
             </CommentTime>
-          )}
+          }
           content={<p>{comment.body}</p>}
           actions={[
             <CommentAction>Reply</CommentAction>,
@@ -39,14 +48,6 @@ function Comments({ comments }) {
       ))}
     </>
   );
-}
-
-Comments.defaultProps = {
-  comments: null,
-};
-
-Comments.propTypes = {
-  comments: PropTypes.arrayOf(PropTypes.objectOf),
 };
 
 export default Comments;

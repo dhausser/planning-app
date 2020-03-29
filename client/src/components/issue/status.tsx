@@ -1,19 +1,22 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import { Status, Color } from '@atlaskit/status/element';
 import { gridSize } from '@atlaskit/theme';
-import { Status } from '@atlaskit/status/element';
+import styled from 'styled-components';
+
 import { statusCatecoryColorMap } from './icon';
 
-const Wrapper = styled.div`
-  padding: ${gridSize() - 2}px ${gridSize() - 2}px;
-`;
+interface Props {
+  name: string;
+  statusCategory: { id: string };
+}
 
-const StatusInParagraph = ({ text, color }) => (
-  <Status text={text} color={color} />
+const StatusInParagraph = ({ text, color }: { text: string; color: Color }) => (
+  <p>
+    <Status text={text} color={color} />
+  </p>
 );
 
-export default function StatusComponent({ name, statusCategory }) {
+const StatusComponent: React.FC<Props> = ({ name, statusCategory }) => {
   const color = statusCatecoryColorMap[statusCategory.id];
   return (
     <div>
@@ -23,14 +26,14 @@ export default function StatusComponent({ name, statusCategory }) {
       </Wrapper>
     </div>
   );
-}
-
-StatusInParagraph.propTypes = {
-  text: PropTypes.string.isRequired,
-  color: PropTypes.string.isRequired,
 };
 
-StatusComponent.propTypes = {
-  name: PropTypes.string.isRequired,
-  statusCategory: PropTypes.objectOf(PropTypes.objectOf).isRequired,
-};
+export default StatusComponent;
+
+/**
+ * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE
+ */
+
+const Wrapper = styled.div`
+  padding: ${gridSize() - 2}px ${gridSize() - 2}px;
+`;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useMutation, gql } from '@apollo/client';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
+
 import { gridSize, fontSize } from '@atlaskit/theme';
 import TextArea from '@atlaskit/textarea';
 import InlineEdit from '@atlaskit/inline-edit';
@@ -12,16 +12,10 @@ const EDIT_ISSUE = gql`
   }
 `;
 
-const minRows = 2;
-const textAreaLineHeightFactor = 2.5;
-const ReadViewContainer = styled.div`
-  line-height: ${(gridSize() * textAreaLineHeightFactor) / fontSize()};
-  min-height: ${gridSize() * textAreaLineHeightFactor * minRows}px;
-  padding: ${gridSize() - 2}px ${gridSize() - 2}px;
-  word-break: break-word;
-`;
-
-function Description({ id, description }) {
+const Description: React.FC<{ id: string; description: string }> = ({
+  id,
+  description,
+}) => {
   const [editValue, setEditValue] = useState(description);
   const [editIssue] = useMutation(EDIT_ISSUE);
 
@@ -31,7 +25,7 @@ function Description({ id, description }) {
       <InlineEdit
         defaultValue={editValue}
         label="Description"
-        editView={(fieldProps, ref) => <TextArea {...fieldProps} ref={ref} />}
+        editView={(_, ref) => <TextArea ref={ref} />}
         readView={() => (
           <ReadViewContainer>
             {editValue || 'Click to enter value'}
@@ -46,15 +40,20 @@ function Description({ id, description }) {
       />
     </>
   );
-}
-
-Description.defaultProps = {
-  description: '',
-};
-
-Description.propTypes = {
-  id: PropTypes.string.isRequired,
-  description: PropTypes.string,
 };
 
 export default Description;
+
+/**
+ * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE
+ */
+
+const minRows = 2;
+const textAreaLineHeightFactor = 2.5;
+
+const ReadViewContainer = styled.div`
+  line-height: ${(gridSize() * textAreaLineHeightFactor) / fontSize()};
+  min-height: ${gridSize() * textAreaLineHeightFactor * minRows}px;
+  padding: ${gridSize() - 2}px ${gridSize() - 2}px;
+  word-break: break-word;
+`;

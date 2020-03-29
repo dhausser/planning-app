@@ -5,7 +5,6 @@ export { default as Priority } from './priority';
 export { default as FixVersions } from './fix-versions';
 export { default as UserPicker } from './user-picker';
 export { default as Comments } from './comments';
-export { default as LoadButton } from './load-button';
 export { default as IssueTable } from './issue-table';
 export {
   priorityIconMap,

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useMutation, gql } from '@apollo/client';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
+
 import { BreadcrumbsStateless, BreadcrumbsItem } from '@atlaskit/breadcrumbs';
 import Button, { ButtonGroup } from '@atlaskit/button';
 import Tooltip from '@atlaskit/tooltip';
@@ -15,22 +15,101 @@ import { colors } from '@atlaskit/theme';
 import PageHeader from '@atlaskit/page-header';
 import { issuetypeIconMap } from './icon';
 
-export function copyLink(key) {
+const EDIT_ISSUE = gql`
+  mutation EditIssue($id: ID!, $value: String!, $type: String!) {
+    editIssue(id: $id, value: $value, type: $type)
+  }
+`;
+
+interface TitleProps {
+  id: string;
+  summary: string;
+}
+
+interface HeaderProps {
+  id: string;
+  summary: string;
+  issuetype: { id: string };
+}
+
+const Title: React.FC<TitleProps> = ({ id, summary }) => {
+  const [editValue, setEditValue] = useState(summary);
+  const [editIssue] = useMutation(EDIT_ISSUE);
+  return (
+    <InlineEdit
+      readView={() => <ReadView>{editValue}</ReadView>}
+      editView={(props, ref) => <EditView {...props} innerRef={ref} />}
+      defaultValue={editValue}
+      onConfirm={(value) => {
+        setEditValue(value);
+        editIssue({ variables: { id, value, type: 'summary' } });
+      }}
+    />
+  );
+};
+
+export function copyLink(key: string) {
   const el = document.createElement('textarea');
   el.value = `https://jira.cdprojektred.com/browse/${key}`;
   el.setAttribute('readonly', '');
-  el.style = { position: 'absolute', left: '-9999px' };
+  // el.style = { position: 'absolute', left: '-9999px' };
   document.body.appendChild(el);
   el.select();
   document.execCommand('copy');
   document.body.removeChild(el);
 }
 
-const EDIT_ISSUE = gql`
-  mutation EditIssue($id: ID!, $value: String!, $type: String!) {
-    editIssue(id: $id, value: $value, type: $type)
-  }
-`;
+const Header: React.FC<HeaderProps> = ({ id, summary, issuetype }) => {
+  const breadcrumbs = (
+    <BreadcrumbsStateless onExpand={() => {}}>
+      <BreadcrumbsItem text="Some project" key="Some project" />
+      <BreadcrumbsItem
+        text={id}
+        key={id}
+        iconBefore={issuetypeIconMap[issuetype.id]}
+      />
+    </BreadcrumbsStateless>
+  );
+  const barContent = (
+    <div style={{ display: 'flex' }}>
+      <div style={{ flexBasis: 150, marginRight: 8 }}>
+        <ButtonGroup>
+          <Tooltip content="Add attachement">
+            <Button iconBefore={<AttachmentIcon label="Attachement" />} />
+          </Tooltip>
+          <Tooltip content="Link issue">
+            <Button iconBefore={<LinkIcon label="Link" />} />
+          </Tooltip>
+          <Tooltip content="Link a Confluence page">
+            <Button iconBefore={<PageIcon label="Page" />} />
+          </Tooltip>
+          <Tooltip content={`Copy to clipboard ${id}`}>
+            <Button
+              iconBefore={<CopyIcon label="Copy" />}
+              onClick={() => copyLink(id)}
+            />
+          </Tooltip>
+          <Button iconBefore={<MoreIcon label="More" />} />
+        </ButtonGroup>
+      </div>
+    </div>
+  );
+  return (
+    <PageHeader
+      breadcrumbs={breadcrumbs}
+      bottomBar={barContent}
+      disableTitleStyles
+    >
+      <Title id={id} summary={summary} />
+    </PageHeader>
+  );
+};
+
+export default Header;
+
+/**
+ * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE
+ */
 
 const ReadView = styled.div`
   font-size: 24px;
@@ -56,75 +135,3 @@ const EditView = styled.input`
     border: 2px solid ${colors.B100};
   }
 `;
-
-function Title({ id, summary }) {
-  const [editValue, setEditValue] = useState(summary);
-  const [editIssue] = useMutation(EDIT_ISSUE);
-  return (
-    <InlineEdit
-      readView={() => <ReadView>{editValue}</ReadView>}
-      editView={(props, ref) => <EditView {...props} innerRef={ref} />}
-      defaultValue={editValue}
-      onConfirm={(value) => {
-        setEditValue(value);
-        editIssue({ variables: { id, value, type: 'summary' } });
-      }}
-    />
-  );
-}
-
-function Header({ id, summary, issuetype }) {
-  const breadcrumbs = (
-    <BreadcrumbsStateless onExpand={() => {}}>
-      <BreadcrumbsItem text="Some project" key="Some project" />
-      <BreadcrumbsItem
-        text={id}
-        key={id}
-        iconBefore={issuetypeIconMap[issuetype.id]}
-      />
-    </BreadcrumbsStateless>
-  );
-  const barContent = (
-    <div style={{ display: 'flex' }}>
-      <div style={{ flexBasis: 150, marginRight: 8 }}>
-        <ButtonGroup>
-          <Tooltip content="Add attachement">
-            <Button iconBefore={AttachmentIcon()} />
-          </Tooltip>
-          <Tooltip content="Link issue">
-            <Button iconBefore={LinkIcon()} />
-          </Tooltip>
-          <Tooltip content="Link a Confluence page">
-            <Button iconBefore={PageIcon()} />
-          </Tooltip>
-          <Tooltip content={`Copy to clipboard ${id}`}>
-            <Button iconBefore={CopyIcon()} onClick={() => copyLink(id)} />
-          </Tooltip>
-          <Button iconBefore={MoreIcon()} />
-        </ButtonGroup>
-      </div>
-    </div>
-  );
-  return (
-    <PageHeader
-      breadcrumbs={breadcrumbs}
-      bottomBar={barContent}
-      disableTitleStyles
-    >
-      <Title id={id} summary={summary} />
-    </PageHeader>
-  );
-}
-
-Title.propTypes = {
-  id: PropTypes.string.isRequired,
-  summary: PropTypes.string.isRequired,
-};
-
-Header.propTypes = {
-  id: PropTypes.string.isRequired,
-  summary: PropTypes.string.isRequired,
-  issuetype: PropTypes.objectOf(PropTypes.string).isRequired,
-};
-
-export default Header;

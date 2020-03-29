@@ -1,14 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useQuery, useMutation, gql } from '@apollo/client';
 import styled from 'styled-components';
+
 import { gridSize } from '@atlaskit/theme';
 import UserPicker from '@atlaskit/user-picker';
 import EmptyState from '@atlaskit/empty-state';
 import { Resource } from '../../types';
-
-const Wrapper = styled.div`
-  padding: ${gridSize() - 2}px ${gridSize() - 2}px;
-`;
 
 // const GET_RESOURCES = gql`
 //   query resourceList {
@@ -38,6 +35,12 @@ const ASSIGN_ISSUE = gql`
   }
 `;
 
+interface Props {
+  id: string;
+  user: Resource;
+  type: string;
+}
+
 function getAvatarUrl(key: string) {
   return `https://jira.cdprojektred.com/secure/useravatar?ownerId=${key}`;
 }
@@ -64,18 +67,9 @@ export function getResource(user: Resource) {
   };
 }
 
-function AssignUser({
-  id,
-  user,
-  type,
-}: {
-  id: string;
-  user: Resource;
-  type: string;
-}) {
+const AssignUser: React.FC<Props> = ({ id, user, type }) => {
   const { data, loading, error } = useQuery(GET_ASSIGNABLE_USERS, {
     variables: { id },
-    fetchPolicy: 'cache-first',
   });
   const [assignIssue] = useMutation(ASSIGN_ISSUE);
 
@@ -105,6 +99,14 @@ function AssignUser({
       </Wrapper>
     </>
   );
-}
+};
 
 export default AssignUser;
+
+/**
+ * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE
+ */
+
+const Wrapper = styled.div`
+  padding: ${gridSize() - 2}px ${gridSize() - 2}px;
+`;
