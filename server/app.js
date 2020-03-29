@@ -14,7 +14,7 @@ const ResourceAPI = require('./datasources/resource');
 
 const app = express();
 const port = process.env.PORT;
-// const store = createStore();
+const store = createStore();
 
 app.use(
   session({
@@ -22,12 +22,12 @@ app.use(
     resave: false,
     saveUninitialized: true,
     cookie: {},
-    // store: new MongoStore({ url: process.env.DATABASE }),
+    store: new MongoStore({ url: process.env.DATABASE }),
   }),
 );
-// app.use(passport.initialize());
-// app.use(passport.session());
-// app.use('/', routes);
+app.use(passport.initialize());
+app.use(passport.session());
+app.use('/', routes);
 
 const apolloServer = new ApolloServer({
   typeDefs,
@@ -43,7 +43,7 @@ const apolloServer = new ApolloServer({
   dataSources: () => ({
     issueAPI: new IssueAPI(),
     absenceAPI: new AbsenceAPI(),
-    // resourceAPI: new ResourceAPI({ store }),
+    resourceAPI: new ResourceAPI({ store }),
   }),
 });
 
