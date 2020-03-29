@@ -23,7 +23,7 @@ interface NavigationViewController {
   navigationViewController: any;
 }
 
-const IS_LOGGED_IN = gql`
+export const IS_LOGGED_IN = gql`
   query IsUserLoggedIn {
     isLoggedIn @client
   }

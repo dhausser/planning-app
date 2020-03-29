@@ -20,7 +20,8 @@ import { Resource } from '../../types';
 /**
  * TODO: Get assignable users - currently blocked by oauth authentication failure
  */
-const GET_ASSIGNABLE_USERS = gql`
+
+export const GET_ASSIGNABLE_USERS = gql`
   query GetAssignableUsers($id: ID!) {
     assignableUsers(id: $id) {
       key

@@ -1,25 +1,18 @@
 import React, { useEffect, FunctionComponent } from 'react';
 import { Link } from '@reach/router';
 import { useApolloClient, useQuery, gql } from '@apollo/client';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
+
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import PageHeader from '@atlaskit/page-header';
 import DynamicTable from '@atlaskit/dynamic-table';
 import EmptyState from '@atlaskit/empty-state';
 import Avatar from '@atlaskit/avatar';
+
+import { Props, FilterLinkProps, Project } from '../types';
 import { productHomeView, Layout } from '../components';
 import { updateFilter } from '../components/filters/project-filter';
-import { Props, FilterLinkProps, Project } from '../types';
-
-const PROJECT_TILE_DATA = gql`
-  fragment ProjectTile on Project {
-    id
-    key
-    name
-    projectTypeKey
-  }
-`;
+import { PROJECT_TILE_DATA } from '../components/nav/switcher';
 
 const GET_PROJECTS = gql`
   query GetProjects {

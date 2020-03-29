@@ -10,7 +10,7 @@ import EmptyState from '@atlaskit/empty-state';
 import { updateFilter } from '../filters/project-filter';
 import { Project, ProjectListItem } from '../../types';
 
-const PROJECT_TILE_DATA = gql`
+export const PROJECT_TILE_DATA = gql`
   fragment ProjectTile on Project {
     id
     key
@@ -19,8 +19,8 @@ const PROJECT_TILE_DATA = gql`
   }
 `;
 
-const GET_PROJECTS = gql`
-  query GetProjects {
+const GET_SWITCHER_PROJECTS = gql`
+  query GetSwitcherProjects {
     projectId @client
     projects {
       ...ProjectTile
@@ -62,7 +62,7 @@ function ProjectSwitcher() {
   const { data, loading, error } = useQuery<{
     projects: Project[];
     projectId: string;
-  }>(GET_PROJECTS);
+  }>(GET_SWITCHER_PROJECTS);
 
   useEffect(() => {
     if (!loading && !error) {

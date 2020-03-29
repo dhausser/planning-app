@@ -6,7 +6,7 @@ import { gridSize, fontSize } from '@atlaskit/theme';
 import TextArea from '@atlaskit/textarea';
 import InlineEdit from '@atlaskit/inline-edit';
 
-const EDIT_ISSUE = gql`
+export const EDIT_ISSUE = gql`
   mutation EditIssue($id: ID!, $value: String!, $type: String!) {
     editIssue(id: $id, value: $value, type: $type)
   }

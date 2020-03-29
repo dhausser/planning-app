@@ -5,14 +5,7 @@ import EmptyState from '@atlaskit/empty-state';
 import UserPicker from '@atlaskit/user-picker';
 import { getResource } from '../issue/user-picker';
 
-const GET_ASSIGNABLE_USERS = gql`
-  query GetAssignableUsers($project: String) {
-    assignableUsers(project: $project) {
-      key
-      displayName
-    }
-  }
-`;
+import { GET_ASSIGNABLE_USERS } from '../issue/user-picker';
 
 const AssignableUserPicker: FunctionComponent = () => {
   const { loading, error, data } = useQuery(GET_ASSIGNABLE_USERS, {

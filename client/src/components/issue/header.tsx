@@ -14,12 +14,7 @@ import InlineEdit from '@atlaskit/inline-edit';
 import { colors } from '@atlaskit/theme';
 import PageHeader from '@atlaskit/page-header';
 import { issuetypeIconMap } from './icon';
-
-const EDIT_ISSUE = gql`
-  mutation EditIssue($id: ID!, $value: String!, $type: String!) {
-    editIssue(id: $id, value: $value, type: $type)
-  }
-`;
+import { EDIT_ISSUE } from './description';
 
 interface TitleProps {
   id: string;
