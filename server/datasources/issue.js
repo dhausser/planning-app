@@ -1,4 +1,5 @@
 const { RESTDataSource } = require('apollo-datasource-rest');
+
 const Issues = require('../models/Issues');
 const Dashboard = require('../models/Dashboard');
 const Roadmap = require('../models/Roadmap');
@@ -30,7 +31,10 @@ module.exports = class IssueAPI extends RESTDataSource {
    * @param {object} req - request object
    */
   willSendRequest(req) {
-    req.headers.set('Authorization', this.oauth.sign(req, this.context.authorization));
+    req.headers.set(
+      'Authorization',
+      this.oauth.sign(req, this.context.authorization),
+    );
   }
 
   /**
@@ -38,7 +42,7 @@ module.exports = class IssueAPI extends RESTDataSource {
    */
   async getProjects() {
     const response = await this.get('/rest/api/2/project');
-    const projects = response.map((project) => ({
+    const projects = response.map(project => ({
       ...project,
       projectTypeKey: `${project.projectTypeKey
         .charAt(0)
@@ -53,8 +57,10 @@ module.exports = class IssueAPI extends RESTDataSource {
    * @param {string} projectIdOrKey - project ID or key
    */
   async getVersions(projectIdOrKey) {
-    const response = await this.get(`/rest/api/2/project/${projectIdOrKey}/versions`);
-    const unreleased = response.filter((value) => value.released === false);
+    const response = await this.get(
+      `/rest/api/2/project/${projectIdOrKey}/versions`,
+    );
+    const unreleased = response.filter(value => value.released === false);
     return Array.isArray(response) ? unreleased : [];
   }
 
@@ -63,7 +69,9 @@ module.exports = class IssueAPI extends RESTDataSource {
    * @param {string} projectIdOrKey - project ID or key
    */
   async getStatuses(projectIdOrKey) {
-    const response = await this.get(`/rest/api/2/project/${projectIdOrKey}/statuses`);
+    const response = await this.get(
+      `/rest/api/2/project/${projectIdOrKey}/statuses`,
+    );
     const { statuses } = response[0];
     return Array.isArray(statuses) ? statuses : [];
   }
@@ -90,7 +98,9 @@ module.exports = class IssueAPI extends RESTDataSource {
     let assignee = resourceId;
 
     if (teamId) {
-      const resources = await this.context.dataSources.resourceAPI.getResourcesByTeam(teamId);
+      const resources = await this.context.dataSources.resourceAPI.getResourcesByTeam(
+        teamId,
+      );
       assignee = resources.map(({ key }) => key);
     }
 
@@ -122,13 +132,19 @@ module.exports = class IssueAPI extends RESTDataSource {
       ? await this.context.dataSources.resourceAPI.getResourcesByTeam(teamId)
       : await this.context.dataSources.resourceAPI.getResources();
 
-    const assignee = resources.map((resource) => resource.key) || [];
+    const assignee = resources.map(resource => resource.key) || [];
 
     const dashboard = new Dashboard({
-      projectId, versionId, teamId, assignee,
+      projectId,
+      versionId,
+      teamId,
+      assignee,
     });
 
-    const response = await this.post('/rest/api/2/search', dashboard.getParams());
+    const response = await this.post(
+      '/rest/api/2/search',
+      dashboard.getParams(),
+    );
     const resourceMap = await this.context.dataSources.resourceAPI.getResourceMap();
 
     return dashboard.getDataset(response, resourceMap);
@@ -146,8 +162,13 @@ module.exports = class IssueAPI extends RESTDataSource {
    * @param {string} versionId - version ID
    */
   async getEpics(projectId, versionId) {
-    const jql = `issuetype = epic${projectId ? ` and project = ${projectId}` : ''} ${versionId ? ` and fixversion = ${versionId}` : ''}`;
-    const response = await this.post('/rest/api/2/search', { jql, fields: ['summary'] });
+    const jql = `issuetype = epic${
+      projectId ? ` and project = ${projectId}` : ''
+    } ${versionId ? ` and fixversion = ${versionId}` : ''}`;
+    const response = await this.post('/rest/api/2/search', {
+      jql,
+      fields: ['summary'],
+    });
     return Array.isArray(response.issues) ? response.issues : [];
   }
 
@@ -164,8 +185,15 @@ module.exports = class IssueAPI extends RESTDataSource {
    */
   async getIssueById(issueId) {
     const fields = [
-      'summary', 'description', 'status', 'assignee', 'reporter', 'issuetype',
-      'priority', 'fixVersions', 'comment',
+      'summary',
+      'description',
+      'status',
+      'assignee',
+      'reporter',
+      'issuetype',
+      'priority',
+      'fixVersions',
+      'comment',
     ];
     const issue = await this.get(`/rest/api/2/issue/${issueId}`, { fields });
     const { assignee, reporter } = issue.fields;
@@ -238,7 +266,9 @@ module.exports = class IssueAPI extends RESTDataSource {
       maxResults,
       actionDescriptorId,
     });
-    const response = await this.get('rest/api/2/user/assignable/search', { project });
+    const response = await this.get('rest/api/2/user/assignable/search', {
+      project,
+    });
     return Array.isArray(response.users) || [];
   }
 

@@ -27,13 +27,9 @@ module.exports = class Oauth {
     };
 
     // Generate Oauth signature
-    const oauthSignature = encodeURIComponent(sign(
-      signatureMethod,
-      method,
-      baseURI,
-      oauthParams,
-      consumerSecret,
-    ));
+    const oauthSignature = encodeURIComponent(
+      sign(signatureMethod, method, baseURI, oauthParams, consumerSecret),
+    );
 
     // Compose Oauth authorization header
     return `OAuth\

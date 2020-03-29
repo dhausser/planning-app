@@ -1,10 +1,10 @@
 /**
-   * Fetch issues for barchart dashboard and aggregate by team or assignee
-   * @param {String} projectId Project identifier
-   * @param {String} versionId Version identifier
-   * @param {String} teamId Team identifier
-   * @param {String} maxResults Maximum number of issues to be fetched
-   */
+ * Fetch issues for barchart dashboard and aggregate by team or assignee
+ * @param {String} projectId Project identifier
+ * @param {String} versionId Version identifier
+ * @param {String} teamId Team identifier
+ * @param {String} maxResults Maximum number of issues to be fetched
+ */
 
 /**
  * TODOL Fix Network error: Cannot read property 'filter' of null
@@ -15,9 +15,7 @@
  */
 
 module.exports = class Dashboard {
-  constructor({
-    projectId, versionId, teamId, assignee,
-  }) {
+  constructor({ projectId, versionId, teamId, assignee }) {
     this.data = {};
     this.fields = ['assignee'];
     this.maxResults = 1500;
@@ -64,7 +62,10 @@ module.exports = class Dashboard {
 
   sumIssues(issues, resourceMap) {
     for (let i = 0; i < issues.length; i += 1) {
-      const key = this.defineAggregationKey(issues[i].fields.assignee.key, resourceMap);
+      const key = this.defineAggregationKey(
+        issues[i].fields.assignee.key,
+        resourceMap,
+      );
 
       if (key) {
         if (Object.prototype.hasOwnProperty.call(this.data, key)) {

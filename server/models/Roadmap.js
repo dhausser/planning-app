@@ -7,7 +7,13 @@
 module.exports = class Roadmap {
   constructor({ projectId, versionId }) {
     this.data = {};
-    this.fields = ['summary', 'status', 'issuetype', 'subtasks', 'customfield_10006'];
+    this.fields = [
+      'summary',
+      'status',
+      'issuetype',
+      'subtasks',
+      'customfield_10006',
+    ];
     this.maxResults = 50;
     this.projectId = projectId;
     this.versionId = versionId;
@@ -31,7 +37,10 @@ module.exports = class Roadmap {
   }
 
   addToBaseTree(issue) {
-    Object.defineProperty(this.data, issue.key, { value: issue, enumerable: true });
+    Object.defineProperty(this.data, issue.key, {
+      value: issue,
+      enumerable: true,
+    });
   }
 
   addToParent(issue) {
@@ -47,7 +56,12 @@ module.exports = class Roadmap {
         break;
 
       default:
-        if (Object.prototype.hasOwnProperty.call(this.data, issue.fields.customfield_10006)) {
+        if (
+          Object.prototype.hasOwnProperty.call(
+            this.data,
+            issue.fields.customfield_10006,
+          )
+        ) {
           this.addToParent(issue);
         } else {
           this.addToBaseTree(issue);

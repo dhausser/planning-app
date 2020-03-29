@@ -16,13 +16,15 @@ const app = express();
 const port = process.env.PORT;
 const store = createStore();
 
-app.use(session({
-  secret: 'keyboard cat',
-  resave: false,
-  saveUninitialized: true,
-  cookie: {},
-  store: new MongoStore({ url: process.env.DATABASE }),
-}));
+app.use(
+  session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {},
+    store: new MongoStore({ url: process.env.DATABASE }),
+  }),
+);
 app.use(passport.initialize());
 app.use(passport.session());
 app.use('/', routes);
@@ -30,7 +32,7 @@ app.use('/', routes);
 const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,
-  formatError: (error) => {
+  formatError: error => {
     console.error(error);
     return error;
   },
@@ -47,6 +49,8 @@ const apolloServer = new ApolloServer({
 
 apolloServer.applyMiddleware({ app });
 
-app.listen(port, () => console.log(
-  `Server ready at http://localhost:${port}${apolloServer.graphqlPath}`,
-));
+app.listen(port, () =>
+  console.log(
+    `Server ready at http://localhost:${port}${apolloServer.graphqlPath}`,
+  ),
+);

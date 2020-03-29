@@ -3,29 +3,23 @@ const { gql } = require('apollo-server-express');
 module.exports = gql`
   type Query {
     issues(
-      projectId: String, 
-      versionId: String, 
-      statusId: String, 
-      teamId: String, 
-      resourceId: String, 
-      startAt: Int, 
+      projectId: String
+      versionId: String
+      statusId: String
+      teamId: String
+      resourceId: String
+      startAt: Int
       maxResults: Int
     ): IssueConnection!
     dashboardIssues(
-      projectId: String, 
-      versionId: String, 
-      teamId: String, 
-      startAt: Int, 
+      projectId: String
+      versionId: String
+      teamId: String
+      startAt: Int
       maxResults: Int
     ): DashboardIssueConnection!
-    roadmapIssues(
-      projectId: String, 
-      versionId: String
-    ): [Issue]!
-    epics(
-      projectId: String, 
-      versionId: String
-    ): [Issue]!
+    roadmapIssues(projectId: String, versionId: String): [Issue]!
+    epics(projectId: String, versionId: String): [Issue]!
     issue(id: ID!): Issue
     projects: [Project]!
     versions(id: ID!): [Version]
@@ -34,18 +28,15 @@ module.exports = gql`
     resource(id: ID!): Resource
     teams: [Team]!
     team(id: ID!): Team
-    absences(
-      id: ID!, 
-      versionId: String
-      ): [Absence]!
+    absences(id: ID!, versionId: String): [Absence]!
     user(id: ID!): User!
     myself: User!
-    assignableUsers( 
-      username: String,
-      project: String,
-      issueKey: String,
-      startAt: Int,
-      maxResults: Int,
+    assignableUsers(
+      username: String
+      project: String
+      issueKey: String
+      startAt: Int
+      maxResults: Int
       actionDescriptorId: Int
     ): [User]!
     loginToken: String
@@ -162,7 +153,7 @@ module.exports = gql`
     team: String
     avatarUrls: AvatarUrls
   }
-  
+
   type Project {
     id: ID!
     key: String!
@@ -205,17 +196,17 @@ module.exports = gql`
 
     # Resources
     insertResource(
-      id: ID!, 
-      firstname: String!, 
-      lastname: String!, 
-      email: String!, 
+      id: ID!
+      firstname: String!
+      lastname: String!
+      email: String!
       team: String!
     ): Resource
     updateResource(
-      id: ID!, 
-      firstname: String!, 
-      lastname: String!, 
-      email: String!, 
+      id: ID!
+      firstname: String!
+      lastname: String!
+      email: String!
       team: String!
     ): Resource
     deleteResource(id: ID!): Resource

@@ -15,8 +15,8 @@ module.exports = class ResourceAPI extends DataSource {
    */
   async initialize(config) {
     this.context = config.context;
-    this.store = await this.store;
     this.context.resourceMap = await this.getResourceMap();
+    // this.store = await this.store;
   }
 
   /**
@@ -28,11 +28,12 @@ module.exports = class ResourceAPI extends DataSource {
     let cursor;
 
     try {
-      cursor = await this.store.resources
-        .find()
-        .project({
-          _id: 0, key: 1, name: 1, team: 1,
-        });
+      cursor = await this.store.resources.find().project({
+        _id: 0,
+        key: 1,
+        name: 1,
+        team: 1,
+      });
     } catch (e) {
       console.error(`Unable to issue find command, ${e}`);
       return [];
@@ -50,11 +51,12 @@ module.exports = class ResourceAPI extends DataSource {
     let cursor;
 
     try {
-      cursor = await this.store.resources
-        .find()
-        .project({
-          _id: 0, key: 1, name: 1, team: 1,
-        });
+      cursor = await this.store.resources.find().project({
+        _id: 0,
+        key: 1,
+        name: 1,
+        team: 1,
+      });
     } catch (e) {
       console.error(`Unable to issue find command, ${e}`);
       return [];
@@ -82,7 +84,10 @@ module.exports = class ResourceAPI extends DataSource {
         { key: resourceId },
         {
           projection: {
-            _id: 0, key: 1, name: 1, team: 1,
+            _id: 0,
+            key: 1,
+            name: 1,
+            team: 1,
           },
         },
       );
@@ -103,29 +108,28 @@ module.exports = class ResourceAPI extends DataSource {
   async getTeams() {
     let cursor;
     try {
-      cursor = await this.store.resources
-        .aggregate([
-          {
-            $group: {
-              _id: '$team',
-              members: { $push: '$$ROOT' },
-            },
+      cursor = await this.store.resources.aggregate([
+        {
+          $group: {
+            _id: '$team',
+            members: { $push: '$$ROOT' },
           },
-          {
-            $project: {
-              _id: 0,
-              id: '$_id',
-              name: '$_id',
-              members: 1,
-            },
+        },
+        {
+          $project: {
+            _id: 0,
+            id: '$_id',
+            name: '$_id',
+            members: 1,
           },
-          {
-            $addFields: { count: 0 },
-          },
-          {
-            $sort: { id: 1 },
-          },
-        ]);
+        },
+        {
+          $addFields: { count: 0 },
+        },
+        {
+          $sort: { id: 1 },
+        },
+      ]);
     } catch (e) {
       console.error(`Unable to issue find command, ${e}`);
       return [];
@@ -145,11 +149,10 @@ module.exports = class ResourceAPI extends DataSource {
     let cursor;
 
     try {
-      cursor = await this.store.resources
-        .find({ team: teamId })
-        .project({
-          _id: 0, key: 1,
-        });
+      cursor = await this.store.resources.find({ team: teamId }).project({
+        _id: 0,
+        key: 1,
+      });
     } catch (e) {
       console.error(`Unable to issue find command, ${e}`);
       return [];
@@ -158,9 +161,7 @@ module.exports = class ResourceAPI extends DataSource {
     return cursor.toArray();
   }
 
-  async insertResource({
-    id, firstname, lastname, team,
-  }) {
+  async insertResource({ id, firstname, lastname, team }) {
     // eslint-disable-next-line no-unused-vars
     let cursor;
 
@@ -180,9 +181,7 @@ module.exports = class ResourceAPI extends DataSource {
     return data;
   }
 
-  async updateResource({
-    id, firstname, lastname, team,
-  }) {
+  async updateResource({ id, firstname, lastname, team }) {
     // eslint-disable-next-line no-unused-vars
     let cursor;
 

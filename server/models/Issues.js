@@ -10,7 +10,14 @@
 
 module.exports = class Issues {
   constructor({
-    context, projectId, statusId, versionId, assignee, resourceMap, startAt, maxResults,
+    context,
+    projectId,
+    statusId,
+    versionId,
+    assignee,
+    resourceMap,
+    startAt,
+    maxResults,
   }) {
     this.context = context;
     this.projectId = projectId;
@@ -46,6 +53,10 @@ module.exports = class Issues {
   }
 
   getQuery() {
-    this.jql = `${this.projectId ? `project=${this.projectId}` : ''}${this.versionId ? ` AND fixVersion=${this.versionId}` : ''}${this.statusId ? ` AND status=${this.statusId}` : ''}${this.assignee ? ` AND assignee in (${this.assignee})` : ''}`;
+    this.jql = `${this.projectId ? `project=${this.projectId}` : ''}${
+      this.versionId ? ` AND fixVersion=${this.versionId}` : ''
+    }${this.statusId ? ` AND status=${this.statusId}` : ''}${
+      this.assignee ? ` AND assignee in (${this.assignee})` : ''
+    }`;
   }
 };
