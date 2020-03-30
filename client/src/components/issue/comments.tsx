@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import Avatar from '@atlaskit/avatar';
 import Comment, {
   CommentAction,
@@ -7,7 +7,7 @@ import Comment, {
   CommentTime,
 } from '@atlaskit/comment';
 
-interface CommentsProps extends Comment {
+interface CommentsProps {
   comments: Array<{
     id: string;
     author: { key: string; name: string };
@@ -17,7 +17,7 @@ interface CommentsProps extends Comment {
   }>;
 }
 
-const Comments: React.FC<CommentsProps> = ({ comments }) => {
+const Comments: FunctionComponent<CommentsProps> = ({ comments }) => {
   return (
     <>
       <h5>Activity</h5>
