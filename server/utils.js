@@ -9,14 +9,18 @@ const filePath = path.join(os.homedir(), '/.oauth/jira_privatekey.pem');
 const consumerSecret = fs.existsSync(filePath)
   ? fs.readFileSync(filePath, 'utf8')
   : '';
-const consumerKey = 'RDM';
+
+const consumerKey = process.env.CONSUMER_KEY;
+const requestTokenURL = process.env.REQUEST_TOKEN_URL;
+const accessTokenURL = process.env.ACCESS_TOKEN_URL;
+const userAuthorizationURL = process.env.USER_AUTHORIZATION_URL;
 
 passport.use(
   new OAuthStrategy(
     {
-      requestTokenURL: `https://${process.env.HOST}/plugins/servlet/oauth/request-token`,
-      accessTokenURL: `https://${process.env.HOST}/plugins/servlet/oauth/access-token`,
-      userAuthorizationURL: `https://${process.env.HOST}/plugins/servlet/oauth/authorize`,
+      requestTokenURL,
+      accessTokenURL,
+      userAuthorizationURL,
       consumerKey,
       consumerSecret,
       callbackURL: '/auth/provider/callback',

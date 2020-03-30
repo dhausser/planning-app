@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FunctionComponent } from 'react';
 
 // import { useQuery, gql } from '@apollo/client';
 // import { ScrollSync } from 'react-scroll-sync';
@@ -71,7 +71,7 @@ const right: number = 95;
 // setIssues([...issues, issue]);
 // }
 
-const Timeline: FC = () => {
+const Timeline: FunctionComponent = () => {
   // const { loading, error, data } = useQuery(GET_EPICS);
 
   // if (loading || !data) return <Loading />;
