@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import Spinner from '@atlaskit/spinner';
 import EmptyState from '@atlaskit/empty-state';
 import UserPicker from '@atlaskit/user-picker';

@@ -106,7 +106,9 @@ const Backlog: FunctionComponent<Props> = ({ navigationViewController }) => {
                 isDefaultExpanded={isExpanded}
               >
                 <Cell singleLine>
-                  <img>{issuetypeIconMap[fields.issuetype.id]}</img>
+                  <img alt="issuetype-icon">
+                    {issuetypeIconMap[fields.issuetype.id]}
+                  </img>
                 </Cell>
                 <Cell singleLine>
                   <Link to={`/issue/${key}`}>{fields.summary}</Link>

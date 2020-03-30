@@ -4,7 +4,7 @@ import ModalDialog from '@atlaskit/modal-dialog';
 import Form, { Field } from '@atlaskit/form';
 import TextField from '@atlaskit/textfield';
 import Footer from './footer';
-import { ModalInterfaceProps, Team, Resource } from './types';
+import { ModalInterfaceProps } from './types';
 
 const DELETE_RESOURCE = gql`
   mutation DeleteResource($id: ID!) {

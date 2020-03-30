@@ -64,7 +64,7 @@
     "react-scripts": "^3.4.1"
   },
   "scripts": {
-    "dev": "react-scripts start index-timeline.tsx",
+    "dev": "NODE_ENV=development react-scripts start",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

@@ -1,4 +1,4 @@
-import React, { useEffect, FunctionComponent, ReactNode } from 'react';
+import React, { useEffect, FunctionComponent } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import { Grid } from '@atlaskit/page';
 import PageHeader from '@atlaskit/page-header';

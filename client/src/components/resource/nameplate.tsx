@@ -1,4 +1,4 @@
-import React, { FunctionComponent, PropsWithChildren } from 'react';
+import React, { FunctionComponent } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import styled from 'styled-components';
 import Avatar from '@atlaskit/avatar';

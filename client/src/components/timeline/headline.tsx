@@ -1,5 +1,4 @@
-import React, { ReactNode } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import styled from 'styled-components';
 import EmojiCustomIcon from '@atlaskit/icon/glyph/emoji/custom';
 // import { ScrollSyncPane } from 'react-scroll-sync';

@@ -86,7 +86,7 @@ function ProjectSwitcher() {
         setOptions(options);
       }
     }
-  }, [data, error, data?.projectId, loading]);
+  }, [data, error, loading]);
 
   if (loading) return <div />;
   if (error)

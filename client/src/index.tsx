@@ -19,6 +19,19 @@ import {
   projectHomeView,
 } from './components/nav';
 
+// TO REMOVE: For Development only
+import Page from '@atlaskit/page';
+import { Timeline } from './components';
+import styled from 'styled-components';
+
+const Padding = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0px 0px 0px 40px;
+  box-sizing: border-box;
+  height: 100vh;
+`;
+
 interface NavigationViewController {
   navigationViewController: any;
 }
@@ -49,11 +62,22 @@ App.propTypes = {
 
 const AppWithNavigationViewController = withNavigationViewController(App);
 
-ReactDOM.render(
-  <ApolloProvider client={client}>
-    <NavigationProvider>
-      <AppWithNavigationViewController />
-    </NavigationProvider>
-  </ApolloProvider>,
-  document.getElementById('root'),
-);
+if (process.env.NODE_ENV === 'development') {
+  ReactDOM.render(
+    <Page>
+      <Padding>
+        <Timeline />
+      </Padding>
+    </Page>,
+    document.getElementById('root'),
+  );
+} else {
+  ReactDOM.render(
+    <ApolloProvider client={client}>
+      <NavigationProvider>
+        <AppWithNavigationViewController />
+      </NavigationProvider>
+    </ApolloProvider>,
+    document.getElementById('root'),
+  );
+}
