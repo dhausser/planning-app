@@ -1,20 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 import EmojiCustomIcon from '@atlaskit/icon/glyph/emoji/custom';
-// import { ScrollSyncPane } from 'react-scroll-sync';
+import { ScrollSyncPane } from 'react-scroll-sync';
 import Epic16Icon from '@atlaskit/icon-object/glyph/epic/16';
-import { MockIssue } from './../../types';
+import { MockIssue } from '../../types';
 
-const HEADLINE_WIDTH: number = 320;
+const HEADLINE_WIDTH = 320;
 
-const Headline: React.FC<{ issues: MockIssue[] }> = ({ issues }) => {
-  return (
-    <HeadlineContainer style={{ width: HEADLINE_WIDTH }}>
-      <EpicTitleWrapper>
-        <EpicTitle>Epic</EpicTitle>
-        <EpicTitleBottom />
-      </EpicTitleWrapper>
-      <HeaderRowWrapper>
+const Headline: React.FC<{ issues: MockIssue[] }> = ({ issues }) => (
+  <HeadlineContainer style={{ width: HEADLINE_WIDTH }}>
+    <EpicTitleWrapper>
+      <EpicTitle>Epic</EpicTitle>
+      <EpicTitleBottom />
+    </EpicTitleWrapper>
+    <HeaderRowWrapper>
+      <ScrollSyncPane>
         <div style={{ display: 'flex', overflow: 'hidden' }}>
           <HeaderRowScrollBar>
             <HeaderRowScrollBarWidth style={{ width: HEADLINE_WIDTH - 2 }}>
@@ -44,10 +44,10 @@ const Headline: React.FC<{ issues: MockIssue[] }> = ({ issues }) => {
         </div>
         <HeaderRowBorder />
         <HeaderRowBorder style={{ width: HEADLINE_WIDTH }} />
-      </HeaderRowWrapper>
-    </HeadlineContainer>
-  );
-};
+      </ScrollSyncPane>
+    </HeaderRowWrapper>
+  </HeadlineContainer>
+);
 
 export default Headline;
 

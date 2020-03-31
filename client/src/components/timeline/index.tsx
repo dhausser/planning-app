@@ -1,12 +1,12 @@
 import React, { FunctionComponent } from 'react';
+import { ScrollSync } from 'react-scroll-sync';
 import styled from 'styled-components';
 import Headline from './headline';
-import Chart from './chart';
+import RoadmapChart from './chart';
 import data from './sample.json';
-import { MockIssue } from './../../types';
+import { MockIssue } from '../../types';
 
 // import { useQuery, gql } from '@apollo/client';
-// import { ScrollSync } from 'react-scroll-sync';
 // import EmojiCustomIcon from '@atlaskit/icon/glyph/emoji/custom';
 // import Epic16Icon from '@atlaskit/icon-object/glyph/epic/16';
 // import EmptyState from '@atlaskit/empty-state';
@@ -50,8 +50,12 @@ const Timeline: FunctionComponent = () => {
   return (
     <Container>
       <Wrapper>
-        <Headline issues={issues} />
-        <Chart issues={issues} months={months} />
+        <ScrollSync>
+          <>
+            <Headline issues={issues} />
+            <RoadmapChart issues={issues} months={months} />
+          </>
+        </ScrollSync>
       </Wrapper>
     </Container>
   );

@@ -1,86 +1,114 @@
 import React, { FunctionComponent } from 'react';
+import { ScrollSyncPane } from 'react-scroll-sync';
 import styled from 'styled-components';
-import { MockIssue } from './../../types';
+import { MockIssue } from '../../types';
 
-type Props = {
+interface Props {
   issues: MockIssue[];
   months: Array<string>;
-};
+}
 
-const Chart: FunctionComponent<Props> = ({ issues, months }) => {
-  const WIDTH: number = 9579.5;
+const RoadmapChart: FunctionComponent<Props> = ({ issues, months }) => {
+  const WIDTH = 9579.5;
   const MONTH_WIDTH: number = WIDTH / months.length / 100;
-  const daylineOffset: number = 320;
-  const left: number = 3;
-  const right: number = 95;
+  // const todayFormatted = new Date().toLocaleDateString();
+  const todayPosition = 764;
+  const left = 5.32;
+  const right = 92;
 
   return (
-    <Div1>
-      <Div2>
-        <Div20>
-          <Div21>
-            <Div22>
-              {months.map((month, i) => (
-                <Div23
-                  key={month}
-                  style={{
-                    left: `calc(${i} * ${MONTH_WIDTH}%)`,
-                    right: `calc(100% - ${MONTH_WIDTH}% * ${i + 1})`,
-                  }}
-                >
-                  <Div24>{month}</Div24>
-                </Div23>
-              ))}
-            </Div22>
-          </Div21>
-        </Div20>
-      </Div2>
-      <Div3>
-        <Div30 id="sr-timeline">
-          <Div31 style={{ width: `${WIDTH}px` }}>
-            <Div320>
-              {months.map((month, i) => (
-                <Divider
-                  key={month}
-                  style={{
-                    left: `calc(${i} * ${MONTH_WIDTH}%)`,
-                    right: `calc(100% - ${MONTH_WIDTH}% * ${i + 1})`,
-                  }}
-                />
-              ))}
-            </Div320>
-            <Div321>
-              <StyledSvg />
-            </Div321>
-            <Div322>
-              {issues.map((issue) => (
-                <Row key={issue.key}>
-                  <Draggable
-                    draggable="true"
-                    style={{ left: `${left}%`, right: `${right}%` }}
+    <Chart>
+      <ChartHeader>
+        <ScrollSyncPane>
+          <StyledDiv20>
+            <HeaderCells>
+              <StyledDiv22>
+                {months.map((month, i) => (
+                  <MonthCell
+                    key={month}
+                    style={{
+                      left: `calc(${i} * ${MONTH_WIDTH}%)`,
+                      right: `calc(100% - ${MONTH_WIDTH}% * ${i + 1})`,
+                    }}
+                  >
+                    <StyledSmall>{month}</StyledSmall>
+                  </MonthCell>
+                ))}
+              </StyledDiv22>
+            </HeaderCells>
+          </StyledDiv20>
+        </ScrollSyncPane>
+      </ChartHeader>
+      <ScrollBars>
+        <ScrollSyncPane>
+          <WithSynchronizedScroll id="sr-timeline">
+            <StyledDiv31 style={{ width: `${WIDTH}px` }}>
+              <ColumnsOverlay>
+                {months.map((month, i) => (
+                  <Column
+                    key={month}
+                    style={{
+                      left: `calc(${i} * ${MONTH_WIDTH}%)`,
+                      right: `calc(100% - ${MONTH_WIDTH}% * ${i + 1})`,
+                    }}
                   />
-                </Row>
-              ))}
-              <Row />
-              <BottomLine />
-            </Div322>
-            <DayLineWrapper style={{ left: `${daylineOffset}px` }}>
-              <DayLine />
-            </DayLineWrapper>
-          </Div31>
-        </Div30>
-      </Div3>
-    </Div1>
+                ))}
+              </ColumnsOverlay>
+              <SvgOverlay>
+                <StyledSvg />
+              </SvgOverlay>
+              <RoadmapChartItems>
+                <FlatItems>
+                  {issues.map((issue) => (
+                    <ChartItemDropTarget key={issue.key}>
+                      {/* <WrappedChartItem> */}
+                      {/* <ChartItem> */}
+                      {/* <Bar> */}
+                      <DraggableBar
+                        draggable="true"
+                        style={{ left: `${left}%`, right: `${right}%` }}
+                      >
+                        {/* <BaseBar> */}
+                        {/* <DependenciesIcon /> */}
+                        <DependenciesBarExtension>
+                          <DependenciesWrapper />
+                        </DependenciesBarExtension>
+                        <DependenciesDropTarget />
+                        <LeftDraggableHandle>
+                          <DraggableHandle />
+                        </LeftDraggableHandle>
+                        <RightDraggableHandle>
+                          <DraggableHandle />
+                        </RightDraggableHandle>
+                        {/* </BaseBar> */}
+                      </DraggableBar>
+                      {/* </Bar> */}
+                      {/* </ChartItem> */}
+                      {/* </WrappedChartItem> */}
+                    </ChartItemDropTarget>
+                  ))}
+                </FlatItems>
+                <ChartItemDropTarget />
+                <BottomLine />
+              </RoadmapChartItems>
+              <TodayMarker style={{ left: `${todayPosition}px` }}>
+                <TodayLine />
+              </TodayMarker>
+            </StyledDiv31>
+          </WithSynchronizedScroll>
+        </ScrollSyncPane>
+      </ScrollBars>
+    </Chart>
   );
 };
 
-export default Chart;
+export default RoadmapChart;
 
 /**
  * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE
  */
 
-export const Div1 = styled.div`
+const Chart = styled.div`
   position: relative;
   height: 100%;
   width: 100%;
@@ -88,7 +116,7 @@ export const Div1 = styled.div`
   overflow: hidden;
 `;
 
-export const Div2 = styled.div`
+const ChartHeader = styled.div`
   width: 100%;
   height: 56px;
   box-sizing: border-box;
@@ -102,26 +130,26 @@ export const Div2 = styled.div`
   overflow: hidden;
 `;
 
-export const Div20 = styled.div`
+const StyledDiv20 = styled.div`
   height: 100%;
   overflow-x: auto;
   overflow-y: hidden;
   padding-bottom: 50px;
 `;
 
-export const Div21 = styled.div`
+const HeaderCells = styled.div`
   display: flex;
   height: 54px;
   width: 9579.5px;
 `;
 
-export const Div22 = styled.div`
+const StyledDiv22 = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
 `;
 
-export const Div23 = styled.div`
+const MonthCell = styled.div`
   position: absolute;
   top: 0px;
   bottom: 0px;
@@ -136,7 +164,7 @@ export const Div23 = styled.div`
   border-right: 1px solid rgb(223, 225, 230);
 `;
 
-export const Div24 = styled.small`
+const StyledSmall = styled.small`
   margin-top: 0px;
   text-transform: uppercase;
   color: #707070;
@@ -144,14 +172,22 @@ export const Div24 = styled.small`
   line-height: 1.33333333333333;
 `;
 
-export const Row = styled.div`
+const RoadmapChartItems = styled.div`
+  position: relative;
+  min-height: 100%;
+  width: 9579.5px;
+`;
+
+const FlatItems = styled.div``;
+
+const ChartItemDropTarget = styled.div`
   position: relative;
   display: flex;
   -webkit-box-align: center;
   align-items: center;
   height: 44px;
   background-color: rgb(255, 255, 255);
-  /* transition: background-color 100ms linear 0s; */
+  transition: background-color 100ms linear 0s;
   overflow: hidden;
 
   &:nth-of-type(even) {
@@ -163,7 +199,112 @@ export const Row = styled.div`
   }
 `;
 
-export const Draggable = styled.div`
+// const WrappedChartItem = styled.div`
+//   position: absolute;
+// `;
+
+// const ChartItem = styled.div`
+//   position: absolute;
+// `;
+
+// const Bar = styled.div`
+//   position: absolute;
+// `;
+
+// const BaseBar = styled.div`
+//   position: absolute;
+// `;
+
+// const DependenciesIcon = styled.div`
+//   position: absolute;
+// `;
+
+const DependenciesBarExtension = styled.div`
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  padding: 0px 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  -moz-box-pack: end;
+  justify-content: flex-end;
+  -moz-box-align: center;
+  align-items: center;
+  overflow: hidden;
+  z-index: 4;
+  pointer-events: none;
+  transform: translate3d(0px, 0px, 0px);
+`;
+
+const DependenciesWrapper = styled.div`
+  display: flex;
+  width: 20px;
+  height: 20px;
+  -moz-box-align: center;
+  align-items: center;
+  -moz-box-pack: center;
+  justify-content: center;
+  margin-right: 4px;
+  border-radius: 50%;
+  pointer-events: all;
+
+  :last-child {
+    margin-right: 0px;
+  }
+`;
+
+const DependenciesDropTarget = styled.div`
+  position: absolute;
+  inset: 0px;
+  pointer-events: none;
+  border-radius: 3px 9px 9px 3px;
+  z-index: 5;
+
+  ::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    border-radius: 3px 9px 9px 3px;
+    box-shadow: rgb(82, 67, 170) 0px 0px 0px 2px inset;
+    transition: opacity 0.1s ease-in-out 0s;
+  }
+`;
+
+const LeftDraggableHandle = styled.div`
+  visibility: hidden;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  padding: 4px;
+  cursor: col-resize;
+`;
+
+const RightDraggableHandle = styled.div`
+  visibility: hidden;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  right: 0px;
+  padding: 4px;
+  cursor: col-resize;
+`;
+
+const DraggableHandle = styled.div`
+  margin: 0;
+  padding: 0;
+  width: 6px;
+  height: 16px;
+  background-color: rgb(64, 50, 148);
+  border-radius: 3px;
+`;
+
+const DraggableBar = styled.div`
   position: absolute;
   display: flex;
   -webkit-box-align: center;
@@ -183,14 +324,23 @@ export const Draggable = styled.div`
     rgb(135, 119, 217) 70%,
     rgb(192, 182, 242) 100%
   );
+
+  :hover {
+    ${LeftDraggableHandle} {
+      visibility: visible;
+    }
+    ${RightDraggableHandle} {
+      visibility: visible;
+    }
+  }
 `;
 
-export const BottomLine = styled.div`
+const BottomLine = styled.div`
   height: 1px;
   background-color: rgb(193, 199, 208);
 `;
 
-export const Div3 = styled.div`
+const ScrollBars = styled.div`
   position: absolute;
   top: 56px;
   right: 0px;
@@ -199,7 +349,7 @@ export const Div3 = styled.div`
   overflow: hidden;
 `;
 
-export const Div30 = styled.div`
+const WithSynchronizedScroll = styled.div`
   position: absolute;
   top: 0px;
   left: 0px;
@@ -209,12 +359,12 @@ export const Div30 = styled.div`
   border-left: 1px solid rgb(193, 199, 208);
 `;
 
-export const Div31 = styled.div`
+const StyledDiv31 = styled.div`
   position: relative;
   min-height: 100%;
 `;
 
-export const Div320 = styled.div`
+const ColumnsOverlay = styled.div`
   position: absolute;
   display: flex;
   width: 100%;
@@ -223,7 +373,7 @@ export const Div320 = styled.div`
   pointer-events: none;
 `;
 
-export const Divider = styled.div`
+const Column = styled.div`
   position: absolute;
   top: 0px;
   bottom: 0px;
@@ -232,11 +382,11 @@ export const Divider = styled.div`
   border-right: 1px solid rgb(223, 225, 230);
 `;
 
-export const Div321 = styled.div`
+const SvgOverlay = styled.div`
   background-color: rgba(9, 30, 66, 0.25);
 `;
 
-export const StyledSvg = styled.svg`
+const StyledSvg = styled.svg`
   position: absolute;
   top: 0px;
   left: 0px;
@@ -246,13 +396,7 @@ export const StyledSvg = styled.svg`
   overflow: visible;
 `;
 
-export const Div322 = styled.div`
-  position: relative;
-  min-height: 100%;
-  width: 9579.5px;
-`;
-
-export const DayLineWrapper = styled.div`
+const TodayMarker = styled.div`
   position: absolute;
   display: flex;
   top: 0px;
@@ -260,7 +404,7 @@ export const DayLineWrapper = styled.div`
   z-index: 7;
 `;
 
-export const DayLine = styled.div`
+const TodayLine = styled.div`
   background-color: rgb(255, 153, 31);
   height: 100%;
   width: 2px;
