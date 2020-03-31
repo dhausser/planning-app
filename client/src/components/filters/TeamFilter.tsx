@@ -1,7 +1,7 @@
 import React from 'react';
 import { ApolloClient, gql } from '@apollo/client';
 import { OptionType } from '@atlaskit/select';
-import Filter from './filter';
+import Filter from './Filter';
 
 export const GET_TEAMS = gql`
   query GetTeams {

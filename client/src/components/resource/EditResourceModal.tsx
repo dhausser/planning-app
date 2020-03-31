@@ -4,8 +4,8 @@ import Form, { Field } from '@atlaskit/form';
 import TextField from '@atlaskit/textfield';
 import Select from '@atlaskit/select';
 import ModalDialog from '@atlaskit/modal-dialog';
-import Footer from './footer';
-import { GET_TEAMS } from '../filters/team-filter';
+import Footer from './Footer';
+import { GET_TEAMS } from '../filters/TeamFilter';
 import { ModalInterfaceProps, Team, ResourceForm } from './types';
 
 const UPDATE_RESOURCE = gql`
@@ -74,7 +74,7 @@ export default function EditResourceModal({ setIsOpen }: ModalInterfaceProps) {
         defaultValue="Gerald"
         isRequired
       >
-        {({ fieldProps }) => <TextField {...fieldProps} />}
+        {({ fieldProps }): React.ReactNode => <TextField {...fieldProps} />}
       </Field>
       <Field
         label="Lastname"
@@ -82,7 +82,7 @@ export default function EditResourceModal({ setIsOpen }: ModalInterfaceProps) {
         defaultValue="Of Rivia"
         isRequired
       >
-        {({ fieldProps }) => <TextField {...fieldProps} />}
+        {({ fieldProps }): React.ReactNode => <TextField {...fieldProps} />}
       </Field>
       <Field
         label="Email"
@@ -90,10 +90,10 @@ export default function EditResourceModal({ setIsOpen }: ModalInterfaceProps) {
         defaultValue="gerald@cdprojektred.com"
         isRequired
       >
-        {({ fieldProps }) => <TextField {...fieldProps} />}
+        {({ fieldProps }): React.ReactNode => <TextField {...fieldProps} />}
       </Field>
       <Field label="Team" name="team" defaultValue="Gameplay" isRequired>
-        {() => <Select options={options} />}
+        {(): React.ReactNode => <Select options={options} />}
       </Field>
     </ModalDialog>
   );

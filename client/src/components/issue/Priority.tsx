@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { gridSize } from '@atlaskit/theme';
-import { priorityIconMap } from './icon';
+import { priorityIconMap } from './Icon';
 
 const Priority: React.FC<{ id: string }> = ({ id }) => {
   return (

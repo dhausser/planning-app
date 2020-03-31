@@ -3,7 +3,7 @@ import { useMutation, gql } from '@apollo/client';
 import ModalDialog from '@atlaskit/modal-dialog';
 import Form, { Field } from '@atlaskit/form';
 import TextField from '@atlaskit/textfield';
-import Footer from './footer';
+import Footer from './Footer';
 import { ModalInterfaceProps } from './types';
 
 const DELETE_RESOURCE = gql`
@@ -43,7 +43,7 @@ export default function DeleteResourceModal({
     >
       <p>Are you sure want to delete this resource?</p>
       <Field label="Email" name="email" defaultValue="" isRequired>
-        {({ fieldProps }) => (
+        {({ fieldProps }): React.ReactNode => (
           <TextField placeholder="gerald@cdprojektred.com" {...fieldProps} />
         )}
       </Field>

@@ -7,7 +7,7 @@ import {
   Switcher,
 } from '@atlaskit/navigation-next';
 import EmptyState from '@atlaskit/empty-state';
-import { updateFilter } from '../filters/project-filter';
+import { updateFilter } from '../filters/ProjectFilter';
 import { Project, ProjectListItem } from '../../types';
 
 export const PROJECT_TILE_DATA = gql`

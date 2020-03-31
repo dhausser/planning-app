@@ -2,9 +2,9 @@ import React from 'react';
 import { useMutation, gql } from '@apollo/client';
 import ModalDialog from '@atlaskit/modal-dialog';
 import Form, { Field } from '@atlaskit/form';
-import AssignableUserPicker from './assignable-user-picker';
-import TeamPicker from './team-picker';
-import Footer from './footer';
+import AssignableUserPicker from './AssignableUserPicker';
+import TeamPicker from './TeamPicker';
+import Footer from './Footer';
 import { ModalInterfaceProps, ResourceForm } from './types';
 
 const INSERT_RESOURCE = gql`
@@ -69,10 +69,10 @@ export default function CreateResourceModal({
       }}
     >
       <Field label="Assignee" name="assignee" defaultValue="" isRequired>
-        {() => <AssignableUserPicker />}
+        {(): React.ReactNode => <AssignableUserPicker />}
       </Field>
       <Field label="Team" name="team" defaultValue="" isRequired>
-        {() => <TeamPicker />}
+        {(): React.ReactNode => <TeamPicker />}
       </Field>
     </ModalDialog>
   );

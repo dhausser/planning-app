@@ -5,9 +5,9 @@
   },
   "extends": [
     "airbnb",
-    "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier/@typescript-eslint",
     "plugin:prettier/recommended"
   ],
   "globals": {
@@ -45,7 +45,7 @@
     "react/prop-types": "off",
     "import/extensions": "off",
     "import/no-unresolved": "off",
-    "react/jsx-props-no-spreading": "off",
+    "react/jsx-props-no-spreading": "off"
   },
   "settings": {
     "import/extensions": [
@@ -71,11 +71,4 @@
       }
     }
   }
-  // "settings": {
-  //   "import/resolver": {
-  //     "node": {
-  //       "extensions": [".js", ".jsx", ".ts", ".tsx"]
-  //     }
-  //   }
-  // }
 }

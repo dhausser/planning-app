@@ -8,8 +8,8 @@ import PersonCircleIcon from '@atlaskit/icon/glyph/person-circle';
 import IssuesIcon from '@atlaskit/icon/glyph/issues';
 import ShipIcon from '@atlaskit/icon/glyph/ship';
 import SettingsIcon from '@atlaskit/icon/glyph/settings';
-import Switcher from './switcher';
-import LinkItem from './link-item';
+import Switcher from './Switcher';
+import LinkItem from './LinkItem';
 
 export default {
   id: 'project/home',

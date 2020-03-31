@@ -1,19 +1,19 @@
 import React, { Fragment } from 'react';
 import { Router } from '@reach/router';
 
-import Dashboard from './dashboard';
-import Resource from './resource';
-import Resources from './resources';
-import Roadmap from './roadmap';
-import Issues from './issues';
-import Issue from './issue';
-import Projects from './projects';
-import Backlog from './backlog';
-import Releases from './releases';
-import Board from './board';
-import Pages from './pages';
-import AddItem from './add-item';
-import Settings from './settings';
+import Dashboard from './Dashboard';
+import Resource from './Resource';
+import Resources from './Resources';
+import Roadmap from './Roadmap';
+import Issues from './Issues';
+import Issue from './Issue';
+import Projects from './Projects';
+import Backlog from './Backlog';
+import Releases from './Releases';
+import Board from './Board';
+import Pages from './Pages';
+import AddItem from './AddItem';
+import Settings from './Settings';
 
 export default () => (
   <Router primary={false} component={Fragment}>

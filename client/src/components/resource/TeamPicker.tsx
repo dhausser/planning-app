@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/client';
 import Spinner from '@atlaskit/spinner';
 import EmptyState from '@atlaskit/empty-state';
 import Select from '@atlaskit/select';
-import { GET_TEAMS } from '../filters/team-filter';
+import { GET_TEAMS } from '../filters/TeamFilter';
 import { Team } from './types';
 
 const TeamPicker: FunctionComponent = () => {

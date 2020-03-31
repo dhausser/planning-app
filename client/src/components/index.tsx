@@ -16,9 +16,9 @@ export {
   issuetypeIconMap,
   statusCatecoryColorMap,
 } from './issue';
-export { default as Layout } from './layout';
-export { default as Loading } from './loading';
-export { default as LoginForm } from './login-form';
-export { default as BarChart } from './bar-chart';
-export { default as Nameplate } from './resource/nameplate';
+export { default as Layout } from './Layout';
+export { default as Loading } from './Loading';
+export { default as LoginForm } from './LoginForm';
+export { default as BarChart } from './BarChart';
+export { default as Nameplate } from './resource/Nameplate';
 export { default as Timeline } from './timeline';

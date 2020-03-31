@@ -1,8 +1,8 @@
-export { default as AssignableUserPicker } from './assignable-user-picker';
-export { default as CreateResourceModal } from './create-resource-modal';
-export { default as EditResourceModal } from './edit-resource-modal';
-export { default as DeleteResourceModal } from './delete-resource-modal';
-export { default as ResourceFooter } from './footer';
-export { default as TableRow } from './table-row';
-export { default as TeamPicker } from './team-picker';
-export { default as Nameplate } from './nameplate';
+export { default as AssignableUserPicker } from './AssignableUserPicker';
+export { default as CreateResourceModal } from './CreateResourceModal';
+export { default as EditResourceModal } from './EditResourceModal';
+export { default as DeleteResourceModal } from './DeleteResourceModal';
+export { default as ResourceFooter } from './Footer';
+export { default as TableRow } from './TableRow';
+export { default as TeamPicker } from './TeamPicker';
+export { default as Nameplate } from './Nameplate';

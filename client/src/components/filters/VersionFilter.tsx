@@ -1,21 +1,15 @@
 import React from 'react';
 import { ApolloClient, gql } from '@apollo/client';
 import { OptionType } from '@atlaskit/select';
-import Filter from './filter';
+import Filter from './Filter';
 
-const GET_STATUSES = gql`
+const GET_VERSIONS = gql`
   query($id: ID!) {
     projectId @client @export(as: "id")
-    statusId @client
-    statuses(id: $id) {
+    versionId @client
+    versions(id: $id) {
       id
       name
-      statusCategory {
-        id
-        key
-        colorName
-        name
-      }
     }
   }
 `;
@@ -25,27 +19,27 @@ const updateFilter = (client: ApolloClient<object>, e: OptionType) => {
   client.writeQuery({
     query: gql`
       {
-        statusId
+        versionId
       }
     `,
     data: {
-      statusId: value,
+      versionId: value,
     },
   });
   if (value) {
-    localStorage.setItem('statusId', value as string);
+    localStorage.setItem('versionId', value as string);
   } else {
-    localStorage.removeItem('statusId');
+    localStorage.removeItem('versionId');
   }
 };
 
 export default () => (
   <Filter
-    query={GET_STATUSES}
+    query={GET_VERSIONS}
     updateFilter={updateFilter}
-    valueName="statusId"
-    valuesName="statuses"
-    placeholder="Select status"
+    valueName="versionId"
+    valuesName="versions"
+    placeholder="Select version"
     isClearable
   />
 );

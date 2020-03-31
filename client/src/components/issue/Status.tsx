@@ -3,7 +3,7 @@ import { Status, Color } from '@atlaskit/status/element';
 import { gridSize } from '@atlaskit/theme';
 import styled from 'styled-components';
 
-import { statusCatecoryColorMap } from './icon';
+import { statusCatecoryColorMap } from './Icon';
 
 interface Props {
   name: string;

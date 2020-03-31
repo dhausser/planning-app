@@ -1,7 +1,7 @@
 import React from 'react';
 import { Router } from '@reach/router';
 import { LoginForm } from '../components';
-import LoginSuccess from './login-success';
+import LoginSuccess from './LoginSuccess';
 
 export default () => (
   <Router>

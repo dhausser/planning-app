@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import { ScrollSync } from 'react-scroll-sync';
 import styled from 'styled-components';
-import Headline from './headline';
-import RoadmapChart from './chart';
+import Headline from './Headline';
+import RoadmapChart from './Chart';
 import data from './sample.json';
 import { MockIssue } from '../../types';
 

@@ -1,28 +1,15 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
-import { ApolloProvider, useQuery, gql } from '@apollo/client';
-import {
-  NavigationProvider,
-  withNavigationViewController,
-  LayoutManagerWithViewController,
-} from '@atlaskit/navigation-next';
-import '@atlaskit/css-reset';
-
-import client from './apollo-client';
-import Pages from './pages';
-import Login from './pages/login';
-import {
-  GlobalNavigation,
-  productHomeView,
-  productIssuesView,
-  projectHomeView,
-} from './components/nav';
-
-// TO REMOVE: For Development only
-import Page from '@atlaskit/page';
-import { Timeline } from './components';
 import styled from 'styled-components';
+import { ApolloProvider } from '@apollo/client';
+import { NavigationProvider } from '@atlaskit/navigation-next';
+import Page from '@atlaskit/page';
+import '@atlaskit/css-reset';
+import App from './App';
+import * as serviceWorker from './serviceWorker';
+
+import client from './apolloClient';
+import { Timeline } from './components';
 
 const Padding = styled.div`
   display: flex;
@@ -31,36 +18,6 @@ const Padding = styled.div`
   box-sizing: border-box;
   height: 100vh;
 `;
-
-interface NavigationViewController {
-  navigationViewController: any;
-}
-
-export const IS_LOGGED_IN = gql`
-  query IsUserLoggedIn {
-    isLoggedIn @client
-  }
-`;
-
-function App({ navigationViewController }: NavigationViewController) {
-  const { data } = useQuery(IS_LOGGED_IN);
-  useEffect(() => {
-    navigationViewController.addView(productHomeView);
-    navigationViewController.addView(productIssuesView);
-    navigationViewController.addView(projectHomeView);
-  }, [navigationViewController]);
-  return (
-    <LayoutManagerWithViewController globalNavigation={GlobalNavigation}>
-      {data.isLoggedIn ? <Pages /> : <Login />}
-    </LayoutManagerWithViewController>
-  );
-}
-
-App.propTypes = {
-  navigationViewController: PropTypes.objectOf(PropTypes.any).isRequired,
-};
-
-const AppWithNavigationViewController = withNavigationViewController(App);
 
 if (process.env.NODE_ENV === 'development') {
   ReactDOM.render(
@@ -75,9 +32,14 @@ if (process.env.NODE_ENV === 'development') {
   ReactDOM.render(
     <ApolloProvider client={client}>
       <NavigationProvider>
-        <AppWithNavigationViewController />
+        <App />
       </NavigationProvider>
     </ApolloProvider>,
     document.getElementById('root'),
   );
 }
+
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: https://bit.ly/CRA-PWA
+serviceWorker.unregister();

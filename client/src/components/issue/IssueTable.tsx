@@ -8,7 +8,7 @@ import DynamicTable from '@atlaskit/dynamic-table';
 import EmptyState from '@atlaskit/empty-state';
 
 import { GET_ISSUES, ROWS_PER_PAGE } from './useIssues';
-import { Loading } from './../';
+import { Loading } from '..';
 import { head, row } from './utils';
 
 interface IssueTableProps extends RouteComponentProps {

@@ -13,8 +13,8 @@ import MoreIcon from '@atlaskit/icon/glyph/more';
 import InlineEdit from '@atlaskit/inline-edit';
 import { colors } from '@atlaskit/theme';
 import PageHeader from '@atlaskit/page-header';
-import { issuetypeIconMap } from './icon';
-import { EDIT_ISSUE } from './description';
+import { issuetypeIconMap } from './Icon';
+import { EDIT_ISSUE } from './Description';
 
 interface TitleProps {
   id: string;
@@ -56,7 +56,7 @@ export function copyLink(key: string) {
 
 const Header: React.FC<HeaderProps> = ({ id, summary, issuetype }) => {
   const breadcrumbs = (
-    <BreadcrumbsStateless onExpand={() => { }}>
+    <BreadcrumbsStateless onExpand={() => {}}>
       <BreadcrumbsItem text="Some project" key="Some project" />
       <BreadcrumbsItem
         text={id}

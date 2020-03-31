@@ -7,7 +7,7 @@ import {
   statusCatecoryColorMap,
   priorityIconMap,
   issuetypeIconMap,
-} from './icon';
+} from './Icon';
 import { Issue } from '../../types';
 
 export const head = {
@@ -60,7 +60,7 @@ export const head = {
 export const row = ({
   key,
   fields: { summary, issuetype, status, priority, fixVersions, assignee },
-}: Issue) => ({
+}: Issue): object => ({
   key,
   cells: [
     {

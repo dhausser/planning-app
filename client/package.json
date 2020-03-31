@@ -2,7 +2,6 @@
   "name": "planning-app-client",
   "version": "0.1.0",
   "private": true,
-  "author": "Davy Hausser <davy.hausser@cdprojektred.com>",
   "dependencies": {
     "@apollo/client": "^3.0.0-beta.41",
     "@atlaskit/avatar": "^17.1.9",
@@ -34,6 +33,9 @@
     "@atlaskit/tooltip": "^15.2.5",
     "@atlaskit/user-picker": "^4.2.0",
     "@reach/router": "^1.3.3",
+    "@testing-library/jest-dom": "^5.3.0",
+    "@testing-library/react": "^10.0.2",
+    "@testing-library/user-event": "^10.0.1",
     "@types/chart.js": "^2.9.16",
     "@types/node": "^13.9.5",
     "@types/reach__router": "^1.3.1",
@@ -63,6 +65,16 @@
     "prettier": "^2.0.2",
     "react-scripts": "^3.4.1"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "prettier --write"
+    ]
+  },
   "scripts": {
     "dev": "NODE_ENV=development react-scripts start",
     "start": "react-scripts start",
@@ -71,11 +83,17 @@
     "eject": "react-scripts eject",
     "codegen": "apollo client:codegen --target typescript --watch"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ],
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
   "proxy": "http://localhost:4000/"
 }

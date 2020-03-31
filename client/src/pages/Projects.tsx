@@ -11,8 +11,8 @@ import Avatar from '@atlaskit/avatar';
 
 import { Props, FilterLinkProps, Project } from '../types';
 import { productHomeView, Layout } from '../components';
-import { updateFilter } from '../components/filters/project-filter';
-import { PROJECT_TILE_DATA } from '../components/nav/switcher';
+import { updateFilter } from '../components/filters/ProjectFilter';
+import { PROJECT_TILE_DATA } from '../components/nav/Switcher';
 
 const GET_PROJECTS = gql`
   query GetProjects {
