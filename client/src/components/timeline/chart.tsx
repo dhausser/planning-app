@@ -1,19 +1,84 @@
+import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
+import { MockIssue } from './../../types';
 
-export const Container = styled.div`
-  position: relative;
-  margin-top: 8px;
-  flex: 1 1 auto;
-`;
+type Props = {
+  issues: MockIssue[];
+  months: Array<string>;
+};
 
-export const Wrapper = styled.div`
-  display: flex;
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  left: 0px;
-`;
+const Chart: FunctionComponent<Props> = ({ issues, months }) => {
+  const WIDTH: number = 9579.5;
+  const MONTH_WIDTH: number = WIDTH / months.length / 100;
+  const daylineOffset: number = 320;
+  const left: number = 3;
+  const right: number = 95;
+
+  return (
+    <Div1>
+      <Div2>
+        <Div20>
+          <Div21>
+            <Div22>
+              {months.map((month, i) => (
+                <Div23
+                  key={month}
+                  style={{
+                    left: `calc(${i} * ${MONTH_WIDTH}%)`,
+                    right: `calc(100% - ${MONTH_WIDTH}% * ${i + 1})`,
+                  }}
+                >
+                  <Div24>{month}</Div24>
+                </Div23>
+              ))}
+            </Div22>
+          </Div21>
+        </Div20>
+      </Div2>
+      <Div3>
+        <Div30 id="sr-timeline">
+          <Div31 style={{ width: `${WIDTH}px` }}>
+            <Div320>
+              {months.map((month, i) => (
+                <Divider
+                  key={month}
+                  style={{
+                    left: `calc(${i} * ${MONTH_WIDTH}%)`,
+                    right: `calc(100% - ${MONTH_WIDTH}% * ${i + 1})`,
+                  }}
+                />
+              ))}
+            </Div320>
+            <Div321>
+              <StyledSvg />
+            </Div321>
+            <Div322>
+              {issues.map((issue) => (
+                <Row key={issue.key}>
+                  <Draggable
+                    draggable="true"
+                    style={{ left: `${left}%`, right: `${right}%` }}
+                  />
+                </Row>
+              ))}
+              <Row />
+              <BottomLine />
+            </Div322>
+            <DayLineWrapper style={{ left: `${daylineOffset}px` }}>
+              <DayLine />
+            </DayLineWrapper>
+          </Div31>
+        </Div30>
+      </Div3>
+    </Div1>
+  );
+};
+
+export default Chart;
+
+/**
+ * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE
+ */
 
 export const Div1 = styled.div`
   position: relative;

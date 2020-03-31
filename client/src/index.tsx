@@ -62,22 +62,22 @@ App.propTypes = {
 
 const AppWithNavigationViewController = withNavigationViewController(App);
 
-// if (process.env.NODE_ENV === 'development') {
-//   ReactDOM.render(
-//     <Page>
-//       <Padding>
-//         <Timeline />
-//       </Padding>
-//     </Page>,
-//     document.getElementById('root'),
-//   );
-// } else {
-ReactDOM.render(
-  <ApolloProvider client={client}>
-    <NavigationProvider>
-      <AppWithNavigationViewController />
-    </NavigationProvider>
-  </ApolloProvider>,
-  document.getElementById('root'),
-);
-// }
+if (process.env.NODE_ENV === 'development') {
+  ReactDOM.render(
+    <Page>
+      <Padding>
+        <Timeline />
+      </Padding>
+    </Page>,
+    document.getElementById('root'),
+  );
+} else {
+  ReactDOM.render(
+    <ApolloProvider client={client}>
+      <NavigationProvider>
+        <AppWithNavigationViewController />
+      </NavigationProvider>
+    </ApolloProvider>,
+    document.getElementById('root'),
+  );
+}

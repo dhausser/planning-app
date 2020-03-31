@@ -1,4 +1,9 @@
 import React, { FunctionComponent } from 'react';
+import styled from 'styled-components';
+import Headline from './headline';
+import Chart from './chart';
+import data from './sample.json';
+import { MockIssue } from './../../types';
 
 // import { useQuery, gql } from '@apollo/client';
 // import { ScrollSync } from 'react-scroll-sync';
@@ -7,42 +12,7 @@ import React, { FunctionComponent } from 'react';
 // import EmptyState from '@atlaskit/empty-state';
 // import { Loading } from '..';
 
-import Headline from './headline';
-import data from './sample.json';
-import { MockIssue } from './../../types';
-
-import {
-  Container,
-  Wrapper,
-  Div1,
-  Div2,
-  Div20,
-  Div21,
-  Div22,
-  Div23,
-  Div24,
-  Row,
-  Draggable,
-  BottomLine,
-  Div3,
-  Div30,
-  Div31,
-  Div320,
-  Divider,
-  Div321,
-  StyledSvg,
-  Div322,
-  DayLineWrapper,
-  DayLine,
-} from './elements';
-
 const { issues, months }: { issues: MockIssue[]; months: Array<string> } = data;
-const WIDTH: number = 9579.5;
-const MONTH_WIDTH: number = WIDTH / months.length / 100;
-const daylineOffset: number = 320;
-
-const left: number = 3;
-const right: number = 95;
 
 // const GET_EPICS = gql`
 //   query issueList($projectId: String, $versionId: String) {
@@ -81,65 +51,29 @@ const Timeline: FunctionComponent = () => {
     <Container>
       <Wrapper>
         <Headline issues={issues} />
-        <Div1>
-          <Div2>
-            <Div20>
-              <Div21>
-                <Div22>
-                  {months.map((month, i) => (
-                    <Div23
-                      key={month}
-                      style={{
-                        left: `calc(${i} * ${MONTH_WIDTH}%)`,
-                        right: `calc(100% - ${MONTH_WIDTH}% * ${i + 1})`,
-                      }}
-                    >
-                      <Div24>{month}</Div24>
-                    </Div23>
-                  ))}
-                </Div22>
-              </Div21>
-            </Div20>
-          </Div2>
-          <Div3>
-            <Div30 id="sr-timeline">
-              <Div31 style={{ width: '9579.5px' }}>
-                <Div320>
-                  {months.map((month, i) => (
-                    <Divider
-                      key={month}
-                      style={{
-                        left: `calc(${i} * ${MONTH_WIDTH}%)`,
-                        right: `calc(100% - ${MONTH_WIDTH}% * ${i + 1})`,
-                      }}
-                    />
-                  ))}
-                </Div320>
-                <Div321>
-                  <StyledSvg />
-                </Div321>
-                <Div322>
-                  {issues.map((issue) => (
-                    <Row key={issue.key}>
-                      <Draggable
-                        draggable="true"
-                        style={{ left: `${left}%`, right: `${right}%` }}
-                      />
-                    </Row>
-                  ))}
-                  <Row />
-                  <BottomLine />
-                </Div322>
-                <DayLineWrapper style={{ left: `${daylineOffset}px` }}>
-                  <DayLine />
-                </DayLineWrapper>
-              </Div31>
-            </Div30>
-          </Div3>
-        </Div1>
+        <Chart issues={issues} months={months} />
       </Wrapper>
     </Container>
   );
 };
 
 export default Timeline;
+
+/**
+ * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE
+ */
+
+const Container = styled.div`
+  position: relative;
+  margin-top: 8px;
+  flex: 1 1 auto;
+`;
+
+const Wrapper = styled.div`
+  display: flex;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+`;
