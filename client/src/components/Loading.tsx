@@ -13,12 +13,10 @@ const Wrapper = styled.div`
   bottom: 0;
 `;
 
-const Loading: FunctionComponent = () => {
-  return (
-    <Wrapper>
-      <Spinner size="large" />
-    </Wrapper>
-  );
-};
+const Loading: FunctionComponent = () => (
+  <Wrapper>
+    <Spinner size="large" />
+  </Wrapper>
+);
 
 export default Loading;

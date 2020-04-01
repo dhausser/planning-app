@@ -10,12 +10,10 @@ const Wrapper = styled.div`
   height: 100vh;
 `;
 
-const Layout: FunctionComponent = ({ children }) => {
-  return (
-    <Page>
-      <Wrapper>{children}</Wrapper>
-    </Page>
-  );
-};
+const Layout: FunctionComponent = ({ children }) => (
+  <Page>
+    <Wrapper>{children}</Wrapper>
+  </Page>
+);
 
 export default Layout;

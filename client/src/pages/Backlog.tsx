@@ -1,4 +1,6 @@
-import React, { useState, useEffect, FunctionComponent } from 'react';
+import React, {
+  useState, useEffect, FunctionComponent, ReactElement,
+} from 'react';
 import { Link } from '@reach/router';
 import { useQuery, gql } from '@apollo/client';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
@@ -70,19 +72,19 @@ const Backlog: FunctionComponent<Props> = ({ navigationViewController }) => {
   return (
     <Layout>
       <PageHeader
-        bottomBar={
+        bottomBar={(
           <div style={{ display: 'flex' }}>
             <div style={{ flex: '0 0 200px', marginRight: 8 }}>
               <TextField isCompact placeholder="Filter" aria-label="Filter" />
             </div>
             <VersionFilter />
             <div style={{ flex: '0 0 200px', marginRight: 8 }}>
-              <Button onClick={() => setIsExpanded(!isExpanded)}>
+              <Button onClick={(): void => setIsExpanded(!isExpanded)}>
                 {isExpanded ? 'Collapse' : 'Expand'}
               </Button>
             </div>
           </div>
-        }
+        )}
       >
         Backlog
       </PageHeader>
@@ -97,7 +99,7 @@ const Backlog: FunctionComponent<Props> = ({ navigationViewController }) => {
           </Headers>
           <Rows
             items={loading ? null : data.roadmapIssues}
-            render={({ key, fields, children }: RowProps) => (
+            render={({ key, fields, children }: RowProps): ReactElement => (
               <Row
                 key
                 itemId={key}
@@ -105,11 +107,7 @@ const Backlog: FunctionComponent<Props> = ({ navigationViewController }) => {
                 hasChildren={children && children.length > 0}
                 isDefaultExpanded={isExpanded}
               >
-                <Cell singleLine>
-                  <img alt="issuetype-icon">
-                    {issuetypeIconMap[fields.issuetype.id]}
-                  </img>
-                </Cell>
+                <Cell singleLine>{issuetypeIconMap[fields.issuetype.id]}</Cell>
                 <Cell singleLine>
                   <Link to={`/issue/${key}`}>{fields.summary}</Link>
                 </Cell>

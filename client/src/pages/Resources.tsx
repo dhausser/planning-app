@@ -73,8 +73,7 @@ const Resources: FunctionComponent<Props> = ({ navigationViewController }) => {
       ? data.resources.filter(({ team }: Resource) => team === data.teamId)
       : data.resources;
   }
-  if (error)
-    return <EmptyState header={error.name} description={error.message} />;
+  if (error) return <EmptyState header={error.name} description={error.message} />;
 
   return (
     <Layout>

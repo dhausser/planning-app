@@ -41,26 +41,23 @@ const { issues, months }: { issues: MockIssue[]; months: Array<string> } = data;
 // setIssues([...issues, issue]);
 // }
 
-const Timeline: FunctionComponent = () => {
-  // const { loading, error, data } = useQuery(GET_EPICS);
+// const { loading, error, data } = useQuery(GET_EPICS);
 
-  // if (loading || !data) return <Loading />;
-  // if (error) return <EmptyState header={error.name} description={error.message} />;
+// if (loading || !data) return <Loading />;
+// if (error) return <EmptyState header={error.name} description={error.message} />;
 
-  return (
-    <Container>
-      <Wrapper>
-        <ScrollSync>
-          <>
-            <Headline issues={issues} />
-            <RoadmapChart issues={issues} months={months} />
-          </>
-        </ScrollSync>
-      </Wrapper>
-    </Container>
-  );
-};
-
+const Timeline: FunctionComponent = () => (
+  <Container>
+    <Wrapper>
+      <ScrollSync>
+        <>
+          <Headline issues={issues} />
+          <RoadmapChart issues={issues} months={months} />
+        </>
+      </ScrollSync>
+    </Wrapper>
+  </Container>
+);
 export default Timeline;
 
 /**

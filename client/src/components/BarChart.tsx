@@ -70,7 +70,7 @@ const BarChart: FunctionComponent<ChartData> = ({
           type: 'bar',
           data: updateChartData(labels, values),
           options: updateChartOptions(results, total),
-        })
+        }),
       );
     }
   }, [chart, labels, values, results, total]);

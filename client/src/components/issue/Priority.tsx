@@ -4,14 +4,12 @@ import styled from 'styled-components';
 import { gridSize } from '@atlaskit/theme';
 import { priorityIconMap } from './Icon';
 
-const Priority: React.FC<{ id: string }> = ({ id }) => {
-  return (
-    <>
-      <h6>Priority</h6>
-      <Wrapper>{priorityIconMap[id]}</Wrapper>
-    </>
-  );
-};
+const Priority: React.FC<{ id: string }> = ({ id }) => (
+  <>
+    <h6>Priority</h6>
+    <Wrapper>{priorityIconMap[id]}</Wrapper>
+  </>
+);
 
 export default Priority;
 

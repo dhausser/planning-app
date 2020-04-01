@@ -1,4 +1,4 @@
-import React, { useEffect, FunctionComponent } from 'react';
+import React, { useEffect, FunctionComponent, ReactElement } from 'react';
 import { Link } from '@reach/router';
 import { useApolloClient, useQuery, gql } from '@apollo/client';
 import styled from 'styled-components';
@@ -55,18 +55,18 @@ const head = {
   ],
 };
 
-function FilterLink({ children, id, name }: FilterLinkProps) {
+function FilterLink({ children, id, name }: FilterLinkProps): ReactElement {
   const client = useApolloClient();
   const value = id;
   const label = name;
   return (
-    <Link to="/roadmap" onClick={() => updateFilter(client, { value, label })}>
+    <Link to="/roadmap" onClick={(): void => updateFilter(client, { value, label })}>
       {children}
     </Link>
   );
 }
 
-function createRow(project: Project) {
+function createRow(project: Project): object {
   return {
     key: project.id,
     cells: [
@@ -106,8 +106,7 @@ const Projects: FunctionComponent<Props> = ({ navigationViewController }) => {
   ]);
   const { data, loading, error } = useQuery(GET_PROJECTS);
 
-  if (error)
-    return <EmptyState header={error.name} description={error.message} />;
+  if (error) return <EmptyState header={error.name} description={error.message} />;
 
   return (
     <Layout>

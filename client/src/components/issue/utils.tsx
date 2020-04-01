@@ -59,7 +59,9 @@ export const head = {
 
 export const row = ({
   key,
-  fields: { summary, issuetype, status, priority, fixVersions, assignee },
+  fields: {
+    summary, issuetype, status, priority, fixVersions, assignee,
+  },
 }: Issue): object => ({
   key,
   cells: [

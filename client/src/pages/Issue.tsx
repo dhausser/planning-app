@@ -66,8 +66,7 @@ const Issue: FunctionComponent<Props> = ({
   });
 
   if (loading) return <Loading />;
-  if (error)
-    return <EmptyState header={error.name} description={error.message} />;
+  if (error) return <EmptyState header={error.name} description={error.message} />;
 
   const {
     id,
