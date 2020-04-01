@@ -6,7 +6,6 @@ import { NavigationProvider } from '@atlaskit/navigation-next';
 import Page from '@atlaskit/page';
 import '@atlaskit/css-reset';
 import App from './App';
-import * as serviceWorker from './serviceWorker';
 
 import client from './apolloClient';
 import { Timeline } from './components';
@@ -38,8 +37,3 @@ if (process.env.NODE_ENV === 'development') {
     document.getElementById('root')
   );
 }
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();

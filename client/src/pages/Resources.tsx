@@ -1,18 +1,20 @@
 import React, { useState, useEffect, FunctionComponent } from 'react';
 import { useQuery, gql } from '@apollo/client';
+import styled from 'styled-components';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import DynamicTable from '@atlaskit/dynamic-table';
 import PageHeader from '@atlaskit/page-header';
-import TextField from '@atlaskit/textfield';
 import Button, { ButtonGroup } from '@atlaskit/button';
 import { ModalTransition } from '@atlaskit/modal-dialog';
 import EmptyState from '@atlaskit/empty-state';
-import { TeamFilter, projectHomeView, Layout } from '../components';
+import { projectHomeView, Layout } from '../components';
 import {
   CreateResourceModal,
   EditResourceModal,
   DeleteResourceModal,
-  TableRow,
+  bottomBar,
+  head,
+  rows,
 } from '../components/resource';
 import { Props, Resource } from '../types';
 
@@ -27,35 +29,9 @@ const GET_RESOURCES = gql`
   }
 `;
 
-const barContent = (
-  <div style={{ display: 'flex' }}>
-    <div style={{ flexBasis: 150, marginRight: 8 }}>
-      <TextField isCompact placeholder="Filter" aria-label="Filter" />
-    </div>
-    <TeamFilter />
-  </div>
-);
-
-const head = {
-  cells: [
-    {
-      key: 'name',
-      content: 'Name',
-      isSortable: true,
-    },
-    {
-      key: 'team',
-      content: 'Team',
-      isSortable: true,
-      width: 15,
-    },
-    {
-      key: 'actions',
-      content: 'Actions',
-      width: 15,
-    },
-  ],
-};
+const Wrapper = styled.div`
+  min-width: 600px;
+`;
 
 const Resources: FunctionComponent<Props> = ({ navigationViewController }) => {
   const [isCreateOpen, setIsCreateOpen] = useState(false);
@@ -78,31 +54,33 @@ const Resources: FunctionComponent<Props> = ({ navigationViewController }) => {
 
   return (
     <Layout>
-      <PageHeader bottomBar={barContent}>Teams</PageHeader>
-      <ButtonGroup>
-        <Button
-          appearance="primary"
-          onClick={(): void => setIsCreateOpen(true)}
-        >
-          Create
-        </Button>
-      </ButtonGroup>
-      <DynamicTable
-        caption={`${resources.length} people`}
-        head={head}
-        rows={TableRow(resources, setIsEditOpen, setIsDeleteOpen)}
-        rowsPerPage={20}
-        loadingSpinnerSize="large"
-        isLoading={loading}
-        isFixedSize
-        defaultSortKey="name"
-        defaultSortOrder="ASC"
-      />
-      <ModalTransition>
-        {isCreateOpen && <CreateResourceModal setIsOpen={setIsCreateOpen} />}
-        {isEditOpen && <EditResourceModal setIsOpen={setIsEditOpen} />}
-        {isDeleteOpen && <DeleteResourceModal setIsOpen={setIsDeleteOpen} />}
-      </ModalTransition>
+      <PageHeader bottomBar={bottomBar}>Teams</PageHeader>
+      <Wrapper>
+        <ButtonGroup>
+          <Button
+            appearance="primary"
+            onClick={(): void => setIsCreateOpen(true)}
+          >
+            Create
+          </Button>
+        </ButtonGroup>
+        <DynamicTable
+          caption={`${resources.length} people`}
+          head={head}
+          rows={rows(resources, setIsEditOpen, setIsDeleteOpen)}
+          rowsPerPage={10}
+          loadingSpinnerSize="large"
+          isLoading={loading}
+          isFixedSize
+          defaultSortKey="name"
+          defaultSortOrder="ASC"
+        />
+        <ModalTransition>
+          {isCreateOpen && <CreateResourceModal setIsOpen={setIsCreateOpen} />}
+          {isEditOpen && <EditResourceModal setIsOpen={setIsEditOpen} />}
+          {isDeleteOpen && <DeleteResourceModal setIsOpen={setIsDeleteOpen} />}
+        </ModalTransition>
+      </Wrapper>
     </Layout>
   );
 };
