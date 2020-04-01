@@ -9,6 +9,10 @@ interface Props {
   fixVersions: FixVersion[];
 }
 
+const Wrapper = styled.div`
+  padding: ${gridSize() - 2}px ${gridSize() - 2}px;
+`;
+
 const FixVersions: React.FC<Props> = ({ fixVersions }) => {
   const [fixVersion] = fixVersions;
   return (
@@ -24,11 +28,3 @@ const FixVersions: React.FC<Props> = ({ fixVersions }) => {
 };
 
 export default FixVersions;
-
-/**
- * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE
- */
-
-const Wrapper = styled.div`
-  padding: ${gridSize() - 2}px ${gridSize() - 2}px;
-`;

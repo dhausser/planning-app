@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { QueryResult, QueryBaseOptions } from '@apollo/client';
 
 export interface Props {
   children: ReactNode;
@@ -23,6 +24,14 @@ export interface Issue {
   key: string;
   name: string;
   fields: IssueFields;
+}
+
+export interface IssueConnectionData extends QueryResult {
+  issues: Issue[];
+}
+
+export interface IssueConnectionVars {
+  issuetype: string;
 }
 
 export interface IssuesStatus {

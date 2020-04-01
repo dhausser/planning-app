@@ -1,5 +1,8 @@
 import React, { ReactElement } from 'react';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery, gql, ApolloQueryResult } from '@apollo/client';
+import EmptyState from '@atlaskit/empty-state';
+import { Loading } from '../components';
+import { IssueConnectionData, IssueConnectionVars } from '../types';
 
 export const ROWS_PER_PAGE = 50;
 
@@ -76,26 +79,28 @@ export const GET_ISSUES = gql`
   ${ISSUE_ROW_DATA}
 `;
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const useEpics = (): any => {
+  const { loading, error, data, networkStatus } = useQuery<
+    IssueConnectionData,
+    IssueConnectionVars
+  >(GET_ISSUES, {
+    variables: { issuetype: 'epic' },
+  });
+  return { loading, error, data, networkStatus };
+};
+
+// const useIssues = (): ApolloQueryResult<IssueConnectionType> => {
 const useIssues = (): ReactElement => {
   const { loading, error, data } = useQuery(GET_ISSUES, {
     variables: { maxResults: ROWS_PER_PAGE },
   });
 
-  if (loading) return <p>Loading...</p>;
-  if (error) {
-    return (
-      <p>
-        Error:
-        {error.message}
-      </p>
-    );
-  }
+  if (loading || !data) return <Loading />;
+  if (error)
+    return <EmptyState header={error.name} description={error.message} />;
 
   return <div>{JSON.stringify(data.issues)}</div>;
 };
-
-// useIssues.propTypes = {
-
-// };
 
 export default useIssues;
