@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { ApolloClient, gql } from '@apollo/client';
 import { OptionType } from '@atlaskit/select';
 import Filter from './Filter';
@@ -12,7 +12,7 @@ export const GET_TEAMS = gql`
   }
 `;
 
-const updateFilter = (client: ApolloClient<object>, e: OptionType) => {
+const updateFilter = (client: ApolloClient<object>, e: OptionType): void => {
   const value = e ? e.value : null;
   client.writeQuery({
     query: gql`
@@ -31,7 +31,7 @@ const updateFilter = (client: ApolloClient<object>, e: OptionType) => {
   }
 };
 
-export default () => (
+const TeamFilter: FunctionComponent = () => (
   <Filter
     query={GET_TEAMS}
     updateFilter={updateFilter}
@@ -41,3 +41,5 @@ export default () => (
     isClearable
   />
 );
+
+export default TeamFilter;

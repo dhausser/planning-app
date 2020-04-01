@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { useQuery, gql } from '@apollo/client';
 
 export const ROWS_PER_PAGE = 50;
@@ -76,14 +76,19 @@ export const GET_ISSUES = gql`
   ${ISSUE_ROW_DATA}
 `;
 
-const useIssues = () => {
+const useIssues = (): ReactElement => {
   const { loading, error, data } = useQuery(GET_ISSUES, {
     variables: { maxResults: ROWS_PER_PAGE },
   });
 
   if (loading) return <p>Loading...</p>;
   if (error) {
-    return <p>Error: {error.message}</p>;
+    return (
+      <p>
+        Error:
+        {error.message}
+      </p>
+    );
   }
 
   return <div>{JSON.stringify(data.issues)}</div>;

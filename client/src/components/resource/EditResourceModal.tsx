@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { useQuery, useMutation, gql } from '@apollo/client';
 import Form, { Field } from '@atlaskit/form';
 import TextField from '@atlaskit/textfield';
@@ -28,7 +28,9 @@ const UPDATE_RESOURCE = gql`
   }
 `;
 
-export default function EditResourceModal({ setIsOpen }: ModalInterfaceProps) {
+const EditResourceModal = ({
+  setIsOpen,
+}: ModalInterfaceProps): ReactElement => {
   const [updateResource] = useMutation(UPDATE_RESOURCE);
   const { data } = useQuery(GET_TEAMS);
   const options =
@@ -40,11 +42,12 @@ export default function EditResourceModal({ setIsOpen }: ModalInterfaceProps) {
     <ModalDialog
       heading="Edit"
       scrollBehavior="outside"
-      onClose={() => setIsOpen(false)}
+      onClose={(): void => setIsOpen(false)}
       components={{
-        Container: ({ children, className }) => (
+        // eslint-disable-next-line react/display-name
+        Container: ({ children, className }): ReactElement => (
           <Form<ResourceForm>
-            onSubmit={({ firstname, lastname, email, team }) => {
+            onSubmit={({ firstname, lastname, email, team }): void => {
               const id = `${firstname.toLowerCase()}.${lastname.toLowerCase()}`;
               updateResource({
                 variables: {
@@ -58,14 +61,15 @@ export default function EditResourceModal({ setIsOpen }: ModalInterfaceProps) {
               setIsOpen(false);
             }}
           >
-            {({ formProps }) => (
+            {({ formProps }): ReactElement => (
               <form {...formProps} className={className}>
                 {children}
               </form>
             )}
           </Form>
         ),
-        Footer: () => <Footer setIsOpen={setIsOpen} />,
+        // eslint-disable-next-line react/display-name
+        Footer: (): ReactElement => <Footer setIsOpen={setIsOpen} />,
       }}
     >
       <Field
@@ -97,4 +101,6 @@ export default function EditResourceModal({ setIsOpen }: ModalInterfaceProps) {
       </Field>
     </ModalDialog>
   );
-}
+};
+
+export default EditResourceModal;

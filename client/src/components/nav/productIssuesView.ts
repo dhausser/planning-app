@@ -4,7 +4,7 @@ import LinkItem from './LinkItem';
 export default {
   id: 'product/issues',
   type: 'product',
-  getItems: () => [
+  getItems: (): Array<object> => [
     {
       type: 'HeaderSection',
       id: 'product/issues:header',

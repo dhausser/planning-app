@@ -5,7 +5,11 @@ import { GlobalItem } from '@atlaskit/navigation-next';
 import AppSwitcherIcon from '@atlaskit/icon/glyph/app-switcher';
 import EmojiAtlassianIcon from '@atlaskit/icon/glyph/emoji/atlassian';
 
-import { IS_LOGGED_IN } from '../..';
+export const IS_LOGGED_IN = gql`
+  query IsUserLoggedIn {
+    isLoggedIn @client
+  }
+`;
 
 const GET_CURRENT_USER = gql`
   query GetCurrentUser {
@@ -17,15 +21,7 @@ const GET_CURRENT_USER = gql`
   }
 `;
 
-const AppSwitcherComponent = () => (
-  <GlobalItem
-    icon={AppSwitcherIcon}
-    id="test"
-    onClick={() => console.log('AppSwitcher clicked')}
-  />
-);
-
-function GetAvatarUrl() {
+function GetAvatarUrl(): HTMLImageElement {
   const { data } = useQuery(GET_CURRENT_USER);
   return (
     data &&
@@ -35,24 +31,15 @@ function GetAvatarUrl() {
   );
 }
 
-export default () => {
+export default function GlobalNav(): React.ReactElement {
   const { data } = useQuery(IS_LOGGED_IN);
   return (
     <GlobalNavigation
       productIcon={EmojiAtlassianIcon}
       productHref="/"
-      onProductClick={() => console.log('product clicked')}
-      onCreateClick={() => console.log('create clicked')}
-      onSearchClick={() => console.log('search clicked')}
-      onStarredClick={() => console.log('starred clicked')}
-      onHelpClick={() => console.log('help clicked')}
-      helpItems={() => <div />}
-      onNotificationClick={() => console.log('notification clicked')}
-      appSwitcherComponent={AppSwitcherComponent}
+      appSwitcherComponent={<GlobalItem icon={AppSwitcherIcon} />}
       appSwitcherTooltip="Switch to ..."
-      onSettingsClick={() => console.log('settings clicked')}
-      profileItems={() => <div />}
       profileIconUrl={data.isLoggedIn ? GetAvatarUrl() : null}
     />
   );
-};
+}

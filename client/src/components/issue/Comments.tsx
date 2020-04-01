@@ -17,37 +17,35 @@ interface CommentsProps {
   }>;
 }
 
-const Comments: FunctionComponent<CommentsProps> = ({ comments }) => {
-  return (
-    <>
-      <h5>Activity</h5>
-      {comments.map((comment) => (
-        <Comment
-          key={comment.id}
-          avatar={
-            <Avatar
-              src={`https://jira.cdprojektred.com/secure/useravatar?ownerId=${comment.author.key}`}
-              label="Atlaskit avatar"
-              size="medium"
-            />
-          }
-          author={<CommentAuthor>{comment.author.name}</CommentAuthor>}
-          edited={comment.updated && <CommentEdited>Edited</CommentEdited>}
-          time={
-            <CommentTime>
-              {new Date(comment.created).toLocaleDateString()}
-            </CommentTime>
-          }
-          content={<p>{comment.body}</p>}
-          actions={[
-            <CommentAction>Reply</CommentAction>,
-            <CommentAction>Edit</CommentAction>,
-            <CommentAction>Like</CommentAction>,
-          ]}
-        />
-      ))}
-    </>
-  );
-};
+const Comments: FunctionComponent<CommentsProps> = ({ comments }) => (
+  <>
+    <h5>Activity</h5>
+    {comments.map((comment) => (
+      <Comment
+        key={comment.id}
+        avatar={(
+          <Avatar
+            src={`https://jira.cdprojektred.com/secure/useravatar?ownerId=${comment.author.key}`}
+            label="Atlaskit avatar"
+            size="medium"
+          />
+        )}
+        author={<CommentAuthor>{comment.author.name}</CommentAuthor>}
+        edited={comment.updated && <CommentEdited>Edited</CommentEdited>}
+        time={(
+          <CommentTime>
+            {new Date(comment.created).toLocaleDateString()}
+          </CommentTime>
+        )}
+        content={<p>{comment.body}</p>}
+        actions={[
+          <CommentAction key="reply">Reply</CommentAction>,
+          <CommentAction key="edit">Edit</CommentAction>,
+          <CommentAction key="like">Like</CommentAction>,
+        ]}
+      />
+    ))}
+  </>
+);
 
 export default Comments;

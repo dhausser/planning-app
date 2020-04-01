@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { useQuery, useMutation, gql } from '@apollo/client';
 import styled from 'styled-components';
 
@@ -42,11 +42,11 @@ interface Props {
   type: string;
 }
 
-function getAvatarUrl(key: string) {
+function getAvatarUrl(key: string): string {
   return `https://jira.cdprojektred.com/secure/useravatar?ownerId=${key}`;
 }
 
-function getAssignee({ key, displayName }: Resource) {
+function getAssignee({ key, displayName }: Resource): object {
   if (key == null) return {};
   return {
     id: key,
@@ -57,7 +57,7 @@ function getAssignee({ key, displayName }: Resource) {
   };
 }
 
-export function getResource(user: Resource) {
+export function getResource(user: Resource): object {
   return {
     id: user.key,
     name: user.name,
@@ -68,7 +68,7 @@ export function getResource(user: Resource) {
   };
 }
 
-const AssignUser: React.FC<Props> = ({ id, user, type }) => {
+const AssignUser: FunctionComponent<Props> = ({ id, type }) => {
   const { data, loading, error } = useQuery(GET_ASSIGNABLE_USERS, {
     variables: { id },
   });
@@ -90,8 +90,7 @@ const AssignUser: React.FC<Props> = ({ id, user, type }) => {
           options={
             data.assignableUsers && data.assignableUsers.map(getAssignee)
           }
-          onChange={(value) => {
-            console.log(value);
+          onChange={(value): void => {
             assignIssue({
               variables: { id: value },
             });

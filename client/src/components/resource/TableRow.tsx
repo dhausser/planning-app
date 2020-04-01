@@ -11,15 +11,15 @@ const NameWrapper = styled.span`
   margin-right: 8px;
 `;
 
-function createKey(input: string) {
+function createKey(input: string): string {
   return input ? input.replace(/^(the|a|an)/, '').replace(/\s/g, '') : input;
 }
 
 const TableRow = (
   resources: Resource[],
   setIsEditOpen: Dispatch<SetStateAction<boolean>>,
-  setIsDeleteOpen: Dispatch<SetStateAction<boolean>>,
-) =>
+  setIsDeleteOpen: Dispatch<SetStateAction<boolean>>
+): object =>
   resources.map((resource) => ({
     key: resource.key,
     cells: [
@@ -44,10 +44,16 @@ const TableRow = (
         key: 'actions',
         content: (
           <ButtonGroup>
-            <Button appearance="default" onClick={() => setIsEditOpen(true)}>
+            <Button
+              appearance="default"
+              onClick={(): void => setIsEditOpen(true)}
+            >
               Edit
             </Button>
-            <Button appearance="default" onClick={() => setIsDeleteOpen(true)}>
+            <Button
+              appearance="default"
+              onClick={(): void => setIsDeleteOpen(true)}
+            >
               Delete
             </Button>
           </ButtonGroup>

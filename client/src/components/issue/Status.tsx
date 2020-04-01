@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { Status, Color } from '@atlaskit/status/element';
 import { gridSize } from '@atlaskit/theme';
 import styled from 'styled-components';
@@ -10,7 +10,13 @@ interface Props {
   statusCategory: { id: string };
 }
 
-const StatusInParagraph = ({ text, color }: { text: string; color: Color }) => (
+const StatusInParagraph = ({
+  text,
+  color,
+}: {
+  text: string;
+  color: Color;
+}): ReactElement => (
   <p>
     <Status text={text} color={color} />
   </p>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { ApolloClient, gql } from '@apollo/client';
 import { OptionType } from '@atlaskit/select';
 import Filter from './Filter';
@@ -20,7 +20,7 @@ const GET_STATUSES = gql`
   }
 `;
 
-const updateFilter = (client: ApolloClient<object>, e: OptionType) => {
+const updateFilter = (client: ApolloClient<object>, e: OptionType): void => {
   const value = e ? e.value : null;
   client.writeQuery({
     query: gql`
@@ -39,7 +39,8 @@ const updateFilter = (client: ApolloClient<object>, e: OptionType) => {
   }
 };
 
-export default () => (
+
+const StatusFilter: FunctionComponent = () => (
   <Filter
     query={GET_STATUSES}
     updateFilter={updateFilter}
@@ -49,3 +50,5 @@ export default () => (
     isClearable
   />
 );
+
+export default StatusFilter;

@@ -17,6 +17,9 @@ import {
 } from '../components';
 import { ResourceProps, Absence } from '../types';
 
+/**
+ * TODO: Refactor GetIssues query
+ */
 // const GET_ISSUES = gql`
 //   query GetIssues(
 //     $projectId: String,

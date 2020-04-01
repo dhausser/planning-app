@@ -1,6 +1,5 @@
 import React, { FunctionComponent } from 'react';
 import Spinner from '@atlaskit/spinner';
-import Button from '@atlaskit/button';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
@@ -13,12 +12,6 @@ const Wrapper = styled.div`
   top: 0;
   bottom: 0;
 `;
-
-export const ButtonLoading = () => (
-  <Button key="filters" isLoading appearance="subtle">
-    Filters
-  </Button>
-);
 
 const Loading: FunctionComponent = () => {
   return (

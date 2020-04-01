@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, ReactElement } from 'react';
 import { useMutation } from '@apollo/client';
 import styled from 'styled-components';
 
@@ -32,10 +32,12 @@ const Title: React.FC<TitleProps> = ({ id, summary }) => {
   const [editIssue] = useMutation(EDIT_ISSUE);
   return (
     <InlineEdit
-      readView={() => <ReadView>{editValue}</ReadView>}
-      editView={(props, ref) => <EditView {...props} innerRef={ref} />}
+      readView={(): ReactElement => <ReadView>{editValue}</ReadView>}
+      editView={(props, ref): ReactElement => (
+        <EditView {...props} innerRef={ref} />
+      )}
       defaultValue={editValue}
-      onConfirm={(value) => {
+      onConfirm={(value): void => {
         setEditValue(value);
         editIssue({ variables: { id, value, type: 'summary' } });
       }}
@@ -43,7 +45,7 @@ const Title: React.FC<TitleProps> = ({ id, summary }) => {
   );
 };
 
-export function copyLink(key: string) {
+export function copyLink(key: string): void {
   const el = document.createElement('textarea');
   el.value = `https://jira.cdprojektred.com/browse/${key}`;
   el.setAttribute('readonly', '');
@@ -56,7 +58,7 @@ export function copyLink(key: string) {
 
 const Header: React.FC<HeaderProps> = ({ id, summary, issuetype }) => {
   const breadcrumbs = (
-    <BreadcrumbsStateless onExpand={() => {}}>
+    <BreadcrumbsStateless>
       <BreadcrumbsItem text="Some project" key="Some project" />
       <BreadcrumbsItem
         text={id}
@@ -81,7 +83,7 @@ const Header: React.FC<HeaderProps> = ({ id, summary, issuetype }) => {
           <Tooltip content={`Copy to clipboard ${id}`}>
             <Button
               iconBefore={<CopyIcon label="Copy" />}
-              onClick={() => copyLink(id)}
+              onClick={(): void => copyLink(id)}
             />
           </Tooltip>
           <Button iconBefore={<MoreIcon label="More" />} />

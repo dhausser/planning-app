@@ -1,4 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, {
+  useState,
+  useEffect,
+  FunctionComponent,
+  ReactElement,
+} from 'react';
 import { useApolloClient, useQuery, gql } from '@apollo/client';
 import ChevD from '@atlaskit/icon/glyph/chevron-down';
 import {
@@ -32,22 +37,30 @@ const GET_SWITCHER_PROJECTS = gql`
   ${PROJECT_TILE_DATA}
 `;
 
-const create = () => ({
-  onClick: () => {
+const create = (): object => ({
+  onClick: (): void => {
     // eslint-disable-next-line no-alert
     const boardName = window.prompt(
-      'What would you like to call your new board?',
+      'What would you like to call your new board?'
     );
     if (boardName && boardName.length) {
+      // eslint-disable-next-line no-console
       console.log(`You created the board "${boardName}"`);
     }
   },
   text: 'Create board',
 });
 
-const target = ({ id, subText, text, avatar }: ProjectListItem) => (
+const target = ({
+  id,
+  subText,
+  text,
+  avatar,
+}: ProjectListItem): ReactElement => (
   <ContainerHeader
-    before={() => <ItemAvatar appearance="square" size="large" src={avatar} />}
+    before={(): ReactElement => (
+      <ItemAvatar appearance="square" size="large" src={avatar} />
+    )}
     after={ChevD}
     id={id}
     subText={subText}
@@ -55,7 +68,7 @@ const target = ({ id, subText, text, avatar }: ProjectListItem) => (
   />
 );
 
-function ProjectSwitcher() {
+const ProjectSwitcher: FunctionComponent = () => {
   const [selected, setSelected] = useState<ProjectListItem>();
   const [options, setOptions] = useState<ProjectListItem[]>();
   const client = useApolloClient();
@@ -66,7 +79,7 @@ function ProjectSwitcher() {
 
   useEffect(() => {
     if (!loading && !error) {
-      const options: ProjectListItem[] = [];
+      const projectOptions: ProjectListItem[] = [];
 
       if (data) {
         data.projects.forEach((project) => {
@@ -77,13 +90,14 @@ function ProjectSwitcher() {
             text: project.name,
             subText: `${project.projectTypeKey} project`,
           };
-          options.push(item);
+          projectOptions.push(item);
         });
 
         const current =
-          data.projectId && options.find(({ id }) => id === data.projectId);
-        setSelected(current || options[0]);
-        setOptions(options);
+          data.projectId &&
+          projectOptions.find(({ id }) => id === data.projectId);
+        setSelected(current || projectOptions[0]);
+        setOptions(projectOptions);
       }
     }
   }, [data, error, loading]);
@@ -95,7 +109,7 @@ function ProjectSwitcher() {
   return (
     <Switcher
       create={create()}
-      onChange={(option: ProjectListItem) => {
+      onChange={(option: ProjectListItem): void => {
         updateFilter(client, { value: option.id, label: option.text });
         setSelected(option);
       }}
@@ -104,6 +118,6 @@ function ProjectSwitcher() {
       value={selected}
     />
   );
-}
+};
 
 export default ProjectSwitcher;

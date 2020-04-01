@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, ReactElement } from 'react';
 import { useMutation, gql } from '@apollo/client';
 import styled from 'styled-components';
 
@@ -25,13 +25,13 @@ const Description: React.FC<{ id: string; description: string }> = ({
       <InlineEdit
         defaultValue={editValue}
         label="Description"
-        editView={(_, ref) => <TextArea ref={ref} />}
-        readView={() => (
+        editView={(_, ref): ReactElement => <TextArea ref={ref} />}
+        readView={(): ReactElement => (
           <ReadViewContainer>
             {editValue || 'Click to enter value'}
           </ReadViewContainer>
         )}
-        onConfirm={(value) => {
+        onConfirm={(value): void => {
           setEditValue(value);
           editIssue({ variables: { id, value, type: 'description' } });
         }}

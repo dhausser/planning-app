@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { useMutation, gql } from '@apollo/client';
 import ModalDialog from '@atlaskit/modal-dialog';
 import Form, { Field } from '@atlaskit/form';
@@ -14,31 +14,33 @@ const DELETE_RESOURCE = gql`
   }
 `;
 
-export default function DeleteResourceModal({
+const DeleteResourceModal = ({
   setIsOpen,
-}: ModalInterfaceProps) {
+}: ModalInterfaceProps): ReactElement => {
   const [deleteResource] = useMutation(DELETE_RESOURCE);
 
   return (
     <ModalDialog
       heading="Delete"
-      onClose={() => setIsOpen(false)}
+      onClose={(): void => setIsOpen(false)}
       components={{
-        Container: ({ children, className }) => (
+        // eslint-disable-next-line react/display-name
+        Container: ({ children, className }): ReactElement => (
           <Form
-            onSubmit={(data) => {
+            onSubmit={(data): void => {
               deleteResource({ variables: { ...data } });
               setIsOpen(false);
             }}
           >
-            {({ formProps }) => (
+            {({ formProps }): ReactElement => (
               <form {...formProps} className={className}>
                 {children}
               </form>
             )}
           </Form>
         ),
-        Footer: () => <Footer setIsOpen={setIsOpen} />,
+        // eslint-disable-next-line react/display-name
+        Footer: (): ReactElement => <Footer setIsOpen={setIsOpen} />,
       }}
     >
       <p>Are you sure want to delete this resource?</p>
@@ -49,4 +51,6 @@ export default function DeleteResourceModal({
       </Field>
     </ModalDialog>
   );
-}
+};
+
+export default DeleteResourceModal;

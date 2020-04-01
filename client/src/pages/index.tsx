@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, FunctionComponent } from 'react';
 import { Router } from '@reach/router';
 
 import Dashboard from './Dashboard';
@@ -15,7 +15,7 @@ import Pages from './Pages';
 import AddItem from './AddItem';
 import Settings from './Settings';
 
-export default () => (
+const AppRouter: FunctionComponent = () => (
   <Router primary={false} component={Fragment}>
     <Projects default />
     <Resource path="/resource/:resourceId" />
@@ -33,3 +33,5 @@ export default () => (
     <AddItem path="/AddItem" />
   </Router>
 );
+
+export default AppRouter;

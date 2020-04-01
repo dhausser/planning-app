@@ -14,7 +14,7 @@ import LinkItem from './LinkItem';
 export default {
   id: 'project/home',
   type: 'container',
-  getItems: () => [
+  getItems: (): Array<object> => [
     {
       type: 'HeaderSection',
       id: 'project/home:header',

@@ -8,7 +8,7 @@ import LinkItem from './LinkItem';
 export default {
   id: 'product/home',
   type: 'product',
-  getItems: () => [
+  getItems: (): Array<object> => [
     {
       type: 'HeaderSection',
       id: 'product/home:header',

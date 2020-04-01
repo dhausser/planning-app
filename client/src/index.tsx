@@ -26,7 +26,7 @@ if (process.env.NODE_ENV === 'development') {
         <Timeline />
       </Padding>
     </Page>,
-    document.getElementById('root'),
+    document.getElementById('root')
   );
 } else {
   ReactDOM.render(
@@ -35,7 +35,7 @@ if (process.env.NODE_ENV === 'development') {
         <App />
       </NavigationProvider>
     </ApolloProvider>,
-    document.getElementById('root'),
+    document.getElementById('root')
   );
 }
 

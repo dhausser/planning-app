@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { useMutation, gql } from '@apollo/client';
 import ModalDialog from '@atlaskit/modal-dialog';
 import Form, { Field } from '@atlaskit/form';
@@ -27,11 +27,12 @@ const INSERT_RESOURCE = gql`
   }
 `;
 
-export default function CreateResourceModal({
+const CreateResourceModal = ({
   setIsOpen,
-}: ModalInterfaceProps) {
+}: ModalInterfaceProps): ReactElement => {
   const [insertResource] = useMutation(INSERT_RESOURCE, {
     onCompleted: ({ key }) => {
+      // eslint-disable-next-line no-console
       console.log(`Successfully created resource: ${key}`);
     },
   });
@@ -40,11 +41,12 @@ export default function CreateResourceModal({
     <ModalDialog
       heading="Create"
       scrollBehavior="outside"
-      onClose={() => setIsOpen(false)}
+      onClose={(): void => setIsOpen(false)}
       components={{
-        Container: ({ children, className }) => (
+        // eslint-disable-next-line react/display-name
+        Container: ({ children, className }): ReactElement => (
           <Form<ResourceForm>
-            onSubmit={({ firstname, lastname, email, team }) => {
+            onSubmit={({ firstname, lastname, email, team }): void => {
               const id = `${firstname.toLowerCase()}.${lastname.toLowerCase()}`;
               insertResource({
                 variables: {
@@ -58,14 +60,15 @@ export default function CreateResourceModal({
               setIsOpen(false);
             }}
           >
-            {({ formProps }) => (
+            {({ formProps }): ReactElement => (
               <form {...formProps} className={className}>
                 {children}
               </form>
             )}
           </Form>
         ),
-        Footer: () => <Footer setIsOpen={setIsOpen} />,
+        // eslint-disable-next-line react/display-name
+        Footer: (): ReactElement => <Footer setIsOpen={setIsOpen} />,
       }}
     >
       <Field label="Assignee" name="assignee" defaultValue="" isRequired>
@@ -76,4 +79,6 @@ export default function CreateResourceModal({
       </Field>
     </ModalDialog>
   );
-}
+};
+
+export default CreateResourceModal;

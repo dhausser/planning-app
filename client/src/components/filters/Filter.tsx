@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import {
   ApolloClient,
   DocumentNode,
@@ -33,25 +33,26 @@ interface ItemProps {
   name: string;
 }
 
-interface IIndexable {
+interface Indexable {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 }
 
-function Filter({
+const Filter = ({
   query,
   updateFilter,
   valuesName,
   valueName,
   placeholder,
   isClearable,
-}: FilterProps) {
+}: FilterProps): ReactElement => {
   const client = useApolloClient();
   const { loading, error, data } = useQuery<FilterOptionData>(query);
 
   let selected: OptionType | null = null;
   let options: OptionsType<OptionType> = [];
 
-  const handleChange = (e: ValueType<OptionType>) => {
+  const handleChange = (e: ValueType<OptionType>): void => {
     if (Array.isArray(e)) {
       throw new Error('Unexpected type passed to ReactSelect onChange handler');
     }
@@ -62,11 +63,11 @@ function Filter({
     return <EmptyState header={error.name} description={error.message} />;
   }
 
-  if (data && (data as IIndexable)[valuesName]) {
-    options = (data as IIndexable)[valuesName].map(
+  if (data && (data as Indexable)[valuesName]) {
+    options = (data as Indexable)[valuesName].map(
       ({ id, name }: ItemProps) => {
         const option = { value: id, label: name || id };
-        if (id === (data as IIndexable)[valueName]) selected = option;
+        if (id === (data as Indexable)[valueName]) selected = option;
         return option;
       },
     );
@@ -85,7 +86,7 @@ function Filter({
       />
     </Wrapper>
   );
-}
+};
 
 Filter.defaultProps = {
   isClearable: false,

@@ -24,7 +24,7 @@ const barContent = (
 );
 
 const breadcrumbs = (
-  <BreadcrumbsStateless onExpand={() => {}}>
+  <BreadcrumbsStateless>
     <BreadcrumbsItem text="Projects" key="Projects" />
     <BreadcrumbsItem text="Gwent" key="Gwent" />
   </BreadcrumbsStateless>

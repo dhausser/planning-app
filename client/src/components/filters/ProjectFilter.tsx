@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { ApolloClient, gql } from '@apollo/client';
 import { OptionType } from '@atlaskit/select';
 import Filter from './Filter';
@@ -13,7 +13,7 @@ const GET_PROJECTS = gql`
   }
 `;
 
-export const updateFilter = (client: ApolloClient<object>, e: OptionType) => {
+export const updateFilter = (client: ApolloClient<object>, e: OptionType): void => {
   const value = e ? e.value : null;
   client.writeQuery({
     query: gql`
@@ -41,7 +41,7 @@ export const updateFilter = (client: ApolloClient<object>, e: OptionType) => {
   localStorage.removeItem('teamId');
 };
 
-export default () => (
+const ProjectFilter: FunctionComponent = () => (
   <Filter
     query={GET_PROJECTS}
     updateFilter={updateFilter}
@@ -51,3 +51,5 @@ export default () => (
     isClearable={false}
   />
 );
+
+export default ProjectFilter;

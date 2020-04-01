@@ -63,6 +63,7 @@ const IssueTable: React.FC<IssueTableProps> = ({ resourceId }) => {
           <Wrapper>
             <Button
               onClick={
+                // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
                 async () => {
                   setIsLoadingMore(true);
                   await fetchMore({

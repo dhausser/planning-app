@@ -80,7 +80,10 @@ const Resources: FunctionComponent<Props> = ({ navigationViewController }) => {
     <Layout>
       <PageHeader bottomBar={barContent}>Teams</PageHeader>
       <ButtonGroup>
-        <Button appearance="primary" onClick={() => setIsCreateOpen(true)}>
+        <Button
+          appearance="primary"
+          onClick={(): void => setIsCreateOpen(true)}
+        >
           Create
         </Button>
       </ButtonGroup>

@@ -16,7 +16,7 @@ const colors = [
   { key: 'P200 - Pastelli', value: `rgba(135, 119, 217, ${transparency})` },
 ];
 
-function updateChartOptions(results: number, total: number) {
+function updateChartOptions(results: number, total: number): object {
   return {
     title: {
       display: true,
@@ -34,7 +34,7 @@ function updateChartOptions(results: number, total: number) {
   };
 }
 
-function updateChartData(labels: string[], values: number[]) {
+function updateChartData(labels: string[], values: number[]): object {
   return {
     labels,
     datasets: [
@@ -59,7 +59,9 @@ const BarChart: FunctionComponent<ChartData> = ({
 
   useEffect(() => {
     if (chart) {
-      chart.options.title!.text = `Displaying ${results} of ${total} issues`;
+      if (chart.options.title) {
+        chart.options.title.text = `Displaying ${results} of ${total} issues`;
+      }
       chart.data = updateChartData(labels, values);
       chart.update();
     } else {
@@ -68,7 +70,7 @@ const BarChart: FunctionComponent<ChartData> = ({
           type: 'bar',
           data: updateChartData(labels, values),
           options: updateChartOptions(results, total),
-        }),
+        })
       );
     }
   }, [chart, labels, values, results, total]);

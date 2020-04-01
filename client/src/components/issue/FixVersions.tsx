@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { gridSize } from '@atlaskit/theme';
 import Lozenge from '@atlaskit/lozenge';
-import { FixVersion } from './../../types';
+import { FixVersion } from '../../types';
 
 interface Props {
   fixVersions: FixVersion[];
