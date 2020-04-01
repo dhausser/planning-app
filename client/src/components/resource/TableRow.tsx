@@ -18,47 +18,48 @@ function createKey(input: string): string {
 const TableRow = (
   resources: Resource[],
   setIsEditOpen: Dispatch<SetStateAction<boolean>>,
-  setIsDeleteOpen: Dispatch<SetStateAction<boolean>>,
-): object => resources.map((resource) => ({
-  key: resource.key,
-  cells: [
-    {
-      key: createKey(resource.name),
-      content: (
-        <NameWrapper>
-          <Avatar
-            name={resource.name}
-            size="medium"
-            src={`https://jira.cdprojektred.com/secure/useravatar?ownerId=${resource.key}`}
-          />
-          <Link to={`/resource/${resource.key}`}>{resource.name}</Link>
-        </NameWrapper>
-      ),
-    },
-    {
-      key: createKey(resource.team),
-      content: resource.team,
-    },
-    {
-      key: 'actions',
-      content: (
-        <ButtonGroup>
-          <Button
-            appearance="default"
-            onClick={(): void => setIsEditOpen(true)}
-          >
-            Edit
-          </Button>
-          <Button
-            appearance="default"
-            onClick={(): void => setIsDeleteOpen(true)}
-          >
-            Delete
-          </Button>
-        </ButtonGroup>
-      ),
-    },
-  ],
-}));
+  setIsDeleteOpen: Dispatch<SetStateAction<boolean>>
+): object =>
+  resources.map((resource) => ({
+    key: resource.key,
+    cells: [
+      {
+        key: createKey(resource.name),
+        content: (
+          <NameWrapper>
+            <Avatar
+              name={resource.name}
+              size="medium"
+              src={`https://jira.cdprojektred.com/secure/useravatar?ownerId=${resource.key}`}
+            />
+            <Link to={`/resource/${resource.key}`}>{resource.name}</Link>
+          </NameWrapper>
+        ),
+      },
+      {
+        key: createKey(resource.team),
+        content: resource.team,
+      },
+      {
+        key: 'actions',
+        content: (
+          <ButtonGroup>
+            <Button
+              appearance="default"
+              onClick={(): void => setIsEditOpen(true)}
+            >
+              Edit
+            </Button>
+            <Button
+              appearance="default"
+              onClick={(): void => setIsDeleteOpen(true)}
+            >
+              Delete
+            </Button>
+          </ButtonGroup>
+        ),
+      },
+    ],
+  }));
 
 export default TableRow;

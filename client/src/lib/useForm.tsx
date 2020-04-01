@@ -33,7 +33,7 @@ export default function useForm(initial = {}): object {
 
   function clearForm(): void {
     const blankState = Object.fromEntries(
-      Object.entries(inputs).map(([key]) => [key, '']),
+      Object.entries(inputs).map(([key]) => [key, ''])
     );
     setInputs(blankState);
   }

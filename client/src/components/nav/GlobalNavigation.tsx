@@ -24,10 +24,10 @@ const GET_CURRENT_USER = gql`
 function GetAvatarUrl(): HTMLImageElement {
   const { data } = useQuery(GET_CURRENT_USER);
   return (
-    data
-    && data.myself
-    && data.myself.avatarUrls
-    && data.myself.avatarUrls.small
+    data &&
+    data.myself &&
+    data.myself.avatarUrls &&
+    data.myself.avatarUrls.small
   );
 }
 

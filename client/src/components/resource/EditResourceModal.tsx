@@ -33,9 +33,10 @@ const EditResourceModal = ({
 }: ModalInterfaceProps): ReactElement => {
   const [updateResource] = useMutation(UPDATE_RESOURCE);
   const { data } = useQuery(GET_TEAMS);
-  const options = data
-    && data.teams
-    && data.teams.map(({ id }: Team) => ({ label: id, value: id }));
+  const options =
+    data &&
+    data.teams &&
+    data.teams.map(({ id }: Team) => ({ label: id, value: id }));
 
   return (
     <ModalDialog
@@ -46,9 +47,7 @@ const EditResourceModal = ({
         // eslint-disable-next-line react/display-name
         Container: ({ children, className }): ReactElement => (
           <Form<ResourceForm>
-            onSubmit={({
-              firstname, lastname, email, team,
-            }): void => {
+            onSubmit={({ firstname, lastname, email, team }): void => {
               const id = `${firstname.toLowerCase()}.${lastname.toLowerCase()}`;
               updateResource({
                 variables: {

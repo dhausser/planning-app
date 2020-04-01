@@ -6,7 +6,8 @@ const openRequestedPopup = (): Window | null => {
   const devEndpoint = process.env.REACT_APP_DEV_ENDPOINT;
   const prodEndpoint = process.env.REACT_APP_PROD_ENDPOINT;
 
-  const url: string | undefined = process.env.NODE_ENV === 'production' ? prodEndpoint : devEndpoint;
+  const url: string | undefined =
+    process.env.NODE_ENV === 'production' ? prodEndpoint : devEndpoint;
 
   // eslint-disable-next-line no-restricted-globals
   const { width, height } = screen;
@@ -20,7 +21,7 @@ const openRequestedPopup = (): Window | null => {
   return window.open(
     url,
     '_blank',
-    `width=${windowWidth}, height=${windowHeight}, top=${top}, left=${left}`,
+    `width=${windowWidth}, height=${windowHeight}, top=${top}, left=${left}`
   );
 };
 

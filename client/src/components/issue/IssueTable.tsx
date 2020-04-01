@@ -18,9 +18,7 @@ interface IssueTableProps extends RouteComponentProps {
 const IssueTable: React.FC<IssueTableProps> = ({ resourceId }) => {
   const [length, setLength] = useState(0);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
-  const {
-    loading, error, data, fetchMore,
-  } = useQuery(GET_ISSUES, {
+  const { loading, error, data, fetchMore } = useQuery(GET_ISSUES, {
     variables: {
       resourceId,
       maxResults: ROWS_PER_PAGE,
@@ -38,10 +36,10 @@ const IssueTable: React.FC<IssueTableProps> = ({ resourceId }) => {
       <DynamicTable
         head={head}
         rows={
-          data
-          && data.issues
-          && data.issues.issues
-          && data.issues.issues.map(row)
+          data &&
+          data.issues &&
+          data.issues.issues &&
+          data.issues.issues.map(row)
         }
         rowsPerPage={ROWS_PER_PAGE}
         loadingSpinnerSize="large"
@@ -56,10 +54,10 @@ const IssueTable: React.FC<IssueTableProps> = ({ resourceId }) => {
           )
         }
       />
-      {data
-        && data.issues
-        && data.issues.total > length
-        && (isLoadingMore ? (
+      {data &&
+        data.issues &&
+        data.issues.total > length &&
+        (isLoadingMore ? (
           <Loading />
         ) : (
           <Wrapper>

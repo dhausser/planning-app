@@ -41,7 +41,7 @@ const create = (): object => ({
   onClick: (): void => {
     // eslint-disable-next-line no-alert
     const boardName = window.prompt(
-      'What would you like to call your new board?',
+      'What would you like to call your new board?'
     );
     if (boardName && boardName.length) {
       // eslint-disable-next-line no-console
@@ -93,8 +93,9 @@ const ProjectSwitcher: FunctionComponent = () => {
           projectOptions.push(item);
         });
 
-        const current = data.projectId
-          && projectOptions.find(({ id }) => id === data.projectId);
+        const current =
+          data.projectId &&
+          projectOptions.find(({ id }) => id === data.projectId);
         setSelected(current || projectOptions[0]);
         setOptions(projectOptions);
       }
@@ -102,7 +103,8 @@ const ProjectSwitcher: FunctionComponent = () => {
   }, [data, error, loading]);
 
   if (loading) return <div />;
-  if (error) return <EmptyState header={error.name} description={error.message} />;
+  if (error)
+    return <EmptyState header={error.name} description={error.message} />;
 
   return (
     <Switcher

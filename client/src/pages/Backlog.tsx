@@ -1,5 +1,8 @@
 import React, {
-  useState, useEffect, FunctionComponent, ReactElement,
+  useState,
+  useEffect,
+  FunctionComponent,
+  ReactElement,
 } from 'react';
 import { Link } from '@reach/router';
 import { useQuery, gql } from '@apollo/client';
@@ -72,7 +75,7 @@ const Backlog: FunctionComponent<Props> = ({ navigationViewController }) => {
   return (
     <Layout>
       <PageHeader
-        bottomBar={(
+        bottomBar={
           <div style={{ display: 'flex' }}>
             <div style={{ flex: '0 0 200px', marginRight: 8 }}>
               <TextField isCompact placeholder="Filter" aria-label="Filter" />
@@ -84,7 +87,7 @@ const Backlog: FunctionComponent<Props> = ({ navigationViewController }) => {
               </Button>
             </div>
           </div>
-        )}
+        }
       >
         Backlog
       </PageHeader>

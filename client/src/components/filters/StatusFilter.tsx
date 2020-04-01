@@ -39,7 +39,6 @@ const updateFilter = (client: ApolloClient<object>, e: OptionType): void => {
   }
 };
 
-
 const StatusFilter: FunctionComponent = () => (
   <Filter
     query={GET_STATUSES}

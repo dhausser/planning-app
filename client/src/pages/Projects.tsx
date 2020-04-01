@@ -60,7 +60,10 @@ function FilterLink({ children, id, name }: FilterLinkProps): ReactElement {
   const value = id;
   const label = name;
   return (
-    <Link to="/roadmap" onClick={(): void => updateFilter(client, { value, label })}>
+    <Link
+      to="/roadmap"
+      onClick={(): void => updateFilter(client, { value, label })}
+    >
       {children}
     </Link>
   );
@@ -106,7 +109,8 @@ const Projects: FunctionComponent<Props> = ({ navigationViewController }) => {
   ]);
   const { data, loading, error } = useQuery(GET_PROJECTS);
 
-  if (error) return <EmptyState header={error.name} description={error.message} />;
+  if (error)
+    return <EmptyState header={error.name} description={error.message} />;
 
   return (
     <Layout>

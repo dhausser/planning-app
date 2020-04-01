@@ -23,20 +23,20 @@ const Comments: FunctionComponent<CommentsProps> = ({ comments }) => (
     {comments.map((comment) => (
       <Comment
         key={comment.id}
-        avatar={(
+        avatar={
           <Avatar
             src={`https://jira.cdprojektred.com/secure/useravatar?ownerId=${comment.author.key}`}
             label="Atlaskit avatar"
             size="medium"
           />
-        )}
+        }
         author={<CommentAuthor>{comment.author.name}</CommentAuthor>}
         edited={comment.updated && <CommentEdited>Edited</CommentEdited>}
-        time={(
+        time={
           <CommentTime>
             {new Date(comment.created).toLocaleDateString()}
           </CommentTime>
-        )}
+        }
         content={<p>{comment.body}</p>}
         actions={[
           <CommentAction key="reply">Reply</CommentAction>,

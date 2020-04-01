@@ -13,7 +13,10 @@ const GET_PROJECTS = gql`
   }
 `;
 
-export const updateFilter = (client: ApolloClient<object>, e: OptionType): void => {
+export const updateFilter = (
+  client: ApolloClient<object>,
+  e: OptionType
+): void => {
   const value = e ? e.value : null;
   client.writeQuery({
     query: gql`

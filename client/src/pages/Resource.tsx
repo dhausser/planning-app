@@ -76,7 +76,8 @@ const Absences: FunctionComponent<{ id: string }> = ({ id }) => {
   });
 
   if (loading || !data) return <Loading />;
-  if (error) return <EmptyState header={error.name} description={error.message} />;
+  if (error)
+    return <EmptyState header={error.name} description={error.message} />;
 
   return (
     <>

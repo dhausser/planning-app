@@ -11,7 +11,9 @@ const AssignableUserPicker: FunctionComponent = () => {
   });
 
   if (loading || !data) return <Spinner size="small" />;
-  if (error) { return <EmptyState header={error.name} description={error.message} />; }
+  if (error) {
+    return <EmptyState header={error.name} description={error.message} />;
+  }
 
   return (
     <UserPicker

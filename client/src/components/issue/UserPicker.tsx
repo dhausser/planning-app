@@ -74,7 +74,8 @@ const AssignUser: FunctionComponent<Props> = ({ id, type }) => {
   });
   const [assignIssue] = useMutation(ASSIGN_ISSUE);
 
-  if (error) return <EmptyState header={error.name} description={error.message} />;
+  if (error)
+    return <EmptyState header={error.name} description={error.message} />;
 
   return (
     <>

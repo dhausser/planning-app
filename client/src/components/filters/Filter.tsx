@@ -64,13 +64,11 @@ const Filter = ({
   }
 
   if (data && (data as Indexable)[valuesName]) {
-    options = (data as Indexable)[valuesName].map(
-      ({ id, name }: ItemProps) => {
-        const option = { value: id, label: name || id };
-        if (id === (data as Indexable)[valueName]) selected = option;
-        return option;
-      },
-    );
+    options = (data as Indexable)[valuesName].map(({ id, name }: ItemProps) => {
+      const option = { value: id, label: name || id };
+      if (id === (data as Indexable)[valueName]) selected = option;
+      return option;
+    });
   }
 
   return (
