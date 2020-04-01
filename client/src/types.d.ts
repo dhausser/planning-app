@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { QueryResult, QueryBaseOptions } from '@apollo/client';
+import { QueryResult } from '@apollo/client';
 
 export interface Props {
   children: ReactNode;
