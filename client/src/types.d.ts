@@ -1,58 +1,58 @@
 import { ReactNode } from 'react';
 import { QueryResult } from '@apollo/client';
+import { RouteComponentProps } from '@reach/router';
 
-export interface Props {
-  children: ReactNode;
+export declare interface Props extends RouteComponentProps {
   navigationViewController: { setView: (id: string) => void };
   issueId?: string;
   resourceId?: string;
 }
 
-export interface ResourceProps {
+export declare interface ResourceProps {
   navigationViewController: { setView: (id: string) => void };
   resourceId: string;
 }
 
-export interface FilterLinkProps {
+export declare interface FilterLinkProps {
   children: ReactNode;
   id: string;
   name: string;
 }
 
-export interface Issue {
+export declare interface Issue {
   id: string;
   key: string;
   name: string;
   fields: IssueFields;
 }
 
-export interface IssueConnectionData extends QueryResult {
+export declare interface IssueConnectionData extends QueryResult {
   issues: Issue[];
 }
 
-export interface IssueConnectionVars {
+export declare interface IssueConnectionVars {
   issuetype: string;
 }
 
-export interface IssuesStatus {
+export declare interface IssuesStatus {
   name: string;
   category: string;
   statusCategory: IssueType;
 }
 
-interface Priority {
+declare interface Priority {
   id: string;
   key: string;
   name: string;
 }
 
-interface FixVersion {
+declare interface FixVersion {
   id: string;
   key: string;
   name: string;
 }
 
-export interface IssueFields {
+export declare interface IssueFields {
   summary: string;
   status: IssuesStatus;
   issuetype: IssueType;
@@ -61,19 +61,19 @@ export interface IssueFields {
   assignee: Assignee;
 }
 
-export interface Assignee {
+export declare interface Assignee {
   id: string;
   key: string;
   displayName: string;
 }
 
-export interface RowProps {
+export declare interface RowProps {
   key: string;
   fields: IssueFields;
   children: Array<ReactNode>;
 }
 
-export interface Project extends IssueType {
+export declare interface Project extends IssueType {
   id: string;
   key: string;
   name: string;
@@ -84,7 +84,7 @@ export interface Project extends IssueType {
   };
 }
 
-export interface ProjectListItem {
+export declare interface ProjectListItem {
   id: string;
   avatar: string;
   pathname: string;
@@ -92,19 +92,19 @@ export interface ProjectListItem {
   subText: string;
 }
 
-export interface Resource {
+export declare interface Resource {
   key: string;
   name: string;
   team: string;
   displayName: string;
 }
 
-export interface Absence {
+export declare interface Absence {
   id: string;
   date: string;
 }
 
-export interface MockIssue {
+export declare interface MockIssue {
   id: string;
   key: string;
   fields: { summary: string };

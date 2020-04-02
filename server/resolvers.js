@@ -7,6 +7,7 @@ module.exports = {
       _,
       {
         projectId,
+        issuetypeId,
         statusId,
         versionId,
         teamId,
@@ -18,6 +19,7 @@ module.exports = {
     ) =>
       dataSources.issueAPI.getIssues({
         projectId,
+        issuetypeId,
         statusId,
         versionId,
         teamId,

@@ -42,7 +42,7 @@ module.exports = class IssueAPI extends RESTDataSource {
    */
   async getProjects() {
     const response = await this.get('/rest/api/2/project');
-    const projects = response.map(project => ({
+    const projects = response.map((project) => ({
       ...project,
       projectTypeKey: `${project.projectTypeKey
         .charAt(0)
@@ -60,7 +60,7 @@ module.exports = class IssueAPI extends RESTDataSource {
     const response = await this.get(
       `/rest/api/2/project/${projectIdOrKey}/versions`,
     );
-    const unreleased = response.filter(value => value.released === false);
+    const unreleased = response.filter((value) => value.released === false);
     return Array.isArray(response) ? unreleased : [];
   }
 
@@ -81,6 +81,7 @@ module.exports = class IssueAPI extends RESTDataSource {
    * @param {string} projectId - project ID
    * @param {string} versionId - version ID
    * @param {string} statusId - status ID
+   * @param {string} issuetypeId - issuetype ID
    * @param {string} teamId - team ID
    * @param {string} resourceId - resource ID
    * @param {int} startAt - start value
@@ -88,6 +89,7 @@ module.exports = class IssueAPI extends RESTDataSource {
    */
   async getIssues({
     projectId,
+    issuetypeId,
     versionId,
     statusId,
     teamId,
@@ -106,6 +108,7 @@ module.exports = class IssueAPI extends RESTDataSource {
 
     const issues = new Issues({
       projectId,
+      issuetypeId,
       statusId,
       versionId,
       assignee,
@@ -132,7 +135,7 @@ module.exports = class IssueAPI extends RESTDataSource {
       ? await this.context.dataSources.resourceAPI.getResourcesByTeam(teamId)
       : await this.context.dataSources.resourceAPI.getResources();
 
-    const assignee = resources.map(resource => resource.key) || [];
+    const assignee = resources.map((resource) => resource.key) || [];
 
     const dashboard = new Dashboard({
       projectId,

@@ -7,7 +7,7 @@ import Page from '@atlaskit/page';
 import '@atlaskit/css-reset';
 import App from './App';
 
-import client from './apolloClient';
+import client from './apollo';
 import { Timeline } from './components';
 
 const Padding = styled.div`

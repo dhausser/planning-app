@@ -10,7 +10,9 @@
   "scripts": {
     "dev": "nodemon app.js",
     "start": "node app.js",
-    "prod": "NODE_ENV=production node app.js"
+    "prod": "NODE_ENV=production node app.js",
+    "sample": "node ./data/load-sample-data.js",
+    "blowitallaway": "node ./data/load-sample-data.js --delete"
   },
   "dependencies": {
     "apollo-datasource": "^0.7.0",

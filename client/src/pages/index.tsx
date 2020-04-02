@@ -1,5 +1,5 @@
 import React, { Fragment, FunctionComponent } from 'react';
-import { Router } from '@reach/router';
+import { Router, RouteComponentProps } from '@reach/router';
 
 import Dashboard from './Dashboard';
 import Resource from './Resource';
@@ -15,7 +15,7 @@ import Pages from './Pages';
 import AddItem from './AddItem';
 import Settings from './Settings';
 
-const AppRouter: FunctionComponent = () => (
+const AppRouter: FunctionComponent<RouteComponentProps> = () => (
   <Router primary={false} component={Fragment}>
     <Projects default />
     <Resource path="/resource/:resourceId" />

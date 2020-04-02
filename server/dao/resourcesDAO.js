@@ -1,7 +1,7 @@
 const assert = require('assert');
 
 // eslint-disable-next-line no-unused-vars
-let database;
+let roadmap;
 let resources;
 
 module.exports = class ResourcesDAO {
@@ -10,8 +10,8 @@ module.exports = class ResourcesDAO {
       return;
     }
     try {
-      database = await conn.db(process.env.ROADMAP_NS);
-      resources = await conn.db(process.env.ROADMAP_NS).collection('resources');
+      roadmap = await conn.db('davyJSDB');
+      resources = await conn.db('davyJSDB').collection('resources');
       this.resources = resources; // this is only for testing
     } catch (e) {
       console.error(
@@ -30,11 +30,12 @@ module.exports = class ResourcesDAO {
 
     try {
       // cursor = await resources
-      cursor = await resources
-        .find()
-        .project({
-          _id: 0, key: 1, name: 1, team: 1,
-        });
+      cursor = await resources.find().project({
+        _id: 0,
+        key: 1,
+        name: 1,
+        team: 1,
+      });
     } catch (e) {
       console.error(`Unable to issue find command, ${e}`);
       return [];
@@ -52,11 +53,12 @@ module.exports = class ResourcesDAO {
     let cursor;
 
     try {
-      cursor = await resources
-        .find()
-        .project({
-          _id: 0, key: 1, name: 1, team: 1,
-        });
+      cursor = await resources.find().project({
+        _id: 0,
+        key: 1,
+        name: 1,
+        team: 1,
+      });
     } catch (e) {
       console.error(`Unable to issue find command, ${e}`);
       return [];
@@ -84,7 +86,10 @@ module.exports = class ResourcesDAO {
         { key: resourceId },
         {
           projection: {
-            _id: 0, key: 1, name: 1, team: 1,
+            _id: 0,
+            key: 1,
+            name: 1,
+            team: 1,
           },
         },
       );
@@ -105,29 +110,28 @@ module.exports = class ResourcesDAO {
   static async getTeams() {
     let cursor;
     try {
-      cursor = await resources
-        .aggregate([
-          {
-            $group: {
-              _id: '$team',
-              members: { $push: '$$ROOT' },
-            },
+      cursor = await resources.aggregate([
+        {
+          $group: {
+            _id: '$team',
+            members: { $push: '$$ROOT' },
           },
-          {
-            $project: {
-              _id: 0,
-              id: '$_id',
-              name: '$_id',
-              members: 1,
-            },
+        },
+        {
+          $project: {
+            _id: 0,
+            id: '$_id',
+            name: '$_id',
+            members: 1,
           },
-          {
-            $addFields: { count: 0 },
-          },
-          {
-            $sort: { id: 1 },
-          },
-        ]);
+        },
+        {
+          $addFields: { count: 0 },
+        },
+        {
+          $sort: { id: 1 },
+        },
+      ]);
     } catch (e) {
       console.error(`Unable to issue find command, ${e}`);
       return [];
@@ -147,11 +151,10 @@ module.exports = class ResourcesDAO {
     let cursor;
 
     try {
-      cursor = await resources
-        .find({ team: teamId })
-        .project({
-          _id: 0, key: 1,
-        });
+      cursor = await resources.find({ team: teamId }).project({
+        _id: 0,
+        key: 1,
+      });
     } catch (e) {
       console.error(`Unable to issue find command, ${e}`);
       return [];
@@ -160,9 +163,7 @@ module.exports = class ResourcesDAO {
     return cursor.toArray();
   }
 
-  static async insertResource({
-    id, firstname, lastname, team,
-  }) {
+  static async insertResource({ id, firstname, lastname, team }) {
     // eslint-disable-next-line no-unused-vars
     let cursor;
 
@@ -182,9 +183,7 @@ module.exports = class ResourcesDAO {
     return data;
   }
 
-  static async updateResource({
-    id, firstname, lastname, team,
-  }) {
+  static async updateResource({ id, firstname, lastname, team }) {
     // eslint-disable-next-line no-unused-vars
     let cursor;
 
@@ -217,5 +216,33 @@ module.exports = class ResourcesDAO {
     }
 
     return id;
+  }
+
+  static async insertManyResources(newResources) {
+    // eslint-disable-next-line no-unused-vars
+    let cursor;
+
+    try {
+      cursor = await resources.insertMany(newResources);
+      assert.equal(1, cursor.insertedCount);
+    } catch (e) {
+      console.error(`Unable to issue command, ${e}`);
+    }
+
+    return null;
+  }
+
+  static async deleteManyResources() {
+    // eslint-disable-next-line no-unused-vars
+    let cursor;
+
+    try {
+      cursor = await resources.deleteMany({});
+      assert.equal(1, cursor.deletedCount);
+    } catch (e) {
+      console.error(`Unable to issue command, ${e}`);
+    }
+
+    return null;
   }
 };

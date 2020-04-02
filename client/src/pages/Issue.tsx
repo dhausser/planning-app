@@ -5,7 +5,7 @@ import { withNavigationViewController } from '@atlaskit/navigation-next';
 import Page, { Grid, GridColumn } from '@atlaskit/page';
 import EmptyState from '@atlaskit/empty-state';
 import { productIssuesView, Loading } from '../components';
-import { ISSUE_ROW_DATA } from '../components/issue/useIssues';
+import { ISSUE_ROW_DATA } from '../lib/useIssues';
 import {
   Header,
   Description,

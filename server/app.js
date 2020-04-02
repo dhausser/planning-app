@@ -4,7 +4,7 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const { ApolloServer } = require('apollo-server-express');
 
-const { passport, createStore } = require('./utils');
+const { passport, db } = require('./utils');
 const routes = require('./routes');
 const typeDefs = require('./schema');
 const resolvers = require('./resolvers');
@@ -14,7 +14,6 @@ const ResourceAPI = require('./datasources/resource');
 
 const app = express();
 const port = process.env.PORT;
-const store = createStore();
 
 app.use(
   session({
@@ -39,11 +38,12 @@ const apolloServer = new ApolloServer({
   context: ({ req }) => ({
     authorization: req.headers.authorization,
     user: req.user,
+    db,
   }),
   dataSources: () => ({
     issueAPI: new IssueAPI(),
     absenceAPI: new AbsenceAPI(),
-    resourceAPI: new ResourceAPI({ store }),
+    resourceAPI: new ResourceAPI({ db }),
   }),
 });
 

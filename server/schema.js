@@ -4,6 +4,7 @@ module.exports = gql`
   type Query {
     issues(
       projectId: String
+      issuetypeId: String
       versionId: String
       statusId: String
       teamId: String

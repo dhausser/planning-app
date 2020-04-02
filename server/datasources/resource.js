@@ -2,9 +2,11 @@ const { DataSource } = require('apollo-datasource');
 const assert = require('assert');
 
 module.exports = class ResourceAPI extends DataSource {
-  constructor({ store }) {
+  constructor({ db }) {
     super();
-    this.store = store;
+    this.db = db;
+    console.log(db);
+    // this.store.resources = db.collection('resources');
   }
 
   /**
@@ -16,7 +18,8 @@ module.exports = class ResourceAPI extends DataSource {
   async initialize(config) {
     this.context = config.context;
     this.context.resourceMap = await this.getResourceMap();
-    // this.store = await this.store;
+    this.store = await this.store;
+    this.store.resources = await this.db.collection('resources');
   }
 
   /**

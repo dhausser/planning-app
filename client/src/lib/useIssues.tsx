@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { useQuery, gql, ApolloQueryResult } from '@apollo/client';
+import { useQuery, gql } from '@apollo/client';
 import EmptyState from '@atlaskit/empty-state';
 import { Loading } from '../components';
 import { IssueConnectionData, IssueConnectionVars } from '../types';
