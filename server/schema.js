@@ -149,9 +149,13 @@ module.exports = gql`
 
   type Resource {
     key: ID!
-    displayName: String
-    name: String
+    name: String!
+    email: String!
+    employeeId: String!
+    position: String!
     team: String
+    phone: String
+    displayName: String
     avatarUrls: AvatarUrls
   }
 

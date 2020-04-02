@@ -3,6 +3,7 @@ const assert = require('assert');
 // eslint-disable-next-line no-unused-vars
 let roadmap;
 let resources;
+const DEFAULT_SORT = [['team', -1]];
 
 module.exports = class ResourcesDAO {
   static async injectDB(conn) {
@@ -21,27 +22,84 @@ module.exports = class ResourcesDAO {
   }
 
   /**
+   * Retrieves the connection pool size, write concern and user roles on the
+   * current client.
+   * @returns {Promise<ConfigurationResult>} An object with configuration details.
+   */
+  static async getConfiguration() {
+    const roleInfo = await roadmap.command({ connectionStatus: 1 });
+    const authInfo = roleInfo.authInfo.authenticatedUserRoles[0];
+    const { poolSize, wtimeout } = resources.s.db.serverConfig.s.options;
+    const response = {
+      poolSize,
+      wtimeout,
+      authInfo,
+    };
+    return response;
+  }
+
+  /**
    * Finds and returns all resources.
    * Returns a list of objects, each object contains a key, name and a team
    * @returns {Promise<ResourcesResult>} A promise that will resolve to a list of ResourcesResult.
    */
-  static async getResources() {
-    let cursor;
-
-    try {
-      // cursor = await resources
-      cursor = await resources.find().project({
-        _id: 0,
-        key: 1,
-        name: 1,
-        team: 1,
-      });
-    } catch (e) {
-      console.error(`Unable to issue find command, ${e}`);
-      return [];
+  static async getResources({
+    // here's where the default parameters are set for the getMovies method
+    filters = null,
+    page = 0,
+    resourcesPerPage = 20,
+  } = {}) {
+    let queryParams = {};
+    if (filters) {
+      if ('text' in filters) {
+        queryParams = this.textSearchQuery(filters.text);
+      } else if ('cast' in filters) {
+        queryParams = this.castSearchQuery(filters.cast);
+      } else if ('genre' in filters) {
+        queryParams = this.genreSearchQuery(filters.genre);
+      }
     }
 
-    return cursor.toArray();
+    const {
+      query = {},
+      project = { _id: 0 },
+      sort = DEFAULT_SORT,
+    } = queryParams;
+    let cursor;
+    try {
+      cursor = await resources.find(query).project(project).sort(sort);
+    } catch (e) {
+      console.error(`Unable to issue find command, ${e}`);
+      return { resourcesList: [], totalNumResources: 0 };
+    }
+
+    /**
+    Ticket: Paging
+
+    Before this method returns back to the API, use the "moviesPerPage" and
+    "page" arguments to decide the movies to display.
+
+    Paging can be implemented by using the skip() and limit() cursor methods.
+    */
+
+    // TODO Ticket: Paging
+    // Use the cursor to only return the movies that belong on the current page
+    const displayCursor = cursor
+      .limit(resourcesPerPage)
+      .skip(resourcesPerPage * page);
+
+    try {
+      const resourcesList = await displayCursor.toArray();
+      const totalNumResources =
+        page === 0 ? await resources.countDocuments(query) : 0;
+
+      return { resourcesList, totalNumResources };
+    } catch (e) {
+      console.error(
+        `Unable to convert cursor to array or problem counting documents, ${e}`,
+      );
+      return { resourcesList: [], totalNumResources: 0 };
+    }
   }
 
   /**

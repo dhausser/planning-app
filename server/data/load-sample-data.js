@@ -22,6 +22,7 @@ function writeDataToFile(resources) {
 async function getDataFromFile() {
   const resources = await csvtojson().fromFile(inputFilePath);
   writeDataToFile(resources);
+  console.log(resources);
   return resources;
 }
 
@@ -46,7 +47,7 @@ async function loadData() {
       console.log(err);
     }
 
-    const resources = getDataFromFile();
+    const resources = await getDataFromFile();
 
     await client.db('davyJSDB').collection('resources').insertMany(resources);
 
