@@ -1,11 +1,10 @@
 require('dotenv').config();
+const fs = require('fs');
 const { MongoClient } = require('mongodb');
-// const ResourcesDAO = require('../dao/resourcesDAO');
+const csvtojson = require('csvtojson');
 
-const resources = require('./resources.json');
-
-console.log(resources.length);
-
+const inputFilePath = './data/resources.csv';
+const outputFilePath = './data/resources.json';
 const uri = process.env.DATABASE;
 
 const client = new MongoClient(uri, {
@@ -15,40 +14,53 @@ const client = new MongoClient(uri, {
   useUnifiedTopology: true,
 });
 
-client.connect(async (err) => {
-  if (err) {
-    throw new Error(err);
-  }
+function writeDataToFile(resources) {
+  const data = JSON.stringify(resources);
+  fs.writeFileSync(outputFilePath, data);
+}
 
-  const collection = await client
-    .db('davyJSDB')
-    .collection('resources')
-    .find()
-    .toArray();
+async function getDataFromFile() {
+  const resources = await csvtojson().fromFile(inputFilePath);
+  writeDataToFile(resources);
+  return resources;
+}
 
-  // collection = await client
-  //   .db('davyJSDB')
-  //   .collection('resources')
-  //   .insertMany(resources);
+async function deleteData() {
+  client.connect(async () => {
+    console.log('😢😢 Goodbye Data...');
+    await client.db('davyJSDB').collection('resources').deleteMany({});
+    console.log(
+      'Data Deleted. To load sample data, run\n\n\t npm run sample\n\n',
+    );
+    client.close();
+    process.exit();
+  });
+}
 
-  // collection = await client.db('davyJSDB').collection('resources').deleteMany();
+async function loadData() {
+  client.connect(async (err) => {
+    if (err) {
+      console.log(
+        '\n👎👎👎👎👎👎👎👎 Error! The Error info is below but if you are importing sample data make sure to drop the existing database first with.\n\n\t npm run blowitallaway\n\n\n',
+      );
+      console.log(err);
+    }
 
-  // await ResourcesDAO.injectDB(client);
+    const resources = getDataFromFile();
 
-  // ResourcesDAO.deleteManyResources();
+    await client.db('davyJSDB').collection('resources').insertMany(resources);
 
-  // console.log('Resources deleted');
+    console.log('👍👍👍👍👍👍👍👍 Done!');
 
-  console.log(collection);
-  client.close();
-});
+    client.close();
+    process.exit();
+  });
+}
 
-// client.connect
-//   .catch((err) => {
-//     console.error(err.stack);
-//     process.exit(1);
-//   })
-//   .then(async (client) => {
-//     await ResourcesDAO.injectDB(client);
-//     console.log('MongoDB connected 💻,📦');
-//   });
+if (process.argv.includes('--delete')) {
+  console.log('Deletind data...');
+  deleteData();
+} else {
+  console.log('Loading data...');
+  loadData();
+}

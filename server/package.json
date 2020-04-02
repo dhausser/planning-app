@@ -20,6 +20,7 @@
     "apollo-server-express": "^2.10.1",
     "assert": "^2.0.0",
     "connect-mongo": "^3.2.0",
+    "csvtojson": "^2.0.10",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-session": "^1.17.0",
