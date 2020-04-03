@@ -43,6 +43,23 @@
     tslib "^1.9.3"
     use-memo-one "^1.1.1"
 
+"@atlaskit/atlassian-navigation@^0.10.0":
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/@atlaskit/atlassian-navigation/-/atlassian-navigation-0.10.0.tgz#f4c49021bfa33d5cd967065cf0fd78e37e5b6f4c"
+  integrity sha512-N1W8mkQtWz/PvnySHaXtMf23S1eVypI7/F6mfr9LYJxgaAMdwAmnmdITRSRW/zEp7jfOz/LCTduwL9Qj7GR24A==
+  dependencies:
+    "@atlaskit/analytics-namespaced-context" "^4.1.11"
+    "@atlaskit/button" "^13.3.7"
+    "@atlaskit/icon" "^20.0.2"
+    "@atlaskit/popup" "^0.3.2"
+    "@atlaskit/theme" "^9.5.1"
+    "@atlaskit/tooltip" "^15.2.3"
+    "@atlaskit/width-detector" "^2.0.10"
+    "@emotion/core" "^10.0.9"
+    "@emotion/css" "^10.0.14"
+    chromatism "^2.6.0"
+    lodash.throttle "^4.1.1"
+
 "@atlaskit/avatar@^17.1.7":
   version "17.1.7"
   resolved "https://registry.yarnpkg.com/@atlaskit/avatar/-/avatar-17.1.7.tgz#66dac03922f5fc0330c224ae21f5a6d84bda27f0"
@@ -388,6 +405,15 @@
     "@emotion/core" "^10.0.9"
     tslib "^1.9.3"
 
+"@atlaskit/menu@^0.3.1":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@atlaskit/menu/-/menu-0.3.1.tgz#68478a15a9ba33178f5d0628211b21a29e03274c"
+  integrity sha512-ua3Rhk3ax+ye1W99QVhV8M/h0tdUzXcIXhZ3OLLUypcq2jHtdzEOnWTu8+Gd8wjEtLc7g8g8EEVkK162I4F0Cw==
+  dependencies:
+    "@atlaskit/theme" "^9.5.1"
+    "@emotion/core" "^10.0.9"
+    tslib "^1.9.3"
+
 "@atlaskit/modal-dialog@^10.5.5":
   version "10.5.5"
   resolved "https://registry.yarnpkg.com/@atlaskit/modal-dialog/-/modal-dialog-10.5.5.tgz#eb81c18bed6f8b120c4c035999eeeb53512a3910"
@@ -487,6 +513,19 @@
   dependencies:
     memoize-one "^5.1.0"
     react-popper "1.3.6"
+    tslib "^1.9.3"
+
+"@atlaskit/popup@^0.3.2", "@atlaskit/popup@^0.3.3":
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/@atlaskit/popup/-/popup-0.3.3.tgz#8494d6e4ae8efa6777ed71557dd01d9dc1aacb7a"
+  integrity sha512-s7QzoiIBwZWhj2wT3qzQZAyVFFVVtyIdCEof5N8YjaDdaMJSq3lEUzDjeOwei+/b959GazvtPQZ9CdUth47XJg==
+  dependencies:
+    "@atlaskit/popper" "^3.1.11"
+    "@atlaskit/portal" "^3.1.6"
+    "@atlaskit/theme" "^9.5.1"
+    "@babel/runtime" "^7.0.0"
+    "@emotion/core" "^10.0.9"
+    focus-trap "^2.4.5"
     tslib "^1.9.3"
 
 "@atlaskit/portal@^3.1.6":
@@ -704,6 +743,15 @@
     tslib "^1.9.3"
     url "^0.11.0"
     url-search-params "^0.10.0"
+
+"@atlaskit/width-detector@^2.0.10":
+  version "2.0.10"
+  resolved "https://registry.yarnpkg.com/@atlaskit/width-detector/-/width-detector-2.0.10.tgz#b6966c8d0781d41d31e2aa8fc4c5f1447ca9adf2"
+  integrity sha512-xm4htKSwRYwyVdeljs/OmP+aFqWgSBDVKWr1RNbD00eDsEFSbKO9h1NP8nnLedu234STrsbDt1/QcUfNhasLGA==
+  dependencies:
+    "@atlaskit/type-helpers" "^4.2.3"
+    raf-schd "^2.1.0"
+    tslib "^1.9.3"
 
 "@babel/code-frame@7.8.3", "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.8.3":
   version "7.8.3"
@@ -1993,7 +2041,7 @@
     "@emotion/sheet" "0.9.4"
     "@emotion/utils" "0.11.3"
 
-"@emotion/css@^10.0.27", "@emotion/css@^10.0.9":
+"@emotion/css@^10.0.14", "@emotion/css@^10.0.27", "@emotion/css@^10.0.9":
   version "10.0.27"
   resolved "https://registry.yarnpkg.com/@emotion/css/-/css-10.0.27.tgz#3a7458198fbbebb53b01b2b87f64e5e21241e14c"
   integrity sha512-6wZjsvYeBhyZQYNrGoR5yPMYbMBNEnanDrqmsqS1mzDm1cOTu12shvl2j4QHNS36UaTE0USIJawCH9C8oW34Zw==
@@ -8035,6 +8083,11 @@ lodash.templatesettings@^4.0.0:
   integrity sha512-stgLz+i3Aa9mZgnjr/O+v9ruKZsPsndy7qPZOchbqk2cnTU1ZaldKK+v7m54WoKIyxiuMZTKT2H81F8BeAc3ZQ==
   dependencies:
     lodash._reinterpolate "^3.0.0"
+
+lodash.throttle@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
+  integrity sha1-wj6RtxAkKscMN/HhzaknTMOb8vQ=
 
 lodash.uniq@^4.5.0:
   version "4.5.0"

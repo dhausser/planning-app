@@ -1,4 +1,5 @@
 const { RESTDataSource } = require('apollo-datasource-rest');
+const ResourcesDAO = require('../dao/resourcesDAO');
 
 const Issues = require('../models/Issues');
 const Dashboard = require('../models/Dashboard');
@@ -100,10 +101,8 @@ module.exports = class IssueAPI extends RESTDataSource {
     let assignee = resourceId;
 
     if (teamId) {
-      const resources = await this.context.dataSources.resourceAPI.getResourcesByTeam(
-        teamId,
-      );
-      assignee = resources.map(({ key }) => key);
+      const { resourcesList } = await ResourcesDAO.getResourcesByTeam(teamId);
+      assignee = resourcesList.map(({ key }) => key);
     }
 
     const issues = new Issues({
@@ -131,11 +130,13 @@ module.exports = class IssueAPI extends RESTDataSource {
    * @param {string} teamId - team ID
    */
   async getDashboardIssues({ projectId, versionId, teamId }) {
-    const resources = teamId
-      ? await this.context.dataSources.resourceAPI.getResourcesByTeam(teamId)
-      : await this.context.dataSources.resourceAPI.getResources();
+    console.log({ projectId, versionId, teamId });
 
-    const assignee = resources.map((resource) => resource.key) || [];
+    const { resourcesList } = teamId
+      ? await ResourcesDAO.getResourcesByTeam({ teamId })
+      : await ResourcesDAO.getResources();
+
+    const assignee = resourcesList.map((resource) => resource.key) || [];
 
     const dashboard = new Dashboard({
       projectId,
@@ -148,7 +149,7 @@ module.exports = class IssueAPI extends RESTDataSource {
       '/rest/api/2/search',
       dashboard.getParams(),
     );
-    const resourceMap = await this.context.dataSources.resourceAPI.getResourceMap();
+    const resourceMap = await ResourcesDAO.getResourceMap();
 
     return dashboard.getDataset(response, resourceMap);
   }

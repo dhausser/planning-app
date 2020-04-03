@@ -43,23 +43,8 @@ module.exports = class ResourcesDAO {
    * Returns a list of objects, each object contains a key, name and a team
    * @returns {Promise<ResourcesResult>} A promise that will resolve to a list of ResourcesResult.
    */
-  static async getResources({
-    // here's where the default parameters are set for the getMovies method
-    filters = null,
-    page = 0,
-    resourcesPerPage = 20,
-  } = {}) {
-    let queryParams = {};
-    if (filters) {
-      if ('text' in filters) {
-        queryParams = this.textSearchQuery(filters.text);
-      } else if ('cast' in filters) {
-        queryParams = this.castSearchQuery(filters.cast);
-      } else if ('genre' in filters) {
-        queryParams = this.genreSearchQuery(filters.genre);
-      }
-    }
-
+  static async getResources({ page = 0, resourcesPerPage = 20 } = {}) {
+    const queryParams = {};
     const {
       query = {},
       project = { _id: 0 },
@@ -98,6 +83,54 @@ module.exports = class ResourcesDAO {
       console.error(
         `Unable to convert cursor to array or problem counting documents, ${e}`,
       );
+      return { resourcesList: [], totalNumResources: 0 };
+    }
+  }
+
+  /**
+   * Finds and returns resources originating from one or more teams.
+   * Returns a list of objects, each object contains a key, name and a team
+   * @param {string[]} teams - The list of teams.
+   * @returns {Promise<ResourcesByTeamResult>} A promise that will resolve to
+   * a list of ResourcesByTeamResult.
+   */
+  static async getResourcesByTeam({ teamId, page = 0, resourcesPerPage = 20 }) {
+    const queryParams = {};
+
+    console.log({ teamId });
+
+    const {
+      query = {},
+      project = { _id: 0 },
+      sort = DEFAULT_SORT,
+    } = queryParams;
+    let cursor;
+    try {
+      cursor = await resources
+        .find({ team: teamId })
+        .project(project)
+        .sort(sort);
+    } catch (e) {
+      console.error(`Unable to issue find command, ${e}`);
+      return { moviesList: [], totalNumMovies: 0 };
+    }
+
+    const displayCursor = cursor
+      .limit(resourcesPerPage)
+      .skip(resourcesPerPage * page);
+
+    try {
+      const resourcesList = await displayCursor.toArray();
+      const totalNumResources =
+        page === 0 ? await resources.countDocuments(query) : 0;
+
+      cursor = await resources.find({ team: teamId }).project({
+        _id: 0,
+        key: 1,
+      });
+      return { resourcesList, totalNumResources };
+    } catch (e) {
+      console.error(`Unable to issue find command, ${e}`);
       return { resourcesList: [], totalNumResources: 0 };
     }
   }
@@ -190,29 +223,6 @@ module.exports = class ResourcesDAO {
           $sort: { id: 1 },
         },
       ]);
-    } catch (e) {
-      console.error(`Unable to issue find command, ${e}`);
-      return [];
-    }
-
-    return cursor.toArray();
-  }
-
-  /**
-   * Finds and returns resources originating from one or more teams.
-   * Returns a list of objects, each object contains a key, name and a team
-   * @param {string[]} teams - The list of teams.
-   * @returns {Promise<ResourcesByTeamResult>} A promise that will resolve to
-   * a list of ResourcesByTeamResult.
-   */
-  static async getResourcesByTeam({ teamId }) {
-    let cursor;
-
-    try {
-      cursor = await resources.find({ team: teamId }).project({
-        _id: 0,
-        key: 1,
-      });
     } catch (e) {
       console.error(`Unable to issue find command, ${e}`);
       return [];

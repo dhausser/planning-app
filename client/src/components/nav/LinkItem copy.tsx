@@ -1,4 +1,4 @@
-import React, { ReactElement, FC } from 'react';
+import React, { ReactElement, FunctionComponent } from 'react';
 import { Location, Link, RouteComponentProps } from '@reach/router';
 
 interface ItemProps extends React.FunctionComponent {
@@ -14,7 +14,11 @@ interface Props extends RouteComponentProps {
   to: string;
 }
 
-const LinkItem: FC<Props> = ({ components: { Item }, to, ...props }) => (
+const LinkItem: FunctionComponent<Props> = ({
+  components: { Item },
+  to,
+  ...props
+}) => (
   <Location>
     {({ location: { pathname } }): ReactElement => (
       // eslint-disable-next-line react/jsx-first-prop-new-line

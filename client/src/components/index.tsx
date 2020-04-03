@@ -5,7 +5,7 @@ export { default as BarChart } from './BarChart';
 export { default as Nameplate } from './resource/Nameplate';
 export { default as Timeline } from './timeline';
 export {
-  GlobalNavigation,
+  GlobalNav,
   productHomeView,
   productIssuesView,
   projectHomeView,

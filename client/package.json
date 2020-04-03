@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.0.0-beta.41",
+    "@atlaskit/atlassian-navigation": "^0.10.0",
     "@atlaskit/avatar": "^17.1.9",
     "@atlaskit/breadcrumbs": "^9.2.8",
     "@atlaskit/button": "^13.3.9",
@@ -19,10 +20,12 @@
     "@atlaskit/inline-edit": "^10.0.30",
     "@atlaskit/logo": "^12.3.3",
     "@atlaskit/lozenge": "^9.1.6",
+    "@atlaskit/menu": "^0.3.1",
     "@atlaskit/modal-dialog": "^10.5.5",
     "@atlaskit/navigation-next": "^8.0.3",
     "@atlaskit/page": "^11.0.9",
     "@atlaskit/page-header": "^9.0.16",
+    "@atlaskit/popup": "^0.3.3",
     "@atlaskit/select": "^11.0.9",
     "@atlaskit/spinner": "^12.1.6",
     "@atlaskit/status": "^0.9.23",
@@ -76,7 +79,6 @@
     ]
   },
   "scripts": {
-    "dev": "NODE_ENV=development react-scripts start",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
