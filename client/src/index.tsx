@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { ApolloProvider } from '@apollo/client';
-import { NavigationProvider } from '@atlaskit/navigation-next';
 import App from './App';
-import client from './apollo';
+
+ReactDOM.render(<App />, document.getElementById('root'));
 
 // import styled from 'styled-components';
 // import '@atlaskit/css-reset';
@@ -26,12 +25,3 @@ import client from './apollo';
 //   </Page>,
 //   document.getElementById('root')
 // );
-
-ReactDOM.render(
-  <ApolloProvider client={client}>
-    <NavigationProvider>
-      <App />
-    </NavigationProvider>
-  </ApolloProvider>,
-  document.getElementById('root')
-);

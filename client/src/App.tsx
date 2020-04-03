@@ -1,85 +1,57 @@
-import React, { useState } from 'react';
-import { AtlassianLogo, AtlassianIcon } from '@atlaskit/logo';
-import Popup from '@atlaskit/popup';
-import QuestionCircleIcon from '@atlaskit/icon/glyph/question-circle';
-import { PopupMenuGroup, Section, ButtonItem } from '@atlaskit/menu';
-import { colors, borderRadius } from '@atlaskit/theme';
+import React, { useEffect, FunctionComponent } from 'react';
+import { ApolloProvider } from '@apollo/client';
 import {
-  AtlassianNavigation,
-  ProductHome,
-  PrimaryButton,
-  PrimaryDropdownButton,
-} from '@atlaskit/atlassian-navigation';
-
+  NavigationProvider,
+  withNavigationViewController,
+  LayoutManagerWithViewController,
+} from '@atlaskit/navigation-next';
 import '@atlaskit/css-reset';
+
 import Pages from './pages';
 import Login from './pages/Login';
+import {
+  GlobalNav,
+  productHomeView,
+  productIssuesView,
+  projectHomeView,
+} from './components/nav';
+
+import client from './apollo';
 import { useUserLogin } from './lib/useUser';
 
-const ProductHomeExample = (): JSX.Element => (
-  <ProductHome icon={AtlassianIcon} logo={AtlassianLogo} />
-);
+interface NavigationViewController {
+  navigationViewController: {
+    setView: (name: object) => void;
+    addView: (name: object) => void;
+  };
+}
 
-const PopupContents = (): JSX.Element => (
-  <PopupMenuGroup>
-    <Section>
-      <ButtonItem
-        description="But what is an Atlassian, anyway?"
-        elemBefore={
-          <QuestionCircleIcon
-            primaryColor={colors.B300}
-            label=""
-            size="medium"
-          />
-        }
-      >
-        About
-      </ButtonItem>
-    </Section>
-  </PopupMenuGroup>
-);
+const AppRouter: FunctionComponent<NavigationViewController> = ({
+  navigationViewController,
+}) => {
+  const isLoggedIn = useUserLogin();
 
-const ExploreDropdown = (): JSX.Element => {
-  const [isOpen, setIsOpen] = useState(false);
+  useEffect(() => {
+    navigationViewController.addView(productHomeView);
+    navigationViewController.addView(productIssuesView);
+    navigationViewController.addView(projectHomeView);
+  }, [navigationViewController]);
 
   return (
-    <Popup
-      content={PopupContents}
-      isOpen={isOpen}
-      placement="bottom-start"
-      onClose={(): void => setIsOpen(false)}
-      trigger={(triggerProps): React.ReactNode => (
-        <PrimaryDropdownButton
-          {...triggerProps}
-          isSelected={isOpen}
-          onClick={(): void => setIsOpen((prev) => !prev)}
-        >
-          Explore
-        </PrimaryDropdownButton>
-      )}
-    />
+    <LayoutManagerWithViewController globalNavigation={GlobalNav}>
+      {isLoggedIn ? <Pages /> : <Login />}
+    </LayoutManagerWithViewController>
   );
 };
 
-export default function App(): JSX.Element {
-  const isLoggedIn = useUserLogin();
-  return (
-    <div
-      style={{
-        paddingBottom: 8,
-        border: `1px solid ${colors.N40}`,
-        borderRadius: borderRadius(),
-      }}
-    >
-      <AtlassianNavigation
-        label="site"
-        primaryItems={[
-          <PrimaryButton key="item">Issues</PrimaryButton>,
-          <ExploreDropdown key="item" />,
-        ]}
-        renderProductHome={ProductHomeExample}
-      />
-      {isLoggedIn ? <Pages /> : <Login />}
-    </div>
-  );
-}
+const AppWithNavigationViewController = withNavigationViewController(AppRouter);
+
+const App: FunctionComponent = () => (
+  <ApolloProvider client={client}>
+    <NavigationProvider>
+      <AppWithNavigationViewController />
+    </NavigationProvider>
+  </ApolloProvider>
+);
+
+export default App;
