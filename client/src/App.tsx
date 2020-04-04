@@ -1,6 +1,6 @@
 import React, { useEffect, FunctionComponent } from 'react';
 import { ApolloProvider } from '@apollo/client';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import {
   NavigationProvider,
   withNavigationViewController,
@@ -43,7 +43,8 @@ interface NavigationViewController {
 const AppRouter: FunctionComponent<NavigationViewController> = ({
   navigationViewController,
 }) => {
-  const isLoggedIn = useUserLogin();
+  // const isLoggedIn = useUserLogin();
+  const isLoggedIn = true;
 
   useEffect(() => {
     navigationViewController.addView(productHomeView);
@@ -86,11 +87,11 @@ const AppWithNavigationViewController = withNavigationViewController(AppRouter);
 
 const App: FunctionComponent = () => (
   <ApolloProvider client={client}>
-    <Router>
+    <BrowserRouter>
       <NavigationProvider>
         <AppWithNavigationViewController />
       </NavigationProvider>
-    </Router>
+    </BrowserRouter>
   </ApolloProvider>
 );
 
