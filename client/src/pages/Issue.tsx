@@ -14,7 +14,7 @@ import {
   FixVersions,
   UserPicker,
   Comments,
-} from '../components/issue';
+} from '../components/Issue';
 import { Props } from '../types';
 
 const Padding = styled.div`

@@ -1,5 +1,5 @@
 import React, { ReactElement, FunctionComponent } from 'react';
-import { Location, Link, RouteComponentProps } from '@reach/router';
+import { Route, Link, RouteComponentProps } from 'react-router-dom';
 
 interface ItemProps extends React.FunctionComponent {
   children?: React.ReactNode;
@@ -8,7 +8,6 @@ interface ItemProps extends React.FunctionComponent {
 }
 
 interface Props extends RouteComponentProps {
-  // components: { Item: ItemProps };
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   components: any;
   to: string;
@@ -19,9 +18,8 @@ const LinkItem: FunctionComponent<Props> = ({
   to,
   ...props
 }) => (
-  <Location>
-    {({ location: { pathname } }): ReactElement => (
-      // eslint-disable-next-line react/jsx-first-prop-new-line
+  <Route>
+    {({ location: { pathname } }): JSX.Element => (
       <Item
         component={({ children, className }: ItemProps): ReactElement => (
           <Link css={{ color: '#DEEBFF' }} className={className} to={to}>
@@ -32,7 +30,7 @@ const LinkItem: FunctionComponent<Props> = ({
         {...props}
       />
     )}
-  </Location>
+  </Route>
 );
 
 export default LinkItem;

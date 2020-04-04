@@ -5,7 +5,7 @@ import TextField from '@atlaskit/textfield';
 import Select from '@atlaskit/select';
 import ModalDialog from '@atlaskit/modal-dialog';
 import Footer from './Footer';
-import { GET_TEAMS } from '../filters/TeamFilter';
+import { GET_TEAMS } from '../Filters/TeamFilter';
 import { ModalInterfaceProps, Team, ResourceForm } from './types';
 
 const UPDATE_RESOURCE = gql`

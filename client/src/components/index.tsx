@@ -2,23 +2,23 @@ export { default as Layout } from './Layout';
 export { default as Loading } from './Loading';
 export { default as LoginForm } from './LoginForm';
 export { default as BarChart } from './BarChart';
-export { default as Nameplate } from './resource/Nameplate';
-export { default as Timeline } from './timeline';
+export { default as Nameplate } from './Resource/Nameplate';
+export { default as Timeline } from './Timeline';
 export {
-  GlobalNav,
+  MyGlobalNavigation,
   productHomeView,
   productIssuesView,
   projectHomeView,
-} from './nav';
+} from './Navigation';
 export {
   ProjectFilter,
   VersionFilter,
   StatusFilter,
   TeamFilter,
-} from './filters';
+} from './Filters';
 export {
   IssueTable,
   priorityIconMap,
   issuetypeIconMap,
   statusCatecoryColorMap,
-} from './issue';
+} from './Issue';

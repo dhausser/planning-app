@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/client';
 import Spinner from '@atlaskit/spinner';
 import EmptyState from '@atlaskit/empty-state';
 import UserPicker from '@atlaskit/user-picker';
-import { getResource, GET_ASSIGNABLE_USERS } from '../issue/UserPicker';
+import { getResource, GET_ASSIGNABLE_USERS } from '../Issue/UserPicker';
 
 const AssignableUserPicker: FunctionComponent = () => {
   const { loading, error, data } = useQuery(GET_ASSIGNABLE_USERS, {

@@ -1,20 +1,21 @@
 import React, { useEffect, FunctionComponent } from 'react';
 import { ApolloProvider } from '@apollo/client';
+import { BrowserRouter as Router } from 'react-router-dom';
 import {
   NavigationProvider,
   withNavigationViewController,
   LayoutManagerWithViewController,
 } from '@atlaskit/navigation-next';
-import '@atlaskit/css-reset';
 
 import Pages from './pages';
 import Login from './pages/Login';
+
 import {
-  GlobalNav,
+  MyGlobalNavigation,
   productHomeView,
   productIssuesView,
   projectHomeView,
-} from './components/nav';
+} from './components/Navigation';
 
 import client from './apollo';
 import { useUserLogin } from './lib/useUser';
@@ -38,7 +39,7 @@ const AppRouter: FunctionComponent<NavigationViewController> = ({
   }, [navigationViewController]);
 
   return (
-    <LayoutManagerWithViewController globalNavigation={GlobalNav}>
+    <LayoutManagerWithViewController globalNavigation={MyGlobalNavigation}>
       {isLoggedIn ? <Pages /> : <Login />}
     </LayoutManagerWithViewController>
   );
@@ -48,9 +49,11 @@ const AppWithNavigationViewController = withNavigationViewController(AppRouter);
 
 const App: FunctionComponent = () => (
   <ApolloProvider client={client}>
-    <NavigationProvider>
-      <AppWithNavigationViewController />
-    </NavigationProvider>
+    <Router>
+      <NavigationProvider>
+        <AppWithNavigationViewController />
+      </NavigationProvider>
+    </Router>
   </ApolloProvider>
 );
 

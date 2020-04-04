@@ -15,7 +15,7 @@ import {
   bottomBar,
   head,
   rows,
-} from '../components/resource';
+} from '../components/Resource';
 import { Props, Resource } from '../types';
 
 const GET_RESOURCES = gql`

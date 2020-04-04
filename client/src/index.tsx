@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+// import App from './components/Navigation';
+import '@atlaskit/css-reset';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

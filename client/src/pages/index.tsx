@@ -1,5 +1,5 @@
-import React, { Fragment, FunctionComponent } from 'react';
-import { Router, RouteComponentProps } from '@reach/router';
+import React, { FunctionComponent } from 'react';
+import { Route, Switch } from 'react-router-dom';
 
 import Dashboard from './Dashboard';
 import Resource from './Resource';
@@ -15,23 +15,23 @@ import Pages from './Pages';
 import AddItem from './AddItem';
 import Settings from './Settings';
 
-const AppRouter: FunctionComponent<RouteComponentProps> = () => (
-  <Router primary={false} component={Fragment}>
-    <Projects default />
-    <Resource path="/resource/:resourceId" />
-    <Issue path="/issue/:issueId" />
-    <Settings path="/settings" />
-    <Dashboard path="/reports" />
-    <Releases path="/releases" />
-    <Backlog path="/backlog" />
-    <Board path="/board" />
-    <Roadmap path="/roadmap" />
-    <Resources path="/resources" />
-    <Issues path="/issues" />
-    <Dashboard path="/dashboards" />
-    <Pages path="/pages" />
-    <AddItem path="/AddItem" />
-  </Router>
+const AppRouter: FunctionComponent = () => (
+  <Switch>
+    <Route path="/" exact component={Projects} />
+    <Route path="/resource/:resourceId" component={Resource} />
+    <Route path="/issue/:issueId" component={Issue} />
+    <Route path="/settings" component={Settings} />
+    <Route path="/reports" component={Dashboard} />
+    <Route path="/releases" component={Releases} />
+    <Route path="/backlog" component={Backlog} />
+    <Route path="/board" component={Board} />
+    <Route path="/roadmap" component={Roadmap} />
+    <Route path="/resources" component={Resources} />
+    <Route path="/issues" component={Issues} />
+    <Route path="/dashboards" component={Dashboard} />
+    <Route path="/pages" component={Pages} />
+    <Route path="/AddItem" component={AddItem} />
+  </Switch>
 );
 
 export default AppRouter;

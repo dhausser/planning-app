@@ -5,7 +5,7 @@ import { BreadcrumbsStateless, BreadcrumbsItem } from '@atlaskit/breadcrumbs';
 import PageHeader from '@atlaskit/page-header';
 import Page from '@atlaskit/page';
 import { projectHomeView, ProjectFilter, VersionFilter } from '../components';
-import Timeline from '../components/timeline';
+import Timeline from '../components/Timeline';
 import { Props } from '../types';
 
 const Padding = styled.div`
