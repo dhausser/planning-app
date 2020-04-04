@@ -15,8 +15,6 @@ import EmptyState from '@atlaskit/empty-state';
 import { updateFilter } from '../Filters/ProjectFilter';
 import { Project, ProjectListItem } from '../../types';
 
-import projects from './data';
-
 export const PROJECT_TILE_DATA = gql`
   fragment ProjectTile on Project {
     id
@@ -71,8 +69,8 @@ const target = ({
 );
 
 const ProjectSwitcher: FunctionComponent = () => {
-  const [selected, setSelected] = useState<ProjectListItem>(projects[0]);
-  const [options, setOptions] = useState<ProjectListItem[]>(projects);
+  const [selected, setSelected] = useState<ProjectListItem>();
+  const [options, setOptions] = useState<ProjectListItem[]>();
   const client = useApolloClient();
   const { data, loading, error } = useQuery<{
     projects: Project[];

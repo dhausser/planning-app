@@ -8,7 +8,6 @@ import {
   Switcher,
 } from '@atlaskit/navigation-next';
 import { updateFilter } from '../Filters/ProjectFilter';
-import sampleProjects from './data';
 
 export const PROJECT_TILE_DATA = gql`
   fragment ProjectTile on Project {
@@ -46,14 +45,13 @@ const create = () => ({
   text: 'Create board',
 });
 
-const target = ({ id, subText, text }) => {
+const target = ({ id, subText, text, avatar: avatarUrl }) => {
   const avatar = (s) => (
     <ItemAvatar
       appearance="square"
-      href={null}
+      src={avatarUrl}
       isInteractive={false}
       itemState={s}
-      onClick={null}
     />
   );
 
@@ -68,37 +66,41 @@ const target = ({ id, subText, text }) => {
   );
 };
 
-const projectReducer = (projects, projectId, setSelected) => {
-  return projects.map((project) => {
-    const value = {
-      avatar: project.avatarUrls.large,
-      id: project.id,
-      pathname: `/projects/${project.key}`,
-      text: project.name,
-      subText: `${project.projectTypeKey} project`,
-    };
-    if (projectId && projectId === project.id) {
-      setSelected(value);
-    }
-    return value;
-  });
+const projectReducer = ({ projects, projectId, setSelected }) => {
+  return (
+    projects &&
+    projects.map((project) => {
+      const value = {
+        avatar: project.avatarUrls.large,
+        id: project.id,
+        pathname: `/projects/${project.key}`,
+        text: project.name,
+        subText: `${project.projectTypeKey} project`,
+      };
+
+      if (projectId && projectId === project.id) {
+        setSelected(value);
+      }
+
+      return value;
+    })
+  );
 };
 
 export default function MySwitcher() {
   const [projects, setProjects] = useState([]);
-  const [selected, setSelected] = useState();
+  const [selected, setSelected] = useState({});
   const client = useApolloClient();
   const { loading, error, data } = useQuery(GET_SWITCHER_PROJECTS);
 
   useEffect(() => {
     if (!loading && !error && data && data.projects) {
-      setProjects(
-        projectReducer({
-          projects: data.projects,
-          projectId: data.projectId,
-          setSelected,
-        })
-      );
+      const options = projectReducer({
+        projects: data.projects,
+        projectId: data.projectId,
+        setSelected,
+      });
+      setProjects(options);
     }
   }, [loading, error, data]);
 
@@ -106,7 +108,7 @@ export default function MySwitcher() {
     <Switcher
       create={create()}
       onChange={(e) => {
-        // updateFilter(client, { value: e.id, label: e.text });
+        updateFilter(client, { value: e.id, label: e.text });
         setSelected(e);
       }}
       options={projects}
