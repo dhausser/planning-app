@@ -97,8 +97,6 @@ module.exports = class ResourcesDAO {
   static async getResourcesByTeam({ teamId, page = 0, resourcesPerPage = 20 }) {
     const queryParams = {};
 
-    console.log({ teamId });
-
     const {
       query = {},
       project = { _id: 0 },

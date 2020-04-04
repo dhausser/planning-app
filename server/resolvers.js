@@ -67,13 +67,8 @@ module.exports = {
      * MongoDB
      */
     resources: async (_, __, { dataSources }) => {
-      const {
-        resourcesList,
-        totalNumResources,
-      } = await dataSources.resourceAPI.getResources();
-      console.log(totalNumResources);
+      const { resourcesList } = await dataSources.resourceAPI.getResources();
       return resourcesList;
-      // return { resourcesList, totalNumResources };
     },
     resource: (_, { id }, { dataSources }) =>
       dataSources.resourceAPI.getResourceById({ resourceId: id }),
