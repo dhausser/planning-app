@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import React, { useState, useEffect } from 'react';
-import { useApolloClient, useQuery, gql } from '@apollo/client';
+import { useApolloClient } from '@apollo/client';
 import ChevD from '@atlaskit/icon/glyph/chevron-down';
 import {
   ContainerHeader,
@@ -8,28 +8,7 @@ import {
   Switcher,
 } from '@atlaskit/navigation-next';
 import { updateFilter } from '../Filters/ProjectFilter';
-
-export const PROJECT_TILE_DATA = gql`
-  fragment ProjectTile on Project {
-    id
-    key
-    name
-    projectTypeKey
-  }
-`;
-
-const GET_SWITCHER_PROJECTS = gql`
-  query GetSwitcherProjects {
-    projectId @client
-    projects {
-      ...ProjectTile
-      avatarUrls {
-        large
-      }
-    }
-  }
-  ${PROJECT_TILE_DATA}
-`;
+import useProjects from '../../useProjects';
 
 const create = () => ({
   onClick: () => {
@@ -91,7 +70,7 @@ export default function MySwitcher() {
   const [projects, setProjects] = useState([]);
   const [selected, setSelected] = useState({});
   const client = useApolloClient();
-  const { loading, error, data } = useQuery(GET_SWITCHER_PROJECTS);
+  const { loading, error, data } = useProjects();
 
   useEffect(() => {
     if (!loading && !error && data && data.projects) {

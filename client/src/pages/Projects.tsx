@@ -1,6 +1,6 @@
 import React, { useEffect, FunctionComponent, ReactElement } from 'react';
 import { Link } from 'react-router-dom';
-import { useApolloClient, useQuery, gql } from '@apollo/client';
+import { useApolloClient } from '@apollo/client';
 import styled from 'styled-components';
 
 import { withNavigationViewController } from '@atlaskit/navigation-next';
@@ -9,22 +9,11 @@ import DynamicTable from '@atlaskit/dynamic-table';
 import EmptyState from '@atlaskit/empty-state';
 import Avatar from '@atlaskit/avatar';
 
+import { RowType } from '@atlaskit/dynamic-table/dist/cjs/types';
 import { Props, FilterLinkProps, Project } from '../types';
 import { productHomeView, Layout } from '../components';
 import { updateFilter } from '../components/Filters/ProjectFilter';
-import { PROJECT_TILE_DATA } from '../components/Navigation/Switcher';
-
-const GET_PROJECTS = gql`
-  query GetProjects {
-    projects {
-      ...ProjectTile
-      avatarUrls {
-        small
-      }
-    }
-  }
-  ${PROJECT_TILE_DATA}
-`;
+import useProjects from '../lib/useProjects';
 
 const NameWrapper = styled.span`
   display: flex;
@@ -69,45 +58,46 @@ function FilterLink({ children, id, name }: FilterLinkProps): ReactElement {
   );
 }
 
-function createRow(project: Project): object {
-  return {
-    key: project.id,
-    cells: [
-      {
-        key: project.name,
-        content: (
-          <NameWrapper>
-            <AvatarWrapper>
-              <Avatar
-                name={project.name}
-                size="small"
-                appearance="square"
-                src={project.avatarUrls.small}
-              />
-            </AvatarWrapper>
-            <FilterLink id={project.id} name={project.name}>
-              {project.name}
-            </FilterLink>
-          </NameWrapper>
-        ),
-      },
-      {
-        key: project.key,
-        content: project.key,
-      },
-      {
-        key: project.projectTypeKey,
-        content: project.projectTypeKey,
-      },
-    ],
-  };
-}
+const row = (project: Project): RowType => ({
+  key: project.id,
+  cells: [
+    {
+      key: project.name,
+      content: (
+        <NameWrapper>
+          <AvatarWrapper>
+            <Avatar
+              name={project.name}
+              size="small"
+              appearance="square"
+              src={project.avatarUrls.small}
+            />
+          </AvatarWrapper>
+          <FilterLink id={project.id} name={project.name}>
+            {project.name}
+          </FilterLink>
+        </NameWrapper>
+      ),
+    },
+    {
+      key: project.key,
+      content: project.key,
+    },
+    {
+      key: project.projectTypeKey,
+      content: project.projectTypeKey,
+    },
+  ],
+});
+
+const getRows = (projects: Project[]): RowType[] =>
+  projects.map((project) => row(project));
 
 const Projects: FunctionComponent<Props> = ({ navigationViewController }) => {
   useEffect(() => navigationViewController.setView(productHomeView.id), [
     navigationViewController,
   ]);
-  const { data, loading, error } = useQuery(GET_PROJECTS);
+  const { loading, error, data } = useProjects();
 
   if (error)
     return <EmptyState header={error.name} description={error.message} />;
@@ -120,7 +110,7 @@ const Projects: FunctionComponent<Props> = ({ navigationViewController }) => {
           data && `Displaying ${data.projects && data.projects.length} projects`
         }
         head={head}
-        rows={data && data.projects && data.projects.map(createRow)}
+        rows={data?.projects && getRows(data?.projects)}
         rowsPerPage={20}
         loadingSpinnerSize="small"
         isLoading={loading}

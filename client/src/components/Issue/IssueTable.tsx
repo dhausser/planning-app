@@ -9,11 +9,18 @@ import EmptyState from '@atlaskit/empty-state';
 
 import { GET_ISSUES, ROWS_PER_PAGE } from '../../lib/useIssues';
 import { Loading } from '..';
-import { head, row } from './utils';
+import { head, getRows } from './utils';
 
 interface IssueTableProps extends RouteComponentProps {
   resourceId?: string;
 }
+
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5em 1.5em;
+`;
 
 const IssueTable: React.FC<IssueTableProps> = ({ resourceId }) => {
   const [length, setLength] = useState(0);
@@ -39,7 +46,7 @@ const IssueTable: React.FC<IssueTableProps> = ({ resourceId }) => {
           data &&
           data.issues &&
           data.issues.issues &&
-          data.issues.issues.map(row)
+          getRows(data.issues.issues)
         }
         rowsPerPage={ROWS_PER_PAGE}
         loadingSpinnerSize="large"
@@ -98,14 +105,3 @@ const IssueTable: React.FC<IssueTableProps> = ({ resourceId }) => {
 };
 
 export default IssueTable;
-
-/**
- * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE
- */
-
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 1.5em 1.5em;
-`;

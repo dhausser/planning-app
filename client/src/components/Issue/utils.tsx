@@ -1,8 +1,9 @@
 import React from 'react';
-import { Link } from '@reach/router';
+import { Link } from 'react-router-dom';
 import Tooltip from '@atlaskit/tooltip';
 import Lozenge from '@atlaskit/lozenge';
 import { Status } from '@atlaskit/status';
+import { RowType } from '@atlaskit/dynamic-table/dist/cjs/types';
 import {
   statusCatecoryColorMap,
   priorityIconMap,
@@ -60,7 +61,7 @@ export const head = {
 export const row = ({
   key,
   fields: { summary, issuetype, status, priority, fixVersions, assignee },
-}: Issue): object => ({
+}: Issue): RowType => ({
   key,
   cells: [
     {
@@ -93,11 +94,11 @@ export const row = ({
       ),
     },
     {
-      key: priority,
+      key: priority.id,
       content: priorityIconMap[priority.id],
     },
     {
-      key: fixVersions[0] ? fixVersions[0].id : null,
+      key: fixVersions[0] ? fixVersions[0].id : undefined,
       content: fixVersions[0] ? (
         <Tooltip content={fixVersions[0].name}>
           <Lozenge appearance="default">{fixVersions[0].name}</Lozenge>
@@ -108,3 +109,6 @@ export const row = ({
     },
   ],
 });
+
+export const getRows = (issues: Issue[]): RowType[] =>
+  issues.map((issue) => row(issue));
