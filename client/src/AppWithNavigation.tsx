@@ -12,9 +12,6 @@ import {
 } from '@atlaskit/atlassian-navigation';
 
 import '@atlaskit/css-reset';
-import Pages from './pages';
-import Login from './pages/Login';
-import { useUserLogin } from './lib/useUser';
 
 const ProductHomeExample = (): JSX.Element => (
   <ProductHome icon={AtlassianIcon} logo={AtlassianLogo} />
@@ -62,7 +59,6 @@ const ExploreDropdown = (): JSX.Element => {
 };
 
 export default function App(): JSX.Element {
-  const isLoggedIn = useUserLogin();
   return (
     <div
       style={{
@@ -79,7 +75,6 @@ export default function App(): JSX.Element {
         ]}
         renderProductHome={ProductHomeExample}
       />
-      {isLoggedIn ? <Pages /> : <Login />}
     </div>
   );
 }

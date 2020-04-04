@@ -102,17 +102,17 @@ const ProjectSwitcher: FunctionComponent = () => {
     }
   }, [data, error, loading]);
 
-  if (loading) return <div />;
-  if (error)
-    return <EmptyState header={error.name} description={error.message} />;
+  // if (loading) return <div />;
+  // if (error)
+  //   return <EmptyState header={error.name} description={error.message} />;
 
   return (
     <Switcher
       create={create()}
-      onChange={(option: ProjectListItem): void => {
-        updateFilter(client, { value: option.id, label: option.text });
-        setSelected(option);
-      }}
+      // onChange={(option: ProjectListItem): void => {
+      //   updateFilter(client, { value: option.id, label: option.text });
+      //   setSelected(option);
+      // }}
       options={options}
       target={selected && target(selected)}
       value={selected}
