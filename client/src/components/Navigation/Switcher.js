@@ -8,7 +8,7 @@ import {
   Switcher,
 } from '@atlaskit/navigation-next';
 import { updateFilter } from '../Filters/ProjectFilter';
-import useProjects from '../../useProjects';
+import useProjects from '../../lib/useProjects';
 
 const create = () => ({
   onClick: () => {
