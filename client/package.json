@@ -26,6 +26,7 @@
     "@atlaskit/page": "^11.0.9",
     "@atlaskit/page-header": "^9.0.16",
     "@atlaskit/popup": "^0.3.3",
+    "@atlaskit/profilecard": "^12.4.0",
     "@atlaskit/select": "^11.0.9",
     "@atlaskit/spinner": "^12.1.6",
     "@atlaskit/status": "^0.9.23",

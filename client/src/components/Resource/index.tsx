@@ -1,3 +1,5 @@
+export { default as ProfileGrid } from './ProfileGrid';
+export { default as ResourceTable } from './ResourceTable';
 export { default as AssignableUserPicker } from './AssignableUserPicker';
 export { default as CreateResourceModal } from './CreateResourceModal';
 export { default as EditResourceModal } from './EditResourceModal';

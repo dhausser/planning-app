@@ -97,6 +97,10 @@ export declare interface Resource {
   name: string;
   team: string;
   displayName: string;
+  position: string;
+  phone: string;
+  email: string;
+  employeeId: string;
 }
 
 export declare interface Absence {
