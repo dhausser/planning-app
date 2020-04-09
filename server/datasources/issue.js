@@ -130,8 +130,6 @@ module.exports = class IssueAPI extends RESTDataSource {
    * @param {string} teamId - team ID
    */
   async getDashboardIssues({ projectId, versionId, teamId }) {
-    console.log({ projectId, versionId, teamId });
-
     const { resourcesList } = teamId
       ? await ResourcesDAO.getResourcesByTeam({ teamId })
       : await ResourcesDAO.getResources();

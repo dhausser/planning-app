@@ -2,6 +2,7 @@ require('dotenv').config();
 const fs = require('fs');
 const { MongoClient } = require('mongodb');
 const csvtojson = require('csvtojson');
+const resources = require('./resources.json');
 
 const inputFilePath = './data/resources.csv';
 const outputFilePath = './data/resources.json';
@@ -14,16 +15,14 @@ const client = new MongoClient(uri, {
   useUnifiedTopology: true,
 });
 
-function writeDataToFile(resources) {
-  const data = JSON.stringify(resources);
-  fs.writeFileSync(outputFilePath, data);
+function writeDataToFile(data) {
+  const result = JSON.stringify(data);
+  fs.writeFileSync(outputFilePath, result);
 }
 
 async function getDataFromFile() {
-  const resources = await csvtojson().fromFile(inputFilePath);
-  writeDataToFile(resources);
-  console.log(resources);
-  return resources;
+  const data = await csvtojson().fromFile(inputFilePath);
+  return data;
 }
 
 async function deleteData() {
@@ -47,7 +46,10 @@ async function loadData() {
       console.log(err);
     }
 
-    const resources = await getDataFromFile();
+    if (!resources) {
+      const data = await getDataFromFile();
+      writeDataToFile(data);
+    }
 
     await client.db('davyJSDB').collection('resources').insertMany(resources);
 
@@ -59,9 +61,7 @@ async function loadData() {
 }
 
 if (process.argv.includes('--delete')) {
-  console.log('Deletind data...');
   deleteData();
 } else {
-  console.log('Loading data...');
   loadData();
 }
