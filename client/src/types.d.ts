@@ -113,3 +113,7 @@ export declare interface MockIssue {
   key: string;
   fields: { summary: string };
 }
+
+export interface Team {
+  id: string;
+}

@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { useMutation, gql } from '@apollo/client';
 import ModalDialog from '@atlaskit/modal-dialog';
 import Form, { Field } from '@atlaskit/form';
-import AssignableUserPicker from './AssignableUserPicker';
+import TextField from '@atlaskit/textfield';
 import TeamPicker from './TeamPicker';
 import Footer from './Footer';
 import { ModalInterfaceProps, ResourceForm } from './types';
@@ -27,9 +27,7 @@ const INSERT_RESOURCE = gql`
   }
 `;
 
-const CreateResourceModal = ({
-  setIsOpen,
-}: ModalInterfaceProps): ReactElement => {
+function CreateResourceModal({ setIsOpen }: ModalInterfaceProps): ReactElement {
   const [insertResource] = useMutation(INSERT_RESOURCE, {
     onCompleted: ({ key }) => {
       // eslint-disable-next-line no-console
@@ -37,29 +35,38 @@ const CreateResourceModal = ({
     },
   });
 
+  const close = (): void => setIsOpen(false);
+
+  const onFormSubmit = (data: Record<string, any>): void => {
+    // const { first }
+    console.log(JSON.stringify(data));
+    // const key = `${firstname.toLowerCase()}.${lastname.toLowerCase()}`;
+    // insertResource({
+    //   variables: {
+    //     key,
+    //     firstname,
+    //     lastname,
+    //     email,
+    //     team: team.value,
+    //   },
+    // });
+    setIsOpen(false);
+  };
+
+  interface ContainerProps {
+    children: React.ReactNode;
+    className?: string;
+  }
+
   return (
     <ModalDialog
       heading="Create"
       scrollBehavior="outside"
-      onClose={(): void => setIsOpen(false)}
+      onClose={close}
       components={{
         // eslint-disable-next-line react/display-name
-        Container: ({ children, className }): ReactElement => (
-          <Form<ResourceForm>
-            onSubmit={({ firstname, lastname, email, team }): void => {
-              const id = `${firstname.toLowerCase()}.${lastname.toLowerCase()}`;
-              insertResource({
-                variables: {
-                  id,
-                  firstname,
-                  lastname,
-                  email,
-                  team: team.value,
-                },
-              });
-              setIsOpen(false);
-            }}
-          >
+        Container: ({ children, className }: ContainerProps): ReactElement => (
+          <Form<ResourceForm> onSubmit={onFormSubmit}>
             {({ formProps }): ReactElement => (
               <form {...formProps} className={className}>
                 {children}
@@ -68,17 +75,41 @@ const CreateResourceModal = ({
           </Form>
         ),
         // eslint-disable-next-line react/display-name
-        Footer: (): ReactElement => <Footer setIsOpen={setIsOpen} />,
+        // Footer: (): ReactElement => <Footer setIsOpen={setIsOpen} />,
       }}
     >
-      <Field label="Assignee" name="assignee" defaultValue="" isRequired>
-        {(): React.ReactNode => <AssignableUserPicker />}
+      <p>Enter some text then submit the form to see the response.</p>
+      <Field
+        label="Firstname"
+        name="resource-firstname"
+        defaultValue=""
+        isRequired
+      >
+        {({ fieldProps }): React.ReactNode => <TextField {...fieldProps} />}
+      </Field>
+      <Field
+        label="Lastname"
+        name="resource-lastname"
+        defaultValue=""
+        isRequired
+      >
+        {({ fieldProps }): React.ReactNode => <TextField {...fieldProps} />}
+      </Field>
+      <Field label="Email" name="resource-email" defaultValue="" isRequired>
+        {({ fieldProps }): React.ReactNode => (
+          <TextField
+            autoComplete="off"
+            placeholder="firstname.lastname@cdprojektred.com"
+            {...fieldProps}
+          />
+        )}
       </Field>
       <Field label="Team" name="team" defaultValue="" isRequired>
         {(): React.ReactNode => <TeamPicker />}
       </Field>
+      <Footer setIsOpen={setIsOpen} />
     </ModalDialog>
   );
-};
+}
 
 export default CreateResourceModal;

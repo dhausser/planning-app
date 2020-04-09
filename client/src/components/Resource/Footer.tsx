@@ -7,15 +7,15 @@ const Footer = ({ setIsOpen }: ModalInterfaceProps): ReactElement => (
   <ModalFooter>
     <span />
     <ButtonGroup>
-      <Button appearance="primary" type="submit">
-        Submit
-      </Button>
       <Button
         appearance="default"
         type="close"
         onClick={(): void => setIsOpen(false)}
       >
         Close
+      </Button>
+      <Button appearance="primary" type="submit">
+        Submit
       </Button>
     </ButtonGroup>
   </ModalFooter>

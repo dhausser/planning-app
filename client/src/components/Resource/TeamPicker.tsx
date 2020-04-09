@@ -1,29 +1,38 @@
-import React, { FunctionComponent } from 'react';
-import { useQuery } from '@apollo/client';
-import Spinner from '@atlaskit/spinner';
-import EmptyState from '@atlaskit/empty-state';
-import Select from '@atlaskit/select';
-import { GET_TEAMS } from '../Filters/TeamFilter';
+import React, { ReactElement } from 'react';
+import { AsyncSelect } from '@atlaskit/select';
+import { OptionsType } from '@atlaskit/select/types';
+
+import useTeams from '../../lib/useTeams';
 import { Team } from './types';
 
-const TeamPicker: FunctionComponent = () => {
-  const { loading, error, data } = useQuery(GET_TEAMS);
-  const options =
-    data &&
-    data.teams &&
-    data.teams.map(({ id }: Team) => ({ label: id, value: id }));
+export default function TeamPicker(): ReactElement {
+  const teams = useTeams();
 
-  if (loading || !data) return <Spinner size="small" />;
-  if (error)
-    return <EmptyState header={error.name} description={error.message} />;
+  const options = teams.map(({ id }: Team) => ({ label: id, value: id }));
+
+  // you control how the options are filtered
+  const filter = (inputValue: string) =>
+    options.filter((i) =>
+      i.label.toLowerCase().includes(inputValue.toLowerCase())
+    );
+
+  // async load function using callback (promises also supported)
+  const loadOptions = (
+    inputValue: string,
+    callback: (options: OptionsType) => void
+  ): void => {
+    setTimeout(() => {
+      callback(filter(inputValue));
+    }, 1000);
+  };
 
   return (
-    <Select
+    <AsyncSelect
+      className="async-select-with-callback"
+      classNamePrefix="react-select"
+      loadOptions={loadOptions}
       options={options}
       placeholder="Choose a Team"
-      defaultValue={options[0]}
     />
   );
-};
-
-export default TeamPicker;
+}
