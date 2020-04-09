@@ -4,7 +4,7 @@ import React, {
   FunctionComponent,
   ReactElement,
 } from 'react';
-import { Link } from '@reach/router';
+import { Link } from 'react-router-dom';
 import { useQuery, gql } from '@apollo/client';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import { Status } from '@atlaskit/status';

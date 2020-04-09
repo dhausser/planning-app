@@ -1,4 +1,5 @@
-import React, { useEffect, FunctionComponent } from 'react';
+import React, { useEffect, FunctionComponent, ReactElement } from 'react';
+import { useParams } from 'react-router-dom';
 import { useQuery, gql } from '@apollo/client';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import EmptyState from '@atlaskit/empty-state';
@@ -50,14 +51,14 @@ import { ResourceProps, Absence } from '../types';
 //   ${ISSUE_ROW_DATA}
 // `;
 
-const GET_ABSENCES = gql`
-  query getAbsences($id: ID!) {
-    absences(id: $id) {
-      key
-      date
-    }
-  }
-`;
+// const GET_ABSENCES = gql`
+//   query getAbsences($id: ID!) {
+//     absences(id: $id) {
+//       key
+//       date
+//     }
+//   }
+// `;
 
 const barContent = (
   <div style={{ display: 'flex' }}>
@@ -70,28 +71,28 @@ const barContent = (
   </div>
 );
 
-const Absences: FunctionComponent<{ id: string }> = ({ id }) => {
-  const { loading, error, data } = useQuery(GET_ABSENCES, {
-    variables: { id },
-  });
+// function Absences({ id }: { id?: string }): ReactElement {
+//   const { loading, error, data } = useQuery(GET_ABSENCES, {
+//     variables: { id },
+//   });
 
-  if (loading || !data) return <Loading />;
-  if (error)
-    return <EmptyState header={error.name} description={error.message} />;
+//   if (loading) return <Loading />;
+//   if (error)
+//     return <EmptyState header={error.name} description={error.message} />;
 
-  return (
-    <>
-      {data.absences.map(({ date }: Absence) => (
-        <Status key={date} text={date} color="blue" />
-      ))}
-    </>
-  );
-};
+//   return (
+//     <>
+//       <h1>Absences</h1>
+//       {data.absences.map(({ date }: Absence) => (
+//         <Status key={date} text={date} color="blue" />
+//       ))}
+//     </>
+//   );
+// }
 
-const Resource: FunctionComponent<ResourceProps> = ({
-  navigationViewController,
-  resourceId,
-}) => {
+function Resource({ navigationViewController }: ResourceProps): ReactElement {
+  const { id } = useParams();
+
   useEffect(() => {
     navigationViewController.setView(projectHomeView.id);
   }, [navigationViewController]);
@@ -99,12 +100,12 @@ const Resource: FunctionComponent<ResourceProps> = ({
   return (
     <Layout>
       <PageHeader bottomBar={barContent}>
-        <Nameplate id={resourceId} />
+        <Nameplate id={id as string} />
       </PageHeader>
-      <IssueTable resourceId={resourceId} />
-      <Absences id={resourceId} />
+      <IssueTable resourceId={id} />
+      {/* <Absences id={id} /> */}
     </Layout>
   );
-};
+}
 
 export default withNavigationViewController(Resource);

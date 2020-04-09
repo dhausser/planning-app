@@ -2,6 +2,9 @@
   "name": "planning-app-client",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=13.12.0"
+  },
   "dependencies": {
     "@apollo/client": "^3.0.0-beta.41",
     "@atlaskit/atlassian-navigation": "^0.10.0",
@@ -37,15 +40,14 @@
     "@atlaskit/tooltip": "^15.2.5",
     "@atlaskit/user-picker": "^4.2.0",
     "chart.js": "^2.9.3",
-    "graphql": "^14.5.8",
+    "graphql": "^15.0.0",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-intl": "^2.6.0",
     "react-router-dom": "^5.1.2",
     "react-scroll-sync": "^0.7.1",
-    "styled-components": "^3.2.6",
-    "typescript": "^3.8.3"
+    "styled-components": "^3.2.6"
   },
   "devDependencies": {
     "@testing-library/dom": "^7.2.1",
@@ -67,11 +69,12 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.19.0",
-    "eslint-plugin-react-hooks": "^2.5.0",
+    "eslint-plugin-react-hooks": "^3.0.0",
     "husky": ">=4",
     "lint-staged": ">=10",
     "prettier": "^2.0.2",
-    "react-scripts": "^3.4.1"
+    "react-scripts": "^3.4.1",
+    "typescript": "^3.8.3"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -81,6 +84,14 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "codegen": "apollo client:codegen --target typescript --watch"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": "eslint --cache --fix"
   },
   "browserslist": {
     "production": [
@@ -94,13 +105,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:4000/",
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.js": "eslint --cache --fix"
-  }
+  "proxy": "http://localhost:4000/"
 }

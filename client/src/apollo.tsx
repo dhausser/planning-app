@@ -6,6 +6,14 @@ import {
   gql,
 } from '@apollo/client';
 
+// interface Cache {
+//   isLoggedIn: boolean;
+//   projectId: string;
+//   versionId: string;
+//   statusId: string;
+//   teamId: string;
+// }
+
 // TODO: Handle default project selection
 const DEFAULT_PROJECT_ID = '10500';
 
@@ -23,7 +31,7 @@ const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   }),
 });
 
-function writeInitialData(): any {
+function writeInitialData(): Promise<unknown> {
   cache.writeQuery({
     query: gql`
       query {
@@ -45,6 +53,7 @@ function writeInitialData(): any {
       teamId: localStorage.getItem('teamId'),
     },
   });
+  return new Promise((resolve) => resolve(null));
 }
 
 writeInitialData();

@@ -1,6 +1,39 @@
-import React, { FunctionComponent } from 'react';
-import { RouteComponentProps } from '@reach/router';
+import React, { ReactElement } from 'react';
+import { useLocation } from 'react-router-dom';
+import {
+  useApolloClient,
+  // useMutation,
+  // gql,
+  // ApolloClient,
+} from '@apollo/client';
 import Modal, { ModalTransition } from '@atlaskit/modal-dialog';
+
+// const LOGIN_USER = gql`
+//   mutation login {
+//     login
+//   }
+// `;
+
+// function useLoginMutation(client: ApolloClient<unknown>): ReactElement {
+//   const client = useApolloClient();
+//   const [login] = useMutation(LOGIN_USER, {
+//     onCompleted: ({ login: token }) => {
+//       localStorage.setItem('token', token);
+//       client.writeQuery({
+//         query: gql`
+//           {
+//             isLoggedIn
+//           }
+//         `,
+//         data: { isLoggedIn: true },
+//       });
+//       window.opener.location.reload();
+//       window.close();
+//     },
+//   });
+//   login();
+//   return <div />;
+// }
 
 const openRequestedPopup = (): Window | null => {
   const devEndpoint = process.env.REACT_APP_DEV_ENDPOINT;
@@ -25,8 +58,8 @@ const openRequestedPopup = (): Window | null => {
   );
 };
 
-// function LoginForm() {
-const LoginForm: FunctionComponent<RouteComponentProps> = () => {
+function LoginForm(): ReactElement {
+  // const location = useLocation();
   const actions = [{ text: 'Login', onClick: openRequestedPopup }];
 
   /**
@@ -43,6 +76,6 @@ const LoginForm: FunctionComponent<RouteComponentProps> = () => {
       </Modal>
     </ModalTransition>
   );
-};
+}
 
 export default LoginForm;

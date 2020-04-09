@@ -43,8 +43,7 @@ interface NavigationViewController {
 const AppRouter: FunctionComponent<NavigationViewController> = ({
   navigationViewController,
 }) => {
-  // const isLoggedIn = useUserLogin();
-  const isLoggedIn = true;
+  const isLoggedIn = useUserLogin();
 
   useEffect(() => {
     navigationViewController.addView(productHomeView);
@@ -58,7 +57,7 @@ const AppRouter: FunctionComponent<NavigationViewController> = ({
         {isLoggedIn ? (
           <>
             <Route path="/" exact component={Projects} />
-            <Route path="/resource/:resourceId" component={Resource} />
+            <Route path="/resource/:id" component={Resource} />
             <Route path="/issue/:issueId" component={Issue} />
             <Route path="/settings" component={Settings} />
             <Route path="/reports" component={Dashboard} />
@@ -75,7 +74,7 @@ const AppRouter: FunctionComponent<NavigationViewController> = ({
         ) : (
           <>
             <Route path="/" component={LoginForm} />
-            <Route path="login" component={LoginSuccess} />
+            <Route path="/login" component={LoginSuccess} />
           </>
         )}
       </Switch>
