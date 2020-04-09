@@ -1,14 +1,12 @@
-import React, { useEffect, FunctionComponent, ReactElement } from 'react';
+import React, { useEffect, ReactElement } from 'react';
 import { useParams } from 'react-router-dom';
-import { useQuery, gql } from '@apollo/client';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
-import EmptyState from '@atlaskit/empty-state';
 import PageHeader from '@atlaskit/page-header';
 import TextField from '@atlaskit/textfield';
-import { Status } from '@atlaskit/status';
+// import { Status } from '@atlaskit/status';
+
 import {
   projectHomeView,
-  Loading,
   Layout,
   ProjectFilter,
   VersionFilter,
@@ -16,49 +14,8 @@ import {
   IssueTable,
   Nameplate,
 } from '../components';
-import { ResourceProps, Absence } from '../types';
-
-/**
- * TODO: Refactor GetIssues query
- */
-// const GET_ISSUES = gql`
-//   query GetIssues(
-//     $projectId: String,
-//     $versionId: String,
-//     $statusId: String,
-//     $resourceId: String,
-//     $startAt: Int,
-//     $maxResults: Int)
-//   {
-//     projectId @client @export(as: "projectId")
-//     versionId @client @export(as: "versionId")
-//     statusId @client @export(as: "statusId")
-//     issues(
-//       projectId: $projectId,
-//       versionId: $versionId,
-//       statusId: $statusId,
-//       resourceId: $resourceId,
-//       startAt: $startAt,
-//       maxResults: $maxResults)
-//     {
-//       ...IssuePagination
-//       issues {
-//         ...IssueRow
-//       }
-//     }
-//   }
-//   ${ISSUE_PAGINATION}
-//   ${ISSUE_ROW_DATA}
-// `;
-
-// const GET_ABSENCES = gql`
-//   query getAbsences($id: ID!) {
-//     absences(id: $id) {
-//       key
-//       date
-//     }
-//   }
-// `;
+import { ResourceProps } from '../types';
+// import useAbsences from '../lib/useAbsences';
 
 const barContent = (
   <div style={{ display: 'flex' }}>
@@ -72,22 +29,8 @@ const barContent = (
 );
 
 // function Absences({ id }: { id?: string }): ReactElement {
-//   const { loading, error, data } = useQuery(GET_ABSENCES, {
-//     variables: { id },
-//   });
-
-//   if (loading) return <Loading />;
-//   if (error)
-//     return <EmptyState header={error.name} description={error.message} />;
-
-//   return (
-//     <>
-//       <h1>Absences</h1>
-//       {data.absences.map(({ date }: Absence) => (
-//         <Status key={date} text={date} color="blue" />
-//       ))}
-//     </>
-//   );
+//   const absences = useAbsences(id);
+//   return <div>{absences}</div>;
 // }
 
 function Resource({ navigationViewController }: ResourceProps): ReactElement {

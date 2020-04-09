@@ -61,6 +61,7 @@ module.exports = {
      * CDPR Portal REST API
      */
     absences: (_, { id }, { dataSources }) =>
+      // dataSources.absenceAPI.getAllAbsences({ userId: id }),
       dataSources.absenceAPI.getAbsencesById({ userId: id }),
 
     /**
