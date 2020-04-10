@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { useMutation, gql } from '@apollo/client';
 import ModalDialog from '@atlaskit/modal-dialog';
-import Form, { Field } from '@atlaskit/form';
+import Form, { Field, OnSubmitHandler } from '@atlaskit/form';
 import TextField from '@atlaskit/textfield';
 import TeamPicker from './TeamPicker';
 import Footer from './Footer';
@@ -37,7 +37,9 @@ function CreateResourceModal({ setIsOpen }: ModalInterfaceProps): ReactElement {
 
   const close = (): void => setIsOpen(false);
 
-  const onFormSubmit = (data: Record<string, any>): void => {
+  const onFormSubmit: OnSubmitHandler<ResourceForm> = (
+    data: Record<string, any>
+  ): void => {
     // const { first }
     console.log(JSON.stringify(data));
     // const key = `${firstname.toLowerCase()}.${lastname.toLowerCase()}`;

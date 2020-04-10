@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
 import { useQuery, gql } from '@apollo/client';
+import { Absence } from '../types';
 
 const GET_ABSENCES = gql`
   query getAbsences($id: ID!) {
@@ -10,10 +11,12 @@ const GET_ABSENCES = gql`
   }
 `;
 
-export default function useAbsences(id?: string): ReactElement {
+export default function useAbsences(id?: string): Array<Absence> {
   const { loading, error, data } = useQuery(GET_ABSENCES, {
     variables: { id },
   });
-
-  return <div>{JSON.stringify(data)}</div>;
+  if (loading || error) {
+    return [];
+  }
+  return Array.isArray(data.absences) ? data.absences : [];
 }

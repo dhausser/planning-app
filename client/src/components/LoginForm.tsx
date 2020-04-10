@@ -1,11 +1,4 @@
 import React, { ReactElement } from 'react';
-import { useLocation } from 'react-router-dom';
-import {
-  useApolloClient,
-  // useMutation,
-  // gql,
-  // ApolloClient,
-} from '@apollo/client';
 import Modal, { ModalTransition } from '@atlaskit/modal-dialog';
 
 // const LOGIN_USER = gql`

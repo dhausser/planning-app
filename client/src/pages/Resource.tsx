@@ -3,8 +3,8 @@ import { useParams } from 'react-router-dom';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import PageHeader from '@atlaskit/page-header';
 import TextField from '@atlaskit/textfield';
-// import { Status } from '@atlaskit/status';
-
+import { Status, Color } from '@atlaskit/status/element';
+import styled from 'styled-components';
 import {
   projectHomeView,
   Layout,
@@ -15,7 +15,23 @@ import {
   Nameplate,
 } from '../components';
 import { ResourceProps } from '../types';
-// import useAbsences from '../lib/useAbsences';
+import useAbsences from '../lib/useAbsences';
+
+const Container = styled.div`
+  width: 140px;
+`;
+
+const StatusInParagraph = ({
+  text,
+  color,
+}: {
+  text: string;
+  color: Color;
+}): ReactElement => (
+  <p>
+    <Status text={text} color={color} />
+  </p>
+);
 
 const barContent = (
   <div style={{ display: 'flex' }}>
@@ -28,10 +44,21 @@ const barContent = (
   </div>
 );
 
-// function Absences({ id }: { id?: string }): ReactElement {
-//   const absences = useAbsences(id);
-//   return <div>{absences}</div>;
-// }
+function Absences({ id }: { id?: string }): ReactElement {
+  const absences = useAbsences(id);
+  return (
+    <Container>
+      <h1>Absences</h1>
+      {absences.map((absence) => (
+        <StatusInParagraph
+          key={absence.date}
+          text={absence.date}
+          color="blue"
+        />
+      ))}
+    </Container>
+  );
+}
 
 function Resource({ navigationViewController }: ResourceProps): ReactElement {
   const { id } = useParams();
@@ -46,7 +73,7 @@ function Resource({ navigationViewController }: ResourceProps): ReactElement {
         <Nameplate id={id as string} />
       </PageHeader>
       <IssueTable resourceId={id} />
-      {/* <Absences id={id} /> */}
+      <Absences id={id} />
     </Layout>
   );
 }
