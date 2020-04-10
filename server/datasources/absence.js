@@ -13,17 +13,13 @@ module.exports = class AbsenceAPI extends RESTDataSource {
 
   async getAllAbsences() {
     const response = await this.get('', { apiKey: this.apiKey });
-    console.log(response);
     return Array.isArray(response) ? response : [];
   }
 
   async getAbsencesById({ userId }) {
-    console.log(userId);
-    console.log(this.apiKey);
     const response = await this.get(`?user[]=${userId}`, {
       apiKey: this.apiKey,
     });
-    console.log(response);
-    return response;
+    return Array.isArray(response) ? response : [];
   }
 };
