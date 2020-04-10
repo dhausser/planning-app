@@ -67,15 +67,17 @@ module.exports = {
     /**
      * MongoDB
      */
-    resources: async (_, __, { dataSources }) => {
-      const { resourcesList } = await dataSources.resourceAPI.getResources();
+    resources: async (_, { teamId }, { dataSources }) => {
+      const { resourcesList } = await dataSources.resourceAPI.getResources({
+        teamId,
+      });
       return resourcesList;
     },
     resource: (_, { id }, { dataSources }) =>
       dataSources.resourceAPI.getResourceById({ resourceId: id }),
     teams: (_, __, { dataSources }) => dataSources.resourceAPI.getTeams(),
     team: (_, { id }, { dataSources }) =>
-      dataSources.resourceAPI.getResourcesByTeam({ teamId: id }),
+      dataSources.resourceAPI.getResources({ teamId: id }),
   },
 
   Mutation: {

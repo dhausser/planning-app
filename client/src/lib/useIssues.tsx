@@ -4,7 +4,7 @@ import EmptyState from '@atlaskit/empty-state';
 import { Loading } from '../components';
 import { IssueConnectionData, IssueConnectionVars } from '../types';
 
-export const ROWS_PER_PAGE = 50;
+export const ROWS_PER_PAGE = 20;
 
 export const ISSUE_ROW_DATA = gql`
   fragment IssueRow on Issue {

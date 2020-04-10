@@ -43,8 +43,8 @@ module.exports = class ResourcesDAO {
    * Returns a list of objects, each object contains a key, name and a team
    * @returns {Promise<ResourcesResult>} A promise that will resolve to a list of ResourcesResult.
    */
-  static async getResources({ page = 0, resourcesPerPage = 20 } = {}) {
-    const queryParams = {};
+  static async getResources({ page = 0, resourcesPerPage = 20, teamId } = {}) {
+    const queryParams = { query: teamId ? { team: teamId } : {} };
     const {
       query = {},
       project = { _id: 0 },
@@ -88,66 +88,21 @@ module.exports = class ResourcesDAO {
   }
 
   /**
-   * Finds and returns resources originating from one or more teams.
+   * Finds and returns all resources.
    * Returns a list of objects, each object contains a key, name and a team
-   * @param {string[]} teams - The list of teams.
-   * @returns {Promise<ResourcesByTeamResult>} A promise that will resolve to
-   * a list of ResourcesByTeamResult.
+   * @returns {Promise<ResourcesMap>} A promise that will resolve to a list of ResourcesResult.
    */
-  static async getResourcesByTeam({ teamId, page = 0, resourcesPerPage = 20 }) {
+  static async getResourceMap() {
     const queryParams = {};
-
     const {
       query = {},
       project = { _id: 0 },
       sort = DEFAULT_SORT,
     } = queryParams;
     let cursor;
-    try {
-      cursor = await resources
-        .find({ team: teamId })
-        .project(project)
-        .sort(sort);
-    } catch (e) {
-      console.error(`Unable to issue find command, ${e}`);
-      return { moviesList: [], totalNumMovies: 0 };
-    }
-
-    const displayCursor = cursor
-      .limit(resourcesPerPage)
-      .skip(resourcesPerPage * page);
 
     try {
-      const resourcesList = await displayCursor.toArray();
-      const totalNumResources =
-        page === 0 ? await resources.countDocuments(query) : 0;
-
-      cursor = await resources.find({ team: teamId }).project({
-        _id: 0,
-        key: 1,
-      });
-      return { resourcesList, totalNumResources };
-    } catch (e) {
-      console.error(`Unable to issue find command, ${e}`);
-      return { resourcesList: [], totalNumResources: 0 };
-    }
-  }
-
-  /**
-   * Finds and returns all resources.
-   * Returns a list of objects, each object contains a key, name and a team
-   * @returns {Promise<ResourcesMap>} A promise that will resolve to a list of ResourcesResult.
-   */
-  static async getResourceMap() {
-    let cursor;
-
-    try {
-      cursor = await resources.find().project({
-        _id: 0,
-        key: 1,
-        name: 1,
-        team: 1,
-      });
+      cursor = await resources.find(query).project(project).sort(sort);
     } catch (e) {
       console.error(`Unable to issue find command, ${e}`);
       return [];
@@ -168,20 +123,14 @@ module.exports = class ResourcesDAO {
    * @returns {Promise<ResourcesResult>} A promise that will resolve to a list of ResourcesResult.
    */
   static async getResourceById({ resourceId }) {
+    const queryParams = {};
+    const { query = { key: resourceId }, project = { _id: 0 } } = queryParams;
     let cursor;
 
     try {
-      cursor = await resources.findOne(
-        { key: resourceId },
-        {
-          projection: {
-            _id: 0,
-            key: 1,
-            name: 1,
-            team: 1,
-          },
-        },
-      );
+      cursor = await resources.findOne(query, {
+        projection: project,
+      });
     } catch (e) {
       console.error(`Unable to issue find command, ${e}`);
       return [];
@@ -230,7 +179,8 @@ module.exports = class ResourcesDAO {
   }
 
   static async insertResource({ id, firstname, lastname, team }) {
-    // eslint-disable-next-line no-unused-vars
+    console.log({ id, firstname, lastname, team });
+
     let cursor;
 
     const data = {
@@ -250,7 +200,8 @@ module.exports = class ResourcesDAO {
   }
 
   static async updateResource({ id, firstname, lastname, team }) {
-    // eslint-disable-next-line no-unused-vars
+    console.log({ id, firstname, lastname, team });
+
     let cursor;
 
     const data = {

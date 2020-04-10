@@ -98,10 +98,11 @@ module.exports = class IssueAPI extends RESTDataSource {
     startAt,
     maxResults,
   }) {
-    let assignee = resourceId;
-
-    if (teamId) {
-      const { resourcesList } = await ResourcesDAO.getResourcesByTeam(teamId);
+    let assignee = null;
+    if (resourceId) {
+      assignee = resourceId;
+    } else if (teamId) {
+      const { resourcesList } = await ResourcesDAO.getResources({ teamId });
       assignee = resourcesList.map(({ key }) => key);
     }
 
@@ -130,9 +131,7 @@ module.exports = class IssueAPI extends RESTDataSource {
    * @param {string} teamId - team ID
    */
   async getDashboardIssues({ projectId, versionId, teamId }) {
-    const { resourcesList } = teamId
-      ? await ResourcesDAO.getResourcesByTeam({ teamId })
-      : await ResourcesDAO.getResources();
+    const { resourcesList } = await ResourcesDAO.getResources({ teamId });
 
     const assignee = resourcesList.map((resource) => resource.key) || [];
 
