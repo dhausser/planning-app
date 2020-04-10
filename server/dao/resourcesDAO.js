@@ -43,7 +43,7 @@ module.exports = class ResourcesDAO {
    * Returns a list of objects, each object contains a key, name and a team
    * @returns {Promise<ResourcesResult>} A promise that will resolve to a list of ResourcesResult.
    */
-  static async getResources({ page = 0, resourcesPerPage = 20, teamId } = {}) {
+  static async getResources({ page = 0, resourcesPerPage = 100, teamId } = {}) {
     const queryParams = { query: teamId ? { team: teamId } : {} };
     const {
       query = {},

@@ -62,11 +62,11 @@ export const rows = ({
         content: (
           <NameWrapper>
             <Avatar
-              name={resource.name}
+              name={resource.displayName}
               size="medium"
               src={`https://jira.cdprojektred.com/secure/useravatar?ownerId=${resource.key}`}
             />
-            <Link to={`/resource/${resource.key}`}>{resource.name}</Link>
+            <Link to={`/resource/${resource.key}`}>{resource.displayName}</Link>
           </NameWrapper>
         ),
       },
