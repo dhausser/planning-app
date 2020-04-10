@@ -1,5 +1,5 @@
 import React, { useState, useEffect, FunctionComponent } from 'react';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import styled from 'styled-components';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import PageHeader from '@atlaskit/page-header';
@@ -17,25 +17,14 @@ import {
 } from '../components/Resource';
 import { Props, Resource } from '../types';
 import { ROWS_PER_PAGE } from '../lib/useIssues';
-
-const GET_RESOURCES = gql`
-  query GetResources($teamId: String) {
-    teamId @client @export(as: "teamId")
-    resources(teamId: $teamId) {
-      key
-      name
-      team
-      position
-      email
-    }
-  }
-`;
+import { GET_RESOURCES } from '../lib/useResources';
 
 const Wrapper = styled.div`
   min-width: 600px;
 `;
 
 const Resources: FunctionComponent<Props> = ({ navigationViewController }) => {
+  const [selection, setSelection] = useState();
   const [isProfileCardView, setIsProfileCardView] = useState(true);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
@@ -47,21 +36,29 @@ const Resources: FunctionComponent<Props> = ({ navigationViewController }) => {
   ]);
 
   let resources: Resource[] = [];
-  if (!loading) {
-    resources = data.teamId
+  if (error)
+    return <EmptyState header={error.name} description={error.message} />;
+  if (!loading && data) {
+    resources = data?.teamId
       ? data.resources.filter(({ team }: Resource) => team === data.teamId)
       : data.resources;
   }
-  if (error)
-    return <EmptyState header={error.name} description={error.message} />;
 
   let display;
   if (isProfileCardView) {
-    display = <ProfileGrid resources={resources} />;
+    display = (
+      <ProfileGrid
+        resources={resources}
+        setSelection={setSelection}
+        setIsEditOpen={setIsEditOpen}
+        setIsDeleteOpen={setIsDeleteOpen}
+      />
+    );
   } else {
     display = (
       <ResourceTable
         resources={resources}
+        setSelection={setSelection}
         setIsEditOpen={setIsEditOpen}
         setIsDeleteOpen={setIsDeleteOpen}
         loading={loading}
@@ -91,8 +88,18 @@ const Resources: FunctionComponent<Props> = ({ navigationViewController }) => {
         {display}
         <ModalTransition>
           {isCreateOpen && <CreateResourceModal setIsOpen={setIsCreateOpen} />}
-          {isEditOpen && <EditResourceModal setIsOpen={setIsEditOpen} />}
-          {isDeleteOpen && <DeleteResourceModal setIsOpen={setIsDeleteOpen} />}
+          {isEditOpen && (
+            <EditResourceModal
+              selection={selection}
+              setIsOpen={setIsEditOpen}
+            />
+          )}
+          {isDeleteOpen && (
+            <DeleteResourceModal
+              selection={selection}
+              setIsOpen={setIsDeleteOpen}
+            />
+          )}
         </ModalTransition>
       </Wrapper>
     </Layout>

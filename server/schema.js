@@ -151,8 +151,8 @@ module.exports = gql`
     key: ID!
     name: String!
     email: String!
-    employeeId: String!
-    position: String!
+    employeeId: String
+    position: String
     team: String
     phone: String
     displayName: String
@@ -201,19 +201,17 @@ module.exports = gql`
 
     # Resources
     insertResource(
-      id: ID!
       firstname: String!
       lastname: String!
-      email: String!
+      position: String!
       team: String!
     ): Resource
     updateResource(
-      id: ID!
       firstname: String!
       lastname: String!
       email: String!
       team: String!
     ): Resource
-    deleteResource(id: ID!): Resource
+    deleteResource(id: ID!): String
   }
 `;

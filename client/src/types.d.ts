@@ -1,6 +1,7 @@
-import { ReactNode } from 'react';
+import { ReactNode, Dispatch, SetStateAction } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 import { QueryResult } from '@apollo/client';
-import { RouteComponentProps } from '@reach/router';
+import { OptionType } from '@atlaskit/select';
 
 export declare interface Props extends RouteComponentProps {
   navigationViewController: { setView: (id: string) => void };
@@ -101,6 +102,12 @@ export declare interface Resource {
   phone: string;
   email: string;
   employeeId: string;
+  avatarUrls: {
+    large: string;
+    small: string;
+    xsmall: string;
+    medium: string;
+  };
 }
 
 export declare interface Absence {
@@ -114,6 +121,49 @@ export declare interface MockIssue {
   fields: { summary: string };
 }
 
-export interface Team {
+export declare interface Team {
   id: string;
+}
+
+export declare interface ModalInterfaceProps {
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  selection?: Dispatch<SetStateAction<string>>;
+}
+
+export declare interface NamePlateProps {
+  id: string;
+}
+
+export declare interface FormTypes {
+  firstname: string;
+  lastname: string;
+  position: OptionType;
+  team: OptionType;
+}
+
+export declare interface ContainerProps {
+  children: React.ReactNode;
+  className?: string;
+}
+
+export declare interface ModalProps {
+  resources: Resource[];
+  setSelection: React.Dispatch<React.SetStateAction<any>>;
+  setIsEditOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsDeleteOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export declare interface ResourceTableProps extends ModalProps {
+  loading?: boolean;
+  rowsPerPage?: number;
+}
+
+export declare interface InputValidation {
+  (data: FormTypes, errors?: Record<string, string>):
+    | Record<string, string>
+    | undefined;
+}
+
+export declare interface ValidateOnSubmit {
+  (data: FormTypes): Record<string, string> | undefined;
 }

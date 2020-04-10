@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import styled from 'styled-components';
 import Avatar from '@atlaskit/avatar';
-import { NamePlateProps } from './types';
+import { NamePlateProps } from '../../types';
 
 const GET_ASSIGNEE = gql`
   query Assignee($id: ID!) {

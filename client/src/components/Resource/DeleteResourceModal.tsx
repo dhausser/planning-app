@@ -1,55 +1,40 @@
 import React, { ReactElement } from 'react';
-import { useMutation, gql } from '@apollo/client';
-import ModalDialog from '@atlaskit/modal-dialog';
-import Form, { Field } from '@atlaskit/form';
-import TextField from '@atlaskit/textfield';
-import Footer from './Footer';
-import { ModalInterfaceProps } from './types';
-
-const DELETE_RESOURCE = gql`
-  mutation DeleteResource($id: ID!) {
-    deleteResource(id: $id) {
-      key
-    }
-  }
-`;
+import { useMutation } from '@apollo/client';
+import Modal from '@atlaskit/modal-dialog';
+import { ModalInterfaceProps } from '../../types';
+import { DELETE_RESOURCE, GET_RESOURCES } from '../../lib/useResources';
 
 const DeleteResourceModal = ({
+  selection,
   setIsOpen,
 }: ModalInterfaceProps): ReactElement => {
-  const [deleteResource] = useMutation(DELETE_RESOURCE);
+  const [deleteResource] = useMutation(DELETE_RESOURCE, {
+    variables: { id: selection },
+    refetchQueries: [{ query: GET_RESOURCES }],
+  });
+
+  const close = (): void => setIsOpen(false);
+
+  const actions: Array<any> = [
+    {
+      text: 'Delete',
+      onClick: (): any => {
+        deleteResource();
+        close();
+      },
+    },
+    { text: 'Close', onClick: close },
+  ];
 
   return (
-    <ModalDialog
-      heading="Delete"
+    <Modal
+      actions={actions}
       onClose={(): void => setIsOpen(false)}
-      components={{
-        // eslint-disable-next-line react/display-name
-        Container: ({ children, className }): ReactElement => (
-          <Form
-            onSubmit={(data): void => {
-              deleteResource({ variables: { ...data } });
-              setIsOpen(false);
-            }}
-          >
-            {({ formProps }): ReactElement => (
-              <form {...formProps} className={className}>
-                {children}
-              </form>
-            )}
-          </Form>
-        ),
-        // eslint-disable-next-line react/display-name
-        Footer: (): ReactElement => <Footer setIsOpen={setIsOpen} />,
-      }}
+      heading="Delete"
+      appearance="danger"
     >
-      <p>Are you sure want to delete this resource?</p>
-      <Field label="Email" name="email" defaultValue="" isRequired>
-        {({ fieldProps }): React.ReactNode => (
-          <TextField placeholder="gerald@cdprojektred.com" {...fieldProps} />
-        )}
-      </Field>
-    </ModalDialog>
+      <p>{`Are you sure want to delete ${selection}?`}</p>
+    </Modal>
   );
 };
 

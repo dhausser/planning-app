@@ -1,37 +1,23 @@
 import React, { ReactElement } from 'react';
-import { useQuery, useMutation, gql } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import Form, { Field } from '@atlaskit/form';
 import TextField from '@atlaskit/textfield';
 import Select from '@atlaskit/select';
 import ModalDialog from '@atlaskit/modal-dialog';
 import Footer from './Footer';
 import { GET_TEAMS } from '../Filters/TeamFilter';
-import { ModalInterfaceProps, Team, ResourceForm } from './types';
-
-const UPDATE_RESOURCE = gql`
-  mutation UpdateResource(
-    $id: ID!
-    $firstname: String!
-    $lastname: String!
-    $email: String!
-    $team: String!
-  ) {
-    updateResource(
-      id: $id
-      firstname: $firstname
-      lastname: $lastname
-      email: $email
-      team: $team
-    ) {
-      key
-    }
-  }
-`;
+import { ModalInterfaceProps, Team, FormTypes } from '../../types';
+import { UPDATE_RESOURCE, GET_RESOURCES } from '../../lib/useResources';
 
 const EditResourceModal = ({
+  selection,
   setIsOpen,
 }: ModalInterfaceProps): ReactElement => {
-  const [updateResource] = useMutation(UPDATE_RESOURCE);
+  const inputs = {};
+  const [updateResource] = useMutation(UPDATE_RESOURCE, {
+    variables: { ...inputs },
+    refetchQueries: [{ query: GET_RESOURCES }],
+  });
   const { data } = useQuery(GET_TEAMS);
   const options =
     data &&
@@ -46,15 +32,15 @@ const EditResourceModal = ({
       components={{
         // eslint-disable-next-line react/display-name
         Container: ({ children, className }): ReactElement => (
-          <Form<ResourceForm>
-            onSubmit={({ firstname, lastname, email, team }): void => {
+          <Form<FormTypes>
+            onSubmit={({ firstname, lastname, position, team }): void => {
               const id = `${firstname.toLowerCase()}.${lastname.toLowerCase()}`;
               updateResource({
                 variables: {
                   id,
                   firstname,
                   lastname,
-                  email,
+                  position,
                   team: team.value,
                 },
               });

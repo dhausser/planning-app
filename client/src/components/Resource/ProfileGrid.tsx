@@ -2,12 +2,9 @@ import React, { ReactElement } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { ProfileCard } from '@atlaskit/profilecard';
-import { Resource } from '../../types';
+import { ModalProps } from '../../types';
 
 const Container = styled.div`
-  /* width: 95%; */
-  /* max-width: 600px; */
-  /* margin: 0 auto; */
   padding-top: 20px;
   padding-bottom: 60px;
 `;
@@ -17,33 +14,49 @@ const CardGrid = styled.div`
   flex-wrap: wrap;
 `;
 
-interface Props {
-  resources: Resource[];
-}
-
-function ProfileGrid({ resources }: Props): ReactElement {
+function ProfileGrid({
+  resources,
+  setSelection,
+  setIsEditOpen,
+  setIsDeleteOpen,
+}: ModalProps): ReactElement {
   const history = useHistory();
   const today = new Date();
-  const time = `${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`;
+  const time = `${today.getHours()}:${today.getMinutes()}`;
   return (
     <Container>
       <CardGrid>
         {resources.map((resource) => (
           <div key={resource.key} style={{ margin: '0 20px 20px 0' }}>
             <ProfileCard
-              avatarUrl={`https://jira.cdprojektred.com/secure/useravatar?size=large&ownerId=${resource.key}`}
-              fullName={resource.name}
-              meta={resource.position}
-              nickname={resource.key}
+              avatarUrl={resource.avatarUrls.large}
+              fullName={resource.displayName}
+              meta={`${resource.position} in ${resource.team}`}
               email={resource.email}
               timestring={time}
               location="Warsaw"
               actions={[
                 {
-                  label: 'View profile',
+                  label: 'View',
                   id: 'view-profile',
                   callback: (): void =>
                     history.push(`/resource/${resource.key}`),
+                },
+                {
+                  label: 'Update',
+                  id: 'update-profile',
+                  callback: (): void => {
+                    setSelection(resource.key);
+                    setIsEditOpen(true);
+                  },
+                },
+                {
+                  label: 'Delete',
+                  id: 'delete-profile',
+                  callback: (): void => {
+                    setSelection(resource.key);
+                    setIsDeleteOpen(true);
+                  },
                 },
               ]}
             />

@@ -1,4 +1,3 @@
-import React, { ReactElement } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import { Absence } from '../types';
 

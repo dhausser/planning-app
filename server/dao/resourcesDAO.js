@@ -178,25 +178,40 @@ module.exports = class ResourcesDAO {
     return cursor.toArray();
   }
 
-  static async insertResource({ id, firstname, lastname, team }) {
-    console.log({ id, firstname, lastname, team });
-
+  static async insertResource({ firstname, lastname, position, team }) {
     let cursor;
-
+    const key = `${firstname.toLowerCase()}.${lastname.toLowerCase()}`;
+    const name = key;
+    const displayName = `${firstname} ${lastname}`;
+    const email = `${key}@cdprojektred.com`;
+    const phone = null;
+    const employeeId = null;
+    const avatarUrls = {
+      large: `https://${process.env.HOST}/secure/useravatar?size=large&ownerId=${key}`,
+      small: `https://${process.env.HOST}/secure/useravatar?size=small&ownerId=${key}`,
+      xsmall: `https://${process.env.HOST}/secure/useravatar?size=xsmall&ownerId=${key}`,
+      medium: `https://${process.env.HOST}/secure/useravatar?size=medium&ownerId=${key}`,
+    };
     const data = {
-      key: id,
-      name: `${firstname} ${lastname}`,
+      key,
+      name,
+      displayName,
+      email,
       team,
+      position,
+      phone,
+      employeeId,
+      avatarUrls,
     };
 
     try {
       cursor = await resources.insertOne(data);
       assert.equal(1, cursor.insertedCount);
+      return data;
     } catch (e) {
       console.error(`Unable to issue command, ${e}`);
+      return e;
     }
-
-    return data;
   }
 
   static async updateResource({ id, firstname, lastname, team }) {
@@ -214,25 +229,23 @@ module.exports = class ResourcesDAO {
       cursor = await resources.updateOne(data);
       assert.equal(1, cursor.matchedCount);
       assert.equal(1, cursor.modifiedCount);
+      return data;
     } catch (e) {
       console.error(`Unable to issue command, ${e}`);
+      return e;
     }
-
-    return data;
   }
 
   static async deleteResource({ id }) {
-    // eslint-disable-next-line no-unused-vars
     let cursor;
-
     try {
       cursor = await resources.deleteOne({ key: id });
       assert.equal(1, cursor.deletedCount);
+      return id;
     } catch (e) {
       console.error(`Unable to issue command, ${e}`);
+      return e;
     }
-
-    return id;
   }
 
   static async insertManyResources(newResources) {

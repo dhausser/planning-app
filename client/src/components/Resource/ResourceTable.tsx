@@ -1,28 +1,21 @@
 import React, { ReactElement } from 'react';
 import DynamicTable from '@atlaskit/dynamic-table';
 import { head, rows } from './utils';
-import { Resource } from '../../types';
-
-interface Props {
-  resources: Array<Resource>;
-  setIsEditOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsDeleteOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  loading: boolean;
-  rowsPerPage: number;
-}
+import { ResourceTableProps } from '../../types';
 
 function ResourceTable({
   resources,
+  setSelection,
   setIsEditOpen,
   setIsDeleteOpen,
   loading,
   rowsPerPage,
-}: Props): ReactElement {
+}: ResourceTableProps): ReactElement {
   return (
     <DynamicTable
       caption={`${resources.length} people`}
       head={head}
-      rows={rows(resources, setIsEditOpen, setIsDeleteOpen)}
+      rows={rows(resources, setSelection, setIsEditOpen, setIsDeleteOpen)}
       rowsPerPage={rowsPerPage}
       loadingSpinnerSize="large"
       isLoading={loading}

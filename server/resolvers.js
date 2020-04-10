@@ -92,18 +92,8 @@ module.exports = {
     /**
      * Mongo DB
      */
-    insertResource: (
-      _,
-      { id, firstname, lastname, email, team },
-      { dataSources },
-    ) =>
-      dataSources.resourceAPI.insertResource({
-        id,
-        firstname,
-        lastname,
-        email,
-        team,
-      }),
+    insertResource: (_, context, { dataSources }) =>
+      dataSources.resourceAPI.insertResource(context),
     updateResource: (
       _,
       { id, firstname, lastname, email, team },

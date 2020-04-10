@@ -6,13 +6,7 @@ import styled from 'styled-components';
 import TextField from '@atlaskit/textfield';
 import { HeadType, RowType } from '@atlaskit/dynamic-table/dist/cjs/types';
 import { TeamFilter } from '..';
-import { Resource } from './types';
-
-interface RowsProps {
-  resources: Resource[];
-  setIsEditOpen: (arg0: boolean) => void;
-  setIsDeleteOpen: (arg0: boolean) => void;
-}
+import { Resource } from '../../types';
 
 const NameWrapper = styled.span`
   display: flex;
@@ -56,6 +50,7 @@ export const head: HeadType = {
 
 export const rows = (
   resources: Resource[],
+  setSelection: (arg0: string) => void,
   setIsEditOpen: (arg0: boolean) => void,
   setIsDeleteOpen: (arg0: boolean) => void
 ): RowType[] => {
@@ -85,17 +80,19 @@ export const rows = (
           <ButtonGroup>
             <Button
               appearance="default"
-              // eslint-disable-next-line no-console
-              // onClick={(): void => console.log('Edit...')}
-              onClick={(): void | undefined => setIsEditOpen(true)}
+              onClick={(): void | undefined => {
+                setSelection(resource.key);
+                setIsEditOpen(true);
+              }}
             >
               Edit
             </Button>
             <Button
               appearance="default"
-              // eslint-disable-next-line no-console
-              // onClick={(): void => console.log('Delete...')}
-              onClick={(): void | undefined => setIsDeleteOpen(true)}
+              onClick={(): void | undefined => {
+                setSelection(resource.key);
+                setIsDeleteOpen(true);
+              }}
             >
               Delete
             </Button>
