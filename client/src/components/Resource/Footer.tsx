@@ -1,9 +1,12 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, Dispatch, SetStateAction } from 'react';
 import { ModalFooter } from '@atlaskit/modal-dialog';
 import Button, { ButtonGroup } from '@atlaskit/button';
-import { ModalInterfaceProps } from '../../types';
 
-const Footer = ({ setIsOpen }: ModalInterfaceProps): ReactElement => (
+interface Props {
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+}
+
+const Footer = ({ setIsOpen }: Props): ReactElement => (
   <ModalFooter>
     <span />
     <ButtonGroup>

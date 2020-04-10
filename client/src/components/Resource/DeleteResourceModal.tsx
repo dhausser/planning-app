@@ -8,8 +8,9 @@ const DeleteResourceModal = ({
   selection,
   setIsOpen,
 }: ModalInterfaceProps): ReactElement => {
+  const { key } = selection;
   const [deleteResource] = useMutation(DELETE_RESOURCE, {
-    variables: { id: selection },
+    variables: { id: key },
     refetchQueries: [{ query: GET_RESOURCES }],
   });
 
@@ -18,7 +19,7 @@ const DeleteResourceModal = ({
   const actions: Array<any> = [
     {
       text: 'Delete',
-      onClick: (): any => {
+      onClick: (): void => {
         deleteResource();
         close();
       },

@@ -15,6 +15,19 @@ const client = new MongoClient(uri, {
   useUnifiedTopology: true,
 });
 
+function addAvatarUrls(resourcesList) {
+  resourcesList.map((resource) => {
+    const updatedResource = resource;
+    updatedResource.avatarUrls = {
+      large: `https://jira.cdprojektred.com/secure/useravatar?size=large&ownerId=${resource.key}`,
+      small: `https://jira.cdprojektred.com/secure/useravatar?size=small&ownerId=${resource.key}`,
+      xsmall: `https://jira.cdprojektred.com/secure/useravatar?size=xsmall&ownerId=${resource.key}`,
+      medium: `https://jira.cdprojektred.com/secure/useravatar?size=medium&ownerId=${resource.key}`,
+    };
+    return updatedResource;
+  });
+}
+
 function writeDataToFile(data) {
   const result = JSON.stringify(data);
   fs.writeFileSync(outputFilePath, result);
@@ -50,6 +63,8 @@ async function loadData() {
       const data = await getDataFromFile();
       writeDataToFile(data);
     }
+
+    addAvatarUrls(resources);
 
     await client.db('davyJSDB').collection('resources').insertMany(resources);
 

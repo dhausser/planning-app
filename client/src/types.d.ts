@@ -95,13 +95,13 @@ export declare interface ProjectListItem {
 
 export declare interface Resource {
   key: string;
-  name: string;
+  name?: string;
   team: string;
   displayName: string;
   position: string;
-  phone: string;
-  email: string;
-  employeeId: string;
+  phone?: string;
+  email?: string;
+  employeeId?: string;
   avatarUrls: {
     large: string;
     small: string;
@@ -127,7 +127,7 @@ export declare interface Team {
 
 export declare interface ModalInterfaceProps {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
-  selection?: Dispatch<SetStateAction<string>>;
+  selection: Resource;
 }
 
 export declare interface NamePlateProps {
@@ -148,7 +148,7 @@ export declare interface ContainerProps {
 
 export declare interface ModalProps {
   resources: Resource[];
-  setSelection: React.Dispatch<React.SetStateAction<any>>;
+  setSelection: React.Dispatch<React.SetStateAction<Resource>>;
   setIsEditOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setIsDeleteOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }

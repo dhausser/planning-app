@@ -29,7 +29,7 @@ function ProfileGrid({
         {resources.map((resource) => (
           <div key={resource.key} style={{ margin: '0 20px 20px 0' }}>
             <ProfileCard
-              avatarUrl={resource.avatarUrls.large}
+              avatarUrl={resource?.avatarUrls?.large}
               fullName={resource.displayName}
               meta={`${resource.position} in ${resource.team}`}
               email={resource.email}
@@ -46,7 +46,7 @@ function ProfileGrid({
                   label: 'Update',
                   id: 'update-profile',
                   callback: (): void => {
-                    setSelection(resource.key);
+                    setSelection(resource);
                     setIsEditOpen(true);
                   },
                 },
@@ -54,7 +54,7 @@ function ProfileGrid({
                   label: 'Delete',
                   id: 'delete-profile',
                   callback: (): void => {
-                    setSelection(resource.key);
+                    setSelection(resource);
                     setIsDeleteOpen(true);
                   },
                 },

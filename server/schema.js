@@ -207,9 +207,10 @@ module.exports = gql`
       team: String!
     ): Resource
     updateResource(
+      id: ID!
       firstname: String!
       lastname: String!
-      email: String!
+      position: String!
       team: String!
     ): Resource
     deleteResource(id: ID!): String

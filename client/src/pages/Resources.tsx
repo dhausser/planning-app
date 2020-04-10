@@ -23,8 +23,21 @@ const Wrapper = styled.div`
   min-width: 600px;
 `;
 
+const resource = {
+  key: '',
+  displayName: '',
+  position: '',
+  team: '',
+  avatarUrls: {
+    large: '',
+    small: '',
+    xsmall: '',
+    medium: '',
+  },
+};
+
 const Resources: FunctionComponent<Props> = ({ navigationViewController }) => {
-  const [selection, setSelection] = useState();
+  const [selection, setSelection] = useState<Resource>(resource);
   const [isProfileCardView, setIsProfileCardView] = useState(true);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);

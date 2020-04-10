@@ -94,19 +94,9 @@ module.exports = {
      */
     insertResource: (_, context, { dataSources }) =>
       dataSources.resourceAPI.insertResource(context),
-    updateResource: (
-      _,
-      { id, firstname, lastname, email, team },
-      { dataSources },
-    ) =>
-      dataSources.resourceAPI.updateResource({
-        id,
-        firstname,
-        lastname,
-        email,
-        team,
-      }),
-    deleteResource: (_, { id }, { dataSources }) =>
-      dataSources.resourceAPI.deleteResource({ id }),
+    updateResource: (_, context, { dataSources }) =>
+      dataSources.resourceAPI.updateResource(context),
+    deleteResource: (_, context, { dataSources }) =>
+      dataSources.resourceAPI.deleteResource(context),
   },
 };

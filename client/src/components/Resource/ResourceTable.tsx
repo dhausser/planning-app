@@ -15,7 +15,7 @@ function ResourceTable({
     <DynamicTable
       caption={`${resources.length} people`}
       head={head}
-      rows={rows(resources, setSelection, setIsEditOpen, setIsDeleteOpen)}
+      rows={rows({ resources, setSelection, setIsEditOpen, setIsDeleteOpen })}
       rowsPerPage={rowsPerPage}
       loadingSpinnerSize="large"
       isLoading={loading}

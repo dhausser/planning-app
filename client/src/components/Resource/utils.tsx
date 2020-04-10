@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import TextField from '@atlaskit/textfield';
 import { HeadType, RowType } from '@atlaskit/dynamic-table/dist/cjs/types';
 import { TeamFilter } from '..';
-import { Resource } from '../../types';
+import { ModalProps } from '../../types';
 
 const NameWrapper = styled.span`
   display: flex;
@@ -48,17 +48,17 @@ export const head: HeadType = {
   ],
 };
 
-export const rows = (
-  resources: Resource[],
-  setSelection: (arg0: string) => void,
-  setIsEditOpen: (arg0: boolean) => void,
-  setIsDeleteOpen: (arg0: boolean) => void
-): RowType[] => {
+export const rows = ({
+  resources,
+  setSelection,
+  setIsEditOpen,
+  setIsDeleteOpen,
+}: ModalProps): RowType[] => {
   return resources.map((resource) => ({
     key: resource.key,
     cells: [
       {
-        key: createKey(resource.name),
+        key: createKey(resource.key),
         content: (
           <NameWrapper>
             <Avatar
@@ -81,7 +81,7 @@ export const rows = (
             <Button
               appearance="default"
               onClick={(): void | undefined => {
-                setSelection(resource.key);
+                setSelection(resource);
                 setIsEditOpen(true);
               }}
             >
@@ -90,7 +90,7 @@ export const rows = (
             <Button
               appearance="default"
               onClick={(): void | undefined => {
-                setSelection(resource.key);
+                setSelection(resource);
                 setIsDeleteOpen(true);
               }}
             >

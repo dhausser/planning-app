@@ -1,103 +1,30 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, Dispatch, SetStateAction } from 'react';
 import { useMutation } from '@apollo/client';
 import ModalDialog from '@atlaskit/modal-dialog';
 import Form, { Field, OnSubmitHandler } from '@atlaskit/form';
 import TextField from '@atlaskit/textfield';
 import Select, { ValueType, OptionType } from '@atlaskit/select';
 import Footer from './Footer';
+import { ContainerProps, FormTypes } from '../../types';
 import {
-  ModalInterfaceProps,
-  ContainerProps,
-  FormTypes,
-  InputValidation,
-  ValidateOnSubmit,
-} from '../../types';
-import { INSERT_RESOURCE, GET_RESOURCES } from '../../lib/useResources';
+  INSERT_RESOURCE,
+  GET_RESOURCES,
+  positions,
+  teams,
+  validateOnSubmit,
+} from '../../lib/useResources';
 // import useTeams from '../../lib/useTeams';
 
-const positions = [
-  { label: 'Producer', value: 'Producer' },
-  { label: 'Programmer', value: 'Programmer' },
-  { label: 'Designer', value: 'Designer' },
-  { label: 'Tester', value: 'Tester' },
-];
+interface Props {
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+}
 
-const teams = [
-  { label: 'Art Center', value: 'Art Center' },
-  { label: 'Comms Center', value: 'Comms Center' },
-  { label: 'Diamonds', value: 'Diamonds' },
-  { label: 'Gold', value: 'Gold' },
-  { label: 'Forge', value: 'Forge' },
-  { label: 'Tech Center', value: 'Tech Center' },
-  { label: 'Tech Art Center', value: 'Tech Art Center' },
-  { label: 'Titan', value: 'Titan' },
-];
-
-const firstnameValidation: InputValidation = (data, errors?) => {
-  if (data.position && !(data.position instanceof Array)) {
-    return (data.position as OptionType).value === 'dog'
-      ? {
-          ...errors,
-          position: `${(data.position as OptionType).value} is not a position`,
-        }
-      : errors;
-  }
-  return errors;
-};
-
-const lastnameValidation: InputValidation = (data, errors?) => {
-  if (data.position && !(data.position instanceof Array)) {
-    return (data.position as OptionType).value === 'dog'
-      ? {
-          ...errors,
-          position: `${(data.position as OptionType).value} is not a position`,
-        }
-      : errors;
-  }
-  return errors;
-};
-
-const positonValidation: InputValidation = (data, errors?) => {
-  if (data.position && !(data.position instanceof Array)) {
-    return (data.position as OptionType).value === 'dog'
-      ? {
-          ...errors,
-          position: `${(data.position as OptionType).value} is not a position`,
-        }
-      : errors;
-  }
-  return errors;
-};
-
-const teamValidation: InputValidation = (data, errors?) => {
-  if (data.team && data.team.length >= 3) {
-    return {
-      ...errors,
-      team: `${data.team.length} is too many flavors, don't be greedy, you get to pick 2.`,
-    };
-  }
-
-  return errors;
-};
-
-const validateOnSubmit: ValidateOnSubmit = (data) => {
-  let errors;
-  errors = firstnameValidation(data, errors);
-  errors = lastnameValidation(data, errors);
-  errors = positonValidation(data, errors);
-  errors = teamValidation(data, errors);
-  return errors;
-};
-
-function CreateResourceModal({ setIsOpen }: ModalInterfaceProps): ReactElement {
+function CreateResourceModal({ setIsOpen }: Props): ReactElement {
   // const teams = useTeams();
   // const options = teams.map(({ id }: Team) => ({ label: id, value: id }));
 
   const [insertResource] = useMutation(INSERT_RESOURCE, {
-    onCompleted: (data) => {
-      // eslint-disable-next-line no-console
-      console.log(`Successfully created resource: ${data.displayName}`);
-    },
+    refetchQueries: [{ query: GET_RESOURCES }],
   });
 
   const close = (): void => setIsOpen(false);
@@ -111,7 +38,6 @@ function CreateResourceModal({ setIsOpen }: ModalInterfaceProps): ReactElement {
         position: data.position.value,
         team: data.team.value,
       },
-      refetchQueries: [{ query: GET_RESOURCES }],
     });
     setIsOpen(false);
     return Promise.resolve(validateOnSubmit(data));

@@ -214,19 +214,34 @@ module.exports = class ResourcesDAO {
     }
   }
 
-  static async updateResource({ id, firstname, lastname, team }) {
-    console.log({ id, firstname, lastname, team });
-
+  static async updateResource({ id, firstname, lastname, position, team }) {
     let cursor;
-
+    const key = `${firstname.toLowerCase()}.${lastname.toLowerCase()}`;
+    const name = key;
+    const displayName = `${firstname} ${lastname}`;
+    const email = `${key}@cdprojektred.com`;
+    const phone = null;
+    const employeeId = null;
+    const avatarUrls = {
+      large: `https://${process.env.HOST}/secure/useravatar?size=large&ownerId=${key}`,
+      small: `https://${process.env.HOST}/secure/useravatar?size=small&ownerId=${key}`,
+      xsmall: `https://${process.env.HOST}/secure/useravatar?size=xsmall&ownerId=${key}`,
+      medium: `https://${process.env.HOST}/secure/useravatar?size=medium&ownerId=${key}`,
+    };
     const data = {
-      key: id,
-      name: `${firstname} ${lastname}`,
+      key,
+      name,
+      displayName,
+      email,
       team,
+      position,
+      phone,
+      employeeId,
+      avatarUrls,
     };
 
     try {
-      cursor = await resources.updateOne(data);
+      cursor = await resources.updateOne({ key: id }, { $set: data });
       assert.equal(1, cursor.matchedCount);
       assert.equal(1, cursor.modifiedCount);
       return data;
