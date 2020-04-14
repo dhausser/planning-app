@@ -75,8 +75,7 @@ module.exports = class ResourcesDAO {
 
     try {
       const resourcesList = await displayCursor.toArray();
-      const totalNumResources =
-        page === 0 ? await resources.countDocuments(query) : 0;
+      const totalNumResources = page === 0 ? await resources.countDocuments(query) : 0;
 
       return { resourcesList, totalNumResources };
     } catch (e) {
@@ -178,7 +177,9 @@ module.exports = class ResourcesDAO {
     return cursor.toArray();
   }
 
-  static async insertResource({ firstname, lastname, position, team }) {
+  static async insertResource({
+    firstname, lastname, position, team,
+  }) {
     let cursor;
     const key = `${firstname.toLowerCase()}.${lastname.toLowerCase()}`;
     const name = key;
@@ -214,7 +215,9 @@ module.exports = class ResourcesDAO {
     }
   }
 
-  static async updateResource({ id, firstname, lastname, position, team }) {
+  static async updateResource({
+    id, firstname, lastname, position, team,
+  }) {
     let cursor;
     const key = `${firstname.toLowerCase()}.${lastname.toLowerCase()}`;
     const name = key;

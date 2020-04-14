@@ -15,7 +15,9 @@
  */
 
 module.exports = class Dashboard {
-  constructor({ projectId, versionId, teamId, assignee }) {
+  constructor({
+    projectId, versionId, teamId, assignee,
+  }) {
     this.data = {};
     this.fields = ['assignee'];
     this.maxResults = 1500;

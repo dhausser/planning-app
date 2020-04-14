@@ -3,10 +3,9 @@ const passport = require('passport');
 const path = require('path');
 
 const router = express.Router();
-const baseUrl =
-  process.env.NODE_ENV === 'production'
-    ? 'https://roadmap.cdprojektred.com'
-    : 'http://localhost:3000';
+const baseUrl = process.env.NODE_ENV === 'production'
+  ? 'https://roadmap.cdprojektred.com'
+  : 'http://localhost:3000';
 
 // Redirect the user to the OAuth provider for authentication.  When
 // complete, the provider will redirect the user back to the application at

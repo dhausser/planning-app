@@ -3,14 +3,6 @@ import resources from './resources.json';
 
 const prisma = new PrismaClient();
 
-interface Resource {
-  key: string;
-  email: string;
-  name: string;
-  team: string;
-  position: string;
-}
-
 async function main() {
   resources.forEach(async ({
     key,

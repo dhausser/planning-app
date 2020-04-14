@@ -2,8 +2,9 @@ require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
-const { MongoClient } = require('mongodb');
+// const { MongoClient } = require('mongodb');
 const { ApolloServer } = require('apollo-server-express');
+const { PrismaClient } = require('@prisma/client');
 
 const { passport } = require('./utils');
 const routes = require('./routes');
@@ -11,8 +12,10 @@ const typeDefs = require('./schema');
 const resolvers = require('./resolvers');
 const IssueAPI = require('./datasources/issue');
 const AbsenceAPI = require('./datasources/absence');
-// const ResourceAPI = require('./datasources/resource');
+const UserAPI = require('./datasources/resource');
 const ResourcesDAO = require('./dao/resourcesDAO');
+
+const prisma = new PrismaClient();
 
 const app = express();
 const port = process.env.PORT;
@@ -44,28 +47,31 @@ const apolloServer = new ApolloServer({
   dataSources: () => ({
     issueAPI: new IssueAPI(),
     absenceAPI: new AbsenceAPI(),
-    resourceAPI: ResourcesDAO,
+    userAPI: new UserAPI({ prisma }), // SQLite
+    resourceAPI: ResourcesDAO, // MongoDB
   }),
 });
 
 apolloServer.applyMiddleware({ app });
 
-MongoClient.connect(process.env.DATABASE, {
-  poolSize: 50,
-  wtimeout: 2500,
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-  .catch((err) => {
-    console.error(err.stack);
-    process.exit(1);
-  })
-  .then(async (client) => {
-    await ResourcesDAO.injectDB(client);
-    console.log('📦 MongoDB database connection establised');
-    app.listen(port, () =>
-      console.log(
-        `💻 Server ready at http://localhost:${port}${apolloServer.graphqlPath}`,
-      ),
-    );
-  });
+app.listen(port, () => console.log(
+  `💻 Server ready at http://localhost:${port}${apolloServer.graphqlPath}`,
+));
+
+// MongoClient.connect(process.env.DATABASE, {
+//   poolSize: 50,
+//   wtimeout: 2500,
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// })
+//   .catch((err) => {
+//     console.error(err.stack);
+//     process.exit(1);
+//   })
+//   .then(async (client) => {
+//     await ResourcesDAO.injectDB(client);
+//     console.log('📦 MongoDB database connection establised');
+//     app.listen(port, () => console.log(
+//       `💻 Server ready at http://localhost:${port}${apolloServer.graphqlPath}`,
+//     ));
+//   });
