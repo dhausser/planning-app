@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "outDir": "dist",
+    "lib": ["esnext"],
+    "strict": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true
+  }
+}

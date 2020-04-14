@@ -8,13 +8,20 @@
     "node": ">=13.12.0"
   },
   "scripts": {
-    "dev": "nodemon app.js",
-    "start": "node app.js",
-    "prod": "NODE_ENV=production node app.js",
-    "sample": "node ./data/load-sample-data.js",
-    "blowitallaway": "node ./data/load-sample-data.js --delete"
+    "start": "node dist/server",
+    "clean": "rm -rf dist",
+    "build": "npm -s run clean && npm -s run generate && tsc",
+    "generate": "npm -s run generate:prisma && npm -s run generate:nexus",
+    "generate:prisma": "prisma generate",
+    "generate:nexus": "ts-node --transpile-only src/schema",
+    "postinstall": "npm -s run generate",
+    "dev": "ts-node-dev --no-notify --respawn --transpileOnly src/server",
+    "script": "ts-node data/script",
+    "sample": "node data/load-sample-data.js",
+    "blowitallaway": "node data/load-sample-data.js --delete"
   },
   "dependencies": {
+    "@prisma/client": "^2.0.0-beta.2",
     "apollo-datasource": "^0.7.0",
     "apollo-datasource-rest": "^0.8.0",
     "apollo-server-express": "^2.10.1",
@@ -31,6 +38,9 @@
     "passport-oauth": "^1.0.0"
   },
   "devDependencies": {
+    "@prisma/cli": "^2.0.0-beta.2",
+    "@types/node": "^13.11.1",
+    "@types/ws": "^7.2.4",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-config-prettier": "^6.10.1",
@@ -38,7 +48,10 @@
     "eslint-plugin-prettier": "^3.1.2",
     "husky": ">=4",
     "lint-staged": ">=10",
-    "prettier": "^2.0.2"
+    "prettier": "^2.0.2",
+    "ts-node": "^8.8.2",
+    "ts-node-dev": "^1.0.0-pre.44",
+    "typescript": "^3.8.3"
   },
   "husky": {
     "hooks": {

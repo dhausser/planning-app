@@ -1,0 +1,20 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "DeleteField",
+      "model": "User",
+      "field": "phone"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "User",
+      "field": "employeeId"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "User",
+      "field": "createdAt"
+    }
+  ]
+}

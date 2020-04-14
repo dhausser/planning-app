@@ -1,0 +1,22 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "DeleteField",
+      "model": "User",
+      "field": "displayName"
+    },
+    {
+      "tag": "UpdateField",
+      "model": "User",
+      "field": "name",
+      "arity": "Required"
+    },
+    {
+      "tag": "UpdateField",
+      "model": "User",
+      "field": "employeeId",
+      "arity": "Required"
+    }
+  ]
+}
