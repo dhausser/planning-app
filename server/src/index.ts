@@ -1,6 +1,6 @@
 import express from 'express';
 import session from 'express-session';
-// import connectMongo from 'connect-mongo';
+import connectMongo from 'connect-mongo';
 import { ApolloServer } from 'apollo-server-express';
 import { PrismaClient } from '@prisma/client';
 import { MongoClient } from 'mongodb';
@@ -15,7 +15,7 @@ import AbsenceAPI from './datasources/absence';
 import ResourcesDAO from './datasources/resource';
 
 const prisma = new PrismaClient();
-// const MongoStore = connectMongo(session);
+const MongoStore = connectMongo(session);
 const app = express();
 const port = process.env.PORT;
 
@@ -24,8 +24,8 @@ app.use(
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: true,
-    // cookie: {},
-    // store: new MongoStore({ url: process.env.DATABASE as string }),
+    cookie: {},
+    store: new MongoStore({ url: process.env.DATABASE as string }),
   })
 );
 app.use(passport.initialize());
@@ -44,8 +44,8 @@ const apolloServer = new ApolloServer({
     user: req.user,
   }),
   dataSources: () => ({
-    // issueAPI: new IssueAPI(),
-    // absenceAPI: new AbsenceAPI(),
+    issueAPI: new IssueAPI(),
+    absenceAPI: new AbsenceAPI(),
     userAPI: new UserAPI({ prisma })
   }),
 });
