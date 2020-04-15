@@ -6,8 +6,8 @@ class Dashboard {
   maxResults: number;
   projectId: string;
   versionId: string;
-  teamId: string;
-  assignee: string;
+  teamId: string | undefined;
+  assignee: string | undefined;
   jql: string;
   constructor({
     projectId, versionId, teamId, assignee,
@@ -26,7 +26,7 @@ class Dashboard {
     this.jql = `statusCategory in (new, indeterminate)\
       ${this.projectId ? `AND project=${this.projectId}` : ''}\
       ${this.versionId ? `AND fixVersion=${this.versionId}` : ''}\
-      ${this.assignee.length ? `AND assignee in (${this.assignee})` : ''}\
+      ${this.assignee && this.assignee.length ? `AND assignee in (${this.assignee})` : ''}\
       order by priority`;
   }
 

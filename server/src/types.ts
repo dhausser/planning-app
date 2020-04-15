@@ -1,3 +1,5 @@
+import { PrismaClient } from '@prisma/client'
+
 export interface Args {
   id: string;
   projectId: string;
@@ -17,6 +19,10 @@ export interface Context {
     resourceAPI: any;
     userAPI: any;
   };
+}
+
+export interface ApolloContext {
+  prisma: PrismaClient
 }
 
 export interface UserInput {
@@ -68,6 +74,14 @@ export interface Resource {
   key: string;
   email: string;
   name: string;
+  position: string;
+  team: string;
+}
+
+export interface ResourceInputs {
+  id: string;
+  firstname: string;
+  lastname: string;
   position: string;
   team: string;
 }

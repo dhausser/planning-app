@@ -1,11 +1,11 @@
 /// <reference path="node.d.ts"/>
 import passport from 'passport';
 import { OAuthStrategy } from 'passport-oauth';
-import path from 'path';
+import { join } from 'path';
 import fs from 'fs';
 import os from 'os';
 
-const filePath = path.join(os.homedir(), process.env.PRIVATE_KEY_PATH!);
+const filePath = join(os.homedir(), process.env.PRIVATE_KEY_PATH as string);
 const consumerSecret = fs.existsSync(filePath)
   ? fs.readFileSync(filePath, 'utf8')
   : '';

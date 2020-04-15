@@ -4,14 +4,23 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "ts-node src/index.ts",
-    "start": "node src/app",
+    "dev": "ts-node -r dotenv/config  src/index",
+    "dev:watch": "ts-node-dev --no-notify --respawn --transpileOnly -r dotenv/config  src/index",
+    "start": "node -r dotenv/config dist/index",
+    "clean": "rm -rf dist",
+    "build": "npm -s run clean && tsc",
+    "build:generate": "npm -s run clean && npm -s run generate && tsc",
+    "generate": "npm -s run generate:prisma && npm -s run generate:nexus",
+    "generate:prisma": "prisma generate",
+    "generate:nexus": "ts-node --transpile-only src/schema",
+    "postinstall": "npm -s run generate",
     "script": "ts-node data/script",
     "sample": "node data/load-sample-data.js",
     "blowitallaway": "node data/load-sample-data.js --delete"
   },
   "dependencies": {
     "@prisma/client": "^2.0.0-beta.2",
+    "@types/mongodb": "^3.5.6",
     "apollo-datasource": "^0.7.0",
     "apollo-datasource-rest": "^0.8.0",
     "apollo-server-express": "^2.10.1",
@@ -25,7 +34,8 @@
     "mongodb": "^3.5.4",
     "oauth-sign": "^0.9.0",
     "passport": "^0.4.1",
-    "passport-oauth": "^1.0.0"
+    "passport-oauth": "^1.0.0",
+    "ts-node-dev": "^1.0.0-pre.44"
   },
   "devDependencies": {
     "@prisma/cli": "^2.0.0-beta.2",

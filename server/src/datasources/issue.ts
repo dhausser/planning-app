@@ -1,5 +1,5 @@
 import { RESTDataSource } from 'apollo-datasource-rest';
-import ResourcesDAO from '../dao/resourcesDAO';
+import ResourcesDAO from './resource';
 import Issues from '../models/Issues';
 import Dashboard from '../models/Dashboard';
 import Roadmap from '../models/Roadmap';
