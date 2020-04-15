@@ -1,23 +1,17 @@
-/**
- * Fetch issues for barchart dashboard and aggregate by team or assignee
- * @param {String} projectId Project identifier
- * @param {String} versionId Version identifier
- * @param {String} teamId Team identifier
- * @param {String} maxResults Maximum number of issues to be fetched
- */
+import { Filter, DashboardChartData } from '../types';
 
-/**
- * TODOL Fix Network error: Cannot read property 'filter' of null
- * message: "Cannot read property 'fistname.lastname' of undefined",
- * locations: [ { line: 2, column: 3 } ],
- * path: [ 'dashboardIssues' ],
- * extensions: { code: 'INTERNAL_SERVER_ERROR', exception: { stacktrace: [Array] } }
- */
-
-module.exports = class Dashboard {
+class Dashboard {
+  data: DashboardChartData;
+  fields: string[];
+  maxResults: number;
+  projectId: string;
+  versionId: string;
+  teamId: string;
+  assignee: string;
+  jql: string;
   constructor({
     projectId, versionId, teamId, assignee,
-  }) {
+  }: Filter) {
     this.data = {};
     this.fields = ['assignee'];
     this.maxResults = 1500;
@@ -45,15 +39,15 @@ module.exports = class Dashboard {
     };
   }
 
-  defineAggregationKey(key, resourceMap) {
+  defineAggregationKey(key: string | number, resourceMap: { [x: string]: any; }) {
     return this.teamId ? key : resourceMap[key];
   }
 
-  incrementDatasetElement(key) {
+  incrementDatasetElement(key: string) {
     this.data[key] += 1;
   }
 
-  inserElementToDataset(key) {
+  inserElementToDataset(key: string | number | symbol) {
     Object.defineProperty(this.data, key, {
       value: 1,
       writable: true,
@@ -62,7 +56,7 @@ module.exports = class Dashboard {
     });
   }
 
-  sumIssues(issues, resourceMap) {
+  sumIssues(issues: string | any[], resourceMap: any) {
     for (let i = 0; i < issues.length; i += 1) {
       const key = this.defineAggregationKey(
         issues[i].fields.assignee.key,
@@ -79,7 +73,7 @@ module.exports = class Dashboard {
     }
   }
 
-  getDataset({ issues, total }, resourceMap) {
+  getDataset({ issues, total }: any, resourceMap: any) {
     this.sumIssues(issues, resourceMap);
     return {
       labels: Object.keys(this.data),
@@ -89,3 +83,5 @@ module.exports = class Dashboard {
     };
   }
 };
+
+export default Dashboard;

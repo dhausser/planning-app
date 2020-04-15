@@ -1,10 +1,11 @@
-const passport = require('passport');
-const { OAuthStrategy } = require('passport-oauth');
-const path = require('path');
-const fs = require('fs');
-const os = require('os');
+/// <reference path="node.d.ts"/>
+import passport from 'passport';
+import { OAuthStrategy } from 'passport-oauth';
+import path from 'path';
+import fs from 'fs';
+import os from 'os';
 
-const filePath = path.join(os.homedir(), process.env.PRIVATE_KEY_PATH);
+const filePath = path.join(os.homedir(), process.env.PRIVATE_KEY_PATH!);
 const consumerSecret = fs.existsSync(filePath)
   ? fs.readFileSync(filePath, 'utf8')
   : '';
@@ -25,7 +26,12 @@ passport.use(
       callbackURL: '/auth/provider/callback',
       signatureMethod: 'RSA-SHA1',
     },
-    (token, _tokenSecret, _profile, done) => {
+    (
+      token: string,
+      _tokenSecret: string,
+      _profile: object,
+      done: (arg0: null, arg1: { token: string }) => void,
+    ) => {
       done(null, { token });
     },
   ),
@@ -33,8 +39,5 @@ passport.use(
 passport.serializeUser(async (user, done) => done(null, user));
 passport.deserializeUser((id, done) => done(null, id));
 
-module.exports = {
-  consumerSecret,
-  consumerKey,
-  passport,
-};
+export default passport;
+export { consumerSecret, consumerKey };

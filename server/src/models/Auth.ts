@@ -1,12 +1,14 @@
-const { sign } = require('oauth-sign');
-const { consumerKey, consumerSecret } = require('../utils');
+/// <reference path="../node.d.ts"/>
+import { sign } from 'oauth-sign';
+import { consumerKey, consumerSecret } from '../utils';
 
-module.exports = class Oauth {
-  constructor(baseURL) {
+export default class Oauth {
+  baseURL: string;
+  constructor(baseURL: string) {
     this.baseURL = baseURL;
   }
 
-  sign(req, oauthToken) {
+  sign(req: { headers?: { set: (arg0: string, arg1: string) => void; }; method?: any; path?: any; params?: any; }, oauthToken: any) {
     const { method, path: addressPath, params } = req;
     const oauthVersion = '1.0';
     const signatureMethod = 'RSA-SHA1';

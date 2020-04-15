@@ -4,8 +4,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "dev": "ts-node src/index.ts",
     "start": "node src/app",
-    "dev": "nodemon src/app",
     "script": "ts-node data/script",
     "sample": "node data/load-sample-data.js",
     "blowitallaway": "node data/load-sample-data.js --delete"
@@ -29,28 +29,13 @@
   },
   "devDependencies": {
     "@prisma/cli": "^2.0.0-beta.2",
+    "@types/express-session": "^1.17.0",
     "@types/node": "^13.11.1",
-    "@typescript-eslint/eslint-plugin": "^2.28.0",
-    "@typescript-eslint/parser": "^2.28.0",
-    "eslint": "^6.8.0",
-    "eslint-config-airbnb-base": "^14.1.0",
-    "eslint-plugin-import": "^2.20.2",
-    "husky": ">=4",
-    "lint-staged": ">=10",
-    "nodemon": "^2.0.3",
+    "@types/passport": "^1.0.3",
     "ts-node": "^8.8.2",
-    "ts-node-dev": "^1.0.0-pre.44",
     "typescript": "^3.8.3"
   },
   "engines": {
     "node": ">=10.0.0"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.{js,ts}": "eslint --cache --ext .js,.ts --fix"
   }
 }

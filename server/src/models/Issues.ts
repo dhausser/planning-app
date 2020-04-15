@@ -1,16 +1,17 @@
-/**
- * Fetch issues for issues table
- * @param {String} projectId Project identifier
- * @param {String} versionId Version identifier
- * @param {String} teamId Team identifier
- * @param {String} resourceId Single resource identifier
- * @param {String} maxResults Maximum number of issues to be fetched
- * @param {String} startAt Starting index number of issues to be fetched
- */
+import { IssueConnection } from '../types';
 
-module.exports = class Issues {
+class Issues {
+  projectId: any;
+  issuetypeId: any;
+  versionId: any;
+  statusId: any;
+  assignee: any;
+  startAt: any;
+  maxResults: any;
+  resourceMap: any;
+  fields: string[];
+  jql: string;
   constructor({
-    context,
     projectId,
     issuetypeId,
     statusId,
@@ -19,8 +20,7 @@ module.exports = class Issues {
     resourceMap,
     startAt,
     maxResults,
-  }) {
-    this.context = context;
+  }: IssueConnection) {
     this.projectId = projectId;
     this.issuetypeId = issuetypeId;
     this.versionId = versionId;
@@ -57,8 +57,10 @@ module.exports = class Issues {
   getQuery() {
     this.jql = `${this.projectId ? `project=${this.projectId}` : ''}${
       this.issuetypeId ? ` AND issuetype=${this.issuetypeId}` : ''
-    }${this.versionId ? ` AND fixVersion=${this.versionId}` : ''}${
+      }${this.versionId ? ` AND fixVersion=${this.versionId}` : ''}${
       this.statusId ? ` AND status=${this.statusId}` : ''
-    }${this.assignee ? ` AND assignee in (${this.assignee})` : ''}`;
+      }${this.assignee ? ` AND assignee in (${this.assignee})` : ''}`;
   }
 };
+
+export default Issues;

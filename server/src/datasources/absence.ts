@@ -1,10 +1,7 @@
-const { RESTDataSource } = require('apollo-datasource-rest');
+import { RESTDataSource } from 'apollo-datasource-rest';
 
-/**
- * TODO: Confinm that the Portal API is still valid
- */
-
-module.exports = class AbsenceAPI extends RESTDataSource {
+class AbsenceAPI extends RESTDataSource {
+  apiKey: string | undefined;
   constructor() {
     super();
     this.baseURL = process.env.PORTAL_URL;
@@ -16,10 +13,12 @@ module.exports = class AbsenceAPI extends RESTDataSource {
     return Array.isArray(response) ? response : [];
   }
 
-  async getAbsencesById({ userId }) {
+  async getAbsencesById({ userId }: { userId: string }) {
     const response = await this.get(`?user[]=${userId}`, {
       apiKey: this.apiKey,
     });
     return Array.isArray(response) ? response : [];
   }
 };
+
+export default AbsenceAPI;

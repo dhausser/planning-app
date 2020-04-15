@@ -1,11 +1,13 @@
-/**
- * Fetch issues for roadmap table tree
- * @param {String} projectId Project identifier
- * @param {String} versionId Version identifier
- */
+import { Filter, TreeTableData, Issue, TreeTableItem } from '../types';
 
-module.exports = class Roadmap {
-  constructor({ projectId, versionId }) {
+class Roadmap {
+  data: TreeTableData;
+  fields: string[];
+  maxResults: number;
+  projectId: any;
+  versionId: any;
+  jql: string;
+  constructor({ projectId, versionId }: Filter) {
     this.data = {};
     this.fields = [
       'summary',
@@ -36,19 +38,20 @@ module.exports = class Roadmap {
     };
   }
 
-  addToBaseTree(issue) {
+  addToBaseTree(issue: { key: string }) {
     Object.defineProperty(this.data, issue.key, {
       value: issue,
       enumerable: true,
     });
   }
 
-  addToParent(issue) {
+  addToParent(issue: Issue) {
     const parent = issue.fields.customfield_10006;
-    this.data[parent].children = [issue, ...this.data[parent].children];
+    this.data[parent].children = [...this.data[parent].children];
+    // this.data[parent].children = [issue, ...this.data[parent].children];
   }
 
-  addToDataset(issue) {
+  addToDataset(issue: Issue) {
     const { id } = issue.fields.issuetype;
     switch (id) {
       case '10000':
@@ -69,15 +72,17 @@ module.exports = class Roadmap {
     }
   }
 
-  buildDataset(issues) {
+  buildDataset(issues: Issue[]) {
     for (let i = 0; i < issues.length; i += 1) {
       const issue = { ...issues[i], children: issues[i].fields.subtasks };
       this.addToDataset(issue);
     }
   }
 
-  getDataset(issues) {
+  getDataset(issues: Issue[]) {
     this.buildDataset(issues);
     return Object.values(this.data);
   }
 };
+
+export default Roadmap;
