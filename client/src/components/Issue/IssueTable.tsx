@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, ReactElement } from 'react';
 import { useQuery } from '@apollo/client';
 import styled from 'styled-components';
 
-import { RouteComponentProps } from '@reach/router';
 import Button from '@atlaskit/button';
 import DynamicTable from '@atlaskit/dynamic-table';
 import EmptyState from '@atlaskit/empty-state';
@@ -10,26 +9,28 @@ import EmptyState from '@atlaskit/empty-state';
 import { GET_ISSUES, ROWS_PER_PAGE } from '../../lib/useIssues';
 import { Loading } from '..';
 import { head, getRows } from './utils';
+import { IssueConnectionData, IssueConnectionVars } from '../../types';
 
-interface IssueTableProps extends RouteComponentProps {
-  resourceId?: string;
-}
-
-const Wrapper = styled.div`
+const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 1.5em 1.5em;
 `;
 
-const IssueTable: React.FC<IssueTableProps> = ({ resourceId }) => {
+function IssueTable({ resourceId }: { resourceId?: string }): ReactElement {
   const [length, setLength] = useState(0);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
-  const { loading, error, data, fetchMore } = useQuery(GET_ISSUES, {
+  const { loading, error, data, fetchMore } = useQuery<
+    IssueConnectionData,
+    IssueConnectionVars
+  >(GET_ISSUES, {
     variables: {
       resourceId,
+      startAt: 0,
       maxResults: ROWS_PER_PAGE,
     },
+    fetchPolicy: 'cache-and-network',
   });
 
   useEffect(() => {
@@ -67,41 +68,38 @@ const IssueTable: React.FC<IssueTableProps> = ({ resourceId }) => {
         (isLoadingMore ? (
           <Loading />
         ) : (
-          <Wrapper>
+          <ButtonWrapper>
             <Button
-              onClick={
-                // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-                async () => {
-                  setIsLoadingMore(true);
-                  await fetchMore({
-                    variables: { start: length },
-                  });
-                  setIsLoadingMore(false);
-                }
-                // fetchMore({
-                //   variables: { startAt: length },
-                //   updateQuery: (prev, { fetchMoreResult }) => {
-                //     if (!fetchMoreResult) return prev;
-                //     return {
-                //       ...fetchMoreResult,
-                //       issues: {
-                //         ...fetchMoreResult.issues,
-                //         issues: [
-                //           ...prev.issues.issues,
-                //           ...fetchMoreResult.issues.issues,
-                //         ],
-                //       },
-                //     };
-                //   },
-                // })
-              }
+              onClick={async () => {
+                setIsLoadingMore(true);
+                await fetchMore({
+                  variables: {
+                    resourceId,
+                    startAt: length,
+                    maxResult: ROWS_PER_PAGE,
+                  },
+                  updateQuery: (prev: any, { fetchMoreResult }) => {
+                    if (!fetchMoreResult) return prev;
+                    return {
+                      issues: {
+                        ...fetchMoreResult.issues,
+                        issues: [
+                          ...prev.issues.issues,
+                          ...fetchMoreResult.issues.issues,
+                        ],
+                      },
+                    };
+                  },
+                });
+                setIsLoadingMore(false);
+              }}
             >
               Load More
             </Button>
-          </Wrapper>
+          </ButtonWrapper>
         ))}
     </>
   );
-};
+}
 
 export default IssueTable;

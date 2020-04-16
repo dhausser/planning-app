@@ -27,6 +27,13 @@ const Wrapper = styled.div`
   min-width: 600px;
 `;
 
+const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5em 1.5em;
+`;
+
 const resource = {
   key: '',
   name: '',
@@ -46,7 +53,7 @@ const Resources: FunctionComponent<Props> = ({ navigationViewController }) => {
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-  const { data, loading, error } = useQuery(GET_RESOURCES);
+  const { data, loading, error, fetchMore } = useQuery(GET_RESOURCES);
   const [createAllResources] = useMutation(CREATE_ALL_RESOURCES, {
     refetchQueries: [{ query: GET_RESOURCES }],
   });
@@ -129,6 +136,28 @@ const Resources: FunctionComponent<Props> = ({ navigationViewController }) => {
             />
           )}
         </ModalTransition>
+        <ButtonWrapper>
+          <Button
+            onClick={async () => {
+              await fetchMore({
+                variables: {
+                  offset: 20,
+                },
+                updateQuery: (prev, { fetchMoreResult }) => {
+                  if (!fetchMoreResult) return prev;
+                  return {
+                    resources: [
+                      ...prev.resources,
+                      ...fetchMoreResult.resources,
+                    ],
+                  };
+                },
+              });
+            }}
+          >
+            Load More
+          </Button>
+        </ButtonWrapper>
       </Wrapper>
     </Layout>
   );

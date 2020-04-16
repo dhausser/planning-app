@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import EmptyState from '@atlaskit/empty-state';
 import { Loading } from '../components';
-import { IssueConnectionData, IssueConnectionVars } from '../types';
+import { IssueConnectionData, RoadmapIssueConnectionVars } from '../types';
 
 export const ROWS_PER_PAGE = 20;
 
@@ -83,7 +83,7 @@ export const GET_ISSUES = gql`
 export const useEpics = (): any => {
   const { loading, error, data, networkStatus } = useQuery<
     IssueConnectionData,
-    IssueConnectionVars
+    RoadmapIssueConnectionVars
   >(GET_ISSUES, {
     variables: { issuetype: 'epic' },
   });
