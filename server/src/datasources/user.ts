@@ -1,5 +1,5 @@
 import { DataSource } from 'apollo-datasource';
-import { ApolloContext, Resource, Pagination } from '../types';
+import { ApolloContext, Resource, ResourceInputs, Pagination } from '../types';
 import resources from '../../data/resources.json';
 import teams from '../../data/teams.json';
 
@@ -12,8 +12,11 @@ class UserAPI extends DataSource {
   }
 
   async findUsers({ offset, limit, teamId }: Pagination) {
+    const where = teamId ? { team: teamId } : {};
+    const first = limit;
+    const skip = offset;
+    const allUsers = await this.prisma.user.findMany({ where, first, skip });
     console.log({ offset, limit, teamId });
-    const allUsers = await this.prisma.user.findMany({ where: { team: teamId } });
     return Array.isArray(allUsers) ? allUsers : [];
   }
 
@@ -34,18 +37,41 @@ class UserAPI extends DataSource {
     }, {});
   }
 
-  async createUser() {
-    const user = {};
+  async createUser({
+    firstname, lastname, position, team,
+  }: ResourceInputs) {
+    const key = `${firstname.toLowerCase()}.${lastname.toLowerCase()}`;
+    const user = this.prisma.user.create({
+      data: {
+        key,
+        email: `${key}@cdprojektred.com`,
+        name: `${firstname} ${lastname}`,
+        position,
+        team,
+      }
+    });
     return user;
   }
 
-  async updateUser() {
-    const user = {};
+  async updateUser({
+    id, firstname, lastname, position, team,
+  }: ResourceInputs) {
+    const key = `${firstname.toLowerCase()}.${lastname.toLowerCase()}`;
+    const where = { key: id };
+    const data = {
+      name: `${firstname} ${lastname}`,
+      email: `${key}@cdprojektred.com`,
+      position,
+      team,
+    };
+    const user = this.prisma.user.update({ where, data });
     return user;
   }
 
-  async deleteUser() {
-    const user = {};
+  async deleteUser({ id }: { id: string }) {
+    const user = await this.prisma.user.delete({
+      where: { key: id },
+    });
     return user;
   }
 
@@ -77,7 +103,7 @@ class UserAPI extends DataSource {
 
   async deleteAllUsers() {
     const deleteUsers = await this.prisma.user.deleteMany({});
-    return deleteUsers;
+    return deleteUsers.count;
   }
 
   

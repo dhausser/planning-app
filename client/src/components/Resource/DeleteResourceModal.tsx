@@ -34,7 +34,7 @@ const DeleteResourceModal = ({
       heading="Delete"
       appearance="danger"
     >
-      <p>{`Are you sure want to delete ${selection}?`}</p>
+      <p>{`Are you sure want to delete ${selection.position} ${selection.name}?`}</p>
     </Modal>
   );
 };

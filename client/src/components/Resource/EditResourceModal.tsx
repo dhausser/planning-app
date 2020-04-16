@@ -1,34 +1,47 @@
 import React, { ReactElement } from 'react';
-import { useMutation } from '@apollo/client';
+import { useQuery, useMutation, gql } from '@apollo/client';
 import Form, { Field, OnSubmitHandler } from '@atlaskit/form';
 import TextField from '@atlaskit/textfield';
 import Select, { ValueType, OptionType } from '@atlaskit/select';
 import ModalDialog from '@atlaskit/modal-dialog';
 import Footer from './Footer';
-import { ModalInterfaceProps, ContainerProps, FormTypes } from '../../types';
+import {
+  ModalInterfaceProps,
+  ContainerProps,
+  FormTypes,
+  Team,
+} from '../../types';
 import {
   UPDATE_RESOURCE,
   GET_RESOURCES,
   positions,
-  teams,
   validateOnSubmit,
 } from '../../lib/useResources';
-// import useTeams from '../../lib/useTeams';
+import useTeams from '../../lib/useTeams';
+
+const GET_TEAM_FILTER = gql`
+  query GetTeamFilter {
+    teamId @client
+  }
+`;
 
 const EditResourceModal = ({
   selection,
   setIsOpen,
 }: ModalInterfaceProps): ReactElement => {
-  // const teams = useTeams();
-  // const options = teams.map(({ id }: Team) => ({ label: id, value: id }));
-  const { key, displayName, position, team } = selection;
-  const firstname = displayName.split(' ')[0];
-  const lastname = displayName.split(' ')[1];
+  const { data: teamId } = useQuery(GET_TEAM_FILTER);
+  const teamsData = useTeams();
+  const teams = teamsData.map(({ id }: Team) => ({ label: id, value: id }));
+  const { key, name, position, team } = selection;
+  const [firstname, lastname] = name.split(' ');
   const positionOption = { label: position, value: position };
   const teamOption = { label: team, value: team };
 
+  /**
+   * TODO: Cache invalidation after update
+   */
   const [updateResource] = useMutation(UPDATE_RESOURCE, {
-    refetchQueries: [{ query: GET_RESOURCES }],
+    refetchQueries: [{ query: GET_RESOURCES, variables: { teamId } }],
   });
 
   const close = (): void => setIsOpen(false);

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, FunctionComponent } from 'react';
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import styled from 'styled-components';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import PageHeader from '@atlaskit/page-header';
@@ -17,7 +17,11 @@ import {
 } from '../components/Resource';
 import { Props, Resource } from '../types';
 import { ROWS_PER_PAGE } from '../lib/useIssues';
-import { GET_RESOURCES } from '../lib/useResources';
+import {
+  GET_RESOURCES,
+  CREATE_ALL_RESOURCES,
+  DELETE_ALL_RESOURCES,
+} from '../lib/useResources';
 
 const Wrapper = styled.div`
   min-width: 600px;
@@ -25,7 +29,7 @@ const Wrapper = styled.div`
 
 const resource = {
   key: '',
-  displayName: '',
+  name: '',
   position: '',
   team: '',
   avatarUrls: {
@@ -43,6 +47,12 @@ const Resources: FunctionComponent<Props> = ({ navigationViewController }) => {
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const { data, loading, error } = useQuery(GET_RESOURCES);
+  const [createAllResources] = useMutation(CREATE_ALL_RESOURCES, {
+    refetchQueries: [{ query: GET_RESOURCES }],
+  });
+  const [deleteAllResources] = useMutation(DELETE_ALL_RESOURCES, {
+    refetchQueries: [{ query: GET_RESOURCES }],
+  });
 
   useEffect(() => navigationViewController.setView(projectHomeView.id), [
     navigationViewController,
@@ -96,10 +106,10 @@ const Resources: FunctionComponent<Props> = ({ navigationViewController }) => {
           >
             Switch Display
           </Button>
-          <Button onClick={(): void => console.log('Loading sample data...')}>
+          <Button onClick={(): any => createAllResources()}>
             Load Sample Data
           </Button>
-          <Button onClick={(): void => console.log('Deleting all data...')}>
+          <Button onClick={(): any => deleteAllResources()}>
             Delete All Data
           </Button>
         </ButtonGroup>

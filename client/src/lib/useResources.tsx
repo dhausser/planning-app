@@ -95,14 +95,14 @@ const GET_RESOURCES = gql`
   }
 `;
 
-const INSERT_RESOURCE = gql`
-  mutation InsertResource(
+const CREATE_RESOURCE = gql`
+  mutation CreateResource(
     $firstname: String!
     $lastname: String!
     $position: String!
     $team: String!
   ) {
-    insertResource(
+    createResource(
       firstname: $firstname
       lastname: $lastname
       position: $position
@@ -135,7 +135,23 @@ const UPDATE_RESOURCE = gql`
 
 const DELETE_RESOURCE = gql`
   mutation DeleteResource($id: ID!) {
-    deleteResource(id: $id)
+    deleteResource(id: $id) {
+      key
+    }
+  }
+`;
+
+const CREATE_ALL_RESOURCES = gql`
+  mutation CreateAllResources {
+    createAllResources {
+      key
+    }
+  }
+`;
+
+const DELETE_ALL_RESOURCES = gql`
+  mutation DeleteAllResources {
+    deleteAllResources
   }
 `;
 
@@ -148,9 +164,11 @@ function useResources(): Resource[] {
 export default useResources;
 export {
   GET_RESOURCES,
-  INSERT_RESOURCE,
+  CREATE_RESOURCE,
   UPDATE_RESOURCE,
   DELETE_RESOURCE,
+  CREATE_ALL_RESOURCES,
+  DELETE_ALL_RESOURCES,
   positions,
   teams,
   firstnameValidation,

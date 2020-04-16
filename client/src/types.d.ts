@@ -95,9 +95,8 @@ export declare interface ProjectListItem {
 
 export declare interface Resource {
   key: string;
-  name?: string;
+  name: string;
   team: string;
-  displayName: string;
   position: string;
   phone?: string;
   email?: string;

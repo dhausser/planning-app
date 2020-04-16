@@ -25,10 +25,7 @@ export const MyGlobalNavigation: FunctionComponent = () => (
   <GlobalNavigation
     productIcon={() => <JiraIcon size="medium" />}
     productTooltip="Jira"
-    profileIconUrl={
-      useUserAvatar() ||
-      'https://api.adorable.io/avatars/285/abott@adorable.png'
-    }
+    profileIconUrl={useUserAvatar}
     productHref="#"
     searchTooltip={<SearchTooltip />}
     searchLabel="Search Label"

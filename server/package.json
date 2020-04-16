@@ -4,8 +4,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "ts-node -r dotenv/config  src/index",
-    "dev:watch": "ts-node-dev --no-notify --respawn --transpileOnly -r dotenv/config  src/index",
+    "dev": "ts-node-dev --no-notify --respawn --transpileOnly -r dotenv/config  src/index",
     "start": "node -r dotenv/config dist/index",
     "clean": "rm -rf dist",
     "build": "npm -s run clean && tsc",

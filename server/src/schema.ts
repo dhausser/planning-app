@@ -200,7 +200,7 @@ export default gql`
     login: String!
 
     # Resources
-    insertResource(
+    createResource(
       firstname: String!
       lastname: String!
       position: String!
@@ -213,6 +213,8 @@ export default gql`
       position: String!
       team: String!
     ): Resource
-    deleteResource(id: ID!): String
+    deleteResource(id: ID!): Resource
+    createAllResources: [Resource]!
+    deleteAllResources: Int!
   }
 `;

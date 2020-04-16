@@ -46,11 +46,11 @@ function getAvatarUrl(key: string): string {
   return `https://jira.cdprojektred.com/secure/useravatar?ownerId=${key}`;
 }
 
-function getAssignee({ key, displayName }: Resource): object {
+function getAssignee({ key, name }: Resource): object {
   if (key == null) return {};
   return {
     id: key,
-    name: displayName,
+    name,
     type: 'user',
     fixed: true,
     avatarUrl: getAvatarUrl(key),

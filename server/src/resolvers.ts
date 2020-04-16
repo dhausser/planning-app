@@ -85,6 +85,7 @@ const resolvers: IResolvers = {
       dataSources.userAPI.findUser({ id }),
     teams: (_: void, __: void, { dataSources }: Context) =>
       dataSources.userAPI.findTeams(),
+    
     // team: (_: void, { id }: Args, { dataSources }: Context) =>
     //   dataSources.userAPI.getResources({ id }),
     /**
@@ -112,12 +113,24 @@ const resolvers: IResolvers = {
       dataSources.issueAPI.editIssue({ id, value, type }),
     assignIssue: (_: void, { id, key }: any, { dataSources }: Context) =>
       dataSources.issueAPI.assignIssue({ id, key }),
-    insertResource: (_: void, args: UserInput, { dataSources }: Context) =>
-      dataSources.resourceAPI.insertResource(args),
+    createResource: (_: void, args: UserInput, { dataSources }: Context) =>
+      dataSources.userAPI.createUser(args),
     updateResource: (_: void, args: UserInput, { dataSources }: Context) =>
-      dataSources.resourceAPI.updateResource(args),
+      dataSources.userAPI.updateUser(args),
     deleteResource: (_: void, args: UserInput, { dataSources }: Context) =>
-      dataSources.resourceAPI.deleteResource(args),
+      dataSources.userAPI.deleteUser(args),
+    createAllResources: (_: void, args: void, { dataSources }: Context) =>
+      dataSources.userAPI.createAllUsers(),
+    deleteAllResources: (_: void, args: void, { dataSources }: Context) =>
+      dataSources.userAPI.deleteAllUsers(),
+
+    // createResource: (_: void, args: UserInput, { dataSources }: Context) =>
+    //   dataSources.resourceAPI.insertResource(args),
+    // updateResource: (_: void, args: UserInput, { dataSources }: Context) =>
+    //   dataSources.resourceAPI.updateResource(args),
+    // deleteResource: (_: void, args: UserInput, { dataSources }: Context) =>
+    //   dataSources.resourceAPI.deleteResource(args),
+
   },
 };
 

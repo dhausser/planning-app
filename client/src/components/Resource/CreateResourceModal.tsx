@@ -5,25 +5,24 @@ import Form, { Field, OnSubmitHandler } from '@atlaskit/form';
 import TextField from '@atlaskit/textfield';
 import Select, { ValueType, OptionType } from '@atlaskit/select';
 import Footer from './Footer';
-import { ContainerProps, FormTypes } from '../../types';
+import { ContainerProps, FormTypes, Team } from '../../types';
 import {
-  INSERT_RESOURCE,
+  CREATE_RESOURCE,
   GET_RESOURCES,
   positions,
-  teams,
   validateOnSubmit,
 } from '../../lib/useResources';
-// import useTeams from '../../lib/useTeams';
+import useTeams from '../../lib/useTeams';
 
 interface Props {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 function CreateResourceModal({ setIsOpen }: Props): ReactElement {
-  // const teams = useTeams();
-  // const options = teams.map(({ id }: Team) => ({ label: id, value: id }));
+  const teamData = useTeams();
+  const teams = teamData.map(({ id }: Team) => ({ label: id, value: id }));
 
-  const [insertResource] = useMutation(INSERT_RESOURCE, {
+  const [createResource] = useMutation(CREATE_RESOURCE, {
     refetchQueries: [{ query: GET_RESOURCES }],
   });
 
@@ -32,7 +31,7 @@ function CreateResourceModal({ setIsOpen }: Props): ReactElement {
   const onFormSubmit: OnSubmitHandler<FormTypes> = (
     data
   ): Promise<Record<string, string> | undefined> => {
-    insertResource({
+    createResource({
       variables: {
         ...data,
         position: data.position.value,
@@ -117,4 +116,3 @@ function CreateResourceModal({ setIsOpen }: Props): ReactElement {
 }
 
 export default CreateResourceModal;
-export { INSERT_RESOURCE };
