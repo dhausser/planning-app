@@ -1,0 +1,10 @@
+[
+  { "id": "Gold", "name": "Gold" },
+  { "id": "Titan", "name": "Titan" },
+  { "id": "Forge", "name": "Forge" },
+  { "id": "Diamond", "name": "Diamond" },
+  { "id": "Art", "name": "Art" },
+  { "id": "Tech Art", "name": "Tech Art" },
+  { "id": "Tech", "name": "Tech" },
+  { "id": "Comms", "name": "Comms" }
+]

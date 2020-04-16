@@ -25,7 +25,7 @@ export default gql`
     projects: [Project]!
     versions(id: ID!): [Version]
     statuses(id: ID!): [Status]
-    resources(teamId: String): [Resource]!
+    resources(offset: Int, limit: Int, teamId: String): [Resource]!
     resource(id: ID!): Resource
     teams: [Team]!
     team(id: ID!): Team

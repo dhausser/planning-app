@@ -92,10 +92,15 @@ const Resources: FunctionComponent<Props> = ({ navigationViewController }) => {
             Create
           </Button>
           <Button
-            appearance="subtle"
             onClick={(): void => setIsProfileCardView(!isProfileCardView)}
           >
             Switch Display
+          </Button>
+          <Button onClick={(): void => console.log('Loading sample data...')}>
+            Load Sample Data
+          </Button>
+          <Button onClick={(): void => console.log('Deleting all data...')}>
+            Delete All Data
           </Button>
         </ButtonGroup>
         {display}

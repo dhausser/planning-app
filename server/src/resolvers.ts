@@ -1,5 +1,5 @@
 import { IResolvers } from 'apollo-server-express';
-import { Args, Context, UserInput } from './types';
+import { Args, Context, UserInput, Pagination } from './types';
 
 const resolvers: IResolvers = {
   Query: {
@@ -79,12 +79,14 @@ const resolvers: IResolvers = {
       user.token,
     absences: (_: void, { id }: Args, { dataSources }: Context) =>
       dataSources.absenceAPI.getAbsencesById({ userId: id }),
-    resources(_: void, __: void, { dataSources }: Context) {
-      return dataSources.userAPI.findUsers();
-    },
-    resource(_: void, { id }: Args, { dataSources }: Context) {
-      return dataSources.userAPI.findUser({ id });
-    },
+    resources: (_: void, { offset, limit, teamId }: Pagination, { dataSources }: Context) =>
+      dataSources.userAPI.findUsers({ offset, limit, teamId }),
+    resource: (_: void, { id }: Args, { dataSources }: Context) =>
+      dataSources.userAPI.findUser({ id }),
+    teams: (_: void, __: void, { dataSources }: Context) =>
+      dataSources.userAPI.findTeams(),
+    // team: (_: void, { id }: Args, { dataSources }: Context) =>
+    //   dataSources.userAPI.getResources({ id }),
     /**
      * Temporary disable og MongoDB remote database for local testing with Prisma and Sqlite
      */
@@ -97,10 +99,10 @@ const resolvers: IResolvers = {
     // resource: (_, { id }, { dataSources }) => (
     //   dataSources.resourceAPI.getResourceById({ resourceId: id })
     // ),
-    teams: (_: void, __: void, { dataSources }: Context) =>
-      dataSources.resourceAPI.getTeams(),
-    team: (_: void, { id }: Args, { dataSources }: Context) =>
-      dataSources.resourceAPI.getResources({ teamId: id }),
+    // teams: (_: void, __: void, { dataSources }: Context) =>
+    //   dataSources.resourceAPI.getTeams(),
+    // team: (_: void, { id }: Args, { dataSources }: Context) =>
+    //   dataSources.resourceAPI.getResources({ teamId: id }),
   },
 
   Mutation: {

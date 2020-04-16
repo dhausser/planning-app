@@ -1,6 +1,7 @@
 import { useQuery, gql } from '@apollo/client';
 import { OptionType } from '@atlaskit/select';
 import { Resource, InputValidation, ValidateOnSubmit } from '../types';
+import { ROWS_PER_PAGE } from './useIssues';
 
 const positions = [
   { label: 'Producer', value: 'Producer' },
@@ -77,11 +78,12 @@ const validateOnSubmit: ValidateOnSubmit = (data) => {
 };
 
 const GET_RESOURCES = gql`
-  query GetResources($teamId: String) {
+  query GetResources($offset: Int = 0, $limit: Int = ${ROWS_PER_PAGE}, $teamId: String) {
     teamId @client @export(as: "teamId")
-    resources(teamId: $teamId) {
+    resources(offset: $offset, limit: $limit, teamId: $teamId) {
       key
-      displayName
+      name
+      # displayName
       team
       position
       email

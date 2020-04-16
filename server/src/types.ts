@@ -118,3 +118,9 @@ export interface TreeTableData {
 export interface DashboardChartData {
   [key: string]: number;
 }
+
+export interface Pagination {
+  offset: number;
+  limit: number;
+  teamId: string;
+}

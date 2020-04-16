@@ -29,8 +29,9 @@ function ProfileGrid({
         {resources.map((resource) => (
           <div key={resource.key} style={{ margin: '0 20px 20px 0' }}>
             <ProfileCard
-              avatarUrl={resource?.avatarUrls?.large}
-              fullName={resource.displayName}
+              // avatarUrl={resource?.avatarUrls?.large}
+              avatarUrl={`https://jira.cdprojektred.com/secure/useravatar?size=large&ownerId=${resource.key}`}
+              fullName={resource.name}
               meta={`${resource.position} in ${resource.team}`}
               email={resource.email}
               timestring={time}
