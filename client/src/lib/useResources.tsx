@@ -83,8 +83,9 @@ const GET_RESOURCES = gql`
     resources(offset: $offset, limit: $limit, teamId: $teamId) {
       key
       name
-      # displayName
-      team
+      team {
+        name
+      }
       position
       email
       avatarUrls {

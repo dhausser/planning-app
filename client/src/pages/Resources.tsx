@@ -6,7 +6,7 @@ import PageHeader from '@atlaskit/page-header';
 import Button, { ButtonGroup } from '@atlaskit/button';
 import { ModalTransition } from '@atlaskit/modal-dialog';
 import EmptyState from '@atlaskit/empty-state';
-import { projectHomeView, Layout } from '../components';
+import { projectHomeView, Layout, Loading } from '../components';
 import {
   ProfileGrid,
   ResourceTable,
@@ -48,6 +48,7 @@ const resource = {
 };
 
 const Resources: FunctionComponent<Props> = ({ navigationViewController }) => {
+  let resources: Resource[] = [];
   const [selection, setSelection] = useState<Resource>(resource);
   const [isProfileCardView, setIsProfileCardView] = useState(true);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
@@ -65,14 +66,10 @@ const Resources: FunctionComponent<Props> = ({ navigationViewController }) => {
     navigationViewController,
   ]);
 
-  let resources: Resource[] = [];
+  if (loading) return <Loading />;
   if (error)
     return <EmptyState header={error.name} description={error.message} />;
-  if (!loading && data) {
-    resources = data?.teamId
-      ? data.resources.filter(({ team }: Resource) => team === data.teamId)
-      : data.resources;
-  }
+  if (data) ({ resources } = data);
 
   let display;
   if (isProfileCardView) {

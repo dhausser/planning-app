@@ -38,6 +38,11 @@ interface Indexable {
   [key: string]: any;
 }
 
+export const Wrapper = styled.div`
+  flex-basis: 180px;
+  margin-right: 10px;
+`;
+
 const Filter = ({
   query,
   updateFilter,
@@ -104,12 +109,3 @@ Filter.propTypes = {
 };
 
 export default Filter;
-
-/**
- * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE
- */
-
-export const Wrapper = styled.div`
-  flex-basis: 180px;
-  margin-right: 10px;
-`;

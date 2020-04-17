@@ -1,16 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import { ApolloClient, gql } from '@apollo/client';
 import { OptionType } from '@atlaskit/select';
+import { GET_TEAMS } from '../../lib/useTeams';
 import Filter from './Filter';
-
-export const GET_TEAMS = gql`
-  query GetTeams {
-    teamId @client
-    teams {
-      id
-    }
-  }
-`;
 
 const updateFilter = (client: ApolloClient<object>, e: OptionType): void => {
   const value = e ? e.value : null;

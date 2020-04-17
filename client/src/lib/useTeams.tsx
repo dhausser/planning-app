@@ -1,10 +1,13 @@
 import { useQuery, gql } from '@apollo/client';
 import { Team } from '../types';
 
-const GET_TEAMS = gql`
+export const GET_TEAMS = gql`
   query GetTeams {
+    teamId @client
     teams {
       id
+      key
+      name
     }
   }
 `;

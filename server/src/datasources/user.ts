@@ -1,7 +1,7 @@
 import { DataSource } from 'apollo-datasource';
 import { ApolloContext, Resource, ResourceInputs, Pagination } from '../types';
 import resources from '../../data/resources.json';
-import teams from '../../data/teams.json';
+// import teams from '../../data/teams.json';
 
 class UserAPI extends DataSource {
   prisma: any;
@@ -12,10 +12,11 @@ class UserAPI extends DataSource {
   }
 
   async findUsers({ offset, limit, teamId }: Pagination) {
-    const where = teamId ? { team: teamId } : {};
+    const where = teamId ? { teamId: parseInt(teamId, 10) } : {};
+    const include = { team: true };
     const first = limit;
     const skip = offset;
-    const allUsers = await this.prisma.user.findMany({ where, first, skip });
+    const allUsers = await this.prisma.user.findMany({ where, include, first, skip });
     console.log({ offset, limit, teamId });
     return Array.isArray(allUsers) ? allUsers : [];
   }
@@ -26,6 +27,7 @@ class UserAPI extends DataSource {
   }
 
   async findTeams() {
+    const teams = await this.prisma.team.findMany({ include: { members: true } });
     return Array.isArray(teams) ? teams : [];
   }
 

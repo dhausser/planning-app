@@ -1,10 +1,11 @@
 [
-  { "id": "Gold Squad", "name": "Gold" },
-  { "id": "Titan Squad", "name": "Titan" },
-  { "id": "Forge Squad", "name": "Forge" },
-  { "id": "Diamond Squad", "name": "Diamond" },
-  { "id": "Art Center", "name": "Art" },
-  { "id": "TechArt Center", "name": "Tech Art" },
-  { "id": "Tech Center", "name": "Tech" },
-  { "id": "Comms Center", "name": "Comms" }
+  { "key": "gold", "name": "Gold", "type": "Squad" },
+  { "key": "titan", "name": "Titan", "type": "Squad" },
+  { "key": "forge", "name": "Forge", "type": "Squad" },
+  { "key": "diamond", "name": "Diamond", "type": "Squad" },
+  { "key": "kraken", "name": "Kraken", "type": "Squad"  },
+  { "key": "art", "name": "Art", "type": "Center" },
+  { "key": "techart", "name": "TechArt", "type": "Center" },
+  { "key": "tech", "name": "Tech", "type": "Center" },
+  { "key": "comms", "name": "Comms", "type": "Center"  }
 ]

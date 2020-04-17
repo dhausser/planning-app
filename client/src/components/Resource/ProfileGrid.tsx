@@ -32,7 +32,7 @@ function ProfileGrid({
               // avatarUrl={resource?.avatarUrls?.large}
               avatarUrl={`https://jira.cdprojektred.com/secure/useravatar?size=large&ownerId=${resource.key}`}
               fullName={resource.name}
-              meta={`${resource.position} in ${resource.team}`}
+              // meta={`${resource.position} in ${resource.team || 'Team'}`}
               email={resource.email}
               timestring={time}
               location="Warsaw"

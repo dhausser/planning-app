@@ -153,7 +153,8 @@ export default gql`
     email: String!
     employeeId: String
     position: String
-    team: String
+    team: Team
+    teamId: Int
     phone: String
     displayName: String
     avatarUrls: AvatarUrls
@@ -175,7 +176,9 @@ export default gql`
 
   type Team {
     id: ID!
+    key: String!
     name: String!
+    type: String!
     members: [Resource]!
   }
 
