@@ -20,7 +20,6 @@ const ButtonWrapper = styled.div`
 
 function IssueTable({ resourceId }: { resourceId?: string }): ReactElement {
   const [length, setLength] = useState(0);
-  const [isLoadingMore, setIsLoadingMore] = useState(false);
   const { loading, error, data, fetchMore } = useQuery<
     IssueConnectionData,
     IssueConnectionVars
@@ -62,42 +61,33 @@ function IssueTable({ resourceId }: { resourceId?: string }): ReactElement {
           )
         }
       />
-      {data &&
-        data.issues &&
-        data.issues.total > length &&
-        (isLoadingMore ? (
-          <Loading />
-        ) : (
-          <ButtonWrapper>
-            <Button
-              onClick={async () => {
-                setIsLoadingMore(true);
-                await fetchMore({
-                  variables: {
-                    resourceId,
-                    startAt: length,
-                    maxResult: ROWS_PER_PAGE,
+      <ButtonWrapper>
+        <Button
+          onClick={async () => {
+            await fetchMore({
+              variables: {
+                resourceId,
+                startAt: length,
+                maxResult: ROWS_PER_PAGE,
+              },
+              updateQuery: (prev: any, { fetchMoreResult }) => {
+                if (!fetchMoreResult) return prev;
+                return {
+                  issues: {
+                    ...fetchMoreResult.issues,
+                    issues: [
+                      ...prev.issues.issues,
+                      ...fetchMoreResult.issues.issues,
+                    ],
                   },
-                  updateQuery: (prev: any, { fetchMoreResult }) => {
-                    if (!fetchMoreResult) return prev;
-                    return {
-                      issues: {
-                        ...fetchMoreResult.issues,
-                        issues: [
-                          ...prev.issues.issues,
-                          ...fetchMoreResult.issues.issues,
-                        ],
-                      },
-                    };
-                  },
-                });
-                setIsLoadingMore(false);
-              }}
-            >
-              Load More
-            </Button>
-          </ButtonWrapper>
-        ))}
+                };
+              },
+            });
+          }}
+        >
+          Load More
+        </Button>
+      </ButtonWrapper>
     </>
   );
 }

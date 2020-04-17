@@ -85,27 +85,7 @@ const resolvers: IResolvers = {
       dataSources.userAPI.findUser({ id }),
     teams: (_: void, __: void, { dataSources }: Context) =>
       dataSources.userAPI.findTeams(),
-    
-    // team: (_: void, { id }: Args, { dataSources }: Context) =>
-    //   dataSources.userAPI.getResources({ id }),
-    /**
-     * Temporary disable og MongoDB remote database for local testing with Prisma and Sqlite
-     */
-    // resources: async (_, { teamId }, { dataSources }) => {
-    //   const { resourcesList } = await dataSources.resourceAPI.getResources({
-    //     teamId,
-    //   });
-    //   return resourcesList;
-    // },
-    // resource: (_, { id }, { dataSources }) => (
-    //   dataSources.resourceAPI.getResourceById({ resourceId: id })
-    // ),
-    // teams: (_: void, __: void, { dataSources }: Context) =>
-    //   dataSources.resourceAPI.getTeams(),
-    // team: (_: void, { id }: Args, { dataSources }: Context) =>
-    //   dataSources.resourceAPI.getResources({ teamId: id }),
   },
-
   Mutation: {
     login: (_: void, __: void, { user }: { user: { token: string } }) =>
       user.token,
@@ -123,14 +103,6 @@ const resolvers: IResolvers = {
       dataSources.userAPI.createAllUsers(),
     deleteAllResources: (_: void, args: void, { dataSources }: Context) =>
       dataSources.userAPI.deleteAllUsers(),
-
-    // createResource: (_: void, args: UserInput, { dataSources }: Context) =>
-    //   dataSources.resourceAPI.insertResource(args),
-    // updateResource: (_: void, args: UserInput, { dataSources }: Context) =>
-    //   dataSources.resourceAPI.updateResource(args),
-    // deleteResource: (_: void, args: UserInput, { dataSources }: Context) =>
-    //   dataSources.resourceAPI.deleteResource(args),
-
   },
 };
 

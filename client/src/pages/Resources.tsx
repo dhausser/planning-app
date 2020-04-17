@@ -21,6 +21,7 @@ import {
   GET_RESOURCES,
   CREATE_ALL_RESOURCES,
   DELETE_ALL_RESOURCES,
+  RESOURCES_PER_PAGE,
 } from '../lib/useResources';
 
 const Wrapper = styled.div`
@@ -48,7 +49,9 @@ const resource = {
 };
 
 const Resources: FunctionComponent<Props> = ({ navigationViewController }) => {
+  let display;
   let resources: Resource[] = [];
+  const [length, setLength] = useState(RESOURCES_PER_PAGE);
   const [selection, setSelection] = useState<Resource>(resource);
   const [isProfileCardView, setIsProfileCardView] = useState(true);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
@@ -62,16 +65,19 @@ const Resources: FunctionComponent<Props> = ({ navigationViewController }) => {
     refetchQueries: [{ query: GET_RESOURCES }],
   });
 
-  useEffect(() => navigationViewController.setView(projectHomeView.id), [
-    navigationViewController,
-  ]);
+  useEffect(() => {
+    const pageSize = data?.resources?.length;
+    if (pageSize) {
+      setLength(pageSize);
+    }
+    navigationViewController.setView(projectHomeView.id);
+  }, [navigationViewController, data]);
 
   if (loading) return <Loading />;
   if (error)
     return <EmptyState header={error.name} description={error.message} />;
   if (data) ({ resources } = data);
 
-  let display;
   if (isProfileCardView) {
     display = (
       <ProfileGrid
@@ -110,10 +116,10 @@ const Resources: FunctionComponent<Props> = ({ navigationViewController }) => {
           >
             Switch Display
           </Button>
-          <Button onClick={(): any => createAllResources()}>
+          <Button onClick={(): Promise<void> => createAllResources()}>
             Load Sample Data
           </Button>
-          <Button onClick={(): any => deleteAllResources()}>
+          <Button onClick={(): Promise<void> => deleteAllResources()}>
             Delete All Data
           </Button>
         </ButtonGroup>
@@ -135,10 +141,11 @@ const Resources: FunctionComponent<Props> = ({ navigationViewController }) => {
         </ModalTransition>
         <ButtonWrapper>
           <Button
-            onClick={async () => {
+            onClick={async (): Promise<void> => {
               await fetchMore({
                 variables: {
-                  offset: 20,
+                  offset: length,
+                  limit: RESOURCES_PER_PAGE,
                 },
                 updateQuery: (prev, { fetchMoreResult }) => {
                   if (!fetchMoreResult) return prev;

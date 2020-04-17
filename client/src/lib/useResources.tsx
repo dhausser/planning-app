@@ -1,24 +1,14 @@
 import { useQuery, gql } from '@apollo/client';
 import { OptionType } from '@atlaskit/select';
 import { Resource, InputValidation, ValidateOnSubmit } from '../types';
-import { ROWS_PER_PAGE } from './useIssues';
+
+const RESOURCES_PER_PAGE = 8;
 
 const positions = [
   { label: 'Producer', value: 'Producer' },
   { label: 'Programmer', value: 'Programmer' },
   { label: 'Designer', value: 'Designer' },
   { label: 'Tester', value: 'Tester' },
-];
-
-const teams = [
-  { label: 'Art Center', value: 'Art Center' },
-  { label: 'Comms Center', value: 'Comms Center' },
-  { label: 'Diamonds', value: 'Diamonds' },
-  { label: 'Gold', value: 'Gold' },
-  { label: 'Forge', value: 'Forge' },
-  { label: 'Tech Center', value: 'Tech Center' },
-  { label: 'Tech Art Center', value: 'Tech Art Center' },
-  { label: 'Titan', value: 'Titan' },
 ];
 
 const firstnameValidation: InputValidation = (data, errors?) => {
@@ -78,7 +68,7 @@ const validateOnSubmit: ValidateOnSubmit = (data) => {
 };
 
 const GET_RESOURCES = gql`
-  query GetResources($offset: Int = 0, $limit: Int = ${ROWS_PER_PAGE}, $teamId: String) {
+  query GetResources($offset: Int = 0, $limit: Int = ${RESOURCES_PER_PAGE}, $teamId: String) {
     teamId @client @export(as: "teamId")
     resources(offset: $offset, limit: $limit, teamId: $teamId) {
       key
@@ -170,8 +160,8 @@ export {
   DELETE_RESOURCE,
   CREATE_ALL_RESOURCES,
   DELETE_ALL_RESOURCES,
+  RESOURCES_PER_PAGE,
   positions,
-  teams,
   firstnameValidation,
   lastnameValidation,
   positonValidation,
