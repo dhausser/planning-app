@@ -37,13 +37,6 @@ export interface Project {
   avatarUrls: any;
 }
 
-export interface Filter {
-  projectId: string;
-  versionId: string;
-  teamId?: string;
-  assignee?: string;
-}
-
 export interface AvatarUrls {
   large: string;
   small: string;
@@ -62,20 +55,10 @@ export interface IssueConnection {
   statusId: string;
   startAt: number;
   maxResults: number;
-  assignee: Resource[],
+  assignee: any,
   resourceMap: any,
-  teamId?: string;
+  teamId?: TeamId;
   resourceId?: string;
-}
-
-
-export interface Resource {
-  id: string;
-  key: string;
-  email: string;
-  name: string;
-  position: string;
-  team: string;
 }
 
 export interface ResourceInputs {
@@ -124,3 +107,34 @@ export interface Pagination {
   limit: number;
   teamId: string;
 }
+
+export interface Team {
+  id: string;
+  key: string;
+  name: string;
+  members: Resource[];
+}
+
+export interface Resource {
+  id: string;
+  key: string;
+  email: string;
+  name: string;
+  position: string;
+  team: Team;
+  teamId: number;
+}
+
+export interface Filter {
+  projectId: string;
+  versionId: string;
+  teamId?: string;
+}
+
+export type Assignee = string[]
+
+export interface DashboardInputs extends Filter {
+  assignee: Assignee;
+}
+
+export type TeamId = string | undefined

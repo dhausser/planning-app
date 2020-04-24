@@ -34,7 +34,7 @@ class UserAPI extends DataSource {
   async getResourceMap() {
     const allUsers = await this.prisma.user.findMany();
     return allUsers.reduce((acc: any, resource: Resource) => {
-      acc[resource.key] = resource.team;
+      acc[resource.key] = resource.teamId;
       return acc;
     }, {});
   }
@@ -77,10 +77,10 @@ class UserAPI extends DataSource {
     return user;
   }
 
-  async createAllTeams() {
-    const allTeams = teams.map(async ({ id, name }) => {})
-    return allTeams;
-  }
+  // async createAllTeams() {
+  //   const allTeams = teams.map(async ({ id, name }) => {})
+  //   return allTeams;
+  // }
 
   async createAllUsers() {
     const allUsers = resources.map(async ({

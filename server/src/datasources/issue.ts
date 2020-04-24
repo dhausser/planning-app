@@ -1,10 +1,10 @@
 import { RESTDataSource } from 'apollo-datasource-rest';
-import ResourcesDAO from './resource';
+import { PrismaClient } from '@prisma/client';
 import Issues from '../models/Issues';
 import Dashboard from '../models/Dashboard';
 import Roadmap from '../models/Roadmap';
 import Oauth from '../models/Auth';
-import { Project, Filter, AvatarUrls, IssueConnection, Resource, AssignableUsers } from '../types'
+import { Project, Filter, AvatarUrls, IssueConnection, Resource, AssignableUsers, ApolloContext, Assignee } from '../types'
 
 function parseAvatarUrls(avatarUrls: AvatarUrls) {
   return {
@@ -16,9 +16,11 @@ function parseAvatarUrls(avatarUrls: AvatarUrls) {
 }
 
 class IssueAPI extends RESTDataSource {
+  prisma: PrismaClient;
   oauth: Oauth;
-  constructor() {
+  constructor({ prisma }: ApolloContext) {
     super();
+    this.prisma = prisma;
     this.baseURL = `https://${process.env.HOST}`;
     this.oauth = new Oauth(this.baseURL);
   }
@@ -98,10 +100,9 @@ class IssueAPI extends RESTDataSource {
     if (resourceId) {
       assignee = resourceId;
     } else if (teamId) {
-      const { resourcesList } = await ResourcesDAO.getResources({ teamId });
-      assignee = resourcesList.map(({ key }: { key: string }) => key);
+      assignee = this.getAssignee({ teamId });
     }
-    const resourceMap = ResourcesDAO.getResourceMap();
+    const resourceMap = this.getResourceMap();
     const issues = new Issues({
       projectId,
       issuetypeId,
@@ -125,9 +126,7 @@ class IssueAPI extends RESTDataSource {
    * @param {string} teamId - team ID
    */
   async getDashboardIssues({ projectId, versionId, teamId }: Filter) {
-    const { resourcesList } = await ResourcesDAO.getResources({ teamId });
-
-    const assignee = resourcesList.map((resource: Resource) => resource.key) || [];
+    const assignee = await this.getAssignee({ teamId });
 
     const dashboard = new Dashboard({
       projectId,
@@ -140,7 +139,7 @@ class IssueAPI extends RESTDataSource {
       '/rest/api/2/search',
       dashboard.getParams(),
     );
-    const resourceMap = await ResourcesDAO.getResourceMap();
+    const resourceMap = await this.getResourceMap();
 
     return dashboard.getDataset(response, resourceMap);
   }
@@ -265,6 +264,35 @@ class IssueAPI extends RESTDataSource {
       project,
     });
     return Array.isArray(response.users) || [];
+  }
+
+  /** TODO: User API to export theses methods */
+  async getAssignee({ teamId }: { teamId: string | undefined }) {
+    let resources: Array<{ key: string }> = [];
+    let assignee: string[] = [];
+    if (teamId) {
+      const team = await this.prisma.team.findOne({
+        where: { id: parseInt(teamId, 10) },
+        select: { members: { select: { key: true } } }
+      })
+      if (team) {
+        assignee = team.members.map(({ key }) => key);
+      }
+    } else {
+      resources = await this.prisma.user.findMany({ select: { key: true } });
+      assignee = resources.map(({ key }) => key);
+    }
+    return assignee
+  }
+
+  async getResourceMap() {
+    const resources = await this.prisma.user.findMany({
+      include: { team: { select: { name: true } } }
+    });
+    return resources.reduce((acc: any, resource: any) => {
+      acc[resource.key] = resource.team.name;
+      return acc;
+    }, {});
   }
 
   /* Mutations */
