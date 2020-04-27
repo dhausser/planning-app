@@ -7,7 +7,6 @@ import DynamicTable from '@atlaskit/dynamic-table';
 import EmptyState from '@atlaskit/empty-state';
 
 import { GET_ISSUES, ROWS_PER_PAGE } from '../../lib/useIssues';
-import { Loading } from '..';
 import { head, getRows } from './utils';
 import { IssueConnectionData, IssueConnectionVars } from '../../types';
 

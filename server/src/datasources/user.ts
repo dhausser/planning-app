@@ -1,7 +1,6 @@
 import { DataSource } from 'apollo-datasource';
 import { ApolloContext, Resource, ResourceInputs, Pagination } from '../types';
-import resources from '../../data/resources.json';
-// import teams from '../../data/teams.json';
+import resources from '../data/resources.json';
 
 class UserAPI extends DataSource {
   prisma: any;
