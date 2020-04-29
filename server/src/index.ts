@@ -16,6 +16,8 @@ const prisma = new PrismaClient();
 const app = express();
 const port = process.env.PORT;
 
+
+/** TODO: configure session store */
 app.use(
   session({
     secret: 'keyboard cat',

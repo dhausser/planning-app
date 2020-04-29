@@ -3,9 +3,7 @@ import { authenticate } from 'passport';
 import { join } from 'path';
 
 const router = Router();
-const baseUrl = process.env.NODE_ENV === 'production'
-  ? 'https://roadmap.cdprojektred.com'
-  : 'http://localhost:3000';
+const { FRONTEND_URL } = process.env;
 
 // Redirect the user to the OAuth provider for authentication.  When
 // complete, the provider will redirect the user back to the application at
@@ -19,8 +17,8 @@ router.get('/auth/provider', authenticate('oauth'));
 router.get(
   '/auth/provider/callback',
   authenticate('oauth', {
-    successRedirect: `${baseUrl}/login`,
-    failureRedirect: `${baseUrl}`,
+    successRedirect: `${FRONTEND_URL}/login`,
+    failureRedirect: `${FRONTEND_URL}`,
   }),
 );
 
