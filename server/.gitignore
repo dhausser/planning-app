@@ -112,3 +112,4 @@ dist
 # Data files
 resources.csv
 resources.json
+redis-5.0.8

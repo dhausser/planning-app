@@ -1,6 +1,8 @@
 require("dotenv").config();
 import express from 'express';
 import session from 'express-session';
+// import redis from 'redis';
+// import connectRedis from 'connect-redis';
 import { ApolloServer } from 'apollo-server-express';
 import { PrismaClient } from '@prisma/client';
 
@@ -12,18 +14,19 @@ import UserAPI from './datasources/user';
 import IssueAPI from './datasources/issue';
 import AbsenceAPI from './datasources/absence';
 
-const prisma = new PrismaClient();
 const app = express();
 const port = process.env.PORT;
+const prisma = new PrismaClient();
 
+// let RedisStore = connectRedis(session);
+// let redisClient = redis.createClient();
 
-/** TODO: configure session store */
 app.use(
   session({
+    // store: new RedisStore({ client: redisClient }),
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: true }
   })
 );
 app.use(passport.initialize());
