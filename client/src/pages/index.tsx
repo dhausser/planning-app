@@ -11,4 +11,3 @@ export { default as Board } from './Board';
 export { default as Pages } from './Pages';
 export { default as AddItem } from './AddItem';
 export { default as Settings } from './Settings';
-export { default as LoginSuccess } from './LoginSuccess';

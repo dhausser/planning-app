@@ -85,10 +85,41 @@ const resolvers: IResolvers = {
       dataSources.userAPI.findUser({ id }),
     teams: (_: void, __: void, { dataSources }: Context) =>
       dataSources.userAPI.findTeams(),
+    currentUser: async (_: void, __: void, { dataSources, token }: Context) => dataSources.issueAPI.getUserLogin(),
   },
   Mutation: {
     login: (_: void, __: void, { user }: { user: { token: string } }) =>
       user.token,
+    signin: async (_: void, __: void, { dataSources, user, token, res }: Context) => {  
+      // 1. If a cookie is present on the request, test whether it is still valid and return the authenticated user    
+      if (token) {
+        try {
+          // If the token is still valid return it
+          const currentUser = await dataSources.issueAPI.getUserLogin();
+          return currentUser ? { token } : null;
+        } catch (error) {
+          // If the authenticated failed, clear the cookie
+          console.error(error);
+          res.clearCookie('token');
+          return null;
+        }
+      }
+
+      // 2. If the user object is present on the session, test whether it is still valid and return the authenticated user  
+      if (user) {
+        const { token } = user;
+        res.cookie('token', token, {
+          httpOnly: true,
+          maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year cookie
+        });
+        return user;
+      }
+      return null;
+    },
+    signout: (_: void, __: void, { res }: { res: any }) => {
+      res.clearCookie('token');
+      return null;
+    },
     editIssue: (_: void, { id, value, type }: any, { dataSources }: Context) =>
       dataSources.issueAPI.editIssue({ id, value, type }),
     assignIssue: (_: void, { id, key }: any, { dataSources }: Context) =>

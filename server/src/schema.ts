@@ -41,6 +41,7 @@ export default gql`
       actionDescriptorId: Int
     ): [User]!
     loginToken: String
+    currentUser: String
   }
 
   type User {
@@ -194,6 +195,10 @@ export default gql`
     medium: String
   }
 
+  type UserSession {
+    token: String!
+  }
+
   type Mutation {
     # Edit Jira Issues
     editIssue(id: ID!, value: String!, type: String!): String
@@ -201,6 +206,8 @@ export default gql`
 
     # Return Access Token
     login: String!
+    signin: UserSession
+    signout: String
 
     # Resources
     createResource(

@@ -1,31 +1,54 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
+import { useApolloClient, useMutation, gql } from '@apollo/client';
 import Modal, { ModalTransition } from '@atlaskit/modal-dialog';
+import { useHistory, RouteComponentProps } from 'react-router-dom';
 
-const openRequestedPopup = (): Window | null => {
-  const devEndpoint = process.env.REACT_APP_DEV_ENDPOINT;
-  const prodEndpoint = process.env.REACT_APP_PROD_ENDPOINT;
+const SIGNIN = gql`
+  mutation signin {
+    signin {
+      token
+    }
+  }
+`;
 
-  const url: string | undefined =
-    process.env.NODE_ENV === 'production' ? prodEndpoint : devEndpoint;
+function useLogin(history: any): void {
+  const client = useApolloClient();
+  const [login] = useMutation(SIGNIN, {
+    onCompleted: ({ signin }) => {
+      if (signin) {
+        // const { token } = signin;
+        // console.log(signin);
+        // localStorage.setItem('token', token);
+        client.writeQuery({
+          query: gql`
+            {
+              isLoggedIn
+            }
+          `,
+          data: { isLoggedIn: true },
+        });
+        history.push('/projects');
+      }
+    },
+  });
+  login();
+}
 
-  // eslint-disable-next-line no-restricted-globals
-  const { width, height } = screen;
+const LoginForm: React.FC<RouteComponentProps> = () => {
+  const history = useHistory();
+  const actions = [
+    {
+      text: 'Login',
+      // eslint-disable-next-line no-restricted-globals
+      onClick: (): null => {
+        // eslint-disable-next-line no-restricted-globals
+        location.href = 'http://localhost:4000/auth/provider';
+        return null;
+      },
+    },
+  ];
 
-  const windowWidth = 800;
-  const windowHeight = 500;
-
-  const left: number = width / 2 - windowWidth / 2;
-  const top: number = height / 12;
-
-  return window.open(
-    url,
-    '_blank',
-    `width=${windowWidth}, height=${windowHeight}, top=${top}, left=${left}`
-  );
-};
-
-function LoginForm(): ReactElement {
-  const actions = [{ text: 'Login', onClick: openRequestedPopup }];
+  useLogin(history);
 
   return (
     <ModalTransition>
@@ -34,6 +57,6 @@ function LoginForm(): ReactElement {
       </Modal>
     </ModalTransition>
   );
-}
+};
 
 export default LoginForm;

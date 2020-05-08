@@ -4,9 +4,9 @@ interface User {
   avatarUrls: { small: string };
 }
 
-export const IS_LOGGED_IN = gql`
-  query IsUserLoggedIn {
-    isLoggedIn @client
+export const CURRENT_USER = gql`
+  query CurrentUser {
+    currentUser
   }
 `;
 
@@ -21,8 +21,9 @@ export const GET_CURRENT_USER = gql`
 `;
 
 export function useUserLogin(): boolean {
-  const { data } = useQuery(IS_LOGGED_IN);
-  return data.isLoggedIn;
+  const { loading, error, data } = useQuery(CURRENT_USER);
+  if (loading || error) return false;
+  return !!data.currentUser;
 }
 
 function useUser(): User | null {

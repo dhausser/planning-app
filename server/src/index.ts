@@ -1,6 +1,7 @@
 require("dotenv").config();
 import express from 'express';
 import session from 'express-session';
+import cookieParser from 'cookie-parser'
 // import redis from 'redis';
 // import connectRedis from 'connect-redis';
 import { ApolloServer } from 'apollo-server-express';
@@ -21,6 +22,7 @@ const prisma = new PrismaClient();
 // let RedisStore = connectRedis(session);
 // let redisClient = redis.createClient();
 
+app.use(cookieParser());
 app.use(
   session({
     // store: new RedisStore({ client: redisClient }),
@@ -40,9 +42,10 @@ const apolloServer = new ApolloServer({
     console.error(error);
     return error;
   },
-  context: ({ req }) => ({
-    authorization: req.headers.authorization,
+  context: ({ req, res }) => ({
+    token: req.cookies.token,
     user: req.user,
+    res
   }),
   dataSources: () => ({
     issueAPI: new IssueAPI({ prisma }),

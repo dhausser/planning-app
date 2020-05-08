@@ -19,6 +19,11 @@ export interface Context {
     resourceAPI: any;
     userAPI: any;
   };
+  user?: {
+    token: string;
+  },
+  token?: string;
+  res?: any;
 }
 
 export interface ApolloContext {

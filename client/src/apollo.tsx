@@ -24,7 +24,7 @@ const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   cache,
   link: new HttpLink({
     uri: '/graphql',
-    credentials: 'include',
+    credentials: 'same-origin',
     headers: {
       authorization: localStorage.getItem('token'),
     },
@@ -46,7 +46,6 @@ function writeInitialData(): Promise<unknown> {
       }
     `,
     data: {
-      isLoggedIn: !!localStorage.getItem('token'),
       projectId: localStorage.getItem('projectId') || DEFAULT_PROJECT_ID,
       versionId: localStorage.getItem('versionId'),
       statusId: localStorage.getItem('statusId'),

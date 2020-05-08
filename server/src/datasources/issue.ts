@@ -30,10 +30,7 @@ class IssueAPI extends RESTDataSource {
    * @param {object} req - request object
    */
   willSendRequest(req: { headers: { set: (arg0: string, arg1: string) => void; }; }) {
-    req.headers.set(
-      'Authorization',
-      this.oauth.sign(req, this.context.authorization),
-    );
+    req.headers.set('Authorization', this.oauth.sign(req, this.context.token));
   }
 
   /**
@@ -224,6 +221,20 @@ class IssueAPI extends RESTDataSource {
       ...user,
       avatarUrls: parseAvatarUrls(user.avatarUrls),
     };
+  }
+
+  /**
+   * Get current logged user
+   */
+  async getUserLogin() {
+    try {
+      const user = await this.get('/rest/auth/1/session');
+      console.log(user.anme);
+      return user.name;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
   }
 
   /**

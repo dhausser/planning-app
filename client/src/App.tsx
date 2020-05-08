@@ -1,6 +1,6 @@
-import React, { useEffect, FunctionComponent } from 'react';
+import React, { useEffect } from 'react';
 import { ApolloProvider } from '@apollo/client';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import {
   NavigationProvider,
   withNavigationViewController,
@@ -20,7 +20,6 @@ import Board from './pages/Board';
 import Pages from './pages/Pages';
 import AddItem from './pages/AddItem';
 import Settings from './pages/Settings';
-import LoginSuccess from './pages/LoginSuccess';
 import { LoginForm } from './components';
 
 import {
@@ -40,7 +39,7 @@ interface NavigationViewController {
   };
 }
 
-const AppRouter: FunctionComponent<NavigationViewController> = ({
+const AppRouter: React.FC<NavigationViewController> = ({
   navigationViewController,
 }) => {
   const isLoggedIn = useUserLogin();
@@ -53,44 +52,45 @@ const AppRouter: FunctionComponent<NavigationViewController> = ({
 
   return (
     <LayoutManagerWithViewController globalNavigation={MyGlobalNavigation}>
-      <Switch>
-        {isLoggedIn ? (
-          <>
-            <Route path="/" exact component={Projects} />
-            <Route path="/resource/:id" component={Resource} />
-            <Route path="/issue/:issueId" component={Issue} />
-            <Route path="/settings" component={Settings} />
-            <Route path="/reports" component={Dashboard} />
-            <Route path="/releases" component={Releases} />
-            <Route path="/backlog" component={Backlog} />
-            <Route path="/board" component={Board} />
-            <Route path="/roadmap" component={Roadmap} />
-            <Route path="/resources" component={Resources} />
-            <Route path="/issues" component={Issues} />
-            <Route path="/dashboards" component={Dashboard} />
-            <Route path="/pages" component={Pages} />
-            <Route path="/AddItem" component={AddItem} />
-          </>
-        ) : (
-          <>
-            <Route path="/" component={LoginForm} />
-            <Route path="/login" component={LoginSuccess} />
-          </>
-        )}
-      </Switch>
+      {isLoggedIn ? (
+        <>
+          <Route path={['/', '/projects']} exact component={Projects} />
+          {/* <Route path="/projects" component={Projects} /> */}
+          {/* <Route path="/" component={Projects} /> */}
+          <Route path="/resource/:id" component={Resource} />
+          <Route path="/issue/:issueId" component={Issue} />
+          <Route path="/settings" component={Settings} />
+          <Route path="/reports" component={Dashboard} />
+          <Route path="/releases" component={Releases} />
+          <Route path="/backlog" component={Backlog} />
+          <Route path="/board" component={Board} />
+          <Route path="/roadmap" component={Roadmap} />
+          <Route path="/resources" component={Resources} />
+          <Route path="/issues" component={Issues} />
+          <Route path="/dashboards" component={Dashboard} />
+          <Route path="/pages" component={Pages} />
+          <Route path="/AddItem" component={AddItem} />
+        </>
+      ) : (
+        <>
+          <Route path={['/', '/login']} exact component={LoginForm} />
+          {/* <Route path="/login" component={LoginForm} /> */}
+          {/* <Route path="/" exact component={LoginForm} /> */}
+        </>
+      )}
     </LayoutManagerWithViewController>
   );
 };
 
 const AppWithNavigationViewController = withNavigationViewController(AppRouter);
 
-const App: FunctionComponent = () => (
+const App: React.FC = () => (
   <ApolloProvider client={client}>
-    <BrowserRouter>
+    <Router>
       <NavigationProvider>
         <AppWithNavigationViewController />
       </NavigationProvider>
-    </BrowserRouter>
+    </Router>
   </ApolloProvider>
 );
 

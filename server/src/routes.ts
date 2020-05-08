@@ -17,8 +17,8 @@ router.get('/auth/provider', authenticate('oauth'));
 router.get(
   '/auth/provider/callback',
   authenticate('oauth', {
-    successRedirect: `${FRONTEND_URL}/login`,
-    failureRedirect: `${FRONTEND_URL}`,
+    successRedirect: `${FRONTEND_URL}`,
+    failureRedirect: `${FRONTEND_URL}/login`,
   }),
 );
 
