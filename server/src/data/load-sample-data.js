@@ -1,8 +1,9 @@
+import { writeFileSync } from 'fs';
+import { MongoClient } from 'mongodb';
+import csvtojson from 'csvtojson';
+import resources from './resources.json';
+
 require('dotenv').config();
-const fs = require('fs');
-const { MongoClient } = require('mongodb');
-const csvtojson = require('csvtojson');
-const resources = require('./resources.json');
 
 const inputFilePath = './data/resources.csv';
 const outputFilePath = './data/resources.json';
@@ -30,7 +31,7 @@ function addAvatarUrls(resourcesList) {
 
 function writeDataToFile(data) {
   const result = JSON.stringify(data);
-  fs.writeFileSync(outputFilePath, result);
+  writeFileSync(outputFilePath, result);
 }
 
 async function getDataFromFile() {
@@ -43,7 +44,7 @@ async function deleteData() {
     console.log('😢😢 Goodbye Data...');
     await client.db('davyJSDB').collection('resources').deleteMany({});
     console.log(
-      'Data Deleted. To load sample data, run\n\n\t npm run sample\n\n',
+      'Data Deleted. To load sample data, run\n\n\t npm run sample\n\n'
     );
     client.close();
     process.exit();
@@ -54,7 +55,7 @@ async function loadData() {
   client.connect(async (err) => {
     if (err) {
       console.log(
-        '\n👎👎👎👎👎👎👎👎 Error! The Error info is below but if you are importing sample data make sure to drop the existing database first with.\n\n\t npm run blowitallaway\n\n\n',
+        '\n👎👎👎👎👎👎👎👎 Error! The Error info is below but if you are importing sample data make sure to drop the existing database first with.\n\n\t npm run blowitallaway\n\n\n'
       );
       console.log(err);
     }

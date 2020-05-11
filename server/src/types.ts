@@ -1,7 +1,8 @@
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '@prisma/client';
 
 export interface Args {
   id: string;
+  key: string;
   projectId: string;
   versionId: string;
   teamId: string;
@@ -10,6 +11,8 @@ export interface Args {
   resourceId: string;
   startAt: number;
   maxResults: number;
+  value: string;
+  type: string;
 }
 
 export interface Context {
@@ -21,13 +24,13 @@ export interface Context {
   };
   user?: {
     token: string;
-  },
+  };
   token?: string;
   res?: any;
 }
 
 export interface ApolloContext {
-  prisma: PrismaClient
+  prisma: PrismaClient;
 }
 
 export interface UserInput {
@@ -60,8 +63,8 @@ export interface IssueConnection {
   statusId: string;
   startAt: number;
   maxResults: number;
-  assignee: any,
-  resourceMap: any,
+  assignee: any;
+  resourceMap: any;
   teamId?: TeamId;
   resourceId?: string;
 }
@@ -84,14 +87,14 @@ export interface AssignableUsers {
 }
 
 export interface Issue {
-  key: string
+  key: string;
   fields: {
     issuetype: {
       id: string;
-    }
+    };
     customfield_10006: string;
-    subtasks: Issue[]
-  }
+    subtasks: Issue[];
+  };
 }
 
 export interface TreeTableItem {
@@ -136,10 +139,10 @@ export interface Filter {
   teamId?: string;
 }
 
-export type Assignee = string[]
+export type Assignee = string[];
 
 export interface DashboardInputs extends Filter {
   assignee: Assignee;
 }
 
-export type TeamId = string | undefined
+export type TeamId = string | undefined;

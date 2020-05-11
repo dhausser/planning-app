@@ -3,7 +3,7 @@ import { Args, Context, UserInput, Pagination } from './types';
 
 const resolvers: IResolvers = {
   Query: {
-    issues: (_: void, args: Args, { dataSources }: Context): any =>
+    issues: (_: void, args: Args, { dataSources }: Context) =>
       dataSources.issueAPI.getIssues(args),
     dashboardIssues: (_: void, args: Args, { dataSources }: Context) =>
       dataSources.issueAPI.getDashboardIssues(args),
@@ -23,7 +23,7 @@ const resolvers: IResolvers = {
       dataSources.issueAPI.getCurrentUser(),
     user: (_: void, { id }: Args, { dataSources }: Context) =>
       dataSources.issueAPI.getUser(id),
-    assignableUsers: (_: void, args: any, { dataSources }: Context) =>
+    assignableUsers: (_: void, args: Args, { dataSources }: Context) =>
       dataSources.issueAPI.getAssignableUsers(args),
     absences: (_: void, { id }: Args, { dataSources }: Context) =>
       dataSources.absenceAPI.getAbsencesById({ userId: id }),
@@ -45,9 +45,9 @@ const resolvers: IResolvers = {
       context.dataSources.issueAPI.signin(context),
     signout: (_: void, __: void, { dataSources, res }: Context) =>
       dataSources.issueAPI.signout({ res }),
-    editIssue: (_: void, { id, value, type }: any, { dataSources }: Context) =>
+    editIssue: (_: void, { id, value, type }: Args, { dataSources }: Context) =>
       dataSources.issueAPI.editIssue({ id, value, type }),
-    assignIssue: (_: void, { id, key }: any, { dataSources }: Context) =>
+    assignIssue: (_: void, { id, key }: Args, { dataSources }: Context) =>
       dataSources.issueAPI.assignIssue({ id, key }),
     createResource: (_: void, args: UserInput, { dataSources }: Context) =>
       dataSources.userAPI.createUser(args),

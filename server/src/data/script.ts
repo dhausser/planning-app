@@ -11,17 +11,11 @@ async function main() {
       data: {
         key,
         name,
-        type
-      }
-    })
+        type,
+      },
+    });
   });
-  resources.forEach(async ({
-    key,
-    email,
-    name,
-    team,
-    position,
-  }) => {
+  resources.forEach(async ({ key, email, name, team, position }) => {
     const teamKey = team.toLocaleLowerCase();
     // console.log(teamKey);
     await prisma.user.create({
@@ -31,7 +25,7 @@ async function main() {
         name,
         position,
         team: {
-          connect: { key: teamKey }
+          connect: { key: teamKey },
         },
       },
     });

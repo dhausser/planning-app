@@ -1,11 +1,20 @@
 import { RESTDataSource } from 'apollo-datasource-rest';
 import { PrismaClient } from '@prisma/client';
+import { Context } from 'vm';
 import Issues from '../models/Issues';
 import Dashboard from '../models/Dashboard';
 import Roadmap from '../models/Roadmap';
 import Oauth from '../models/Auth';
-import { Project, Filter, AvatarUrls, IssueConnection, Resource, AssignableUsers, ApolloContext, Assignee } from '../types'
-import { Context } from 'vm';
+import {
+  Project,
+  Filter,
+  AvatarUrls,
+  IssueConnection,
+  Resource,
+  AssignableUsers,
+  ApolloContext,
+  Assignee,
+} from '../types';
 
 function parseAvatarUrls(avatarUrls: AvatarUrls) {
   return {
@@ -18,7 +27,9 @@ function parseAvatarUrls(avatarUrls: AvatarUrls) {
 
 class IssueAPI extends RESTDataSource {
   prisma: PrismaClient;
+
   oauth: Oauth;
+
   constructor({ prisma }: ApolloContext) {
     super();
     this.prisma = prisma;
@@ -30,7 +41,9 @@ class IssueAPI extends RESTDataSource {
    * Sign request before sending
    * @param {object} req - request object
    */
-  willSendRequest(req: { headers: { set: (arg0: string, arg1: string) => void; }; }) {
+  willSendRequest(req: {
+    headers: { set: (arg0: string, arg1: string) => void };
+  }) {
     req.headers.set('Authorization', this.oauth.sign(req, this.context.token));
   }
 
@@ -38,7 +51,7 @@ class IssueAPI extends RESTDataSource {
    * Signin
    */
   async signin({ token, user, res }: Context) {
-    // 1. If a cookie is present on the request, test whether it is still valid and return the authenticated user    
+    // 1. If a cookie is present on the request, test whether it is still valid and return the authenticated user
     if (token) {
       try {
         // If the token is still valid return it
@@ -52,10 +65,9 @@ class IssueAPI extends RESTDataSource {
       }
     }
 
-    // 2. If the user object is present on the session, test whether it is still valid and return the authenticated user  
+    // 2. If the user object is present on the session, test whether it is still valid and return the authenticated user
     if (user) {
-      const { token } = user;
-      res.cookie('token', token, {
+      res.cookie('token', user.token, {
         httpOnly: true,
         maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year cookie
       });
@@ -67,6 +79,7 @@ class IssueAPI extends RESTDataSource {
   /**
    * Signout
    */
+  // eslint-disable-next-line class-methods-use-this
   async signout({ res }: Context) {
     res.clearCookie('token');
     return null;
@@ -93,9 +106,11 @@ class IssueAPI extends RESTDataSource {
    */
   async getVersions(projectIdOrKey: string) {
     const response = await this.get(
-      `/rest/api/2/project/${projectIdOrKey}/versions`,
+      `/rest/api/2/project/${projectIdOrKey}/versions`
     );
-    const unreleased = response.filter((value: { released: boolean }) => value.released === false);
+    const unreleased = response.filter(
+      (value: { released: boolean }) => value.released === false
+    );
     return Array.isArray(response) ? unreleased : [];
   }
 
@@ -105,7 +120,7 @@ class IssueAPI extends RESTDataSource {
    */
   async getStatuses(projectIdOrKey: string) {
     const response = await this.get(
-      `/rest/api/2/project/${projectIdOrKey}/statuses`,
+      `/rest/api/2/project/${projectIdOrKey}/statuses`
     );
     const { statuses } = response[0];
     return Array.isArray(statuses) ? statuses : [];
@@ -173,14 +188,20 @@ class IssueAPI extends RESTDataSource {
 
     const response = await this.post(
       '/rest/api/2/search',
-      dashboard.getParams(),
+      dashboard.getParams()
     );
     const resourceMap = await this.getResourceMap();
 
     return dashboard.getDataset(response, resourceMap);
   }
 
-  async getRoadmapIssues({ projectId, versionId }: { projectId: string, versionId: string }) {
+  async getRoadmapIssues({
+    projectId,
+    versionId,
+  }: {
+    projectId: string;
+    versionId: string;
+  }) {
     const roadmap = new Roadmap({ projectId, versionId });
     const response = await this.post('/rest/api/2/search', roadmap.getParams());
     return roadmap.getDataset(response.issues);
@@ -191,10 +212,16 @@ class IssueAPI extends RESTDataSource {
    * @param {string} projectId - project ID
    * @param {string} versionId - version ID
    */
-  async getEpics({ projectId, versionId }: { projectId: string, versionId: string }) {
+  async getEpics({
+    projectId,
+    versionId,
+  }: {
+    projectId: string;
+    versionId: string;
+  }) {
     const jql = `issuetype = epic${
       projectId ? ` and project = ${projectId}` : ''
-      } ${versionId ? ` and fixversion = ${versionId}` : ''}`;
+    } ${versionId ? ` and fixversion = ${versionId}` : ''}`;
     const response = await this.post('/rest/api/2/search', {
       jql,
       fields: ['summary'],
@@ -323,8 +350,8 @@ class IssueAPI extends RESTDataSource {
     if (teamId) {
       const team = await this.prisma.team.findOne({
         where: { id: parseInt(teamId, 10) },
-        select: { members: { select: { key: true } } }
-      })
+        select: { members: { select: { key: true } } },
+      });
       if (team) {
         assignee = team.members.map(({ key }) => key);
       }
@@ -332,12 +359,12 @@ class IssueAPI extends RESTDataSource {
       resources = await this.prisma.user.findMany({ select: { key: true } });
       assignee = resources.map(({ key }) => key);
     }
-    return assignee
+    return assignee;
   }
 
   async getResourceMap() {
     const resources = await this.prisma.user.findMany({
-      include: { team: { select: { name: true } } }
+      include: { team: { select: { name: true } } },
     });
     return resources.reduce((acc: any, resource: any) => {
       acc[resource.key] = resource.team.name;
@@ -354,7 +381,15 @@ class IssueAPI extends RESTDataSource {
    * @param {string} value - value to be updated
    * @param {string} type - name of field to update
    */
-  async editIssue({ id, value, type }: { id: string, value: string, type: string }) {
+  async editIssue({
+    id,
+    value,
+    type,
+  }: {
+    id: string;
+    value: string;
+    type: string;
+  }) {
     return this.put(`/rest/api/2/issue/${id}`, { fields: { [type]: value } });
   }
 
@@ -364,9 +399,9 @@ class IssueAPI extends RESTDataSource {
    * @param {string} param0 - issue ID or key
    * @param {key} param0 - user key
    */
-  async assignIssue({ id, key }: { id: string, key: string }) {
+  async assignIssue({ id, key }: { id: string; key: string }) {
     return this.put(`/rest/api/2/issue/${id}/assignee`, { name: key });
   }
-};
+}
 
 export default IssueAPI;
