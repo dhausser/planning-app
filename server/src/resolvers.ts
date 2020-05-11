@@ -27,13 +27,13 @@ const resolvers: IResolvers = {
       dataSources.issueAPI.getAssignableUsers(args),
     absences: (_: void, { id }: Args, { dataSources }: Context) =>
       dataSources.absenceAPI.getAbsencesById({ userId: id }),
-    resources: (_: void, { offset, limit, teamId }: Pagination, { dataSources }: Context) =>
-      dataSources.userAPI.findUsers({ offset, limit, teamId }),
+    resources: (_: void, args: Pagination, { dataSources }: Context) =>
+      dataSources.userAPI.findUsers(args),
     resource: (_: void, { id }: Args, { dataSources }: Context) =>
       dataSources.userAPI.findUser({ id }),
     teams: (_: void, __: void, { dataSources }: Context) =>
       dataSources.userAPI.findTeams(),
-    currentUser: async (_: void, __: void, { dataSources, token }: Context) =>
+    currentUser: async (_: void, __: void, { dataSources }: Context) =>
       dataSources.issueAPI.getUserLogin(),
     // loginToken: (_: void, __: void, { user }: { user: { token: string } }) =>
     //   user.token,
@@ -41,9 +41,9 @@ const resolvers: IResolvers = {
   Mutation: {
     // login: (_: void, __: void, { user }: { user: { token: string } }) =>
     //   user.token,
-    signin: async (_: void, __: void, { dataSources, token, user, res }: Context) =>
-      dataSources.issueAPI.signin({ token, user, res }),
-    signout: (_: void, __: void, { dataSources, res }: Context) => 
+    signin: async (_: void, __: void, context: Context) =>
+      context.dataSources.issueAPI.signin(context),
+    signout: (_: void, __: void, { dataSources, res }: Context) =>
       dataSources.issueAPI.signout({ res }),
     editIssue: (_: void, { id, value, type }: any, { dataSources }: Context) =>
       dataSources.issueAPI.editIssue({ id, value, type }),
