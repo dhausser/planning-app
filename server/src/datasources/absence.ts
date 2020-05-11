@@ -2,6 +2,7 @@ import { RESTDataSource } from 'apollo-datasource-rest';
 
 class AbsenceAPI extends RESTDataSource {
   apiKey: string | undefined;
+
   constructor() {
     super();
     this.baseURL = process.env.PORTAL_URL;
@@ -19,6 +20,6 @@ class AbsenceAPI extends RESTDataSource {
     });
     return Array.isArray(response) ? response : [];
   }
-};
+}
 
 export default AbsenceAPI;

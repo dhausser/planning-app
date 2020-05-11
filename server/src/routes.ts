@@ -19,7 +19,7 @@ router.get(
   authenticate('oauth', {
     successRedirect: `${FRONTEND_URL}`,
     failureRedirect: `${FRONTEND_URL}/login`,
-  }),
+  })
 );
 
 if (process.env.NODE_ENV === 'production') {

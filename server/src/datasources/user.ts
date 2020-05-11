@@ -1,10 +1,11 @@
 import { DataSource } from 'apollo-datasource';
+import { PrismaClient } from '@prisma/client';
 import { ApolloContext, Resource, ResourceInputs, Pagination } from '../types';
 import resources from '../data/resources.json';
 
 class UserAPI extends DataSource {
-  prisma: any;
-  context: any;
+  prisma: PrismaClient;
+
   constructor({ prisma }: ApolloContext) {
     super();
     this.prisma = prisma;
@@ -15,7 +16,12 @@ class UserAPI extends DataSource {
     const include = { team: true };
     const first = limit;
     const skip = offset;
-    const allUsers = await this.prisma.user.findMany({ where, include, first, skip });
+    const allUsers = await this.prisma.user.findMany({
+      where,
+      include,
+      first,
+      skip,
+    });
     console.log({ offset, limit, teamId });
     return Array.isArray(allUsers) ? allUsers : [];
   }
@@ -26,21 +32,21 @@ class UserAPI extends DataSource {
   }
 
   async findTeams() {
-    const teams = await this.prisma.team.findMany({ include: { members: true } });
+    const teams = await this.prisma.team.findMany({
+      include: { members: true },
+    });
     return Array.isArray(teams) ? teams : [];
   }
 
   async getResourceMap() {
     const allUsers = await this.prisma.user.findMany();
-    return allUsers.reduce((acc: any, resource: Resource) => {
+    return allUsers.reduce((acc: any, resource: any) => {
       acc[resource.key] = resource.teamId;
       return acc;
     }, {});
   }
 
-  async createUser({
-    firstname, lastname, position, team,
-  }: ResourceInputs) {
+  async createUser({ firstname, lastname, position, team }: ResourceInputs) {
     const key = `${firstname.toLowerCase()}.${lastname.toLowerCase()}`;
     const user = this.prisma.user.create({
       data: {
@@ -48,14 +54,18 @@ class UserAPI extends DataSource {
         email: `${key}@cdprojektred.com`,
         name: `${firstname} ${lastname}`,
         position,
-        team,
-      }
+        // team,
+      },
     });
     return user;
   }
 
   async updateUser({
-    id, firstname, lastname, position, team,
+    id,
+    firstname,
+    lastname,
+    position,
+    team,
   }: ResourceInputs) {
     const key = `${firstname.toLowerCase()}.${lastname.toLowerCase()}`;
     const where = { key: id };
@@ -63,7 +73,7 @@ class UserAPI extends DataSource {
       name: `${firstname} ${lastname}`,
       email: `${key}@cdprojektred.com`,
       position,
-      team,
+      // team,
     };
     const user = this.prisma.user.update({ where, data });
     return user;
@@ -82,23 +92,19 @@ class UserAPI extends DataSource {
   // }
 
   async createAllUsers() {
-    const allUsers = resources.map(async ({
-      key,
-      email,
-      name,
-      team,
-      position,
-    }) => {
-      return await this.prisma.user.create({
-        data: {
-          key,
-          email,
-          name,
-          team,
-          position,
-        },
-      });
-    });
+    const allUsers = resources.map(
+      async ({ key, email, name, team, position }) => {
+        return this.prisma.user.create({
+          data: {
+            key,
+            email,
+            name,
+            position,
+            // team,/
+          },
+        });
+      }
+    );
     return allUsers;
   }
 
@@ -106,8 +112,6 @@ class UserAPI extends DataSource {
     const deleteUsers = await this.prisma.user.deleteMany({});
     return deleteUsers.count;
   }
-
-  
 }
 
 export default UserAPI;

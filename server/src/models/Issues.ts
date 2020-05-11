@@ -2,15 +2,25 @@ import { IssueConnection } from '../types';
 
 class Issues {
   projectId: any;
+
   issuetypeId: any;
+
   versionId: any;
+
   statusId: any;
+
   assignee: any;
+
   startAt: any;
+
   maxResults: any;
+
   resourceMap: any;
+
   fields: string[];
+
   jql: string;
+
   constructor({
     projectId,
     issuetypeId,
@@ -57,10 +67,10 @@ class Issues {
   getQuery() {
     this.jql = `${this.projectId ? `project=${this.projectId}` : ''}${
       this.issuetypeId ? ` AND issuetype=${this.issuetypeId}` : ''
-      }${this.versionId ? ` AND fixVersion=${this.versionId}` : ''}${
+    }${this.versionId ? ` AND fixVersion=${this.versionId}` : ''}${
       this.statusId ? ` AND status=${this.statusId}` : ''
-      }${this.assignee ? ` AND assignee in (${this.assignee})` : ''}`;
+    }${this.assignee ? ` AND assignee in (${this.assignee})` : ''}`;
   }
-};
+}
 
 export default Issues;

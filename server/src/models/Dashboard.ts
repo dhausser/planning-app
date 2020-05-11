@@ -1,17 +1,28 @@
-import { DashboardChartData, DashboardInputs, TeamId, Assignee } from '../types';
+import {
+  DashboardChartData,
+  DashboardInputs,
+  TeamId,
+  Assignee,
+} from '../types';
 
 class Dashboard {
   data: DashboardChartData;
+
   fields: string[];
+
   maxResults: number;
+
   projectId: string;
+
   versionId: string;
+
   teamId: TeamId;
+
   assignee: Assignee;
+
   jql: string;
-  constructor({
-    projectId, versionId, teamId, assignee,
-  }: DashboardInputs) {
+
+  constructor({ projectId, versionId, teamId, assignee }: DashboardInputs) {
     this.data = {};
     this.fields = ['assignee'];
     this.maxResults = 1500;
@@ -39,7 +50,10 @@ class Dashboard {
     };
   }
 
-  defineAggregationKey(key: string | number, resourceMap: { [x: string]: any; }) {
+  defineAggregationKey(
+    key: string | number,
+    resourceMap: { [x: string]: any }
+  ) {
     return this.teamId ? key : resourceMap[key];
   }
 
@@ -60,7 +74,7 @@ class Dashboard {
     for (let i = 0; i < issues.length; i += 1) {
       const key = this.defineAggregationKey(
         issues[i].fields.assignee.key,
-        resourceMap,
+        resourceMap
       );
 
       if (key) {
@@ -82,6 +96,6 @@ class Dashboard {
       total,
     };
   }
-};
+}
 
 export default Dashboard;

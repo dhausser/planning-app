@@ -7,6 +7,7 @@ const DEFAULT_SORT = [['team', -1]];
 
 class ResourcesDAO {
   static resources: any;
+
   static async injectDB(conn: any) {
     if (resources) {
       return;
@@ -17,7 +18,7 @@ class ResourcesDAO {
       this.resources = resources; // this is only for testing
     } catch (e) {
       console.error(
-        `Unable to establish a collection handle in resourcesDAO: ${e}`,
+        `Unable to establish a collection handle in resourcesDAO: ${e}`
       );
     }
   }
@@ -44,7 +45,11 @@ class ResourcesDAO {
    * Returns a list of objects, each object contains a key, name and a team
    * @returns {Promise<ResourcesResult>} A promise that will resolve to a list of ResourcesResult.
    */
-  static async getResources({ page = 0, resourcesPerPage = 100, teamId = '' } = {}) {
+  static async getResources({
+    page = 0,
+    resourcesPerPage = 100,
+    teamId = '',
+  } = {}) {
     const query = teamId ? { team: teamId } : {};
     const project = { _id: 0 };
     const sort = DEFAULT_SORT;
@@ -62,12 +67,13 @@ class ResourcesDAO {
 
     try {
       const resourcesList = await displayCursor.toArray();
-      const totalNumResources = page === 0 ? await resources.countDocuments(query) : 0;
+      const totalNumResources =
+        page === 0 ? await resources.countDocuments(query) : 0;
 
       return { resourcesList, totalNumResources };
     } catch (e) {
       console.error(
-        `Unable to convert cursor to array or problem counting documents, ${e}`,
+        `Unable to convert cursor to array or problem counting documents, ${e}`
       );
       return { resourcesList: [], totalNumResources: 0 };
     }
@@ -160,9 +166,11 @@ class ResourcesDAO {
     return cursor.toArray();
   }
 
-
   static async insertResource({
-    firstname, lastname, position, team,
+    firstname,
+    lastname,
+    position,
+    team,
   }: ResourceInputs) {
     let cursor;
     const key = `${firstname.toLowerCase()}.${lastname.toLowerCase()}`;
@@ -200,7 +208,11 @@ class ResourcesDAO {
   }
 
   static async updateResource({
-    id, firstname, lastname, position, team,
+    id,
+    firstname,
+    lastname,
+    position,
+    team,
   }: ResourceInputs) {
     let cursor;
     const key = `${firstname.toLowerCase()}.${lastname.toLowerCase()}`;
@@ -277,6 +289,6 @@ class ResourcesDAO {
 
     return null;
   }
-};
+}
 
 export default ResourcesDAO;

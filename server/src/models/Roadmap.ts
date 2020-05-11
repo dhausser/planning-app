@@ -2,11 +2,17 @@ import { Filter, TreeTableData, Issue, TreeTableItem } from '../types';
 
 class Roadmap {
   data: TreeTableData;
+
   fields: string[];
+
   maxResults: number;
+
   projectId: any;
+
   versionId: any;
+
   jql: string;
+
   constructor({ projectId, versionId }: Filter) {
     this.data = {};
     this.fields = [
@@ -62,7 +68,7 @@ class Roadmap {
         if (
           Object.prototype.hasOwnProperty.call(
             this.data,
-            issue.fields.customfield_10006,
+            issue.fields.customfield_10006
           )
         ) {
           this.addToParent(issue);
@@ -83,6 +89,6 @@ class Roadmap {
     this.buildDataset(issues);
     return Object.values(this.data);
   }
-};
+}
 
 export default Roadmap;

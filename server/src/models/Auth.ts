@@ -1,14 +1,24 @@
-/// <reference path="../node.d.ts"/>
+/* eslint-disable @typescript-eslint/camelcase */
+// / <reference path="../node.d.ts"/>
 import { sign } from 'oauth-sign';
 import { consumerKey, consumerSecret } from '../utils';
 
 export default class Oauth {
   baseURL: string;
+
   constructor(baseURL: string) {
     this.baseURL = baseURL;
   }
 
-  sign(req: { headers?: { set: (arg0: string, arg1: string) => void; }; method?: any; path?: any; params?: any; }, oauthToken: any) {
+  sign(
+    req: {
+      headers?: { set: (arg0: string, arg1: string) => void };
+      method?: any;
+      path?: any;
+      params?: any;
+    },
+    oauthToken: any
+  ) {
     const { method, path: addressPath, params } = req;
     const oauthVersion = '1.0';
     const signatureMethod = 'RSA-SHA1';
@@ -30,7 +40,7 @@ export default class Oauth {
 
     // Generate Oauth signature
     const oauthSignature = encodeURIComponent(
-      sign(signatureMethod, method, baseURI, oauthParams, consumerSecret),
+      sign(signatureMethod, method, baseURI, oauthParams, consumerSecret)
     );
 
     // Compose Oauth authorization header
@@ -43,4 +53,4 @@ export default class Oauth {
       oauth_token="${oauthToken}",\
       oauth_version="${oauthVersion}"`;
   }
-};
+}

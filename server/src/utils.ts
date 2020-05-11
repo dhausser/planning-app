@@ -1,4 +1,4 @@
-/// <reference path="node.d.ts"/>
+// / <reference path="node.d.ts"/>
 import passport from 'passport';
 import { OAuthStrategy } from 'passport-oauth';
 import { join } from 'path';
@@ -30,11 +30,11 @@ passport.use(
       token: string,
       _tokenSecret: string,
       _profile: object,
-      done: (arg0: null, arg1: { token: string }) => void,
+      done: (arg0: null, arg1: { token: string }) => void
     ) => {
       done(null, { token });
-    },
-  ),
+    }
+  )
 );
 passport.serializeUser(async (user, done) => done(null, user));
 passport.deserializeUser((id, done) => done(null, id));
