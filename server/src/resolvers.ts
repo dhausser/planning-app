@@ -3,46 +3,14 @@ import { Args, Context, UserInput, Pagination } from './types';
 
 const resolvers: IResolvers = {
   Query: {
-    issues: (
-      _: void,
-      {
-        projectId,
-        issuetypeId,
-        statusId,
-        versionId,
-        teamId,
-        resourceId,
-        startAt,
-        maxResults,
-      }: Args,
-      { dataSources }: Context
-    ): any =>
-      dataSources.issueAPI.getIssues({
-        projectId,
-        issuetypeId,
-        statusId,
-        versionId,
-        teamId,
-        resourceId,
-        startAt,
-        maxResults,
-      }),
-    dashboardIssues: (
-      _: void,
-      { projectId, versionId, teamId }: Args,
-      { dataSources }: Context
-    ) =>
-      dataSources.issueAPI.getDashboardIssues({ projectId, versionId, teamId }),
-    roadmapIssues: (
-      _: void,
-      { projectId, versionId }: Args,
-      { dataSources }: Context
-    ) => dataSources.issueAPI.getRoadmapIssues(projectId, versionId),
-    epics: (
-      _: void,
-      { projectId, versionId }: Args,
-      { dataSources }: Context
-    ) => dataSources.issueAPI.getEpics(projectId, versionId),
+    issues: (_: void, args: Args, { dataSources }: Context): any =>
+      dataSources.issueAPI.getIssues(args),
+    dashboardIssues: (_: void, args: Args, { dataSources }: Context) =>
+      dataSources.issueAPI.getDashboardIssues(args),
+    roadmapIssues: (_: void, args: Args, { dataSources }: Context) =>
+      dataSources.issueAPI.getRoadmapIssues(args),
+    epics: (_: void, args: Args, { dataSources }: Context) =>
+      dataSources.issueAPI.getEpics(args),
     issue: (_: void, { id }: Args, { dataSources }: Context) =>
       dataSources.issueAPI.getIssueById(id),
     projects: (_: void, __: void, { dataSources }: Context) =>
@@ -55,28 +23,8 @@ const resolvers: IResolvers = {
       dataSources.issueAPI.getCurrentUser(),
     user: (_: void, { id }: Args, { dataSources }: Context) =>
       dataSources.issueAPI.getUser(id),
-    assignableUsers: (
-      _: void,
-      {
-        username,
-        project,
-        issueKey,
-        startAt,
-        maxResults,
-        actionDescriptorId,
-      }: any,
-      { dataSources }: Context
-    ) =>
-      dataSources.issueAPI.getAssignableUsers({
-        username,
-        project,
-        issueKey,
-        startAt,
-        maxResults,
-        actionDescriptorId,
-      }),
-    loginToken: (_: void, __: void, { user }: { user: { token: string } }) =>
-      user.token,
+    assignableUsers: (_: void, args: any, { dataSources }: Context) =>
+      dataSources.issueAPI.getAssignableUsers(args),
     absences: (_: void, { id }: Args, { dataSources }: Context) =>
       dataSources.absenceAPI.getAbsencesById({ userId: id }),
     resources: (_: void, { offset, limit, teamId }: Pagination, { dataSources }: Context) =>
@@ -85,41 +33,18 @@ const resolvers: IResolvers = {
       dataSources.userAPI.findUser({ id }),
     teams: (_: void, __: void, { dataSources }: Context) =>
       dataSources.userAPI.findTeams(),
-    currentUser: async (_: void, __: void, { dataSources, token }: Context) => dataSources.issueAPI.getUserLogin(),
+    currentUser: async (_: void, __: void, { dataSources, token }: Context) =>
+      dataSources.issueAPI.getUserLogin(),
+    // loginToken: (_: void, __: void, { user }: { user: { token: string } }) =>
+    //   user.token,
   },
   Mutation: {
-    login: (_: void, __: void, { user }: { user: { token: string } }) =>
-      user.token,
-    signin: async (_: void, __: void, { dataSources, user, token, res }: Context) => {  
-      // 1. If a cookie is present on the request, test whether it is still valid and return the authenticated user    
-      if (token) {
-        try {
-          // If the token is still valid return it
-          const currentUser = await dataSources.issueAPI.getUserLogin();
-          return currentUser ? { token } : null;
-        } catch (error) {
-          // If the authenticated failed, clear the cookie
-          console.error(error);
-          res.clearCookie('token');
-          return null;
-        }
-      }
-
-      // 2. If the user object is present on the session, test whether it is still valid and return the authenticated user  
-      if (user) {
-        const { token } = user;
-        res.cookie('token', token, {
-          httpOnly: true,
-          maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year cookie
-        });
-        return user;
-      }
-      return null;
-    },
-    signout: (_: void, __: void, { res }: { res: any }) => {
-      res.clearCookie('token');
-      return null;
-    },
+    // login: (_: void, __: void, { user }: { user: { token: string } }) =>
+    //   user.token,
+    signin: async (_: void, __: void, { dataSources, token, user, res }: Context) =>
+      dataSources.issueAPI.signin({ token, user, res }),
+    signout: (_: void, __: void, { dataSources, res }: Context) => 
+      dataSources.issueAPI.signout({ res }),
     editIssue: (_: void, { id, value, type }: any, { dataSources }: Context) =>
       dataSources.issueAPI.editIssue({ id, value, type }),
     assignIssue: (_: void, { id, key }: any, { dataSources }: Context) =>

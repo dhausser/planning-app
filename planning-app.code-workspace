@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "client"
+		},
+		{
+			"path": "server"
+		}
+	],
+	"remoteAuthority": "wsl+ubuntu",
+	"settings": {
+		"workbench.colorCustomizations": {
+			"titleBar.activeBackground": "#6554C0",
+			"titleBar.inactiveBackground": "#6554C0"
+		}
+	}
+}

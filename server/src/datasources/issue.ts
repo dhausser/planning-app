@@ -5,6 +5,7 @@ import Dashboard from '../models/Dashboard';
 import Roadmap from '../models/Roadmap';
 import Oauth from '../models/Auth';
 import { Project, Filter, AvatarUrls, IssueConnection, Resource, AssignableUsers, ApolloContext, Assignee } from '../types'
+import { Context } from 'vm';
 
 function parseAvatarUrls(avatarUrls: AvatarUrls) {
   return {
@@ -31,6 +32,44 @@ class IssueAPI extends RESTDataSource {
    */
   willSendRequest(req: { headers: { set: (arg0: string, arg1: string) => void; }; }) {
     req.headers.set('Authorization', this.oauth.sign(req, this.context.token));
+  }
+
+  /**
+   * Signin
+   */
+  async signin({ token, user, res }: Context) {
+    // 1. If a cookie is present on the request, test whether it is still valid and return the authenticated user    
+    if (token) {
+      try {
+        // If the token is still valid return it
+        const currentUser = await this.getUserLogin();
+        return currentUser ? { token } : null;
+      } catch (error) {
+        // If the authenticated failed, clear the cookie
+        console.error(error);
+        res.clearCookie('token');
+        return null;
+      }
+    }
+
+    // 2. If the user object is present on the session, test whether it is still valid and return the authenticated user  
+    if (user) {
+      const { token } = user;
+      res.cookie('token', token, {
+        httpOnly: true,
+        maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year cookie
+      });
+      return user;
+    }
+    return null;
+  }
+
+  /**
+   * Signout
+   */
+  async signout({ res }: Context) {
+    res.clearCookie('token');
+    return null;
   }
 
   /**
@@ -141,7 +180,7 @@ class IssueAPI extends RESTDataSource {
     return dashboard.getDataset(response, resourceMap);
   }
 
-  async getRoadmapIssues(projectId: string, versionId: string) {
+  async getRoadmapIssues({ projectId, versionId }: { projectId: string, versionId: string }) {
     const roadmap = new Roadmap({ projectId, versionId });
     const response = await this.post('/rest/api/2/search', roadmap.getParams());
     return roadmap.getDataset(response.issues);
@@ -152,7 +191,7 @@ class IssueAPI extends RESTDataSource {
    * @param {string} projectId - project ID
    * @param {string} versionId - version ID
    */
-  async getEpics(projectId: string, versionId: string) {
+  async getEpics({ projectId, versionId }: { projectId: string, versionId: string }) {
     const jql = `issuetype = epic${
       projectId ? ` and project = ${projectId}` : ''
       } ${versionId ? ` and fixversion = ${versionId}` : ''}`;
