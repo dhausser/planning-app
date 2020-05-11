@@ -1,8 +1,11 @@
 {
   "name": "planning-app-server",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "license": "MIT",
   "private": true,
+  "engines": {
+    "node": ">=13.13.0"
+  },
   "scripts": {
     "dev": "ts-node-dev --no-notify --respawn --transpileOnly src/index",
     "start": "node dist/index",
@@ -39,8 +42,7 @@
     "oauth-sign": "^0.9.0",
     "passport": "^0.4.1",
     "passport-oauth": "^1.0.0",
-    "redis": "^3.0.2",
-    "ts-node-dev": "^1.0.0-pre.44"
+    "redis": "^3.0.2"
   },
   "devDependencies": {
     "@prisma/cli": "^2.0.0-beta.4",
@@ -48,9 +50,7 @@
     "@types/node": "^13.13.5",
     "@types/passport": "^1.0.3",
     "ts-node": "^8.10.1",
+    "ts-node-dev": "^1.0.0-pre.44",
     "typescript": "^3.8.3"
-  },
-  "engines": {
-    "node": ">=10.0.0"
   }
 }
