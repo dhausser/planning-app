@@ -1,3 +1,4 @@
+// import * as dotenv from 'dotenv';
 import express from 'express';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
@@ -14,7 +15,8 @@ import UserAPI from './datasources/user';
 import IssueAPI from './datasources/issue';
 import AbsenceAPI from './datasources/absence';
 
-require('dotenv').config();
+// require('dotenv').config();
+// dotenv.config();
 
 const app = express();
 const port = process.env.PORT;

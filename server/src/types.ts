@@ -18,9 +18,9 @@ export interface Args {
 
 export interface Context {
   dataSources: {
-    issueAPI: unknown;
-    absenceAPI: unknown;
-    userAPI: unknown;
+    issueAPI: any;
+    absenceAPI: any;
+    userAPI: any;
   };
   res: Response;
   user?: {

@@ -139,15 +139,12 @@ class UserAPI extends DataSource {
     const resources = await this.prisma.user.findMany({
       include: { team: { select: { name: true } } },
     });
-    if (resources) {
-      return resources.reduce<ResourceMap>((acc, resource) => {
-        if (acc[resource.key] && resource.team) {
-          acc[resource.key] = resource.team.name;
-        }
-        return acc;
-      }, {});
-    }
-    return null;
+    return resources.reduce<ResourceMap>((acc, resource) => {
+      if (resource.key && resource.team) {
+        acc[resource.key] = resource.team.name;
+      }
+      return acc;
+    }, {});
   }
 }
 

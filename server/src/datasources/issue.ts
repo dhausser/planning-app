@@ -149,9 +149,9 @@ class IssueAPI extends RESTDataSource {
     if (resourceId) {
       assignee = resourceId;
     } else if (teamId) {
-      assignee = await this.context.userApi.getAssignee({ teamId });
+      assignee = await this.context.dataSources.userAPI.getAssignee({ teamId });
     }
-    const resourceMap = await this.context.userApi.getResourceMap();
+    const resourceMap = await this.context.dataSources.userAPI.getResourceMap();
     const issues = new Issues({
       projectId,
       issuetypeId,
@@ -175,7 +175,9 @@ class IssueAPI extends RESTDataSource {
    * @param {string} teamId - team ID
    */
   async getDashboardIssues({ projectId, versionId, teamId }: Filter) {
-    const assignee = await this.context.userAPI.getAssignee({ teamId });
+    const assignee = await this.context.dataSources.userAPI.getAssignee({
+      teamId,
+    });
 
     const dashboard = new Dashboard({
       projectId,
@@ -188,7 +190,7 @@ class IssueAPI extends RESTDataSource {
       '/rest/api/2/search',
       dashboard.getParams()
     );
-    const resourceMap = await this.context.userAPI.getResourceMap();
+    const resourceMap = await this.context.dataSources.userAPI.getResourceMap();
 
     return dashboard.getDataset(response, resourceMap);
   }
@@ -293,7 +295,6 @@ class IssueAPI extends RESTDataSource {
   async getUserLogin() {
     try {
       const user = await this.get('/rest/auth/1/session');
-      console.log(user.anme);
       return user.name;
     } catch (error) {
       console.error(error);
@@ -319,22 +320,7 @@ class IssueAPI extends RESTDataSource {
    * If you specify a value that is higher than this number, your search results will be truncated.
    * @param {int} [actionDescriptorId]
    */
-  async getAssignableUsers({
-    username,
-    project,
-    issueKey,
-    startAt,
-    maxResults,
-    actionDescriptorId,
-  }: AssignableUsers) {
-    console.log({
-      username,
-      project,
-      issueKey,
-      startAt,
-      maxResults,
-      actionDescriptorId,
-    });
+  async getAssignableUsers({ project }: AssignableUsers) {
     const response = await this.get('rest/api/2/user/assignable/search', {
       project,
     });
@@ -342,7 +328,6 @@ class IssueAPI extends RESTDataSource {
   }
 
   /* Mutations */
-
   /**
    * Edit issue
    * Edits an issue from a JSON representation.

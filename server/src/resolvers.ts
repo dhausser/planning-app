@@ -1,61 +1,113 @@
 import { IResolvers } from 'apollo-server-express';
-import { Args, Context, UserInput, Pagination } from './types';
 
 const resolvers: IResolvers = {
   Query: {
-    issues: (_: void, args: Args, { dataSources }: Context) =>
-      dataSources.issueAPI.getIssues(args),
-    dashboardIssues: (_: void, args: Args, { dataSources }: Context) =>
+    issues: (_, args, { dataSources }) => dataSources.issueAPI.getIssues(args),
+    dashboardIssues: (_, args, { dataSources }) =>
       dataSources.issueAPI.getDashboardIssues(args),
-    roadmapIssues: (_: void, args: Args, { dataSources }: Context) =>
+    roadmapIssues: (_, args, { dataSources }) =>
       dataSources.issueAPI.getRoadmapIssues(args),
-    epics: (_: void, args: Args, { dataSources }: Context) =>
-      dataSources.issueAPI.getEpics(args),
-    issue: (_: void, { id }: Args, { dataSources }: Context) =>
+    epics: (_, args, { dataSources }) => dataSources.issueAPI.getEpics(args),
+    issue: (_, { id }, { dataSources }) =>
       dataSources.issueAPI.getIssueById(id),
-    projects: (_: void, __: void, { dataSources }: Context) =>
-      dataSources.issueAPI.getProjects(),
-    versions: (_: void, { id }: Args, { dataSources }: Context) =>
+    projects: (_, __, { dataSources }) => dataSources.issueAPI.getProjects(),
+    versions: (_, { id }, { dataSources }) =>
       dataSources.issueAPI.getVersions(id),
-    statuses: (_: void, { id }: Args, { dataSources }: Context) =>
+    statuses: (_, { id }, { dataSources }) =>
       dataSources.issueAPI.getStatuses(id),
-    myself: (_: void, __: void, { dataSources }: Context) =>
-      dataSources.issueAPI.getCurrentUser(),
-    user: (_: void, { id }: Args, { dataSources }: Context) =>
-      dataSources.issueAPI.getUser(id),
-    assignableUsers: (_: void, args: Args, { dataSources }: Context) =>
+    myself: (_, __, { dataSources }) => dataSources.issueAPI.getCurrentUser(),
+    user: (_, { id }, { dataSources }) => dataSources.issueAPI.getUser(id),
+    assignableUsers: (_, args, { dataSources }) =>
       dataSources.issueAPI.getAssignableUsers(args),
-    absences: (_: void, { id }: Args, { dataSources }: Context) =>
+    absences: (_, { id }, { dataSources }) =>
       dataSources.absenceAPI.getAbsencesById({ userId: id }),
-    resources: (_: void, args: Pagination, { dataSources }: Context) =>
+    resources: (_, args, { dataSources }) =>
       dataSources.userAPI.findUsers(args),
-    resource: (_: void, { id }: Args, { dataSources }: Context) =>
+    resource: (_, { id }, { dataSources }) =>
       dataSources.userAPI.findUser({ id }),
-    teams: (_: void, __: void, { dataSources }: Context) =>
-      dataSources.userAPI.findTeams(),
-    currentUser: async (_: void, __: void, { dataSources }: Context) =>
+    teams: (_, __, { dataSources }) => dataSources.userAPI.findTeams(),
+    currentUser: async (_, __, { dataSources }) =>
       dataSources.issueAPI.getUserLogin(),
   },
   Mutation: {
-    signin: async (_: void, __: void, context: Context) =>
+    signin: async (_, __, context) =>
       context.dataSources.issueAPI.signin(context),
-    signout: (_: void, __: void, { dataSources, res }: Context) =>
+    signout: (_, __, { dataSources, res }) =>
       dataSources.issueAPI.signout({ res }),
-    editIssue: (_: void, { id, value, type }: Args, { dataSources }: Context) =>
+    editIssue: (_, { id, value, type }, { dataSources }) =>
       dataSources.issueAPI.editIssue({ id, value, type }),
-    assignIssue: (_: void, { id, key }: Args, { dataSources }: Context) =>
+    assignIssue: (_, { id, key }, { dataSources }) =>
       dataSources.issueAPI.assignIssue({ id, key }),
-    createResource: (_: void, args: UserInput, { dataSources }: Context) =>
+    createResource: (_, args, { dataSources }) =>
       dataSources.userAPI.createUser(args),
-    updateResource: (_: void, args: UserInput, { dataSources }: Context) =>
+    updateResource: (_, args, { dataSources }) =>
       dataSources.userAPI.updateUser(args),
-    deleteResource: (_: void, args: UserInput, { dataSources }: Context) =>
+    deleteResource: (_, args, { dataSources }) =>
       dataSources.userAPI.deleteUser(args),
-    createAllResources: (_: void, __: void, { dataSources }: Context) =>
+    createAllResources: (_, __, { dataSources }) =>
       dataSources.userAPI.createAllUsers(),
-    deleteAllResources: (_: void, __: void, { dataSources }: Context) =>
+    deleteAllResources: (_, __, { dataSources }) =>
       dataSources.userAPI.deleteAllUsers(),
   },
 };
 
 export default resolvers;
+
+// import { Args, Context, UserInput, Pagination } from './types';
+
+// const resolvers: IResolvers = {
+//   Query: {
+//     issues: (_, args: Args, { dataSources }: Context) =>
+//       dataSources.issueAPI.getIssues(args),
+//     dashboardIssues: (_, args: Args, { dataSources }: Context) =>
+//       dataSources.issueAPI.getDashboardIssues(args),
+//     roadmapIssues: (_, args: Args, { dataSources }: Context) =>
+//       dataSources.issueAPI.getRoadmapIssues(args),
+//     epics: (_, args: Args, { dataSources }: Context) =>
+//       dataSources.issueAPI.getEpics(args),
+//     issue: (_, { id }: Args, { dataSources }: Context) =>
+//       dataSources.issueAPI.getIssueById(id),
+//     projects: (_, __, { dataSources }: Context) =>
+//       dataSources.issueAPI.getProjects(),
+//     versions: (_, { id }: Args, { dataSources }: Context) =>
+//       dataSources.issueAPI.getVersions(id),
+//     statuses: (_, { id }: Args, { dataSources }: Context) =>
+//       dataSources.issueAPI.getStatuses(id),
+//     myself: (_, __, { dataSources }: Context) =>
+//       dataSources.issueAPI.getCurrentUser(),
+//     user: (_, { id }: Args, { dataSources }: Context) =>
+//       dataSources.issueAPI.getUser(id),
+//     assignableUsers: (_, args: Args, { dataSources }: Context) =>
+//       dataSources.issueAPI.getAssignableUsers(args),
+//     absences: (_, { id }: Args, { dataSources }: Context) =>
+//       dataSources.absenceAPI.getAbsencesById({ userId: id }),
+//     resources: (_, args: Pagination, { dataSources }: Context) =>
+//       dataSources.userAPI.findUsers(args),
+//     resource: (_, { id }: Args, { dataSources }: Context) =>
+//       dataSources.userAPI.findUser({ id }),
+//     teams: (_, __, { dataSources }: Context) =>
+//       dataSources.userAPI.findTeams(),
+//     currentUser: async (_, __, { dataSources }: Context) =>
+//       dataSources.issueAPI.getUserLogin(),
+//   },
+//   Mutation: {
+//     signin: async (_, __, context: Context) =>
+//       context.dataSources.issueAPI.signin(context),
+//     signout: (_, __, { dataSources, res }: Context) =>
+//       dataSources.issueAPI.signout({ res }),
+//     editIssue: (_, { id, value, type }: Args, { dataSources }: Context) =>
+//       dataSources.issueAPI.editIssue({ id, value, type }),
+//     assignIssue: (_, { id, key }: Args, { dataSources }: Context) =>
+//       dataSources.issueAPI.assignIssue({ id, key }),
+//     createResource: (_, args: UserInput, { dataSources }: Context) =>
+//       dataSources.userAPI.createUser(args),
+//     updateResource: (_, args: UserInput, { dataSources }: Context) =>
+//       dataSources.userAPI.updateUser(args),
+//     deleteResource: (_, args: UserInput, { dataSources }: Context) =>
+//       dataSources.userAPI.deleteUser(args),
+//     createAllResources: (_, __, { dataSources }: Context) =>
+//       dataSources.userAPI.createAllUsers(),
+//     deleteAllResources: (_, __, { dataSources }: Context) =>
+//       dataSources.userAPI.deleteAllUsers(),
+//   },
+// };
