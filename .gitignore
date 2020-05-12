@@ -110,6 +110,7 @@ dist
 .vscode-test
 
 # Data files
+data/
 resources.csv
 resources.json
-redis-5.0.8
+teams.json

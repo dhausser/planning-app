@@ -20,7 +20,6 @@ export interface Context {
   dataSources: {
     issueAPI: unknown;
     absenceAPI: unknown;
-    resourceAPI: unknown;
     userAPI: unknown;
   };
   res: Response;
