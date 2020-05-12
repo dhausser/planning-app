@@ -35,12 +35,8 @@ const resolvers: IResolvers = {
       dataSources.userAPI.findTeams(),
     currentUser: async (_: void, __: void, { dataSources }: Context) =>
       dataSources.issueAPI.getUserLogin(),
-    // loginToken: (_: void, __: void, { user }: { user: { token: string } }) =>
-    //   user.token,
   },
   Mutation: {
-    // login: (_: void, __: void, { user }: { user: { token: string } }) =>
-    //   user.token,
     signin: async (_: void, __: void, context: Context) =>
       context.dataSources.issueAPI.signin(context),
     signout: (_: void, __: void, { dataSources, res }: Context) =>
@@ -55,9 +51,9 @@ const resolvers: IResolvers = {
       dataSources.userAPI.updateUser(args),
     deleteResource: (_: void, args: UserInput, { dataSources }: Context) =>
       dataSources.userAPI.deleteUser(args),
-    createAllResources: (_: void, args: void, { dataSources }: Context) =>
+    createAllResources: (_: void, __: void, { dataSources }: Context) =>
       dataSources.userAPI.createAllUsers(),
-    deleteAllResources: (_: void, args: void, { dataSources }: Context) =>
+    deleteAllResources: (_: void, __: void, { dataSources }: Context) =>
       dataSources.userAPI.deleteAllUsers(),
   },
 };

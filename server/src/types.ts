@@ -1,3 +1,4 @@
+import { Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 
 export interface Args {
@@ -17,16 +18,16 @@ export interface Args {
 
 export interface Context {
   dataSources: {
-    issueAPI: any;
-    absenceAPI: any;
-    resourceAPI: any;
-    userAPI: any;
+    issueAPI: unknown;
+    absenceAPI: unknown;
+    resourceAPI: unknown;
+    userAPI: unknown;
   };
+  res: Response;
   user?: {
     token: string;
   };
   token?: string;
-  res?: any;
 }
 
 export interface ApolloContext {
@@ -42,7 +43,7 @@ export interface UserInput {
 
 export interface Project {
   projectTypeKey: string;
-  avatarUrls: any;
+  avatarUrls: AvatarUrls;
 }
 
 export interface AvatarUrls {
@@ -63,10 +64,14 @@ export interface IssueConnection {
   statusId: string;
   startAt: number;
   maxResults: number;
-  assignee: any;
-  resourceMap: any;
+  assignee: string[] | string | null;
+  resourceMap: ResourceMap;
   teamId?: TeamId;
   resourceId?: string;
+}
+
+export interface ResourceMap {
+  [s: string]: string;
 }
 
 export interface ResourceInputs {

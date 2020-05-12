@@ -1,7 +1,13 @@
+/* eslint-disable import/no-cycle */
 import { DataSource } from 'apollo-datasource';
 import { PrismaClient } from '@prisma/client';
-import { ApolloContext, Resource, ResourceInputs, Pagination } from '../types';
-import resources from '../data/resources.json';
+import {
+  ApolloContext,
+  ResourceInputs,
+  Pagination,
+  ResourceMap,
+} from '../types';
+import sampleResources from '../data/resources.json';
 
 class UserAPI extends DataSource {
   prisma: PrismaClient;
@@ -22,7 +28,6 @@ class UserAPI extends DataSource {
       first,
       skip,
     });
-    console.log({ offset, limit, teamId });
     return Array.isArray(allUsers) ? allUsers : [];
   }
 
@@ -38,14 +43,6 @@ class UserAPI extends DataSource {
     return Array.isArray(teams) ? teams : [];
   }
 
-  async getResourceMap() {
-    const allUsers = await this.prisma.user.findMany();
-    return allUsers.reduce((acc: any, resource: any) => {
-      acc[resource.key] = resource.teamId;
-      return acc;
-    }, {});
-  }
-
   async createUser({ firstname, lastname, position, team }: ResourceInputs) {
     const key = `${firstname.toLowerCase()}.${lastname.toLowerCase()}`;
     const user = this.prisma.user.create({
@@ -54,7 +51,9 @@ class UserAPI extends DataSource {
         email: `${key}@cdprojektred.com`,
         name: `${firstname} ${lastname}`,
         position,
-        // team,
+        team: {
+          connect: { name: team },
+        },
       },
     });
     return user;
@@ -68,14 +67,17 @@ class UserAPI extends DataSource {
     team,
   }: ResourceInputs) {
     const key = `${firstname.toLowerCase()}.${lastname.toLowerCase()}`;
-    const where = { key: id };
-    const data = {
-      name: `${firstname} ${lastname}`,
-      email: `${key}@cdprojektred.com`,
-      position,
-      // team,
-    };
-    const user = this.prisma.user.update({ where, data });
+    const user = this.prisma.user.update({
+      where: { key: id },
+      data: {
+        name: `${firstname} ${lastname}`,
+        email: `${key}@cdprojektred.com`,
+        position,
+        team: {
+          connect: { name: team },
+        },
+      },
+    });
     return user;
   }
 
@@ -92,7 +94,7 @@ class UserAPI extends DataSource {
   // }
 
   async createAllUsers() {
-    const allUsers = resources.map(
+    const allUsers = sampleResources.map(
       async ({ key, email, name, team, position }) => {
         return this.prisma.user.create({
           data: {
@@ -100,7 +102,9 @@ class UserAPI extends DataSource {
             email,
             name,
             position,
-            // team,/
+            team: {
+              connect: { name: team },
+            },
           },
         });
       }
@@ -111,6 +115,39 @@ class UserAPI extends DataSource {
   async deleteAllUsers() {
     const deleteUsers = await this.prisma.user.deleteMany({});
     return deleteUsers.count;
+  }
+
+  async getAssignee({ teamId }: { teamId: string | undefined }) {
+    let resources: Array<{ key: string }> = [];
+    let assignee: string[] = [];
+    if (teamId) {
+      const team = await this.prisma.team.findOne({
+        where: { id: parseInt(teamId, 10) },
+        select: { members: { select: { key: true } } },
+      });
+      if (team) {
+        assignee = team.members.map(({ key }) => key);
+      }
+    } else {
+      resources = await this.prisma.user.findMany({ select: { key: true } });
+      assignee = resources.map(({ key }) => key);
+    }
+    return assignee;
+  }
+
+  async getResourceMap() {
+    const resources = await this.prisma.user.findMany({
+      include: { team: { select: { name: true } } },
+    });
+    if (resources) {
+      return resources.reduce<ResourceMap>((acc, resource) => {
+        if (acc[resource.key] && resource.team) {
+          acc[resource.key] = resource.team.name;
+        }
+        return acc;
+      }, {});
+    }
+    return null;
   }
 }
 

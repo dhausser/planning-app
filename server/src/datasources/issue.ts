@@ -1,19 +1,17 @@
 import { RESTDataSource } from 'apollo-datasource-rest';
 import { PrismaClient } from '@prisma/client';
-import { Context } from 'vm';
 import Issues from '../models/Issues';
 import Dashboard from '../models/Dashboard';
 import Roadmap from '../models/Roadmap';
 import Oauth from '../models/Auth';
 import {
+  Context,
   Project,
   Filter,
   AvatarUrls,
   IssueConnection,
-  Resource,
   AssignableUsers,
   ApolloContext,
-  Assignee,
 } from '../types';
 
 function parseAvatarUrls(avatarUrls: AvatarUrls) {
@@ -151,9 +149,9 @@ class IssueAPI extends RESTDataSource {
     if (resourceId) {
       assignee = resourceId;
     } else if (teamId) {
-      assignee = this.getAssignee({ teamId });
+      assignee = await this.context.userApi.getAssignee({ teamId });
     }
-    const resourceMap = this.getResourceMap();
+    const resourceMap = await this.context.userApi.getResourceMap();
     const issues = new Issues({
       projectId,
       issuetypeId,
@@ -177,7 +175,7 @@ class IssueAPI extends RESTDataSource {
    * @param {string} teamId - team ID
    */
   async getDashboardIssues({ projectId, versionId, teamId }: Filter) {
-    const assignee = await this.getAssignee({ teamId });
+    const assignee = await this.context.userAPI.getAssignee({ teamId });
 
     const dashboard = new Dashboard({
       projectId,
@@ -190,7 +188,7 @@ class IssueAPI extends RESTDataSource {
       '/rest/api/2/search',
       dashboard.getParams()
     );
-    const resourceMap = await this.getResourceMap();
+    const resourceMap = await this.context.userAPI.getResourceMap();
 
     return dashboard.getDataset(response, resourceMap);
   }
@@ -341,35 +339,6 @@ class IssueAPI extends RESTDataSource {
       project,
     });
     return Array.isArray(response.users) || [];
-  }
-
-  /** TODO: User API to export theses methods */
-  async getAssignee({ teamId }: { teamId: string | undefined }) {
-    let resources: Array<{ key: string }> = [];
-    let assignee: string[] = [];
-    if (teamId) {
-      const team = await this.prisma.team.findOne({
-        where: { id: parseInt(teamId, 10) },
-        select: { members: { select: { key: true } } },
-      });
-      if (team) {
-        assignee = team.members.map(({ key }) => key);
-      }
-    } else {
-      resources = await this.prisma.user.findMany({ select: { key: true } });
-      assignee = resources.map(({ key }) => key);
-    }
-    return assignee;
-  }
-
-  async getResourceMap() {
-    const resources = await this.prisma.user.findMany({
-      include: { team: { select: { name: true } } },
-    });
-    return resources.reduce((acc: any, resource: any) => {
-      acc[resource.key] = resource.team.name;
-      return acc;
-    }, {});
   }
 
   /* Mutations */
