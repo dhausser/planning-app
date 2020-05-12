@@ -52,11 +52,10 @@
   "devDependencies": {
     "@types/chart.js": "^2.9.20",
     "@types/node": "^13.13.5",
-    "@types/react-router-dom": "^5.1.5",
     "@types/react": "^16.9.34",
     "@types/react-dom": "^16.9.7",
-    "react-scripts": "^3.4.1",
-    "typescript": "^3.8.3"
+    "@types/react-router-dom": "^5.1.5",
+    "react-scripts": "^3.4.1"
   },
   "scripts": {
     "start": "react-scripts start",
