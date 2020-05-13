@@ -2,8 +2,8 @@
 import express from 'express';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
-// import redis from 'redis';
-// import connectRedis from 'connect-redis';
+import redis from 'redis';
+import connectRedis from 'connect-redis';
 import { ApolloServer } from 'apollo-server-express';
 import { PrismaClient } from '@prisma/client';
 
@@ -22,13 +22,13 @@ const app = express();
 const port = process.env.PORT;
 const prisma = new PrismaClient();
 
-// let RedisStore = connectRedis(session);
-// let redisClient = redis.createClient();
+const RedisStore = connectRedis(session);
+const redisClient = redis.createClient({ password: process.env.REDIS_PWD });
 
 app.use(cookieParser());
 app.use(
   session({
-    // store: new RedisStore({ client: redisClient }),
+    store: new RedisStore({ client: redisClient }),
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: true,

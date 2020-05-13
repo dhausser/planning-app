@@ -52,6 +52,9 @@ const AppRouter: React.FC<NavigationViewController> = ({
 
   return (
     <LayoutManagerWithViewController globalNavigation={MyGlobalNavigation}>
+      {/* <Route exact path="/">
+        {isLoggedIn ? <Redirect to="/projects" /> : <Redirect to="/login" />}
+      </Route> */}
       {isLoggedIn ? (
         <>
           <Route path={['/', '/projects']} exact component={Projects} />
@@ -71,7 +74,8 @@ const AppRouter: React.FC<NavigationViewController> = ({
         </>
       ) : (
         <>
-          <Route path={['/', '/login']} exact component={LoginForm} />
+          <Route path="/login" component={LoginForm} />
+          {/* <Route path={['/', '/login']} exact component={LoginForm} /> */}
         </>
       )}
     </LayoutManagerWithViewController>

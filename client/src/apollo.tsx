@@ -46,6 +46,7 @@ function writeInitialData(): Promise<unknown> {
       }
     `,
     data: {
+      isLoggedIn: !!localStorage.getItem('token'),
       projectId: localStorage.getItem('projectId') || DEFAULT_PROJECT_ID,
       versionId: localStorage.getItem('versionId'),
       statusId: localStorage.getItem('statusId'),

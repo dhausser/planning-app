@@ -1,7 +1,8 @@
 import React from 'react';
 import { useApolloClient, useMutation, gql } from '@apollo/client';
 import Modal, { ModalTransition } from '@atlaskit/modal-dialog';
-import { useHistory, RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
+// import { useHistory, RouteComponentProps } from 'react-router-dom';
 
 const SIGNIN = gql`
   mutation signin {
@@ -11,7 +12,9 @@ const SIGNIN = gql`
   }
 `;
 
-function useLogin(history: any): void {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// function useLogin(history: any) {
+function useLogin() {
   const client = useApolloClient();
   const [login] = useMutation(SIGNIN, {
     onCompleted: ({ signin }) => {
@@ -27,7 +30,7 @@ function useLogin(history: any): void {
           `,
           data: { isLoggedIn: true },
         });
-        history.push('/projects');
+        // history.push('/projects');
       }
     },
   });
@@ -35,7 +38,7 @@ function useLogin(history: any): void {
 }
 
 const LoginForm: React.FC<RouteComponentProps> = () => {
-  const history = useHistory();
+  // const history = useHistory();
   const actions = [
     {
       text: 'Login',
@@ -48,7 +51,8 @@ const LoginForm: React.FC<RouteComponentProps> = () => {
     },
   ];
 
-  useLogin(history);
+  useLogin();
+  // useLogin(history);
 
   return (
     <ModalTransition>
