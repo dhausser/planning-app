@@ -20,10 +20,14 @@ export const GET_CURRENT_USER = gql`
   }
 `;
 
-export function useUserLogin(): boolean {
+export function useUserLogin() {
   const { loading, error, data } = useQuery(CURRENT_USER);
-  if (loading || error) return false;
-  return !!data.currentUser;
+  return { loading, error, data };
+  // if (loading) return <Loading />;
+  // if (error)
+  // return <EmptyState header={error.name} description={error.message} />;
+  // if (data.currentUser) return <Redirect to="/" />;
+  // return <Redirect to="/login" />;
 }
 
 function useUser(): User | null {

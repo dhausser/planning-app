@@ -46,44 +46,6 @@ class IssueAPI extends RESTDataSource {
   }
 
   /**
-   * Signin
-   */
-  async signin({ token, user, res }: Context) {
-    // 1. If a cookie is present on the request, test whether it is still valid and return the authenticated user
-    if (token) {
-      try {
-        // If the token is still valid return it
-        const currentUser = await this.getUserLogin();
-        return currentUser ? { token } : null;
-      } catch (error) {
-        // If the authenticated failed, clear the cookie
-        console.error(error);
-        res.clearCookie('token');
-        return null;
-      }
-    }
-
-    // 2. If the user object is present on the session, test whether it is still valid and return the authenticated user
-    if (user) {
-      res.cookie('token', user.token, {
-        httpOnly: true,
-        maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year cookie
-      });
-      return user;
-    }
-    return null;
-  }
-
-  /**
-   * Signout
-   */
-  // eslint-disable-next-line class-methods-use-this
-  async signout({ res }: Context) {
-    res.clearCookie('token');
-    return null;
-  }
-
-  /**
    * Get projects
    */
   async getProjects() {
@@ -293,13 +255,60 @@ class IssueAPI extends RESTDataSource {
    * Get current logged user
    */
   async getUserLogin() {
-    try {
-      const user = await this.get('/rest/auth/1/session');
-      return user.name;
-    } catch (error) {
-      console.error(error);
-      return null;
+    const { token, res } = this.context;
+
+    // If a token is present in cookie check if it is still valid otherwise invalidate it
+    if (token) {
+      try {
+        const user = await this.get('/rest/auth/1/session');
+        return user.name;
+      } catch (error) {
+        console.error(error);
+        res.clearCookie('token');
+        return null;
+      }
     }
+    return null;
+  }
+
+  /**
+   * Signin
+   */
+  async signin() {
+    const { user, res } = this.context;
+
+    // If the user object is present on the session, test whether it is still valid and return the authenticated user
+    if (user) {
+      res.cookie('token', user.token, {
+        httpOnly: true,
+        maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year cookie
+      });
+      return user;
+    }
+    return null;
+
+    // // 1. If a cookie is present on the request, test whether it is still valid and return the authenticated user
+    // if (token) {
+    //   try {
+    //     // If the token is still valid return it
+    //     const currentUser = await this.getUserLogin();
+    //     return currentUser ? { token } : null;
+    //   } catch (error) {
+    //     // If the authenticated failed, clear the cookie
+    //     console.error(error);
+    //     res.clearCookie('token');
+    //     return null;
+    //   }
+    // }
+  }
+
+  /**
+   * Signout
+   */
+  // eslint-disable-next-line class-methods-use-this
+  async signout({ res }: Context) {
+    res.clearCookie('token');
+    return null;
   }
 
   /**

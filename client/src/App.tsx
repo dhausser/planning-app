@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import { ApolloProvider } from '@apollo/client';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import {
   NavigationProvider,
   withNavigationViewController,
   LayoutManagerWithViewController,
 } from '@atlaskit/navigation-next';
 
+import EmptyState from '@atlaskit/empty-state';
 import Dashboard from './pages/Dashboard';
 import Resource from './pages/Resource';
 import Resources from './pages/Resources';
@@ -20,7 +21,7 @@ import Board from './pages/Board';
 import Pages from './pages/Pages';
 import AddItem from './pages/AddItem';
 import Settings from './pages/Settings';
-import { LoginForm } from './components';
+import { Loading, LoginForm } from './components';
 
 import {
   MyGlobalNavigation,
@@ -42,7 +43,8 @@ interface NavigationViewController {
 const AppRouter: React.FC<NavigationViewController> = ({
   navigationViewController,
 }) => {
-  const isLoggedIn = useUserLogin();
+  // const isLoggedIn = useUserLogin();
+  const { loading, error, data } = useUserLogin();
 
   useEffect(() => {
     navigationViewController.addView(productHomeView);
@@ -50,12 +52,13 @@ const AppRouter: React.FC<NavigationViewController> = ({
     navigationViewController.addView(projectHomeView);
   }, [navigationViewController]);
 
+  if (loading) return <Loading />;
+  if (error)
+    return <EmptyState header={error.name} description={error.message} />;
+
   return (
     <LayoutManagerWithViewController globalNavigation={MyGlobalNavigation}>
-      {/* <Route exact path="/">
-        {isLoggedIn ? <Redirect to="/projects" /> : <Redirect to="/login" />}
-      </Route> */}
-      {isLoggedIn ? (
+      {data.currentUser ? (
         <>
           <Route path={['/', '/projects']} exact component={Projects} />
           <Route path="/resource/:id" component={Resource} />
@@ -74,8 +77,8 @@ const AppRouter: React.FC<NavigationViewController> = ({
         </>
       ) : (
         <>
+          <Redirect to="/login" />
           <Route path="/login" component={LoginForm} />
-          {/* <Route path={['/', '/login']} exact component={LoginForm} /> */}
         </>
       )}
     </LayoutManagerWithViewController>

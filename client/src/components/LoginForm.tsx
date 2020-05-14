@@ -1,8 +1,8 @@
+/* eslint-disable no-restricted-globals */
 import React from 'react';
 import { useApolloClient, useMutation, gql } from '@apollo/client';
 import Modal, { ModalTransition } from '@atlaskit/modal-dialog';
-import { RouteComponentProps } from 'react-router-dom';
-// import { useHistory, RouteComponentProps } from 'react-router-dom';
+import { useHistory, RouteComponentProps } from 'react-router-dom';
 
 const SIGNIN = gql`
   mutation signin {
@@ -12,16 +12,11 @@ const SIGNIN = gql`
   }
 `;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-// function useLogin(history: any) {
-function useLogin() {
+function useLogin(history: any) {
   const client = useApolloClient();
   const [login] = useMutation(SIGNIN, {
     onCompleted: ({ signin }) => {
       if (signin) {
-        // const { token } = signin;
-        // console.log(signin);
-        // localStorage.setItem('token', token);
         client.writeQuery({
           query: gql`
             {
@@ -30,7 +25,9 @@ function useLogin() {
           `,
           data: { isLoggedIn: true },
         });
-        // history.push('/projects');
+        // setIsLoggedIn(true);
+        history.push('/');
+        location.reload();
       }
     },
   });
@@ -38,21 +35,19 @@ function useLogin() {
 }
 
 const LoginForm: React.FC<RouteComponentProps> = () => {
-  // const history = useHistory();
+  const history = useHistory();
   const actions = [
     {
       text: 'Login',
-      // eslint-disable-next-line no-restricted-globals
       onClick: (): null => {
-        // eslint-disable-next-line no-restricted-globals
         location.href = 'http://localhost:4000/auth/provider';
         return null;
       },
     },
   ];
 
-  useLogin();
-  // useLogin(history);
+  // useLogin();
+  useLogin(history);
 
   return (
     <ModalTransition>

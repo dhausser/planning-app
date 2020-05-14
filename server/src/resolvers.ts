@@ -26,12 +26,11 @@ const resolvers: IResolvers = {
     resource: (_, { id }, { dataSources }) =>
       dataSources.userAPI.findUser({ id }),
     teams: (_, __, { dataSources }) => dataSources.userAPI.findTeams(),
-    currentUser: async (_, __, { dataSources }) =>
+    currentUser: (_, __, { dataSources }) =>
       dataSources.issueAPI.getUserLogin(),
   },
   Mutation: {
-    signin: async (_, __, context) =>
-      context.dataSources.issueAPI.signin(context),
+    signin: (_, __, { dataSources }) => dataSources.issueAPI.signin(),
     signout: (_, __, { dataSources, res }) =>
       dataSources.issueAPI.signout({ res }),
     editIssue: (_, { id, value, type }, { dataSources }) =>
