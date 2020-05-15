@@ -1,4 +1,4 @@
-// import * as dotenv from 'dotenv';
+import 'dotenv/config';
 import express from 'express';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
@@ -14,9 +14,6 @@ import resolvers from './resolvers';
 import UserAPI from './datasources/user';
 import IssueAPI from './datasources/issue';
 import AbsenceAPI from './datasources/absence';
-
-// require('dotenv').config();
-// dotenv.config();
 
 const app = express();
 const port = process.env.PORT;
@@ -61,6 +58,6 @@ apolloServer.applyMiddleware({ app });
 
 app.listen(port, () =>
   console.log(
-    `💻 Server ready at http://localhost:${port}${apolloServer.graphqlPath}`
+    `🚀 Server ready at http://localhost:${port}${apolloServer.graphqlPath}`
   )
 );

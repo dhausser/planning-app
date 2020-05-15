@@ -22,6 +22,8 @@ router.get(
   })
 );
 
+console.log(process.env.NODE_ENV);
+
 if (process.env.NODE_ENV === 'production') {
   router.use(express.static(join(__dirname, 'build')));
   router.get('/*', (_req, res) => {

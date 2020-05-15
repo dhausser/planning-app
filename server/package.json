@@ -7,8 +7,7 @@
     "node": ">=13.13.0"
   },
   "scripts": {
-    "dev": "ts-node-dev --no-notify --respawn --transpileOnly -r dotenv/config src/index",
-    "start": "node -r dotenv/config dist/index",
+    "start": "node dist/index",
     "clean": "rm -rf dist",
     "build": "npm -s run clean && tsc",
     "build:generate": "npm -s run clean && npm -s run generate && tsc",
@@ -16,6 +15,8 @@
     "generate:prisma": "prisma generate",
     "generate:nexus": "ts-node --transpile-only src/schema",
     "postinstall": "npm -s run generate",
+    "dev": "tsnd --respawn src/index.ts",
+    "start:dev": "ts-node src/index.ts",
     "sample": "node data/load-sample-data.js",
     "blowitallaway": "node data/load-sample-data.js --delete",
     "script": "ts-node data/script",
@@ -24,10 +25,7 @@
     "studio": "npx prisma studio --experimental"
   },
   "dependencies": {
-    "@prisma/client": "^2.0.0-beta.4",
-    "@types/connect-redis": "^0.0.13",
-    "@types/cookie-parser": "^1.4.2",
-    "@types/redis": "^2.8.20",
+    "@prisma/client": "^2.0.0-beta.5",
     "apollo-datasource": "^0.7.0",
     "apollo-datasource-rest": "^0.9.0",
     "apollo-server-express": "^2.13.0",
@@ -45,12 +43,15 @@
     "redis": "^3.0.2"
   },
   "devDependencies": {
-    "@prisma/cli": "^2.0.0-beta.4",
+    "@prisma/cli": "^2.0.0-beta.5",
+    "@types/connect-redis": "^0.0.13",
+    "@types/cookie-parser": "^1.4.2",
     "@types/express-session": "^1.17.0",
     "@types/node": "^13.13.5",
     "@types/passport": "^1.0.3",
+    "@types/redis": "^2.8.20",
     "ts-node": "^8.10.1",
     "ts-node-dev": "^1.0.0-pre.44",
-    "typescript": "^3.8.3"
+    "typescript": "^3.9.2"
   }
 }
