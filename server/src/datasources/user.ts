@@ -7,7 +7,7 @@ import {
   Pagination,
   ResourceMap,
 } from '../types';
-import sampleResources from '../data/resources.json';
+// import sampleResources from '../data/resources.json';
 
 class UserAPI extends DataSource {
   prisma: PrismaClient;
@@ -93,24 +93,24 @@ class UserAPI extends DataSource {
   //   return allTeams;
   // }
 
-  async createAllUsers() {
-    const allUsers = sampleResources.map(
-      async ({ key, email, name, team, position }) => {
-        return this.prisma.user.create({
-          data: {
-            key,
-            email,
-            name,
-            position,
-            team: {
-              connect: { name: team },
-            },
-          },
-        });
-      }
-    );
-    return allUsers;
-  }
+  // async createAllUsers() {
+  //   const allUsers = sampleResources.map(
+  //     async ({ key, email, name, team, position }) => {
+  //       return this.prisma.user.create({
+  //         data: {
+  //           key,
+  //           email,
+  //           name,
+  //           position,
+  //           team: {
+  //             connect: { name: team },
+  //           },
+  //         },
+  //       });
+  //     }
+  //   );
+  //   return allUsers;
+  // }
 
   async deleteAllUsers() {
     const deleteUsers = await this.prisma.user.deleteMany({});
