@@ -6,17 +6,6 @@ import {
   gql,
 } from '@apollo/client';
 
-// interface Cache {
-//   isLoggedIn: boolean;
-//   projectId: string;
-//   versionId: string;
-//   statusId: string;
-//   teamId: string;
-// }
-
-// TODO: Handle default project selection
-const DEFAULT_PROJECT_ID = '10500';
-
 // Set up our apollo-client to point at the server we created
 // this can be local or a remote endpoint
 const cache = new InMemoryCache();
@@ -47,7 +36,7 @@ function writeInitialData(): Promise<unknown> {
     `,
     data: {
       isLoggedIn: !!localStorage.getItem('token'),
-      projectId: localStorage.getItem('projectId') || DEFAULT_PROJECT_ID,
+      projectId: localStorage.getItem('projectId'),
       versionId: localStorage.getItem('versionId'),
       statusId: localStorage.getItem('statusId'),
       teamId: localStorage.getItem('teamId'),

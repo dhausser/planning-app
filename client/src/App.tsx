@@ -46,8 +46,6 @@ const AppRouter: React.FC<NavigationViewController> = ({
   // const isLoggedIn = useUserLogin();
   const { loading, error, data } = useUserLogin();
 
-  console.log(data);
-
   useEffect(() => {
     navigationViewController.addView(productHomeView);
     navigationViewController.addView(productIssuesView);
