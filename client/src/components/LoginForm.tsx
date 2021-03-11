@@ -1,6 +1,11 @@
 /* eslint-disable no-restricted-globals */
 import React from 'react';
-import { useApolloClient, useMutation, gql } from '@apollo/client';
+import {
+  useApolloClient,
+  useMutation,
+  gql,
+  ApolloClient,
+} from '@apollo/client';
 import Modal, { ModalTransition } from '@atlaskit/modal-dialog';
 import { useHistory, RouteComponentProps } from 'react-router-dom';
 
@@ -12,22 +17,26 @@ const SIGNIN = gql`
   }
 `;
 
-function useLogin(history: any) {
+function loginUser(client: ApolloClient<object>, history: any) {
+  client.writeQuery({
+    query: gql`
+      {
+        isLoggedIn
+      }
+    `,
+    data: { isLoggedIn: true },
+  });
+  history.push('/');
+  location.reload();
+}
+
+function useLogin() {
   const client = useApolloClient();
+  const history = useHistory();
   const [login] = useMutation(SIGNIN, {
     onCompleted: ({ signin }) => {
       if (signin) {
-        client.writeQuery({
-          query: gql`
-            {
-              isLoggedIn
-            }
-          `,
-          data: { isLoggedIn: true },
-        });
-        // setIsLoggedIn(true);
-        history.push('/');
-        location.reload();
+        loginUser(client, history);
       }
     },
   });
@@ -35,19 +44,21 @@ function useLogin(history: any) {
 }
 
 const LoginForm: React.FC<RouteComponentProps> = () => {
+  const client = useApolloClient();
   const history = useHistory();
+
   const actions = [
     {
       text: 'Login',
-      onClick: (): null => {
-        location.href = 'http://localhost:4000/auth/provider';
-        return null;
+      onClick: (): void => {
+        loginUser(client, history);
+        // location.href = 'http://localhost:4000/auth/provider';
+        // return null;
       },
     },
   ];
 
-  // useLogin();
-  useLogin(history);
+  useLogin();
 
   return (
     <ModalTransition>
