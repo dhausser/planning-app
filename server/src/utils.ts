@@ -2,15 +2,10 @@
 import passport from 'passport';
 import OAuth2Strategy from 'passport-oauth2';
 
-const userBoundValue = Math.random()
-  .toString(36)
-  .replace(/[^a-z]+/g, '')
-  .substr(0, 5);
-
 passport.use(
   new OAuth2Strategy(
     {
-      authorizationURL: `https://auth.atlassian.com/authorize?audience=api.atlassian.com&client_id=fpWonrSz0xAGhlTUFakjN3zSNH0TdJn9&scope=read%3Ajira-user%20read%3Ajira-work%20write%3Ajira-work&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2F&state=${userBoundValue}&response_type=code&prompt=consent`,
+      authorizationURL: `https://auth.atlassian.com/authorize?audience=api.atlassian.com&response_type=code&prompt=consent`,
       tokenURL: process.env.TOKEN_URL,
       clientID: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
@@ -54,8 +49,8 @@ passport.use(
 //     }
 //   )
 // );
-// passport.serializeUser(async (user, done) => done(null, user));
-// passport.deserializeUser((id, done) => done(null, id));
+passport.serializeUser(async (user, done) => done(null, user));
+passport.deserializeUser((id, done) => done(null, id));
 
 const consumerKey = '';
 const consumerSecret = '';
