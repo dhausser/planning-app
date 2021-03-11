@@ -268,7 +268,8 @@ class IssueAPI extends RESTDataSource {
         return null;
       }
     }
-    return null;
+
+    return 'fake_user';
   }
 
   /**

@@ -52,8 +52,7 @@ const LoginForm: React.FC<RouteComponentProps> = () => {
       text: 'Login',
       onClick: (): void => {
         loginUser(client, history);
-        // location.href = 'http://localhost:4000/auth/provider';
-        // return null;
+        location.href = 'http://localhost:4000/auth/provider';
       },
     },
   ];
