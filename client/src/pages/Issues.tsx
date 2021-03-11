@@ -19,9 +19,9 @@ const barContent = (
       <TextField isCompact placeholder="Filter" aria-label="Filter" />
     </div>
     <ProjectFilter />
-    <VersionFilter />
-    <StatusFilter />
-    <TeamFilter />
+    {/* <VersionFilter /> */}
+    {/* <StatusFilter />
+    <TeamFilter /> */}
   </div>
 );
 

@@ -1,43 +1,64 @@
 // / <reference path="node.d.ts"/>
 import passport from 'passport';
-import { OAuthStrategy } from 'passport-oauth';
-import { join } from 'path';
-import fs from 'fs';
-import os from 'os';
+import OAuth2Strategy from 'passport-oauth2';
 
-const filePath = join(os.homedir(), process.env.PRIVATE_KEY_PATH as string);
-const consumerSecret = fs.existsSync(filePath)
-  ? fs.readFileSync(filePath, 'utf8')
-  : '';
-
-const consumerKey = process.env.CONSUMER_KEY;
-const requestTokenURL = process.env.REQUEST_TOKEN_URL;
-const accessTokenURL = process.env.ACCESS_TOKEN_URL;
-const userAuthorizationURL = process.env.USER_AUTHORIZATION_URL;
+const userBoundValue = Math.random()
+  .toString(36)
+  .replace(/[^a-z]+/g, '')
+  .substr(0, 5);
 
 passport.use(
-  new OAuthStrategy(
+  new OAuth2Strategy(
     {
-      requestTokenURL,
-      accessTokenURL,
-      userAuthorizationURL,
-      consumerKey,
-      consumerSecret,
-      callbackURL: '/auth/provider/callback',
-      signatureMethod: 'RSA-SHA1',
+      authorizationURL: `https://auth.atlassian.com/authorize?audience=api.atlassian.com&client_id=fpWonrSz0xAGhlTUFakjN3zSNH0TdJn9&scope=read%3Ajira-user%20read%3Ajira-work%20write%3Ajira-work&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2F&state=${userBoundValue}&response_type=code&prompt=consent`,
+      tokenURL: process.env.TOKEN_URL,
+      clientID: process.env.CLIENT_ID,
+      clientSecret: process.env.CLIENT_SECRET,
+      callbackURL: process.env.CALLBACK_URL,
     },
-    (
-      token: string,
-      _tokenSecret: string,
-      _profile: object,
-      done: (arg0: null, arg1: { token: string }) => void
-    ) => {
-      done(null, { token });
+    (accessToken, refreshToken, profile, cb) => {
+      console.log({ accessToken, refreshToken, profile, cb });
     }
   )
 );
-passport.serializeUser(async (user, done) => done(null, user));
-passport.deserializeUser((id, done) => done(null, id));
+
+// Oauth 1
+// const filePath = join(os.homedir(), process.env.PRIVATE_KEY_PATH as string);
+// const consumerSecret = fs.existsSync(filePath)
+//   ? fs.readFileSync(filePath, 'utf8')
+//   : '';
+
+// const consumerKey = process.env.CONSUMER_KEY;
+// const requestTokenURL = process.env.REQUEST_TOKEN_URL;
+// const accessTokenURL = process.env.ACCESS_TOKEN_URL;
+// const userAuthorizationURL = process.env.USER_AUTHORIZATION_URL;
+
+// passport.use(
+//   new OAuthStrategy(
+//     {
+//       requestTokenURL,
+//       accessTokenURL,
+//       userAuthorizationURL,
+//       consumerKey,
+//       consumerSecret,
+//       callbackURL: '/auth/provider/callback',
+//       signatureMethod: 'RSA-SHA1',
+//     },
+//     (
+//       token: string,
+//       _tokenSecret: string,
+//       _profile: object,
+//       done: (arg0: null, arg1: { token: string }) => void
+//     ) => {
+//       done(null, { token });
+//     }
+//   )
+// );
+// passport.serializeUser(async (user, done) => done(null, user));
+// passport.deserializeUser((id, done) => done(null, id));
+
+const consumerKey = '';
+const consumerSecret = '';
 
 export default passport;
 export { consumerSecret, consumerKey };

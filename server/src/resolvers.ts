@@ -28,6 +28,7 @@ const resolvers: IResolvers = {
     teams: (_, __, { dataSources }) => dataSources.userAPI.findTeams(),
     currentUser: (_, __, { dataSources }) =>
       dataSources.issueAPI.getUserLogin(),
+    authToken: (_, __, { dataSources }) => dataSources.issueAPI.getAuthToken(),
   },
   Mutation: {
     signin: (_, __, { dataSources }) => dataSources.issueAPI.signin(),

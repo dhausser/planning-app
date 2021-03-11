@@ -42,6 +42,7 @@ export default gql`
     ): [User]!
     loginToken: String
     currentUser: String
+    authToken: String
   }
 
   type User {

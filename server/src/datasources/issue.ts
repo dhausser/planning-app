@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client';
 import Issues from '../models/Issues';
 import Dashboard from '../models/Dashboard';
 import Roadmap from '../models/Roadmap';
-import Oauth from '../models/Auth';
+// import Oauth from '../models/Auth';
 import {
   Context,
   Project,
@@ -26,38 +26,39 @@ function parseAvatarUrls(avatarUrls: AvatarUrls) {
 class IssueAPI extends RESTDataSource {
   prisma: PrismaClient;
 
-  oauth: Oauth;
+  // oauth: Oauth;
 
   constructor({ prisma }: ApolloContext) {
     super();
     this.prisma = prisma;
-    this.baseURL = `https://${process.env.HOST}`;
-    this.oauth = new Oauth(this.baseURL);
+    this.baseURL = process.env.HOST;
+    // this.oauth = new Oauth(this.baseURL);
   }
 
   /**
    * Sign request before sending
    * @param {object} req - request object
    */
-  willSendRequest(req: {
-    headers: { set: (arg0: string, arg1: string) => void };
-  }) {
-    req.headers.set('Authorization', this.oauth.sign(req, this.context.token));
-  }
+  // willSendRequest(req: {
+  //   headers: { set: (arg0: string, arg1: string) => void };
+  // }) {
+  //   req.headers.set('Authorization', this.oauth.sign(req, this.context.token));
+  // }
 
   /**
    * Get projects
    */
   async getProjects() {
-    const response = await this.get('/rest/api/2/project');
-    const projects = response.map((project: Project) => ({
-      ...project,
-      projectTypeKey: `${project.projectTypeKey
-        .charAt(0)
-        .toUpperCase()}${project.projectTypeKey.slice(1)}`,
-      avatarUrls: parseAvatarUrls(project.avatarUrls),
-    }));
-    return projects;
+    const response = await this.get('project/search');
+    // const projects = response.map((project: Project) => ({
+    //   ...project,
+    //   projectTypeKey: `${project.projectTypeKey
+    //     .charAt(0)
+    //     .toUpperCase()}${project.projectTypeKey.slice(1)}`,
+    //   avatarUrls: parseAvatarUrls(project.avatarUrls),
+    // }));
+
+    return response ? response.values : [];
   }
 
   /**
@@ -66,11 +67,12 @@ class IssueAPI extends RESTDataSource {
    */
   async getVersions(projectIdOrKey: string) {
     const response = await this.get(
-      `/rest/api/2/project/${projectIdOrKey}/versions`
+      `project/${projectIdOrKey || 10000}/versions`
     );
     const unreleased = response.filter(
       (value: { released: boolean }) => value.released === false
     );
+
     return Array.isArray(response) ? unreleased : [];
   }
 
@@ -79,9 +81,7 @@ class IssueAPI extends RESTDataSource {
    * @param {string} projectIdOrKey - project ID or key
    */
   async getStatuses(projectIdOrKey: string) {
-    const response = await this.get(
-      `/rest/api/2/project/${projectIdOrKey}/statuses`
-    );
+    const response = await this.get(`project/${projectIdOrKey}/statuses`);
     const { statuses } = response[0];
     return Array.isArray(statuses) ? statuses : [];
   }
@@ -107,27 +107,29 @@ class IssueAPI extends RESTDataSource {
     startAt,
     maxResults,
   }: IssueConnection) {
-    let assignee = null;
-    if (resourceId) {
-      assignee = resourceId;
-    } else if (teamId) {
-      assignee = await this.context.dataSources.userAPI.getAssignee({ teamId });
-    }
-    const resourceMap = await this.context.dataSources.userAPI.getResourceMap();
-    const issues = new Issues({
-      projectId,
-      issuetypeId,
-      statusId,
-      versionId,
-      assignee,
-      resourceMap,
-      startAt,
-      maxResults,
-    });
-    const params = issues.getParams();
-    const response = await this.post('/rest/api/2/search', params);
+    // let assignee = null;
+    // if (resourceId) {
+    //   assignee = resourceId;
+    // } else if (teamId) {
+    //   assignee = await this.context.dataSources.userAPI.getAssignee({ teamId });
+    // }
+    // const resourceMap = await this.context.dataSources.userAPI.getResourceMap();
+    // const issues = new Issues({
+    //   projectId,
+    //   issuetypeId,
+    //   statusId,
+    //   versionId,
+    //   assignee,
+    //   resourceMap,
+    //   startAt,
+    //   maxResults,
+    // });
+    // const params = issues.getParams();
+    const response = await this.get('search');
 
-    return { ...response };
+    console.log(response);
+
+    return response ? response.values : [];
   }
 
   /**
@@ -148,10 +150,7 @@ class IssueAPI extends RESTDataSource {
       assignee,
     });
 
-    const response = await this.post(
-      '/rest/api/2/search',
-      dashboard.getParams()
-    );
+    const response = await this.post('search', dashboard.getParams());
     const resourceMap = await this.context.dataSources.userAPI.getResourceMap();
 
     return dashboard.getDataset(response, resourceMap);
@@ -165,7 +164,7 @@ class IssueAPI extends RESTDataSource {
     versionId: string;
   }) {
     const roadmap = new Roadmap({ projectId, versionId });
-    const response = await this.post('/rest/api/2/search', roadmap.getParams());
+    const response = await this.post('search', roadmap.getParams());
     return roadmap.getDataset(response.issues);
   }
 
@@ -184,7 +183,7 @@ class IssueAPI extends RESTDataSource {
     const jql = `issuetype = epic${
       projectId ? ` and project = ${projectId}` : ''
     } ${versionId ? ` and fixversion = ${versionId}` : ''}`;
-    const response = await this.post('/rest/api/2/search', {
+    const response = await this.post('search', {
       jql,
       fields: ['summary'],
     });
@@ -214,7 +213,7 @@ class IssueAPI extends RESTDataSource {
       'fixVersions',
       'comment',
     ];
-    const issue = await this.get(`/rest/api/2/issue/${issueId}`, { fields });
+    const issue = await this.get(`issue/${issueId}`, { fields });
     const { assignee, reporter } = issue.fields;
     if (assignee) {
       assignee.avatarUrls = parseAvatarUrls(assignee.avatarUrls);
@@ -230,7 +229,7 @@ class IssueAPI extends RESTDataSource {
    * Returns currently logged user. This resource cannot be accessed anonymously.
    */
   async getCurrentUser() {
-    const user = await this.get('/rest/api/2/myself');
+    const user = await this.get('myself');
     return {
       ...user,
       avatarUrls: parseAvatarUrls(user.avatarUrls),
@@ -244,7 +243,7 @@ class IssueAPI extends RESTDataSource {
    * @param {string} key - user key
    */
   async getUser(key: string) {
-    const user = await this.get('/rest/api/2/user', { key });
+    const user = await this.get('user', { key });
     return {
       ...user,
       avatarUrls: parseAvatarUrls(user.avatarUrls),
@@ -269,7 +268,7 @@ class IssueAPI extends RESTDataSource {
       }
     }
 
-    return 'fake_user';
+    return null;
   }
 
   /**
@@ -354,7 +353,7 @@ class IssueAPI extends RESTDataSource {
     value: string;
     type: string;
   }) {
-    return this.put(`/rest/api/2/issue/${id}`, { fields: { [type]: value } });
+    return this.put(`issue/${id}`, { fields: { [type]: value } });
   }
 
   /**
@@ -364,7 +363,12 @@ class IssueAPI extends RESTDataSource {
    * @param {key} param0 - user key
    */
   async assignIssue({ id, key }: { id: string; key: string }) {
-    return this.put(`/rest/api/2/issue/${id}/assignee`, { name: key });
+    return this.put(`issue/${id}/assignee`, { name: key });
+  }
+
+  async getAuthToken() {
+    const authorizationUrl = process.env.AUTHORIZATION_URL;
+    return this.get(authorizationUrl);
   }
 }
 

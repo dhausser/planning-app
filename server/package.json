@@ -9,7 +9,8 @@
   "scripts": {
     "start": "node dist/index",
     "clean": "rm -rf dist",
-    "build": "npm -s run clean && tsc",
+    "watch": "tsc --watch",
+    "build": "npm -s run clean && tsc ",
     "build:generate": "npm -s run clean && npm -s run generate && tsc",
     "generate": "npm -s run generate:prisma && npm -s run generate:nexus",
     "generate:prisma": "prisma generate",
@@ -40,6 +41,7 @@
     "oauth-sign": "^0.9.0",
     "passport": "^0.4.1",
     "passport-oauth": "^1.0.0",
+    "passport-oauth2": "^1.5.0",
     "redis": "^3.0.2"
   },
   "devDependencies": {
