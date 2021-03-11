@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client';
 import Issues from '../models/Issues';
 import Dashboard from '../models/Dashboard';
 import Roadmap from '../models/Roadmap';
-// import Oauth from '../models/Auth';
+import Oauth from '../models/Auth';
 import {
   Context,
   Project,
@@ -26,24 +26,24 @@ function parseAvatarUrls(avatarUrls: AvatarUrls) {
 class IssueAPI extends RESTDataSource {
   prisma: PrismaClient;
 
-  // oauth: Oauth;
+  oauth: Oauth;
 
   constructor({ prisma }: ApolloContext) {
     super();
     this.prisma = prisma;
     this.baseURL = `https://${process.env.HOST}`;
-    // this.oauth = new Oauth(this.baseURL);
+    this.oauth = new Oauth(this.baseURL);
   }
 
   /**
    * Sign request before sending
    * @param {object} req - request object
    */
-  // willSendRequest(req: {
-  //   headers: { set: (arg0: string, arg1: string) => void };
-  // }) {
-  //   req.headers.set('Authorization', this.oauth.sign(req, this.context.token));
-  // }
+  willSendRequest(req: {
+    headers: { set: (arg0: string, arg1: string) => void };
+  }) {
+    req.headers.set('Authorization', this.oauth.sign(req, this.context.token));
+  }
 
   /**
    * Get projects

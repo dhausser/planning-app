@@ -31,8 +31,8 @@ app.use(
     saveUninitialized: true,
   })
 );
-// app.use(passport.initialize());
-// app.use(passport.session());
+app.use(passport.initialize());
+app.use(passport.session());
 app.use('/', routes);
 
 const apolloServer = new ApolloServer({
@@ -49,8 +49,8 @@ const apolloServer = new ApolloServer({
   }),
   dataSources: () => ({
     issueAPI: new IssueAPI({ prisma }),
-    // absenceAPI: new AbsenceAPI(),
-    // userAPI: new UserAPI({ prisma }),
+    absenceAPI: new AbsenceAPI(),
+    userAPI: new UserAPI({ prisma }),
   }),
 });
 
