@@ -1,8 +1,8 @@
-import { RESTDataSource } from 'apollo-datasource-rest';
-import { PrismaClient } from '@prisma/client';
-import Issues from '../models/Issues';
-import Dashboard from '../models/Dashboard';
-import Roadmap from '../models/Roadmap';
+import { RESTDataSource } from "apollo-datasource-rest";
+import { PrismaClient } from "@prisma/client";
+import Issues from "../models/Issues";
+import Dashboard from "../models/Dashboard";
+import Roadmap from "../models/Roadmap";
 // import Oauth from '../models/Auth';
 import {
   Context,
@@ -12,21 +12,18 @@ import {
   IssueConnection,
   AssignableUsers,
   ApolloContext,
-} from '../types';
+} from "../types";
 
-import mockData from '../mocks/data.json';
-import mockIssues from '../mocks/issues.json';
-// import mockProjects from '../mocks/projects.json';
-// import mockVersions from '../mocks/versions.json';
+import mockData from "../mocks/data.json";
 
 const USE_MOCK_DATA = true;
 
 function parseAvatarUrls(avatarUrls: AvatarUrls) {
   return {
-    large: avatarUrls['48x48'] as string,
-    small: avatarUrls['24x24'] as string,
-    xsmall: avatarUrls['16x16'] as string,
-    medium: avatarUrls['32x32'] as string,
+    large: avatarUrls["48x48"] as string,
+    small: avatarUrls["24x24"] as string,
+    xsmall: avatarUrls["16x16"] as string,
+    medium: avatarUrls["32x32"] as string,
   };
 }
 
@@ -58,7 +55,7 @@ class IssueAPI extends RESTDataSource {
   async getProjects() {
     if (USE_MOCK_DATA) return mockData.projects;
 
-    const response = await this.get('project/search');
+    const response = await this.get("project/search");
     // const projects = response.map((project: Project) => ({
     //   ...project,
     //   projectTypeKey: `${project.projectTypeKey
@@ -139,7 +136,7 @@ class IssueAPI extends RESTDataSource {
     //   maxResults,
     // });
     // const params = issues.getParams();
-    const response = await this.get('search');
+    const response = await this.get("search");
 
     return response ? response.values : [];
   }
@@ -162,7 +159,7 @@ class IssueAPI extends RESTDataSource {
       assignee,
     });
 
-    const response = await this.post('search', dashboard.getParams());
+    const response = await this.post("search", dashboard.getParams());
     const resourceMap = await this.context.dataSources.userAPI.getResourceMap();
 
     return dashboard.getDataset(response, resourceMap);
@@ -178,7 +175,7 @@ class IssueAPI extends RESTDataSource {
     if (USE_MOCK_DATA) return mockData.issues.issues;
 
     const roadmap = new Roadmap({ projectId, versionId });
-    const response = await this.post('search', roadmap.getParams());
+    const response = await this.post("search", roadmap.getParams());
     return roadmap.getDataset(response.issues);
   }
 
@@ -197,11 +194,11 @@ class IssueAPI extends RESTDataSource {
     if (USE_MOCK_DATA) return mockData.issues;
 
     const jql = `issuetype = epic${
-      projectId ? ` and project = ${projectId}` : ''
-    } ${versionId ? ` and fixversion = ${versionId}` : ''}`;
-    const response = await this.post('search', {
+      projectId ? ` and project = ${projectId}` : ""
+    } ${versionId ? ` and fixversion = ${versionId}` : ""}`;
+    const response = await this.post("search", {
       jql,
-      fields: ['summary'],
+      fields: ["summary"],
     });
     return Array.isArray(response.issues) ? response.issues : [];
   }
@@ -219,15 +216,15 @@ class IssueAPI extends RESTDataSource {
    */
   async getIssueById(issueId: string) {
     const fields = [
-      'summary',
-      'description',
-      'status',
-      'assignee',
-      'reporter',
-      'issuetype',
-      'priority',
-      'fixVersions',
-      'comment',
+      "summary",
+      "description",
+      "status",
+      "assignee",
+      "reporter",
+      "issuetype",
+      "priority",
+      "fixVersions",
+      "comment",
     ];
     const issue = await this.get(`issue/${issueId}`, { fields });
     const { assignee, reporter } = issue.fields;
@@ -247,7 +244,7 @@ class IssueAPI extends RESTDataSource {
   async getCurrentUser() {
     if (USE_MOCK_DATA) return mockData.resources[0];
 
-    const user = await this.get('myself');
+    const user = await this.get("myself");
     return {
       ...user,
       avatarUrls: parseAvatarUrls(user.avatarUrls),
@@ -263,7 +260,7 @@ class IssueAPI extends RESTDataSource {
   async getUser(key: string) {
     if (USE_MOCK_DATA) return mockData.resources[0];
 
-    const user = await this.get('user', { key });
+    const user = await this.get("user", { key });
     return {
       ...user,
       avatarUrls: parseAvatarUrls(user.avatarUrls),
@@ -279,16 +276,16 @@ class IssueAPI extends RESTDataSource {
     // If a token is present in cookie check if it is still valid otherwise invalidate it
     if (token) {
       try {
-        const user = await this.get('/rest/auth/1/session');
+        const user = await this.get("/rest/auth/1/session");
         return user.name;
       } catch (error) {
         console.error(error);
-        res.clearCookie('token');
+        res.clearCookie("token");
         return null;
       }
     }
 
-    return 'FAKE_USER_TOKEN';
+    return "FAKE_USER_TOKEN";
   }
 
   /**
@@ -299,7 +296,7 @@ class IssueAPI extends RESTDataSource {
 
     // If the user object is present on the session, test whether it is still valid and return the authenticated user
     if (user) {
-      res.cookie('token', user.token, {
+      res.cookie("token", user.token, {
         httpOnly: true,
         maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year cookie
       });
@@ -327,7 +324,7 @@ class IssueAPI extends RESTDataSource {
    */
   // eslint-disable-next-line class-methods-use-this
   async signout({ res }: Context) {
-    res.clearCookie('token');
+    res.clearCookie("token");
     return null;
   }
 
@@ -350,7 +347,7 @@ class IssueAPI extends RESTDataSource {
    * @param {int} [actionDescriptorId]
    */
   async getAssignableUsers({ project }: AssignableUsers) {
-    const response = await this.get('rest/api/2/user/assignable/search', {
+    const response = await this.get("rest/api/2/user/assignable/search", {
       project,
     });
     return Array.isArray(response.users) || [];

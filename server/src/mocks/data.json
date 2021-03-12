@@ -28,7 +28,7 @@
         "colorName": "blue-gray",
         "name": "To Do"
       }
-    }
+    },
     {
       "self": "https://wanderlost.atlassian.net/rest/api/3/status/10000",
       "description": "",
@@ -231,9 +231,7 @@
       "name": "Davy Hausser",
       "email": "davy.hausser@gmail.com",
       "displayName": "Davy Hausser",
-      "avatarUrls": {
-        
-      }
+      "avatarUrls": {}
     }
   ]
 }
