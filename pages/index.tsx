@@ -1,5 +1,4 @@
 import gql from "graphql-tag";
-import Link from "next/link";
 import { useQuery } from "@apollo/client";
 import { initializeApollo } from "../apollo/client";
 
@@ -17,7 +16,7 @@ const Index = () => {
     data: { projects },
   } = useQuery(ProjectQuery);
 
-  return <div>Welcome to {projects[0].name}</div>;
+  return <div>hello world</div>;
 };
 
 export async function getStaticProps() {

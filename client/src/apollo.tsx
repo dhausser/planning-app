@@ -20,33 +20,36 @@ const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
     uri: endpoint,
     credentials: "same-origin",
     headers: {
-      authorization: localStorage.getItem("token"),
+      authorization:
+        typeof window !== "undefined" ? localStorage.getItem("token") : null,
     },
   }),
 });
 
 function writeInitialData(): Promise<unknown> {
-  cache.writeQuery({
-    query: gql`
-      query {
-        isLoggedIn @client
-        projectId @client
-        versionId @client
-        statusId @client
-        teamId @client
-        networkStatus @client {
-          isConnected
+  if (typeof window !== "undefined") {
+    cache.writeQuery({
+      query: gql`
+        query {
+          isLoggedIn @client
+          projectId @client
+          versionId @client
+          statusId @client
+          teamId @client
+          networkStatus @client {
+            isConnected
+          }
         }
-      }
-    `,
-    data: {
-      isLoggedIn: !!localStorage.getItem("token"),
-      projectId: localStorage.getItem("projectId"),
-      versionId: localStorage.getItem("versionId"),
-      statusId: localStorage.getItem("statusId"),
-      teamId: localStorage.getItem("teamId"),
-    },
-  });
+      `,
+      data: {
+        isLoggedIn: !!localStorage.getItem("token"),
+        projectId: localStorage.getItem("projectId"),
+        versionId: localStorage.getItem("versionId"),
+        statusId: localStorage.getItem("statusId"),
+        teamId: localStorage.getItem("teamId"),
+      },
+    });
+  }
   return new Promise((resolve) => resolve(null));
 }
 

@@ -9,11 +9,17 @@
   },
   "dependencies": {
     "@apollo/client": "^3.3.11",
+    "@atlaskit/css-reset": "^5.0.10",
+    "@atlaskit/navigation-next": "^8.0.4",
     "apollo-server-micro": "^2.21.1",
     "graphql": "^15.5.0",
+    "micro": "^9.3.4",
+    "micro-cors": "^0.1.1",
     "next": "10.0.8",
     "react": "17.0.1",
-    "react-dom": "17.0.1"
+    "react-dom": "17.0.1",
+    "react-router-dom": "^5.1.2",
+    "styled-components": "^3.2.6"
   },
   "devDependencies": {
     "@types/node": "^14.14.34",
