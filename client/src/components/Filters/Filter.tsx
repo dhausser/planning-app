@@ -10,6 +10,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import EmptyState from '@atlaskit/empty-state';
 
+type IsMulti = boolean;
+
 interface FilterOption {
   id: number;
   name: string;
@@ -57,7 +59,7 @@ const Filter = ({
   let selected: OptionType | null = null;
   let options: OptionsType<OptionType> = [];
 
-  const handleChange = (e: ValueType<OptionType>): void => {
+  const handleChange = (e: ValueType<OptionType, IsMulti>): void => {
     if (Array.isArray(e)) {
       throw new Error('Unexpected type passed to ReactSelect onChange handler');
     }

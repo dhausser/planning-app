@@ -76,10 +76,10 @@ function CreateResourceModal({ setIsOpen }: Props): ReactElement {
       <Field name="lastname" label="Lastname" defaultValue="" isRequired>
         {({ fieldProps }): React.ReactNode => <TextField {...fieldProps} />}
       </Field>
-      <Field<ValueType<OptionType>>
+      <Field<ValueType<OptionType, false>>
         name="position"
         label="Select a position"
-        defaultValue={[]}
+        // defaultValue={[]}
         isRequired
       >
         {({ fieldProps: { id, ...rest }, error }): React.ReactNode => (
@@ -93,10 +93,10 @@ function CreateResourceModal({ setIsOpen }: Props): ReactElement {
           />
         )}
       </Field>
-      <Field<ValueType<OptionType>>
+      <Field<ValueType<OptionType, false>>
         name="team"
         label="Select a team"
-        defaultValue={[]}
+        // defaultValue={[]}
         isRequired
       >
         {({ fieldProps: { id, ...rest }, error }): React.ReactNode => (

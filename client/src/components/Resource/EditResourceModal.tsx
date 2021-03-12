@@ -104,7 +104,7 @@ const EditResourceModal = ({
       >
         {({ fieldProps }): React.ReactNode => <TextField {...fieldProps} />}
       </Field>
-      <Field<ValueType<OptionType>>
+      <Field<ValueType<OptionType, false>>
         name="position"
         label="Select a position"
         defaultValue={positionOption}
@@ -121,7 +121,7 @@ const EditResourceModal = ({
           />
         )}
       </Field>
-      <Field<ValueType<OptionType>>
+      <Field<ValueType<OptionType, false>>
         name="team"
         label="Select a team"
         defaultValue={teamOption}
