@@ -29,6 +29,34 @@
         "name": "To Do"
       }
     }
+    {
+      "self": "https://wanderlost.atlassian.net/rest/api/3/status/10000",
+      "description": "",
+      "iconUrl": "https://wanderlost.atlassian.net/",
+      "name": "In Progress",
+      "id": "10001",
+      "statusCategory": {
+        "self": "https://wanderlost.atlassian.net/rest/api/3/statuscategory/2",
+        "id": 2,
+        "key": "new",
+        "colorName": "blue-gray",
+        "name": "In Progress"
+      }
+    },
+    {
+      "self": "https://wanderlost.atlassian.net/rest/api/3/status/10000",
+      "description": "",
+      "iconUrl": "https://wanderlost.atlassian.net/",
+      "name": "Done",
+      "id": "10002",
+      "statusCategory": {
+        "self": "https://wanderlost.atlassian.net/rest/api/3/statuscategory/2",
+        "id": 2,
+        "key": "new",
+        "colorName": "blue-gray",
+        "name": "Done"
+      }
+    }
   ],
   "issues": {
     "expand": "names,schema",
@@ -192,7 +220,7 @@
     {
       "id": "10000",
       "key": "backend",
-      "name": "backend",
+      "name": "Backend",
       "type": "",
       "members": []
     }
