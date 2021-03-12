@@ -58,12 +58,12 @@ const Resources: FunctionComponent<Props> = ({ navigationViewController }) => {
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const { data, loading, error, fetchMore } = useQuery(GET_RESOURCES);
-  const [createAllResources] = useMutation(CREATE_ALL_RESOURCES, {
-    refetchQueries: [{ query: GET_RESOURCES }],
-  });
-  const [deleteAllResources] = useMutation(DELETE_ALL_RESOURCES, {
-    refetchQueries: [{ query: GET_RESOURCES }],
-  });
+  // const [createAllResources] = useMutation(CREATE_ALL_RESOURCES, {
+  //   refetchQueries: [{ query: GET_RESOURCES }],
+  // });
+  // const [deleteAllResources] = useMutation(DELETE_ALL_RESOURCES, {
+  //   refetchQueries: [{ query: GET_RESOURCES }],
+  // });
 
   useEffect(() => {
     const pageSize = data?.resources?.length;
