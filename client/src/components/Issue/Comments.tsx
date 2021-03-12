@@ -1,11 +1,11 @@
-import React, { FunctionComponent } from 'react';
-import Avatar from '@atlaskit/avatar';
+import React, { FunctionComponent } from "react";
+import Avatar from "@atlaskit/avatar";
 import Comment, {
   CommentAction,
   CommentAuthor,
   CommentEdited,
   CommentTime,
-} from '@atlaskit/comment';
+} from "@atlaskit/comment";
 
 interface CommentsProps {
   comments: Array<{
@@ -25,7 +25,7 @@ const Comments: FunctionComponent<CommentsProps> = ({ comments }) => (
         key={comment.id}
         avatar={
           <Avatar
-            src={`https://jira.cdprojektred.com/secure/useravatar?ownerId=${comment.author.key}`}
+            src={`${process.env.REACT_APP_BASE_URL}/secure/useravatar?ownerId=${comment.author.key}`}
             label="Atlaskit avatar"
             size="medium"
           />

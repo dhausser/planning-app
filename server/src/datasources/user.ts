@@ -1,14 +1,14 @@
 /* eslint-disable import/no-cycle */
-import { DataSource } from 'apollo-datasource';
-import { PrismaClient } from '@prisma/client';
+import { DataSource } from "apollo-datasource";
+import { PrismaClient } from "@prisma/client";
 import {
   ApolloContext,
   ResourceInputs,
   Pagination,
   ResourceMap,
-} from '../types';
+} from "../types";
 
-import mockData from '../mocks/data.json';
+import mockData from "../mocks/data.json";
 // import mockIssues from '../mocks/issues.json';
 // import mockProjects from '../mocks/projects.json';
 // import mockVersions from '../mocks/versions.json';
@@ -60,7 +60,7 @@ class UserAPI extends DataSource {
     const user = this.prisma.user.create({
       data: {
         key,
-        email: `${key}@cdprojektred.com`,
+        email: key,
         name: `${firstname} ${lastname}`,
         position,
         team: {
@@ -83,7 +83,7 @@ class UserAPI extends DataSource {
       where: { key: id },
       data: {
         name: `${firstname} ${lastname}`,
-        email: `${key}@cdprojektred.com`,
+        email: key,
         position,
         team: {
           connect: { name: team },

@@ -1,11 +1,11 @@
-import React, { FunctionComponent } from 'react';
-import { useQuery, useMutation, gql } from '@apollo/client';
-import styled from 'styled-components';
+import React, { FunctionComponent } from "react";
+import { useQuery, useMutation, gql } from "@apollo/client";
+import styled from "styled-components";
 
-import { gridSize } from '@atlaskit/theme';
-import UserPicker from '@atlaskit/user-picker';
-import EmptyState from '@atlaskit/empty-state';
-import { Resource } from '../../types';
+import { gridSize } from "@atlaskit/theme";
+import UserPicker from "@atlaskit/user-picker";
+import EmptyState from "@atlaskit/empty-state";
+import { Resource } from "../../types";
 
 // const GET_RESOURCES = gql`
 //   query resourceList {
@@ -43,7 +43,7 @@ interface Props {
 }
 
 function getAvatarUrl(key: string): string {
-  return `https://jira.cdprojektred.com/secure/useravatar?ownerId=${key}`;
+  return `${process.env.REACT_APP_BASE_URL}/secure/useravatar?ownerId=${key}`;
 }
 
 function getAssignee({ key, name }: Resource): object {
@@ -51,7 +51,7 @@ function getAssignee({ key, name }: Resource): object {
   return {
     id: key,
     name,
-    type: 'user',
+    type: "user",
     fixed: true,
     avatarUrl: getAvatarUrl(key),
   };
@@ -61,7 +61,7 @@ export function getResource(user: Resource): object {
   return {
     id: user.key,
     name: user.name,
-    type: 'user',
+    type: "user",
     fixed: true,
     emailLabel: user.team,
     avatarUrl: getAvatarUrl(user.key),
@@ -79,7 +79,7 @@ const AssignUser: FunctionComponent<Props> = ({ id, type }) => {
 
   return (
     <>
-      <h6>{type === 'assignee' ? 'ASSIGNEE' : 'REPORTER'}</h6>
+      <h6>{type === "assignee" ? "ASSIGNEE" : "REPORTER"}</h6>
       <Wrapper>
         <UserPicker
           fieldId="example"
