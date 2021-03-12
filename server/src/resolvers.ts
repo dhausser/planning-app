@@ -1,6 +1,6 @@
-import { IResolvers } from 'apollo-server-express';
+import { IResolvers } from "apollo-server-express";
 
-const resolvers: IResolvers = {
+export const resolvers: IResolvers = {
   Query: {
     issues: (_, args, { dataSources }) => dataSources.issueAPI.getIssues(args),
     dashboardIssues: (_, args, { dataSources }) =>
@@ -50,8 +50,6 @@ const resolvers: IResolvers = {
       dataSources.userAPI.deleteAllUsers(),
   },
 };
-
-export default resolvers;
 
 // import { Args, Context, UserInput, Pagination } from './types';
 

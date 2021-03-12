@@ -1,6 +1,6 @@
-import { gql } from 'apollo-server-express';
+import { gql } from "apollo-server-express";
 
-export default gql`
+export const typeDefs = gql`
   type Query {
     issues(
       projectId: String
