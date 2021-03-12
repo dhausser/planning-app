@@ -13,5 +13,188 @@
       "id": "10000",
       "name": "1.0"
     }
+  ],
+  "status": [
+    {
+      "self": "https://wanderlost.atlassian.net/rest/api/3/status/10000",
+      "description": "",
+      "iconUrl": "https://wanderlost.atlassian.net/",
+      "name": "To Do",
+      "id": "10000",
+      "statusCategory": {
+        "self": "https://wanderlost.atlassian.net/rest/api/3/statuscategory/2",
+        "id": 2,
+        "key": "new",
+        "colorName": "blue-gray",
+        "name": "To Do"
+      }
+    }
+  ],
+  "issues": {
+    "expand": "names,schema",
+    "startAt": 0,
+    "maxResults": 50,
+    "total": 1,
+    "issues": [
+      {
+        "expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
+        "id": "10000",
+        "self": "https://wanderlost.atlassian.net/rest/api/3/issue/10000",
+        "key": "WD-1",
+        "fields": {
+          "statuscategorychangedate": "2021-03-11T18:08:02.247+0100",
+          "issuetype": {
+            "self": "https://wanderlost.atlassian.net/rest/api/3/issuetype/10001",
+            "id": "10001",
+            "description": "Stories track functionality or features expressed as user goals.",
+            "iconUrl": "https://wanderlost.atlassian.net/secure/viewavatar?size=medium&avatarId=10315&avatarType=issuetype",
+            "name": "Story",
+            "subtask": false,
+            "avatarId": 10315,
+            "entityId": "ffe44995-485a-4dbd-8a5e-4b45f538c01c",
+            "hierarchyLevel": 0
+          },
+          "timespent": null,
+          "project": {
+            "self": "https://wanderlost.atlassian.net/rest/api/3/project/10000",
+            "id": "10000",
+            "key": "WD",
+            "name": "Wanderlost",
+            "projectTypeKey": "software",
+            "simplified": true,
+            "avatarUrls": {
+              "48x48": "https://wanderlost.atlassian.net/secure/projectavatar?pid=10000&avatarId=10419",
+              "24x24": "https://wanderlost.atlassian.net/secure/projectavatar?size=small&s=small&pid=10000&avatarId=10419",
+              "16x16": "https://wanderlost.atlassian.net/secure/projectavatar?size=xsmall&s=xsmall&pid=10000&avatarId=10419",
+              "32x32": "https://wanderlost.atlassian.net/secure/projectavatar?size=medium&s=medium&pid=10000&avatarId=10419"
+            }
+          },
+          "fixVersions": [],
+          "aggregatetimespent": null,
+          "resolution": null,
+          "resolutiondate": null,
+          "workratio": -1,
+          "watches": {
+            "self": "https://wanderlost.atlassian.net/rest/api/3/issue/WD-1/watchers",
+            "watchCount": 1,
+            "isWatching": true
+          },
+          "lastViewed": "2021-03-11T18:08:31.906+0100",
+          "created": "2021-03-11T18:08:01.967+0100",
+          "customfield_10020": null,
+          "customfield_10021": null,
+          "customfield_10022": null,
+          "priority": {
+            "self": "https://wanderlost.atlassian.net/rest/api/3/priority/3",
+            "iconUrl": "https://wanderlost.atlassian.net/images/icons/priorities/medium.svg",
+            "name": "Medium",
+            "id": "3"
+          },
+          "customfield_10023": null,
+          "customfield_10024": null,
+          "customfield_10025": null,
+          "labels": [],
+          "customfield_10016": null,
+          "customfield_10017": null,
+          "customfield_10018": {
+            "hasEpicLinkFieldDependency": false,
+            "showField": false,
+            "nonEditableReason": {
+              "reason": "PLUGIN_LICENSE_ERROR",
+              "message": "The Parent Link is only available to Jira Premium users."
+            }
+          },
+          "customfield_10019": "0|hzzzzz:",
+          "timeestimate": null,
+          "aggregatetimeoriginalestimate": null,
+          "versions": [],
+          "issuelinks": [],
+          "assignee": null,
+          "updated": "2021-03-11T18:08:01.967+0100",
+          "status": {
+            "self": "https://wanderlost.atlassian.net/rest/api/3/status/10000",
+            "description": "",
+            "iconUrl": "https://wanderlost.atlassian.net/",
+            "name": "To Do",
+            "id": "10000",
+            "statusCategory": {
+              "self": "https://wanderlost.atlassian.net/rest/api/3/statuscategory/2",
+              "id": 2,
+              "key": "new",
+              "colorName": "blue-gray",
+              "name": "To Do"
+            }
+          },
+          "components": [],
+          "timeoriginalestimate": null,
+          "description": null,
+          "customfield_10010": null,
+          "customfield_10014": null,
+          "customfield_10015": null,
+          "customfield_10005": null,
+          "customfield_10006": null,
+          "security": null,
+          "customfield_10007": null,
+          "customfield_10008": null,
+          "aggregatetimeestimate": null,
+          "customfield_10009": null,
+          "summary": "Build a rocket",
+          "creator": {
+            "self": "https://wanderlost.atlassian.net/rest/api/3/user?accountId=557058%3A3fdc1f13-d60b-43bc-9dad-4148284848a8",
+            "accountId": "557058:3fdc1f13-d60b-43bc-9dad-4148284848a8",
+            "emailAddress": "davy.hausser@gmail.com",
+            "avatarUrls": {
+              "48x48": "https://secure.gravatar.com/avatar/c29252d86495eb50695fa16db00613bb?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FDH-3.png",
+              "24x24": "https://secure.gravatar.com/avatar/c29252d86495eb50695fa16db00613bb?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FDH-3.png",
+              "16x16": "https://secure.gravatar.com/avatar/c29252d86495eb50695fa16db00613bb?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FDH-3.png",
+              "32x32": "https://secure.gravatar.com/avatar/c29252d86495eb50695fa16db00613bb?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FDH-3.png"
+            },
+            "displayName": "Davy Hausser",
+            "active": true,
+            "timeZone": "Europe/Warsaw",
+            "accountType": "atlassian"
+          },
+          "subtasks": [],
+          "reporter": {
+            "self": "https://wanderlost.atlassian.net/rest/api/3/user?accountId=557058%3A3fdc1f13-d60b-43bc-9dad-4148284848a8",
+            "accountId": "557058:3fdc1f13-d60b-43bc-9dad-4148284848a8",
+            "emailAddress": "davy.hausser@gmail.com",
+            "avatarUrls": {
+              "48x48": "https://secure.gravatar.com/avatar/c29252d86495eb50695fa16db00613bb?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FDH-3.png",
+              "24x24": "https://secure.gravatar.com/avatar/c29252d86495eb50695fa16db00613bb?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FDH-3.png",
+              "16x16": "https://secure.gravatar.com/avatar/c29252d86495eb50695fa16db00613bb?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FDH-3.png",
+              "32x32": "https://secure.gravatar.com/avatar/c29252d86495eb50695fa16db00613bb?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FDH-3.png"
+            },
+            "displayName": "Davy Hausser",
+            "active": true,
+            "timeZone": "Europe/Warsaw",
+            "accountType": "atlassian"
+          },
+          "customfield_10000": "{}",
+          "aggregateprogress": { "progress": 0, "total": 0 },
+          "customfield_10001": null,
+          "customfield_10002": null,
+          "customfield_10003": null,
+          "customfield_10004": null,
+          "environment": null,
+          "duedate": null,
+          "progress": { "progress": 0, "total": 0 },
+          "votes": {
+            "self": "https://wanderlost.atlassian.net/rest/api/3/issue/WD-1/votes",
+            "votes": 0,
+            "hasVoted": false
+          }
+        }
+      }
+    ]
+  },
+  "teams": [
+    {
+      "id": "10000",
+      "key": "backend",
+      "name": "backend",
+      "type": "",
+      "members": []
+    }
   ]
 }

@@ -7,7 +7,13 @@ import {
   Pagination,
   ResourceMap,
 } from '../types';
-// import sampleResources from '../data/resources.json';
+
+import mockData from '../mocks/data.json';
+// import mockIssues from '../mocks/issues.json';
+// import mockProjects from '../mocks/projects.json';
+// import mockVersions from '../mocks/versions.json';
+
+const USE_MOCK_DATA = true;
 
 class UserAPI extends DataSource {
   prisma: PrismaClient;
@@ -37,6 +43,8 @@ class UserAPI extends DataSource {
   }
 
   async findTeams() {
+    if (USE_MOCK_DATA) return mockData.teams;
+
     const teams = await this.prisma.team.findMany({
       include: { members: true },
     });

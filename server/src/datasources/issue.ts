@@ -91,6 +91,8 @@ class IssueAPI extends RESTDataSource {
    * @param {string} projectIdOrKey - project ID or key
    */
   async getStatuses(projectIdOrKey: string) {
+    if (USE_MOCK_DATA) return mockData.status;
+
     const response = await this.get(`project/${projectIdOrKey}/statuses`);
     const { statuses } = response[0];
     return Array.isArray(statuses) ? statuses : [];
@@ -117,7 +119,7 @@ class IssueAPI extends RESTDataSource {
     startAt,
     maxResults,
   }: IssueConnection) {
-    if (USE_MOCK_DATA) return mockIssues;
+    if (USE_MOCK_DATA) return mockData.issues;
 
     // let assignee = null;
     // if (resourceId) {
