@@ -20,6 +20,8 @@ const Nameplate: FunctionComponent<NamePlateProps> = ({ id }) => {
     variables: { id },
   });
 
+  console.log(data);
+
   if (loading || error) return <NameWrapper>Unknown user</NameWrapper>;
 
   return (

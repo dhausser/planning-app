@@ -229,7 +229,11 @@
     {
       "key": "davy.hausser",
       "name": "Davy Hausser",
-      "email": "davy.hausser@gmail.com" 
+      "email": "davy.hausser@gmail.com",
+      "displayName": "Davy Hausser",
+      "avatarUrls": {
+        
+      }
     }
   ]
 }

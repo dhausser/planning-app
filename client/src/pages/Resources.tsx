@@ -116,8 +116,8 @@ const Resources: FunctionComponent<Props> = ({ navigationViewController }) => {
           >
             Switch Display
           </Button>
-          <Button onClick={() => createAllResources()}>Load Sample Data</Button>
-          <Button onClick={() => deleteAllResources()}>Delete All Data</Button>
+          {/* <Button onClick={() => createAllResources()}>Load Sample Data</Button>
+          <Button onClick={() => deleteAllResources()}>Delete All Data</Button> */}
         </ButtonGroup>
         {display}
         <ModalTransition>

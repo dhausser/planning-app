@@ -245,6 +245,8 @@ class IssueAPI extends RESTDataSource {
    * Returns currently logged user. This resource cannot be accessed anonymously.
    */
   async getCurrentUser() {
+    if (USE_MOCK_DATA) return mockData.resources[0];
+
     const user = await this.get('myself');
     return {
       ...user,
@@ -259,6 +261,8 @@ class IssueAPI extends RESTDataSource {
    * @param {string} key - user key
    */
   async getUser(key: string) {
+    if (USE_MOCK_DATA) return mockData.resources[0];
+
     const user = await this.get('user', { key });
     return {
       ...user,
