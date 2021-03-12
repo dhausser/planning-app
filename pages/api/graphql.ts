@@ -1,6 +1,6 @@
-// import micro from "micro";
+// https://github.com/apollographql/apollo-server/blob/main/packages/apollo-server-micro/README.md#cors-example
+
 import Cors from "micro-cors";
-// import Cors from "cors";
 import { ApolloServer } from "apollo-server-micro";
 import { schema } from "../../apollo/schema";
 
@@ -12,9 +12,11 @@ export const config = {
   },
 };
 
-const cors = Cors({
-  "Access-Control-Allow-Origin": process.env.FRONTEND_URL,
-});
+const cors = Cors();
+
+// const cors = Cors({
+//   origin: process.env.FRONTEND_URL,
+// });
 
 export default cors((req, res) => {
   if (req.method === "OPTIONS") {

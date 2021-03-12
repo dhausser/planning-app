@@ -43,25 +43,25 @@ interface NavigationViewController {
 const AppRouter: React.FC<NavigationViewController> = ({
   navigationViewController,
 }) => {
-  // const isLoggedIn = useUserLogin();
-  // const { loading, error, data } = useUserLogin();
+  const isLoggedIn = useUserLogin();
+  const { loading, error, data } = useUserLogin();
 
-  // useEffect(() => {
-  //   navigationViewController.addView(productHomeView);
-  //   navigationViewController.addView(productIssuesView);
-  //   navigationViewController.addView(projectHomeView);
-  // }, [navigationViewController]);
+  useEffect(() => {
+    navigationViewController.addView(productHomeView);
+    navigationViewController.addView(productIssuesView);
+    navigationViewController.addView(projectHomeView);
+  }, [navigationViewController]);
 
-  // if (loading) return <Loading />;
-  // if (error)
-  //   return <EmptyState header={error.name} description={error.message} />;
+  if (loading) return <Loading />;
+  if (error)
+    return <EmptyState header={error.name} description={error.message} />;
 
   return (
     <LayoutManagerWithViewController globalNavigation={MyGlobalNavigation}>
       <Route path={["/", "/projects"]} exact component={Projects} />
-      {/* {data.currentUser ? (
+      {data.currentUser ? (
         <>
-          <Route path={['/', '/projects']} exact component={Projects} />
+          <Route path={["/", "/projects"]} exact component={Projects} />
           <Route path="/resource/:id" component={Resource} />
           <Route path="/issue/:issueId" component={Issue} />
           <Route path="/settings" component={Settings} />
@@ -81,7 +81,7 @@ const AppRouter: React.FC<NavigationViewController> = ({
           <Redirect to="/login" />
           <Route path="/login" component={LoginForm} />
         </>
-      )} */}
+      )}
     </LayoutManagerWithViewController>
   );
 };
