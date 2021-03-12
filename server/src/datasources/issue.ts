@@ -175,6 +175,8 @@ class IssueAPI extends RESTDataSource {
     projectId: string;
     versionId: string;
   }) {
+    if (USE_MOCK_DATA) return mockData.issues.issues;
+
     const roadmap = new Roadmap({ projectId, versionId });
     const response = await this.post('search', roadmap.getParams());
     return roadmap.getDataset(response.issues);
@@ -192,6 +194,8 @@ class IssueAPI extends RESTDataSource {
     projectId: string;
     versionId: string;
   }) {
+    if (USE_MOCK_DATA) return mockData.issues;
+
     const jql = `issuetype = epic${
       projectId ? ` and project = ${projectId}` : ''
     } ${versionId ? ` and fixversion = ${versionId}` : ''}`;
