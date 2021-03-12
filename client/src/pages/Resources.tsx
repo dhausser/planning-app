@@ -1,5 +1,6 @@
 import React, { useState, useEffect, FunctionComponent } from 'react';
-import { useQuery, useMutation } from '@apollo/client';
+import { useQuery } from '@apollo/client';
+// import { useMutation } from '@apollo/client';
 import styled from 'styled-components';
 import { withNavigationViewController } from '@atlaskit/navigation-next';
 import PageHeader from '@atlaskit/page-header';
@@ -19,8 +20,8 @@ import { Props, Resource } from '../types';
 import { ROWS_PER_PAGE } from '../lib/useIssues';
 import {
   GET_RESOURCES,
-  CREATE_ALL_RESOURCES,
-  DELETE_ALL_RESOURCES,
+  // CREATE_ALL_RESOURCES,
+  // DELETE_ALL_RESOURCES,
   RESOURCES_PER_PAGE,
 } from '../lib/useResources';
 
