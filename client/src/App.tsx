@@ -43,7 +43,6 @@ interface NavigationViewController {
 const AppRouter: React.FC<NavigationViewController> = ({
   navigationViewController,
 }) => {
-  const isLoggedIn = useUserLogin();
   const { loading, error, data } = useUserLogin();
 
   useEffect(() => {
