@@ -14,6 +14,13 @@ import {
   ApolloContext,
 } from '../types';
 
+import mockData from '../mocks/data.json';
+import mockIssues from '../mocks/issues.json';
+// import mockProjects from '../mocks/projects.json';
+// import mockVersions from '../mocks/versions.json';
+
+const USE_MOCK_DATA = true;
+
 function parseAvatarUrls(avatarUrls: AvatarUrls) {
   return {
     large: avatarUrls['48x48'] as string,
@@ -49,6 +56,8 @@ class IssueAPI extends RESTDataSource {
    * Get projects
    */
   async getProjects() {
+    if (USE_MOCK_DATA) return mockData.projects;
+
     const response = await this.get('project/search');
     // const projects = response.map((project: Project) => ({
     //   ...project,
@@ -57,7 +66,6 @@ class IssueAPI extends RESTDataSource {
     //     .toUpperCase()}${project.projectTypeKey.slice(1)}`,
     //   avatarUrls: parseAvatarUrls(project.avatarUrls),
     // }));
-
     return response ? response.values : [];
   }
 
@@ -66,6 +74,8 @@ class IssueAPI extends RESTDataSource {
    * @param {string} projectIdOrKey - project ID or key
    */
   async getVersions(projectIdOrKey: string) {
+    if (USE_MOCK_DATA) return mockData.versions;
+
     const response = await this.get(
       `project/${projectIdOrKey || 10000}/versions`
     );
@@ -107,6 +117,8 @@ class IssueAPI extends RESTDataSource {
     startAt,
     maxResults,
   }: IssueConnection) {
+    if (USE_MOCK_DATA) return mockIssues;
+
     // let assignee = null;
     // if (resourceId) {
     //   assignee = resourceId;
@@ -126,8 +138,6 @@ class IssueAPI extends RESTDataSource {
     // });
     // const params = issues.getParams();
     const response = await this.get('search');
-
-    console.log(response);
 
     return response ? response.values : [];
   }
@@ -268,7 +278,7 @@ class IssueAPI extends RESTDataSource {
       }
     }
 
-    return null;
+    return 'FAKE_USER_TOKEN';
   }
 
   /**
