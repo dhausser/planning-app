@@ -224,5 +224,12 @@
       "type": "",
       "members": []
     }
+  ],
+  "resources": [
+    {
+      "key": "davy.hausser",
+      "name": "Davy Hausser",
+      "email": "davy.hausser@gmail.com" 
+    }
   ]
 }

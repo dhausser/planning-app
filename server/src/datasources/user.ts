@@ -24,6 +24,8 @@ class UserAPI extends DataSource {
   }
 
   async findUsers({ offset, limit, teamId }: Pagination) {
+    if (USE_MOCK_DATA) return mockData.resources;
+
     const where = teamId ? { teamId: parseInt(teamId, 10) } : {};
     const include = { team: true };
     const first = limit;
@@ -38,6 +40,8 @@ class UserAPI extends DataSource {
   }
 
   async findUser({ id }: { id: string }) {
+    if (USE_MOCK_DATA) return mockData.resources[0];
+
     const user = await this.prisma.user.findOne({ where: { key: id } });
     return user;
   }
