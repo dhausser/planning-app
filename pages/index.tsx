@@ -3,36 +3,35 @@ import Link from "next/link";
 import { useQuery } from "@apollo/client";
 import { initializeApollo } from "../apollo/client";
 
-// const ViewerQuery = gql`
-//   query ViewerQuery {
-//     viewer {
-//       id
-//       name
-//       status
-//     }
-//   }
-// `;
+const ProjectQuery = gql`
+  query ProjectQuery {
+    projects {
+      id
+      name
+    }
+  }
+`;
 
 const Index = () => {
-  // const {
-  //   data: { viewer },
-  // } = useQuery(ViewerQuery);
+  const {
+    data: { projects },
+  } = useQuery(ProjectQuery);
 
-  return <div>Hello world</div>;
+  return <div>Welcome to {projects[0].name}</div>;
 };
 
-// export async function getStaticProps() {
-//   const apolloClient = initializeApollo();
+export async function getStaticProps() {
+  const apolloClient = initializeApollo();
 
-//   await apolloClient.query({
-//     query: ViewerQuery,
-//   });
+  await apolloClient.query({
+    query: ProjectQuery,
+  });
 
-//   return {
-//     props: {
-//       initialApolloState: apolloClient.cache.extract(),
-//     },
-//   };
-// }
+  return {
+    props: {
+      initialApolloState: apolloClient.cache.extract(),
+    },
+  };
+}
 
 export default Index;
