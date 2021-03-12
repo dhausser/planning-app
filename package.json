@@ -8,10 +8,13 @@
     "start": "next start"
   },
   "dependencies": {
+    "apollo-server-lambda": "^2.21.1",
     "apollo-server-micro": "^2.21.1",
     "graphql": "^15.5.0",
     "micro-cors": "^0.1.1",
+    "netlify-lambda": "^2.0.3",
     "next": "10.0.8",
+    "npm-run-all": "^4.1.5",
     "react": "17.0.1",
     "react-dom": "17.0.1"
   },

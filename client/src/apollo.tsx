@@ -6,18 +6,13 @@ import {
   gql,
 } from "@apollo/client";
 
-const endpoint =
-  process.env.NODE_ENV === "production"
-    ? process.env.REACT_APP_PRODUCTION_ENDPOINT
-    : "/graphql";
-
 // Set up our apollo-client to point at the server we created
 // this can be local or a remote endpoint
 const cache = new InMemoryCache();
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   cache,
   link: new HttpLink({
-    uri: endpoint,
+    uri: "/.netlify/functions/graphql",
     credentials: "same-origin",
     headers: {
       authorization:
