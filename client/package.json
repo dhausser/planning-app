@@ -41,6 +41,7 @@
     "@atlaskit/user-picker": "^4.3.0",
     "chart.js": "^2.9.3",
     "graphql": "^14.0.0",
+    "msw": "^0.27.1",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
