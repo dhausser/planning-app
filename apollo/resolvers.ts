@@ -3,8 +3,8 @@ import mockData from "./data.json";
 export const resolvers = {
   Query: {
     issues: () => mockData.issues,
-    dashboardIssues: () => mockData.issues,
-    roadmapIssues: () => mockData.issues,
+    dashboardIssues: () => mockData.issues.issues,
+    roadmapIssues: () => mockData.issues.issues,
     epics: () => mockData.issues,
     issue: () => mockData.issues[0],
     projects: () => mockData.projects,
