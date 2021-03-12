@@ -1,4 +1,4 @@
-import mockData from "../server/src/mocks/data.json";
+// import mockData from "../server/src/mocks/data.json";
 
 export const resolvers = {
   Query: {
