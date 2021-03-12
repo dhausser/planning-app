@@ -14,10 +14,6 @@ export const config = {
 
 const cors = Cors();
 
-// const cors = Cors({
-//   origin: process.env.FRONTEND_URL,
-// });
-
 export default cors((req, res) => {
   if (req.method === "OPTIONS") {
     res.end();
