@@ -593,20 +593,7 @@
     "@popperjs/core" "^2.9.1"
     react-popper "^2.2.3"
 
-"@atlaskit/popup@^0.4.0":
-  version "0.4.3"
-  resolved "https://registry.yarnpkg.com/@atlaskit/popup/-/popup-0.4.3.tgz#7ba4f6a3259be596f9646639317f936548c7416f"
-  integrity sha512-Eqd8wlF3XMYsGFwavtwir4NrjsSnfEcf4oQTruZhYAD5lYuC6moR6IC3jeu90kTKm5ugFrEdjmbMglqGyswZNQ==
-  dependencies:
-    "@atlaskit/popper" "^3.1.12"
-    "@atlaskit/portal" "^3.1.7"
-    "@atlaskit/theme" "^9.5.3"
-    "@babel/runtime" "^7.0.0"
-    "@emotion/core" "^10.0.9"
-    focus-trap "^2.4.5"
-    tslib "^1.9.3"
-
-"@atlaskit/popup@^1.0.0":
+"@atlaskit/popup@^1.0.0", "@atlaskit/popup@^1.0.6":
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/@atlaskit/popup/-/popup-1.0.6.tgz#5a9a1992222aee5cc0ad962ba5ab102db4f93aef"
   integrity sha512-1cxXscBN28adezEPHcm22YVHDtXcXqEcAagkVtx1wRXcA+WlyA4U2UHnc51cLWDRMdePLysuZqCbicDHTi4wlw==
@@ -619,7 +606,7 @@
     bind-event-listener "^1.0.2"
     focus-trap "^2.4.5"
 
-"@atlaskit/portal@^3.1.6", "@atlaskit/portal@^3.1.7":
+"@atlaskit/portal@^3.1.6":
   version "3.1.9"
   resolved "https://registry.yarnpkg.com/@atlaskit/portal/-/portal-3.1.9.tgz#245906893c9d7cb4892e6ab7a918668962e0fb7e"
   integrity sha512-PW1kPU9aeVzjDx3Jttm3IOaT+2WdjldZV4fIMs+mrPeMLITca1CvoRz0s9eBbv9mVJYQ4X9/Wkcs0XW3J3V6rQ==
