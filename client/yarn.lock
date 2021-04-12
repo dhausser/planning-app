@@ -456,21 +456,13 @@
     raf-schd "^2.1.0"
     react-scrolllock "^5.0.1"
 
-"@atlaskit/logo@*":
+"@atlaskit/logo@*", "@atlaskit/logo@^13.2.0":
   version "13.2.0"
   resolved "https://registry.yarnpkg.com/@atlaskit/logo/-/logo-13.2.0.tgz#203e053e59ba4680fb886984f82f24c16a159438"
   integrity sha512-+jGt8AxjY1LcdPJKNuq7zHZJO35YMfeyesKYx3LrjuDYhUoZfs654gHNei5EiaKwK1tjetRiukojbzoIQ7VBAg==
   dependencies:
     "@babel/runtime" "^7.0.0"
     react-uid "^2.2.0"
-
-"@atlaskit/logo@^12.3.4":
-  version "12.3.5"
-  resolved "https://registry.yarnpkg.com/@atlaskit/logo/-/logo-12.3.5.tgz#80e4dc628d1daf11b819481e5da05208bb6cb97c"
-  integrity sha512-XeUS3J3iZbIR0RUeo65oTQUyJdAgCkW8pL5MiPX7um4oPPE7a5g1e9LESNEmCjUxZD7kM2azvBq/g082Fzt2HA==
-  dependencies:
-    react-uid "^2.2.0"
-    tslib "^1.9.3"
 
 "@atlaskit/lozenge@^10.0.0":
   version "10.1.2"
