@@ -169,16 +169,18 @@
     "@atlaskit/theme" "^9.5.1"
     tslib "^1.9.3"
 
-"@atlaskit/breadcrumbs@^9.2.9":
-  version "9.2.11"
-  resolved "https://registry.yarnpkg.com/@atlaskit/breadcrumbs/-/breadcrumbs-9.2.11.tgz#c16989839639b84753c2583e74e151332c2ac9b9"
-  integrity sha512-yUnH8vcvveMHTmicqWGEMo4nSDai2ds6vtA20gkAMugQ9sxQf8+OWkJrWOmRNcbXhK5SYrWBOcxZcguk6aStXQ==
+"@atlaskit/breadcrumbs@^11.0.3":
+  version "11.0.3"
+  resolved "https://registry.yarnpkg.com/@atlaskit/breadcrumbs/-/breadcrumbs-11.0.3.tgz#b8c36d96f806c91a70260713a92ad54e55788d30"
+  integrity sha512-rT2MKNLF2C065S50qhBz18Bchk/gE7qjFY/ldGlrXIgGvOCT02co/YIAnpM3aEb6aNeaAF8W4icqjgHnMYjW3w==
   dependencies:
-    "@atlaskit/analytics-next" "^6.3.5"
-    "@atlaskit/button" "^13.3.12"
-    "@atlaskit/theme" "^9.5.1"
-    "@atlaskit/tooltip" "^15.2.7"
-    tslib "^1.9.3"
+    "@atlaskit/analytics-next" "^8.0.0"
+    "@atlaskit/button" "^15.1.0"
+    "@atlaskit/theme" "^11.0.0"
+    "@atlaskit/tooltip" "^17.2.0"
+    "@babel/runtime" "^7.0.0"
+    "@emotion/core" "^10.0.9"
+    react-loosely-lazy "^0.4.4"
 
 "@atlaskit/button@^13.3.11", "@atlaskit/button@^13.3.12", "@atlaskit/button@^13.3.7", "@atlaskit/button@^13.4.0":
   version "13.4.2"
@@ -774,7 +776,7 @@
     react-transition-group "^4.4.1"
     tslib "^1.9.3"
 
-"@atlaskit/tooltip@^17.0.0":
+"@atlaskit/tooltip@^17.0.0", "@atlaskit/tooltip@^17.2.0":
   version "17.2.0"
   resolved "https://registry.yarnpkg.com/@atlaskit/tooltip/-/tooltip-17.2.0.tgz#5996b0849530d7636a40ecfed4efff8666665aba"
   integrity sha512-yJcKCkys/mU46aY7YHOgJMqa/SYbL+zWD1+YjTMOa7UdDFRUV+i8+gEUfBjYEJ6yybFX8bGLB+ghrkNvBO0aeA==
@@ -10970,6 +10972,11 @@ react-loadable@^5.1.0:
   integrity sha512-C8Aui0ZpMd4KokxRdVAm2bQtI03k2RMRNzOB+IipV3yxFTSVICv7WoUr5L9ALB5BmKO1iHgZtWM8EvYG83otdg==
   dependencies:
     prop-types "^15.5.0"
+
+react-loosely-lazy@^0.4.4:
+  version "0.4.4"
+  resolved "https://registry.yarnpkg.com/react-loosely-lazy/-/react-loosely-lazy-0.4.4.tgz#b09546c3e6c0c518a483feee7679c440f8fec7d5"
+  integrity sha512-6/oHAFzGtCZvuNqEqP9Qf3dGkhxIdF9rpZzQMJrcopuBAgnPFgor/YeHVUnUn7yV2vES+G1LY6rakxO/83SStw==
 
 react-node-resolver@^1.0.1:
   version "1.0.1"
