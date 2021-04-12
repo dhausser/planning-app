@@ -557,12 +557,12 @@
     "@atlaskit/theme" "^9.5.1"
     tslib "^1.9.3"
 
-"@atlaskit/page@^11.0.13":
-  version "11.0.14"
-  resolved "https://registry.yarnpkg.com/@atlaskit/page/-/page-11.0.14.tgz#87eafee5026745b8d8207ebb0f044e45186117a0"
-  integrity sha512-FcLXX6YEOqLh0H3I/w0q2wM1an9ckt6ImQihTRtid/une/NTDYEEsW0q9SmvnkFEZQ/suCRXH1nwcrHwVL12XA==
+"@atlaskit/page@^12.0.6":
+  version "12.0.6"
+  resolved "https://registry.yarnpkg.com/@atlaskit/page/-/page-12.0.6.tgz#e4e6a8930fb9cd90930dde2d34ae59092103feed"
+  integrity sha512-r5rnwpRbTi4xRQBTH8qfbOB0H2JpZzWUYJcgyNMa7U4xnQttXpVi8wOgaG8Z9mIK1nUgZ9lPsjzrlR1leZNY8g==
   dependencies:
-    tslib "^1.9.3"
+    "@babel/runtime" "^7.0.0"
 
 "@atlaskit/pagination@^13.0.0":
   version "13.0.10"
