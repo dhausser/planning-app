@@ -13,7 +13,7 @@
     "@atlaskit/dynamic-table": "^14.2.1",
     "@atlaskit/empty-state": "^7.1.5",
     "@atlaskit/form": "^8.2.2",
-    "@atlaskit/global-navigation": "^9.0.1",
+    "@atlaskit/global-navigation": "^10.0.7",
     "@atlaskit/icon": "^20.1.2",
     "@atlaskit/icon-object": "^5.0.3",
     "@atlaskit/icon-priority": "^5.0.3",
