@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@apollo/client": "^3.0.0-beta.44",
+    "@apollo/client": "^3.3.14",
     "@atlaskit/atlassian-navigation": "^0.10.5",
     "@atlaskit/avatar": "^17.1.10",
     "@atlaskit/breadcrumbs": "^9.2.9",
