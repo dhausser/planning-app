@@ -751,7 +751,7 @@
     "@babel/runtime" "^7.0.0"
     "@emotion/core" "^10.0.9"
 
-"@atlaskit/theme@^11.0.0":
+"@atlaskit/theme@^11.0.0", "@atlaskit/theme@^11.0.3":
   version "11.0.3"
   resolved "https://registry.yarnpkg.com/@atlaskit/theme/-/theme-11.0.3.tgz#6483a751eb7c28209e50307aabe255a8209bdb3b"
   integrity sha512-XD/8FWiivaW92+5hs1L0B65TkfxtigaGAUktq49cgh2bowgPcjl+GGAUWfByojKC8g7+akMgrL+eGNhry9B9ZA==
