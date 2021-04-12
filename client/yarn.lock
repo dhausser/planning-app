@@ -464,7 +464,7 @@
     "@babel/runtime" "^7.0.0"
     react-uid "^2.2.0"
 
-"@atlaskit/lozenge@^10.0.0":
+"@atlaskit/lozenge@^10.0.0", "@atlaskit/lozenge@^10.1.2":
   version "10.1.2"
   resolved "https://registry.yarnpkg.com/@atlaskit/lozenge/-/lozenge-10.1.2.tgz#2e56bd9c3fc3cd8d8bb94f478397943aa67709d1"
   integrity sha512-HJHFT4T35iaDqRvEJmvHH9n4hfjJEb1hhYTynbM/uIq8hykYMHhkIhcU34hhOfxnOb6LqygbZ1HhSuK0vcPngQ==
@@ -473,7 +473,7 @@
     "@babel/runtime" "^7.0.0"
     "@compiled/react" "^0.6.0"
 
-"@atlaskit/lozenge@^9.1.4", "@atlaskit/lozenge@^9.1.6", "@atlaskit/lozenge@^9.1.7":
+"@atlaskit/lozenge@^9.1.4", "@atlaskit/lozenge@^9.1.6":
   version "9.1.9"
   resolved "https://registry.yarnpkg.com/@atlaskit/lozenge/-/lozenge-9.1.9.tgz#6168bb37d58717504e5856eef4a916b8fbad5a0e"
   integrity sha512-X5zGO8s4Ae82kB1a2UGevcnqFlRKILqTfAChmThVASl53ki4Fe7dbGCTLRgkMZs1P33qQii/cbpwoQMLyp8rJA==
