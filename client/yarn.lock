@@ -311,7 +311,7 @@
     "@atlaskit/theme" "^9.5.1"
     "@babel/runtime" "^7.0.0"
 
-"@atlaskit/form@^7.2.1", "@atlaskit/form@^7.2.2":
+"@atlaskit/form@^7.2.2":
   version "7.4.1"
   resolved "https://registry.yarnpkg.com/@atlaskit/form/-/form-7.4.1.tgz#b74df4749889630614794c18fe3ea36e68fb1387"
   integrity sha512-EqeQ00QNF38yUI8lbvxMi3AHwI5HX2VO4hHrGV+DLvqGOJMFaPkysuk9iAa2TmrehuaN9LTNP+MxJRx5KH0yIQ==
@@ -324,6 +324,20 @@
     react-uid "^2.2.0"
     tiny-invariant "^0.0.3"
     tslib "^1.9.3"
+
+"@atlaskit/form@^8.2.2":
+  version "8.2.2"
+  resolved "https://registry.yarnpkg.com/@atlaskit/form/-/form-8.2.2.tgz#7ed097ee7ba5b2061b5025fbb684b5739daff84b"
+  integrity sha512-rSVscAP3cKu9nqn1WmqxELKWvGUlCt5d4DkZj1q3aThoucVqzGwkmOqjEuwW+bxUDBr1KrQPju6KunZ+5fcULQ==
+  dependencies:
+    "@atlaskit/icon" "^21.4.0"
+    "@atlaskit/theme" "^11.0.0"
+    "@babel/runtime" "^7.0.0"
+    final-form "^4.20.1"
+    final-form-focus "^1.1.2"
+    lodash "^4.17.15"
+    react-uid "^2.2.0"
+    tiny-invariant "^0.0.3"
 
 "@atlaskit/global-navigation@^9.0.1":
   version "9.0.4"
@@ -6379,12 +6393,12 @@ fill-range@^7.0.1:
   dependencies:
     to-regex-range "^5.0.1"
 
-final-form-focus@^1.1.0:
+final-form-focus@^1.1.0, final-form-focus@^1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/final-form-focus/-/final-form-focus-1.1.2.tgz#8ea5c4bd802e220cebaa47a587bb0be164eb6806"
   integrity sha512-Gd+Bd2Ll7ijo3/sd6kJ/bwLkhc2bUJPxTON6fIqee/008EJpACWhT+zoWCm9q6NcfMcWRS+Sp5ikRX8iqdXeGQ==
 
-final-form@^4.14.1:
+final-form@^4.14.1, final-form@^4.20.1:
   version "4.20.2"
   resolved "https://registry.yarnpkg.com/final-form/-/final-form-4.20.2.tgz#c820b37d7ebb73d71169480256a36c7e6e6c9155"
   integrity sha512-5i0IxqwjjPG1nUNCjWhqPCvQJJ2R+QwTwaAnjPmFnLbyjIHWuBPU8u+Ps4G3TcX2Sjno+O5xCZJzYcMJEzzfCQ==
