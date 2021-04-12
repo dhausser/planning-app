@@ -24,7 +24,7 @@
     "@atlaskit/modal-dialog": "^11.2.9",
     "@atlaskit/navigation-next": "^9.0.10",
     "@atlaskit/page": "^12.0.6",
-    "@atlaskit/page-header": "^9.0.19",
+    "@atlaskit/page-header": "^10.0.9",
     "@atlaskit/popup": "^0.4.0",
     "@atlaskit/profilecard": "^12.4.0",
     "@atlaskit/select": "^11.0.10",

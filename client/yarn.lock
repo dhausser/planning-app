@@ -549,13 +549,13 @@
     "@atlaskit/util-service-support" "^6.0.0"
     "@babel/runtime" "^7.0.0"
 
-"@atlaskit/page-header@^9.0.19":
-  version "9.0.20"
-  resolved "https://registry.yarnpkg.com/@atlaskit/page-header/-/page-header-9.0.20.tgz#69a162291bb677ab26621d2fd84203aab1202f23"
-  integrity sha512-7tBDV80xpkZkKHRX8eAg+VcHhqlm9ZLsVzo2LDlimCeWlfUvY0BuYeVPZz3zlNMfd0FKl901Ba1k69zPtUklHA==
+"@atlaskit/page-header@^10.0.9":
+  version "10.0.9"
+  resolved "https://registry.yarnpkg.com/@atlaskit/page-header/-/page-header-10.0.9.tgz#e9586fe32d13924f41e0b8372b18b163e76bdef7"
+  integrity sha512-s824zvL6OtE/7oD7UIgp28bEmoQYMGCpWGgh2XyV0PwgsiKmmR1RKZPeE/wBkmCtU6vFTIIo6+YtXkrD+yFgwA==
   dependencies:
-    "@atlaskit/theme" "^9.5.1"
-    tslib "^1.9.3"
+    "@atlaskit/theme" "^11.0.0"
+    "@babel/runtime" "^7.0.0"
 
 "@atlaskit/page@^12.0.6":
   version "12.0.6"
