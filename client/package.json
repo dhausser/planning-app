@@ -28,7 +28,7 @@
     "@atlaskit/popup": "^1.0.6",
     "@atlaskit/profilecard": "^15.5.5",
     "@atlaskit/select": "^13.3.0",
-    "@atlaskit/spinner": "^12.1.6",
+    "@atlaskit/spinner": "^15.0.7",
     "@atlaskit/status": "^0.9.23",
     "@atlaskit/table-tree": "^8.0.3",
     "@atlaskit/textarea": "^2.2.8",
