@@ -731,14 +731,15 @@
     "@atlaskit/theme" "^9.5.1"
     tslib "^1.9.3"
 
-"@atlaskit/textarea@^2.2.8":
-  version "2.2.10"
-  resolved "https://registry.yarnpkg.com/@atlaskit/textarea/-/textarea-2.2.10.tgz#2f68863d3e969737fe6b5f49f2487575b3faa2f4"
-  integrity sha512-Nl5Qm+ByzQIjCeoOSVTc8nWzf4nktsSK1k7IoLjvdh5/DBnct4jNrsD19A05H56WF6CMzIWqUyQ+yi8N0McplQ==
+"@atlaskit/textarea@^4.0.2":
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/@atlaskit/textarea/-/textarea-4.0.2.tgz#2eec6aa36da375677842698212cd2c50d6e7d7ea"
+  integrity sha512-yRMWcJODo97l1n/n4BdZ7eXz6lFK6KBPEtBz38Vj3B1g8vXr4Xbr1IoSbyT4U/a2S/GWg/2DUTixR+QGE43cWQ==
   dependencies:
-    "@atlaskit/analytics-next" "^6.3.6"
-    "@atlaskit/theme" "^9.5.3"
-    tslib "^1.9.3"
+    "@atlaskit/analytics-next" "^8.0.0"
+    "@atlaskit/theme" "^11.0.0"
+    "@babel/runtime" "^7.0.0"
+    "@emotion/core" "^10.0.9"
 
 "@atlaskit/textfield@^3.1.10":
   version "3.1.13"
