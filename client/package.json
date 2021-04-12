@@ -34,7 +34,7 @@
     "@atlaskit/textarea": "^4.0.2",
     "@atlaskit/textfield": "^5.0.1",
     "@atlaskit/theme": "^11.0.3",
-    "@atlaskit/tooltip": "^15.2.6",
+    "@atlaskit/tooltip": "^17.2.0",
     "@atlaskit/user-picker": "^4.3.0",
     "apollo-server-lambda": "^2.21.1",
     "chart.js": "^2.9.3",
