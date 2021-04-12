@@ -187,18 +187,6 @@
     "@emotion/core" "^10.0.9"
     react-loosely-lazy "^0.4.4"
 
-"@atlaskit/button@^13.4.0":
-  version "13.4.2"
-  resolved "https://registry.yarnpkg.com/@atlaskit/button/-/button-13.4.2.tgz#c0afe579465d16949432a42d8d73d8f6aa650ad0"
-  integrity sha512-qLxbnnuSDr+arM8NIRva9J2H3YU6kvpWYw0lzQiW59iCQIjsRlo5EQqrGPd9l4nDL/shvdNzAuEQTVC+21t/pg==
-  dependencies:
-    "@atlaskit/analytics-next" "^6.3.6"
-    "@atlaskit/spinner" "^14.0.0"
-    "@atlaskit/theme" "^9.5.3"
-    "@emotion/core" "^10.0.9"
-    memoize-one "^5.1.0"
-    tslib "^1.9.3"
-
 "@atlaskit/button@^15.1.0", "@atlaskit/button@^15.1.5":
   version "15.1.5"
   resolved "https://registry.yarnpkg.com/@atlaskit/button/-/button-15.1.5.tgz#1cbe12d86e9b54f2c42a9d8a5a8f874e2de7ae8f"
@@ -720,19 +708,18 @@
     "@babel/runtime" "^7.0.0"
     styled-components "^3.2.6"
 
-"@atlaskit/table-tree@^8.0.3":
-  version "8.0.8"
-  resolved "https://registry.yarnpkg.com/@atlaskit/table-tree/-/table-tree-8.0.8.tgz#da590fcf8965fd23f203a025b89f2cc3e1e7ebb7"
-  integrity sha512-36EW4HLWh0Q7q1/8IDIAJlCu5N0lBgOGJhFxHT8wtbghDuaKQrUyUts5Qcxwpu04lSXNYvvYOILQ1GZUT4QJ2w==
+"@atlaskit/table-tree@^9.0.8":
+  version "9.0.8"
+  resolved "https://registry.yarnpkg.com/@atlaskit/table-tree/-/table-tree-9.0.8.tgz#e20022aef71e8f6904032e284801d592572c3720"
+  integrity sha512-YsEe/NORt4OlHktHq8LtbdTsLvH+/Tacp28Fhn/wtxVK8wg0Vmr6U+JY0j0lfDyTTDrOn7IbrpEbYFhbUniOFA==
   dependencies:
-    "@atlaskit/analytics-next" "^6.3.5"
-    "@atlaskit/button" "^13.4.0"
-    "@atlaskit/icon" "^20.1.1"
-    "@atlaskit/spinner" "^14.0.0"
-    "@atlaskit/theme" "^9.5.1"
+    "@atlaskit/analytics-next" "^8.0.0"
+    "@atlaskit/button" "^15.1.0"
+    "@atlaskit/icon" "^21.4.0"
+    "@atlaskit/spinner" "^15.0.0"
+    "@atlaskit/theme" "^11.0.0"
     "@babel/runtime" "^7.0.0"
-    lodash.get "^4.4.2"
-    lodash.set "^4.3.2"
+    lodash "^4.17.15"
     prop-types "^15.5.10"
 
 "@atlaskit/tag@^9.0.13":
@@ -9026,20 +9013,10 @@ lodash.debounce@^4.0.8:
   resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
   integrity sha1-gteb/zCmfEAF/9XiUVMArZyk168=
 
-lodash.get@^4.4.2:
-  version "4.4.2"
-  resolved "https://registry.yarnpkg.com/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
-  integrity sha1-LRd/ZS+jHpObRDjVNBSZ36OCXpk=
-
 lodash.memoize@^4.1.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/lodash.memoize/-/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"
   integrity sha1-vMbEmkKihA7Zl/Mj6tpezRguC/4=
-
-lodash.set@^4.3.2:
-  version "4.3.2"
-  resolved "https://registry.yarnpkg.com/lodash.set/-/lodash.set-4.3.2.tgz#d8757b1da807dde24816b0d6a84bea1a76230b23"
-  integrity sha1-2HV7HagH3eJIFrDWqEvqGnYjCyM=
 
 lodash.sortby@^4.7.0:
   version "4.7.0"

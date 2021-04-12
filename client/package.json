@@ -30,7 +30,7 @@
     "@atlaskit/select": "^13.3.0",
     "@atlaskit/spinner": "^15.0.7",
     "@atlaskit/status": "^0.11.0",
-    "@atlaskit/table-tree": "^8.0.3",
+    "@atlaskit/table-tree": "^9.0.8",
     "@atlaskit/textarea": "^2.2.8",
     "@atlaskit/textfield": "^3.1.10",
     "@atlaskit/theme": "^9.5.3",
