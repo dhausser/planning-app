@@ -29,7 +29,7 @@
     "@atlaskit/profilecard": "^15.5.5",
     "@atlaskit/select": "^13.3.0",
     "@atlaskit/spinner": "^15.0.7",
-    "@atlaskit/status": "^0.9.23",
+    "@atlaskit/status": "^0.11.0",
     "@atlaskit/table-tree": "^8.0.3",
     "@atlaskit/textarea": "^2.2.8",
     "@atlaskit/textfield": "^3.1.10",
