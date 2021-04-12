@@ -657,7 +657,7 @@
     es6-promise "^4.0.5"
     lru-fast "^0.2.2"
 
-"@atlaskit/select@^11.0.10", "@atlaskit/select@^11.0.7":
+"@atlaskit/select@^11.0.7":
   version "11.0.14"
   resolved "https://registry.yarnpkg.com/@atlaskit/select/-/select-11.0.14.tgz#f8cfc75f9de1f2a97a743bbd47567629fec90785"
   integrity sha512-YRLiiz4Pni1AmQh7ZgpzyxoXnNzYySEpm5C3MkhAn8c4dU2CN8e2vqJQWwGeNgAtqLcdn1o7bcfK+CCJ6ara2w==
@@ -677,7 +677,7 @@
     shallow-equal "^1.0.0"
     tslib "^1.9.3"
 
-"@atlaskit/select@^13.2.0":
+"@atlaskit/select@^13.2.0", "@atlaskit/select@^13.3.0":
   version "13.3.0"
   resolved "https://registry.yarnpkg.com/@atlaskit/select/-/select-13.3.0.tgz#31088795cb8dffdf68c8c4b24be782ca2163482e"
   integrity sha512-Cv2SEZ7M01sUfemrnWBpJGnTooQCSI3kFOU5rj0sO7jAxP9jc8qjPwyxHI5Bn0voSmcmotfzllfc9SeDADRDOA==
