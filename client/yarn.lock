@@ -75,6 +75,14 @@
     "@atlaskit/analytics-next" "^6.3.6"
     tslib "^1.9.3"
 
+"@atlaskit/analytics-namespaced-context@^6.0.0":
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/@atlaskit/analytics-namespaced-context/-/analytics-namespaced-context-6.1.0.tgz#e4d40f70cada420e8143517c1052831b3580b437"
+  integrity sha512-z6dn9bWR6tLyttPOromU5WvrzSX9HfWIPr+Aqi3dYyOXqC1oCgSzTqFKkoxUwevnMANvE79aezQkNGTq1pJ1Xw==
+  dependencies:
+    "@atlaskit/analytics-next" "^8.0.0"
+    "@babel/runtime" "^7.0.0"
+
 "@atlaskit/analytics-next-stable-react-context@1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@atlaskit/analytics-next-stable-react-context/-/analytics-next-stable-react-context-1.0.1.tgz#93c4c7a1a35f4ab606d727af443f49f0842fd96f"
@@ -92,21 +100,33 @@
     tslib "^1.9.3"
     use-memo-one "^1.1.1"
 
-"@atlaskit/atlassian-navigation@^0.10.5":
-  version "0.10.15"
-  resolved "https://registry.yarnpkg.com/@atlaskit/atlassian-navigation/-/atlassian-navigation-0.10.15.tgz#6e26a3a38a9f7229236614239503521def0523b9"
-  integrity sha512-kWiscUQXEWAzuwNchdXkdHLUn0IT/xA8+bx+iPi4AniHn5LvzCWD/SC3yqRAsj6jyyursnMp22mGCkkyDvq2jQ==
+"@atlaskit/analytics-next@^8.0.0", "@atlaskit/analytics-next@^8.1.0":
+  version "8.1.2"
+  resolved "https://registry.yarnpkg.com/@atlaskit/analytics-next/-/analytics-next-8.1.2.tgz#4b09bcd1c178804fa6a47401e055ca0a5655d50a"
+  integrity sha512-SgHYeLu1KnCBfqc0d8QbtwNQCWePGBopQv+wDP2jBQ5nKKcnTVhREuiwkdmqiUe5cG2iqJdUiJ52r0UDhpizOA==
   dependencies:
-    "@atlaskit/analytics-namespaced-context" "^4.1.11"
-    "@atlaskit/button" "^13.4.0"
-    "@atlaskit/icon" "^20.0.2"
-    "@atlaskit/popup" "^0.5.0"
-    "@atlaskit/theme" "^9.5.1"
-    "@atlaskit/tooltip" "^15.2.3"
-    "@atlaskit/width-detector" "^2.2.0"
+    "@atlaskit/analytics-next-stable-react-context" "1.0.1"
+    "@babel/runtime" "^7.0.0"
+    prop-types "^15.5.10"
+    use-memo-one "^1.1.1"
+
+"@atlaskit/atlassian-navigation@^0.12.6":
+  version "0.12.6"
+  resolved "https://registry.yarnpkg.com/@atlaskit/atlassian-navigation/-/atlassian-navigation-0.12.6.tgz#062ac2ae62eb4502a9088cd82ed6d609d18bab21"
+  integrity sha512-8QZNOLDI4N5akjsji0UtNcUY34gym9ymgl23BWkA9VUj1vaTGuraiBqSwyM/4dI4BWYqFFKwDx4Vmte1QHLQcw==
+  dependencies:
+    "@atlaskit/analytics-namespaced-context" "^6.0.0"
+    "@atlaskit/button" "^15.1.0"
+    "@atlaskit/icon" "^21.4.0"
+    "@atlaskit/logo" "*"
+    "@atlaskit/popup" "^1.0.0"
+    "@atlaskit/theme" "^11.0.0"
+    "@atlaskit/tooltip" "^17.0.0"
+    "@atlaskit/width-detector" "^3.0.0"
+    "@babel/runtime" "^7.0.0"
     "@emotion/core" "^10.0.9"
     chromatism "^2.6.0"
-    lodash.throttle "^4.1.1"
+    lodash "^4.17.15"
 
 "@atlaskit/avatar@^17.1.10":
   version "17.1.11"
@@ -169,6 +189,17 @@
     "@emotion/core" "^10.0.9"
     memoize-one "^5.1.0"
     tslib "^1.9.3"
+
+"@atlaskit/button@^15.1.0":
+  version "15.1.5"
+  resolved "https://registry.yarnpkg.com/@atlaskit/button/-/button-15.1.5.tgz#1cbe12d86e9b54f2c42a9d8a5a8f874e2de7ae8f"
+  integrity sha512-LzReteesB4KYAbDHFKkc4XfWOs1WPLM8AYftTCfhl+vJcI8YVuc5+G2Hx+R1m2+ByZ0PW4UiazqXX7N4Jt8UIg==
+  dependencies:
+    "@atlaskit/analytics-next" "^8.0.0"
+    "@atlaskit/spinner" "^15.0.0"
+    "@atlaskit/theme" "^11.0.0"
+    "@babel/runtime" "^7.0.0"
+    "@emotion/core" "^10.0.9"
 
 "@atlaskit/comment@^9.3.5":
   version "9.3.7"
@@ -326,7 +357,7 @@
     "@atlaskit/theme" "^9.5.1"
     tslib "^1.9.3"
 
-"@atlaskit/icon@^20.0.1", "@atlaskit/icon@^20.0.2", "@atlaskit/icon@^20.1.0", "@atlaskit/icon@^20.1.1", "@atlaskit/icon@^20.1.2":
+"@atlaskit/icon@^20.0.1", "@atlaskit/icon@^20.1.0", "@atlaskit/icon@^20.1.1", "@atlaskit/icon@^20.1.2":
   version "20.1.2"
   resolved "https://registry.yarnpkg.com/@atlaskit/icon/-/icon-20.1.2.tgz#1054196d5442cb818faefe17a47c3e528bc15ae7"
   integrity sha512-cDpE6kfiCxv4VNY4LKtRUPAdXTcx4t2eEU1K5Htm/5i6/rmJMHMITIvpZaRqF2R7XdBH5kE2MLxSfexBHC0DjQ==
@@ -334,6 +365,15 @@
     "@atlaskit/theme" "^9.5.1"
     tslib "^1.9.3"
     uuid "^3.1.0"
+
+"@atlaskit/icon@^21.4.0":
+  version "21.5.0"
+  resolved "https://registry.yarnpkg.com/@atlaskit/icon/-/icon-21.5.0.tgz#2f231d34f074024e54dba17859dfd34065af6e0d"
+  integrity sha512-gTzETPAh1jlGipyugRLIutFhAiTh2bsht481JlXoqO4dLYzhUWTBpmjR14uVZhTo+pRaOaeNmdjugD5CQBwfzA==
+  dependencies:
+    "@atlaskit/theme" "^11.0.0"
+    "@babel/runtime" "^7.0.0"
+    "@emotion/core" "^10.0.9"
 
 "@atlaskit/inline-dialog@^12.1.11", "@atlaskit/inline-dialog@^12.1.13":
   version "12.1.14"
@@ -382,6 +422,14 @@
     raf-schd "^2.1.0"
     react-scrolllock "^5.0.1"
 
+"@atlaskit/logo@*":
+  version "13.2.0"
+  resolved "https://registry.yarnpkg.com/@atlaskit/logo/-/logo-13.2.0.tgz#203e053e59ba4680fb886984f82f24c16a159438"
+  integrity sha512-+jGt8AxjY1LcdPJKNuq7zHZJO35YMfeyesKYx3LrjuDYhUoZfs654gHNei5EiaKwK1tjetRiukojbzoIQ7VBAg==
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+    react-uid "^2.2.0"
+
 "@atlaskit/logo@^12.3.4":
   version "12.3.5"
   resolved "https://registry.yarnpkg.com/@atlaskit/logo/-/logo-12.3.5.tgz#80e4dc628d1daf11b819481e5da05208bb6cb97c"
@@ -429,6 +477,14 @@
     react-uid "^2.2.0"
     tiny-invariant "^0.0.3"
     tslib "^1.9.3"
+
+"@atlaskit/motion@^0.4.0":
+  version "0.4.6"
+  resolved "https://registry.yarnpkg.com/@atlaskit/motion/-/motion-0.4.6.tgz#d4e6cb3a26152efbc1b2d6363eac18e2ce06ea60"
+  integrity sha512-HZA9k/k4Vm98WGe0z4atVlpSUAgvXWF4c8HRnVNBwqDhfrqrO8+BeXyPMhXs6Fe7pHqVBIKwJ9/yinQ/lVPdOQ==
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+    "@emotion/core" "^10.0.9"
 
 "@atlaskit/navigation-next@^8.0.2", "@atlaskit/navigation-next@^8.0.4":
   version "8.0.9"
@@ -510,6 +566,15 @@
     react-popper "1.3.6"
     tslib "^1.9.3"
 
+"@atlaskit/popper@^5.0.0":
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/@atlaskit/popper/-/popper-5.1.0.tgz#2854c7aab83a9584fefd038ea8dd126449e07457"
+  integrity sha512-gYaZEqBDSNwdz1kkU9kG7GOQ30GKamzfC6sx2qbU27DJtyBsUJSO/3OuYOGrFY/M9zzXPhdpMRM3/Ypox6udJQ==
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+    "@popperjs/core" "^2.9.1"
+    react-popper "^2.2.3"
+
 "@atlaskit/popup@^0.4.0":
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/@atlaskit/popup/-/popup-0.4.3.tgz#7ba4f6a3259be596f9646639317f936548c7416f"
@@ -523,18 +588,18 @@
     focus-trap "^2.4.5"
     tslib "^1.9.3"
 
-"@atlaskit/popup@^0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@atlaskit/popup/-/popup-0.5.0.tgz#cd33915425e54839623d8f72d234ae35fdd3657b"
-  integrity sha512-QOVpXNn8CSccOkAhp5Cv6IFKa88ph0MBHgMqxDmmly5bJ6IxOok49V+gBnRagVxrgP6PN4VAJaxOaVUuvksu7A==
+"@atlaskit/popup@^1.0.0":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@atlaskit/popup/-/popup-1.0.6.tgz#5a9a1992222aee5cc0ad962ba5ab102db4f93aef"
+  integrity sha512-1cxXscBN28adezEPHcm22YVHDtXcXqEcAagkVtx1wRXcA+WlyA4U2UHnc51cLWDRMdePLysuZqCbicDHTi4wlw==
   dependencies:
-    "@atlaskit/popper" "^3.1.12"
-    "@atlaskit/portal" "^3.1.7"
-    "@atlaskit/theme" "^9.5.3"
+    "@atlaskit/popper" "^5.0.0"
+    "@atlaskit/portal" "^4.0.0"
+    "@atlaskit/theme" "^11.0.0"
     "@babel/runtime" "^7.0.0"
     "@emotion/core" "^10.0.9"
+    bind-event-listener "^1.0.2"
     focus-trap "^2.4.5"
-    tslib "^1.9.3"
 
 "@atlaskit/portal@^3.1.6", "@atlaskit/portal@^3.1.7":
   version "3.1.9"
@@ -545,6 +610,14 @@
     exenv "^1.2.2"
     tiny-invariant "^0.0.3"
     tslib "^1.9.3"
+
+"@atlaskit/portal@^4.0.0", "@atlaskit/portal@^4.1.0":
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/@atlaskit/portal/-/portal-4.1.0.tgz#52a3d5388cc7a98080ab82acadfcea7cdd84c867"
+  integrity sha512-c1ber3tomzOoDabuzByjlPiTRQnNQeD9dtzUqYTZVXxzZmNw2ikGgWjA94VLTAYKW9kmlXwQCy8Yq5av6APrRw==
+  dependencies:
+    "@atlaskit/theme" "^11.0.0"
+    "@babel/runtime" "^7.0.0"
 
 "@atlaskit/profilecard@^12.4.0":
   version "12.4.4"
@@ -603,6 +676,15 @@
     "@emotion/core" "^10.0.9"
     tslib "^1.9.3"
 
+"@atlaskit/spinner@^15.0.0":
+  version "15.0.7"
+  resolved "https://registry.yarnpkg.com/@atlaskit/spinner/-/spinner-15.0.7.tgz#92e2df2f97d8a8eaab7511ffac1b54c54ba8d94d"
+  integrity sha512-k4M0UgcLyCAB6ZP/R5PT/lh4a/AQKLwDWyAXQGffCPpKyXCkMsxDrnjYqdW7mk8qThjpJHaX4f1rDRdLklwkHQ==
+  dependencies:
+    "@atlaskit/theme" "^11.0.0"
+    "@babel/runtime" "^7.0.0"
+    "@emotion/core" "^10.0.9"
+
 "@atlaskit/status@^0.9.23":
   version "0.9.25"
   resolved "https://registry.yarnpkg.com/@atlaskit/status/-/status-0.9.25.tgz#91aa2e670590cd886fff14c352f56efb30753b41"
@@ -658,6 +740,15 @@
     "@emotion/core" "^10.0.9"
     tslib "^1.9.3"
 
+"@atlaskit/theme@^11.0.0":
+  version "11.0.3"
+  resolved "https://registry.yarnpkg.com/@atlaskit/theme/-/theme-11.0.3.tgz#6483a751eb7c28209e50307aabe255a8209bdb3b"
+  integrity sha512-XD/8FWiivaW92+5hs1L0B65TkfxtigaGAUktq49cgh2bowgPcjl+GGAUWfByojKC8g7+akMgrL+eGNhry9B9ZA==
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+    exenv "^1.2.2"
+    prop-types "^15.5.10"
+
 "@atlaskit/theme@^9.5.1", "@atlaskit/theme@^9.5.3":
   version "9.5.6"
   resolved "https://registry.yarnpkg.com/@atlaskit/theme/-/theme-9.5.6.tgz#fbc1068eee3af5dbb57c346276b5eb0913e89d0d"
@@ -680,6 +771,20 @@
     react-node-resolver "^1.0.1"
     react-transition-group "^4.4.1"
     tslib "^1.9.3"
+
+"@atlaskit/tooltip@^17.0.0":
+  version "17.2.0"
+  resolved "https://registry.yarnpkg.com/@atlaskit/tooltip/-/tooltip-17.2.0.tgz#5996b0849530d7636a40ecfed4efff8666665aba"
+  integrity sha512-yJcKCkys/mU46aY7YHOgJMqa/SYbL+zWD1+YjTMOa7UdDFRUV+i8+gEUfBjYEJ6yybFX8bGLB+ghrkNvBO0aeA==
+  dependencies:
+    "@atlaskit/analytics-next" "^8.1.0"
+    "@atlaskit/motion" "^0.4.0"
+    "@atlaskit/popper" "^5.0.0"
+    "@atlaskit/portal" "^4.1.0"
+    "@atlaskit/theme" "^11.0.0"
+    "@babel/runtime" "^7.0.0"
+    "@emotion/core" "^10.0.9"
+    bind-event-listener "^1.0.2"
 
 "@atlaskit/user-picker@^4.3.0":
   version "4.6.4"
@@ -708,13 +813,13 @@
     url "^0.11.0"
     url-search-params "^0.10.0"
 
-"@atlaskit/width-detector@^2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@atlaskit/width-detector/-/width-detector-2.2.0.tgz#844a0b082a93899c9ad2ce6f9e96611286f4ec1a"
-  integrity sha512-jCWH83kqKytXpkzlsf57ZPWbCgtOxs6fOIydMIDUr7N5/5m1UZCZ8YDt1j68hXTgguqjuvlf1D9HkX70a/WzxQ==
+"@atlaskit/width-detector@^3.0.0":
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/@atlaskit/width-detector/-/width-detector-3.0.5.tgz#ee2a34d9ad9e1f7867de56544c1d77c6ba95e782"
+  integrity sha512-V9oYuRI4jaR6uab+DXnGq2FAuXqmKFIlP+IT0fJ72bc2lnYT69+TiKW0pLMcdW6VLhZdJlGPCrJEA5ld5kDvvA==
   dependencies:
+    "@babel/runtime" "^7.0.0"
     raf-schd "^2.1.0"
-    tslib "^1.9.3"
 
 "@babel/code-frame@7.8.3":
   version "7.8.3"
@@ -2194,6 +2299,11 @@
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@open-draft/until/-/until-1.0.3.tgz#db9cc719191a62e7d9200f6e7bab21c5b848adca"
   integrity sha512-Aq58f5HiWdyDlFffbbSjAlv596h/cOnt2DO1w3DOC7OJ5EHs0hd/nycJfiu9RJbT6Yk6F1knnRRXNSpxoIVZ9Q==
+
+"@popperjs/core@^2.9.1":
+  version "2.9.2"
+  resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.9.2.tgz#adea7b6953cbb34651766b0548468e743c6a2353"
+  integrity sha512-VZMYa7+fXHdwIq1TDhSXoVmSPEGM/aa+6Aiq3nVVJ9bXr24zScr+NlKFKC3iPljA7ho/GAZr+d2jOf5GIRC30Q==
 
 "@protobufjs/aspromise@^1.1.1", "@protobufjs/aspromise@^1.1.2":
   version "1.1.2"
@@ -3907,6 +4017,11 @@ binary-extensions@^2.0.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/binary-extensions/-/binary-extensions-2.2.0.tgz#75f502eeaf9ffde42fc98829645be4ea76bd9e2d"
   integrity sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==
+
+bind-event-listener@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/bind-event-listener/-/bind-event-listener-1.0.2.tgz#3af1ab15f64aff0b95ba38e0e9d7d2c78b85dc0b"
+  integrity sha512-50S1ecl2UzqyHabspfZkZ0zp+V92ueggSm5BUFYGCHq9cD48a6bDqZeEykSWF4yFEbWDIOkl1Ly7igta9l3E7Q==
 
 bindings@^1.5.0:
   version "1.5.0"
@@ -8544,11 +8659,6 @@ lodash.templatesettings@^4.0.0:
   dependencies:
     lodash._reinterpolate "^3.0.0"
 
-lodash.throttle@^4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
-  integrity sha1-wj6RtxAkKscMN/HhzaknTMOb8vQ=
-
 lodash.uniq@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
@@ -10809,6 +10919,11 @@ react-fast-compare@^2.0.1:
   resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-2.0.4.tgz#e84b4d455b0fec113e0402c329352715196f81f9"
   integrity sha512-suNP+J1VU1MWFKcyt7RtjiSWUjvidmQSlqu+eHslq+342xCbGTYmC0mEhPCOHxlW0CywylOC1u2DFAT+bv4dBw==
 
+react-fast-compare@^3.0.1:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-3.2.0.tgz#641a9da81b6a6320f270e89724fb45a0b39e43bb"
+  integrity sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==
+
 react-focus-lock@^1.19.1:
   version "1.19.1"
   resolved "https://registry.yarnpkg.com/react-focus-lock/-/react-focus-lock-1.19.1.tgz#2f3429793edaefe2d077121f973ce5a3c7a0651a"
@@ -10869,6 +10984,14 @@ react-popper@1.3.6:
     popper.js "^1.14.4"
     prop-types "^15.6.1"
     typed-styles "^0.0.7"
+    warning "^4.0.2"
+
+react-popper@^2.2.3:
+  version "2.2.5"
+  resolved "https://registry.yarnpkg.com/react-popper/-/react-popper-2.2.5.tgz#1214ef3cec86330a171671a4fbcbeeb65ee58e96"
+  integrity sha512-kxGkS80eQGtLl18+uig1UIf9MKixFSyPxglsgLBxlYnyDf65BiY9B3nZSc6C9XUNDgStROB0fMQlTEz1KxGddw==
+  dependencies:
+    react-fast-compare "^3.0.1"
     warning "^4.0.2"
 
 react-redux@^7.1.1:
