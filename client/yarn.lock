@@ -367,32 +367,23 @@
     "@babel/runtime" "^7.0.0"
     url-parse "^1.4.5"
 
-"@atlaskit/icon-object@^5.0.3":
-  version "5.0.3"
-  resolved "https://registry.yarnpkg.com/@atlaskit/icon-object/-/icon-object-5.0.3.tgz#5c177f82c7a6a5d38038d01d442ee81374ab15d6"
-  integrity sha512-eAEuz6iPkgMEzFC75lazNHFrlu886GZgYzp3brtjZ9P/JV/hTg3e3Pmlgr7a5PcZcPgiwnJpEi7Hh9kE0D2/FQ==
+"@atlaskit/icon-object@^6.2.1":
+  version "6.2.1"
+  resolved "https://registry.yarnpkg.com/@atlaskit/icon-object/-/icon-object-6.2.1.tgz#026c49945577bd068e1261219cca1455bb0dfc42"
+  integrity sha512-YDhLIKcXPd4AqsLetektjj5pdMWasCbpEGXUVDuU53szuJH/KR/TopeXJ/r1eQ/4qQb0DwOJsvQ7KPaziwSdUw==
   dependencies:
-    "@atlaskit/theme" "^9.5.1"
-    tslib "^1.9.3"
+    "@atlaskit/icon" "21.5.0"
+    "@babel/runtime" "^7.0.0"
 
-"@atlaskit/icon-priority@^5.0.3":
-  version "5.0.3"
-  resolved "https://registry.yarnpkg.com/@atlaskit/icon-priority/-/icon-priority-5.0.3.tgz#f958c41824d8f93d65895ec15f54fc8f5735814c"
-  integrity sha512-Mc1rKzd1ExlOVkdhMMETt8/mLjWDRCIcJdviVhRxASaB7uQgxYP43exlWeo2eBwPYiUvhr/DO3Oyw21ShTv+kQ==
+"@atlaskit/icon-priority@^6.2.1":
+  version "6.2.1"
+  resolved "https://registry.yarnpkg.com/@atlaskit/icon-priority/-/icon-priority-6.2.1.tgz#e1046bc6a25cbb2f4a629a50d62dfdc125403398"
+  integrity sha512-tYEdonLBvW0NucB5qgOlLB/G+wa8vVgYfM/mMXLJM+C/WJNVG4wOFxfS9q+piEpXblIZBRPpcJ0wAWuK2FgqMA==
   dependencies:
-    "@atlaskit/theme" "^9.5.1"
-    tslib "^1.9.3"
+    "@atlaskit/icon" "21.5.0"
+    "@babel/runtime" "^7.0.0"
 
-"@atlaskit/icon@^20.0.1", "@atlaskit/icon@^20.1.0", "@atlaskit/icon@^20.1.1", "@atlaskit/icon@^20.1.2":
-  version "20.1.2"
-  resolved "https://registry.yarnpkg.com/@atlaskit/icon/-/icon-20.1.2.tgz#1054196d5442cb818faefe17a47c3e528bc15ae7"
-  integrity sha512-cDpE6kfiCxv4VNY4LKtRUPAdXTcx4t2eEU1K5Htm/5i6/rmJMHMITIvpZaRqF2R7XdBH5kE2MLxSfexBHC0DjQ==
-  dependencies:
-    "@atlaskit/theme" "^9.5.1"
-    tslib "^1.9.3"
-    uuid "^3.1.0"
-
-"@atlaskit/icon@^21.4.0", "@atlaskit/icon@^21.5.0":
+"@atlaskit/icon@21.5.0", "@atlaskit/icon@^21.4.0", "@atlaskit/icon@^21.5.0":
   version "21.5.0"
   resolved "https://registry.yarnpkg.com/@atlaskit/icon/-/icon-21.5.0.tgz#2f231d34f074024e54dba17859dfd34065af6e0d"
   integrity sha512-gTzETPAh1jlGipyugRLIutFhAiTh2bsht481JlXoqO4dLYzhUWTBpmjR14uVZhTo+pRaOaeNmdjugD5CQBwfzA==
@@ -400,6 +391,15 @@
     "@atlaskit/theme" "^11.0.0"
     "@babel/runtime" "^7.0.0"
     "@emotion/core" "^10.0.9"
+
+"@atlaskit/icon@^20.0.1", "@atlaskit/icon@^20.1.0", "@atlaskit/icon@^20.1.1":
+  version "20.1.2"
+  resolved "https://registry.yarnpkg.com/@atlaskit/icon/-/icon-20.1.2.tgz#1054196d5442cb818faefe17a47c3e528bc15ae7"
+  integrity sha512-cDpE6kfiCxv4VNY4LKtRUPAdXTcx4t2eEU1K5Htm/5i6/rmJMHMITIvpZaRqF2R7XdBH5kE2MLxSfexBHC0DjQ==
+  dependencies:
+    "@atlaskit/theme" "^9.5.1"
+    tslib "^1.9.3"
+    uuid "^3.1.0"
 
 "@atlaskit/inline-dialog@^12.1.11", "@atlaskit/inline-dialog@^12.1.13":
   version "12.1.14"
@@ -1072,7 +1072,14 @@
   dependencies:
     "@babel/types" "^7.13.0"
 
-"@babel/helper-module-imports@^7.0.0", "@babel/helper-module-imports@^7.12.13", "@babel/helper-module-imports@^7.8.3":
+"@babel/helper-module-imports@^7.0.0":
+  version "7.13.12"
+  resolved "https://registry.yarnpkg.com/@babel/helper-module-imports/-/helper-module-imports-7.13.12.tgz#c6a369a6f3621cb25da014078684da9196b61977"
+  integrity sha512-4cVvR2/1B693IuOvSI20xqqa/+bl7lqAMR59R4iu39R9aOX8/JoYY1sFaNvUMyMBGnHdwvJgUrzNLoUZxXypxA==
+  dependencies:
+    "@babel/types" "^7.13.12"
+
+"@babel/helper-module-imports@^7.12.13", "@babel/helper-module-imports@^7.8.3":
   version "7.12.13"
   resolved "https://registry.yarnpkg.com/@babel/helper-module-imports/-/helper-module-imports-7.12.13.tgz#ec67e4404f41750463e455cc3203f6a32e93fcb0"
   integrity sha512-NGmfvRp9Rqxy0uHSSVP+SRIW1q31a7Ji10cLBcqSDUngGentY4FRiHOFZFE1CLU5eiL0oE8reH7Tg1y99TDM/g==
@@ -2030,10 +2037,19 @@
     globals "^11.1.0"
     lodash "^4.17.19"
 
-"@babel/types@^7.0.0", "@babel/types@^7.12.1", "@babel/types@^7.12.13", "@babel/types@^7.12.17", "@babel/types@^7.13.0", "@babel/types@^7.3.0", "@babel/types@^7.4.0", "@babel/types@^7.4.4", "@babel/types@^7.7.0", "@babel/types@^7.9.0":
+"@babel/types@^7.0.0", "@babel/types@^7.12.1", "@babel/types@^7.12.17", "@babel/types@^7.13.0", "@babel/types@^7.3.0", "@babel/types@^7.4.0", "@babel/types@^7.4.4", "@babel/types@^7.7.0", "@babel/types@^7.9.0":
   version "7.13.0"
   resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.13.0.tgz#74424d2816f0171b4100f0ab34e9a374efdf7f80"
   integrity sha512-hE+HE8rnG1Z6Wzo+MhaKE5lM5eMx71T4EHJgku2E3xIfaULhDcxiiRxUYgwX8qwP1BBSlag+TdGOt6JAidIZTA==
+  dependencies:
+    "@babel/helper-validator-identifier" "^7.12.11"
+    lodash "^4.17.19"
+    to-fast-properties "^2.0.0"
+
+"@babel/types@^7.12.13", "@babel/types@^7.13.12":
+  version "7.13.14"
+  resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.13.14.tgz#c35a4abb15c7cd45a2746d78ab328e362cbace0d"
+  integrity sha512-A2aa3QTkWoyqsZZFl56MLUsfmh7O0gN41IPvXAE/++8ojpbz12SszD7JEGYVdn4f9Kt4amIei07swF1h4AqmmQ==
   dependencies:
     "@babel/helper-validator-identifier" "^7.12.11"
     lodash "^4.17.19"
@@ -13691,9 +13707,9 @@ yallist@^4.0.0:
   integrity sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==
 
 yaml@^1.7.2:
-  version "1.10.0"
-  resolved "https://registry.yarnpkg.com/yaml/-/yaml-1.10.0.tgz#3b593add944876077d4d683fee01081bd9fff31e"
-  integrity sha512-yr2icI4glYaNG+KWONODapy2/jDdMSDnrONSjblABjD9B4Z5LgiircSt8m8sRZFNi08kG9Sm0uSHtEmP3zaEGg==
+  version "1.10.2"
+  resolved "https://registry.yarnpkg.com/yaml/-/yaml-1.10.2.tgz#2301c5ffbf12b467de8da2333a459e29e7920e4b"
+  integrity sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==
 
 yargs-parser@^13.1.2:
   version "13.1.2"
