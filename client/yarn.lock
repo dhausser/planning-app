@@ -67,14 +67,6 @@
     http-errors "^1.7.3"
     object-path "^0.11.4"
 
-"@atlaskit/analytics-namespaced-context@^4.1.11":
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/@atlaskit/analytics-namespaced-context/-/analytics-namespaced-context-4.3.0.tgz#4db234137f0e95ff2e700f7091233eb9ab4ee95a"
-  integrity sha512-zrnrRJ9UT3Qwi+HI5mFCx5erF43C+8PPx8nAQYFvoqJFESR0io9SJR0WWgkoNc+YuHkZnZEGq90U3oROAAFrhA==
-  dependencies:
-    "@atlaskit/analytics-next" "^6.3.6"
-    tslib "^1.9.3"
-
 "@atlaskit/analytics-namespaced-context@^6.0.0":
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/@atlaskit/analytics-namespaced-context/-/analytics-namespaced-context-6.1.0.tgz#e4d40f70cada420e8143517c1052831b3580b437"
@@ -512,34 +504,7 @@
     "@babel/runtime" "^7.0.0"
     "@emotion/core" "^10.0.9"
 
-"@atlaskit/navigation-next@^8.0.4":
-  version "8.0.9"
-  resolved "https://registry.yarnpkg.com/@atlaskit/navigation-next/-/navigation-next-8.0.9.tgz#0bf9055f2465f28a3331db524a437c8a1ece8972"
-  integrity sha512-1VmyISea9SX0k9Q6GlhiOPMGaOE9kEaO01N+ZvqrvSlrrTDe0waDkNMCBnOoChMhCGdtce7WvOC2bpWWmAqXiQ==
-  dependencies:
-    "@atlaskit/analytics-namespaced-context" "^4.1.11"
-    "@atlaskit/analytics-next" "^6.3.5"
-    "@atlaskit/avatar" "^18.0.0"
-    "@atlaskit/icon" "^20.1.1"
-    "@atlaskit/select" "^11.0.11"
-    "@atlaskit/spinner" "^14.0.0"
-    "@atlaskit/theme" "^9.5.1"
-    "@atlaskit/tooltip" "^15.2.7"
-    "@babel/runtime" "^7.0.0"
-    "@emotion/core" "^10.0.9"
-    chromatism "^2.6.0"
-    deep-object-diff "^1.1.0"
-    emotion-theming "^10.0.7"
-    raf-schd "^2.1.0"
-    react-beautiful-dnd "^12.1.1"
-    react-fast-compare "^2.0.1"
-    react-loadable "^5.1.0"
-    react-node-resolver "^1.0.1"
-    react-transition-group "^4.4.1"
-    shallow-equal "^1.0.0"
-    unstated "^1.2.0"
-
-"@atlaskit/navigation-next@^9.0.0":
+"@atlaskit/navigation-next@^9.0.0", "@atlaskit/navigation-next@^9.0.10":
   version "9.0.10"
   resolved "https://registry.yarnpkg.com/@atlaskit/navigation-next/-/navigation-next-9.0.10.tgz#7431afafb95fdb4b55e01a8ba84484fc1cff5e55"
   integrity sha512-r0lJIhjAHPxqfiy+3e/RTXSFrfabd8MWeYZ/bIAcJJhZK+RAl1K6cUI0ucTEL/WG2BtkJoGiLzghhMC4IrnzKA==
@@ -691,7 +656,7 @@
     lru-fast "^0.2.2"
     react-node-resolver "^1.0.1"
 
-"@atlaskit/select@^11.0.10", "@atlaskit/select@^11.0.11", "@atlaskit/select@^11.0.7":
+"@atlaskit/select@^11.0.10", "@atlaskit/select@^11.0.7":
   version "11.0.14"
   resolved "https://registry.yarnpkg.com/@atlaskit/select/-/select-11.0.14.tgz#f8cfc75f9de1f2a97a743bbd47567629fec90785"
   integrity sha512-YRLiiz4Pni1AmQh7ZgpzyxoXnNzYySEpm5C3MkhAn8c4dU2CN8e2vqJQWwGeNgAtqLcdn1o7bcfK+CCJ6ara2w==
