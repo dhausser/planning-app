@@ -120,6 +120,19 @@
     chromatism "^2.6.0"
     lodash "^4.17.15"
 
+"@atlaskit/avatar-group@^8.0.15":
+  version "8.0.15"
+  resolved "https://registry.yarnpkg.com/@atlaskit/avatar-group/-/avatar-group-8.0.15.tgz#e8596884e98ba20be7382e9fb98a4f44caed9e67"
+  integrity sha512-FkIrU3n96PfzL0/xt6wKQKJExIXoTrt3n+vT13TUrQO1V/HGqcfVWeCUWQbwmXBRtC4cuQS0v+2+wkb+EesJrg==
+  dependencies:
+    "@atlaskit/avatar" "^20.0.0"
+    "@atlaskit/menu" "^0.7.0"
+    "@atlaskit/popup" "^1.0.0"
+    "@atlaskit/theme" "^11.0.0"
+    "@atlaskit/tooltip" "^17.0.0"
+    "@babel/runtime" "^7.0.0"
+    "@emotion/core" "^10.0.9"
+
 "@atlaskit/avatar@^18.0.0":
   version "18.0.2"
   resolved "https://registry.yarnpkg.com/@atlaskit/avatar/-/avatar-18.0.2.tgz#6d9cd49afd9e480e8b3d7c30a6f4ab5a40724727"
@@ -132,7 +145,7 @@
     "@emotion/core" "^10.0.9"
     tslib "^1.9.3"
 
-"@atlaskit/avatar@^20.0.0", "@atlaskit/avatar@^20.2.2":
+"@atlaskit/avatar@^20.0.0", "@atlaskit/avatar@^20.2.0", "@atlaskit/avatar@^20.2.2":
   version "20.2.2"
   resolved "https://registry.yarnpkg.com/@atlaskit/avatar/-/avatar-20.2.2.tgz#9cd58be2908428253083e866cf87458100fdb771"
   integrity sha512-Yj3KuKqY3igNpcK/Bb+h9R/xMGZEB/OC1Ohz1XwgB6/BNbGX9c6u8M/lt40AyvR34Segz5x4opKW0O7/TSqfyw==
@@ -362,7 +375,7 @@
     "@atlaskit/icon" "21.5.0"
     "@babel/runtime" "^7.0.0"
 
-"@atlaskit/icon@21.5.0", "@atlaskit/icon@^21.4.0", "@atlaskit/icon@^21.5.0":
+"@atlaskit/icon@21.5.0", "@atlaskit/icon@^21.3.0", "@atlaskit/icon@^21.4.0", "@atlaskit/icon@^21.5.0":
   version "21.5.0"
   resolved "https://registry.yarnpkg.com/@atlaskit/icon/-/icon-21.5.0.tgz#2f231d34f074024e54dba17859dfd34065af6e0d"
   integrity sha512-gTzETPAh1jlGipyugRLIutFhAiTh2bsht481JlXoqO4dLYzhUWTBpmjR14uVZhTo+pRaOaeNmdjugD5CQBwfzA==
@@ -456,7 +469,7 @@
     "@babel/runtime" "^7.0.0"
     "@compiled/react" "^0.6.0"
 
-"@atlaskit/lozenge@^9.1.4", "@atlaskit/lozenge@^9.1.6":
+"@atlaskit/lozenge@^9.1.4":
   version "9.1.9"
   resolved "https://registry.yarnpkg.com/@atlaskit/lozenge/-/lozenge-9.1.9.tgz#6168bb37d58717504e5856eef4a916b8fbad5a0e"
   integrity sha512-X5zGO8s4Ae82kB1a2UGevcnqFlRKILqTfAChmThVASl53ki4Fe7dbGCTLRgkMZs1P33qQii/cbpwoQMLyp8rJA==
@@ -465,7 +478,7 @@
     "@emotion/core" "^10.0.9"
     tslib "^1.9.3"
 
-"@atlaskit/menu@^0.7.5":
+"@atlaskit/menu@^0.7.0", "@atlaskit/menu@^0.7.5":
   version "0.7.5"
   resolved "https://registry.yarnpkg.com/@atlaskit/menu/-/menu-0.7.5.tgz#6f6264252398f2e82bd6baa8347064c3a9501487"
   integrity sha512-tow0xfr/2GvmEYJo4gVH+OwbRgmIrFsI81FVjRrO9FHH4oiXw8/iWW4kUuM83DxCd3ZmvQ00vN7Oab1dxNFQyg==
@@ -575,7 +588,7 @@
     "@atlaskit/theme" "^11.0.0"
     "@babel/runtime" "^7.0.0"
 
-"@atlaskit/popper@^3.1.11", "@atlaskit/popper@^3.1.12":
+"@atlaskit/popper@^3.1.12":
   version "3.1.13"
   resolved "https://registry.yarnpkg.com/@atlaskit/popper/-/popper-3.1.13.tgz#dd128a11d661f94db0074deeadf38c206d8cffe1"
   integrity sha512-S3hmXjT3Zps5Mqyp7fyxN9TTNL+Cpcv+82oZ4nCc3Tx1wPnu0J36rA6LK5uEXHlgc/12d27wHh+Qdkm1K5C5SQ==
@@ -624,24 +637,25 @@
     "@atlaskit/theme" "^11.0.0"
     "@babel/runtime" "^7.0.0"
 
-"@atlaskit/profilecard@^12.4.0":
-  version "12.4.4"
-  resolved "https://registry.yarnpkg.com/@atlaskit/profilecard/-/profilecard-12.4.4.tgz#9bb0a7e2d6463eb411371a54a3f9b7170dfa462b"
-  integrity sha512-neoLhF4Y+05ZVSXbq17dAnMNPUq0/VDPoJEzdk18Y4H0jmkUYu2rIitN4jznNGxhnDuHise+stItmhzO/TQAbA==
+"@atlaskit/profilecard@^15.5.5":
+  version "15.5.5"
+  resolved "https://registry.yarnpkg.com/@atlaskit/profilecard/-/profilecard-15.5.5.tgz#faf2ef344251cd49408f61361bb21dd18b72270f"
+  integrity sha512-mHG4SEdYlgpmNPs2p1DP9pSZ020/OI1EWQ22838di7xvQ7HyIa5LwmBQlgYhPTCrcoNugSLjeCzZTNM3hqDV0g==
   dependencies:
-    "@atlaskit/avatar" "^18.0.0"
-    "@atlaskit/button" "^13.4.0"
-    "@atlaskit/icon" "^20.1.0"
-    "@atlaskit/lozenge" "^9.1.6"
-    "@atlaskit/popper" "^3.1.11"
-    "@atlaskit/portal" "^3.1.6"
-    "@atlaskit/spinner" "^14.0.0"
-    "@atlaskit/theme" "^9.5.1"
+    "@atlaskit/analytics-next" "^8.0.0"
+    "@atlaskit/avatar" "^20.2.0"
+    "@atlaskit/avatar-group" "^8.0.15"
+    "@atlaskit/button" "^15.1.0"
+    "@atlaskit/icon" "^21.3.0"
+    "@atlaskit/lozenge" "^10.0.0"
+    "@atlaskit/menu" "^0.7.0"
+    "@atlaskit/popup" "^1.0.6"
+    "@atlaskit/spinner" "^15.0.0"
+    "@atlaskit/theme" "^11.0.0"
     "@babel/runtime" "^7.0.0"
     date-fns "^1.30.1"
     es6-promise "^4.0.5"
     lru-fast "^0.2.2"
-    react-node-resolver "^1.0.1"
 
 "@atlaskit/select@^11.0.10", "@atlaskit/select@^11.0.7":
   version "11.0.14"
