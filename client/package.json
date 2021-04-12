@@ -5,7 +5,7 @@
   "dependencies": {
     "@apollo/client": "^3.3.14",
     "@atlaskit/atlassian-navigation": "^0.12.6",
-    "@atlaskit/avatar": "^17.1.10",
+    "@atlaskit/avatar": "^20.2.2",
     "@atlaskit/breadcrumbs": "^9.2.9",
     "@atlaskit/button": "^13.3.11",
     "@atlaskit/comment": "^9.3.5",

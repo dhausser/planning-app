@@ -128,16 +128,6 @@
     chromatism "^2.6.0"
     lodash "^4.17.15"
 
-"@atlaskit/avatar@^17.1.10":
-  version "17.1.11"
-  resolved "https://registry.yarnpkg.com/@atlaskit/avatar/-/avatar-17.1.11.tgz#3b34a216250dc65026a994b657bd8ea9cbb867ec"
-  integrity sha512-ETb66o66A5F8eph0U0H3mNuUd9m3OVKOdI388KAqKzhJSXa2VpdfaLA2V2mRT5tWyBpaUFF1scGE/LKDvb0/cg==
-  dependencies:
-    "@atlaskit/analytics-next" "^6.3.5"
-    "@atlaskit/theme" "^9.5.1"
-    "@atlaskit/tooltip" "^15.2.7"
-    tslib "^1.9.3"
-
 "@atlaskit/avatar@^18.0.0":
   version "18.0.2"
   resolved "https://registry.yarnpkg.com/@atlaskit/avatar/-/avatar-18.0.2.tgz#6d9cd49afd9e480e8b3d7c30a6f4ab5a40724727"
@@ -149,6 +139,18 @@
     "@atlaskit/tooltip" "^15.2.7"
     "@emotion/core" "^10.0.9"
     tslib "^1.9.3"
+
+"@atlaskit/avatar@^20.2.2":
+  version "20.2.2"
+  resolved "https://registry.yarnpkg.com/@atlaskit/avatar/-/avatar-20.2.2.tgz#9cd58be2908428253083e866cf87458100fdb771"
+  integrity sha512-Yj3KuKqY3igNpcK/Bb+h9R/xMGZEB/OC1Ohz1XwgB6/BNbGX9c6u8M/lt40AyvR34Segz5x4opKW0O7/TSqfyw==
+  dependencies:
+    "@atlaskit/analytics-next" "^8.0.0"
+    "@atlaskit/icon" "^21.4.0"
+    "@atlaskit/theme" "^11.0.0"
+    "@atlaskit/tooltip" "^17.0.0"
+    "@babel/runtime" "^7.0.0"
+    "@emotion/core" "^10.0.9"
 
 "@atlaskit/badge@^13.1.5", "@atlaskit/badge@^13.1.7":
   version "13.1.10"
