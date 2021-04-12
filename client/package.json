@@ -8,7 +8,7 @@
     "@atlaskit/avatar": "^20.2.2",
     "@atlaskit/breadcrumbs": "^11.0.3",
     "@atlaskit/button": "^15.1.5",
-    "@atlaskit/comment": "^9.3.5",
+    "@atlaskit/comment": "^10.0.7",
     "@atlaskit/css-reset": "^5.0.10",
     "@atlaskit/dynamic-table": "^13.7.4",
     "@atlaskit/empty-state": "^6.0.9",

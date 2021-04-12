@@ -205,17 +205,17 @@
     "@babel/runtime" "^7.0.0"
     "@emotion/core" "^10.0.9"
 
-"@atlaskit/comment@^9.3.5":
-  version "9.3.7"
-  resolved "https://registry.yarnpkg.com/@atlaskit/comment/-/comment-9.3.7.tgz#d26ac3e53ca24afe7d3901020415d9d1db048e61"
-  integrity sha512-SQR4Mgh7EtcaVg+s0HJu6MTbssWLoGjCMsIYw/m7pZ0OJ+bLJqYCK3cQVYJuoX4+2MyZlqmC7BmRzGmctGq3zw==
+"@atlaskit/comment@^10.0.7":
+  version "10.0.7"
+  resolved "https://registry.yarnpkg.com/@atlaskit/comment/-/comment-10.0.7.tgz#9220eec0d85ac2dd7a6a0b58118e86e2f2c0afb1"
+  integrity sha512-nlyEAtongukJzWhZCbSPj0UTVpPD4uxJDvHDkTV3XgL7rVwWJNBPC/woX87cdn48zhZcpv2N1EdvRzHLyeCR4w==
   dependencies:
-    "@atlaskit/analytics-next" "^6.3.6"
-    "@atlaskit/button" "^13.4.0"
-    "@atlaskit/icon" "^20.1.2"
-    "@atlaskit/lozenge" "^9.1.7"
-    "@atlaskit/theme" "^9.5.3"
-    tslib "^1.9.3"
+    "@atlaskit/analytics-next" "^8.0.0"
+    "@atlaskit/button" "^15.1.0"
+    "@atlaskit/icon" "^21.4.0"
+    "@atlaskit/lozenge" "^10.0.0"
+    "@atlaskit/theme" "^11.0.0"
+    "@babel/runtime" "^7.0.0"
 
 "@atlaskit/css-reset@^5.0.10":
   version "5.0.12"
@@ -441,6 +441,15 @@
   dependencies:
     react-uid "^2.2.0"
     tslib "^1.9.3"
+
+"@atlaskit/lozenge@^10.0.0":
+  version "10.1.2"
+  resolved "https://registry.yarnpkg.com/@atlaskit/lozenge/-/lozenge-10.1.2.tgz#2e56bd9c3fc3cd8d8bb94f478397943aa67709d1"
+  integrity sha512-HJHFT4T35iaDqRvEJmvHH9n4hfjJEb1hhYTynbM/uIq8hykYMHhkIhcU34hhOfxnOb6LqygbZ1HhSuK0vcPngQ==
+  dependencies:
+    "@atlaskit/theme" "^11.0.0"
+    "@babel/runtime" "^7.0.0"
+    "@compiled/react" "^0.6.0"
 
 "@atlaskit/lozenge@^9.1.4", "@atlaskit/lozenge@^9.1.6", "@atlaskit/lozenge@^9.1.7":
   version "9.1.9"
@@ -1967,6 +1976,13 @@
   dependencies:
     exec-sh "^0.3.2"
     minimist "^1.2.0"
+
+"@compiled/react@^0.6.0":
+  version "0.6.10"
+  resolved "https://registry.yarnpkg.com/@compiled/react/-/react-0.6.10.tgz#140172bd471b89359105696e05ee6f616a352ea7"
+  integrity sha512-0KYg6/kAXDcPOIgvCIOer+BZOQiTHmNTVXX7KYmoeBsnAtTVejWB2XG8DRCaKcbUWLZlHT7x2kpbmZaj2Sni+A==
+  dependencies:
+    csstype "^3.0.7"
 
 "@csstools/convert-colors@^1.4.0":
   version "1.4.0"
@@ -5211,7 +5227,7 @@ csstype@^2.5.7:
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.6.16.tgz#544d69f547013b85a40d15bff75db38f34fe9c39"
   integrity sha512-61FBWoDHp/gRtsoDkq/B1nWrCUG/ok1E3tUrcNbZjsE9Cxd9yzUirjS3+nAATB8U4cTtaQmAHbNndoFz5L6C9Q==
 
-csstype@^3.0.2:
+csstype@^3.0.2, csstype@^3.0.7:
   version "3.0.7"
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.0.7.tgz#2a5fb75e1015e84dd15692f71e89a1450290950b"
   integrity sha512-KxnUB0ZMlnUWCsx2Z8MUsr6qV6ja1w9ArPErJaJaF8a5SOWoHLIszeCTKGRGRgtLgYrs1E8CHkNSP1VZTTPc9g==
