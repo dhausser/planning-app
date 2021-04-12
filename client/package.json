@@ -11,7 +11,7 @@
     "@atlaskit/comment": "^10.0.7",
     "@atlaskit/css-reset": "^6.0.5",
     "@atlaskit/dynamic-table": "^14.2.1",
-    "@atlaskit/empty-state": "^6.0.9",
+    "@atlaskit/empty-state": "^7.1.5",
     "@atlaskit/form": "^7.2.1",
     "@atlaskit/global-navigation": "^9.0.1",
     "@atlaskit/icon": "^20.1.2",

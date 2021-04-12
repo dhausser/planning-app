@@ -290,15 +290,15 @@
     "@babel/runtime" "^7.0.0"
     react-beautiful-dnd "^12.1.1"
 
-"@atlaskit/empty-state@^6.0.9":
-  version "6.0.12"
-  resolved "https://registry.yarnpkg.com/@atlaskit/empty-state/-/empty-state-6.0.12.tgz#7d8d1cd10fec07459da5d5ccab657ea013801239"
-  integrity sha512-fWI426z0zBJfVbCC4R2NA0FEEQSDTnK+m4/g4cgnhKek1P51tE4Or6bgNMG6bD/vXRAvbCxIl+mD7A9SsO2OBQ==
+"@atlaskit/empty-state@^7.1.5":
+  version "7.1.5"
+  resolved "https://registry.yarnpkg.com/@atlaskit/empty-state/-/empty-state-7.1.5.tgz#22bdf2d40642cb81626306cccc0cab8de43b8851"
+  integrity sha512-aFfUerEareXUYJwxXVrjiQPYNv/KLsWgIImgPlfGmdQU7ZChNf8xe8DhRqL9bSiAYcis6qLiwLxm2n62HG8kpA==
   dependencies:
-    "@atlaskit/button" "^13.4.0"
-    "@atlaskit/spinner" "^14.0.0"
-    "@atlaskit/theme" "^9.5.1"
-    tslib "^1.9.3"
+    "@atlaskit/button" "^15.1.0"
+    "@atlaskit/spinner" "^15.0.0"
+    "@atlaskit/theme" "^11.0.0"
+    "@babel/runtime" "^7.0.0"
 
 "@atlaskit/field-base@^14.0.1":
   version "14.0.5"
