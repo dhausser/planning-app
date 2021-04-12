@@ -39,11 +39,10 @@
     "apollo-server-lambda": "^2.22.2",
     "chart.js": "^3.1.0",
     "graphql": "^15.5.0",
-    "msw": "^0.27.1",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-intl": "^2.6.0",
+    "react-intl": "^5.15.8",
     "react-router-dom": "^5.1.2",
     "react-scroll-sync": "^0.7.1",
     "styled-components": "^3.2.6"
