@@ -182,7 +182,7 @@
     "@emotion/core" "^10.0.9"
     react-loosely-lazy "^0.4.4"
 
-"@atlaskit/button@^13.3.11", "@atlaskit/button@^13.3.12", "@atlaskit/button@^13.3.7", "@atlaskit/button@^13.4.0":
+"@atlaskit/button@^13.3.12", "@atlaskit/button@^13.3.7", "@atlaskit/button@^13.4.0":
   version "13.4.2"
   resolved "https://registry.yarnpkg.com/@atlaskit/button/-/button-13.4.2.tgz#c0afe579465d16949432a42d8d73d8f6aa650ad0"
   integrity sha512-qLxbnnuSDr+arM8NIRva9J2H3YU6kvpWYw0lzQiW59iCQIjsRlo5EQqrGPd9l4nDL/shvdNzAuEQTVC+21t/pg==
@@ -194,7 +194,7 @@
     memoize-one "^5.1.0"
     tslib "^1.9.3"
 
-"@atlaskit/button@^15.1.0":
+"@atlaskit/button@^15.1.0", "@atlaskit/button@^15.1.5":
   version "15.1.5"
   resolved "https://registry.yarnpkg.com/@atlaskit/button/-/button-15.1.5.tgz#1cbe12d86e9b54f2c42a9d8a5a8f874e2de7ae8f"
   integrity sha512-LzReteesB4KYAbDHFKkc4XfWOs1WPLM8AYftTCfhl+vJcI8YVuc5+G2Hx+R1m2+ByZ0PW4UiazqXX7N4Jt8UIg==
