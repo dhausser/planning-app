@@ -182,7 +182,7 @@
     "@emotion/core" "^10.0.9"
     react-loosely-lazy "^0.4.4"
 
-"@atlaskit/button@^13.3.12", "@atlaskit/button@^13.3.7", "@atlaskit/button@^13.4.0":
+"@atlaskit/button@^13.3.12", "@atlaskit/button@^13.4.0":
   version "13.4.2"
   resolved "https://registry.yarnpkg.com/@atlaskit/button/-/button-13.4.2.tgz#c0afe579465d16949432a42d8d73d8f6aa650ad0"
   integrity sha512-qLxbnnuSDr+arM8NIRva9J2H3YU6kvpWYw0lzQiW59iCQIjsRlo5EQqrGPd9l4nDL/shvdNzAuEQTVC+21t/pg==
@@ -278,17 +278,17 @@
     "@babel/runtime" "^7.0.0"
     prop-types "^15.5.10"
 
-"@atlaskit/dynamic-table@^13.7.4":
-  version "13.7.9"
-  resolved "https://registry.yarnpkg.com/@atlaskit/dynamic-table/-/dynamic-table-13.7.9.tgz#54fec94dcc594479a55889089230eb0e192325ad"
-  integrity sha512-jqaO3+pkHZiHuXZdJicsrr7vxbac+4uhCjoQmGqcYaONCzhWiRBq0TxmAGj7l77bIYmzPrrKkZSUCk4cgnjfug==
+"@atlaskit/dynamic-table@^14.2.1":
+  version "14.2.1"
+  resolved "https://registry.yarnpkg.com/@atlaskit/dynamic-table/-/dynamic-table-14.2.1.tgz#7576b4e3a26f2feb31fc979e96391924c24cc061"
+  integrity sha512-X1Bjuiecg9ircCyF2pz7VH3xIoVvKlFMhkhKyjEQ8+pvv2L8taH63ftM8gMmObTB/RkJYAvUfjncwVtnLtgs4w==
   dependencies:
-    "@atlaskit/analytics-next" "^6.3.6"
-    "@atlaskit/pagination" "^12.0.19"
-    "@atlaskit/spinner" "^14.0.0"
-    "@atlaskit/theme" "^9.5.3"
+    "@atlaskit/analytics-next" "^8.0.0"
+    "@atlaskit/pagination" "^13.0.0"
+    "@atlaskit/spinner" "^15.0.0"
+    "@atlaskit/theme" "^11.0.0"
+    "@babel/runtime" "^7.0.0"
     react-beautiful-dnd "^12.1.1"
-    tslib "^1.9.3"
 
 "@atlaskit/empty-state@^6.0.9":
   version "6.0.12"
@@ -559,16 +559,16 @@
   dependencies:
     tslib "^1.9.3"
 
-"@atlaskit/pagination@^12.0.19":
-  version "12.0.21"
-  resolved "https://registry.yarnpkg.com/@atlaskit/pagination/-/pagination-12.0.21.tgz#8d46fbee62c6b409155e80f3d1c3f4116a373915"
-  integrity sha512-IPW7JbE+rwY8S6negzASjaWE3oxNvT/Uafyb8Z6S4bOKD4W90yKPEDSQzSI2qrZt4bfHdxtSuIdpdNF3fyCz0w==
+"@atlaskit/pagination@^13.0.0":
+  version "13.0.10"
+  resolved "https://registry.yarnpkg.com/@atlaskit/pagination/-/pagination-13.0.10.tgz#765c4a044abdbb347870569a8d12735504fbf91e"
+  integrity sha512-HIldsHeOX40+s1FHRgFl6skxQNRgbQR4F+3Sea5tQUl2dCG/lGJuxYldyg+Wnqi5VrMPpctU0VafuVlEAXHNWw==
   dependencies:
-    "@atlaskit/analytics-next" "^6.3.5"
-    "@atlaskit/button" "^13.3.7"
-    "@atlaskit/icon" "^20.1.2"
-    "@atlaskit/theme" "^9.5.1"
-    tslib "^1.9.3"
+    "@atlaskit/analytics-next" "^8.0.0"
+    "@atlaskit/button" "^15.1.0"
+    "@atlaskit/icon" "^21.4.0"
+    "@atlaskit/theme" "^11.0.0"
+    "@babel/runtime" "^7.0.0"
 
 "@atlaskit/popper@^3.1.11", "@atlaskit/popper@^3.1.12":
   version "3.1.13"
