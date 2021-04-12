@@ -160,16 +160,7 @@
     "@atlaskit/theme" "^11.0.0"
     "@babel/runtime" "^7.0.0"
 
-"@atlaskit/blanket@^10.0.18":
-  version "10.0.19"
-  resolved "https://registry.yarnpkg.com/@atlaskit/blanket/-/blanket-10.0.19.tgz#191de6f80b2df8340c980c2b20faa5c0a9faa764"
-  integrity sha512-KRtQCgqEZ/GHh6i5ICCCfgCvkQOD/rM2iLw9IBpV9g092MTjWKGRttI27Aovj3ia29QVyqzWHxE0/61Ot8VzGQ==
-  dependencies:
-    "@atlaskit/analytics-next" "^6.3.5"
-    "@atlaskit/theme" "^9.5.1"
-    tslib "^1.9.3"
-
-"@atlaskit/blanket@^11.0.0":
+"@atlaskit/blanket@^11.0.0", "@atlaskit/blanket@^11.1.0":
   version "11.1.1"
   resolved "https://registry.yarnpkg.com/@atlaskit/blanket/-/blanket-11.1.1.tgz#0dc6db40c7823fa1a09eeb263f48e822091cf7dd"
   integrity sha512-21XKBvux/ooBiSWqi2kV6XtBdEtwuK8c272XbiBH+ghtaQx+SLBc4AjppEIjIxuORf3q3XX0O4pXVdNJeYAb1w==
@@ -491,17 +482,18 @@
     "@babel/runtime" "^7.0.0"
     "@emotion/core" "^10.0.9"
 
-"@atlaskit/modal-dialog@^10.5.8":
-  version "10.6.4"
-  resolved "https://registry.yarnpkg.com/@atlaskit/modal-dialog/-/modal-dialog-10.6.4.tgz#23c391953ede4eda32c7ce0b24513b4206ccfe64"
-  integrity sha512-hL8sNK+iReduSsbnRfMOjuSaAo7K1bTdtoMdSwqg4U+U3Ftj82DatCnKQNoDReosmPiWXcjn8lB/15AMhU2qZA==
+"@atlaskit/modal-dialog@^11.2.9":
+  version "11.2.9"
+  resolved "https://registry.yarnpkg.com/@atlaskit/modal-dialog/-/modal-dialog-11.2.9.tgz#e7d158334b6375c212cdaf4a636d07ac7bba5a1b"
+  integrity sha512-qtC2enesGx5gXtpboNKYKFrlMj0U7tAe4VyV8n1TnfRC9cG/QDy1bqG9Hm1WIGbXGG7Ia2FPin+Z9IAqv5u9TA==
   dependencies:
-    "@atlaskit/analytics-next" "^6.3.6"
-    "@atlaskit/blanket" "^10.0.18"
-    "@atlaskit/button" "^13.4.0"
-    "@atlaskit/icon" "^20.1.1"
-    "@atlaskit/portal" "^3.1.7"
-    "@atlaskit/theme" "^9.5.3"
+    "@atlaskit/analytics-next" "^8.0.0"
+    "@atlaskit/blanket" "^11.1.0"
+    "@atlaskit/button" "^15.1.0"
+    "@atlaskit/icon" "^21.5.0"
+    "@atlaskit/portal" "^4.1.0"
+    "@atlaskit/theme" "^11.0.0"
+    "@babel/runtime" "^7.0.0"
     "@emotion/core" "^10.0.9"
     "@emotion/styled" "^10.0.7"
     exenv "^1.2.2"
@@ -511,7 +503,6 @@
     react-transition-group "^4.4.1"
     react-uid "^2.2.0"
     tiny-invariant "^0.0.3"
-    tslib "^1.9.3"
 
 "@atlaskit/motion@^0.4.0":
   version "0.4.6"
