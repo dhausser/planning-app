@@ -32,7 +32,7 @@
     "@atlaskit/status": "^0.11.0",
     "@atlaskit/table-tree": "^9.0.8",
     "@atlaskit/textarea": "^4.0.2",
-    "@atlaskit/textfield": "^3.1.10",
+    "@atlaskit/textfield": "^5.0.1",
     "@atlaskit/theme": "^9.5.3",
     "@atlaskit/tooltip": "^15.2.6",
     "@atlaskit/user-picker": "^4.3.0",

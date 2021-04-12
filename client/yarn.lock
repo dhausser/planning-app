@@ -741,17 +741,7 @@
     "@babel/runtime" "^7.0.0"
     "@emotion/core" "^10.0.9"
 
-"@atlaskit/textfield@^3.1.10":
-  version "3.1.13"
-  resolved "https://registry.yarnpkg.com/@atlaskit/textfield/-/textfield-3.1.13.tgz#6bd46adda45397eb756a78086d6478423946bfba"
-  integrity sha512-9ykxGwdeZ21i7ufyScCU9IpUWoQUEAq7MMIRAyvbL8eSIHvfYP1xRJd3bJLc2veRYoghIvPj6YcDndT8YrmHeg==
-  dependencies:
-    "@atlaskit/analytics-next" "^6.3.5"
-    "@atlaskit/theme" "^9.5.1"
-    "@emotion/core" "^10.0.9"
-    tslib "^1.9.3"
-
-"@atlaskit/textfield@^5.0.0":
+"@atlaskit/textfield@^5.0.0", "@atlaskit/textfield@^5.0.1":
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/@atlaskit/textfield/-/textfield-5.0.1.tgz#28fa035317a8f9d2056a830fd8816473e7265a84"
   integrity sha512-wcqivlUr51zbTTkh7aYpOCqU/AdolUhbGDQi6+jt0Q3HnwIVsO/EC7Ah23gWqMnOwiF3DHRgTVXuO0pDa5fQ5w==
