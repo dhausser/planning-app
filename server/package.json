@@ -45,12 +45,12 @@
     "redis": "^3.0.2"
   },
   "devDependencies": {
-    "@types/connect-redis": "^0.0.13",
+    "@types/connect-redis": "^0.0.16",
     "@types/cookie-parser": "^1.4.2",
-    "@types/express-session": "^1.17.0",
-    "@types/node": "^13.13.5",
-    "@types/passport": "^1.0.3",
-    "@types/redis": "^2.8.20",
+    "@types/express-session": "^1.17.3",
+    "@types/node": "^14.14.37",
+    "@types/passport": "^1.0.6",
+    "@types/redis": "^2.8.28",
     "nodemon": "^2.0.7",
     "prisma": "^2.20.1",
     "ts-node": "^8.10.1",

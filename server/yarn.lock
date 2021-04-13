@@ -150,10 +150,10 @@
     "@types/connect" "*"
     "@types/node" "*"
 
-"@types/connect-redis@^0.0.13":
-  version "0.0.13"
-  resolved "https://registry.yarnpkg.com/@types/connect-redis/-/connect-redis-0.0.13.tgz#9237f7f57b79d9f6418993fd6f3b6ea923859079"
-  integrity sha512-bHo/UWrUPbWkn05D1YAMs31wG+0dMt6GYXjv8Vfu8kAxO6CfD4N6lmHv/sAkjzYVdXFhc5jck/kEYLBDPJ90iQ==
+"@types/connect-redis@^0.0.16":
+  version "0.0.16"
+  resolved "https://registry.yarnpkg.com/@types/connect-redis/-/connect-redis-0.0.16.tgz#fd98a26ffbe6ac3037baa4aecc940951b9f78cdc"
+  integrity sha512-ToZRmwoeqRhzGIqMO9k8Hs1B9pFSGYCjHvMpPlgo+kQ4M7xaPwi2/5HjikJ0MOfPDFcAe9Qwl1SaULYCNE6jYg==
   dependencies:
     "@types/express" "*"
     "@types/express-session" "*"
@@ -205,13 +205,20 @@
     "@types/qs" "*"
     "@types/range-parser" "*"
 
-"@types/express-session@*", "@types/express-session@^1.17.0":
+"@types/express-session@*":
   version "1.17.0"
   resolved "https://registry.yarnpkg.com/@types/express-session/-/express-session-1.17.0.tgz#770daf81368f6278e3e40dd894e1e52abbdca0cd"
   integrity sha512-OQEHeBFE1UhChVIBhRh9qElHUvTp4BzKKHxMDkGHT7WuYk5eL93hPG7D8YAIkoBSbhNEY0RjreF15zn+U0eLjA==
   dependencies:
     "@types/express" "*"
     "@types/node" "*"
+
+"@types/express-session@^1.17.3":
+  version "1.17.3"
+  resolved "https://registry.yarnpkg.com/@types/express-session/-/express-session-1.17.3.tgz#4a37c5c4428b8f922ac8ac1cb4bd9190a4d2b097"
+  integrity sha512-57DnyxiqClXOIjoCgeKCUYfKxBPOlOY/k+l1TPK+7bSwyiPTrS5FIk1Ycql7twk4wO7P5lfOVy6akDGiaMSLfw==
+  dependencies:
+    "@types/express" "*"
 
 "@types/express@*":
   version "4.17.6"
@@ -295,7 +302,7 @@
     "@types/node" "*"
     form-data "^3.0.0"
 
-"@types/node@*", "@types/node@^13.13.5":
+"@types/node@*":
   version "13.13.5"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-13.13.5.tgz#96ec3b0afafd64a4ccea9107b75bf8489f0e5765"
   integrity sha512-3ySmiBYJPqgjiHA7oEaIo2Rzz0HrOZ7yrNO5HWyaE5q0lQ3BppDZ3N53Miz8bw2I7gh1/zir2MGVZBvpb1zq9g==
@@ -305,10 +312,15 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.17.21.tgz#c00e9603399126925806bed2d9a1e37da506965e"
   integrity sha512-PQKsydPxYxF1DsAFWmunaxd3sOi3iMt6Zmx/tgaagHYmwJ/9cRH91hQkeJZaUGWbvn0K5HlSVEXkn5U/llWPpQ==
 
-"@types/passport@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@types/passport/-/passport-1.0.3.tgz#e459ed6c262bf0686684d1b05901be0d0b192a9c"
-  integrity sha512-nyztuxtDPQv9utCzU0qW7Gl8BY2Dn8BKlYAFFyxKipFxjaVd96celbkLCV/tRqqBUZ+JB8If3UfgV8347DTo3Q==
+"@types/node@^14.14.37":
+  version "14.14.37"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.37.tgz#a3dd8da4eb84a996c36e331df98d82abd76b516e"
+  integrity sha512-XYmBiy+ohOR4Lh5jE379fV2IU+6Jn4g5qASinhitfyO71b/sCo6MKsMLF5tc7Zf2CE8hViVQyYSobJNke8OvUw==
+
+"@types/passport@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@types/passport/-/passport-1.0.6.tgz#72343e49d65efa98cb328163cff5f127981947d7"
+  integrity sha512-9oKfrJXuAxvyxdrtMCxKkHgmd6DMO8NDOLvMJ1LvIWd6/xP+i81PAkpTaEca7VhJX9S009RciwZL/j6dsLsHrA==
   dependencies:
     "@types/express" "*"
 
@@ -322,10 +334,17 @@
   resolved "https://registry.yarnpkg.com/@types/range-parser/-/range-parser-1.2.3.tgz#7ee330ba7caafb98090bece86a5ee44115904c2c"
   integrity sha512-ewFXqrQHlFsgc09MK5jP5iR7vumV/BYayNC6PgJO2LPe8vrnNFyjQjSppfEngITi0qvfKtzFvgKymGheFM9UOA==
 
-"@types/redis@*", "@types/redis@^2.8.20":
+"@types/redis@*":
   version "2.8.20"
   resolved "https://registry.yarnpkg.com/@types/redis/-/redis-2.8.20.tgz#7060fa9d65ccf7ef32f714f05f83a016a20211c8"
   integrity sha512-IJOvkg+BnCRDlMrrBIasCs8bqddnjiplI26HwsPSeY/biEJaDzAQnjs2i5z5vJelTbi3TIiLUIrKXk7j9Tmi/Q==
+  dependencies:
+    "@types/node" "*"
+
+"@types/redis@^2.8.28":
+  version "2.8.28"
+  resolved "https://registry.yarnpkg.com/@types/redis/-/redis-2.8.28.tgz#5862b2b64aa7f7cbc76dafd7e6f06992b52c55e3"
+  integrity sha512-8l2gr2OQ969ypa7hFOeKqtFoY70XkHxISV0pAwmQ2nm6CSPb1brmTmqJCGGrekCo+pAZyWlNXr+Kvo6L/1wijA==
   dependencies:
     "@types/node" "*"
 
