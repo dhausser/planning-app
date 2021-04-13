@@ -53,15 +53,15 @@
     http-errors "^1.7.3"
     object-path "^0.11.4"
 
-"@prisma/cli@^2.0.0-beta.5":
-  version "2.0.0-beta.5"
-  resolved "https://registry.yarnpkg.com/@prisma/cli/-/cli-2.0.0-beta.5.tgz#9116e9ba08131fce47bb96d9bc19e8a443a2b893"
-  integrity sha512-Kl3IqOq6sYdajnLA034SLJxFCB0IxXcrSLYR8W9XTOyt3RRP/TCUPp5yBVfO9B21Kwe9YrFujTbSD2qQaDg1QA==
-
 "@prisma/client@^2.0.0-beta.5":
   version "2.0.0-beta.5"
   resolved "https://registry.yarnpkg.com/@prisma/client/-/client-2.0.0-beta.5.tgz#e2192831e868c4c65257b7dd2c679234f1fcdf4a"
   integrity sha512-Ov7rOV5h+nu+zSFG61OvOTsDjQX+QSa8AI0sYbNSsfL9MvEMtb7mMCiGsQRdHGvxbqErFuqlN83+eUCR/umb1Q==
+
+"@prisma/engines@2.20.0-26.60ba6551f29b17d7d6ce479e5733c70d9c00860e":
+  version "2.20.0-26.60ba6551f29b17d7d6ce479e5733c70d9c00860e"
+  resolved "https://registry.yarnpkg.com/@prisma/engines/-/engines-2.20.0-26.60ba6551f29b17d7d6ce479e5733c70d9c00860e.tgz#18f23c4a8a335a93fd338f88c310f5cf120f5591"
+  integrity sha512-zOWETm7DTRvlwf/CekPNSeJe6EC5bn2IFexd74wM9zgBXCZo+1sMDuNGtCqIt4Rzv8CcimEgyzrEFVq0LPV8qg==
 
 "@protobufjs/aspromise@^1.1.1", "@protobufjs/aspromise@^1.1.2":
   version "1.1.2"
@@ -2140,6 +2140,13 @@ prepend-http@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/prepend-http/-/prepend-http-2.0.0.tgz#e92434bfa5ea8c19f41cdfd401d741a3c819d897"
   integrity sha1-6SQ0v6XqjBn0HN/UAddBo8gZ2Jc=
+
+prisma@^2.20.1:
+  version "2.20.1"
+  resolved "https://registry.yarnpkg.com/prisma/-/prisma-2.20.1.tgz#28c52135523e0853258cd4ca7e883e9e4b5a9d40"
+  integrity sha512-zyPvJSUfJrmciP2D/4aUrsyIefiH8AIJUeuq1a0X1df1AFw9QQ+ata/7VQdoP+RIQHnCb6Kln9kqfUw/fieljw==
+  dependencies:
+    "@prisma/engines" "2.20.0-26.60ba6551f29b17d7d6ce479e5733c70d9c00860e"
 
 proxy-addr@~2.0.5:
   version "2.0.6"
