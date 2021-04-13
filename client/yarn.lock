@@ -333,15 +333,15 @@
     "@atlaskit/icon" "^21.5.0"
     "@babel/runtime" "^7.0.0"
 
-"@atlaskit/icon-priority@^6.2.1":
-  version "6.2.1"
-  resolved "https://registry.yarnpkg.com/@atlaskit/icon-priority/-/icon-priority-6.2.1.tgz#e1046bc6a25cbb2f4a629a50d62dfdc125403398"
-  integrity sha512-tYEdonLBvW0NucB5qgOlLB/G+wa8vVgYfM/mMXLJM+C/WJNVG4wOFxfS9q+piEpXblIZBRPpcJ0wAWuK2FgqMA==
+"@atlaskit/icon-priority@^6.2.2":
+  version "6.2.2"
+  resolved "https://registry.yarnpkg.com/@atlaskit/icon-priority/-/icon-priority-6.2.2.tgz#824adad81e1763d81d6110736b800ac68eade315"
+  integrity sha512-0DuuwiAl1yjF7qVnsiEROK2KQfbkLVuMtePxvxKPGTBR7CQW/+Mtl26yrygHvJEYUnDRByJPcIVVCRQauvdtRg==
   dependencies:
-    "@atlaskit/icon" "21.5.0"
+    "@atlaskit/icon" "^21.5.0"
     "@babel/runtime" "^7.0.0"
 
-"@atlaskit/icon@21.5.0", "@atlaskit/icon@^21.0.0", "@atlaskit/icon@^21.2.0", "@atlaskit/icon@^21.3.0", "@atlaskit/icon@^21.4.0", "@atlaskit/icon@^21.5.0":
+"@atlaskit/icon@^21.0.0", "@atlaskit/icon@^21.2.0", "@atlaskit/icon@^21.3.0", "@atlaskit/icon@^21.4.0", "@atlaskit/icon@^21.5.0":
   version "21.5.0"
   resolved "https://registry.yarnpkg.com/@atlaskit/icon/-/icon-21.5.0.tgz#2f231d34f074024e54dba17859dfd34065af6e0d"
   integrity sha512-gTzETPAh1jlGipyugRLIutFhAiTh2bsht481JlXoqO4dLYzhUWTBpmjR14uVZhTo+pRaOaeNmdjugD5CQBwfzA==
