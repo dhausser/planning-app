@@ -31,7 +31,7 @@
     "apollo-datasource-rest": "^0.11.0",
     "apollo-server-express": "^2.22.2",
     "assert": "^2.0.0",
-    "connect-redis": "^4.0.4",
+    "connect-redis": "^5.1.0",
     "cookie-parser": "^1.4.5",
     "csvtojson": "^2.0.10",
     "dotenv": "^8.2.0",
