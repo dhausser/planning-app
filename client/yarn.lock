@@ -454,10 +454,37 @@
     "@babel/runtime" "^7.0.0"
     "@emotion/core" "^10.0.9"
 
-"@atlaskit/navigation-next@^9.0.0", "@atlaskit/navigation-next@^9.0.10":
+"@atlaskit/navigation-next@^9.0.0":
   version "9.0.10"
   resolved "https://registry.yarnpkg.com/@atlaskit/navigation-next/-/navigation-next-9.0.10.tgz#7431afafb95fdb4b55e01a8ba84484fc1cff5e55"
   integrity sha512-r0lJIhjAHPxqfiy+3e/RTXSFrfabd8MWeYZ/bIAcJJhZK+RAl1K6cUI0ucTEL/WG2BtkJoGiLzghhMC4IrnzKA==
+  dependencies:
+    "@atlaskit/analytics-namespaced-context" "^6.0.0"
+    "@atlaskit/analytics-next" "^8.0.0"
+    "@atlaskit/avatar" "^20.0.0"
+    "@atlaskit/icon" "^21.4.0"
+    "@atlaskit/select" "^13.2.0"
+    "@atlaskit/spinner" "^15.0.0"
+    "@atlaskit/theme" "^11.0.0"
+    "@atlaskit/tooltip" "^17.0.0"
+    "@babel/runtime" "^7.0.0"
+    "@emotion/core" "^10.0.9"
+    chromatism "^2.6.0"
+    deep-object-diff "^1.1.0"
+    emotion-theming "^10.0.7"
+    raf-schd "^2.1.0"
+    react-beautiful-dnd "^12.1.1"
+    react-fast-compare "^2.0.1"
+    react-loadable "^5.1.0"
+    react-node-resolver "^1.0.1"
+    react-transition-group "^4.4.1"
+    shallow-equal "^1.0.0"
+    unstated "^1.2.0"
+
+"@atlaskit/navigation-next@^9.0.11":
+  version "9.0.11"
+  resolved "https://registry.yarnpkg.com/@atlaskit/navigation-next/-/navigation-next-9.0.11.tgz#63b800734f493c724f664538a8806e3879360cc6"
+  integrity sha512-v+K4kMLXMRtosBbbLSNGnT014C3mYm/tmPr1A3hUFYRpsKud4DXf4t8UmuUZQmAXwut0EBNfzp3bIZ8ogH1TRQ==
   dependencies:
     "@atlaskit/analytics-namespaced-context" "^6.0.0"
     "@atlaskit/analytics-next" "^8.0.0"
