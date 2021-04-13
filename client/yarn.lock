@@ -325,12 +325,12 @@
     "@babel/runtime" "^7.0.0"
     url-parse "^1.4.5"
 
-"@atlaskit/icon-object@^6.2.1":
-  version "6.2.1"
-  resolved "https://registry.yarnpkg.com/@atlaskit/icon-object/-/icon-object-6.2.1.tgz#026c49945577bd068e1261219cca1455bb0dfc42"
-  integrity sha512-YDhLIKcXPd4AqsLetektjj5pdMWasCbpEGXUVDuU53szuJH/KR/TopeXJ/r1eQ/4qQb0DwOJsvQ7KPaziwSdUw==
+"@atlaskit/icon-object@^6.2.2":
+  version "6.2.2"
+  resolved "https://registry.yarnpkg.com/@atlaskit/icon-object/-/icon-object-6.2.2.tgz#36867431c02f6fd8d787575b34594eeeb2984a8b"
+  integrity sha512-Yo3XBM+lMaFyEEd5TchlRocpyjZOtGJO7kOFpKuDJlQIRChoFuV9Lri34g8loopQ/m/T7/WajZ+Uioj6ZqXFHQ==
   dependencies:
-    "@atlaskit/icon" "21.5.0"
+    "@atlaskit/icon" "^21.5.0"
     "@babel/runtime" "^7.0.0"
 
 "@atlaskit/icon-priority@^6.2.1":
