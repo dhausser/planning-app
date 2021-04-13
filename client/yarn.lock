@@ -152,10 +152,10 @@
     "@atlaskit/theme" "^11.0.0"
     "@babel/runtime" "^7.0.0"
 
-"@atlaskit/breadcrumbs@^11.0.3":
-  version "11.0.3"
-  resolved "https://registry.yarnpkg.com/@atlaskit/breadcrumbs/-/breadcrumbs-11.0.3.tgz#b8c36d96f806c91a70260713a92ad54e55788d30"
-  integrity sha512-rT2MKNLF2C065S50qhBz18Bchk/gE7qjFY/ldGlrXIgGvOCT02co/YIAnpM3aEb6aNeaAF8W4icqjgHnMYjW3w==
+"@atlaskit/breadcrumbs@^11.1.0":
+  version "11.1.0"
+  resolved "https://registry.yarnpkg.com/@atlaskit/breadcrumbs/-/breadcrumbs-11.1.0.tgz#f741c88e9a6d90a077674b71fe482e0e9b9019ba"
+  integrity sha512-tvXQWQvLbGf0CivKcSdSLU0IftYTG3tTZSY7O+e9+1h13NUwbegNspEOWbj2naKyjXmWwVSJ7rBbi6H6pg9/6Q==
   dependencies:
     "@atlaskit/analytics-next" "^8.0.0"
     "@atlaskit/button" "^15.1.0"

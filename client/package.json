@@ -6,7 +6,7 @@
     "@apollo/client": "^3.3.14",
     "@atlaskit/atlassian-navigation": "^0.12.6",
     "@atlaskit/avatar": "^20.2.2",
-    "@atlaskit/breadcrumbs": "^11.0.3",
+    "@atlaskit/breadcrumbs": "^11.1.0",
     "@atlaskit/button": "^15.1.5",
     "@atlaskit/comment": "^10.0.7",
     "@atlaskit/css-reset": "^6.0.5",
